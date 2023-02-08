@@ -2,15 +2,16 @@ package gorm
 
 import (
 	"encoding/json"
+	"math/rand"
 	"time"
 
 	"github.com/heromicro/omgind/pkg/logger"
-	"github.com/jinzhu/gorm"
+	"github.com/oklog/ulid/v2"
 	"github.com/sirupsen/logrus"
-
-	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"gorm.io/gorm"
+	// _ "github.com/go-sql-driver/mysql"
+	// _ "github.com/jinzhu/gorm/dialects/postgres"
+	// _ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 var tableName string
@@ -28,7 +29,35 @@ type Config struct {
 // New 创建基于gorm的钩子实例(需要指定表名)
 func New(c *Config) *Hook {
 	tableName = c.TableName
-	
+
+	var dialector gorm.Dialector
+	switch strings.ToLower(c.DBType) {
+	case "mysql":
+		cfg, err := mysqlDriver.ParseDSN(c.DSN)
+		if err != nil {
+			return nil, err
+		}
+		err = createDatabaseWithMySQL(cfg)
+		if err != nil {
+			return nil, err
+		}
+
+		dialector = mysql.Open(c.DSN)
+	case "postgres":
+		dialector = postgres.Open(c.DSN)
+	case "sqlite3":
+		dialector = sqlite.Open(c.DSN)
+	default:
+		panic("missing dbtype")
+	}
+
+	gconfig := &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   c.TablePrefix,
+			SingularTable: true,
+		},
+	}
+
 	db, err := gorm.Open(c.DBType, c.DSN)
 	if err != nil {
 		panic(err)
@@ -39,9 +68,23 @@ func New(c *Config) *Hook {
 	db.DB().SetConnMaxLifetime(time.Duration(c.MaxLifetime) * time.Second)
 
 	db.AutoMigrate(new(LogItem))
+
 	return &Hook{
 		db: db,
 	}
+}
+
+func createDatabaseWithMySQL(cfg *mysqlDriver.Config) error {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/", cfg.User, cfg.Passwd, cfg.Addr)
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	query := fmt.Sprintf("CREATE DATABASE IF NOT EXISTS `%s` DEFAULT CHARACTER SET = `utf8mb4`;", cfg.DBName)
+	_, err = db.Exec(query)
+	return err
 }
 
 // Hook gorm日志钩子
@@ -51,7 +94,15 @@ type Hook struct {
 
 // Exec 执行日志写入
 func (h *Hook) Exec(entry *logrus.Entry) error {
+
+	seed := time.Now().UnixNano()
+	source := rand.NewSource(seed)
+	entropy := rand.New(source)
+
+	id := ulid.MustNew(ulid.Timestamp(time.Now()), entropy).String()
+
 	item := &LogItem{
+		ID:        id,
 		Level:     entry.Level.String(),
 		Message:   entry.Message,
 		CreatedAt: entry.Time,
@@ -94,16 +145,17 @@ func (h *Hook) Close() error {
 
 // LogItem 存储日志项
 type LogItem struct {
-	ID         uint      `gorm:"column:id;primary_key;auto_increment;"` // id
-	Level      string    `gorm:"column:level;size:20;index;"`           // 日志级别
-	TraceID    string    `gorm:"column:trace_id;size:128;index;"`       // 跟踪ID
-	UserID     string    `gorm:"column:user_id;size:36;index;"`         // 用户ID
-	Tag        string    `gorm:"column:tag;size:128;index;"`            // Tag
-	Version    string    `gorm:"column:version;index;size:64;"`         // 版本号
-	Message    string    `gorm:"column:message;size:1024;"`             // 消息
-	Data       string    `gorm:"column:data;type:text;"`                // 日志数据(json)
-	ErrorStack string    `gorm:"column:error_stack;type:text;"`         // Error Stack
-	CreatedAt  time.Time `gorm:"column:created_at;index"`               // 创建时间
+	// ID         uint      `gorm:"column:id;primary_key;auto_increment;"` // id
+	ID         string    `gorm:"column:id;primary_key;"`          // id
+	Level      string    `gorm:"column:level;size:20;index;"`     // 日志级别
+	TraceID    string    `gorm:"column:trace_id;size:128;index;"` // 跟踪ID
+	UserID     string    `gorm:"column:user_id;size:36;index;"`   // 用户ID
+	Tag        string    `gorm:"column:tag;size:128;index;"`      // Tag
+	Version    string    `gorm:"column:version;index;size:64;"`   // 版本号
+	Message    string    `gorm:"column:message;size:1024;"`       // 消息
+	Data       string    `gorm:"column:data;type:text;"`          // 日志数据(json)
+	ErrorStack string    `gorm:"column:error_stack;type:text;"`   // Error Stack
+	CreatedAt  time.Time `gorm:"column:crtd_at;index"`            // 创建时间
 }
 
 // TableName 表名

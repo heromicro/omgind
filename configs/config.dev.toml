@@ -69,8 +69,8 @@
 
 [LogGormHook]
     # 数据库类型(目前支持的数据库类型：mysql/sqlite3/postgres)
-    # DBType = "mysql"
-    DBType = "postgres"
+    DBType = "mysql"
+    # DBType = "postgres"
     # 设置连接可以重用的最长时间(单位：秒)
     MaxLifetime = 7200
     # 设置数据库的最大打开连接数
@@ -207,8 +207,8 @@
     # 是否开启调试模式
     Debug = true
     # 数据库类型(目前支持的数据库类型：mysql/sqlite3/postgres)
-    # DBType = "mysql"
-    DBType = "postgres"
+    DBType = "mysql"
+    # DBType = "postgres"
     # 设置连接可以重用的最长时间(单位：秒)
     MaxLifetime = 7200
     # 设置数据库的最大打开连接数
@@ -222,9 +222,10 @@
 
 [MySQL]
     # 连接地址
-    Host = "127.0.0.1"
+    # Host = "127.0.0.1"
+    Host = "10.10.8.1"
     # 连接端口
-    Port= 3306
+    Port= 23306
     # 用户名
     User = "omgind"
     # 密码

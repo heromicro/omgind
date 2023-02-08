@@ -23,7 +23,7 @@ require (
 	github.com/influxdata/influxdb-client-go/v2 v2.3.0
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/jinzhu/copier v0.3.0
-	github.com/jinzhu/gorm v1.9.16
+
 	github.com/json-iterator/go v1.1.12
 	github.com/koding/multiconfig v0.0.0-20171124222453-69c27309b2d7
 	github.com/meehow/go-django-hashers v0.0.0-20171231135116-5e5d6afe52db
