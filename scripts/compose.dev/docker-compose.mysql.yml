@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+
+  core:
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: "mysql:8"
+    container_name: omgind_mysql
+    restart: always
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
+    env_file:
+      - ${CONFIG_FILE}
+    ports:
+      - "13306:3306"
+
+    volumes:
+      - ${CONFIG_DIR}/mysql/conf.d:/etc/mysql/conf.d
+      - ${VOLUME_DIR}/mysql/data:/var/lib/mysql
+
+    healthcheck:
+      test: "mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD"
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+    networks:
+      - net

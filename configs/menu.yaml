@@ -1,0 +1,211 @@
+---
+# 菜单配置初始化(服务启动时会进行数据检查，如果存在则不再初始化)
+- name: 首页
+  icon: dashboard
+  router: "/dashboard"
+  sort: 1
+- name: DEMO
+  icon: tag
+  router: "/example/demo"
+  sort: 8
+  actions:
+    - code: add
+      name: 新增
+      resources:
+        - method: POST
+          path: "/api/v2/demos"
+    - code: edit
+      name: 编辑
+      resources:
+        - method: GET
+          path: "/api/v2/demos/:id"
+        - method: PUT
+          path: "/api/v2/demos/:id"
+    - code: del
+      name: 删除
+      resources:
+        - method: DELETE
+          path: "/api/v2/demos/:id"
+    - code: query
+      name: 查询
+      resources:
+        - method: GET
+          path: "/api/v2/demos"
+    - code: disable
+      name: 禁用
+      resources:
+        - method: PATCH
+          path: "/api/v2/demos/:id/disable"
+    - code: enable
+      name: 启用
+      resources:
+        - method: PATCH
+          path: "/api/v2/demos/:id/enable"
+
+- name: 系统管理
+  icon: setting
+  sort: 39
+  children:
+    - name: 角色管理
+      icon: audit
+      router: "/system/role"
+      sort: 49
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: GET
+              path: "/api/v2/menus.tree"
+            - method: POST
+              path: "/api/v2/roles"
+        - code: edit
+          name: 编辑
+          resources:
+            - method: GET
+              path: "/api/v2/menus.tree"
+            - method: GET
+              path: "/api/v2/roles/:id"
+            - method: PUT
+              path: "/api/v2/roles/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/roles/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/roles"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/roles/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/roles/:id/enable"
+    - name: 用户管理
+      icon: user
+      router: "/system/user"
+      sort: 59
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: GET
+              path: "/api/v2/roles.select"
+            - method: POST
+              path: "/api/v2/users"
+        - code: edit
+          name: 编辑
+          resources:
+            - method: GET
+              path: "/api/v2/roles.select"
+            - method: GET
+              path: "/api/v2/users/:id"
+            - method: PUT
+              path: "/api/v2/users/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/users/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/users"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/users/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/users/:id/enable"
+    - name: 数据字典
+      icon: key
+      router: "/system/dict"
+      sort: 69
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: POST
+              path: "/api/v2/dicts"
+        - code: edit
+          name: 编辑
+          resources:
+            - method: GET
+              path: "/api/v2/dicts/:id"
+            - method: PUT
+              path: "/api/v2/dicts/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/dicts/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/dicts"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/dicts/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/dicts/:id/enable"
+
+- name: 开发状态
+  icon: setting
+  sort: 999
+  children:
+    - name: 菜单管理
+      icon: solution
+      router: "/dev/menu"
+      sort: 999
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: POST
+              path: "/api/v2/menus"
+        - code: edit
+          name: 编辑
+          resources:
+            - method: GET
+              path: "/api/v2/menus/:id"
+            - method: PUT
+              path: "/api/v2/menus/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/menus/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/menus"
+            - method: GET
+              path: "/api/v2/menus.tree"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/menus/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/menus/:id/enable"

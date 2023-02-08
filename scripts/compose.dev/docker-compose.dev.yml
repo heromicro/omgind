@@ -1,0 +1,137 @@
+version: "3.7"
+
+services:
+
+  go:
+    container_name: omgind-server
+
+    build:
+      context: ../..
+      dockerfile: ./deploy/dockerfile/Dockerfile.dev
+
+    entrypoint: /app/run.sh
+
+    image: omgind:latest
+    restart: always
+    environment:
+      GOPROXY: https://goproxy.cn,direct
+      profile: prod
+
+    ports:
+      - "10088:10088"
+    volumes:
+      - $PWD:/app/omgind
+      - $PWD/deploy/dev/run.sh:/app/run.sh
+
+    working_dir: /app/omgind 
+
+    depends_on:
+      - redis
+      - mysql
+      - influxdb
+      - rabbitmq
+
+    networks:
+      - omgind-be
+      - omgind-fe
+
+  redis:
+    container_name: omgind-redis
+    image: "redis:alpine"
+    restart: always
+    ports:
+      - "16739:6739"
+
+    networks:
+      - omgind-be
+
+  mysql:
+    container_name: omgind-mysql
+    image: "mysql:8"
+    restart: always
+    environment:
+      MYSQL_USER: omgind
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: omgind
+    volumes:
+      - $PWD/data/mysql:/var/lib/mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
+    ports:
+      - "13306:3306"
+    
+    networks:
+      - omgind-be
+
+
+#  postgres:
+#    container_name: omgind-pgsql
+#    image: "postgres:12-alpine"
+#    privileged: true
+#    restart: always
+#    environment:
+#      POSTGRES_USER: omgind
+#      POSTGRES_PASSWORD: 123456
+#      POSTGRES_DB: omgind
+#      PGDATA: /var/lib/postgresql/data/pgdata
+#
+#    volumes:
+#      - $PWD/data/pgsql:/var/lib/postgresql/data/pgdata
+#
+#    ports:
+#      - 15432:5432
+#
+#    networks:
+#      - omgind
+  
+  influxdb:
+    container_name: omgind-influxdb
+    image: "influxdb:2.0-alpine"
+    restart: always
+    environment:
+      DOCKER_INFLUXDB_INIT_USERNAME: omgind
+      DOCKER_INFLUXDB_INIT_PASSWORD: "12345678"
+      DOCKER_INFLUXDB_INIT_ORG: "omgind"
+      DOCKER_INFLUXDB_INIT_BUCKET: "omgind"
+      DOCKER_INFLUXDB_INIT_RETENTION: 1w
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: 12345678
+
+    volumes:
+      - $PWD/data/influxdb:/var/lib/influxdb2
+#      - $PWD/data/config/influx:/etc/influxdb2
+
+    ports:
+      - 8086:8086
+
+    networks:
+      - omgind-be
+
+  rabbitmq:
+    container_name: omgind-mq
+    image: "rabbitmq:alpine"
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: omgind
+      RABBITMQ_DEFAULT_PASS: 123456
+
+    volumes:
+      - $PWD/data/rabbitmq:/var/lib/rabbitmq
+
+    ports:
+      - 15691:15691
+      - 15692:15692
+      - 25672:25672
+      - 4369:4369
+      - 5671:5671
+      - 5672:5672
+
+    networks:
+      - omgind-be
+
+networks:
+  omgind-be:
+    driver: bridge
+    name: omgind-be
+  omgind-fe:
+    driver: bridge
+    name: omgind-fe

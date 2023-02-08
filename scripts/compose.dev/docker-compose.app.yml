@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+
+  core:
+    container_name: omgind_server
+
+    build:
+      context: ${PROJECT_DIR}
+      dockerfile: ${PROJECT_DIR}/deploy/dockerfile/dockerfile.dev
+
+    entrypoint: /app/run.sh
+
+    image: omgind:latest
+    restart: always
+    environment:
+      GOPROXY: https://goproxy.cn,direct
+      profile: prod
+
+    ports:
+      - "10088:10088"
+    volumes:
+      - ${PROJECT_DIR}:/app/omgind
+      - ${PROJECT_DIR}/deploy/dev/run.sh:/app/run.sh
+
+    working_dir: /app/omgind 
+
+    depends_on:
+      - redis
+      - mysql
+      - influxdb
+      - rabbitmq
+
+    networks:
+      - net
+

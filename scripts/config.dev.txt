@@ -1,0 +1,75 @@
+
+###################################
+USE_EXTERNAL_MYSQL=0
+DB_HOST=mysql
+DB_PORT=3306
+DB_USER=omgind
+DB_PASSWORD=123456
+DB_NAME=omgind
+
+USE_EXTERNAL_REDIS=0
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+
+###################################
+## Compose 项目设置
+COMPOSE_PROJECT_NAME=omgind
+COMPOSE_HTTP_TIMEOUT=3600
+DOCKER_CLIENT_TIMEOUT=3600
+DOCKER_SUBNET=192.168.250.0/24
+
+
+###################################
+## IPV6
+DOCKER_SUBNET_IPV6=2001:db8:10::/64
+USE_IPV6=0
+
+
+###################################
+## Nginx 配置，这个 Nginx 是用来分发路径到不同的服务
+HTTP_PORT=9080
+HTTPS_PORT=9443
+SSH_PORT=2222
+
+
+###################################
+# Mysql 容器配置
+MYSQL_USER=omgind
+MYSQL_ROOT_PASSWORD=123456
+MYSQL_PASSWORD=123456
+MYSQL_DATABASE=omgind
+
+
+###################################
+# postgres 容器配置
+POSTGRES_USER=omgind
+POSTGRES_PASSWORD=123456
+POSTGRES_DB=omgind
+PGDATA=/var/lib/postgresql/data/pgdata
+
+
+###################################
+# go
+GOPROXY=https://goproxy.cn,direct
+
+
+###################################
+# influxdb 配置
+DOCKER_INFLUXDB_INIT_USERNAME=omgind
+DOCKER_INFLUXDB_INIT_PASSWORD=12345678
+DOCKER_INFLUXDB_INIT_ORG=omgind
+DOCKER_INFLUXDB_INIT_BUCKET=omgind
+DOCKER_INFLUXDB_INIT_RETENTION=1w
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=12345678
+
+###################################
+# rabbitmq 容器配置
+RABBITMQ_DEFAULT_USER=omgind
+RABBITMQ_DEFAULT_PASS=123456
+
+
+
+
+
+

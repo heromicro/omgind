@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+
+  core:
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  rabbitmq:
+    container_name: omgind_mq
+    image: "rabbitmq:alpine"
+    restart: always
+    env_file:
+      - ${CONFIG_FILE}
+
+#    environment:
+#      RABBITMQ_DEFAULT_USER: omgind
+#      RABBITMQ_DEFAULT_PASS: 123456
+
+    volumes:
+      - ${VOLUME_DIR}/rabbitmq/data:/var/lib/rabbitmq
+
+    ports:
+      - 15691:15691
+      - 15692:15692
+      - 25672:25672
+      - 4369:4369
+      - 5671:5671
+      - 5672:5672
+
+    healthcheck:
+      timeout: 5s
+      interval: 15s
+      retries: 5
+      test:
+        - CMD
+        - rabbitmqctl
+        - status
+
+    networks:
+      - net
+
+

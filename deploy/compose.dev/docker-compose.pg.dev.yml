@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+
+  postgres:
+    container_name: omgind_pgsql
+    image: "postgres:12-alpine"
+    privileged: true
+    restart: always
+    env_file:
+      - ${CONFIG_FILE}
+#    environment:
+#      POSTGRES_USER: omgind
+#      POSTGRES_PASSWORD: 123456
+#      POSTGRES_DB: omgind
+#      PGDATA: /var/lib/postgresql/data/pgdata
+
+    volumes:
+      - ${PROJECT_DIR}/data/pgsql:/var/lib/postgresql/data/pgdata
+
+    ports:
+      - 15432:5432
+
+    networks:
+      - net
+
+

@@ -1,0 +1,17 @@
+#FROM golang:1.16
+FROM cosmtrek/air
+
+ENV GO111MODULE=on \
+    GOPROXY=https://goproxy.cn,direct
+
+
+RUN mkdir -p /app
+
+WORKDIR /app
+
+#COPY ./deploy/dev/run.sh /app
+
+EXPOSE 10088
+
+#ENTRYPOINT ["/app/run.sh"]
+ENTRYPOINT ["sh", "/app/run.sh"]
