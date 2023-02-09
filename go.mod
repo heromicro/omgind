@@ -39,7 +39,7 @@ require (
 	github.com/swaggo/files v1.0.0
 	github.com/swaggo/gin-swagger v1.5.3
 	github.com/swaggo/swag v1.8.10
-	github.com/tidwall/buntdb v1.1.2
+	github.com/tidwall/buntdb v1.2.10
 	github.com/urfave/cli/v2 v2.24.3
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/mysql v1.4.6
@@ -97,13 +97,14 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
-	github.com/tidwall/btree v0.0.0-20191029221954-400434d76274 // indirect
-	github.com/tidwall/gjson v1.3.4 // indirect
-	github.com/tidwall/grect v0.0.0-20161006141115-ba9a043346eb // indirect
-	github.com/tidwall/match v1.0.1 // indirect
-	github.com/tidwall/pretty v1.0.0 // indirect
+	github.com/tidwall/btree v1.6.0 // indirect
+	github.com/tidwall/gjson v1.14.4 // indirect
+	github.com/tidwall/grect v0.1.4 // indirect
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.1 // indirect
+	github.com/tidwall/rtred v0.1.2 // indirect
 	github.com/tidwall/rtree v0.0.0-20180113144539-6cd427091e0e // indirect
-	github.com/tidwall/tinyqueue v0.0.0-20180302190814-1e39f5511563 // indirect
+	github.com/tidwall/tinyqueue v0.1.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
 	github.com/vektah/gqlparser/v2 v2.5.1 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
