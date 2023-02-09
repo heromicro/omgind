@@ -18,35 +18,35 @@ var UserSet = wire.NewSet(wire.Struct(new(User), "*"))
 
 // User 用户管理
 type User struct {
-	Enforcer      *casbin.SyncedEnforcer
+	Enforcer *casbin.SyncedEnforcer
 
-	UserModel     *repo.User
-	UserRoleModel *repo.UserRole
-	RoleModel     *repo.Role
+	UserRepo     *repo.User
+	UserRoleRepo *repo.UserRole
+	RoleRepo     *repo.Role
 }
 
 // Query 查询数据
 func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...schema.UserQueryOptions) (*schema.UserQueryResult, error) {
-	return a.UserModel.Query(ctx, params, opts...)
+	return a.UserRepo.Query(ctx, params, opts...)
 }
 
 // QueryShow 查询显示项数据
 func (a *User) QueryShow(ctx context.Context, params schema.UserQueryParam, opts ...schema.UserQueryOptions) (*schema.UserShowQueryResult, error) {
-	result, err := a.UserModel.Query(ctx, params, opts...)
+	result, err := a.UserRepo.Query(ctx, params, opts...)
 	if err != nil {
 		return nil, err
 	} else if result == nil {
 		return nil, nil
 	}
 
-	userRoleResult, err := a.UserRoleModel.Query(ctx, schema.UserRoleQueryParam{
+	userRoleResult, err := a.UserRoleRepo.Query(ctx, schema.UserRoleQueryParam{
 		UserIDs: result.Data.ToIDs(),
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	roleResult, err := a.RoleModel.Query(ctx, schema.RoleQueryParam{
+	roleResult, err := a.RoleRepo.Query(ctx, schema.RoleQueryParam{
 		IDs: userRoleResult.Data.ToRoleIDs(),
 	})
 	if err != nil {
@@ -58,14 +58,14 @@ func (a *User) QueryShow(ctx context.Context, params schema.UserQueryParam, opts
 
 // Get 查询指定数据
 func (a *User) Get(ctx context.Context, id string, opts ...schema.UserQueryOptions) (*schema.User, error) {
-	item, err := a.UserModel.Get(ctx, id, opts...)
+	item, err := a.UserRepo.Get(ctx, id, opts...)
 	if err != nil {
 		return nil, err
 	} else if item == nil {
 		return nil, errors.ErrNotFound
 	}
 
-	userRoleResult, err := a.UserRoleModel.Query(ctx, schema.UserRoleQueryParam{
+	userRoleResult, err := a.UserRoleRepo.Query(ctx, schema.UserRoleQueryParam{
 		UserID: id,
 	})
 	if err != nil {
@@ -88,9 +88,9 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.IDResult, 
 	pword, _ := hash.MakePassword(item.Password)
 	item.Password = pword
 
-	err = repo.WithTx(ctx, a.UserModel.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.UserRepo.EntCli, func(tx *ent.Tx) error {
 
-		userInput := a.UserModel.ToEntCreateSysUserInput(&item)
+		userInput := a.UserRepo.ToEntCreateSysUserInput(&item)
 		userInput.CreatedAt = nil
 		userInput.UpdatedAt = nil
 
@@ -126,7 +126,7 @@ func (a *User) checkUserName(ctx context.Context, item schema.User) error {
 	if len(item.UserName) < 6 {
 		return errors.New400Response("用户名不合法")
 	}
-	result, err := a.UserModel.Query(ctx, schema.UserQueryParam{
+	result, err := a.UserRepo.Query(ctx, schema.UserQueryParam{
 		PaginationParam: schema.PaginationParam{OnlyCount: true},
 		UserName:        item.UserName,
 	})
@@ -163,7 +163,7 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) error {
 	item.ID = oldItem.ID
 	item.Creator = oldItem.Creator
 	item.CreatedAt = oldItem.CreatedAt
-	err = repo.WithTx(ctx, a.UserModel.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.UserRepo.EntCli, func(tx *ent.Tx) error {
 		addUserRoles, delUserRoles := a.compareUserRoles(ctx, oldItem.UserRoles, item.UserRoles)
 
 		// 添加的
@@ -182,7 +182,7 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) error {
 			}
 		}
 
-		user_input := a.UserModel.ToEntUpdateSysUserInput(&item)
+		user_input := a.UserRepo.ToEntUpdateSysUserInput(&item)
 		user_input.UpdatedAt = nil
 		_, err := tx.SysUser.UpdateOneID(id).SetInput(*user_input).Save(ctx)
 		if err != nil {
@@ -220,7 +220,7 @@ func (a *User) compareUserRoles(ctx context.Context, oldUserRoles, newUserRoles 
 // Delete 删除数据
 func (a *User) Delete(ctx context.Context, id string) error {
 
-	oldItem, err := a.UserModel.Get(ctx, id)
+	oldItem, err := a.UserRepo.Get(ctx, id)
 
 	if err != nil {
 		return err
@@ -228,7 +228,7 @@ func (a *User) Delete(ctx context.Context, id string) error {
 		return errors.ErrNotFound
 	}
 
-	err = a.UserModel.Delete(ctx, id)
+	err = a.UserRepo.Delete(ctx, id)
 
 	if err != nil {
 		return err
@@ -240,7 +240,7 @@ func (a *User) Delete(ctx context.Context, id string) error {
 
 // UpdateStatus 更新状态
 func (a *User) UpdateStatus(ctx context.Context, id string, status int16) error {
-	oldItem, err := a.UserModel.Get(ctx, id)
+	oldItem, err := a.UserRepo.Get(ctx, id)
 	if err != nil {
 		return err
 	} else if oldItem == nil {
@@ -248,7 +248,7 @@ func (a *User) UpdateStatus(ctx context.Context, id string, status int16) error 
 	}
 	oldItem.Status = status
 
-	err = a.UserModel.UpdateStatus(ctx, id, status)
+	err = a.UserRepo.UpdateStatus(ctx, id, status)
 	if err != nil {
 		return err
 	}

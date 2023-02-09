@@ -19,23 +19,21 @@ var RoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 
 // Role 角色管理
 type Role struct {
-	Enforcer      *casbin.SyncedEnforcer
+	Enforcer *casbin.SyncedEnforcer
 
-	//TransModel    *repo.Trans
-
-	RoleModel     *repo.Role
-	RoleMenuModel *repo.RoleMenu
-	UserModel     *repo.User
+	RoleRepo     *repo.Role
+	RoleMenuRepo *repo.RoleMenu
+	UserRepo     *repo.User
 }
 
 // Query 查询数据
 func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...schema.RoleQueryOptions) (*schema.RoleQueryResult, error) {
-	return a.RoleModel.Query(ctx, params, opts...)
+	return a.RoleRepo.Query(ctx, params, opts...)
 }
 
 // Get 查询指定数据
 func (a *Role) Get(ctx context.Context, id string, opts ...schema.RoleQueryOptions) (*schema.Role, error) {
-	item, err := a.RoleModel.Get(ctx, id, opts...)
+	item, err := a.RoleRepo.Get(ctx, id, opts...)
 	if err != nil {
 		return nil, err
 	} else if item == nil {
@@ -53,7 +51,7 @@ func (a *Role) Get(ctx context.Context, id string, opts ...schema.RoleQueryOptio
 
 // QueryRoleMenus 查询角色菜单列表
 func (a *Role) QueryRoleMenus(ctx context.Context, roleID string) (schema.RoleMenus, error) {
-	result, err := a.RoleMenuModel.Query(ctx, schema.RoleMenuQueryParam{
+	result, err := a.RoleMenuRepo.Query(ctx, schema.RoleMenuQueryParam{
 		RoleID: roleID,
 	})
 	if err != nil {
@@ -69,15 +67,15 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.IDResult, 
 		return nil, err
 	}
 
-	err = repo.WithTx(ctx, a.RoleModel.EntCli, func(tx *ent.Tx) error {
-		role_input := a.RoleModel.ToEntCreateSysRoleInput(&item)
+	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *ent.Tx) error {
+		role_input := a.RoleRepo.ToEntCreateSysRoleInput(&item)
 
 		arole, err := tx.SysRole.Create().SetInput(*role_input).Save(ctx)
 		if err != nil {
 			return err
 		}
 		for _, rmitem := range item.RoleMenus {
-			rminput := a.RoleMenuModel.ToEntCreateSysRoleMenuInput(rmitem)
+			rminput := a.RoleMenuRepo.ToEntCreateSysRoleMenuInput(rmitem)
 			rminput.CreatedAt = nil
 			rminput.UpdatedAt = nil
 			rminput.RoleID = arole.ID
@@ -97,7 +95,7 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.IDResult, 
 }
 
 func (a *Role) checkName(ctx context.Context, item schema.Role) error {
-	result, err := a.RoleModel.Query(ctx, schema.RoleQueryParam{
+	result, err := a.RoleRepo.Query(ctx, schema.RoleQueryParam{
 		PaginationParam: schema.PaginationParam{OnlyCount: true},
 		Name:            item.Name,
 	})
@@ -125,11 +123,11 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 
 	item.Creator = oldItem.Creator
 
-	err = repo.WithTx(ctx, a.RoleModel.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *ent.Tx) error {
 		addRoleMenus, delRoleMenus := a.compareRoleMenus(ctx, oldItem.RoleMenus, item.RoleMenus)
 		for _, rmitem := range addRoleMenus {
 			rmitem.RoleID = id
-			rolemenu := a.RoleMenuModel.ToEntCreateSysRoleMenuInput(rmitem)
+			rolemenu := a.RoleMenuRepo.ToEntCreateSysRoleMenuInput(rmitem)
 
 			_, err := tx.SysRoleMenu.Create().SetInput(*rolemenu).Save(ctx)
 			if err != nil {
@@ -146,7 +144,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 			}
 		}
 
-		rminput := a.RoleModel.ToEntUpdateSysRoleInput(&item)
+		rminput := a.RoleRepo.ToEntUpdateSysRoleInput(&item)
 		_, err := tx.SysRole.UpdateOneID(id).SetInput(*rminput).Save(ctx)
 		if err != nil {
 			return err
@@ -155,26 +153,26 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 	})
 
 	/*
-	err = a.TransModel.Exec(ctx, func(ctx context.Context) error {
-		addRoleMenus, delRoleMenus := a.compareRoleMenus(ctx, oldItem.RoleMenus, item.RoleMenus)
-		for _, rmitem := range addRoleMenus {
-			rmitem.ID = uid.MustString()
-			rmitem.RoleID = id
-			err := a.RoleMenuModel.Create(ctx, *rmitem)
-			if err != nil {
-				return err
+		err = a.TransModel.Exec(ctx, func(ctx context.Context) error {
+			addRoleMenus, delRoleMenus := a.compareRoleMenus(ctx, oldItem.RoleMenus, item.RoleMenus)
+			for _, rmitem := range addRoleMenus {
+				rmitem.ID = uid.MustString()
+				rmitem.RoleID = id
+				err := a.RoleMenuRepo.Create(ctx, *rmitem)
+				if err != nil {
+					return err
+				}
 			}
-		}
 
-		for _, rmitem := range delRoleMenus {
-			err := a.RoleMenuModel.Delete(ctx, rmitem.ID)
-			if err != nil {
-				return err
+			for _, rmitem := range delRoleMenus {
+				err := a.RoleMenuRepo.Delete(ctx, rmitem.ID)
+				if err != nil {
+					return err
+				}
 			}
-		}
 
-		return a.RoleModel.Update(ctx, id, item)
-	})*/
+			return a.RoleRepo.Update(ctx, id, item)
+		})*/
 
 	if err != nil {
 		return err
@@ -203,14 +201,14 @@ func (a *Role) compareRoleMenus(ctx context.Context, oldRoleMenus, newRoleMenus 
 
 // Delete 删除数据
 func (a *Role) Delete(ctx context.Context, id string) error {
-	oldItem, err := a.RoleModel.Get(ctx, id)
+	oldItem, err := a.RoleRepo.Get(ctx, id)
 	if err != nil {
 		return err
 	} else if oldItem == nil {
 		return errors.ErrNotFound
 	}
 
-	userResult, err := a.UserModel.Query(ctx, schema.UserQueryParam{
+	userResult, err := a.UserRepo.Query(ctx, schema.UserQueryParam{
 		PaginationParam: schema.PaginationParam{OnlyCount: true},
 		RoleIDs:         []string{id},
 	})
@@ -220,7 +218,7 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 		return errors.New400Response("该角色已被赋予用户，不允许删除")
 	}
 
-	err = repo.WithTx(ctx, a.RoleModel.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *ent.Tx) error {
 		_, err := tx.SysRoleMenu.Update().Where(sysrolemenu.RoleIDEQ(id)).SetDeletedAt(time.Now()).SetIsDel(true).Save(
 			ctx)
 		if err != nil {
@@ -239,14 +237,14 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 
 // UpdateStatus 更新状态
 func (a *Role) UpdateStatus(ctx context.Context, id string, status int16) error {
-	oldItem, err := a.RoleModel.Get(ctx, id)
+	oldItem, err := a.RoleRepo.Get(ctx, id)
 	if err != nil {
 		return err
 	} else if oldItem == nil {
 		return errors.ErrNotFound
 	}
 
-	err = a.RoleModel.UpdateStatus(ctx, id, status)
+	err = a.RoleRepo.UpdateStatus(ctx, id, status)
 	if err != nil {
 		return err
 	}

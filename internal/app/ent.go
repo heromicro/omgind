@@ -19,7 +19,7 @@ import (
 	"github.com/heromicro/omgind/pkg/global"
 
 	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/jackc/pgx/v4/stdlib"
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 // InitGormDB 初始化gorm存储
@@ -45,7 +45,7 @@ func InitEntClient() (*ent.Client, func(), error) {
 		return ent.MutateFunc(func(ctx context.Context, m ent.Mutation) (ent.Value, error) {
 			start := time.Now()
 			defer func() {
-				log.Printf("Op=%s\tType=%s\tTime=%s\tConcreteType=%T\n", m.Op(), m.Type(), time.Since(start), m )
+				log.Printf("Op=%s\tType=%s\tTime=%s\tConcreteType=%T\n", m.Op(), m.Type(), time.Since(start), m)
 			}()
 			return next.Mutate(ctx, m)
 		})

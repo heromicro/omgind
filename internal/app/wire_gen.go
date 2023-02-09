@@ -17,8 +17,8 @@ import (
 
 import (
 	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/heromicro/omgind/internal/app/swagger"
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 // Injectors from wire.go:
@@ -50,11 +50,11 @@ func BuildInjector() (*Injector, func(), error) {
 		EntCli: client,
 	}
 	casbinAdapter := &adapter.CasbinAdapter{
-		RoleModel:         role,
-		RoleMenuModel:     roleMenu,
-		MenuResourceModel: menuActionResource,
-		UserModel:         user,
-		UserRoleModel:     userRole,
+		RoleRepo:         role,
+		RoleMenuRepo:     roleMenu,
+		MenuResourceRepo: menuActionResource,
+		UserRepo:         user,
+		UserRoleRepo:     userRole,
 	}
 	syncedEnforcer, cleanup3, err := InitCasbin(casbinAdapter)
 	if err != nil {
@@ -76,8 +76,8 @@ func BuildInjector() (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceDict := &service.Dict{
-		DictModel:     dict,
-		DictItemModel: dictItem,
+		DictRepo:     dict,
+		DictItemRepo: dictItem,
 	}
 	api_v2Dict := &api_v2.Dict{
 		DictSrv: serviceDict,
@@ -86,7 +86,7 @@ func BuildInjector() (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceDemo := &service.Demo{
-		DemoModel: demo,
+		DemoRepo: demo,
 	}
 	api_v2Demo := &api_v2.Demo{
 		DemoSrv: serviceDemo,
@@ -98,27 +98,27 @@ func BuildInjector() (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceMenu := &service.Menu{
-		MenuModel:               menu,
-		MenuActionModel:         menuAction,
-		MenuActionResourceModel: menuActionResource,
+		MenuRepo:               menu,
+		MenuActionRepo:         menuAction,
+		MenuActionResourceRepo: menuActionResource,
 	}
 	api_v2Menu := &api_v2.Menu{
 		MenuSrv: serviceMenu,
 	}
 	serviceRole := &service.Role{
-		Enforcer:      syncedEnforcer,
-		RoleModel:     role,
-		RoleMenuModel: roleMenu,
-		UserModel:     user,
+		Enforcer:     syncedEnforcer,
+		RoleRepo:     role,
+		RoleMenuRepo: roleMenu,
+		UserRepo:     user,
 	}
 	api_v2Role := &api_v2.Role{
 		RoleSrv: serviceRole,
 	}
 	serviceUser := &service.User{
-		Enforcer:      syncedEnforcer,
-		UserModel:     user,
-		UserRoleModel: userRole,
-		RoleModel:     role,
+		Enforcer:     syncedEnforcer,
+		UserRepo:     user,
+		UserRoleRepo: userRole,
+		RoleRepo:     role,
 	}
 	api_v2User := &api_v2.User{
 		UserSrv: serviceUser,
@@ -133,14 +133,14 @@ func BuildInjector() (*Injector, func(), error) {
 	}
 	vcode := InitVcode(cmdable)
 	signIn := &service.SignIn{
-		Auth:            auther,
-		UserModel:       user,
-		UserRoleModel:   userRole,
-		RoleModel:       role,
-		RoleMenuModel:   roleMenu,
-		MenuModel:       menu,
-		MenuActionModel: menuAction,
-		Vcode:           vcode,
+		Auth:           auther,
+		UserRepo:       user,
+		UserRoleRepo:   userRole,
+		RoleRepo:       role,
+		RoleMenuRepo:   roleMenu,
+		MenuRepo:       menu,
+		MenuActionRepo: menuAction,
+		Vcode:          vcode,
 	}
 	api_v2SignIn := &api_v2.SignIn{
 		SigninSrv: signIn,

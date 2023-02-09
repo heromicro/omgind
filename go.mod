@@ -7,7 +7,7 @@ require (
 	github.com/99designs/gqlgen v0.13.0
 	github.com/LyricTian/queue v1.2.0
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
-	github.com/casbin/casbin/v2 v2.11.3
+	github.com/casbin/casbin/v2 v2.61.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-contrib/gzip v0.0.3
@@ -22,8 +22,7 @@ require (
 	github.com/gotidy/ptr v1.3.0
 	github.com/influxdata/influxdb-client-go/v2 v2.3.0
 	github.com/jackc/pgx/v4 v4.17.2
-	github.com/jinzhu/copier v0.3.0
-
+	github.com/jinzhu/copier v0.3.5
 	github.com/json-iterator/go v1.1.12
 	github.com/koding/multiconfig v0.0.0-20171124222453-69c27309b2d7
 	github.com/meehow/go-django-hashers v0.0.0-20171231135116-5e5d6afe52db
@@ -43,6 +42,10 @@ require (
 	github.com/urfave/cli/v2 v2.3.0
 	golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba
 	gopkg.in/yaml.v2 v2.4.0
+	gorm.io/driver/mysql v1.4.6
+	gorm.io/driver/postgres v1.4.6
+	gorm.io/driver/sqlite v1.4.4
+	gorm.io/gorm v1.24.2
 )
 
 require (
@@ -83,10 +86,11 @@ require (
 	github.com/jackc/pgproto3/v2 v2.3.1 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/pgtype v1.13.0 // indirect
+	github.com/jackc/pgx/v5 v5.2.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
-	github.com/lib/pq v1.10.7 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-sqlite3 v1.14.16 // indirect

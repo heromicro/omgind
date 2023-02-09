@@ -16,7 +16,7 @@ var DemoSet = wire.NewSet(wire.Struct(new(Demo), "*"))
 
 // Demo 示例程序
 type Demo struct {
-	DemoModel *repo.Demo
+	DemoRepo *repo.Demo
 }
 
 // ToSchemaDemo 转换为
@@ -58,12 +58,12 @@ func toEntCreateDemoInputs(dms schema.Demos) []*ent.CreateXxxDemoInput {
 
 // Query 查询数据
 func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...schema.DemoQueryOptions) (*schema.DemoQueryResult, error) {
-	return a.DemoModel.Query(ctx, params, opts...)
+	return a.DemoRepo.Query(ctx, params, opts...)
 }
 
 // Get 查询指定数据
 func (a *Demo) Get(ctx context.Context, id string, opts ...schema.DemoQueryOptions) (*schema.Demo, error) {
-	item, err := a.DemoModel.Get(ctx, id, opts...)
+	item, err := a.DemoRepo.Get(ctx, id, opts...)
 	if err != nil {
 		return nil, err
 	} else if item == nil {
@@ -73,7 +73,7 @@ func (a *Demo) Get(ctx context.Context, id string, opts ...schema.DemoQueryOptio
 }
 
 func (a *Demo) checkCode(ctx context.Context, code string) error {
-	result, err := a.DemoModel.Query(ctx, schema.DemoQueryParam{
+	result, err := a.DemoRepo.Query(ctx, schema.DemoQueryParam{
 		PaginationParam: schema.PaginationParam{
 			OnlyCount: true,
 		},
@@ -97,7 +97,7 @@ func (a *Demo) Create(ctx context.Context, item schema.Demo) (*schema.Demo, erro
 		return nil, err
 	}
 
-	sch_demo, err := a.DemoModel.Create(ctx, item)
+	sch_demo, err := a.DemoRepo.Create(ctx, item)
 
 	if err != nil {
 		return nil, err
@@ -109,7 +109,7 @@ func (a *Demo) Create(ctx context.Context, item schema.Demo) (*schema.Demo, erro
 // Update 更新数据
 func (a *Demo) Update(ctx context.Context, id string, item schema.Demo) (*schema.Demo, error) {
 
-	oitem, err := a.DemoModel.Get(ctx, id)
+	oitem, err := a.DemoRepo.Get(ctx, id)
 	if err != nil {
 		return nil, err
 	} else if oitem == nil {
@@ -121,29 +121,29 @@ func (a *Demo) Update(ctx context.Context, id string, item schema.Demo) (*schema
 	}
 	item.ID = oitem.ID
 
-	return a.DemoModel.Update(ctx, id, item)
+	return a.DemoRepo.Update(ctx, id, item)
 }
 
 // Delete 删除数据
 func (a *Demo) Delete(ctx context.Context, id string) error {
 
-	oldItem, err := a.DemoModel.Get(ctx, id)
+	oldItem, err := a.DemoRepo.Get(ctx, id)
 	if err != nil {
 		return err
 	} else if oldItem == nil {
 		return errors.ErrNotFound
 	}
-	return a.DemoModel.Delete(ctx, id)
+	return a.DemoRepo.Delete(ctx, id)
 }
 
 // UpdateStatus 更新状态
 func (a *Demo) UpdateStatus(ctx context.Context, id string, status int16) error {
-	oldItem, err := a.DemoModel.Get(ctx, id)
+	oldItem, err := a.DemoRepo.Get(ctx, id)
 	if err != nil {
 		return err
 	} else if oldItem == nil {
 		return errors.ErrNotFound
 	}
 
-	return a.DemoModel.UpdateStatus(ctx, id, status)
+	return a.DemoRepo.UpdateStatus(ctx, id, status)
 }

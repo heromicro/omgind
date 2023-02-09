@@ -16,7 +16,7 @@ type chCasbinPolicyItem struct {
 	e   *casbin.SyncedEnforcer
 }
 
-func init() {
+func init1() {
 	chCasbinPolicy = make(chan *chCasbinPolicyItem, 1)
 	go func() {
 		for item := range chCasbinPolicy {
@@ -44,4 +44,3 @@ func LoadCasbinPolicy(ctx context.Context, e *casbin.SyncedEnforcer) {
 		e:   e,
 	}
 }
-

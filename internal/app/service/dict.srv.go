@@ -17,18 +17,18 @@ var DictSet = wire.NewSet(wire.Struct(new(Dict), "*"))
 
 // Demo 示例程序
 type Dict struct {
-	DictModel     *repo.Dict
-	DictItemModel *repo.DictItem
+	DictRepo     *repo.Dict
+	DictItemRepo *repo.DictItem
 }
 
 // Query 查询数据
 func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...schema.DictQueryOptions) (*schema.DictQueryResult, error) {
-	return a.DictModel.Query(ctx, params, opts...)
+	return a.DictRepo.Query(ctx, params, opts...)
 }
 
 // Get 查询指定数据
 func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptions) (*schema.Dict, error) {
-	item, err := a.DictModel.Get(ctx, id, opts...)
+	item, err := a.DictRepo.Get(ctx, id, opts...)
 	if err != nil {
 		return nil, err
 	} else if item == nil {
@@ -45,7 +45,7 @@ func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptio
 
 func (d Dict) QueryItems(ctx context.Context, id string) (schema.DictItems, error) {
 
-	result, err := d.DictItemModel.Query(ctx, schema.DictItemQueryParam{
+	result, err := d.DictItemRepo.Query(ctx, schema.DictItemQueryParam{
 		DictID: id,
 	})
 
@@ -60,7 +60,7 @@ func (d Dict) QueryItems(ctx context.Context, id string) (schema.DictItems, erro
 
 func (d *Dict) checkName(ctx context.Context, item schema.Dict) error {
 	// TODO:: need optimization
-	result1, err1 := d.DictModel.Query(ctx, schema.DictQueryParam{
+	result1, err1 := d.DictRepo.Query(ctx, schema.DictQueryParam{
 		PaginationParam: schema.PaginationParam{
 			OnlyCount: true,
 		},
@@ -73,7 +73,7 @@ func (d *Dict) checkName(ctx context.Context, item schema.Dict) error {
 		return errors.New400Response("字典名称" + item.NameEn + "已经存在")
 	}
 
-	result2, err2 := d.DictModel.Query(ctx, schema.DictQueryParam{
+	result2, err2 := d.DictRepo.Query(ctx, schema.DictQueryParam{
 		PaginationParam: schema.PaginationParam{
 			OnlyCount: true,
 		},
@@ -96,9 +96,9 @@ func (a *Dict) Create(ctx context.Context, item schema.Dict) (*schema.IDResult, 
 	}
 	item.ID = uid.MustString()
 
-	err := repo.WithTx(ctx, a.DictModel.EntCli, func(tx *ent.Tx) error {
+	err := repo.WithTx(ctx, a.DictRepo.EntCli, func(tx *ent.Tx) error {
 
-		dictInput := a.DictModel.ToEntCreateSysDictInput(&item)
+		dictInput := a.DictRepo.ToEntCreateSysDictInput(&item)
 		dictInput.CreatedAt = nil
 		dictInput.UpdatedAt = nil
 
@@ -110,7 +110,7 @@ func (a *Dict) Create(ctx context.Context, item schema.Dict) (*schema.IDResult, 
 
 		for _, itm := range item.Items {
 			itm.DictID = adict.ID
-			ipt := a.DictItemModel.ToEntCreateSysDictItemInput(itm)
+			ipt := a.DictItemRepo.ToEntCreateSysDictItemInput(itm)
 			ipt.CreatedAt = nil
 			ipt.UpdatedAt = nil
 
@@ -150,13 +150,13 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) error {
 
 	addItems, delItems, updateItems := a.compareDictItems(ctx, oldItem.Items, item.Items)
 
-	err1 := repo.WithTx(ctx, a.DictModel.EntCli, func(tx *ent.Tx) error {
+	err1 := repo.WithTx(ctx, a.DictRepo.EntCli, func(tx *ent.Tx) error {
 
 		// 添加
 		for _, itm := range addItems {
 
 			itm.DictID = id
-			inpt := a.DictItemModel.ToEntCreateSysDictItemInput(itm)
+			inpt := a.DictItemRepo.ToEntCreateSysDictItemInput(itm)
 			itm.DictID = id
 
 			inpt.CreatedAt = nil
@@ -185,7 +185,7 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) error {
 		// 更新
 		for _, itm := range updateItems {
 
-			inpt := a.DictItemModel.ToEntUpdateSysDictItemInput(itm)
+			inpt := a.DictItemRepo.ToEntUpdateSysDictItemInput(itm)
 			inpt.UpdatedAt = nil
 			_, err := tx.SysDictItem.UpdateOneID(itm.ID).SetInput(*inpt).Save(ctx)
 			if err != nil {
@@ -196,7 +196,7 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) error {
 			}
 		}
 
-		dict_input := a.DictModel.ToEntUpdateSysDictInput(&item)
+		dict_input := a.DictRepo.ToEntUpdateSysDictInput(&item)
 		dict_input.UpdatedAt = nil
 		_, err := tx.SysDict.UpdateOneID(id).SetInput(*dict_input).Save(ctx)
 
@@ -237,35 +237,35 @@ func (a *Dict) compareDictItems(ctx context.Context, oldItems, newItems schema.D
 // Delete 删除数据
 func (a *Dict) Delete(ctx context.Context, id string) error {
 
-	oldItem, err := a.DictModel.Get(ctx, id)
+	oldItem, err := a.DictRepo.Get(ctx, id)
 	if err != nil {
 		return err
 	} else if oldItem == nil {
 		return errors.ErrNotFound
 	}
-	return a.DictModel.Delete(ctx, id)
+	return a.DictRepo.Delete(ctx, id)
 }
 
 // Delete 删除数据
 func (a *Dict) DeleteS(ctx context.Context, id string) error {
-	oldItem, err := a.DictModel.Get(ctx, id)
+	oldItem, err := a.DictRepo.Get(ctx, id)
 	if err != nil {
 		return err
 	} else if oldItem == nil {
 		return errors.ErrNotFound
 	}
-	_, err1 := a.DictModel.Update(ctx, id, *oldItem)
+	_, err1 := a.DictRepo.Update(ctx, id, *oldItem)
 	return err1
 }
 
 func (a *Dict) UpdateStatus(ctx context.Context, id string, status int16) error {
 
-	oldItem, err := a.DictModel.Get(ctx, id)
+	oldItem, err := a.DictRepo.Get(ctx, id)
 	if err != nil {
 		return err
 	} else if oldItem == nil {
 		return errors.ErrNotFound
 	}
 
-	return a.DictModel.UpdateStatus(ctx, id, status)
+	return a.DictRepo.UpdateStatus(ctx, id, status)
 }

@@ -1,17 +1,23 @@
 package gorm
 
 import (
+	"database/sql"
 	"encoding/json"
+	"fmt"
 	"math/rand"
+	"strings"
 	"time"
 
+	mysqlDriver "github.com/go-sql-driver/mysql"
 	"github.com/heromicro/omgind/pkg/logger"
 	"github.com/oklog/ulid/v2"
 	"github.com/sirupsen/logrus"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	// _ "github.com/go-sql-driver/mysql"
-	// _ "github.com/jinzhu/gorm/dialects/postgres"
-	// _ "github.com/jinzhu/gorm/dialects/sqlite"
+	"gorm.io/gorm/schema"
 )
 
 var tableName string
@@ -24,6 +30,7 @@ type Config struct {
 	MaxOpenConns int
 	MaxIdleConns int
 	TableName    string
+	TablePrefix  string
 }
 
 // New 创建基于gorm的钩子实例(需要指定表名)
@@ -35,11 +42,11 @@ func New(c *Config) *Hook {
 	case "mysql":
 		cfg, err := mysqlDriver.ParseDSN(c.DSN)
 		if err != nil {
-			return nil, err
+			return nil
 		}
 		err = createDatabaseWithMySQL(cfg)
 		if err != nil {
-			return nil, err
+			return nil
 		}
 
 		dialector = mysql.Open(c.DSN)
@@ -58,14 +65,18 @@ func New(c *Config) *Hook {
 		},
 	}
 
-	db, err := gorm.Open(c.DBType, c.DSN)
+	db, err := gorm.Open(dialector, gconfig)
 	if err != nil {
 		panic(err)
 	}
 
-	db.DB().SetMaxIdleConns(c.MaxIdleConns)
-	db.DB().SetMaxOpenConns(c.MaxOpenConns)
-	db.DB().SetConnMaxLifetime(time.Duration(c.MaxLifetime) * time.Second)
+	sqlDB, err := db.DB()
+	if err != nil {
+		panic(err)
+	}
+	sqlDB.SetMaxIdleConns(c.MaxIdleConns)
+	sqlDB.SetMaxOpenConns(c.MaxOpenConns)
+	sqlDB.SetConnMaxLifetime(time.Duration(c.MaxLifetime) * time.Second)
 
 	db.AutoMigrate(new(LogItem))
 
@@ -140,7 +151,11 @@ func (h *Hook) Exec(entry *logrus.Entry) error {
 
 // Close 关闭钩子
 func (h *Hook) Close() error {
-	return h.db.Close()
+	db, err := h.db.DB()
+	if err != nil {
+		return err
+	}
+	return db.Close()
 }
 
 // LogItem 存储日志项

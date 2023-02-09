@@ -19,14 +19,14 @@ var SignInSet = wire.NewSet(wire.Struct(new(SignIn), "*"))
 
 // SignIn 登录管理
 type SignIn struct {
-	Auth            auth.Auther
-	UserModel       *repo.User
-	UserRoleModel   *repo.UserRole
-	RoleModel       *repo.Role
-	RoleMenuModel   *repo.RoleMenu
-	MenuModel       *repo.Menu
-	MenuActionModel *repo.MenuAction
-	Vcode           *vcode.Vcode
+	Auth           auth.Auther
+	UserRepo       *repo.User
+	UserRoleRepo   *repo.UserRole
+	RoleRepo       *repo.Role
+	RoleMenuRepo   *repo.RoleMenu
+	MenuRepo       *repo.Menu
+	MenuActionRepo *repo.MenuAction
+	Vcode          *vcode.Vcode
 }
 
 // GetCaptcha 获取图形验证码信息
@@ -66,7 +66,7 @@ func (a *SignIn) Verify(ctx context.Context, userName, password string) (*schema
 		return root, nil
 	}
 
-	result, err := a.UserModel.Query(ctx, schema.UserQueryParam{
+	result, err := a.UserRepo.Query(ctx, schema.UserQueryParam{
 		UserName: userName,
 	})
 	if err != nil {
@@ -111,7 +111,7 @@ func (a *SignIn) DestroyToken(ctx context.Context, tokenString string) error {
 }
 
 func (a *SignIn) checkAndGetUser(ctx context.Context, userID string) (*schema.User, error) {
-	user, err := a.UserModel.Get(ctx, userID)
+	user, err := a.UserRepo.Get(ctx, userID)
 	if err != nil {
 		return nil, err
 	} else if user == nil {
@@ -146,7 +146,7 @@ func (a *SignIn) GetSignInInfo(ctx context.Context, userID string) (*schema.User
 		RealName: user.RealName,
 	}
 
-	userRoleResult, err := a.UserRoleModel.Query(ctx, schema.UserRoleQueryParam{
+	userRoleResult, err := a.UserRoleRepo.Query(ctx, schema.UserRoleQueryParam{
 		UserID: userID,
 	})
 	if err != nil {
@@ -154,7 +154,7 @@ func (a *SignIn) GetSignInInfo(ctx context.Context, userID string) (*schema.User
 	}
 
 	if roleIDs := userRoleResult.Data.ToRoleIDs(); len(roleIDs) > 0 {
-		roleResult, err := a.RoleModel.Query(ctx, schema.RoleQueryParam{
+		roleResult, err := a.RoleRepo.Query(ctx, schema.RoleQueryParam{
 			IDs:    roleIDs,
 			Status: 1,
 		})
@@ -173,7 +173,7 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 	isRoot := schema.CheckIsRootUser(ctx, userID)
 	// 如果是root用户，则查询所有显示的菜单树
 	if isRoot {
-		result, err := a.MenuModel.Query(ctx, schema.MenuQueryParam{
+		result, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
 			Status: 1,
 		}, schema.MenuQueryOptions{
 			OrderFields: schema.NewOrderFields(schema.NewOrderField("sort", schema.OrderByASC)),
@@ -183,7 +183,7 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 			return nil, err
 		}
 
-		menuActionResult, err := a.MenuActionModel.Query(ctx, schema.MenuActionQueryParam{})
+		menuActionResult, err := a.MenuActionRepo.Query(ctx, schema.MenuActionQueryParam{})
 
 		if err != nil {
 			return nil, err
@@ -191,7 +191,7 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 		return result.Data.FillMenuAction(menuActionResult.Data.ToMenuIDMap()).ToTree(), nil
 	}
 
-	userRoleResult, err := a.UserRoleModel.Query(ctx, schema.UserRoleQueryParam{
+	userRoleResult, err := a.UserRoleRepo.Query(ctx, schema.UserRoleQueryParam{
 		UserID: userID,
 	})
 	if err != nil {
@@ -200,7 +200,7 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 		return nil, errors.ErrNoPerm
 	}
 
-	roleMenuResult, err := a.RoleMenuModel.Query(ctx, schema.RoleMenuQueryParam{
+	roleMenuResult, err := a.RoleMenuRepo.Query(ctx, schema.RoleMenuQueryParam{
 		RoleIDs: userRoleResult.Data.ToRoleIDs(),
 	})
 	if err != nil {
@@ -209,7 +209,7 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 		return nil, errors.ErrNoPerm
 	}
 
-	menuResult, err := a.MenuModel.Query(ctx, schema.MenuQueryParam{
+	menuResult, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
 		IDs:    roleMenuResult.Data.ToMenuIDs(),
 		Status: 1,
 	})
@@ -229,7 +229,7 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 	}
 	// 获取这些差异的父级菜单的信息，补充到menuResult.Data中
 	if len(qIDs) > 0 {
-		pmenuResult, err := a.MenuModel.Query(ctx, schema.MenuQueryParam{
+		pmenuResult, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
 			IDs: qIDs,
 		})
 		if err != nil {
@@ -239,7 +239,7 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 	}
 
 	sort.Sort(menuResult.Data)
-	menuActionResult, err := a.MenuActionModel.Query(ctx, schema.MenuActionQueryParam{
+	menuActionResult, err := a.MenuActionRepo.Query(ctx, schema.MenuActionQueryParam{
 		IDs: roleMenuResult.Data.ToActionIDs(),
 	})
 	if err != nil {
@@ -265,5 +265,5 @@ func (a *SignIn) UpdatePassword(ctx context.Context, userID string, params schem
 	}
 
 	params.NewPassword = hash.SHA1String(params.NewPassword)
-	return a.UserModel.UpdatePassword(ctx, userID, params.NewPassword)
+	return a.UserRepo.UpdatePassword(ctx, userID, params.NewPassword)
 }
