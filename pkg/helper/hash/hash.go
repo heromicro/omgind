@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"fmt"
 
+	// hashers "github.com/heromicro/omgind/pkg/helper/hash/django-hashers"
 	hashers "github.com/meehow/go-django-hashers"
 )
 

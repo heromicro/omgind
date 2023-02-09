@@ -7,9 +7,15 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v7"
 	"github.com/heromicro/omgind/pkg/config"
 	"github.com/koding/multiconfig"
+
+	mconfig "github.com/gookit/config/v2"
+	mconfigJson "github.com/gookit/config/v2/json"
+	"github.com/gookit/config/v2/json5"
+	"github.com/gookit/config/v2/toml"
+	"github.com/gookit/config/v2/yamlv3"
 )
 
 var (
@@ -30,6 +36,37 @@ func PrintWithJSON() {
 		}
 		os.Stdout.WriteString(string(b) + "\n")
 	}
+}
+
+func MustLoad2(fpaths ...string) {
+
+	once.Do(func() {
+
+		mconfig.WithOptions(mconfig.ParseEnv)
+		mconfig.AddDriver(yamlv3.Driver)
+		mconfig.AddDriver(toml.Driver)
+		mconfig.AddDriver(mconfigJson.Driver)
+		mconfig.AddDriver(json5.Driver)
+
+		for _, fpath := range fpaths {
+			if strings.HasSuffix(fpath, "toml") {
+				mconfig.LoadFiles(fpath)
+			}
+			if strings.HasSuffix(fpath, "json") {
+				mconfig.LoadFiles(fpath)
+			}
+			if strings.HasSuffix(fpath, "yaml") {
+				mconfig.LoadFiles(fpath)
+			}
+		}
+
+		err := mconfig.BindStruct("cfg", &CFG)
+		if err != nil {
+			panic(err)
+
+		}
+	})
+
 }
 
 // MustLoad 加载配置

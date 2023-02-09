@@ -6,7 +6,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v7"
 	"github.com/heromicro/omgind/pkg/config"
 	"github.com/heromicro/omgind/pkg/helper/str"
 	"github.com/heromicro/omgind/pkg/helper/uid/uuid"

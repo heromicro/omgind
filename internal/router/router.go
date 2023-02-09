@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 
-	// socketio "github.com/googollee/go-socket.io"
 	api_v2 "github.com/heromicro/omgind/internal/api/v2"
 	"github.com/heromicro/omgind/pkg/auth"
 )

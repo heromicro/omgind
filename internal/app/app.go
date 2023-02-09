@@ -10,10 +10,10 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/google/gops/agent"
+
 	"github.com/heromicro/omgind/pkg/global"
 	"github.com/heromicro/omgind/pkg/logger"
-
-	"github.com/google/gops/agent"
 
 	// 引入swagger
 	_ "github.com/heromicro/omgind/internal/app/swagger"

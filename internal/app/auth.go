@@ -7,7 +7,7 @@ import (
 	"github.com/heromicro/omgind/pkg/auth/jwtauth/store/redis"
 	"github.com/heromicro/omgind/pkg/global"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt/v4"
 )
 
 // InitAuth 初始化用户认证

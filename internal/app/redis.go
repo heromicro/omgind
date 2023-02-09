@@ -3,7 +3,7 @@ package app
 import (
 	"errors"
 
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v7"
 	"github.com/heromicro/omgind/pkg/global"
 	"github.com/heromicro/omgind/pkg/logger"
 )
