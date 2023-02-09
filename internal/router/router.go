@@ -4,7 +4,8 @@ import (
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
-	socketio "github.com/googollee/go-socket.io"
+
+	// socketio "github.com/googollee/go-socket.io"
 	api_v2 "github.com/heromicro/omgind/internal/api/v2"
 	"github.com/heromicro/omgind/pkg/auth"
 )
@@ -25,7 +26,7 @@ type Router struct {
 	Auth           auth.Auther
 	CasbinEnforcer *casbin.SyncedEnforcer
 
-	SockIO *socketio.Server
+	// SockIO *socketio.Server
 
 	DictApiV2 *api_v2.Dict
 	DemoAPIV2 *api_v2.Demo
@@ -34,7 +35,6 @@ type Router struct {
 	UserAPIV2 *api_v2.User
 
 	SignInAPIV2 *api_v2.SignIn
-
 }
 
 // Register 注册路由

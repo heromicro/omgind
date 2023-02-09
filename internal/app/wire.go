@@ -14,7 +14,7 @@ import (
 	"github.com/google/wire"
 	"github.com/heromicro/omgind/internal/app/module/adapter"
 	"github.com/heromicro/omgind/internal/router"
-	"github.com/heromicro/omgind/pkg/ws/sockio"
+	// "github.com/heromicro/omgind/pkg/ws/sockio"
 )
 
 // BuildInjector 生成注入器

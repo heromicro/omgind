@@ -12,7 +12,6 @@ import (
 	"github.com/heromicro/omgind/internal/app/service"
 	"github.com/heromicro/omgind/internal/router"
 	"github.com/heromicro/omgind/internal/schema/repo"
-	"github.com/heromicro/omgind/pkg/ws/sockio"
 )
 
 import (
@@ -58,13 +57,6 @@ func BuildInjector() (*Injector, func(), error) {
 	}
 	syncedEnforcer, cleanup3, err := InitCasbin(casbinAdapter)
 	if err != nil {
-		cleanup2()
-		cleanup()
-		return nil, nil, err
-	}
-	server, cleanup4, err := sockio.New()
-	if err != nil {
-		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
@@ -123,9 +115,8 @@ func BuildInjector() (*Injector, func(), error) {
 	api_v2User := &api_v2.User{
 		UserSrv: serviceUser,
 	}
-	cmdable, cleanup5, err := InitRedisCli()
+	cmdable, cleanup4, err := InitRedisCli()
 	if err != nil {
-		cleanup4()
 		cleanup3()
 		cleanup2()
 		cleanup()
@@ -149,7 +140,6 @@ func BuildInjector() (*Injector, func(), error) {
 	routerRouter := &router.Router{
 		Auth:           auther,
 		CasbinEnforcer: syncedEnforcer,
-		SockIO:         server,
 		DictApiV2:      api_v2Dict,
 		DemoAPIV2:      api_v2Demo,
 		MenuAPIV2:      api_v2Menu,
@@ -166,7 +156,6 @@ func BuildInjector() (*Injector, func(), error) {
 		RedisCli:       cmdable,
 	}
 	return injector, func() {
-		cleanup5()
 		cleanup4()
 		cleanup3()
 		cleanup2()
