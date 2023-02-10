@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/heromicro/omgind/pkg/global"
@@ -30,8 +29,6 @@ func InitCasbin(adapter persist.Adapter) (*casbin.SyncedEnforcer, func(), error)
 	e.EnableEnforce(cfg.Enable)
 
 	cleanFunc := func() {}
-
-	fmt.Println(" ------ ======= ", cfg.AutoLoad)
 
 	if cfg.AutoLoad {
 		e.StartAutoLoadPolicy(time.Duration(cfg.AutoLoadInternal) * time.Second)

@@ -27,6 +27,7 @@ type hooks struct {
 	SysDict               []ent.Hook
 	SysDictItem           []ent.Hook
 	SysJwtBlock           []ent.Hook
+	SysLogging            []ent.Hook
 	SysMenu               []ent.Hook
 	SysMenuAction         []ent.Hook
 	SysMenuActionResource []ent.Hook

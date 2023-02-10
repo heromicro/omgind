@@ -48,6 +48,19 @@ func (f SysJwtBlockFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value,
 	return f(ctx, mv)
 }
 
+// The SysLoggingFunc type is an adapter to allow the use of ordinary
+// function as SysLogging mutator.
+type SysLoggingFunc func(context.Context, *ent.SysLoggingMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SysLoggingFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.SysLoggingMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysLoggingMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The SysMenuFunc type is an adapter to allow the use of ordinary
 // function as SysMenu mutator.
 type SysMenuFunc func(context.Context, *ent.SysMenuMutation) (ent.Value, error)

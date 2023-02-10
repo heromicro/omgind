@@ -8,6 +8,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
+	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
@@ -215,6 +216,71 @@ func init() {
 	// sysjwtblock.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	sysjwtblock.IDValidator = func() func(string) error {
 		validators := sysjwtblockDescID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(id string) error {
+			for _, fn := range fns {
+				if err := fn(id); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	sysloggingMixin := entity.SysLogging{}.Mixin()
+	sysloggingMixinFields0 := sysloggingMixin[0].Fields()
+	_ = sysloggingMixinFields0
+	sysloggingMixinFields1 := sysloggingMixin[1].Fields()
+	_ = sysloggingMixinFields1
+	sysloggingFields := entity.SysLogging{}.Fields()
+	_ = sysloggingFields
+	// sysloggingDescIsDel is the schema descriptor for is_del field.
+	sysloggingDescIsDel := sysloggingMixinFields0[1].Descriptor()
+	// syslogging.DefaultIsDel holds the default value on creation for the is_del field.
+	syslogging.DefaultIsDel = sysloggingDescIsDel.Default.(bool)
+	// sysloggingDescMemo is the schema descriptor for memo field.
+	sysloggingDescMemo := sysloggingMixinFields1[0].Descriptor()
+	// syslogging.DefaultMemo holds the default value on creation for the memo field.
+	syslogging.DefaultMemo = sysloggingDescMemo.Default.(string)
+	// syslogging.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
+	syslogging.MemoValidator = sysloggingDescMemo.Validators[0].(func(string) error)
+	// sysloggingDescLevel is the schema descriptor for level field.
+	sysloggingDescLevel := sysloggingFields[0].Descriptor()
+	// syslogging.LevelValidator is a validator for the "level" field. It is called by the builders before save.
+	syslogging.LevelValidator = sysloggingDescLevel.Validators[0].(func(string) error)
+	// sysloggingDescTraceID is the schema descriptor for trace_id field.
+	sysloggingDescTraceID := sysloggingFields[1].Descriptor()
+	// syslogging.TraceIDValidator is a validator for the "trace_id" field. It is called by the builders before save.
+	syslogging.TraceIDValidator = sysloggingDescTraceID.Validators[0].(func(string) error)
+	// sysloggingDescUserID is the schema descriptor for user_id field.
+	sysloggingDescUserID := sysloggingFields[2].Descriptor()
+	// syslogging.UserIDValidator is a validator for the "user_id" field. It is called by the builders before save.
+	syslogging.UserIDValidator = sysloggingDescUserID.Validators[0].(func(string) error)
+	// sysloggingDescTag is the schema descriptor for tag field.
+	sysloggingDescTag := sysloggingFields[3].Descriptor()
+	// syslogging.TagValidator is a validator for the "tag" field. It is called by the builders before save.
+	syslogging.TagValidator = sysloggingDescTag.Validators[0].(func(string) error)
+	// sysloggingDescVersion is the schema descriptor for version field.
+	sysloggingDescVersion := sysloggingFields[4].Descriptor()
+	// syslogging.VersionValidator is a validator for the "version" field. It is called by the builders before save.
+	syslogging.VersionValidator = sysloggingDescVersion.Validators[0].(func(string) error)
+	// sysloggingDescMessage is the schema descriptor for message field.
+	sysloggingDescMessage := sysloggingFields[5].Descriptor()
+	// syslogging.MessageValidator is a validator for the "message" field. It is called by the builders before save.
+	syslogging.MessageValidator = sysloggingDescMessage.Validators[0].(func(string) error)
+	// sysloggingDescCreatedAt is the schema descriptor for created_at field.
+	sysloggingDescCreatedAt := sysloggingFields[8].Descriptor()
+	// syslogging.DefaultCreatedAt holds the default value on creation for the created_at field.
+	syslogging.DefaultCreatedAt = sysloggingDescCreatedAt.Default.(func() time.Time)
+	// sysloggingDescID is the schema descriptor for id field.
+	sysloggingDescID := sysloggingMixinFields0[0].Descriptor()
+	// syslogging.DefaultID holds the default value on creation for the id field.
+	syslogging.DefaultID = sysloggingDescID.Default.(func() string)
+	// syslogging.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	syslogging.IDValidator = func() func(string) error {
+		validators := sysloggingDescID.Validators
 		fns := [...]func(string) error{
 			validators[0].(func(string) error),
 			validators[1].(func(string) error),

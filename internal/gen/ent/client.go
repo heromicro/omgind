@@ -12,6 +12,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
+	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
@@ -36,6 +37,8 @@ type Client struct {
 	SysDictItem *SysDictItemClient
 	// SysJwtBlock is the client for interacting with the SysJwtBlock builders.
 	SysJwtBlock *SysJwtBlockClient
+	// SysLogging is the client for interacting with the SysLogging builders.
+	SysLogging *SysLoggingClient
 	// SysMenu is the client for interacting with the SysMenu builders.
 	SysMenu *SysMenuClient
 	// SysMenuAction is the client for interacting with the SysMenuAction builders.
@@ -68,6 +71,7 @@ func (c *Client) init() {
 	c.SysDict = NewSysDictClient(c.config)
 	c.SysDictItem = NewSysDictItemClient(c.config)
 	c.SysJwtBlock = NewSysJwtBlockClient(c.config)
+	c.SysLogging = NewSysLoggingClient(c.config)
 	c.SysMenu = NewSysMenuClient(c.config)
 	c.SysMenuAction = NewSysMenuActionClient(c.config)
 	c.SysMenuActionResource = NewSysMenuActionResourceClient(c.config)
@@ -112,6 +116,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		SysDict:               NewSysDictClient(cfg),
 		SysDictItem:           NewSysDictItemClient(cfg),
 		SysJwtBlock:           NewSysJwtBlockClient(cfg),
+		SysLogging:            NewSysLoggingClient(cfg),
 		SysMenu:               NewSysMenuClient(cfg),
 		SysMenuAction:         NewSysMenuActionClient(cfg),
 		SysMenuActionResource: NewSysMenuActionResourceClient(cfg),
@@ -142,6 +147,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		SysDict:               NewSysDictClient(cfg),
 		SysDictItem:           NewSysDictItemClient(cfg),
 		SysJwtBlock:           NewSysJwtBlockClient(cfg),
+		SysLogging:            NewSysLoggingClient(cfg),
 		SysMenu:               NewSysMenuClient(cfg),
 		SysMenuAction:         NewSysMenuActionClient(cfg),
 		SysMenuActionResource: NewSysMenuActionResourceClient(cfg),
@@ -182,6 +188,7 @@ func (c *Client) Use(hooks ...Hook) {
 	c.SysDict.Use(hooks...)
 	c.SysDictItem.Use(hooks...)
 	c.SysJwtBlock.Use(hooks...)
+	c.SysLogging.Use(hooks...)
 	c.SysMenu.Use(hooks...)
 	c.SysMenuAction.Use(hooks...)
 	c.SysMenuActionResource.Use(hooks...)
@@ -460,6 +467,96 @@ func (c *SysJwtBlockClient) GetX(ctx context.Context, id string) *SysJwtBlock {
 // Hooks returns the client hooks.
 func (c *SysJwtBlockClient) Hooks() []Hook {
 	return c.hooks.SysJwtBlock
+}
+
+// SysLoggingClient is a client for the SysLogging schema.
+type SysLoggingClient struct {
+	config
+}
+
+// NewSysLoggingClient returns a client for the SysLogging from the given config.
+func NewSysLoggingClient(c config) *SysLoggingClient {
+	return &SysLoggingClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `syslogging.Hooks(f(g(h())))`.
+func (c *SysLoggingClient) Use(hooks ...Hook) {
+	c.hooks.SysLogging = append(c.hooks.SysLogging, hooks...)
+}
+
+// Create returns a builder for creating a SysLogging entity.
+func (c *SysLoggingClient) Create() *SysLoggingCreate {
+	mutation := newSysLoggingMutation(c.config, OpCreate)
+	return &SysLoggingCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of SysLogging entities.
+func (c *SysLoggingClient) CreateBulk(builders ...*SysLoggingCreate) *SysLoggingCreateBulk {
+	return &SysLoggingCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for SysLogging.
+func (c *SysLoggingClient) Update() *SysLoggingUpdate {
+	mutation := newSysLoggingMutation(c.config, OpUpdate)
+	return &SysLoggingUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SysLoggingClient) UpdateOne(sl *SysLogging) *SysLoggingUpdateOne {
+	mutation := newSysLoggingMutation(c.config, OpUpdateOne, withSysLogging(sl))
+	return &SysLoggingUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SysLoggingClient) UpdateOneID(id string) *SysLoggingUpdateOne {
+	mutation := newSysLoggingMutation(c.config, OpUpdateOne, withSysLoggingID(id))
+	return &SysLoggingUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for SysLogging.
+func (c *SysLoggingClient) Delete() *SysLoggingDelete {
+	mutation := newSysLoggingMutation(c.config, OpDelete)
+	return &SysLoggingDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *SysLoggingClient) DeleteOne(sl *SysLogging) *SysLoggingDeleteOne {
+	return c.DeleteOneID(sl.ID)
+}
+
+// DeleteOne returns a builder for deleting the given entity by its id.
+func (c *SysLoggingClient) DeleteOneID(id string) *SysLoggingDeleteOne {
+	builder := c.Delete().Where(syslogging.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SysLoggingDeleteOne{builder}
+}
+
+// Query returns a query builder for SysLogging.
+func (c *SysLoggingClient) Query() *SysLoggingQuery {
+	return &SysLoggingQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a SysLogging entity by its id.
+func (c *SysLoggingClient) Get(ctx context.Context, id string) (*SysLogging, error) {
+	return c.Query().Where(syslogging.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SysLoggingClient) GetX(ctx context.Context, id string) *SysLogging {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *SysLoggingClient) Hooks() []Hook {
+	return c.hooks.SysLogging
 }
 
 // SysMenuClient is a client for the SysMenu schema.

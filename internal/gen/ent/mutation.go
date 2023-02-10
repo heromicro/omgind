@@ -13,6 +13,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
+	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
@@ -37,6 +38,7 @@ const (
 	TypeSysDict               = "SysDict"
 	TypeSysDictItem           = "SysDictItem"
 	TypeSysJwtBlock           = "SysJwtBlock"
+	TypeSysLogging            = "SysLogging"
 	TypeSysMenu               = "SysMenu"
 	TypeSysMenuAction         = "SysMenuAction"
 	TypeSysMenuActionResource = "SysMenuActionResource"
@@ -2511,6 +2513,885 @@ func (m *SysJwtBlockMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *SysJwtBlockMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown SysJwtBlock edge %s", name)
+}
+
+// SysLoggingMutation represents an operation that mutates the SysLogging nodes in the graph.
+type SysLoggingMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *string
+	is_del        *bool
+	memo          *string
+	level         *string
+	trace_id      *string
+	user_id       *string
+	tag           *string
+	version       *string
+	message       *string
+	data          *string
+	error_stack   *string
+	created_at    *time.Time
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*SysLogging, error)
+	predicates    []predicate.SysLogging
+}
+
+var _ ent.Mutation = (*SysLoggingMutation)(nil)
+
+// sysloggingOption allows management of the mutation configuration using functional options.
+type sysloggingOption func(*SysLoggingMutation)
+
+// newSysLoggingMutation creates new mutation for the SysLogging entity.
+func newSysLoggingMutation(c config, op Op, opts ...sysloggingOption) *SysLoggingMutation {
+	m := &SysLoggingMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeSysLogging,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withSysLoggingID sets the ID field of the mutation.
+func withSysLoggingID(id string) sysloggingOption {
+	return func(m *SysLoggingMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *SysLogging
+		)
+		m.oldValue = func(ctx context.Context) (*SysLogging, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().SysLogging.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withSysLogging sets the old SysLogging of the mutation.
+func withSysLogging(node *SysLogging) sysloggingOption {
+	return func(m *SysLoggingMutation) {
+		m.oldValue = func(context.Context) (*SysLogging, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m SysLoggingMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m SysLoggingMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of SysLogging entities.
+func (m *SysLoggingMutation) SetID(id string) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *SysLoggingMutation) ID() (id string, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *SysLoggingMutation) IDs(ctx context.Context) ([]string, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []string{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().SysLogging.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *SysLoggingMutation) SetIsDel(b bool) {
+	m.is_del = &b
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *SysLoggingMutation) IsDel() (r bool, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldIsDel(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *SysLoggingMutation) ResetIsDel() {
+	m.is_del = nil
+}
+
+// SetMemo sets the "memo" field.
+func (m *SysLoggingMutation) SetMemo(s string) {
+	m.memo = &s
+}
+
+// Memo returns the value of the "memo" field in the mutation.
+func (m *SysLoggingMutation) Memo() (r string, exists bool) {
+	v := m.memo
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMemo returns the old "memo" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldMemo(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMemo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMemo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMemo: %w", err)
+	}
+	return oldValue.Memo, nil
+}
+
+// ResetMemo resets all changes to the "memo" field.
+func (m *SysLoggingMutation) ResetMemo() {
+	m.memo = nil
+}
+
+// SetLevel sets the "level" field.
+func (m *SysLoggingMutation) SetLevel(s string) {
+	m.level = &s
+}
+
+// Level returns the value of the "level" field in the mutation.
+func (m *SysLoggingMutation) Level() (r string, exists bool) {
+	v := m.level
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLevel returns the old "level" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldLevel(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLevel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLevel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLevel: %w", err)
+	}
+	return oldValue.Level, nil
+}
+
+// ResetLevel resets all changes to the "level" field.
+func (m *SysLoggingMutation) ResetLevel() {
+	m.level = nil
+}
+
+// SetTraceID sets the "trace_id" field.
+func (m *SysLoggingMutation) SetTraceID(s string) {
+	m.trace_id = &s
+}
+
+// TraceID returns the value of the "trace_id" field in the mutation.
+func (m *SysLoggingMutation) TraceID() (r string, exists bool) {
+	v := m.trace_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTraceID returns the old "trace_id" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldTraceID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTraceID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTraceID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTraceID: %w", err)
+	}
+	return oldValue.TraceID, nil
+}
+
+// ResetTraceID resets all changes to the "trace_id" field.
+func (m *SysLoggingMutation) ResetTraceID() {
+	m.trace_id = nil
+}
+
+// SetUserID sets the "user_id" field.
+func (m *SysLoggingMutation) SetUserID(s string) {
+	m.user_id = &s
+}
+
+// UserID returns the value of the "user_id" field in the mutation.
+func (m *SysLoggingMutation) UserID() (r string, exists bool) {
+	v := m.user_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUserID returns the old "user_id" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldUserID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUserID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUserID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUserID: %w", err)
+	}
+	return oldValue.UserID, nil
+}
+
+// ResetUserID resets all changes to the "user_id" field.
+func (m *SysLoggingMutation) ResetUserID() {
+	m.user_id = nil
+}
+
+// SetTag sets the "tag" field.
+func (m *SysLoggingMutation) SetTag(s string) {
+	m.tag = &s
+}
+
+// Tag returns the value of the "tag" field in the mutation.
+func (m *SysLoggingMutation) Tag() (r string, exists bool) {
+	v := m.tag
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTag returns the old "tag" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldTag(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTag is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTag requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTag: %w", err)
+	}
+	return oldValue.Tag, nil
+}
+
+// ResetTag resets all changes to the "tag" field.
+func (m *SysLoggingMutation) ResetTag() {
+	m.tag = nil
+}
+
+// SetVersion sets the "version" field.
+func (m *SysLoggingMutation) SetVersion(s string) {
+	m.version = &s
+}
+
+// Version returns the value of the "version" field in the mutation.
+func (m *SysLoggingMutation) Version() (r string, exists bool) {
+	v := m.version
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersion returns the old "version" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldVersion(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldVersion is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldVersion requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersion: %w", err)
+	}
+	return oldValue.Version, nil
+}
+
+// ResetVersion resets all changes to the "version" field.
+func (m *SysLoggingMutation) ResetVersion() {
+	m.version = nil
+}
+
+// SetMessage sets the "message" field.
+func (m *SysLoggingMutation) SetMessage(s string) {
+	m.message = &s
+}
+
+// Message returns the value of the "message" field in the mutation.
+func (m *SysLoggingMutation) Message() (r string, exists bool) {
+	v := m.message
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMessage returns the old "message" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldMessage(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMessage is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMessage requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMessage: %w", err)
+	}
+	return oldValue.Message, nil
+}
+
+// ResetMessage resets all changes to the "message" field.
+func (m *SysLoggingMutation) ResetMessage() {
+	m.message = nil
+}
+
+// SetData sets the "data" field.
+func (m *SysLoggingMutation) SetData(s string) {
+	m.data = &s
+}
+
+// Data returns the value of the "data" field in the mutation.
+func (m *SysLoggingMutation) Data() (r string, exists bool) {
+	v := m.data
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldData returns the old "data" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldData(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldData is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldData requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldData: %w", err)
+	}
+	return oldValue.Data, nil
+}
+
+// ClearData clears the value of the "data" field.
+func (m *SysLoggingMutation) ClearData() {
+	m.data = nil
+	m.clearedFields[syslogging.FieldData] = struct{}{}
+}
+
+// DataCleared returns if the "data" field was cleared in this mutation.
+func (m *SysLoggingMutation) DataCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldData]
+	return ok
+}
+
+// ResetData resets all changes to the "data" field.
+func (m *SysLoggingMutation) ResetData() {
+	m.data = nil
+	delete(m.clearedFields, syslogging.FieldData)
+}
+
+// SetErrorStack sets the "error_stack" field.
+func (m *SysLoggingMutation) SetErrorStack(s string) {
+	m.error_stack = &s
+}
+
+// ErrorStack returns the value of the "error_stack" field in the mutation.
+func (m *SysLoggingMutation) ErrorStack() (r string, exists bool) {
+	v := m.error_stack
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldErrorStack returns the old "error_stack" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldErrorStack(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldErrorStack is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldErrorStack requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldErrorStack: %w", err)
+	}
+	return oldValue.ErrorStack, nil
+}
+
+// ResetErrorStack resets all changes to the "error_stack" field.
+func (m *SysLoggingMutation) ResetErrorStack() {
+	m.error_stack = nil
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *SysLoggingMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *SysLoggingMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *SysLoggingMutation) ResetCreatedAt() {
+	m.created_at = nil
+}
+
+// Where appends a list predicates to the SysLoggingMutation builder.
+func (m *SysLoggingMutation) Where(ps ...predicate.SysLogging) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// Op returns the operation name.
+func (m *SysLoggingMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (SysLogging).
+func (m *SysLoggingMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *SysLoggingMutation) Fields() []string {
+	fields := make([]string, 0, 11)
+	if m.is_del != nil {
+		fields = append(fields, syslogging.FieldIsDel)
+	}
+	if m.memo != nil {
+		fields = append(fields, syslogging.FieldMemo)
+	}
+	if m.level != nil {
+		fields = append(fields, syslogging.FieldLevel)
+	}
+	if m.trace_id != nil {
+		fields = append(fields, syslogging.FieldTraceID)
+	}
+	if m.user_id != nil {
+		fields = append(fields, syslogging.FieldUserID)
+	}
+	if m.tag != nil {
+		fields = append(fields, syslogging.FieldTag)
+	}
+	if m.version != nil {
+		fields = append(fields, syslogging.FieldVersion)
+	}
+	if m.message != nil {
+		fields = append(fields, syslogging.FieldMessage)
+	}
+	if m.data != nil {
+		fields = append(fields, syslogging.FieldData)
+	}
+	if m.error_stack != nil {
+		fields = append(fields, syslogging.FieldErrorStack)
+	}
+	if m.created_at != nil {
+		fields = append(fields, syslogging.FieldCreatedAt)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *SysLoggingMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case syslogging.FieldIsDel:
+		return m.IsDel()
+	case syslogging.FieldMemo:
+		return m.Memo()
+	case syslogging.FieldLevel:
+		return m.Level()
+	case syslogging.FieldTraceID:
+		return m.TraceID()
+	case syslogging.FieldUserID:
+		return m.UserID()
+	case syslogging.FieldTag:
+		return m.Tag()
+	case syslogging.FieldVersion:
+		return m.Version()
+	case syslogging.FieldMessage:
+		return m.Message()
+	case syslogging.FieldData:
+		return m.Data()
+	case syslogging.FieldErrorStack:
+		return m.ErrorStack()
+	case syslogging.FieldCreatedAt:
+		return m.CreatedAt()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *SysLoggingMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case syslogging.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case syslogging.FieldMemo:
+		return m.OldMemo(ctx)
+	case syslogging.FieldLevel:
+		return m.OldLevel(ctx)
+	case syslogging.FieldTraceID:
+		return m.OldTraceID(ctx)
+	case syslogging.FieldUserID:
+		return m.OldUserID(ctx)
+	case syslogging.FieldTag:
+		return m.OldTag(ctx)
+	case syslogging.FieldVersion:
+		return m.OldVersion(ctx)
+	case syslogging.FieldMessage:
+		return m.OldMessage(ctx)
+	case syslogging.FieldData:
+		return m.OldData(ctx)
+	case syslogging.FieldErrorStack:
+		return m.OldErrorStack(ctx)
+	case syslogging.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	}
+	return nil, fmt.Errorf("unknown SysLogging field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *SysLoggingMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case syslogging.FieldIsDel:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case syslogging.FieldMemo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMemo(v)
+		return nil
+	case syslogging.FieldLevel:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLevel(v)
+		return nil
+	case syslogging.FieldTraceID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTraceID(v)
+		return nil
+	case syslogging.FieldUserID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUserID(v)
+		return nil
+	case syslogging.FieldTag:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTag(v)
+		return nil
+	case syslogging.FieldVersion:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersion(v)
+		return nil
+	case syslogging.FieldMessage:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMessage(v)
+		return nil
+	case syslogging.FieldData:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetData(v)
+		return nil
+	case syslogging.FieldErrorStack:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetErrorStack(v)
+		return nil
+	case syslogging.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	}
+	return fmt.Errorf("unknown SysLogging field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *SysLoggingMutation) AddedFields() []string {
+	return nil
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *SysLoggingMutation) AddedField(name string) (ent.Value, bool) {
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *SysLoggingMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	}
+	return fmt.Errorf("unknown SysLogging numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *SysLoggingMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(syslogging.FieldData) {
+		fields = append(fields, syslogging.FieldData)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *SysLoggingMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *SysLoggingMutation) ClearField(name string) error {
+	switch name {
+	case syslogging.FieldData:
+		m.ClearData()
+		return nil
+	}
+	return fmt.Errorf("unknown SysLogging nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *SysLoggingMutation) ResetField(name string) error {
+	switch name {
+	case syslogging.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case syslogging.FieldMemo:
+		m.ResetMemo()
+		return nil
+	case syslogging.FieldLevel:
+		m.ResetLevel()
+		return nil
+	case syslogging.FieldTraceID:
+		m.ResetTraceID()
+		return nil
+	case syslogging.FieldUserID:
+		m.ResetUserID()
+		return nil
+	case syslogging.FieldTag:
+		m.ResetTag()
+		return nil
+	case syslogging.FieldVersion:
+		m.ResetVersion()
+		return nil
+	case syslogging.FieldMessage:
+		m.ResetMessage()
+		return nil
+	case syslogging.FieldData:
+		m.ResetData()
+		return nil
+	case syslogging.FieldErrorStack:
+		m.ResetErrorStack()
+		return nil
+	case syslogging.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	}
+	return fmt.Errorf("unknown SysLogging field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *SysLoggingMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *SysLoggingMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *SysLoggingMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *SysLoggingMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *SysLoggingMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *SysLoggingMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *SysLoggingMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown SysLogging unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *SysLoggingMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown SysLogging edge %s", name)
 }
 
 // SysMenuMutation represents an operation that mutates the SysMenu nodes in the graph.

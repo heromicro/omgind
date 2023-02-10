@@ -15,6 +15,9 @@ type SysDictItem func(*sql.Selector)
 // SysJwtBlock is the predicate function for sysjwtblock builders.
 type SysJwtBlock func(*sql.Selector)
 
+// SysLogging is the predicate function for syslogging builders.
+type SysLogging func(*sql.Selector)
+
 // SysMenu is the predicate function for sysmenu builders.
 type SysMenu func(*sql.Selector)
 

@@ -78,8 +78,9 @@ func New(c *Config) *Hook {
 	sqlDB.SetMaxOpenConns(c.MaxOpenConns)
 	sqlDB.SetConnMaxLifetime(time.Duration(c.MaxLifetime) * time.Second)
 
-	db.AutoMigrate(new(LogItem))
-
+	if !db.Migrator().HasTable(new(LogItem)) {
+		db.AutoMigrate(new(LogItem))
+	}
 	return &Hook{
 		db: db,
 	}
@@ -158,19 +159,32 @@ func (h *Hook) Close() error {
 	return db.Close()
 }
 
+/*
+
+	field.String("level").MaxLen(32).Comment("日志级别"),
+	field.String("trace_id").MaxLen(128).Comment("跟踪ID"),
+	field.String("user_id").MaxLen(128).Comment("用户ID"),
+	field.String("tag").MaxLen(128).Comment("Tag"),
+
+	field.String("version").MaxLen(64).Comment("版本号"),
+	field.String("message").Comment("消息"),
+	field.Text("data").Immutable().Optional().Nillable().Comment("日志数据(json string)"),
+	field.Text("error_stack").Comment("日志数据(json string)"),
+
+*/
 // LogItem 存储日志项
 type LogItem struct {
 	// ID         uint      `gorm:"column:id;primary_key;auto_increment;"` // id
-	ID         string    `gorm:"column:id;primary_key;"`          // id
-	Level      string    `gorm:"column:level;size:20;index;"`     // 日志级别
-	TraceID    string    `gorm:"column:trace_id;size:128;index;"` // 跟踪ID
-	UserID     string    `gorm:"column:user_id;size:36;index;"`   // 用户ID
-	Tag        string    `gorm:"column:tag;size:128;index;"`      // Tag
-	Version    string    `gorm:"column:version;index;size:64;"`   // 版本号
-	Message    string    `gorm:"column:message;size:1024;"`       // 消息
-	Data       string    `gorm:"column:data;type:text;"`          // 日志数据(json)
-	ErrorStack string    `gorm:"column:error_stack;type:text;"`   // Error Stack
-	CreatedAt  time.Time `gorm:"column:crtd_at;index"`            // 创建时间
+	ID         string    `gorm:"column:id;primary_key;size:36;"`           // id
+	Level      string    `gorm:"column:level;size:20;index;size:32;"`      // 日志级别
+	TraceID    string    `gorm:"column:trace_id;size:128;index;size:128;"` // 跟踪ID
+	UserID     string    `gorm:"column:user_id;size:36;index;size:32;"`    // 用户ID
+	Tag        string    `gorm:"column:tag;size:128;index;type:text;"`     // Tag
+	Version    string    `gorm:"column:version;index;size:64;"`            // 版本号
+	Message    string    `gorm:"column:message;size:1024;"`                // 消息
+	Data       string    `gorm:"column:data;type:text;"`                   // 日志数据(json)
+	ErrorStack string    `gorm:"column:error_stack;type:text;"`            // Error Stack
+	CreatedAt  time.Time `gorm:"column:crtd_at;index"`                     // 创建时间
 }
 
 // TableName 表名
