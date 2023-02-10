@@ -30,7 +30,7 @@ func New(cli redis.Cmdable, cfg config.CaptchaConfig) *Vcode {
 
 	fmt.Printf(" === captach config %+v \n", cfg)
 
-	driver := base64Captcha.NewDriverString(cfg.Height, cfg.Width, cfg.NoiseCount, cfg.ShowLineOptions, cfg.Length, cfg.Source, cfg.BgColor, cfg.Fonts)
+	driver := base64Captcha.NewDriverString(cfg.Height, cfg.Width, cfg.NoiseCount, cfg.ShowLineOptions, cfg.Length, cfg.Source, cfg.BgColor, nil, cfg.Fonts)
 
 	if cfg.Store == "redis" {
 		storer := store.NewRedisStore(cli, time.Minute*time.Duration(cfg.Duration), cfg.RedisPrefix)
@@ -57,11 +57,11 @@ func New(cli redis.Cmdable, cfg config.CaptchaConfig) *Vcode {
 	}
 }
 
-func (vc *Vcode) NewLen(length int) (id string) {
-	id = uuid.MustString()
+func (vc *Vcode) NewLen(length int) (string, error) {
+	id := uuid.MustString()
 	val := str.RandCustom(length, vc.source)
-	vc.store.Set(id, val)
-	return
+	err := vc.store.Set(id, val)
+	return id, err
 }
 
 func (vc *Vcode) Reload(id string) bool {

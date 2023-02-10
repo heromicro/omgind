@@ -32,11 +32,11 @@ type SignIn struct {
 // GetCaptcha 获取图形验证码信息
 func (a *SignIn) GetCaptcha(ctx context.Context, length int) (*schema.SignInCaptcha, error) {
 
-	captchaID := a.Vcode.NewLen(length)
+	captchaID, err := a.Vcode.NewLen(length)
 	item := &schema.SignInCaptcha{
 		CaptchaID: captchaID,
 	}
-	return item, nil
+	return item, err
 }
 
 // ResCaptcha 生成并响应图形验证码

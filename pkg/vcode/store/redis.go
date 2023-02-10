@@ -41,8 +41,9 @@ func NewRedisStore(cli redis.Cmdable, expiration time.Duration,
 	return store
 }
 
-func (rs *RedisStore) Set(id string, value string) {
-	rs.cli.Set(rs.prefix+":"+id, value, rs.expiration)
+func (rs *RedisStore) Set(id string, value string) error {
+	_, err := rs.cli.Set(rs.prefix+":"+id, value, rs.expiration).Result()
+	return err
 }
 
 func (rs *RedisStore) Get(id string, clear bool) string {

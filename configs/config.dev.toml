@@ -155,7 +155,7 @@
     Source = "23456789qwertyuiopasdfghjkzxcvbnmQWERTYUPASDFGHJKLZXCVBNM"
     
     # 字体
-    Fonts = ["wqy-microhei.ttc", "3Dumb.ttf", "ApothecaryFont.ttf", "Comismsh.ttf", "DENNEthree-dee.ttf", "DeborahFancyDress.ttf", "Flim-Flam.ttf", "RitaSmith.ttf", "actionj.ttf",]
+    Fonts = ["3Dumb.ttf", "ApothecaryFont.ttf", "Comismsh.ttf", "DENNEthree-dee.ttf", "DeborahFancyDress.ttf", "Flim-Flam.ttf", "RitaSmith.ttf", "actionj.ttf", "chromohv.ttf" ]
 
     Duration = 10
 
