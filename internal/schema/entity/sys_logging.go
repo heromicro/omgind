@@ -33,6 +33,7 @@ func (SysLogging) Fields() []ent.Field {
 		field.String("level").MaxLen(32).Comment("日志级别"),
 		field.String("trace_id").MaxLen(128).Comment("跟踪ID"),
 		field.String("user_id").MaxLen(128).Comment("用户ID"),
+		// field.JSON("tag", []string{}).Comment("Tag"),
 		field.String("tag").MaxLen(128).Comment("Tag"),
 
 		field.String("version").MaxLen(64).Comment("版本号"),
