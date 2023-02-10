@@ -33,7 +33,7 @@ var VERSION = "7.0.0"
 // @schemes http https
 // @basePath /
 // @contact.name heromicro
-// @contact.email wankeye@foxmail.com
+// @contact.email wky@foal.com
 func main() {
 	logger.SetVersion(VERSION)
 	ctx := logger.NewTagContext(context.Background(), "__main__")

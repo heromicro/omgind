@@ -21,7 +21,7 @@ type Menu struct{}
 // @Param status query int false "状态(1:启用 2:禁用)"
 // @Param isShow query bool false "显示状态(true:显示 false:隐藏)"
 // @Param parentID query string false "父级ID"
-// @Success 200 {object} schema.ListResult{list=[]schema.Menu} "查询结果"
+// @Success 200 {object} schema.ListResult{list=schema.Menus,pagination=schema.PaginationResult}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/v2/menus [get]

@@ -11,7 +11,7 @@ type Demo struct {
 	Status int    `json:"status" binding:"required,max=2,min=1"` // 状态(1:启用 2:停用)
 	Sort   int    `json:"sort,omitempty"`
 
-	Creator   string    `json:"creator" `    // 创建者
+	Creator   string     `json:"creator" `    // 创建者
 	CreatedAt *time.Time `json:"created_at" ` // 创建时间
 	UpdatedAt *time.Time `json:"updated_at" ` // 更新时间
 }
@@ -30,7 +30,7 @@ type DemoQueryOptions struct {
 
 // DemoQueryResult 示例对象查询结果
 type DemoQueryResult struct {
-	Data       []*Demo
+	Data       Demos
 	PageResult *PaginationResult
 }
 
