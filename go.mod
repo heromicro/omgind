@@ -20,17 +20,17 @@ require (
 	github.com/google/wire v0.5.0
 	github.com/gookit/config/v2 v2.1.8
 	github.com/gotidy/ptr v1.4.0
-	github.com/influxdata/influxdb-client-go/v2 v2.3.0
+	github.com/influxdata/influxdb-client-go/v2 v2.12.2
 	github.com/jackc/pgx/v5 v5.2.0
 	github.com/jinzhu/copier v0.3.5
 	github.com/json-iterator/go v1.1.12
 	github.com/koding/multiconfig v0.0.0-20171124222453-69c27309b2d7
 	github.com/meehow/go-django-hashers v0.0.0-20171231135116-5e5d6afe52db
-	github.com/mojocn/base64Captcha v1.3.4
+	github.com/mojocn/base64Captcha v1.3.5
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/pkg/errors v0.9.1
 	github.com/psampaz/slice v0.2.0
-	github.com/rabbitmq/amqp091-go v1.6.1
+	github.com/rabbitmq/amqp091-go v1.7.0
 	github.com/rs/zerolog v1.29.0
 	github.com/simukti/sqldb-logger v0.0.0-20230108155151-646c1a075551
 	github.com/simukti/sqldb-logger/logadapter/zerologadapter v0.0.0-20201125162808-c35f87e285f2
@@ -43,9 +43,9 @@ require (
 	github.com/urfave/cli/v2 v2.24.3
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/mysql v1.4.6
-	gorm.io/driver/postgres v1.4.6
+	gorm.io/driver/postgres v1.4.7
 	gorm.io/driver/sqlite v1.4.4
-	gorm.io/gorm v1.24.2
+	gorm.io/gorm v1.24.5
 )
 
 require (

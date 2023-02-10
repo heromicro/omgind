@@ -98,10 +98,11 @@ func BuildInjector() (*Injector, func(), error) {
 		MenuSrv: serviceMenu,
 	}
 	serviceRole := &service.Role{
-		Enforcer:     syncedEnforcer,
-		RoleRepo:     role,
-		RoleMenuRepo: roleMenu,
-		UserRepo:     user,
+		Enforcer:               syncedEnforcer,
+		RoleRepo:               role,
+		RoleMenuRepo:           roleMenu,
+		UserRepo:               user,
+		MenuActionResourceRepo: menuActionResource,
 	}
 	api_v2Role := &api_v2.Role{
 		RoleSrv: serviceRole,

@@ -21,9 +21,10 @@ var RoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 type Role struct {
 	Enforcer *casbin.SyncedEnforcer
 
-	RoleRepo     *repo.Role
-	RoleMenuRepo *repo.RoleMenu
-	UserRepo     *repo.User
+	RoleRepo               *repo.Role
+	RoleMenuRepo           *repo.RoleMenu
+	UserRepo               *repo.User
+	MenuActionResourceRepo *repo.MenuActionResource
 }
 
 // Query 查询数据
@@ -124,6 +125,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 	item.Creator = oldItem.Creator
 
 	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *ent.Tx) error {
+
 		addRoleMenus, delRoleMenus := a.compareRoleMenus(ctx, oldItem.RoleMenus, item.RoleMenus)
 		for _, rmitem := range addRoleMenus {
 			rmitem.RoleID = id
@@ -136,7 +138,6 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 		}
 
 		for _, rmitem := range delRoleMenus {
-
 			_, err := tx.SysRoleMenu.UpdateOneID(rmitem.ID).SetDeletedAt(time.Now()).Save(ctx)
 
 			if err != nil {
@@ -149,6 +150,12 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 		if err != nil {
 			return err
 		}
+
+		// a.Enforcer.DeletePermissionsForUser(item.ID)
+		// for _, ritem := range resources.Data.ToMap() {
+		// 	a.Enforcer.AddPermissionForUser(item.ID, ritem.Path, ritem.Method)
+		// }
+
 		return nil
 	})
 
@@ -177,6 +184,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 	if err != nil {
 		return err
 	}
+
 	LoadCasbinPolicy(ctx, a.Enforcer)
 	return nil
 }
