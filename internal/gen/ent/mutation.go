@@ -3415,6 +3415,9 @@ type SysMenuMutation struct {
 	is_show       *bool
 	parent_id     *string
 	parent_path   *string
+	level         *int32
+	addlevel      *int32
+	is_leaf       *bool
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*SysMenu, error)
@@ -4072,6 +4075,111 @@ func (m *SysMenuMutation) ResetParentPath() {
 	delete(m.clearedFields, sysmenu.FieldParentPath)
 }
 
+// SetLevel sets the "level" field.
+func (m *SysMenuMutation) SetLevel(i int32) {
+	m.level = &i
+	m.addlevel = nil
+}
+
+// Level returns the value of the "level" field in the mutation.
+func (m *SysMenuMutation) Level() (r int32, exists bool) {
+	v := m.level
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLevel returns the old "level" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldLevel(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLevel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLevel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLevel: %w", err)
+	}
+	return oldValue.Level, nil
+}
+
+// AddLevel adds i to the "level" field.
+func (m *SysMenuMutation) AddLevel(i int32) {
+	if m.addlevel != nil {
+		*m.addlevel += i
+	} else {
+		m.addlevel = &i
+	}
+}
+
+// AddedLevel returns the value that was added to the "level" field in this mutation.
+func (m *SysMenuMutation) AddedLevel() (r int32, exists bool) {
+	v := m.addlevel
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetLevel resets all changes to the "level" field.
+func (m *SysMenuMutation) ResetLevel() {
+	m.level = nil
+	m.addlevel = nil
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (m *SysMenuMutation) SetIsLeaf(b bool) {
+	m.is_leaf = &b
+}
+
+// IsLeaf returns the value of the "is_leaf" field in the mutation.
+func (m *SysMenuMutation) IsLeaf() (r bool, exists bool) {
+	v := m.is_leaf
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsLeaf returns the old "is_leaf" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldIsLeaf(ctx context.Context) (v *bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsLeaf is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsLeaf requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsLeaf: %w", err)
+	}
+	return oldValue.IsLeaf, nil
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (m *SysMenuMutation) ClearIsLeaf() {
+	m.is_leaf = nil
+	m.clearedFields[sysmenu.FieldIsLeaf] = struct{}{}
+}
+
+// IsLeafCleared returns if the "is_leaf" field was cleared in this mutation.
+func (m *SysMenuMutation) IsLeafCleared() bool {
+	_, ok := m.clearedFields[sysmenu.FieldIsLeaf]
+	return ok
+}
+
+// ResetIsLeaf resets all changes to the "is_leaf" field.
+func (m *SysMenuMutation) ResetIsLeaf() {
+	m.is_leaf = nil
+	delete(m.clearedFields, sysmenu.FieldIsLeaf)
+}
+
 // Where appends a list predicates to the SysMenuMutation builder.
 func (m *SysMenuMutation) Where(ps ...predicate.SysMenu) {
 	m.predicates = append(m.predicates, ps...)
@@ -4091,7 +4199,7 @@ func (m *SysMenuMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysMenuMutation) Fields() []string {
-	fields := make([]string, 0, 13)
+	fields := make([]string, 0, 15)
 	if m.is_del != nil {
 		fields = append(fields, sysmenu.FieldIsDel)
 	}
@@ -4131,6 +4239,12 @@ func (m *SysMenuMutation) Fields() []string {
 	if m.parent_path != nil {
 		fields = append(fields, sysmenu.FieldParentPath)
 	}
+	if m.level != nil {
+		fields = append(fields, sysmenu.FieldLevel)
+	}
+	if m.is_leaf != nil {
+		fields = append(fields, sysmenu.FieldIsLeaf)
+	}
 	return fields
 }
 
@@ -4165,6 +4279,10 @@ func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 		return m.ParentID()
 	case sysmenu.FieldParentPath:
 		return m.ParentPath()
+	case sysmenu.FieldLevel:
+		return m.Level()
+	case sysmenu.FieldIsLeaf:
+		return m.IsLeaf()
 	}
 	return nil, false
 }
@@ -4200,6 +4318,10 @@ func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldParentID(ctx)
 	case sysmenu.FieldParentPath:
 		return m.OldParentPath(ctx)
+	case sysmenu.FieldLevel:
+		return m.OldLevel(ctx)
+	case sysmenu.FieldIsLeaf:
+		return m.OldIsLeaf(ctx)
 	}
 	return nil, fmt.Errorf("unknown SysMenu field %s", name)
 }
@@ -4300,6 +4422,20 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetParentPath(v)
 		return nil
+	case sysmenu.FieldLevel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLevel(v)
+		return nil
+	case sysmenu.FieldIsLeaf:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsLeaf(v)
+		return nil
 	}
 	return fmt.Errorf("unknown SysMenu field %s", name)
 }
@@ -4314,6 +4450,9 @@ func (m *SysMenuMutation) AddedFields() []string {
 	if m.addstatus != nil {
 		fields = append(fields, sysmenu.FieldStatus)
 	}
+	if m.addlevel != nil {
+		fields = append(fields, sysmenu.FieldLevel)
+	}
 	return fields
 }
 
@@ -4326,6 +4465,8 @@ func (m *SysMenuMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedSort()
 	case sysmenu.FieldStatus:
 		return m.AddedStatus()
+	case sysmenu.FieldLevel:
+		return m.AddedLevel()
 	}
 	return nil, false
 }
@@ -4349,6 +4490,13 @@ func (m *SysMenuMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddStatus(v)
 		return nil
+	case sysmenu.FieldLevel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLevel(v)
+		return nil
 	}
 	return fmt.Errorf("unknown SysMenu numeric field %s", name)
 }
@@ -4365,6 +4513,9 @@ func (m *SysMenuMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(sysmenu.FieldParentPath) {
 		fields = append(fields, sysmenu.FieldParentPath)
+	}
+	if m.FieldCleared(sysmenu.FieldIsLeaf) {
+		fields = append(fields, sysmenu.FieldIsLeaf)
 	}
 	return fields
 }
@@ -4388,6 +4539,9 @@ func (m *SysMenuMutation) ClearField(name string) error {
 		return nil
 	case sysmenu.FieldParentPath:
 		m.ClearParentPath()
+		return nil
+	case sysmenu.FieldIsLeaf:
+		m.ClearIsLeaf()
 		return nil
 	}
 	return fmt.Errorf("unknown SysMenu nullable field %s", name)
@@ -4435,6 +4589,12 @@ func (m *SysMenuMutation) ResetField(name string) error {
 		return nil
 	case sysmenu.FieldParentPath:
 		m.ResetParentPath()
+		return nil
+	case sysmenu.FieldLevel:
+		m.ResetLevel()
+		return nil
+	case sysmenu.FieldIsLeaf:
+		m.ResetIsLeaf()
 		return nil
 	}
 	return fmt.Errorf("unknown SysMenu field %s", name)

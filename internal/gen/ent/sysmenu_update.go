@@ -196,6 +196,39 @@ func (smu *SysMenuUpdate) ClearParentPath() *SysMenuUpdate {
 	return smu
 }
 
+// SetLevel sets the "level" field.
+func (smu *SysMenuUpdate) SetLevel(i int32) *SysMenuUpdate {
+	smu.mutation.ResetLevel()
+	smu.mutation.SetLevel(i)
+	return smu
+}
+
+// AddLevel adds i to the "level" field.
+func (smu *SysMenuUpdate) AddLevel(i int32) *SysMenuUpdate {
+	smu.mutation.AddLevel(i)
+	return smu
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (smu *SysMenuUpdate) SetIsLeaf(b bool) *SysMenuUpdate {
+	smu.mutation.SetIsLeaf(b)
+	return smu
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableIsLeaf(b *bool) *SysMenuUpdate {
+	if b != nil {
+		smu.SetIsLeaf(*b)
+	}
+	return smu
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (smu *SysMenuUpdate) ClearIsLeaf() *SysMenuUpdate {
+	smu.mutation.ClearIsLeaf()
+	return smu
+}
+
 // Mutation returns the SysMenuMutation object of the builder.
 func (smu *SysMenuUpdate) Mutation() *SysMenuMutation {
 	return smu.mutation
@@ -300,6 +333,11 @@ func (smu *SysMenuUpdate) check() error {
 	if v, ok := smu.mutation.ParentPath(); ok {
 		if err := sysmenu.ParentPathValidator(v); err != nil {
 			return &ValidationError{Name: "parent_path", err: fmt.Errorf(`ent: validator failed for field "SysMenu.parent_path": %w`, err)}
+		}
+	}
+	if v, ok := smu.mutation.Level(); ok {
+		if err := sysmenu.LevelValidator(v); err != nil {
+			return &ValidationError{Name: "level", err: fmt.Errorf(`ent: validator failed for field "SysMenu.level": %w`, err)}
 		}
 	}
 	return nil
@@ -437,6 +475,33 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysmenu.FieldParentPath,
+		})
+	}
+	if value, ok := smu.mutation.Level(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: sysmenu.FieldLevel,
+		})
+	}
+	if value, ok := smu.mutation.AddedLevel(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: sysmenu.FieldLevel,
+		})
+	}
+	if value, ok := smu.mutation.IsLeaf(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldIsLeaf,
+		})
+	}
+	if smu.mutation.IsLeafCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Column: sysmenu.FieldIsLeaf,
 		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, smu.driver, _spec); err != nil {
@@ -626,6 +691,39 @@ func (smuo *SysMenuUpdateOne) ClearParentPath() *SysMenuUpdateOne {
 	return smuo
 }
 
+// SetLevel sets the "level" field.
+func (smuo *SysMenuUpdateOne) SetLevel(i int32) *SysMenuUpdateOne {
+	smuo.mutation.ResetLevel()
+	smuo.mutation.SetLevel(i)
+	return smuo
+}
+
+// AddLevel adds i to the "level" field.
+func (smuo *SysMenuUpdateOne) AddLevel(i int32) *SysMenuUpdateOne {
+	smuo.mutation.AddLevel(i)
+	return smuo
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (smuo *SysMenuUpdateOne) SetIsLeaf(b bool) *SysMenuUpdateOne {
+	smuo.mutation.SetIsLeaf(b)
+	return smuo
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableIsLeaf(b *bool) *SysMenuUpdateOne {
+	if b != nil {
+		smuo.SetIsLeaf(*b)
+	}
+	return smuo
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (smuo *SysMenuUpdateOne) ClearIsLeaf() *SysMenuUpdateOne {
+	smuo.mutation.ClearIsLeaf()
+	return smuo
+}
+
 // Mutation returns the SysMenuMutation object of the builder.
 func (smuo *SysMenuUpdateOne) Mutation() *SysMenuMutation {
 	return smuo.mutation
@@ -743,6 +841,11 @@ func (smuo *SysMenuUpdateOne) check() error {
 	if v, ok := smuo.mutation.ParentPath(); ok {
 		if err := sysmenu.ParentPathValidator(v); err != nil {
 			return &ValidationError{Name: "parent_path", err: fmt.Errorf(`ent: validator failed for field "SysMenu.parent_path": %w`, err)}
+		}
+	}
+	if v, ok := smuo.mutation.Level(); ok {
+		if err := sysmenu.LevelValidator(v); err != nil {
+			return &ValidationError{Name: "level", err: fmt.Errorf(`ent: validator failed for field "SysMenu.level": %w`, err)}
 		}
 	}
 	return nil
@@ -897,6 +1000,33 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: sysmenu.FieldParentPath,
+		})
+	}
+	if value, ok := smuo.mutation.Level(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: sysmenu.FieldLevel,
+		})
+	}
+	if value, ok := smuo.mutation.AddedLevel(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: sysmenu.FieldLevel,
+		})
+	}
+	if value, ok := smuo.mutation.IsLeaf(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldIsLeaf,
+		})
+	}
+	if smuo.mutation.IsLeafCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Column: sysmenu.FieldIsLeaf,
 		})
 	}
 	_node = &SysMenu{config: smuo.config}

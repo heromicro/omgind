@@ -42,6 +42,10 @@ type SysMenu struct {
 	ParentID *string `json:"parent_id,omitempty"`
 	// 父级路径: 1/2/3
 	ParentPath *string `json:"parent_path,omitempty"`
+	// 层级
+	Level int32 `json:"level"`
+	// 是否是子叶
+	IsLeaf *bool `json:"is_leaf"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -49,9 +53,9 @@ func (*SysMenu) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysmenu.FieldIsDel, sysmenu.FieldIsShow:
+		case sysmenu.FieldIsDel, sysmenu.FieldIsShow, sysmenu.FieldIsLeaf:
 			values[i] = new(sql.NullBool)
-		case sysmenu.FieldSort, sysmenu.FieldStatus:
+		case sysmenu.FieldSort, sysmenu.FieldStatus, sysmenu.FieldLevel:
 			values[i] = new(sql.NullInt64)
 		case sysmenu.FieldID, sysmenu.FieldMemo, sysmenu.FieldName, sysmenu.FieldIcon, sysmenu.FieldRouter, sysmenu.FieldParentID, sysmenu.FieldParentPath:
 			values[i] = new(sql.NullString)
@@ -159,6 +163,19 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 				sm.ParentPath = new(string)
 				*sm.ParentPath = value.String
 			}
+		case sysmenu.FieldLevel:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field level", values[i])
+			} else if value.Valid {
+				sm.Level = int32(value.Int64)
+			}
+		case sysmenu.FieldIsLeaf:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_leaf", values[i])
+			} else if value.Valid {
+				sm.IsLeaf = new(bool)
+				*sm.IsLeaf = value.Bool
+			}
 		}
 	}
 	return nil
@@ -230,6 +247,14 @@ func (sm *SysMenu) String() string {
 	if v := sm.ParentPath; v != nil {
 		builder.WriteString("parent_path=")
 		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	builder.WriteString("level=")
+	builder.WriteString(fmt.Sprintf("%v", sm.Level))
+	builder.WriteString(", ")
+	if v := sm.IsLeaf; v != nil {
+		builder.WriteString("is_leaf=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')
 	return builder.String()

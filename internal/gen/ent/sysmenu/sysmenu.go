@@ -37,6 +37,10 @@ const (
 	FieldParentID = "pid"
 	// FieldParentPath holds the string denoting the parent_path field in the database.
 	FieldParentPath = "ppath"
+	// FieldLevel holds the string denoting the level field in the database.
+	FieldLevel = "level"
+	// FieldIsLeaf holds the string denoting the is_leaf field in the database.
+	FieldIsLeaf = "is_leaf"
 	// Table holds the table name of the sysmenu in the database.
 	Table = "sys_menus"
 )
@@ -57,6 +61,8 @@ var Columns = []string{
 	FieldIsShow,
 	FieldParentID,
 	FieldParentPath,
+	FieldLevel,
+	FieldIsLeaf,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -98,6 +104,10 @@ var (
 	ParentIDValidator func(string) error
 	// ParentPathValidator is a validator for the "parent_path" field. It is called by the builders before save.
 	ParentPathValidator func(string) error
+	// LevelValidator is a validator for the "level" field. It is called by the builders before save.
+	LevelValidator func(int32) error
+	// DefaultIsLeaf holds the default value on creation for the "is_leaf" field.
+	DefaultIsLeaf bool
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

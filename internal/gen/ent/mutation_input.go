@@ -417,6 +417,8 @@ type CreateSysMenuInput struct {
 	IsShow     *bool
 	ParentID   *string
 	ParentPath *string
+	Level      int32
+	IsLeaf     *bool
 }
 
 // Mutate applies the CreateSysMenuInput on the SysMenuCreate builder.
@@ -454,6 +456,10 @@ func (i *CreateSysMenuInput) Mutate(m *SysMenuCreate) {
 	if v := i.ParentPath; v != nil {
 		m.SetParentPath(*v)
 	}
+	m.SetLevel(i.Level)
+	if v := i.IsLeaf; v != nil {
+		m.SetIsLeaf(*v)
+	}
 }
 
 // SetInput applies the change-set in the CreateSysMenuInput on the create builder.
@@ -479,6 +485,9 @@ type UpdateSysMenuInput struct {
 	ClearParentID   bool
 	ParentPath      *string
 	ClearParentPath bool
+	Level           *int32
+	IsLeaf          *bool
+	ClearIsLeaf     bool
 }
 
 // Mutate applies the UpdateSysMenuInput on the SysMenuMutation.
@@ -527,6 +536,15 @@ func (i *UpdateSysMenuInput) Mutate(m *SysMenuMutation) {
 	}
 	if v := i.ParentPath; v != nil {
 		m.SetParentPath(*v)
+	}
+	if v := i.Level; v != nil {
+		m.SetLevel(*v)
+	}
+	if i.ClearIsLeaf {
+		m.ClearIsLeaf()
+	}
+	if v := i.IsLeaf; v != nil {
+		m.SetIsLeaf(*v)
 	}
 }
 

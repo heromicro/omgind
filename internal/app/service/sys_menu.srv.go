@@ -8,6 +8,7 @@ import (
 	"github.com/google/wire"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/errors"
@@ -225,11 +226,11 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, 
 		return nil, err
 	}
 
-	parentPath, err := a.getParentPath(ctx, item.ParentID)
+	pitem, err := a.getParent(ctx, item.ParentID)
 	if err != nil {
 		return nil, err
 	}
-	item.ParentPath = parentPath
+	item.ParentPath = a.getParentPathNet(pitem, item.ParentID)
 
 	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
 
@@ -239,6 +240,10 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, 
 			return err
 		}
 		item.ID = amenu.ID
+		if pitem != nil {
+			tx.SysMenu.Update().SetIsLeaf(false).Where(sysmenu.IDEQ(pitem.ID)).Save(ctx)
+		}
+
 		// 保存actions
 		err = a.createActionsTx(ctx, tx, amenu.ID, item.Actions)
 		if err != nil {
@@ -282,13 +287,39 @@ func (a *Menu) createActionsTx(ctx context.Context, tx *ent.Tx, menuID string, i
 	return nil
 }
 
+// 获取父级
+func (a *Menu) getParent(ctx context.Context, parentID string) (*schema.Menu, error) {
+	if parentID == "" {
+		return nil, nil
+	}
+
+	pitem, err := a.MenuRepo.Get(ctx, parentID)
+	if err != nil {
+		return nil, err
+	} else if pitem == nil {
+		return nil, errors.ErrInvalidParent
+	}
+
+	return pitem, nil
+}
+
+func (a *Menu) getParentPathNet(pitem *schema.Menu, parentID string) string {
+	if parentID == "" {
+		return ""
+	}
+	if pitem == nil {
+		return ""
+	}
+	return a.joinParentPath(pitem.ParentPath, pitem.ID)
+}
+
 // 获取父级路径
 func (a *Menu) getParentPath(ctx context.Context, parentID string) (string, error) {
 	if parentID == "" {
 		return "", nil
 	}
 
-	pitem, err := a.MenuRepo.Get(ctx, parentID)
+	pitem, err := a.getParent(ctx, parentID)
 	if err != nil {
 		return "", err
 	} else if pitem == nil {
@@ -326,21 +357,34 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) error {
 	item.Creator = oldItem.Creator
 	item.CreatedAt = oldItem.CreatedAt
 
+	pitem, err := a.getParent(ctx, item.ParentID)
+
 	if oldItem.ParentID != item.ParentID {
-		parentPath, err := a.getParentPath(ctx, item.ParentID)
+		// parentPath, err := a.getParentPath(ctx, item.ParentID)
 		if err != nil {
 			return err
 		}
-		item.ParentPath = parentPath
+		item.ParentPath = a.getParentPathNet(pitem, item.ParentID)
+		item.Level = 1
+		if pitem == nil {
+			item.Level = pitem.Level + 1
+		}
 	} else {
 		item.ParentPath = oldItem.ParentPath
+		item.Level = oldItem.Level
 	}
+	item.IsLeaf = oldItem.IsLeaf
+
 	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
 
 		menuinput := a.MenuRepo.ToEntUpdateSysMenuInput(&item)
 		_, err = tx.SysMenu.UpdateOneID(id).SetInput(*menuinput).Save(ctx)
 		if err != nil {
 			return err
+		}
+
+		if pitem != nil {
+			tx.SysMenu.UpdateOneID(pitem.ID).SetIsLeaf(false).Save(ctx)
 		}
 
 		err := a.updateActions(ctx, tx, id, oldItem.Actions, item.Actions)

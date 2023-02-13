@@ -240,6 +240,8 @@ var (
 		{Name: "is_show", Type: field.TypeBool, Default: true},
 		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "ppath", Type: field.TypeString, Nullable: true, Size: 160},
+		{Name: "level", Type: field.TypeInt32},
+		{Name: "is_leaf", Type: field.TypeBool, Nullable: true, Default: true},
 	}
 	// SysMenusTable holds the schema information for the "sys_menus" table.
 	SysMenusTable = &schema.Table{

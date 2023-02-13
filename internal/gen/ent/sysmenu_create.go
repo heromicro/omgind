@@ -178,6 +178,26 @@ func (smc *SysMenuCreate) SetNillableParentPath(s *string) *SysMenuCreate {
 	return smc
 }
 
+// SetLevel sets the "level" field.
+func (smc *SysMenuCreate) SetLevel(i int32) *SysMenuCreate {
+	smc.mutation.SetLevel(i)
+	return smc
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (smc *SysMenuCreate) SetIsLeaf(b bool) *SysMenuCreate {
+	smc.mutation.SetIsLeaf(b)
+	return smc
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableIsLeaf(b *bool) *SysMenuCreate {
+	if b != nil {
+		smc.SetIsLeaf(*b)
+	}
+	return smc
+}
+
 // SetID sets the "id" field.
 func (smc *SysMenuCreate) SetID(s string) *SysMenuCreate {
 	smc.mutation.SetID(s)
@@ -297,6 +317,10 @@ func (smc *SysMenuCreate) defaults() {
 		v := sysmenu.DefaultIsShow
 		smc.mutation.SetIsShow(v)
 	}
+	if _, ok := smc.mutation.IsLeaf(); !ok {
+		v := sysmenu.DefaultIsLeaf
+		smc.mutation.SetIsLeaf(v)
+	}
 	if _, ok := smc.mutation.ID(); !ok {
 		v := sysmenu.DefaultID()
 		smc.mutation.SetID(v)
@@ -363,6 +387,14 @@ func (smc *SysMenuCreate) check() error {
 	if v, ok := smc.mutation.ParentPath(); ok {
 		if err := sysmenu.ParentPathValidator(v); err != nil {
 			return &ValidationError{Name: "parent_path", err: fmt.Errorf(`ent: validator failed for field "SysMenu.parent_path": %w`, err)}
+		}
+	}
+	if _, ok := smc.mutation.Level(); !ok {
+		return &ValidationError{Name: "level", err: errors.New(`ent: missing required field "SysMenu.level"`)}
+	}
+	if v, ok := smc.mutation.Level(); ok {
+		if err := sysmenu.LevelValidator(v); err != nil {
+			return &ValidationError{Name: "level", err: fmt.Errorf(`ent: validator failed for field "SysMenu.level": %w`, err)}
 		}
 	}
 	if v, ok := smc.mutation.ID(); ok {
@@ -509,6 +541,22 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 			Column: sysmenu.FieldParentPath,
 		})
 		_node.ParentPath = &value
+	}
+	if value, ok := smc.mutation.Level(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt32,
+			Value:  value,
+			Column: sysmenu.FieldLevel,
+		})
+		_node.Level = value
+	}
+	if value, ok := smc.mutation.IsLeaf(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysmenu.FieldIsLeaf,
+		})
+		_node.IsLeaf = &value
 	}
 	return _node, _spec
 }

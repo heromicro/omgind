@@ -373,6 +373,14 @@ func init() {
 	sysmenuDescParentPath := sysmenuFields[5].Descriptor()
 	// sysmenu.ParentPathValidator is a validator for the "parent_path" field. It is called by the builders before save.
 	sysmenu.ParentPathValidator = sysmenuDescParentPath.Validators[0].(func(string) error)
+	// sysmenuDescLevel is the schema descriptor for level field.
+	sysmenuDescLevel := sysmenuFields[6].Descriptor()
+	// sysmenu.LevelValidator is a validator for the "level" field. It is called by the builders before save.
+	sysmenu.LevelValidator = sysmenuDescLevel.Validators[0].(func(int32) error)
+	// sysmenuDescIsLeaf is the schema descriptor for is_leaf field.
+	sysmenuDescIsLeaf := sysmenuFields[7].Descriptor()
+	// sysmenu.DefaultIsLeaf holds the default value on creation for the is_leaf field.
+	sysmenu.DefaultIsLeaf = sysmenuDescIsLeaf.Default.(bool)
 	// sysmenuDescID is the schema descriptor for id field.
 	sysmenuDescID := sysmenuMixinFields0[0].Descriptor()
 	// sysmenu.DefaultID holds the default value on creation for the id field.
