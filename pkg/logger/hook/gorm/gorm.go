@@ -161,7 +161,6 @@ func (h *Hook) Close() error {
 
 // LogItem 存储日志项
 type LogItem struct {
-	// ID         uint      `gorm:"column:id;primary_key;auto_increment;"` // id
 	ID         string    `gorm:"column:id;primary_key;size:36;"`       // id
 	Level      string    `gorm:"column:level;index;size:32;"`          // 日志级别
 	TraceID    string    `gorm:"column:trace_id;index;size:128;"`      // 跟踪ID
