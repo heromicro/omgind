@@ -18,7 +18,7 @@ func (su SysUser) Mixin() []ent.Mixin {
 		mixin.IDMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
-		mixin.StatusMixin{},
+		mixin.ActiveMixin{},
 	}
 }
 

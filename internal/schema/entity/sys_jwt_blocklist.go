@@ -15,7 +15,7 @@ func (sjb SysJwtBlock) Mixin() []ent.Mixin {
 		mixin.IDMixin{},
 		mixin.MemoMixin{},
 		mixin.TimeMixin{},
-		mixin.StatusMixin{},
+		mixin.ActiveMixin{},
 	}
 }
 

@@ -16,6 +16,7 @@ func (xd XxxDemo) Mixin() []ent.Mixin {
 		mixin.MemoMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
+		mixin.ActiveMixin{},
 	}
 }
 

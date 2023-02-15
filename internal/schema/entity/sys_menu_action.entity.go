@@ -15,7 +15,7 @@ func (ma SysMenuAction) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
 		mixin.SortMixin{},
-		mixin.StatusMixin{},
+		mixin.ActiveMixin{},
 		mixin.MemoMixin{},
 		mixin.TimeMixin{},
 	}

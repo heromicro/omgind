@@ -14,7 +14,7 @@ type SysRole struct {
 func (sr SysRole) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
-		mixin.StatusMixin{},
+		mixin.ActiveMixin{},
 		mixin.SortMixin{},
 		mixin.MemoMixin{},
 		mixin.TimeMixin{},

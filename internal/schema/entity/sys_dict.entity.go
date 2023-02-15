@@ -16,8 +16,7 @@ func (sd SysDict) Mixin() []ent.Mixin {
 		mixin.MemoMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
-		mixin.StatusMixin{},
-	}
+		mixin.ActiveMixin{}}
 }
 
 func (sd SysDict) Fields() []ent.Field {

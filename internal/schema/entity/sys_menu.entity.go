@@ -18,7 +18,7 @@ func (sm SysMenu) Mixin() []ent.Mixin {
 		mixin.MemoMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
-		mixin.StatusMixin{},
+		mixin.ActiveMixin{},
 	}
 }
 

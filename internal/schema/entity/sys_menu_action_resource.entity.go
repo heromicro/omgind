@@ -17,7 +17,7 @@ func (smar SysMenuActionResource) Mixin() []ent.Mixin {
 		mixin.SortMixin{},
 		mixin.MemoMixin{},
 		mixin.TimeMixin{},
-		mixin.StatusMixin{},
+		mixin.ActiveMixin{},
 	}
 }
 
