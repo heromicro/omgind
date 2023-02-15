@@ -143,7 +143,7 @@ func (a *Demo) Update(ctx context.Context, id string, item schema.Demo) (*schema
 
 	iteminput := a.toEntUpdateDemoInput(&item)
 	iteminput.UpdatedAt = nil
-	
+
 	xxxdemo, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 	sch_demo := a.toSchemaDemo(xxxdemo)
 
@@ -165,9 +165,9 @@ func (a *Demo) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateStatus 更新状态
-func (a *Demo) UpdateStatus(ctx context.Context, id string, status int16) error {
+func (a *Demo) UpdateStatus(ctx context.Context, id string, isActive bool) error {
 
-	_, err1 := a.EntCli.XxxDemo.Update().Where(xxxdemo.IDEQ(id)).SetStatus(status).Save(ctx)
+	_, err1 := a.EntCli.XxxDemo.Update().Where(xxxdemo.IDEQ(id)).SetIsActive(isActive).Save(ctx)
 
 	return errors.WithStack(err1)
 }

@@ -49,7 +49,6 @@ func (a *Menu) ToEntUpdateSysMenuInput(m *schema.Menu) *ent.UpdateSysMenuInput {
 	return updateinput
 }
 
-
 func (a *Menu) getQueryOption(opts ...schema.MenuQueryOptions) schema.MenuQueryOptions {
 	var opt schema.MenuQueryOptions
 	if len(opts) > 0 {
@@ -77,8 +76,8 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 	if v := params.PrefixParentPath; v != "" {
 		query = query.Where(sysmenu.ParentPathContains(v))
 	}
-	if v := params.Status; v != 0 {
-		query = query.Where(sysmenu.Status(v))
+	if v := params.IsActive; v != nil {
+		query = query.Where(sysmenu.IsActive(*v))
 	}
 	if v := params.IsShow; v != nil {
 		query = query.Where(sysmenu.IsShowEQ(*v))
@@ -88,7 +87,7 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 		query = query.Where(sysmenu.Or(
 			sysmenu.NameContains(v),
 			sysmenu.MemoContains(v),
-			))
+		))
 	}
 
 	count, err := query.Count(ctx)
@@ -153,7 +152,7 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.Menu, erro
 }
 
 // Update 更新数据
-func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema.Menu,error) {
+func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema.Menu, error) {
 
 	oitem, err := a.EntCli.SysMenu.Query().Where(sysmenu.IDEQ(id)).Only(ctx)
 
@@ -190,8 +189,7 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateStatus 更新状态
-func (a *Menu) UpdateStatus(ctx context.Context, id string, status int16) error {
-	_, err := a.EntCli.SysMenu.UpdateOneID(id).SetStatus(status).Save(ctx)
+func (a *Menu) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+	_, err := a.EntCli.SysMenu.UpdateOneID(id).SetIsActive(isActive).Save(ctx)
 	return errors.WithStack(err)
 }
-

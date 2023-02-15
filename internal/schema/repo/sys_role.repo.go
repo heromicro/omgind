@@ -22,7 +22,6 @@ type Role struct {
 	EntCli *ent.Client
 }
 
-
 func (a *Role) toSchemaRole(role *ent.SysRole) *schema.Role {
 	item := new(schema.Role)
 	structure.Copy(role, item)
@@ -37,7 +36,6 @@ func (a *Role) toSchemaRoles(roles ent.SysRoles) []*schema.Role {
 	return list
 }
 
-
 func (a *Role) ToEntCreateSysRoleInput(schrole *schema.Role) *ent.CreateSysRoleInput {
 	createinput := new(ent.CreateSysRoleInput)
 	structure.Copy(schrole, &createinput)
@@ -51,7 +49,6 @@ func (a *Role) ToEntUpdateSysRoleInput(schrole *schema.Role) *ent.UpdateSysRoleI
 
 	return updateinput
 }
-
 
 func (a *Role) getQueryOption(opts ...schema.RoleQueryOptions) schema.RoleQueryOptions {
 	var opt schema.RoleQueryOptions
@@ -77,16 +74,16 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 	if v := params.UserID; v != "" {
 		query = query.Where(func(s *sql.Selector) {
 			sur_t := sql.Table(sysuserrole.Table)
-			s.Where( sql.In(
+			s.Where(sql.In(
 				sysrole.FieldID,
 				sql.Select(sysuserrole.FieldRoleID).
 					From(sur_t).
 					Where(sql.EQ(sysuserrole.FieldUserID, v)),
-				),
+			),
 			)
 		})
 	}
-	
+
 	if v := params.QueryValue; v != "" {
 		query = query.Where(sysrole.Or(sysrole.NameContains(v), sysrole.MemoContains(v)))
 	}
@@ -113,7 +110,6 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 	}
 
 	query = query.Limit(params.Limit()).Offset(params.Offset())
-
 
 	list, err1 := query.All(ctx)
 	if err1 != nil {
@@ -160,7 +156,7 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, erro
 }
 
 // Update 更新数据
-func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema.Role,error) {
+func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema.Role, error) {
 
 	oitem, err := a.EntCli.SysRole.Query().Where(sysrole.IDEQ(id)).Only(ctx)
 	if err != nil {
@@ -191,7 +187,7 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateStatus 更新状态
-func (a *Role) UpdateStatus(ctx context.Context, id string, status int16) error {
-	_, err1 := a.EntCli.SysRole.UpdateOneID(id).SetStatus(status).Save(ctx)
+func (a *Role) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+	_, err1 := a.EntCli.SysRole.UpdateOneID(id).SetIsActive(isActive).Save(ctx)
 	return errors.WithStack(err1)
 }

@@ -52,7 +52,6 @@ func (a *User) ToEntUpdateSysUserInput(user *schema.User) *ent.UpdateSysUserInpu
 	return updateinput
 }
 
-
 func (a *User) getQueryOption(opts ...schema.UserQueryOptions) schema.UserQueryOptions {
 	var opt schema.UserQueryOptions
 	if len(opts) > 0 {
@@ -65,26 +64,26 @@ func (a *User) getQueryOption(opts ...schema.UserQueryOptions) schema.UserQueryO
 func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...schema.UserQueryOptions) (*schema.UserQueryResult, error) {
 	opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.SysUser.Query().Where(sysuser.DeletedAtIsNil() )
+	query := a.EntCli.SysUser.Query().Where(sysuser.DeletedAtIsNil())
 
 	if v := params.UserName; v != "" {
 		query = query.Where(sysuser.UserNameEQ(v))
 	}
-	if v := params.Status; v > 0 {
-		query = query.Where(sysuser.StatusEQ(v))
+	if v := params.IsActive; v != nil {
+		query = query.Where(sysuser.IsActiveEQ(*v))
 	}
 	if v := params.RoleIDs; len(v) > 0 {
 		//log.Printf(" =000000 ---- subquery -- v %+v ", v)
 		query = query.Where(func(s *sql.Selector) {
 			sur_t := sql.Table(sysuserrole.Table)
 			s.Where(sql.In(
-					sysuser.FieldID,
-					sql.Select(sysuserrole.FieldUserID).
+				sysuser.FieldID,
+				sql.Select(sysuserrole.FieldUserID).
 					From(sur_t).
 					Where(
 						sql.In(sysuserrole.FieldRoleID, strings.Join(v, ",")),
 					),
-				))
+			))
 		})
 	}
 
@@ -92,7 +91,7 @@ func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...
 		query = query.Where(sysuser.Or(
 			sysuser.UserNameContains(v), sysuser.RealNameContains(v),
 			sysuser.PhoneContains(v), sysuser.EmailContains(v),
-			))
+		))
 	}
 
 	count, err := query.Count(ctx)
@@ -186,8 +185,8 @@ func (a *User) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateStatus 更新状态
-func (a *User) UpdateStatus(ctx context.Context, id string, status int16) error {
-	_, err := a.EntCli.SysUser.UpdateOneID(id).SetStatus(status).Save(ctx)
+func (a *User) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+	_, err := a.EntCli.SysUser.UpdateOneID(id).SetIsActive(isActive).Save(ctx)
 	return errors.WithStack(err)
 }
 

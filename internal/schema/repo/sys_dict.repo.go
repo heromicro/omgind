@@ -75,8 +75,8 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 		query = query.Where(sysdict.NameEnEQ(v))
 	}
 
-	if v := params.Status; v > 0 {
-		query = query.Where(sysdict.StatusEQ(v))
+	if v := params.IsActive; v != nil {
+		query = query.Where(sysdict.IsActiveEQ(*v))
 	}
 
 	if v := params.QueryValue; v != "" {
@@ -160,7 +160,7 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) (*schema
 	if err != nil {
 		return nil, err
 	}
-	
+
 	sch_dict := a.toSchemaSysDict(dict)
 
 	return sch_dict, nil
@@ -180,9 +180,9 @@ func (a *Dict) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateStatus 更新状态
-func (a *Dict) UpdateStatus(ctx context.Context, id string, status int16) error {
+func (a *Dict) UpdateStatus(ctx context.Context, id string, isActive bool) error {
 
-	_, err1 := a.EntCli.SysDict.UpdateOneID(id).SetStatus(status).Save(ctx)
+	_, err1 := a.EntCli.SysDict.UpdateOneID(id).SetIsActive(isActive).Save(ctx)
 
 	return errors.WithStack(err1)
 }
