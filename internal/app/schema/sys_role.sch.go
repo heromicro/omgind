@@ -4,16 +4,15 @@ import "time"
 
 // Role 角色对象
 type Role struct {
-	ID     string `json:"id" `                                   // 唯一标识
-	Name   string `json:"name" binding:"required"`               // 角色名称
-	Sort   int    `json:"sort"`                                  // 排序值
-	Memo   string `json:"memo"`                                  // 备注
-	Status int    `json:"status" binding:"required,max=2,min=1"` // 状态(1:启用 2:禁用)
-
-	Creator   string    `json:"creator" `                           // 创建者
+	ID        string     `json:"id" `                                // 唯一标识
+	Name      string     `json:"name" binding:"required"`            // 角色名称
+	Sort      int        `json:"sort"`                               // 排序值
+	Memo      string     `json:"memo"`                               // 备注
+	IsActive  *bool      `json:"is_active" binding:"required"`       // 状态
+	Creator   string     `json:"creator" `                           // 创建者
 	CreatedAt *time.Time `json:"created_at" `                        // 创建时间
 	UpdatedAt *time.Time `json:"updated_at" `                        // 更新时间
-	RoleMenus RoleMenus `json:"role_menus" binding:"required,gt=0"` // 角色菜单列表
+	RoleMenus RoleMenus  `json:"role_menus" binding:"required,gt=0"` // 角色菜单列表
 }
 
 // RoleQueryParam 查询条件
@@ -23,7 +22,7 @@ type RoleQueryParam struct {
 	Name       string   `form:"-"`          // 角色名称
 	QueryValue string   `form:"queryValue"` // 模糊查询
 	UserID     string   `form:"-"`          // 用户ID
-	Status     int      `form:"status"`     // 状态(1:启用 2:禁用)
+	IsActive   *bool    `form:"is_active"`
 }
 
 // RoleQueryOptions 查询可选参数项

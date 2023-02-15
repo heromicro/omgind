@@ -121,7 +121,7 @@ func (a *Menu) Delete(c *gin.Context) {
 // Enable 启用数据
 func (a *Menu) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.MenuSrv.UpdateStatus(ctx, c.Param("id"), 1)
+	err := a.MenuSrv.UpdateStatus(ctx, c.Param("id"), true)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -132,7 +132,7 @@ func (a *Menu) Enable(c *gin.Context) {
 // Disable 禁用数据
 func (a *Menu) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.MenuSrv.UpdateStatus(ctx, c.Param("id"), 2)
+	err := a.MenuSrv.UpdateStatus(ctx, c.Param("id"), false)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

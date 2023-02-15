@@ -244,7 +244,7 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateStatus 更新状态
-func (a *Role) UpdateStatus(ctx context.Context, id string, status int16) error {
+func (a *Role) UpdateStatus(ctx context.Context, id string, isActive bool) error {
 	oldItem, err := a.RoleRepo.Get(ctx, id)
 	if err != nil {
 		return err
@@ -252,7 +252,7 @@ func (a *Role) UpdateStatus(ctx context.Context, id string, status int16) error 
 		return errors.ErrNotFound
 	}
 
-	err = a.RoleRepo.UpdateStatus(ctx, id, status)
+	err = a.RoleRepo.UpdateStatus(ctx, id, isActive)
 	if err != nil {
 		return err
 	}

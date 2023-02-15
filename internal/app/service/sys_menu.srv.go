@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/wire"
+	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
@@ -77,7 +78,7 @@ func (a *Menu) createMenus(ctx context.Context, parentID string, list schema.Men
 			Icon:     tritem.Icon,
 			Router:   tritem.Router,
 			ParentID: parentID,
-			Status:   1,
+			IsActive: ptr.Bool(true),
 			IsShow:   tritem.IsShow,
 			Actions:  tritem.Actions,
 		}
@@ -596,7 +597,7 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateStatus 更新状态
-func (a *Menu) UpdateStatus(ctx context.Context, id string, status int16) error {
+func (a *Menu) UpdateStatus(ctx context.Context, id string, isActive bool) error {
 	oldItem, err := a.MenuRepo.Get(ctx, id)
 	if err != nil {
 		return err
@@ -604,5 +605,5 @@ func (a *Menu) UpdateStatus(ctx context.Context, id string, status int16) error 
 		return errors.ErrNotFound
 	}
 
-	return a.MenuRepo.UpdateStatus(ctx, id, status)
+	return a.MenuRepo.UpdateStatus(ctx, id, isActive)
 }

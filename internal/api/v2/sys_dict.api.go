@@ -97,7 +97,7 @@ func (a *Dict) Delete(c *gin.Context) {
 // Enable 启用数据
 func (a *Dict) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.DictSrv.UpdateStatus(ctx, c.Param("id"), 1)
+	err := a.DictSrv.UpdateStatus(ctx, c.Param("id"), true)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -108,7 +108,7 @@ func (a *Dict) Enable(c *gin.Context) {
 // Disable 禁用数据
 func (a *Dict) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.DictSrv.UpdateStatus(ctx, c.Param("id"), 2)
+	err := a.DictSrv.UpdateStatus(ctx, c.Param("id"), false)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

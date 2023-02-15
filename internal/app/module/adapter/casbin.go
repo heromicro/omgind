@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/logger"
@@ -48,8 +49,9 @@ func (a *CasbinAdapter) LoadPolicy(model casbinModel.Model) error {
 // 加载角色策略(p,role_id,path,method)
 func (a *CasbinAdapter) loadRolePolicy(ctx context.Context, m casbinModel.Model) error {
 
+	isActive := ptr.Bool(true)
 	roleResult, err := a.RoleRepo.Query(ctx, schema.RoleQueryParam{
-		Status: 1,
+		IsActive: isActive,
 	})
 	if err != nil {
 		return err
@@ -94,8 +96,10 @@ func (a *CasbinAdapter) loadRolePolicy(ctx context.Context, m casbinModel.Model)
 
 // 加载用户策略(g,user_id,role_id)
 func (a *CasbinAdapter) loadUserPolicy(ctx context.Context, m casbinModel.Model) error {
+	isActive := ptr.Bool(true)
+
 	userResult, err := a.UserRepo.Query(ctx, schema.UserQueryParam{
-		Status: 1,
+		IsActive: isActive,
 	})
 	if err != nil {
 		return err

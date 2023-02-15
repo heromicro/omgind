@@ -31,16 +31,16 @@ func CheckIsRootUser(ctx context.Context, userID string) bool {
 
 // User 用户对象
 type User struct {
-	ID        string `json:"id" `                                   // 唯一标识
-	UserName  string `json:"user_name" binding:"required"`          // 用户名
-	RealName  string `json:"real_name"`                             // 真实姓名
-	FirstName string `json:"first_name" binding:"required"`         // 真实姓名
-	LastName  string `json:"last_name" binding:"required"`          // 真实姓名
-	Password  string `json:"password"`                              // 密码
-	Phone     string `json:"phone"`                                 // 手机号
-	Email     string `json:"email"`                                 // 邮箱
-	Status    int16    `json:"status" binding:"required,max=2,min=1"` // 用户状态(1:启用 2:停用)
-	Gender    int    `json:"gender" binding:"max=3,min=1"` // 性别(1:男,2:女)
+	ID        string `json:"id" `                           // 唯一标识
+	UserName  string `json:"user_name" binding:"required"`  // 用户名
+	RealName  string `json:"real_name"`                     // 真实姓名
+	FirstName string `json:"first_name" binding:"required"` // 真实姓名
+	LastName  string `json:"last_name" binding:"required"`  // 真实姓名
+	Password  string `json:"password"`                      // 密码
+	Phone     string `json:"phone"`                         // 手机号
+	Email     string `json:"email"`                         // 邮箱
+	IsActive  *bool  `json:"is_active" binding:"required"`  // 状态
+	Gender    int    `json:"gender" binding:"max=3,min=1"`  // 性别(1:男,2:女)
 
 	Creator   string    `json:"creator" `                           // 创建者
 	CreatedAt time.Time `json:"created_at" `                        // 创建时间
@@ -63,8 +63,8 @@ type UserQueryParam struct {
 	PaginationParam
 	UserName   string   `form:"userName"`   // 用户名
 	QueryValue string   `form:"queryValue"` // 模糊查询
-	Status     int16      `form:"status"`     // 用户状态(1:启用 2:停用)
-	RoleIDs    []string `form:"-"`          // 角色ID列表
+	IsActive   *bool    `form:"is_active"`
+	RoleIDs    []string `form:"-"` // 角色ID列表
 }
 
 // UserQueryOptions 查询可选参数项

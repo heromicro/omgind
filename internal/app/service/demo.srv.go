@@ -137,7 +137,7 @@ func (a *Demo) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateStatus 更新状态
-func (a *Demo) UpdateStatus(ctx context.Context, id string, status int16) error {
+func (a *Demo) UpdateStatus(ctx context.Context, id string, isActive bool) error {
 	oldItem, err := a.DemoRepo.Get(ctx, id)
 	if err != nil {
 		return err
@@ -145,5 +145,5 @@ func (a *Demo) UpdateStatus(ctx context.Context, id string, status int16) error 
 		return errors.ErrNotFound
 	}
 
-	return a.DemoRepo.UpdateStatus(ctx, id, status)
+	return a.DemoRepo.UpdateStatus(ctx, id, isActive)
 }

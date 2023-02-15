@@ -258,7 +258,7 @@ func (a *Dict) DeleteS(ctx context.Context, id string) error {
 	return err1
 }
 
-func (a *Dict) UpdateStatus(ctx context.Context, id string, status int16) error {
+func (a *Dict) UpdateStatus(ctx context.Context, id string, isActive bool) error {
 
 	oldItem, err := a.DictRepo.Get(ctx, id)
 	if err != nil {
@@ -267,5 +267,5 @@ func (a *Dict) UpdateStatus(ctx context.Context, id string, status int16) error 
 		return errors.ErrNotFound
 	}
 
-	return a.DictRepo.UpdateStatus(ctx, id, status)
+	return a.DictRepo.UpdateStatus(ctx, id, isActive)
 }

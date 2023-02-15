@@ -6,6 +6,7 @@ import (
 	"sort"
 
 	"github.com/google/wire"
+	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/auth"
@@ -79,7 +80,7 @@ func (a *SignIn) Verify(ctx context.Context, userName, password string) (*schema
 	ok, err := hash.CheckPassword(password, item.Password)
 	if err != nil || !ok {
 		return nil, errors.ErrInvalidPassword
-	} else if item.Status != 1 {
+	} else if *item.IsActive {
 		return nil, errors.ErrUserDisable
 	}
 
@@ -116,7 +117,7 @@ func (a *SignIn) checkAndGetUser(ctx context.Context, userID string) (*schema.Us
 		return nil, err
 	} else if user == nil {
 		return nil, errors.ErrInvalidUser
-	} else if user.Status != 1 {
+	} else if *user.IsActive {
 		return nil, errors.ErrUserDisable
 	}
 	return user, nil
@@ -155,8 +156,8 @@ func (a *SignIn) GetSignInInfo(ctx context.Context, userID string) (*schema.User
 
 	if roleIDs := userRoleResult.Data.ToRoleIDs(); len(roleIDs) > 0 {
 		roleResult, err := a.RoleRepo.Query(ctx, schema.RoleQueryParam{
-			IDs:    roleIDs,
-			Status: 1,
+			IDs:      roleIDs,
+			IsActive: ptr.Bool(true),
 		})
 		if err != nil {
 			return nil, err
@@ -174,7 +175,7 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 	// 如果是root用户，则查询所有显示的菜单树
 	if isRoot {
 		result, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
-			Status: 1,
+			IsActive: ptr.Bool(true),
 		}, schema.MenuQueryOptions{
 			OrderFields: schema.NewOrderFields(schema.NewOrderField("sort", schema.OrderByASC)),
 		})
@@ -210,8 +211,8 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 	}
 
 	menuResult, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
-		IDs:    roleMenuResult.Data.ToMenuIDs(),
-		Status: 1,
+		IDs:      roleMenuResult.Data.ToMenuIDs(),
+		IsActive: ptr.Bool(true),
 	})
 	if err != nil {
 		return nil, err

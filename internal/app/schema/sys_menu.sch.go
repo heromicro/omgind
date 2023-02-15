@@ -9,22 +9,22 @@ import (
 
 // Menu 菜单对象
 type Menu struct {
-	ID         string      `json:"id"`                                    // 唯一标识
-	Name       string      `json:"name" binding:"required"`               // 菜单名称
-	Sort       int         `json:"sort"`                                  // 排序值
-	Icon       string      `json:"icon"`                                  // 菜单图标
-	Router     string      `json:"router"`                                // 访问路由
-	ParentID   string      `json:"parent_id"`                             // 父级ID
-	ParentPath string      `json:"parent_path"`                           // 父级路径
-	Status     int         `json:"status" binding:"required,max=2,min=1"` // 状态(1:启用 2:禁用)
-	Memo       string      `json:"memo"`                                  // 备注
-	IsShow     *bool       `json:"is_show"`                               // 是否显示
-	Level      int32       `json:"level"`                                 // 层级
-	IsLeaf     bool        `json:"is_leaf"`                               // 是否子叶
-	Creator    string      `json:"creator" `                              // 创建者
-	CreatedAt  *time.Time  `json:"created_at" `                           // 创建时间
-	UpdatedAt  *time.Time  `json:"updated_at" `                           // 更新时间
-	Actions    MenuActions `json:"actions" `                              // 动作列表
+	ID         string      `json:"id"`                           // 唯一标识
+	Name       string      `json:"name" binding:"required"`      // 菜单名称
+	Sort       int         `json:"sort"`                         // 排序值
+	Icon       string      `json:"icon"`                         // 菜单图标
+	Router     string      `json:"router"`                       // 访问路由
+	ParentID   string      `json:"parent_id"`                    // 父级ID
+	ParentPath string      `json:"parent_path"`                  // 父级路径
+	IsActive   *bool       `json:"is_active" binding:"required"` // 状态
+	Memo       string      `json:"memo"`                         // 备注
+	IsShow     *bool       `json:"is_show"`                      // 是否显示
+	Level      int32       `json:"level"`                        // 层级
+	IsLeaf     bool        `json:"is_leaf"`                      // 是否子叶
+	Creator    string      `json:"creator" `                     // 创建者
+	CreatedAt  *time.Time  `json:"created_at" `                  // 创建时间
+	UpdatedAt  *time.Time  `json:"updated_at" `                  // 更新时间
+	Actions    MenuActions `json:"actions" `                     // 动作列表
 }
 
 func (a *Menu) String() string {
@@ -40,7 +40,7 @@ type MenuQueryParam struct {
 	QueryValue       string   `form:"queryValue"` // 模糊查询
 	ParentID         *string  `form:"parentID"`   // 父级内码
 	IsShow           *bool    `form:"isShow"`
-	Status           int16    `form:"status"` // 状态(1:启用 2:禁用)
+	IsActive         *bool    `form:"is_active"`
 }
 
 // MenuQueryOptions 查询可选参数项
@@ -116,7 +116,7 @@ func (a Menus) ToTree() MenuTrees {
 			IsShow:     item.IsShow,
 			Level:      item.Level,
 			IsLeaf:     item.IsLeaf,
-			Status:     item.Status,
+			IsActive:   item.IsActive,
 			Actions:    item.Actions,
 		}
 	}
@@ -149,7 +149,7 @@ type MenuTree struct {
 	ParentPath string      `yaml:"-" json:"parent_path"`           // 父级路径
 	Sort       int         `yaml:"sort" json:"sort"`               // 排序值
 	IsShow     *bool       `json:"is_show"`
-	Status     int         `yaml:"-" json:"status"`                              // 状态(1:启用 2:禁用)
+	IsActive   *bool       `yaml:"-" json:"is_active"`                           // 状态
 	Level      int32       `json:"level"`                                        // 层级
 	IsLeaf     bool        `json:"is_leaf"`                                      // 是否子叶
 	Actions    MenuActions `yaml:"actions,omitempty" json:"actions"`             // 动作列表
