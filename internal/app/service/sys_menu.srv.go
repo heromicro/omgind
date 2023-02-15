@@ -231,6 +231,11 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, 
 		return nil, err
 	}
 	item.ParentPath = a.getParentPathNet(pitem, item.ParentID)
+	item.Level = 1
+	if pitem != nil {
+		item.Level = pitem.Level + 1
+	}
+	item.IsLeaf = true
 
 	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
 
