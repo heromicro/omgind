@@ -104,16 +104,16 @@ func (smarc *SysMenuActionResourceCreate) SetNillableDeletedAt(t *time.Time) *Sy
 	return smarc
 }
 
-// SetStatus sets the "status" field.
-func (smarc *SysMenuActionResourceCreate) SetStatus(i int16) *SysMenuActionResourceCreate {
-	smarc.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (smarc *SysMenuActionResourceCreate) SetIsActive(b bool) *SysMenuActionResourceCreate {
+	smarc.mutation.SetIsActive(b)
 	return smarc
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableStatus(i *int16) *SysMenuActionResourceCreate {
-	if i != nil {
-		smarc.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (smarc *SysMenuActionResourceCreate) SetNillableIsActive(b *bool) *SysMenuActionResourceCreate {
+	if b != nil {
+		smarc.SetIsActive(*b)
 	}
 	return smarc
 }
@@ -247,9 +247,9 @@ func (smarc *SysMenuActionResourceCreate) defaults() {
 		v := sysmenuactionresource.DefaultUpdatedAt()
 		smarc.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := smarc.mutation.Status(); !ok {
-		v := sysmenuactionresource.DefaultStatus
-		smarc.mutation.SetStatus(v)
+	if _, ok := smarc.mutation.IsActive(); !ok {
+		v := sysmenuactionresource.DefaultIsActive
+		smarc.mutation.SetIsActive(v)
 	}
 	if _, ok := smarc.mutation.ID(); !ok {
 		v := sysmenuactionresource.DefaultID()
@@ -279,8 +279,8 @@ func (smarc *SysMenuActionResourceCreate) check() error {
 	if _, ok := smarc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysMenuActionResource.updated_at"`)}
 	}
-	if _, ok := smarc.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "SysMenuActionResource.status"`)}
+	if _, ok := smarc.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysMenuActionResource.is_active"`)}
 	}
 	if _, ok := smarc.mutation.Method(); !ok {
 		return &ValidationError{Name: "method", err: errors.New(`ent: missing required field "SysMenuActionResource.method"`)}
@@ -395,13 +395,13 @@ func (smarc *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, 
 		})
 		_node.DeletedAt = &value
 	}
-	if value, ok := smarc.mutation.Status(); ok {
+	if value, ok := smarc.mutation.IsActive(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenuactionresource.FieldStatus,
+			Column: sysmenuactionresource.FieldIsActive,
 		})
-		_node.Status = value
+		_node.IsActive = value
 	}
 	if value, ok := smarc.mutation.Method(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

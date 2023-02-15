@@ -104,16 +104,16 @@ func (sdc *SysDictCreate) SetNillableDeletedAt(t *time.Time) *SysDictCreate {
 	return sdc
 }
 
-// SetStatus sets the "status" field.
-func (sdc *SysDictCreate) SetStatus(i int16) *SysDictCreate {
-	sdc.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (sdc *SysDictCreate) SetIsActive(b bool) *SysDictCreate {
+	sdc.mutation.SetIsActive(b)
 	return sdc
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableStatus(i *int16) *SysDictCreate {
-	if i != nil {
-		sdc.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sdc *SysDictCreate) SetNillableIsActive(b *bool) *SysDictCreate {
+	if b != nil {
+		sdc.SetIsActive(*b)
 	}
 	return sdc
 }
@@ -241,9 +241,9 @@ func (sdc *SysDictCreate) defaults() {
 		v := sysdict.DefaultUpdatedAt()
 		sdc.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := sdc.mutation.Status(); !ok {
-		v := sysdict.DefaultStatus
-		sdc.mutation.SetStatus(v)
+	if _, ok := sdc.mutation.IsActive(); !ok {
+		v := sysdict.DefaultIsActive
+		sdc.mutation.SetIsActive(v)
 	}
 	if _, ok := sdc.mutation.ID(); !ok {
 		v := sysdict.DefaultID()
@@ -273,8 +273,8 @@ func (sdc *SysDictCreate) check() error {
 	if _, ok := sdc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysDict.updated_at"`)}
 	}
-	if _, ok := sdc.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "SysDict.status"`)}
+	if _, ok := sdc.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysDict.is_active"`)}
 	}
 	if _, ok := sdc.mutation.NameCn(); !ok {
 		return &ValidationError{Name: "name_cn", err: errors.New(`ent: missing required field "SysDict.name_cn"`)}
@@ -381,13 +381,13 @@ func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 		})
 		_node.DeletedAt = &value
 	}
-	if value, ok := sdc.mutation.Status(); ok {
+	if value, ok := sdc.mutation.IsActive(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysdict.FieldStatus,
+			Column: sysdict.FieldIsActive,
 		})
-		_node.Status = value
+		_node.IsActive = value
 	}
 	if value, ok := sdc.mutation.NameCn(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

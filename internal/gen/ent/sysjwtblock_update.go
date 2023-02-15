@@ -82,24 +82,17 @@ func (sjbu *SysJwtBlockUpdate) ClearDeletedAt() *SysJwtBlockUpdate {
 	return sjbu
 }
 
-// SetStatus sets the "status" field.
-func (sjbu *SysJwtBlockUpdate) SetStatus(i int16) *SysJwtBlockUpdate {
-	sjbu.mutation.ResetStatus()
-	sjbu.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (sjbu *SysJwtBlockUpdate) SetIsActive(b bool) *SysJwtBlockUpdate {
+	sjbu.mutation.SetIsActive(b)
 	return sjbu
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (sjbu *SysJwtBlockUpdate) SetNillableStatus(i *int16) *SysJwtBlockUpdate {
-	if i != nil {
-		sjbu.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sjbu *SysJwtBlockUpdate) SetNillableIsActive(b *bool) *SysJwtBlockUpdate {
+	if b != nil {
+		sjbu.SetIsActive(*b)
 	}
-	return sjbu
-}
-
-// AddStatus adds i to the "status" field.
-func (sjbu *SysJwtBlockUpdate) AddStatus(i int16) *SysJwtBlockUpdate {
-	sjbu.mutation.AddStatus(i)
 	return sjbu
 }
 
@@ -250,18 +243,11 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysjwtblock.FieldDeletedAt,
 		})
 	}
-	if value, ok := sjbu.mutation.Status(); ok {
+	if value, ok := sjbu.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysjwtblock.FieldStatus,
-		})
-	}
-	if value, ok := sjbu.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysjwtblock.FieldStatus,
+			Column: sysjwtblock.FieldIsActive,
 		})
 	}
 	if value, ok := sjbu.mutation.Jwt(); ok {
@@ -344,24 +330,17 @@ func (sjbuo *SysJwtBlockUpdateOne) ClearDeletedAt() *SysJwtBlockUpdateOne {
 	return sjbuo
 }
 
-// SetStatus sets the "status" field.
-func (sjbuo *SysJwtBlockUpdateOne) SetStatus(i int16) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.ResetStatus()
-	sjbuo.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (sjbuo *SysJwtBlockUpdateOne) SetIsActive(b bool) *SysJwtBlockUpdateOne {
+	sjbuo.mutation.SetIsActive(b)
 	return sjbuo
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (sjbuo *SysJwtBlockUpdateOne) SetNillableStatus(i *int16) *SysJwtBlockUpdateOne {
-	if i != nil {
-		sjbuo.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sjbuo *SysJwtBlockUpdateOne) SetNillableIsActive(b *bool) *SysJwtBlockUpdateOne {
+	if b != nil {
+		sjbuo.SetIsActive(*b)
 	}
-	return sjbuo
-}
-
-// AddStatus adds i to the "status" field.
-func (sjbuo *SysJwtBlockUpdateOne) AddStatus(i int16) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.AddStatus(i)
 	return sjbuo
 }
 
@@ -542,18 +521,11 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 			Column: sysjwtblock.FieldDeletedAt,
 		})
 	}
-	if value, ok := sjbuo.mutation.Status(); ok {
+	if value, ok := sjbuo.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysjwtblock.FieldStatus,
-		})
-	}
-	if value, ok := sjbuo.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysjwtblock.FieldStatus,
+			Column: sysjwtblock.FieldIsActive,
 		})
 	}
 	if value, ok := sjbuo.mutation.Jwt(); ok {

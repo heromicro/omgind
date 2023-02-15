@@ -42,24 +42,17 @@ func (sru *SysRoleUpdate) SetNillableIsDel(b *bool) *SysRoleUpdate {
 	return sru
 }
 
-// SetStatus sets the "status" field.
-func (sru *SysRoleUpdate) SetStatus(i int16) *SysRoleUpdate {
-	sru.mutation.ResetStatus()
-	sru.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (sru *SysRoleUpdate) SetIsActive(b bool) *SysRoleUpdate {
+	sru.mutation.SetIsActive(b)
 	return sru
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableStatus(i *int16) *SysRoleUpdate {
-	if i != nil {
-		sru.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sru *SysRoleUpdate) SetNillableIsActive(b *bool) *SysRoleUpdate {
+	if b != nil {
+		sru.SetIsActive(*b)
 	}
-	return sru
-}
-
-// AddStatus adds i to the "status" field.
-func (sru *SysRoleUpdate) AddStatus(i int16) *SysRoleUpdate {
-	sru.mutation.AddStatus(i)
 	return sru
 }
 
@@ -244,18 +237,11 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysrole.FieldIsDel,
 		})
 	}
-	if value, ok := sru.mutation.Status(); ok {
+	if value, ok := sru.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysrole.FieldStatus,
-		})
-	}
-	if value, ok := sru.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysrole.FieldStatus,
+			Column: sysrole.FieldIsActive,
 		})
 	}
 	if value, ok := sru.mutation.Sort(); ok {
@@ -339,24 +325,17 @@ func (sruo *SysRoleUpdateOne) SetNillableIsDel(b *bool) *SysRoleUpdateOne {
 	return sruo
 }
 
-// SetStatus sets the "status" field.
-func (sruo *SysRoleUpdateOne) SetStatus(i int16) *SysRoleUpdateOne {
-	sruo.mutation.ResetStatus()
-	sruo.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (sruo *SysRoleUpdateOne) SetIsActive(b bool) *SysRoleUpdateOne {
+	sruo.mutation.SetIsActive(b)
 	return sruo
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableStatus(i *int16) *SysRoleUpdateOne {
-	if i != nil {
-		sruo.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sruo *SysRoleUpdateOne) SetNillableIsActive(b *bool) *SysRoleUpdateOne {
+	if b != nil {
+		sruo.SetIsActive(*b)
 	}
-	return sruo
-}
-
-// AddStatus adds i to the "status" field.
-func (sruo *SysRoleUpdateOne) AddStatus(i int16) *SysRoleUpdateOne {
-	sruo.mutation.AddStatus(i)
 	return sruo
 }
 
@@ -571,18 +550,11 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 			Column: sysrole.FieldIsDel,
 		})
 	}
-	if value, ok := sruo.mutation.Status(); ok {
+	if value, ok := sruo.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysrole.FieldStatus,
-		})
-	}
-	if value, ok := sruo.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysrole.FieldStatus,
+			Column: sysrole.FieldIsActive,
 		})
 	}
 	if value, ok := sruo.mutation.Sort(); ok {

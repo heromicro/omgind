@@ -104,6 +104,20 @@ func (xdc *XxxDemoCreate) SetNillableDeletedAt(t *time.Time) *XxxDemoCreate {
 	return xdc
 }
 
+// SetIsActive sets the "is_active" field.
+func (xdc *XxxDemoCreate) SetIsActive(b bool) *XxxDemoCreate {
+	xdc.mutation.SetIsActive(b)
+	return xdc
+}
+
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (xdc *XxxDemoCreate) SetNillableIsActive(b *bool) *XxxDemoCreate {
+	if b != nil {
+		xdc.SetIsActive(*b)
+	}
+	return xdc
+}
+
 // SetCode sets the "code" field.
 func (xdc *XxxDemoCreate) SetCode(s string) *XxxDemoCreate {
 	xdc.mutation.SetCode(s)
@@ -241,6 +255,10 @@ func (xdc *XxxDemoCreate) defaults() {
 		v := xxxdemo.DefaultUpdatedAt()
 		xdc.mutation.SetUpdatedAt(v)
 	}
+	if _, ok := xdc.mutation.IsActive(); !ok {
+		v := xxxdemo.DefaultIsActive
+		xdc.mutation.SetIsActive(v)
+	}
 	if _, ok := xdc.mutation.Status(); !ok {
 		v := xxxdemo.DefaultStatus
 		xdc.mutation.SetStatus(v)
@@ -272,6 +290,9 @@ func (xdc *XxxDemoCreate) check() error {
 	}
 	if _, ok := xdc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "XxxDemo.updated_at"`)}
+	}
+	if _, ok := xdc.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "XxxDemo.is_active"`)}
 	}
 	if _, ok := xdc.mutation.Code(); !ok {
 		return &ValidationError{Name: "code", err: errors.New(`ent: missing required field "XxxDemo.code"`)}
@@ -380,6 +401,14 @@ func (xdc *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
 			Column: xxxdemo.FieldDeletedAt,
 		})
 		_node.DeletedAt = &value
+	}
+	if value, ok := xdc.mutation.IsActive(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: xxxdemo.FieldIsActive,
+		})
+		_node.IsActive = value
 	}
 	if value, ok := xdc.mutation.Code(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

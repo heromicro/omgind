@@ -13,8 +13,8 @@ const (
 	FieldID = "id"
 	// FieldIsDel holds the string denoting the is_del field in the database.
 	FieldIsDel = "is_del"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
+	// FieldIsActive holds the string denoting the is_active field in the database.
+	FieldIsActive = "is_active"
 	// FieldSort holds the string denoting the sort field in the database.
 	FieldSort = "sort"
 	// FieldMemo holds the string denoting the memo field in the database.
@@ -35,7 +35,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldIsDel,
-	FieldStatus,
+	FieldIsActive,
 	FieldSort,
 	FieldMemo,
 	FieldCreatedAt,
@@ -57,8 +57,8 @@ func ValidColumn(column string) bool {
 var (
 	// DefaultIsDel holds the default value on creation for the "is_del" field.
 	DefaultIsDel bool
-	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus int16
+	// DefaultIsActive holds the default value on creation for the "is_active" field.
+	DefaultIsActive bool
 	// DefaultSort holds the default value on creation for the "sort" field.
 	DefaultSort int32
 	// DefaultMemo holds the default value on creation for the "memo" field.

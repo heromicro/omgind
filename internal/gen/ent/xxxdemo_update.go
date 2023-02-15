@@ -103,6 +103,20 @@ func (xdu *XxxDemoUpdate) ClearDeletedAt() *XxxDemoUpdate {
 	return xdu
 }
 
+// SetIsActive sets the "is_active" field.
+func (xdu *XxxDemoUpdate) SetIsActive(b bool) *XxxDemoUpdate {
+	xdu.mutation.SetIsActive(b)
+	return xdu
+}
+
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (xdu *XxxDemoUpdate) SetNillableIsActive(b *bool) *XxxDemoUpdate {
+	if b != nil {
+		xdu.SetIsActive(*b)
+	}
+	return xdu
+}
+
 // SetCode sets the "code" field.
 func (xdu *XxxDemoUpdate) SetCode(s string) *XxxDemoUpdate {
 	xdu.mutation.SetCode(s)
@@ -296,6 +310,13 @@ func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: xxxdemo.FieldDeletedAt,
 		})
 	}
+	if value, ok := xdu.mutation.IsActive(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: xxxdemo.FieldIsActive,
+		})
+	}
 	if value, ok := xdu.mutation.Code(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -415,6 +436,20 @@ func (xduo *XxxDemoUpdateOne) SetNillableDeletedAt(t *time.Time) *XxxDemoUpdateO
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (xduo *XxxDemoUpdateOne) ClearDeletedAt() *XxxDemoUpdateOne {
 	xduo.mutation.ClearDeletedAt()
+	return xduo
+}
+
+// SetIsActive sets the "is_active" field.
+func (xduo *XxxDemoUpdateOne) SetIsActive(b bool) *XxxDemoUpdateOne {
+	xduo.mutation.SetIsActive(b)
+	return xduo
+}
+
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (xduo *XxxDemoUpdateOne) SetNillableIsActive(b *bool) *XxxDemoUpdateOne {
+	if b != nil {
+		xduo.SetIsActive(*b)
+	}
 	return xduo
 }
 
@@ -639,6 +674,13 @@ func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Column: xxxdemo.FieldDeletedAt,
+		})
+	}
+	if value, ok := xduo.mutation.IsActive(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: xxxdemo.FieldIsActive,
 		})
 	}
 	if value, ok := xduo.mutation.Code(); ok {

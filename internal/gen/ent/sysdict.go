@@ -28,8 +28,8 @@ type SysDict struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 删除时间,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 状态,
-	Status int16 `json:"status,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// 字典名（中）
 	NameCn string `json:"name_cn,omitempty"`
 	// 字典名（英）
@@ -41,9 +41,9 @@ func (*SysDict) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysdict.FieldIsDel:
+		case sysdict.FieldIsDel, sysdict.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case sysdict.FieldSort, sysdict.FieldStatus:
+		case sysdict.FieldSort:
 			values[i] = new(sql.NullInt64)
 		case sysdict.FieldID, sysdict.FieldMemo, sysdict.FieldNameCn, sysdict.FieldNameEn:
 			values[i] = new(sql.NullString)
@@ -107,11 +107,11 @@ func (sd *SysDict) assignValues(columns []string, values []interface{}) error {
 				sd.DeletedAt = new(time.Time)
 				*sd.DeletedAt = value.Time
 			}
-		case sysdict.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case sysdict.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sd.Status = int16(value.Int64)
+				sd.IsActive = value.Bool
 			}
 		case sysdict.FieldNameCn:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -173,8 +173,8 @@ func (sd *SysDict) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", sd.Status))
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", sd.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("name_cn=")
 	builder.WriteString(sd.NameCn)

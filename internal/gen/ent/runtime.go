@@ -61,10 +61,10 @@ func init() {
 	sysdict.DefaultUpdatedAt = sysdictDescUpdatedAt.Default.(func() time.Time)
 	// sysdict.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysdict.UpdateDefaultUpdatedAt = sysdictDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// sysdictDescStatus is the schema descriptor for status field.
-	sysdictDescStatus := sysdictMixinFields4[0].Descriptor()
-	// sysdict.DefaultStatus holds the default value on creation for the status field.
-	sysdict.DefaultStatus = sysdictDescStatus.Default.(int16)
+	// sysdictDescIsActive is the schema descriptor for is_active field.
+	sysdictDescIsActive := sysdictMixinFields4[0].Descriptor()
+	// sysdict.DefaultIsActive holds the default value on creation for the is_active field.
+	sysdict.DefaultIsActive = sysdictDescIsActive.Default.(bool)
 	// sysdictDescNameCn is the schema descriptor for name_cn field.
 	sysdictDescNameCn := sysdictFields[0].Descriptor()
 	// sysdict.NameCnValidator is a validator for the "name_cn" field. It is called by the builders before save.
@@ -201,10 +201,10 @@ func init() {
 	sysjwtblock.DefaultUpdatedAt = sysjwtblockDescUpdatedAt.Default.(func() time.Time)
 	// sysjwtblock.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysjwtblock.UpdateDefaultUpdatedAt = sysjwtblockDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// sysjwtblockDescStatus is the schema descriptor for status field.
-	sysjwtblockDescStatus := sysjwtblockMixinFields3[0].Descriptor()
-	// sysjwtblock.DefaultStatus holds the default value on creation for the status field.
-	sysjwtblock.DefaultStatus = sysjwtblockDescStatus.Default.(int16)
+	// sysjwtblockDescIsActive is the schema descriptor for is_active field.
+	sysjwtblockDescIsActive := sysjwtblockMixinFields3[0].Descriptor()
+	// sysjwtblock.DefaultIsActive holds the default value on creation for the is_active field.
+	sysjwtblock.DefaultIsActive = sysjwtblockDescIsActive.Default.(bool)
 	// sysjwtblockDescJwt is the schema descriptor for jwt field.
 	sysjwtblockDescJwt := sysjwtblockFields[0].Descriptor()
 	// sysjwtblock.JwtValidator is a validator for the "jwt" field. It is called by the builders before save.
@@ -331,10 +331,10 @@ func init() {
 	sysmenu.DefaultUpdatedAt = sysmenuDescUpdatedAt.Default.(func() time.Time)
 	// sysmenu.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysmenu.UpdateDefaultUpdatedAt = sysmenuDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// sysmenuDescStatus is the schema descriptor for status field.
-	sysmenuDescStatus := sysmenuMixinFields4[0].Descriptor()
-	// sysmenu.DefaultStatus holds the default value on creation for the status field.
-	sysmenu.DefaultStatus = sysmenuDescStatus.Default.(int16)
+	// sysmenuDescIsActive is the schema descriptor for is_active field.
+	sysmenuDescIsActive := sysmenuMixinFields4[0].Descriptor()
+	// sysmenu.DefaultIsActive holds the default value on creation for the is_active field.
+	sysmenu.DefaultIsActive = sysmenuDescIsActive.Default.(bool)
 	// sysmenuDescName is the schema descriptor for name field.
 	sysmenuDescName := sysmenuFields[0].Descriptor()
 	// sysmenu.NameValidator is a validator for the "name" field. It is called by the builders before save.
@@ -422,10 +422,10 @@ func init() {
 	sysmenuactionDescSort := sysmenuactionMixinFields1[0].Descriptor()
 	// sysmenuaction.DefaultSort holds the default value on creation for the sort field.
 	sysmenuaction.DefaultSort = sysmenuactionDescSort.Default.(int32)
-	// sysmenuactionDescStatus is the schema descriptor for status field.
-	sysmenuactionDescStatus := sysmenuactionMixinFields2[0].Descriptor()
-	// sysmenuaction.DefaultStatus holds the default value on creation for the status field.
-	sysmenuaction.DefaultStatus = sysmenuactionDescStatus.Default.(int16)
+	// sysmenuactionDescIsActive is the schema descriptor for is_active field.
+	sysmenuactionDescIsActive := sysmenuactionMixinFields2[0].Descriptor()
+	// sysmenuaction.DefaultIsActive holds the default value on creation for the is_active field.
+	sysmenuaction.DefaultIsActive = sysmenuactionDescIsActive.Default.(bool)
 	// sysmenuactionDescMemo is the schema descriptor for memo field.
 	sysmenuactionDescMemo := sysmenuactionMixinFields3[0].Descriptor()
 	// sysmenuaction.DefaultMemo holds the default value on creation for the memo field.
@@ -553,10 +553,10 @@ func init() {
 	sysmenuactionresource.DefaultUpdatedAt = sysmenuactionresourceDescUpdatedAt.Default.(func() time.Time)
 	// sysmenuactionresource.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysmenuactionresource.UpdateDefaultUpdatedAt = sysmenuactionresourceDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// sysmenuactionresourceDescStatus is the schema descriptor for status field.
-	sysmenuactionresourceDescStatus := sysmenuactionresourceMixinFields4[0].Descriptor()
-	// sysmenuactionresource.DefaultStatus holds the default value on creation for the status field.
-	sysmenuactionresource.DefaultStatus = sysmenuactionresourceDescStatus.Default.(int16)
+	// sysmenuactionresourceDescIsActive is the schema descriptor for is_active field.
+	sysmenuactionresourceDescIsActive := sysmenuactionresourceMixinFields4[0].Descriptor()
+	// sysmenuactionresource.DefaultIsActive holds the default value on creation for the is_active field.
+	sysmenuactionresource.DefaultIsActive = sysmenuactionresourceDescIsActive.Default.(bool)
 	// sysmenuactionresourceDescMethod is the schema descriptor for method field.
 	sysmenuactionresourceDescMethod := sysmenuactionresourceFields[0].Descriptor()
 	// sysmenuactionresource.MethodValidator is a validator for the "method" field. It is called by the builders before save.
@@ -648,10 +648,10 @@ func init() {
 	sysroleDescIsDel := sysroleMixinFields0[1].Descriptor()
 	// sysrole.DefaultIsDel holds the default value on creation for the is_del field.
 	sysrole.DefaultIsDel = sysroleDescIsDel.Default.(bool)
-	// sysroleDescStatus is the schema descriptor for status field.
-	sysroleDescStatus := sysroleMixinFields1[0].Descriptor()
-	// sysrole.DefaultStatus holds the default value on creation for the status field.
-	sysrole.DefaultStatus = sysroleDescStatus.Default.(int16)
+	// sysroleDescIsActive is the schema descriptor for is_active field.
+	sysroleDescIsActive := sysroleMixinFields1[0].Descriptor()
+	// sysrole.DefaultIsActive holds the default value on creation for the is_active field.
+	sysrole.DefaultIsActive = sysroleDescIsActive.Default.(bool)
 	// sysroleDescSort is the schema descriptor for sort field.
 	sysroleDescSort := sysroleMixinFields2[0].Descriptor()
 	// sysrole.DefaultSort holds the default value on creation for the sort field.
@@ -821,10 +821,10 @@ func init() {
 	sysuser.DefaultUpdatedAt = sysuserDescUpdatedAt.Default.(func() time.Time)
 	// sysuser.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysuser.UpdateDefaultUpdatedAt = sysuserDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// sysuserDescStatus is the schema descriptor for status field.
-	sysuserDescStatus := sysuserMixinFields3[0].Descriptor()
-	// sysuser.DefaultStatus holds the default value on creation for the status field.
-	sysuser.DefaultStatus = sysuserDescStatus.Default.(int16)
+	// sysuserDescIsActive is the schema descriptor for is_active field.
+	sysuserDescIsActive := sysuserMixinFields3[0].Descriptor()
+	// sysuser.DefaultIsActive holds the default value on creation for the is_active field.
+	sysuser.DefaultIsActive = sysuserDescIsActive.Default.(bool)
 	// sysuserDescUserName is the schema descriptor for user_name field.
 	sysuserDescUserName := sysuserFields[0].Descriptor()
 	// sysuser.UserNameValidator is a validator for the "user_name" field. It is called by the builders before save.
@@ -978,6 +978,8 @@ func init() {
 	_ = xxxdemoMixinFields2
 	xxxdemoMixinFields3 := xxxdemoMixin[3].Fields()
 	_ = xxxdemoMixinFields3
+	xxxdemoMixinFields4 := xxxdemoMixin[4].Fields()
+	_ = xxxdemoMixinFields4
 	xxxdemoFields := entity.XxxDemo{}.Fields()
 	_ = xxxdemoFields
 	// xxxdemoDescIsDel is the schema descriptor for is_del field.
@@ -1004,6 +1006,10 @@ func init() {
 	xxxdemo.DefaultUpdatedAt = xxxdemoDescUpdatedAt.Default.(func() time.Time)
 	// xxxdemo.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	xxxdemo.UpdateDefaultUpdatedAt = xxxdemoDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// xxxdemoDescIsActive is the schema descriptor for is_active field.
+	xxxdemoDescIsActive := xxxdemoMixinFields4[0].Descriptor()
+	// xxxdemo.DefaultIsActive holds the default value on creation for the is_active field.
+	xxxdemo.DefaultIsActive = xxxdemoDescIsActive.Default.(bool)
 	// xxxdemoDescCode is the schema descriptor for code field.
 	xxxdemoDescCode := xxxdemoFields[0].Descriptor()
 	// xxxdemo.CodeValidator is a validator for the "code" field. It is called by the builders before save.

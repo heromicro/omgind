@@ -103,24 +103,17 @@ func (smaru *SysMenuActionResourceUpdate) ClearDeletedAt() *SysMenuActionResourc
 	return smaru
 }
 
-// SetStatus sets the "status" field.
-func (smaru *SysMenuActionResourceUpdate) SetStatus(i int16) *SysMenuActionResourceUpdate {
-	smaru.mutation.ResetStatus()
-	smaru.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (smaru *SysMenuActionResourceUpdate) SetIsActive(b bool) *SysMenuActionResourceUpdate {
+	smaru.mutation.SetIsActive(b)
 	return smaru
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillableStatus(i *int16) *SysMenuActionResourceUpdate {
-	if i != nil {
-		smaru.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (smaru *SysMenuActionResourceUpdate) SetNillableIsActive(b *bool) *SysMenuActionResourceUpdate {
+	if b != nil {
+		smaru.SetIsActive(*b)
 	}
-	return smaru
-}
-
-// AddStatus adds i to the "status" field.
-func (smaru *SysMenuActionResourceUpdate) AddStatus(i int16) *SysMenuActionResourceUpdate {
-	smaru.mutation.AddStatus(i)
 	return smaru
 }
 
@@ -307,18 +300,11 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 			Column: sysmenuactionresource.FieldDeletedAt,
 		})
 	}
-	if value, ok := smaru.mutation.Status(); ok {
+	if value, ok := smaru.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenuactionresource.FieldStatus,
-		})
-	}
-	if value, ok := smaru.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysmenuactionresource.FieldStatus,
+			Column: sysmenuactionresource.FieldIsActive,
 		})
 	}
 	if value, ok := smaru.mutation.Method(); ok {
@@ -436,24 +422,17 @@ func (smaruo *SysMenuActionResourceUpdateOne) ClearDeletedAt() *SysMenuActionRes
 	return smaruo
 }
 
-// SetStatus sets the "status" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetStatus(i int16) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.ResetStatus()
-	smaruo.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (smaruo *SysMenuActionResourceUpdateOne) SetIsActive(b bool) *SysMenuActionResourceUpdateOne {
+	smaruo.mutation.SetIsActive(b)
 	return smaruo
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillableStatus(i *int16) *SysMenuActionResourceUpdateOne {
-	if i != nil {
-		smaruo.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (smaruo *SysMenuActionResourceUpdateOne) SetNillableIsActive(b *bool) *SysMenuActionResourceUpdateOne {
+	if b != nil {
+		smaruo.SetIsActive(*b)
 	}
-	return smaruo
-}
-
-// AddStatus adds i to the "status" field.
-func (smaruo *SysMenuActionResourceUpdateOne) AddStatus(i int16) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.AddStatus(i)
 	return smaruo
 }
 
@@ -670,18 +649,11 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 			Column: sysmenuactionresource.FieldDeletedAt,
 		})
 	}
-	if value, ok := smaruo.mutation.Status(); ok {
+	if value, ok := smaruo.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenuactionresource.FieldStatus,
-		})
-	}
-	if value, ok := smaruo.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysmenuactionresource.FieldStatus,
+			Column: sysmenuactionresource.FieldIsActive,
 		})
 	}
 	if value, ok := smaruo.mutation.Method(); ok {

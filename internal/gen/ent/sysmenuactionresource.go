@@ -28,8 +28,8 @@ type SysMenuActionResource struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 删除时间,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 状态,
-	Status int16 `json:"status,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// 资源HTTP请求方式(支持正则, get, delete, delete, put, patch )
 	Method string `json:"method,omitempty"`
 	// 资源HTTP请求路径（支持/:id匹配）
@@ -43,9 +43,9 @@ func (*SysMenuActionResource) scanValues(columns []string) ([]interface{}, error
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysmenuactionresource.FieldIsDel:
+		case sysmenuactionresource.FieldIsDel, sysmenuactionresource.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case sysmenuactionresource.FieldSort, sysmenuactionresource.FieldStatus:
+		case sysmenuactionresource.FieldSort:
 			values[i] = new(sql.NullInt64)
 		case sysmenuactionresource.FieldID, sysmenuactionresource.FieldMemo, sysmenuactionresource.FieldMethod, sysmenuactionresource.FieldPath, sysmenuactionresource.FieldActionID:
 			values[i] = new(sql.NullString)
@@ -109,11 +109,11 @@ func (smar *SysMenuActionResource) assignValues(columns []string, values []inter
 				smar.DeletedAt = new(time.Time)
 				*smar.DeletedAt = value.Time
 			}
-		case sysmenuactionresource.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case sysmenuactionresource.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				smar.Status = int16(value.Int64)
+				smar.IsActive = value.Bool
 			}
 		case sysmenuactionresource.FieldMethod:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -181,8 +181,8 @@ func (smar *SysMenuActionResource) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", smar.Status))
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", smar.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("method=")
 	builder.WriteString(smar.Method)

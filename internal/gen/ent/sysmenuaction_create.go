@@ -48,16 +48,16 @@ func (smac *SysMenuActionCreate) SetNillableSort(i *int32) *SysMenuActionCreate 
 	return smac
 }
 
-// SetStatus sets the "status" field.
-func (smac *SysMenuActionCreate) SetStatus(i int16) *SysMenuActionCreate {
-	smac.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (smac *SysMenuActionCreate) SetIsActive(b bool) *SysMenuActionCreate {
+	smac.mutation.SetIsActive(b)
 	return smac
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableStatus(i *int16) *SysMenuActionCreate {
-	if i != nil {
-		smac.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (smac *SysMenuActionCreate) SetNillableIsActive(b *bool) *SysMenuActionCreate {
+	if b != nil {
+		smac.SetIsActive(*b)
 	}
 	return smac
 }
@@ -235,9 +235,9 @@ func (smac *SysMenuActionCreate) defaults() {
 		v := sysmenuaction.DefaultSort
 		smac.mutation.SetSort(v)
 	}
-	if _, ok := smac.mutation.Status(); !ok {
-		v := sysmenuaction.DefaultStatus
-		smac.mutation.SetStatus(v)
+	if _, ok := smac.mutation.IsActive(); !ok {
+		v := sysmenuaction.DefaultIsActive
+		smac.mutation.SetIsActive(v)
 	}
 	if _, ok := smac.mutation.Memo(); !ok {
 		v := sysmenuaction.DefaultMemo
@@ -265,8 +265,8 @@ func (smac *SysMenuActionCreate) check() error {
 	if _, ok := smac.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysMenuAction.sort"`)}
 	}
-	if _, ok := smac.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "SysMenuAction.status"`)}
+	if _, ok := smac.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysMenuAction.is_active"`)}
 	}
 	if _, ok := smac.mutation.Memo(); !ok {
 		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "SysMenuAction.memo"`)}
@@ -363,13 +363,13 @@ func (smac *SysMenuActionCreate) createSpec() (*SysMenuAction, *sqlgraph.CreateS
 		})
 		_node.Sort = value
 	}
-	if value, ok := smac.mutation.Status(); ok {
+	if value, ok := smac.mutation.IsActive(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenuaction.FieldStatus,
+			Column: sysmenuaction.FieldIsActive,
 		})
-		_node.Status = value
+		_node.IsActive = value
 	}
 	if value, ok := smac.mutation.Memo(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

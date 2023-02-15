@@ -62,8 +62,7 @@ type SysDictMutation struct {
 	created_at    *time.Time
 	updated_at    *time.Time
 	deleted_at    *time.Time
-	status        *int16
-	addstatus     *int16
+	is_active     *bool
 	name_cn       *string
 	name_en       *string
 	clearedFields map[string]struct{}
@@ -425,60 +424,40 @@ func (m *SysDictMutation) ResetDeletedAt() {
 	delete(m.clearedFields, sysdict.FieldDeletedAt)
 }
 
-// SetStatus sets the "status" field.
-func (m *SysDictMutation) SetStatus(i int16) {
-	m.status = &i
-	m.addstatus = nil
+// SetIsActive sets the "is_active" field.
+func (m *SysDictMutation) SetIsActive(b bool) {
+	m.is_active = &b
 }
 
-// Status returns the value of the "status" field in the mutation.
-func (m *SysDictMutation) Status() (r int16, exists bool) {
-	v := m.status
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysDictMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStatus returns the old "status" field's value of the SysDict entity.
+// OldIsActive returns the old "is_active" field's value of the SysDict entity.
 // If the SysDict object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysDictMutation) OldStatus(ctx context.Context) (v int16, err error) {
+func (m *SysDictMutation) OldIsActive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
 	}
-	return oldValue.Status, nil
+	return oldValue.IsActive, nil
 }
 
-// AddStatus adds i to the "status" field.
-func (m *SysDictMutation) AddStatus(i int16) {
-	if m.addstatus != nil {
-		*m.addstatus += i
-	} else {
-		m.addstatus = &i
-	}
-}
-
-// AddedStatus returns the value that was added to the "status" field in this mutation.
-func (m *SysDictMutation) AddedStatus() (r int16, exists bool) {
-	v := m.addstatus
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *SysDictMutation) ResetStatus() {
-	m.status = nil
-	m.addstatus = nil
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysDictMutation) ResetIsActive() {
+	m.is_active = nil
 }
 
 // SetNameCn sets the "name_cn" field.
@@ -591,8 +570,8 @@ func (m *SysDictMutation) Fields() []string {
 	if m.deleted_at != nil {
 		fields = append(fields, sysdict.FieldDeletedAt)
 	}
-	if m.status != nil {
-		fields = append(fields, sysdict.FieldStatus)
+	if m.is_active != nil {
+		fields = append(fields, sysdict.FieldIsActive)
 	}
 	if m.name_cn != nil {
 		fields = append(fields, sysdict.FieldNameCn)
@@ -620,8 +599,8 @@ func (m *SysDictMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdatedAt()
 	case sysdict.FieldDeletedAt:
 		return m.DeletedAt()
-	case sysdict.FieldStatus:
-		return m.Status()
+	case sysdict.FieldIsActive:
+		return m.IsActive()
 	case sysdict.FieldNameCn:
 		return m.NameCn()
 	case sysdict.FieldNameEn:
@@ -647,8 +626,8 @@ func (m *SysDictMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldUpdatedAt(ctx)
 	case sysdict.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
-	case sysdict.FieldStatus:
-		return m.OldStatus(ctx)
+	case sysdict.FieldIsActive:
+		return m.OldIsActive(ctx)
 	case sysdict.FieldNameCn:
 		return m.OldNameCn(ctx)
 	case sysdict.FieldNameEn:
@@ -704,12 +683,12 @@ func (m *SysDictMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDeletedAt(v)
 		return nil
-	case sysdict.FieldStatus:
-		v, ok := value.(int16)
+	case sysdict.FieldIsActive:
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStatus(v)
+		m.SetIsActive(v)
 		return nil
 	case sysdict.FieldNameCn:
 		v, ok := value.(string)
@@ -736,9 +715,6 @@ func (m *SysDictMutation) AddedFields() []string {
 	if m.addsort != nil {
 		fields = append(fields, sysdict.FieldSort)
 	}
-	if m.addstatus != nil {
-		fields = append(fields, sysdict.FieldStatus)
-	}
 	return fields
 }
 
@@ -749,8 +725,6 @@ func (m *SysDictMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case sysdict.FieldSort:
 		return m.AddedSort()
-	case sysdict.FieldStatus:
-		return m.AddedStatus()
 	}
 	return nil, false
 }
@@ -766,13 +740,6 @@ func (m *SysDictMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddSort(v)
-		return nil
-	case sysdict.FieldStatus:
-		v, ok := value.(int16)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStatus(v)
 		return nil
 	}
 	return fmt.Errorf("unknown SysDict numeric field %s", name)
@@ -828,8 +795,8 @@ func (m *SysDictMutation) ResetField(name string) error {
 	case sysdict.FieldDeletedAt:
 		m.ResetDeletedAt()
 		return nil
-	case sysdict.FieldStatus:
-		m.ResetStatus()
+	case sysdict.FieldIsActive:
+		m.ResetIsActive()
 		return nil
 	case sysdict.FieldNameCn:
 		m.ResetNameCn()
@@ -1827,8 +1794,7 @@ type SysJwtBlockMutation struct {
 	created_at    *time.Time
 	updated_at    *time.Time
 	deleted_at    *time.Time
-	status        *int16
-	addstatus     *int16
+	is_active     *bool
 	jwt           *string
 	clearedFields map[string]struct{}
 	done          bool
@@ -2133,60 +2099,40 @@ func (m *SysJwtBlockMutation) ResetDeletedAt() {
 	delete(m.clearedFields, sysjwtblock.FieldDeletedAt)
 }
 
-// SetStatus sets the "status" field.
-func (m *SysJwtBlockMutation) SetStatus(i int16) {
-	m.status = &i
-	m.addstatus = nil
+// SetIsActive sets the "is_active" field.
+func (m *SysJwtBlockMutation) SetIsActive(b bool) {
+	m.is_active = &b
 }
 
-// Status returns the value of the "status" field in the mutation.
-func (m *SysJwtBlockMutation) Status() (r int16, exists bool) {
-	v := m.status
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysJwtBlockMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStatus returns the old "status" field's value of the SysJwtBlock entity.
+// OldIsActive returns the old "is_active" field's value of the SysJwtBlock entity.
 // If the SysJwtBlock object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysJwtBlockMutation) OldStatus(ctx context.Context) (v int16, err error) {
+func (m *SysJwtBlockMutation) OldIsActive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
 	}
-	return oldValue.Status, nil
+	return oldValue.IsActive, nil
 }
 
-// AddStatus adds i to the "status" field.
-func (m *SysJwtBlockMutation) AddStatus(i int16) {
-	if m.addstatus != nil {
-		*m.addstatus += i
-	} else {
-		m.addstatus = &i
-	}
-}
-
-// AddedStatus returns the value that was added to the "status" field in this mutation.
-func (m *SysJwtBlockMutation) AddedStatus() (r int16, exists bool) {
-	v := m.addstatus
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *SysJwtBlockMutation) ResetStatus() {
-	m.status = nil
-	m.addstatus = nil
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysJwtBlockMutation) ResetIsActive() {
+	m.is_active = nil
 }
 
 // SetJwt sets the "jwt" field.
@@ -2260,8 +2206,8 @@ func (m *SysJwtBlockMutation) Fields() []string {
 	if m.deleted_at != nil {
 		fields = append(fields, sysjwtblock.FieldDeletedAt)
 	}
-	if m.status != nil {
-		fields = append(fields, sysjwtblock.FieldStatus)
+	if m.is_active != nil {
+		fields = append(fields, sysjwtblock.FieldIsActive)
 	}
 	if m.jwt != nil {
 		fields = append(fields, sysjwtblock.FieldJwt)
@@ -2284,8 +2230,8 @@ func (m *SysJwtBlockMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdatedAt()
 	case sysjwtblock.FieldDeletedAt:
 		return m.DeletedAt()
-	case sysjwtblock.FieldStatus:
-		return m.Status()
+	case sysjwtblock.FieldIsActive:
+		return m.IsActive()
 	case sysjwtblock.FieldJwt:
 		return m.Jwt()
 	}
@@ -2307,8 +2253,8 @@ func (m *SysJwtBlockMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldUpdatedAt(ctx)
 	case sysjwtblock.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
-	case sysjwtblock.FieldStatus:
-		return m.OldStatus(ctx)
+	case sysjwtblock.FieldIsActive:
+		return m.OldIsActive(ctx)
 	case sysjwtblock.FieldJwt:
 		return m.OldJwt(ctx)
 	}
@@ -2355,12 +2301,12 @@ func (m *SysJwtBlockMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDeletedAt(v)
 		return nil
-	case sysjwtblock.FieldStatus:
-		v, ok := value.(int16)
+	case sysjwtblock.FieldIsActive:
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStatus(v)
+		m.SetIsActive(v)
 		return nil
 	case sysjwtblock.FieldJwt:
 		v, ok := value.(string)
@@ -2376,21 +2322,13 @@ func (m *SysJwtBlockMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *SysJwtBlockMutation) AddedFields() []string {
-	var fields []string
-	if m.addstatus != nil {
-		fields = append(fields, sysjwtblock.FieldStatus)
-	}
-	return fields
+	return nil
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *SysJwtBlockMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	case sysjwtblock.FieldStatus:
-		return m.AddedStatus()
-	}
 	return nil, false
 }
 
@@ -2399,13 +2337,6 @@ func (m *SysJwtBlockMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *SysJwtBlockMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case sysjwtblock.FieldStatus:
-		v, ok := value.(int16)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStatus(v)
-		return nil
 	}
 	return fmt.Errorf("unknown SysJwtBlock numeric field %s", name)
 }
@@ -2457,8 +2388,8 @@ func (m *SysJwtBlockMutation) ResetField(name string) error {
 	case sysjwtblock.FieldDeletedAt:
 		m.ResetDeletedAt()
 		return nil
-	case sysjwtblock.FieldStatus:
-		m.ResetStatus()
+	case sysjwtblock.FieldIsActive:
+		m.ResetIsActive()
 		return nil
 	case sysjwtblock.FieldJwt:
 		m.ResetJwt()
@@ -3407,8 +3338,7 @@ type SysMenuMutation struct {
 	created_at    *time.Time
 	updated_at    *time.Time
 	deleted_at    *time.Time
-	status        *int16
-	addstatus     *int16
+	is_active     *bool
 	name          *string
 	icon          *string
 	router        *string
@@ -3777,60 +3707,40 @@ func (m *SysMenuMutation) ResetDeletedAt() {
 	delete(m.clearedFields, sysmenu.FieldDeletedAt)
 }
 
-// SetStatus sets the "status" field.
-func (m *SysMenuMutation) SetStatus(i int16) {
-	m.status = &i
-	m.addstatus = nil
+// SetIsActive sets the "is_active" field.
+func (m *SysMenuMutation) SetIsActive(b bool) {
+	m.is_active = &b
 }
 
-// Status returns the value of the "status" field in the mutation.
-func (m *SysMenuMutation) Status() (r int16, exists bool) {
-	v := m.status
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysMenuMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStatus returns the old "status" field's value of the SysMenu entity.
+// OldIsActive returns the old "is_active" field's value of the SysMenu entity.
 // If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuMutation) OldStatus(ctx context.Context) (v int16, err error) {
+func (m *SysMenuMutation) OldIsActive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
 	}
-	return oldValue.Status, nil
+	return oldValue.IsActive, nil
 }
 
-// AddStatus adds i to the "status" field.
-func (m *SysMenuMutation) AddStatus(i int16) {
-	if m.addstatus != nil {
-		*m.addstatus += i
-	} else {
-		m.addstatus = &i
-	}
-}
-
-// AddedStatus returns the value that was added to the "status" field in this mutation.
-func (m *SysMenuMutation) AddedStatus() (r int16, exists bool) {
-	v := m.addstatus
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *SysMenuMutation) ResetStatus() {
-	m.status = nil
-	m.addstatus = nil
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysMenuMutation) ResetIsActive() {
+	m.is_active = nil
 }
 
 // SetName sets the "name" field.
@@ -4218,8 +4128,8 @@ func (m *SysMenuMutation) Fields() []string {
 	if m.deleted_at != nil {
 		fields = append(fields, sysmenu.FieldDeletedAt)
 	}
-	if m.status != nil {
-		fields = append(fields, sysmenu.FieldStatus)
+	if m.is_active != nil {
+		fields = append(fields, sysmenu.FieldIsActive)
 	}
 	if m.name != nil {
 		fields = append(fields, sysmenu.FieldName)
@@ -4265,8 +4175,8 @@ func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdatedAt()
 	case sysmenu.FieldDeletedAt:
 		return m.DeletedAt()
-	case sysmenu.FieldStatus:
-		return m.Status()
+	case sysmenu.FieldIsActive:
+		return m.IsActive()
 	case sysmenu.FieldName:
 		return m.Name()
 	case sysmenu.FieldIcon:
@@ -4304,8 +4214,8 @@ func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldUpdatedAt(ctx)
 	case sysmenu.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
-	case sysmenu.FieldStatus:
-		return m.OldStatus(ctx)
+	case sysmenu.FieldIsActive:
+		return m.OldIsActive(ctx)
 	case sysmenu.FieldName:
 		return m.OldName(ctx)
 	case sysmenu.FieldIcon:
@@ -4373,12 +4283,12 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDeletedAt(v)
 		return nil
-	case sysmenu.FieldStatus:
-		v, ok := value.(int16)
+	case sysmenu.FieldIsActive:
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStatus(v)
+		m.SetIsActive(v)
 		return nil
 	case sysmenu.FieldName:
 		v, ok := value.(string)
@@ -4447,9 +4357,6 @@ func (m *SysMenuMutation) AddedFields() []string {
 	if m.addsort != nil {
 		fields = append(fields, sysmenu.FieldSort)
 	}
-	if m.addstatus != nil {
-		fields = append(fields, sysmenu.FieldStatus)
-	}
 	if m.addlevel != nil {
 		fields = append(fields, sysmenu.FieldLevel)
 	}
@@ -4463,8 +4370,6 @@ func (m *SysMenuMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case sysmenu.FieldSort:
 		return m.AddedSort()
-	case sysmenu.FieldStatus:
-		return m.AddedStatus()
 	case sysmenu.FieldLevel:
 		return m.AddedLevel()
 	}
@@ -4482,13 +4387,6 @@ func (m *SysMenuMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddSort(v)
-		return nil
-	case sysmenu.FieldStatus:
-		v, ok := value.(int16)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStatus(v)
 		return nil
 	case sysmenu.FieldLevel:
 		v, ok := value.(int32)
@@ -4569,8 +4467,8 @@ func (m *SysMenuMutation) ResetField(name string) error {
 	case sysmenu.FieldDeletedAt:
 		m.ResetDeletedAt()
 		return nil
-	case sysmenu.FieldStatus:
-		m.ResetStatus()
+	case sysmenu.FieldIsActive:
+		m.ResetIsActive()
 		return nil
 	case sysmenu.FieldName:
 		m.ResetName()
@@ -4657,8 +4555,7 @@ type SysMenuActionMutation struct {
 	is_del        *bool
 	sort          *int32
 	addsort       *int32
-	status        *int16
-	addstatus     *int16
+	is_active     *bool
 	memo          *string
 	created_at    *time.Time
 	updated_at    *time.Time
@@ -4868,60 +4765,40 @@ func (m *SysMenuActionMutation) ResetSort() {
 	m.addsort = nil
 }
 
-// SetStatus sets the "status" field.
-func (m *SysMenuActionMutation) SetStatus(i int16) {
-	m.status = &i
-	m.addstatus = nil
+// SetIsActive sets the "is_active" field.
+func (m *SysMenuActionMutation) SetIsActive(b bool) {
+	m.is_active = &b
 }
 
-// Status returns the value of the "status" field in the mutation.
-func (m *SysMenuActionMutation) Status() (r int16, exists bool) {
-	v := m.status
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysMenuActionMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStatus returns the old "status" field's value of the SysMenuAction entity.
+// OldIsActive returns the old "is_active" field's value of the SysMenuAction entity.
 // If the SysMenuAction object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuActionMutation) OldStatus(ctx context.Context) (v int16, err error) {
+func (m *SysMenuActionMutation) OldIsActive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
 	}
-	return oldValue.Status, nil
+	return oldValue.IsActive, nil
 }
 
-// AddStatus adds i to the "status" field.
-func (m *SysMenuActionMutation) AddStatus(i int16) {
-	if m.addstatus != nil {
-		*m.addstatus += i
-	} else {
-		m.addstatus = &i
-	}
-}
-
-// AddedStatus returns the value that was added to the "status" field in this mutation.
-func (m *SysMenuActionMutation) AddedStatus() (r int16, exists bool) {
-	v := m.addstatus
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *SysMenuActionMutation) ResetStatus() {
-	m.status = nil
-	m.addstatus = nil
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysMenuActionMutation) ResetIsActive() {
+	m.is_active = nil
 }
 
 // SetMemo sets the "memo" field.
@@ -5215,8 +5092,8 @@ func (m *SysMenuActionMutation) Fields() []string {
 	if m.sort != nil {
 		fields = append(fields, sysmenuaction.FieldSort)
 	}
-	if m.status != nil {
-		fields = append(fields, sysmenuaction.FieldStatus)
+	if m.is_active != nil {
+		fields = append(fields, sysmenuaction.FieldIsActive)
 	}
 	if m.memo != nil {
 		fields = append(fields, sysmenuaction.FieldMemo)
@@ -5251,8 +5128,8 @@ func (m *SysMenuActionMutation) Field(name string) (ent.Value, bool) {
 		return m.IsDel()
 	case sysmenuaction.FieldSort:
 		return m.Sort()
-	case sysmenuaction.FieldStatus:
-		return m.Status()
+	case sysmenuaction.FieldIsActive:
+		return m.IsActive()
 	case sysmenuaction.FieldMemo:
 		return m.Memo()
 	case sysmenuaction.FieldCreatedAt:
@@ -5280,8 +5157,8 @@ func (m *SysMenuActionMutation) OldField(ctx context.Context, name string) (ent.
 		return m.OldIsDel(ctx)
 	case sysmenuaction.FieldSort:
 		return m.OldSort(ctx)
-	case sysmenuaction.FieldStatus:
-		return m.OldStatus(ctx)
+	case sysmenuaction.FieldIsActive:
+		return m.OldIsActive(ctx)
 	case sysmenuaction.FieldMemo:
 		return m.OldMemo(ctx)
 	case sysmenuaction.FieldCreatedAt:
@@ -5319,12 +5196,12 @@ func (m *SysMenuActionMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetSort(v)
 		return nil
-	case sysmenuaction.FieldStatus:
-		v, ok := value.(int16)
+	case sysmenuaction.FieldIsActive:
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStatus(v)
+		m.SetIsActive(v)
 		return nil
 	case sysmenuaction.FieldMemo:
 		v, ok := value.(string)
@@ -5386,9 +5263,6 @@ func (m *SysMenuActionMutation) AddedFields() []string {
 	if m.addsort != nil {
 		fields = append(fields, sysmenuaction.FieldSort)
 	}
-	if m.addstatus != nil {
-		fields = append(fields, sysmenuaction.FieldStatus)
-	}
 	return fields
 }
 
@@ -5399,8 +5273,6 @@ func (m *SysMenuActionMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case sysmenuaction.FieldSort:
 		return m.AddedSort()
-	case sysmenuaction.FieldStatus:
-		return m.AddedStatus()
 	}
 	return nil, false
 }
@@ -5416,13 +5288,6 @@ func (m *SysMenuActionMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddSort(v)
-		return nil
-	case sysmenuaction.FieldStatus:
-		v, ok := value.(int16)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStatus(v)
 		return nil
 	}
 	return fmt.Errorf("unknown SysMenuAction numeric field %s", name)
@@ -5466,8 +5331,8 @@ func (m *SysMenuActionMutation) ResetField(name string) error {
 	case sysmenuaction.FieldSort:
 		m.ResetSort()
 		return nil
-	case sysmenuaction.FieldStatus:
-		m.ResetStatus()
+	case sysmenuaction.FieldIsActive:
+		m.ResetIsActive()
 		return nil
 	case sysmenuaction.FieldMemo:
 		m.ResetMemo()
@@ -5555,8 +5420,7 @@ type SysMenuActionResourceMutation struct {
 	created_at    *time.Time
 	updated_at    *time.Time
 	deleted_at    *time.Time
-	status        *int16
-	addstatus     *int16
+	is_active     *bool
 	method        *string
 	_path         *string
 	action_id     *string
@@ -5919,60 +5783,40 @@ func (m *SysMenuActionResourceMutation) ResetDeletedAt() {
 	delete(m.clearedFields, sysmenuactionresource.FieldDeletedAt)
 }
 
-// SetStatus sets the "status" field.
-func (m *SysMenuActionResourceMutation) SetStatus(i int16) {
-	m.status = &i
-	m.addstatus = nil
+// SetIsActive sets the "is_active" field.
+func (m *SysMenuActionResourceMutation) SetIsActive(b bool) {
+	m.is_active = &b
 }
 
-// Status returns the value of the "status" field in the mutation.
-func (m *SysMenuActionResourceMutation) Status() (r int16, exists bool) {
-	v := m.status
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysMenuActionResourceMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStatus returns the old "status" field's value of the SysMenuActionResource entity.
+// OldIsActive returns the old "is_active" field's value of the SysMenuActionResource entity.
 // If the SysMenuActionResource object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysMenuActionResourceMutation) OldStatus(ctx context.Context) (v int16, err error) {
+func (m *SysMenuActionResourceMutation) OldIsActive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
 	}
-	return oldValue.Status, nil
+	return oldValue.IsActive, nil
 }
 
-// AddStatus adds i to the "status" field.
-func (m *SysMenuActionResourceMutation) AddStatus(i int16) {
-	if m.addstatus != nil {
-		*m.addstatus += i
-	} else {
-		m.addstatus = &i
-	}
-}
-
-// AddedStatus returns the value that was added to the "status" field in this mutation.
-func (m *SysMenuActionResourceMutation) AddedStatus() (r int16, exists bool) {
-	v := m.addstatus
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *SysMenuActionResourceMutation) ResetStatus() {
-	m.status = nil
-	m.addstatus = nil
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysMenuActionResourceMutation) ResetIsActive() {
+	m.is_active = nil
 }
 
 // SetMethod sets the "method" field.
@@ -6121,8 +5965,8 @@ func (m *SysMenuActionResourceMutation) Fields() []string {
 	if m.deleted_at != nil {
 		fields = append(fields, sysmenuactionresource.FieldDeletedAt)
 	}
-	if m.status != nil {
-		fields = append(fields, sysmenuactionresource.FieldStatus)
+	if m.is_active != nil {
+		fields = append(fields, sysmenuactionresource.FieldIsActive)
 	}
 	if m.method != nil {
 		fields = append(fields, sysmenuactionresource.FieldMethod)
@@ -6153,8 +5997,8 @@ func (m *SysMenuActionResourceMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdatedAt()
 	case sysmenuactionresource.FieldDeletedAt:
 		return m.DeletedAt()
-	case sysmenuactionresource.FieldStatus:
-		return m.Status()
+	case sysmenuactionresource.FieldIsActive:
+		return m.IsActive()
 	case sysmenuactionresource.FieldMethod:
 		return m.Method()
 	case sysmenuactionresource.FieldPath:
@@ -6182,8 +6026,8 @@ func (m *SysMenuActionResourceMutation) OldField(ctx context.Context, name strin
 		return m.OldUpdatedAt(ctx)
 	case sysmenuactionresource.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
-	case sysmenuactionresource.FieldStatus:
-		return m.OldStatus(ctx)
+	case sysmenuactionresource.FieldIsActive:
+		return m.OldIsActive(ctx)
 	case sysmenuactionresource.FieldMethod:
 		return m.OldMethod(ctx)
 	case sysmenuactionresource.FieldPath:
@@ -6241,12 +6085,12 @@ func (m *SysMenuActionResourceMutation) SetField(name string, value ent.Value) e
 		}
 		m.SetDeletedAt(v)
 		return nil
-	case sysmenuactionresource.FieldStatus:
-		v, ok := value.(int16)
+	case sysmenuactionresource.FieldIsActive:
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStatus(v)
+		m.SetIsActive(v)
 		return nil
 	case sysmenuactionresource.FieldMethod:
 		v, ok := value.(string)
@@ -6280,9 +6124,6 @@ func (m *SysMenuActionResourceMutation) AddedFields() []string {
 	if m.addsort != nil {
 		fields = append(fields, sysmenuactionresource.FieldSort)
 	}
-	if m.addstatus != nil {
-		fields = append(fields, sysmenuactionresource.FieldStatus)
-	}
 	return fields
 }
 
@@ -6293,8 +6134,6 @@ func (m *SysMenuActionResourceMutation) AddedField(name string) (ent.Value, bool
 	switch name {
 	case sysmenuactionresource.FieldSort:
 		return m.AddedSort()
-	case sysmenuactionresource.FieldStatus:
-		return m.AddedStatus()
 	}
 	return nil, false
 }
@@ -6310,13 +6149,6 @@ func (m *SysMenuActionResourceMutation) AddField(name string, value ent.Value) e
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddSort(v)
-		return nil
-	case sysmenuactionresource.FieldStatus:
-		v, ok := value.(int16)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStatus(v)
 		return nil
 	}
 	return fmt.Errorf("unknown SysMenuActionResource numeric field %s", name)
@@ -6372,8 +6204,8 @@ func (m *SysMenuActionResourceMutation) ResetField(name string) error {
 	case sysmenuactionresource.FieldDeletedAt:
 		m.ResetDeletedAt()
 		return nil
-	case sysmenuactionresource.FieldStatus:
-		m.ResetStatus()
+	case sysmenuactionresource.FieldIsActive:
+		m.ResetIsActive()
 		return nil
 	case sysmenuactionresource.FieldMethod:
 		m.ResetMethod()
@@ -6443,8 +6275,7 @@ type SysRoleMutation struct {
 	typ           string
 	id            *string
 	is_del        *bool
-	status        *int16
-	addstatus     *int16
+	is_active     *bool
 	sort          *int32
 	addsort       *int32
 	memo          *string
@@ -6598,60 +6429,40 @@ func (m *SysRoleMutation) ResetIsDel() {
 	m.is_del = nil
 }
 
-// SetStatus sets the "status" field.
-func (m *SysRoleMutation) SetStatus(i int16) {
-	m.status = &i
-	m.addstatus = nil
+// SetIsActive sets the "is_active" field.
+func (m *SysRoleMutation) SetIsActive(b bool) {
+	m.is_active = &b
 }
 
-// Status returns the value of the "status" field in the mutation.
-func (m *SysRoleMutation) Status() (r int16, exists bool) {
-	v := m.status
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysRoleMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStatus returns the old "status" field's value of the SysRole entity.
+// OldIsActive returns the old "is_active" field's value of the SysRole entity.
 // If the SysRole object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysRoleMutation) OldStatus(ctx context.Context) (v int16, err error) {
+func (m *SysRoleMutation) OldIsActive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
 	}
-	return oldValue.Status, nil
+	return oldValue.IsActive, nil
 }
 
-// AddStatus adds i to the "status" field.
-func (m *SysRoleMutation) AddStatus(i int16) {
-	if m.addstatus != nil {
-		*m.addstatus += i
-	} else {
-		m.addstatus = &i
-	}
-}
-
-// AddedStatus returns the value that was added to the "status" field in this mutation.
-func (m *SysRoleMutation) AddedStatus() (r int16, exists bool) {
-	v := m.addstatus
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *SysRoleMutation) ResetStatus() {
-	m.status = nil
-	m.addstatus = nil
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysRoleMutation) ResetIsActive() {
+	m.is_active = nil
 }
 
 // SetSort sets the "sort" field.
@@ -6926,8 +6737,8 @@ func (m *SysRoleMutation) Fields() []string {
 	if m.is_del != nil {
 		fields = append(fields, sysrole.FieldIsDel)
 	}
-	if m.status != nil {
-		fields = append(fields, sysrole.FieldStatus)
+	if m.is_active != nil {
+		fields = append(fields, sysrole.FieldIsActive)
 	}
 	if m.sort != nil {
 		fields = append(fields, sysrole.FieldSort)
@@ -6957,8 +6768,8 @@ func (m *SysRoleMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case sysrole.FieldIsDel:
 		return m.IsDel()
-	case sysrole.FieldStatus:
-		return m.Status()
+	case sysrole.FieldIsActive:
+		return m.IsActive()
 	case sysrole.FieldSort:
 		return m.Sort()
 	case sysrole.FieldMemo:
@@ -6982,8 +6793,8 @@ func (m *SysRoleMutation) OldField(ctx context.Context, name string) (ent.Value,
 	switch name {
 	case sysrole.FieldIsDel:
 		return m.OldIsDel(ctx)
-	case sysrole.FieldStatus:
-		return m.OldStatus(ctx)
+	case sysrole.FieldIsActive:
+		return m.OldIsActive(ctx)
 	case sysrole.FieldSort:
 		return m.OldSort(ctx)
 	case sysrole.FieldMemo:
@@ -7012,12 +6823,12 @@ func (m *SysRoleMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetIsDel(v)
 		return nil
-	case sysrole.FieldStatus:
-		v, ok := value.(int16)
+	case sysrole.FieldIsActive:
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStatus(v)
+		m.SetIsActive(v)
 		return nil
 	case sysrole.FieldSort:
 		v, ok := value.(int32)
@@ -7069,9 +6880,6 @@ func (m *SysRoleMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *SysRoleMutation) AddedFields() []string {
 	var fields []string
-	if m.addstatus != nil {
-		fields = append(fields, sysrole.FieldStatus)
-	}
 	if m.addsort != nil {
 		fields = append(fields, sysrole.FieldSort)
 	}
@@ -7083,8 +6891,6 @@ func (m *SysRoleMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *SysRoleMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case sysrole.FieldStatus:
-		return m.AddedStatus()
 	case sysrole.FieldSort:
 		return m.AddedSort()
 	}
@@ -7096,13 +6902,6 @@ func (m *SysRoleMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *SysRoleMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case sysrole.FieldStatus:
-		v, ok := value.(int16)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStatus(v)
-		return nil
 	case sysrole.FieldSort:
 		v, ok := value.(int32)
 		if !ok {
@@ -7149,8 +6948,8 @@ func (m *SysRoleMutation) ResetField(name string) error {
 	case sysrole.FieldIsDel:
 		m.ResetIsDel()
 		return nil
-	case sysrole.FieldStatus:
-		m.ResetStatus()
+	case sysrole.FieldIsActive:
+		m.ResetIsActive()
 		return nil
 	case sysrole.FieldSort:
 		m.ResetSort()
@@ -7916,8 +7715,7 @@ type SysUserMutation struct {
 	created_at    *time.Time
 	updated_at    *time.Time
 	deleted_at    *time.Time
-	status        *int16
-	addstatus     *int16
+	is_active     *bool
 	user_name     *string
 	real_name     *string
 	first_name    *string
@@ -8249,60 +8047,40 @@ func (m *SysUserMutation) ResetDeletedAt() {
 	delete(m.clearedFields, sysuser.FieldDeletedAt)
 }
 
-// SetStatus sets the "status" field.
-func (m *SysUserMutation) SetStatus(i int16) {
-	m.status = &i
-	m.addstatus = nil
+// SetIsActive sets the "is_active" field.
+func (m *SysUserMutation) SetIsActive(b bool) {
+	m.is_active = &b
 }
 
-// Status returns the value of the "status" field in the mutation.
-func (m *SysUserMutation) Status() (r int16, exists bool) {
-	v := m.status
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysUserMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStatus returns the old "status" field's value of the SysUser entity.
+// OldIsActive returns the old "is_active" field's value of the SysUser entity.
 // If the SysUser object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysUserMutation) OldStatus(ctx context.Context) (v int16, err error) {
+func (m *SysUserMutation) OldIsActive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
 	}
-	return oldValue.Status, nil
+	return oldValue.IsActive, nil
 }
 
-// AddStatus adds i to the "status" field.
-func (m *SysUserMutation) AddStatus(i int16) {
-	if m.addstatus != nil {
-		*m.addstatus += i
-	} else {
-		m.addstatus = &i
-	}
-}
-
-// AddedStatus returns the value that was added to the "status" field in this mutation.
-func (m *SysUserMutation) AddedStatus() (r int16, exists bool) {
-	v := m.addstatus
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetStatus resets all changes to the "status" field.
-func (m *SysUserMutation) ResetStatus() {
-	m.status = nil
-	m.addstatus = nil
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysUserMutation) ResetIsActive() {
+	m.is_active = nil
 }
 
 // SetUserName sets the "user_name" field.
@@ -8667,8 +8445,8 @@ func (m *SysUserMutation) Fields() []string {
 	if m.deleted_at != nil {
 		fields = append(fields, sysuser.FieldDeletedAt)
 	}
-	if m.status != nil {
-		fields = append(fields, sysuser.FieldStatus)
+	if m.is_active != nil {
+		fields = append(fields, sysuser.FieldIsActive)
 	}
 	if m.user_name != nil {
 		fields = append(fields, sysuser.FieldUserName)
@@ -8712,8 +8490,8 @@ func (m *SysUserMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdatedAt()
 	case sysuser.FieldDeletedAt:
 		return m.DeletedAt()
-	case sysuser.FieldStatus:
-		return m.Status()
+	case sysuser.FieldIsActive:
+		return m.IsActive()
 	case sysuser.FieldUserName:
 		return m.UserName()
 	case sysuser.FieldRealName:
@@ -8749,8 +8527,8 @@ func (m *SysUserMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldUpdatedAt(ctx)
 	case sysuser.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
-	case sysuser.FieldStatus:
-		return m.OldStatus(ctx)
+	case sysuser.FieldIsActive:
+		return m.OldIsActive(ctx)
 	case sysuser.FieldUserName:
 		return m.OldUserName(ctx)
 	case sysuser.FieldRealName:
@@ -8811,12 +8589,12 @@ func (m *SysUserMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDeletedAt(v)
 		return nil
-	case sysuser.FieldStatus:
-		v, ok := value.(int16)
+	case sysuser.FieldIsActive:
+		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStatus(v)
+		m.SetIsActive(v)
 		return nil
 	case sysuser.FieldUserName:
 		v, ok := value.(string)
@@ -8885,9 +8663,6 @@ func (m *SysUserMutation) AddedFields() []string {
 	if m.addsort != nil {
 		fields = append(fields, sysuser.FieldSort)
 	}
-	if m.addstatus != nil {
-		fields = append(fields, sysuser.FieldStatus)
-	}
 	return fields
 }
 
@@ -8898,8 +8673,6 @@ func (m *SysUserMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case sysuser.FieldSort:
 		return m.AddedSort()
-	case sysuser.FieldStatus:
-		return m.AddedStatus()
 	}
 	return nil, false
 }
@@ -8915,13 +8688,6 @@ func (m *SysUserMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddSort(v)
-		return nil
-	case sysuser.FieldStatus:
-		v, ok := value.(int16)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStatus(v)
 		return nil
 	}
 	return fmt.Errorf("unknown SysUser numeric field %s", name)
@@ -8992,8 +8758,8 @@ func (m *SysUserMutation) ResetField(name string) error {
 	case sysuser.FieldDeletedAt:
 		m.ResetDeletedAt()
 		return nil
-	case sysuser.FieldStatus:
-		m.ResetStatus()
+	case sysuser.FieldIsActive:
+		m.ResetIsActive()
 		return nil
 	case sysuser.FieldUserName:
 		m.ResetUserName()
@@ -9693,6 +9459,7 @@ type XxxDemoMutation struct {
 	created_at    *time.Time
 	updated_at    *time.Time
 	deleted_at    *time.Time
+	is_active     *bool
 	code          *string
 	name          *string
 	status        *int16
@@ -10056,6 +9823,42 @@ func (m *XxxDemoMutation) ResetDeletedAt() {
 	delete(m.clearedFields, xxxdemo.FieldDeletedAt)
 }
 
+// SetIsActive sets the "is_active" field.
+func (m *XxxDemoMutation) SetIsActive(b bool) {
+	m.is_active = &b
+}
+
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *XxxDemoMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsActive returns the old "is_active" field's value of the XxxDemo entity.
+// If the XxxDemo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *XxxDemoMutation) OldIsActive(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
+	}
+	return oldValue.IsActive, nil
+}
+
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *XxxDemoMutation) ResetIsActive() {
+	m.is_active = nil
+}
+
 // SetCode sets the "code" field.
 func (m *XxxDemoMutation) SetCode(s string) {
 	m.code = &s
@@ -10203,7 +10006,7 @@ func (m *XxxDemoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *XxxDemoMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 10)
 	if m.is_del != nil {
 		fields = append(fields, xxxdemo.FieldIsDel)
 	}
@@ -10221,6 +10024,9 @@ func (m *XxxDemoMutation) Fields() []string {
 	}
 	if m.deleted_at != nil {
 		fields = append(fields, xxxdemo.FieldDeletedAt)
+	}
+	if m.is_active != nil {
+		fields = append(fields, xxxdemo.FieldIsActive)
 	}
 	if m.code != nil {
 		fields = append(fields, xxxdemo.FieldCode)
@@ -10251,6 +10057,8 @@ func (m *XxxDemoMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdatedAt()
 	case xxxdemo.FieldDeletedAt:
 		return m.DeletedAt()
+	case xxxdemo.FieldIsActive:
+		return m.IsActive()
 	case xxxdemo.FieldCode:
 		return m.Code()
 	case xxxdemo.FieldName:
@@ -10278,6 +10086,8 @@ func (m *XxxDemoMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldUpdatedAt(ctx)
 	case xxxdemo.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
+	case xxxdemo.FieldIsActive:
+		return m.OldIsActive(ctx)
 	case xxxdemo.FieldCode:
 		return m.OldCode(ctx)
 	case xxxdemo.FieldName:
@@ -10334,6 +10144,13 @@ func (m *XxxDemoMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDeletedAt(v)
+		return nil
+	case xxxdemo.FieldIsActive:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsActive(v)
 		return nil
 	case xxxdemo.FieldCode:
 		v, ok := value.(string)
@@ -10458,6 +10275,9 @@ func (m *XxxDemoMutation) ResetField(name string) error {
 		return nil
 	case xxxdemo.FieldDeletedAt:
 		m.ResetDeletedAt()
+		return nil
+	case xxxdemo.FieldIsActive:
+		m.ResetIsActive()
 		return nil
 	case xxxdemo.FieldCode:
 		m.ResetCode()

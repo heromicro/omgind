@@ -122,6 +122,13 @@ func DeletedAt(v time.Time) predicate.XxxDemo {
 	})
 }
 
+// IsActive applies equality check predicate on the "is_active" field. It's identical to IsActiveEQ.
+func IsActive(v bool) predicate.XxxDemo {
+	return predicate.XxxDemo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIsActive), v))
+	})
+}
+
 // Code applies equality check predicate on the "code" field. It's identical to CodeEQ.
 func Code(v string) predicate.XxxDemo {
 	return predicate.XxxDemo(func(s *sql.Selector) {
@@ -583,6 +590,20 @@ func DeletedAtIsNil() predicate.XxxDemo {
 func DeletedAtNotNil() predicate.XxxDemo {
 	return predicate.XxxDemo(func(s *sql.Selector) {
 		s.Where(sql.NotNull(s.C(FieldDeletedAt)))
+	})
+}
+
+// IsActiveEQ applies the EQ predicate on the "is_active" field.
+func IsActiveEQ(v bool) predicate.XxxDemo {
+	return predicate.XxxDemo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIsActive), v))
+	})
+}
+
+// IsActiveNEQ applies the NEQ predicate on the "is_active" field.
+func IsActiveNEQ(v bool) predicate.XxxDemo {
+	return predicate.XxxDemo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldIsActive), v))
 	})
 }
 

@@ -104,16 +104,16 @@ func (smc *SysMenuCreate) SetNillableDeletedAt(t *time.Time) *SysMenuCreate {
 	return smc
 }
 
-// SetStatus sets the "status" field.
-func (smc *SysMenuCreate) SetStatus(i int16) *SysMenuCreate {
-	smc.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (smc *SysMenuCreate) SetIsActive(b bool) *SysMenuCreate {
+	smc.mutation.SetIsActive(b)
 	return smc
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableStatus(i *int16) *SysMenuCreate {
-	if i != nil {
-		smc.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableIsActive(b *bool) *SysMenuCreate {
+	if b != nil {
+		smc.SetIsActive(*b)
 	}
 	return smc
 }
@@ -309,9 +309,9 @@ func (smc *SysMenuCreate) defaults() {
 		v := sysmenu.DefaultUpdatedAt()
 		smc.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := smc.mutation.Status(); !ok {
-		v := sysmenu.DefaultStatus
-		smc.mutation.SetStatus(v)
+	if _, ok := smc.mutation.IsActive(); !ok {
+		v := sysmenu.DefaultIsActive
+		smc.mutation.SetIsActive(v)
 	}
 	if _, ok := smc.mutation.IsShow(); !ok {
 		v := sysmenu.DefaultIsShow
@@ -349,8 +349,8 @@ func (smc *SysMenuCreate) check() error {
 	if _, ok := smc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysMenu.updated_at"`)}
 	}
-	if _, ok := smc.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "SysMenu.status"`)}
+	if _, ok := smc.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysMenu.is_active"`)}
 	}
 	if _, ok := smc.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "SysMenu.name"`)}
@@ -486,13 +486,13 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 		})
 		_node.DeletedAt = &value
 	}
-	if value, ok := smc.mutation.Status(); ok {
+	if value, ok := smc.mutation.IsActive(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldStatus,
+			Column: sysmenu.FieldIsActive,
 		})
-		_node.Status = value
+		_node.IsActive = value
 	}
 	if value, ok := smc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

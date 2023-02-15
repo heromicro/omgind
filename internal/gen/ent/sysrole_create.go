@@ -34,16 +34,16 @@ func (src *SysRoleCreate) SetNillableIsDel(b *bool) *SysRoleCreate {
 	return src
 }
 
-// SetStatus sets the "status" field.
-func (src *SysRoleCreate) SetStatus(i int16) *SysRoleCreate {
-	src.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (src *SysRoleCreate) SetIsActive(b bool) *SysRoleCreate {
+	src.mutation.SetIsActive(b)
 	return src
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableStatus(i *int16) *SysRoleCreate {
-	if i != nil {
-		src.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (src *SysRoleCreate) SetNillableIsActive(b *bool) *SysRoleCreate {
+	if b != nil {
+		src.SetIsActive(*b)
 	}
 	return src
 }
@@ -219,9 +219,9 @@ func (src *SysRoleCreate) defaults() {
 		v := sysrole.DefaultIsDel
 		src.mutation.SetIsDel(v)
 	}
-	if _, ok := src.mutation.Status(); !ok {
-		v := sysrole.DefaultStatus
-		src.mutation.SetStatus(v)
+	if _, ok := src.mutation.IsActive(); !ok {
+		v := sysrole.DefaultIsActive
+		src.mutation.SetIsActive(v)
 	}
 	if _, ok := src.mutation.Sort(); !ok {
 		v := sysrole.DefaultSort
@@ -250,8 +250,8 @@ func (src *SysRoleCreate) check() error {
 	if _, ok := src.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysRole.is_del"`)}
 	}
-	if _, ok := src.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "SysRole.status"`)}
+	if _, ok := src.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysRole.is_active"`)}
 	}
 	if _, ok := src.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysRole.sort"`)}
@@ -327,13 +327,13 @@ func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 		})
 		_node.IsDel = value
 	}
-	if value, ok := src.mutation.Status(); ok {
+	if value, ok := src.mutation.IsActive(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysrole.FieldStatus,
+			Column: sysrole.FieldIsActive,
 		})
-		_node.Status = value
+		_node.IsActive = value
 	}
 	if value, ok := src.mutation.Sort(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

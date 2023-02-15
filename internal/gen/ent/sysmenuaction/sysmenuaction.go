@@ -15,8 +15,8 @@ const (
 	FieldIsDel = "is_del"
 	// FieldSort holds the string denoting the sort field in the database.
 	FieldSort = "sort"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
+	// FieldIsActive holds the string denoting the is_active field in the database.
+	FieldIsActive = "is_active"
 	// FieldMemo holds the string denoting the memo field in the database.
 	FieldMemo = "memo"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
@@ -40,7 +40,7 @@ var Columns = []string{
 	FieldID,
 	FieldIsDel,
 	FieldSort,
-	FieldStatus,
+	FieldIsActive,
 	FieldMemo,
 	FieldCreatedAt,
 	FieldUpdatedAt,
@@ -65,8 +65,8 @@ var (
 	DefaultIsDel bool
 	// DefaultSort holds the default value on creation for the "sort" field.
 	DefaultSort int32
-	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus int16
+	// DefaultIsActive holds the default value on creation for the "is_active" field.
+	DefaultIsActive bool
 	// DefaultMemo holds the default value on creation for the "memo" field.
 	DefaultMemo string
 	// MemoValidator is a validator for the "memo" field. It is called by the builders before save.

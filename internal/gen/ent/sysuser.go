@@ -26,8 +26,8 @@ type SysUser struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 删除时间,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 状态,
-	Status int16 `json:"status,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// 用户名
 	UserName string `json:"user_name,omitempty"`
 	// RealName holds the value of the "real_name" field.
@@ -51,9 +51,9 @@ func (*SysUser) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysuser.FieldIsDel:
+		case sysuser.FieldIsDel, sysuser.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case sysuser.FieldSort, sysuser.FieldStatus:
+		case sysuser.FieldSort:
 			values[i] = new(sql.NullInt64)
 		case sysuser.FieldID, sysuser.FieldUserName, sysuser.FieldRealName, sysuser.FieldFirstName, sysuser.FieldLastName, sysuser.FieldPassword, sysuser.FieldEmail, sysuser.FieldPhone, sysuser.FieldSalt:
 			values[i] = new(sql.NullString)
@@ -111,11 +111,11 @@ func (su *SysUser) assignValues(columns []string, values []interface{}) error {
 				su.DeletedAt = new(time.Time)
 				*su.DeletedAt = value.Time
 			}
-		case sysuser.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case sysuser.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				su.Status = int16(value.Int64)
+				su.IsActive = value.Bool
 			}
 		case sysuser.FieldUserName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -213,8 +213,8 @@ func (su *SysUser) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", su.Status))
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", su.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("user_name=")
 	builder.WriteString(su.UserName)

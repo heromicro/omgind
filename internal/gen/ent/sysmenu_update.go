@@ -103,24 +103,17 @@ func (smu *SysMenuUpdate) ClearDeletedAt() *SysMenuUpdate {
 	return smu
 }
 
-// SetStatus sets the "status" field.
-func (smu *SysMenuUpdate) SetStatus(i int16) *SysMenuUpdate {
-	smu.mutation.ResetStatus()
-	smu.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (smu *SysMenuUpdate) SetIsActive(b bool) *SysMenuUpdate {
+	smu.mutation.SetIsActive(b)
 	return smu
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (smu *SysMenuUpdate) SetNillableStatus(i *int16) *SysMenuUpdate {
-	if i != nil {
-		smu.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableIsActive(b *bool) *SysMenuUpdate {
+	if b != nil {
+		smu.SetIsActive(*b)
 	}
-	return smu
-}
-
-// AddStatus adds i to the "status" field.
-func (smu *SysMenuUpdate) AddStatus(i int16) *SysMenuUpdate {
-	smu.mutation.AddStatus(i)
 	return smu
 }
 
@@ -409,18 +402,11 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysmenu.FieldDeletedAt,
 		})
 	}
-	if value, ok := smu.mutation.Status(); ok {
+	if value, ok := smu.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldStatus,
-		})
-	}
-	if value, ok := smu.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysmenu.FieldStatus,
+			Column: sysmenu.FieldIsActive,
 		})
 	}
 	if value, ok := smu.mutation.Name(); ok {
@@ -598,24 +584,17 @@ func (smuo *SysMenuUpdateOne) ClearDeletedAt() *SysMenuUpdateOne {
 	return smuo
 }
 
-// SetStatus sets the "status" field.
-func (smuo *SysMenuUpdateOne) SetStatus(i int16) *SysMenuUpdateOne {
-	smuo.mutation.ResetStatus()
-	smuo.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (smuo *SysMenuUpdateOne) SetIsActive(b bool) *SysMenuUpdateOne {
+	smuo.mutation.SetIsActive(b)
 	return smuo
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (smuo *SysMenuUpdateOne) SetNillableStatus(i *int16) *SysMenuUpdateOne {
-	if i != nil {
-		smuo.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableIsActive(b *bool) *SysMenuUpdateOne {
+	if b != nil {
+		smuo.SetIsActive(*b)
 	}
-	return smuo
-}
-
-// AddStatus adds i to the "status" field.
-func (smuo *SysMenuUpdateOne) AddStatus(i int16) *SysMenuUpdateOne {
-	smuo.mutation.AddStatus(i)
 	return smuo
 }
 
@@ -934,18 +913,11 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 			Column: sysmenu.FieldDeletedAt,
 		})
 	}
-	if value, ok := smuo.mutation.Status(); ok {
+	if value, ok := smuo.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysmenu.FieldStatus,
-		})
-	}
-	if value, ok := smuo.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysmenu.FieldStatus,
+			Column: sysmenu.FieldIsActive,
 		})
 	}
 	if value, ok := smuo.mutation.Name(); ok {

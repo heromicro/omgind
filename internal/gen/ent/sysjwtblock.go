@@ -26,8 +26,8 @@ type SysJwtBlock struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 删除时间,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 状态,
-	Status int16 `json:"status,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// jwt
 	Jwt string `json:"jwt,omitempty"`
 }
@@ -37,10 +37,8 @@ func (*SysJwtBlock) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysjwtblock.FieldIsDel:
+		case sysjwtblock.FieldIsDel, sysjwtblock.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case sysjwtblock.FieldStatus:
-			values[i] = new(sql.NullInt64)
 		case sysjwtblock.FieldID, sysjwtblock.FieldMemo, sysjwtblock.FieldJwt:
 			values[i] = new(sql.NullString)
 		case sysjwtblock.FieldCreatedAt, sysjwtblock.FieldUpdatedAt, sysjwtblock.FieldDeletedAt:
@@ -97,11 +95,11 @@ func (sjb *SysJwtBlock) assignValues(columns []string, values []interface{}) err
 				sjb.DeletedAt = new(time.Time)
 				*sjb.DeletedAt = value.Time
 			}
-		case sysjwtblock.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case sysjwtblock.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sjb.Status = int16(value.Int64)
+				sjb.IsActive = value.Bool
 			}
 		case sysjwtblock.FieldJwt:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -154,8 +152,8 @@ func (sjb *SysJwtBlock) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", sjb.Status))
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", sjb.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("jwt=")
 	builder.WriteString(sjb.Jwt)

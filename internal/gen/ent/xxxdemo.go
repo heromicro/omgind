@@ -28,6 +28,8 @@ type XxxDemo struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 删除时间,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// 编号
 	Code string `json:"code,omitempty"`
 	// 名称
@@ -41,7 +43,7 @@ func (*XxxDemo) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case xxxdemo.FieldIsDel:
+		case xxxdemo.FieldIsDel, xxxdemo.FieldIsActive:
 			values[i] = new(sql.NullBool)
 		case xxxdemo.FieldSort, xxxdemo.FieldStatus:
 			values[i] = new(sql.NullInt64)
@@ -106,6 +108,12 @@ func (xd *XxxDemo) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				xd.DeletedAt = new(time.Time)
 				*xd.DeletedAt = value.Time
+			}
+		case xxxdemo.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
+			} else if value.Valid {
+				xd.IsActive = value.Bool
 			}
 		case xxxdemo.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -172,6 +180,9 @@ func (xd *XxxDemo) String() string {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
+	builder.WriteString(", ")
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", xd.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("code=")
 	builder.WriteString(xd.Code)

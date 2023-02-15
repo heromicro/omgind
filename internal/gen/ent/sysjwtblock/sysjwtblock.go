@@ -21,8 +21,8 @@ const (
 	FieldUpdatedAt = "uptd_at"
 	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
 	FieldDeletedAt = "dltd_at"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
+	// FieldIsActive holds the string denoting the is_active field in the database.
+	FieldIsActive = "is_active"
 	// FieldJwt holds the string denoting the jwt field in the database.
 	FieldJwt = "jwt"
 	// Table holds the table name of the sysjwtblock in the database.
@@ -37,7 +37,7 @@ var Columns = []string{
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldDeletedAt,
-	FieldStatus,
+	FieldIsActive,
 	FieldJwt,
 }
 
@@ -64,8 +64,8 @@ var (
 	DefaultUpdatedAt func() time.Time
 	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
 	UpdateDefaultUpdatedAt func() time.Time
-	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus int16
+	// DefaultIsActive holds the default value on creation for the "is_active" field.
+	DefaultIsActive bool
 	// JwtValidator is a validator for the "jwt" field. It is called by the builders before save.
 	JwtValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.

@@ -23,8 +23,8 @@ const (
 	FieldUpdatedAt = "uptd_at"
 	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
 	FieldDeletedAt = "dltd_at"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
+	// FieldIsActive holds the string denoting the is_active field in the database.
+	FieldIsActive = "is_active"
 	// FieldMethod holds the string denoting the method field in the database.
 	FieldMethod = "method"
 	// FieldPath holds the string denoting the path field in the database.
@@ -44,7 +44,7 @@ var Columns = []string{
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldDeletedAt,
-	FieldStatus,
+	FieldIsActive,
 	FieldMethod,
 	FieldPath,
 	FieldActionID,
@@ -75,8 +75,8 @@ var (
 	DefaultUpdatedAt func() time.Time
 	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
 	UpdateDefaultUpdatedAt func() time.Time
-	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus int16
+	// DefaultIsActive holds the default value on creation for the "is_active" field.
+	DefaultIsActive bool
 	// MethodValidator is a validator for the "method" field. It is called by the builders before save.
 	MethodValidator func(string) error
 	// PathValidator is a validator for the "path" field. It is called by the builders before save.

@@ -89,24 +89,17 @@ func (suu *SysUserUpdate) ClearDeletedAt() *SysUserUpdate {
 	return suu
 }
 
-// SetStatus sets the "status" field.
-func (suu *SysUserUpdate) SetStatus(i int16) *SysUserUpdate {
-	suu.mutation.ResetStatus()
-	suu.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (suu *SysUserUpdate) SetIsActive(b bool) *SysUserUpdate {
+	suu.mutation.SetIsActive(b)
 	return suu
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableStatus(i *int16) *SysUserUpdate {
-	if i != nil {
-		suu.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (suu *SysUserUpdate) SetNillableIsActive(b *bool) *SysUserUpdate {
+	if b != nil {
+		suu.SetIsActive(*b)
 	}
-	return suu
-}
-
-// AddStatus adds i to the "status" field.
-func (suu *SysUserUpdate) AddStatus(i int16) *SysUserUpdate {
-	suu.mutation.AddStatus(i)
 	return suu
 }
 
@@ -370,18 +363,11 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysuser.FieldDeletedAt,
 		})
 	}
-	if value, ok := suu.mutation.Status(); ok {
+	if value, ok := suu.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysuser.FieldStatus,
-		})
-	}
-	if value, ok := suu.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysuser.FieldStatus,
+			Column: sysuser.FieldIsActive,
 		})
 	}
 	if value, ok := suu.mutation.RealName(); ok {
@@ -531,24 +517,17 @@ func (suuo *SysUserUpdateOne) ClearDeletedAt() *SysUserUpdateOne {
 	return suuo
 }
 
-// SetStatus sets the "status" field.
-func (suuo *SysUserUpdateOne) SetStatus(i int16) *SysUserUpdateOne {
-	suuo.mutation.ResetStatus()
-	suuo.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (suuo *SysUserUpdateOne) SetIsActive(b bool) *SysUserUpdateOne {
+	suuo.mutation.SetIsActive(b)
 	return suuo
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableStatus(i *int16) *SysUserUpdateOne {
-	if i != nil {
-		suuo.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (suuo *SysUserUpdateOne) SetNillableIsActive(b *bool) *SysUserUpdateOne {
+	if b != nil {
+		suuo.SetIsActive(*b)
 	}
-	return suuo
-}
-
-// AddStatus adds i to the "status" field.
-func (suuo *SysUserUpdateOne) AddStatus(i int16) *SysUserUpdateOne {
-	suuo.mutation.AddStatus(i)
 	return suuo
 }
 
@@ -842,18 +821,11 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 			Column: sysuser.FieldDeletedAt,
 		})
 	}
-	if value, ok := suuo.mutation.Status(); ok {
+	if value, ok := suuo.mutation.IsActive(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysuser.FieldStatus,
-		})
-	}
-	if value, ok := suuo.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysuser.FieldStatus,
+			Column: sysuser.FieldIsActive,
 		})
 	}
 	if value, ok := suuo.mutation.RealName(); ok {

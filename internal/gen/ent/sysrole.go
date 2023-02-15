@@ -18,8 +18,8 @@ type SysRole struct {
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
-	// 状态,
-	Status int16 `json:"status,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// 排序, 在数据库里的排序
 	Sort int32 `json:"sort,omitempty"`
 	// 备注
@@ -39,9 +39,9 @@ func (*SysRole) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysrole.FieldIsDel:
+		case sysrole.FieldIsDel, sysrole.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case sysrole.FieldStatus, sysrole.FieldSort:
+		case sysrole.FieldSort:
 			values[i] = new(sql.NullInt64)
 		case sysrole.FieldID, sysrole.FieldMemo, sysrole.FieldName:
 			values[i] = new(sql.NullString)
@@ -74,11 +74,11 @@ func (sr *SysRole) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				sr.IsDel = value.Bool
 			}
-		case sysrole.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case sysrole.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sr.Status = int16(value.Int64)
+				sr.IsActive = value.Bool
 			}
 		case sysrole.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -148,8 +148,8 @@ func (sr *SysRole) String() string {
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", sr.IsDel))
 	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", sr.Status))
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", sr.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", sr.Sort))

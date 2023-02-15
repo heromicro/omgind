@@ -28,8 +28,8 @@ type SysMenu struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 删除时间,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-	// 状态,
-	Status int16 `json:"status,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// 菜单名称
 	Name string `json:"name,omitempty"`
 	// 菜单图标
@@ -53,9 +53,9 @@ func (*SysMenu) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysmenu.FieldIsDel, sysmenu.FieldIsShow, sysmenu.FieldIsLeaf:
+		case sysmenu.FieldIsDel, sysmenu.FieldIsActive, sysmenu.FieldIsShow, sysmenu.FieldIsLeaf:
 			values[i] = new(sql.NullBool)
-		case sysmenu.FieldSort, sysmenu.FieldStatus, sysmenu.FieldLevel:
+		case sysmenu.FieldSort, sysmenu.FieldLevel:
 			values[i] = new(sql.NullInt64)
 		case sysmenu.FieldID, sysmenu.FieldMemo, sysmenu.FieldName, sysmenu.FieldIcon, sysmenu.FieldRouter, sysmenu.FieldParentID, sysmenu.FieldParentPath:
 			values[i] = new(sql.NullString)
@@ -119,11 +119,11 @@ func (sm *SysMenu) assignValues(columns []string, values []interface{}) error {
 				sm.DeletedAt = new(time.Time)
 				*sm.DeletedAt = value.Time
 			}
-		case sysmenu.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case sysmenu.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sm.Status = int16(value.Int64)
+				sm.IsActive = value.Bool
 			}
 		case sysmenu.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -224,8 +224,8 @@ func (sm *SysMenu) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", sm.Status))
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", sm.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("name=")
 	builder.WriteString(sm.Name)

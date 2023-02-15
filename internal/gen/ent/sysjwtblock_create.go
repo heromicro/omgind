@@ -90,16 +90,16 @@ func (sjbc *SysJwtBlockCreate) SetNillableDeletedAt(t *time.Time) *SysJwtBlockCr
 	return sjbc
 }
 
-// SetStatus sets the "status" field.
-func (sjbc *SysJwtBlockCreate) SetStatus(i int16) *SysJwtBlockCreate {
-	sjbc.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (sjbc *SysJwtBlockCreate) SetIsActive(b bool) *SysJwtBlockCreate {
+	sjbc.mutation.SetIsActive(b)
 	return sjbc
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (sjbc *SysJwtBlockCreate) SetNillableStatus(i *int16) *SysJwtBlockCreate {
-	if i != nil {
-		sjbc.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sjbc *SysJwtBlockCreate) SetNillableIsActive(b *bool) *SysJwtBlockCreate {
+	if b != nil {
+		sjbc.SetIsActive(*b)
 	}
 	return sjbc
 }
@@ -217,9 +217,9 @@ func (sjbc *SysJwtBlockCreate) defaults() {
 		v := sysjwtblock.DefaultUpdatedAt()
 		sjbc.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := sjbc.mutation.Status(); !ok {
-		v := sysjwtblock.DefaultStatus
-		sjbc.mutation.SetStatus(v)
+	if _, ok := sjbc.mutation.IsActive(); !ok {
+		v := sysjwtblock.DefaultIsActive
+		sjbc.mutation.SetIsActive(v)
 	}
 	if _, ok := sjbc.mutation.ID(); !ok {
 		v := sysjwtblock.DefaultID()
@@ -246,8 +246,8 @@ func (sjbc *SysJwtBlockCreate) check() error {
 	if _, ok := sjbc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysJwtBlock.updated_at"`)}
 	}
-	if _, ok := sjbc.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "SysJwtBlock.status"`)}
+	if _, ok := sjbc.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysJwtBlock.is_active"`)}
 	}
 	if _, ok := sjbc.mutation.Jwt(); !ok {
 		return &ValidationError{Name: "jwt", err: errors.New(`ent: missing required field "SysJwtBlock.jwt"`)}
@@ -338,13 +338,13 @@ func (sjbc *SysJwtBlockCreate) createSpec() (*SysJwtBlock, *sqlgraph.CreateSpec)
 		})
 		_node.DeletedAt = &value
 	}
-	if value, ok := sjbc.mutation.Status(); ok {
+	if value, ok := sjbc.mutation.IsActive(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysjwtblock.FieldStatus,
+			Column: sysjwtblock.FieldIsActive,
 		})
-		_node.Status = value
+		_node.IsActive = value
 	}
 	if value, ok := sjbc.mutation.Jwt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

@@ -90,16 +90,16 @@ func (suc *SysUserCreate) SetNillableDeletedAt(t *time.Time) *SysUserCreate {
 	return suc
 }
 
-// SetStatus sets the "status" field.
-func (suc *SysUserCreate) SetStatus(i int16) *SysUserCreate {
-	suc.mutation.SetStatus(i)
+// SetIsActive sets the "is_active" field.
+func (suc *SysUserCreate) SetIsActive(b bool) *SysUserCreate {
+	suc.mutation.SetIsActive(b)
 	return suc
 }
 
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableStatus(i *int16) *SysUserCreate {
-	if i != nil {
-		suc.SetStatus(*i)
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (suc *SysUserCreate) SetNillableIsActive(b *bool) *SysUserCreate {
+	if b != nil {
+		suc.SetIsActive(*b)
 	}
 	return suc
 }
@@ -291,9 +291,9 @@ func (suc *SysUserCreate) defaults() {
 		v := sysuser.DefaultUpdatedAt()
 		suc.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := suc.mutation.Status(); !ok {
-		v := sysuser.DefaultStatus
-		suc.mutation.SetStatus(v)
+	if _, ok := suc.mutation.IsActive(); !ok {
+		v := sysuser.DefaultIsActive
+		suc.mutation.SetIsActive(v)
 	}
 	if _, ok := suc.mutation.Salt(); !ok {
 		v := sysuser.DefaultSalt()
@@ -319,8 +319,8 @@ func (suc *SysUserCreate) check() error {
 	if _, ok := suc.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysUser.updated_at"`)}
 	}
-	if _, ok := suc.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "SysUser.status"`)}
+	if _, ok := suc.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysUser.is_active"`)}
 	}
 	if _, ok := suc.mutation.UserName(); !ok {
 		return &ValidationError{Name: "user_name", err: errors.New(`ent: missing required field "SysUser.user_name"`)}
@@ -453,13 +453,13 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		})
 		_node.DeletedAt = &value
 	}
-	if value, ok := suc.mutation.Status(); ok {
+	if value, ok := suc.mutation.IsActive(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
+			Type:   field.TypeBool,
 			Value:  value,
-			Column: sysuser.FieldStatus,
+			Column: sysuser.FieldIsActive,
 		})
-		_node.Status = value
+		_node.IsActive = value
 	}
 	if value, ok := suc.mutation.UserName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

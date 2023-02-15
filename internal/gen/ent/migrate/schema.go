@@ -18,7 +18,7 @@ var (
 		{Name: "crtd_at", Type: field.TypeTime},
 		{Name: "uptd_at", Type: field.TypeTime},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
-		{Name: "status", Type: field.TypeInt16, Default: 1},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "name_cn", Type: field.TypeString, Size: 128},
 		{Name: "name_en", Type: field.TypeString, Size: 128},
 	}
@@ -59,7 +59,7 @@ var (
 				Columns: []*schema.Column{SysDictsColumns[6]},
 			},
 			{
-				Name:    "sysdict_status",
+				Name:    "sysdict_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{SysDictsColumns[7]},
 			},
@@ -125,7 +125,7 @@ var (
 		{Name: "crtd_at", Type: field.TypeTime},
 		{Name: "uptd_at", Type: field.TypeTime},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
-		{Name: "status", Type: field.TypeInt16, Default: 1},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "jwt", Type: field.TypeString, Size: 2147483647},
 	}
 	// SysJwtBlocksTable holds the schema information for the "sys_jwt_blocks" table.
@@ -160,7 +160,7 @@ var (
 				Columns: []*schema.Column{SysJwtBlocksColumns[5]},
 			},
 			{
-				Name:    "sysjwtblock_status",
+				Name:    "sysjwtblock_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{SysJwtBlocksColumns[6]},
 			},
@@ -233,7 +233,7 @@ var (
 		{Name: "crtd_at", Type: field.TypeTime},
 		{Name: "uptd_at", Type: field.TypeTime},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
-		{Name: "status", Type: field.TypeInt16, Default: 1},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "name", Type: field.TypeString, Size: 64},
 		{Name: "icon", Type: field.TypeString, Size: 256},
 		{Name: "router", Type: field.TypeString, Size: 4096},
@@ -280,7 +280,7 @@ var (
 				Columns: []*schema.Column{SysMenusColumns[6]},
 			},
 			{
-				Name:    "sysmenu_status",
+				Name:    "sysmenu_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{SysMenusColumns[7]},
 			},
@@ -301,7 +301,7 @@ var (
 		{Name: "id", Type: field.TypeString, Size: 36},
 		{Name: "is_del", Type: field.TypeBool, Default: false},
 		{Name: "sort", Type: field.TypeInt32, Default: 9999},
-		{Name: "status", Type: field.TypeInt16, Default: 1},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "memo", Type: field.TypeString, Size: 1024, Default: ""},
 		{Name: "crtd_at", Type: field.TypeTime},
 		{Name: "uptd_at", Type: field.TypeTime},
@@ -332,7 +332,7 @@ var (
 				Columns: []*schema.Column{SysMenuActionsColumns[2]},
 			},
 			{
-				Name:    "sysmenuaction_status",
+				Name:    "sysmenuaction_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{SysMenuActionsColumns[3]},
 			},
@@ -362,7 +362,7 @@ var (
 		{Name: "crtd_at", Type: field.TypeTime},
 		{Name: "uptd_at", Type: field.TypeTime},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
-		{Name: "status", Type: field.TypeInt16, Default: 1},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "method", Type: field.TypeString, Size: 128},
 		{Name: "path", Type: field.TypeString, Size: 256},
 		{Name: "action_id", Type: field.TypeString, Size: 36},
@@ -404,7 +404,7 @@ var (
 				Columns: []*schema.Column{SysMenuActionResourcesColumns[6]},
 			},
 			{
-				Name:    "sysmenuactionresource_status",
+				Name:    "sysmenuactionresource_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{SysMenuActionResourcesColumns[7]},
 			},
@@ -414,7 +414,7 @@ var (
 	SysRolesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
 		{Name: "is_del", Type: field.TypeBool, Default: false},
-		{Name: "status", Type: field.TypeInt16, Default: 1},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "sort", Type: field.TypeInt32, Default: 9999},
 		{Name: "memo", Type: field.TypeString, Size: 1024, Default: ""},
 		{Name: "crtd_at", Type: field.TypeTime},
@@ -439,7 +439,7 @@ var (
 				Columns: []*schema.Column{SysRolesColumns[1]},
 			},
 			{
-				Name:    "sysrole_status",
+				Name:    "sysrole_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{SysRolesColumns[2]},
 			},
@@ -517,7 +517,7 @@ var (
 		{Name: "crtd_at", Type: field.TypeTime},
 		{Name: "uptd_at", Type: field.TypeTime},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
-		{Name: "status", Type: field.TypeInt16, Default: 1},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "user_name", Type: field.TypeString, Size: 128},
 		{Name: "real_name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "first_name", Type: field.TypeString, Nullable: true, Size: 31},
@@ -564,7 +564,7 @@ var (
 				Columns: []*schema.Column{SysUsersColumns[5]},
 			},
 			{
-				Name:    "sysuser_status",
+				Name:    "sysuser_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{SysUsersColumns[6]},
 			},
@@ -627,6 +627,7 @@ var (
 		{Name: "crtd_at", Type: field.TypeTime},
 		{Name: "uptd_at", Type: field.TypeTime},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "code", Type: field.TypeString, Size: 128},
 		{Name: "name", Type: field.TypeString, Size: 128},
 		{Name: "status", Type: field.TypeInt16, Default: 1},
@@ -666,6 +667,11 @@ var (
 				Name:    "xxxdemo_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{XxxDemosColumns[6]},
+			},
+			{
+				Name:    "xxxdemo_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{XxxDemosColumns[7]},
 			},
 		},
 	}

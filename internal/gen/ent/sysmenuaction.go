@@ -20,8 +20,8 @@ type SysMenuAction struct {
 	IsDel bool `json:"is_del,omitempty"`
 	// 排序, 在数据库里的排序
 	Sort int32 `json:"sort,omitempty"`
-	// 状态,
-	Status int16 `json:"status,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// 备注
 	Memo string `json:"memo,omitempty"`
 	// 创建时间,由程序自动生成
@@ -43,9 +43,9 @@ func (*SysMenuAction) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysmenuaction.FieldIsDel:
+		case sysmenuaction.FieldIsDel, sysmenuaction.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case sysmenuaction.FieldSort, sysmenuaction.FieldStatus:
+		case sysmenuaction.FieldSort:
 			values[i] = new(sql.NullInt64)
 		case sysmenuaction.FieldID, sysmenuaction.FieldMemo, sysmenuaction.FieldMenuID, sysmenuaction.FieldCode, sysmenuaction.FieldName:
 			values[i] = new(sql.NullString)
@@ -84,11 +84,11 @@ func (sma *SysMenuAction) assignValues(columns []string, values []interface{}) e
 			} else if value.Valid {
 				sma.Sort = int32(value.Int64)
 			}
-		case sysmenuaction.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case sysmenuaction.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sma.Status = int16(value.Int64)
+				sma.IsActive = value.Bool
 			}
 		case sysmenuaction.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -167,8 +167,8 @@ func (sma *SysMenuAction) String() string {
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", sma.Sort))
 	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", sma.Status))
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", sma.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("memo=")
 	builder.WriteString(sma.Memo)
