@@ -13,7 +13,7 @@
 | router      | 访问路由 | 字符串   |               |
 | memo        | 备注     | 字符串   |               |
 | is_show     | 显示状态 | 数值     | 1:显示 2:隐藏 |
-| status      | 状态     | 数值     | 1:启用 2:禁用 |
+| is_active   | 状态     | 数值     |              |
 | parent_id   | 父级 ID  | 字符串   |               |
 | parent_path | 父级路径 | 字符串   |               |
 | creator     | 创建人   | 字符串   |               |
@@ -53,7 +53,7 @@
 | name       | 角色名称 | 字符串   |               |
 | sort   | 排序值   | 数值     |               |
 | memo       | 备注     | 字符串   |               |
-| status     | 状态     | 数值     | 1:启用 2:禁用 |
+| is_active  | 状态     | 数值     |       |
 | creator    | 创建人   | 字符串   |               |
 | created_at | 创建时间 | 时间格式 |               |
 | updated_at | 更新时间 | 时间格式 |               |
@@ -82,7 +82,7 @@
 | real_name     | 真实姓名   | 字符串   |               |
 | email         | 邮箱       | 字符串   |               |
 | phone         | 手机号     | 字符串   |               |
-| status        | 状态       | 数值     | 1:启用 2:禁用 |
+| is_active     | 状态       | 数值     |              |
 | creator       | 创建人     | 字符串   |               |
 | created_at    | 创建时间   | 时间格式 |               |
 | updated_at    | 更新时间   | 时间格式 |               |
