@@ -104,6 +104,20 @@ func (sdic *SysDictItemCreate) SetNillableDeletedAt(t *time.Time) *SysDictItemCr
 	return sdic
 }
 
+// SetIsActive sets the "is_active" field.
+func (sdic *SysDictItemCreate) SetIsActive(b bool) *SysDictItemCreate {
+	sdic.mutation.SetIsActive(b)
+	return sdic
+}
+
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sdic *SysDictItemCreate) SetNillableIsActive(b *bool) *SysDictItemCreate {
+	if b != nil {
+		sdic.SetIsActive(*b)
+	}
+	return sdic
+}
+
 // SetLabel sets the "label" field.
 func (sdic *SysDictItemCreate) SetLabel(s string) *SysDictItemCreate {
 	sdic.mutation.SetLabel(s)
@@ -113,12 +127,6 @@ func (sdic *SysDictItemCreate) SetLabel(s string) *SysDictItemCreate {
 // SetValue sets the "value" field.
 func (sdic *SysDictItemCreate) SetValue(i int) *SysDictItemCreate {
 	sdic.mutation.SetValue(i)
-	return sdic
-}
-
-// SetStatus sets the "status" field.
-func (sdic *SysDictItemCreate) SetStatus(i int16) *SysDictItemCreate {
-	sdic.mutation.SetStatus(i)
 	return sdic
 }
 
@@ -239,6 +247,10 @@ func (sdic *SysDictItemCreate) defaults() {
 		v := sysdictitem.DefaultUpdatedAt()
 		sdic.mutation.SetUpdatedAt(v)
 	}
+	if _, ok := sdic.mutation.IsActive(); !ok {
+		v := sysdictitem.DefaultIsActive
+		sdic.mutation.SetIsActive(v)
+	}
 	if _, ok := sdic.mutation.ID(); !ok {
 		v := sysdictitem.DefaultID()
 		sdic.mutation.SetID(v)
@@ -267,6 +279,9 @@ func (sdic *SysDictItemCreate) check() error {
 	if _, ok := sdic.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysDictItem.updated_at"`)}
 	}
+	if _, ok := sdic.mutation.IsActive(); !ok {
+		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysDictItem.is_active"`)}
+	}
 	if _, ok := sdic.mutation.Label(); !ok {
 		return &ValidationError{Name: "label", err: errors.New(`ent: missing required field "SysDictItem.label"`)}
 	}
@@ -277,9 +292,6 @@ func (sdic *SysDictItemCreate) check() error {
 	}
 	if _, ok := sdic.mutation.Value(); !ok {
 		return &ValidationError{Name: "value", err: errors.New(`ent: missing required field "SysDictItem.value"`)}
-	}
-	if _, ok := sdic.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "SysDictItem.status"`)}
 	}
 	if _, ok := sdic.mutation.DictID(); !ok {
 		return &ValidationError{Name: "dict_id", err: errors.New(`ent: missing required field "SysDictItem.dict_id"`)}
@@ -378,6 +390,14 @@ func (sdic *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec)
 		})
 		_node.DeletedAt = &value
 	}
+	if value, ok := sdic.mutation.IsActive(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdictitem.FieldIsActive,
+		})
+		_node.IsActive = value
+	}
 	if value, ok := sdic.mutation.Label(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -393,14 +413,6 @@ func (sdic *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec)
 			Column: sysdictitem.FieldValue,
 		})
 		_node.Value = value
-	}
-	if value, ok := sdic.mutation.Status(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysdictitem.FieldStatus,
-		})
-		_node.Status = value
 	}
 	if value, ok := sdic.mutation.DictID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

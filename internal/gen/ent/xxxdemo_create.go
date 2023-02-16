@@ -130,20 +130,6 @@ func (xdc *XxxDemoCreate) SetName(s string) *XxxDemoCreate {
 	return xdc
 }
 
-// SetStatus sets the "status" field.
-func (xdc *XxxDemoCreate) SetStatus(i int16) *XxxDemoCreate {
-	xdc.mutation.SetStatus(i)
-	return xdc
-}
-
-// SetNillableStatus sets the "status" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableStatus(i *int16) *XxxDemoCreate {
-	if i != nil {
-		xdc.SetStatus(*i)
-	}
-	return xdc
-}
-
 // SetID sets the "id" field.
 func (xdc *XxxDemoCreate) SetID(s string) *XxxDemoCreate {
 	xdc.mutation.SetID(s)
@@ -259,10 +245,6 @@ func (xdc *XxxDemoCreate) defaults() {
 		v := xxxdemo.DefaultIsActive
 		xdc.mutation.SetIsActive(v)
 	}
-	if _, ok := xdc.mutation.Status(); !ok {
-		v := xxxdemo.DefaultStatus
-		xdc.mutation.SetStatus(v)
-	}
 	if _, ok := xdc.mutation.ID(); !ok {
 		v := xxxdemo.DefaultID()
 		xdc.mutation.SetID(v)
@@ -309,9 +291,6 @@ func (xdc *XxxDemoCreate) check() error {
 		if err := xxxdemo.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "XxxDemo.name": %w`, err)}
 		}
-	}
-	if _, ok := xdc.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "XxxDemo.status"`)}
 	}
 	if v, ok := xdc.mutation.ID(); ok {
 		if err := xxxdemo.IDValidator(v); err != nil {
@@ -425,14 +404,6 @@ func (xdc *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
 			Column: xxxdemo.FieldName,
 		})
 		_node.Name = value
-	}
-	if value, ok := xdc.mutation.Status(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: xxxdemo.FieldStatus,
-		})
-		_node.Status = value
 	}
 	return _node, _spec
 }

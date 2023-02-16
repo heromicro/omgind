@@ -4,12 +4,12 @@ import "time"
 
 // Demo 示例对象
 type Demo struct {
-	ID     string `json:"id" `                                   // 唯一标识
-	Code   string `json:"code" binding:"required"`               // 编号
-	Name   string `json:"name" binding:"required"`               // 名称
-	Memo   string `json:"memo"`                                  // 备注
-	Status int    `json:"status" binding:"required,max=2,min=1"` // 状态(1:启用 2:停用)
-	Sort   int    `json:"sort,omitempty"`
+	ID       string `json:"id" `                          // 唯一标识
+	Code     string `json:"code" binding:"required"`      // 编号
+	Name     string `json:"name" binding:"required"`      // 名称
+	Memo     string `json:"memo"`                         // 备注
+	IsActive *bool  `json:"is_active" binding:"required"` // 状态
+	Sort     int    `json:"sort,omitempty"`
 
 	Creator   string     `json:"creator" `    // 创建者
 	CreatedAt *time.Time `json:"created_at" ` // 创建时间

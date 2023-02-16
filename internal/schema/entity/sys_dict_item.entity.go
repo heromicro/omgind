@@ -16,6 +16,7 @@ func (sdd SysDictItem) Mixin() []ent.Mixin {
 		mixin.MemoMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
+		mixin.ActiveMixin{},
 	}
 }
 
@@ -25,7 +26,6 @@ func (sdd SysDictItem) Fields() []ent.Field {
 		field.String("label").StorageKey("label").
 			MaxLen(128).StructTag(`json:"label,omitempty"`).Comment("显示值"),
 		field.Int("value").StorageKey("val").StructTag(`json:"value,omitempty"`).Comment("字典值"),
-		field.Int16("status").StorageKey("status").StructTag(`json:"status,omitempty"`).Comment("启用状态"),
 
 		field.String("dict_id").MaxLen(36).NotEmpty().Comment("sys_dict.id"),
 	}

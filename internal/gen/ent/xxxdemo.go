@@ -34,8 +34,6 @@ type XxxDemo struct {
 	Code string `json:"code,omitempty"`
 	// 名称
 	Name string `json:"name,omitempty"`
-	// 状态
-	Status int16 `json:"status,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -45,7 +43,7 @@ func (*XxxDemo) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case xxxdemo.FieldIsDel, xxxdemo.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case xxxdemo.FieldSort, xxxdemo.FieldStatus:
+		case xxxdemo.FieldSort:
 			values[i] = new(sql.NullInt64)
 		case xxxdemo.FieldID, xxxdemo.FieldMemo, xxxdemo.FieldCode, xxxdemo.FieldName:
 			values[i] = new(sql.NullString)
@@ -127,12 +125,6 @@ func (xd *XxxDemo) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				xd.Name = value.String
 			}
-		case xxxdemo.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
-			} else if value.Valid {
-				xd.Status = int16(value.Int64)
-			}
 		}
 	}
 	return nil
@@ -189,9 +181,6 @@ func (xd *XxxDemo) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("name=")
 	builder.WriteString(xd.Name)
-	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", xd.Status))
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -103,6 +103,20 @@ func (sdiu *SysDictItemUpdate) ClearDeletedAt() *SysDictItemUpdate {
 	return sdiu
 }
 
+// SetIsActive sets the "is_active" field.
+func (sdiu *SysDictItemUpdate) SetIsActive(b bool) *SysDictItemUpdate {
+	sdiu.mutation.SetIsActive(b)
+	return sdiu
+}
+
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sdiu *SysDictItemUpdate) SetNillableIsActive(b *bool) *SysDictItemUpdate {
+	if b != nil {
+		sdiu.SetIsActive(*b)
+	}
+	return sdiu
+}
+
 // SetLabel sets the "label" field.
 func (sdiu *SysDictItemUpdate) SetLabel(s string) *SysDictItemUpdate {
 	sdiu.mutation.SetLabel(s)
@@ -119,19 +133,6 @@ func (sdiu *SysDictItemUpdate) SetValue(i int) *SysDictItemUpdate {
 // AddValue adds i to the "value" field.
 func (sdiu *SysDictItemUpdate) AddValue(i int) *SysDictItemUpdate {
 	sdiu.mutation.AddValue(i)
-	return sdiu
-}
-
-// SetStatus sets the "status" field.
-func (sdiu *SysDictItemUpdate) SetStatus(i int16) *SysDictItemUpdate {
-	sdiu.mutation.ResetStatus()
-	sdiu.mutation.SetStatus(i)
-	return sdiu
-}
-
-// AddStatus adds i to the "status" field.
-func (sdiu *SysDictItemUpdate) AddStatus(i int16) *SysDictItemUpdate {
-	sdiu.mutation.AddStatus(i)
 	return sdiu
 }
 
@@ -301,6 +302,13 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysdictitem.FieldDeletedAt,
 		})
 	}
+	if value, ok := sdiu.mutation.IsActive(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdictitem.FieldIsActive,
+		})
+	}
 	if value, ok := sdiu.mutation.Label(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -320,20 +328,6 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeInt,
 			Value:  value,
 			Column: sysdictitem.FieldValue,
-		})
-	}
-	if value, ok := sdiu.mutation.Status(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysdictitem.FieldStatus,
-		})
-	}
-	if value, ok := sdiu.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysdictitem.FieldStatus,
 		})
 	}
 	if value, ok := sdiu.mutation.DictID(); ok {
@@ -437,6 +431,20 @@ func (sdiuo *SysDictItemUpdateOne) ClearDeletedAt() *SysDictItemUpdateOne {
 	return sdiuo
 }
 
+// SetIsActive sets the "is_active" field.
+func (sdiuo *SysDictItemUpdateOne) SetIsActive(b bool) *SysDictItemUpdateOne {
+	sdiuo.mutation.SetIsActive(b)
+	return sdiuo
+}
+
+// SetNillableIsActive sets the "is_active" field if the given value is not nil.
+func (sdiuo *SysDictItemUpdateOne) SetNillableIsActive(b *bool) *SysDictItemUpdateOne {
+	if b != nil {
+		sdiuo.SetIsActive(*b)
+	}
+	return sdiuo
+}
+
 // SetLabel sets the "label" field.
 func (sdiuo *SysDictItemUpdateOne) SetLabel(s string) *SysDictItemUpdateOne {
 	sdiuo.mutation.SetLabel(s)
@@ -453,19 +461,6 @@ func (sdiuo *SysDictItemUpdateOne) SetValue(i int) *SysDictItemUpdateOne {
 // AddValue adds i to the "value" field.
 func (sdiuo *SysDictItemUpdateOne) AddValue(i int) *SysDictItemUpdateOne {
 	sdiuo.mutation.AddValue(i)
-	return sdiuo
-}
-
-// SetStatus sets the "status" field.
-func (sdiuo *SysDictItemUpdateOne) SetStatus(i int16) *SysDictItemUpdateOne {
-	sdiuo.mutation.ResetStatus()
-	sdiuo.mutation.SetStatus(i)
-	return sdiuo
-}
-
-// AddStatus adds i to the "status" field.
-func (sdiuo *SysDictItemUpdateOne) AddStatus(i int16) *SysDictItemUpdateOne {
-	sdiuo.mutation.AddStatus(i)
 	return sdiuo
 }
 
@@ -665,6 +660,13 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 			Column: sysdictitem.FieldDeletedAt,
 		})
 	}
+	if value, ok := sdiuo.mutation.IsActive(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdictitem.FieldIsActive,
+		})
+	}
 	if value, ok := sdiuo.mutation.Label(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -684,20 +686,6 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 			Type:   field.TypeInt,
 			Value:  value,
 			Column: sysdictitem.FieldValue,
-		})
-	}
-	if value, ok := sdiuo.mutation.Status(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysdictitem.FieldStatus,
-		})
-	}
-	if value, ok := sdiuo.mutation.AddedStatus(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt16,
-			Value:  value,
-			Column: sysdictitem.FieldStatus,
 		})
 	}
 	if value, ok := sdiuo.mutation.DictID(); ok {

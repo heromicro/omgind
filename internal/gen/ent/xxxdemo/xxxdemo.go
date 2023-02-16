@@ -29,8 +29,6 @@ const (
 	FieldCode = "code"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
 	// Table holds the table name of the xxxdemo in the database.
 	Table = "xxx_demos"
 )
@@ -47,7 +45,6 @@ var Columns = []string{
 	FieldIsActive,
 	FieldCode,
 	FieldName,
-	FieldStatus,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -81,8 +78,6 @@ var (
 	CodeValidator func(string) error
 	// NameValidator is a validator for the "name" field. It is called by the builders before save.
 	NameValidator func(string) error
-	// DefaultStatus holds the default value on creation for the "status" field.
-	DefaultStatus int16
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

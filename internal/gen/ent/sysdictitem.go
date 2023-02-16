@@ -28,12 +28,12 @@ type SysDictItem struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// 删除时间,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+	// 是否活跃
+	IsActive bool `json:"is_active,omitempty"`
 	// 显示值
 	Label string `json:"label,omitempty"`
 	// 字典值
 	Value int `json:"value,omitempty"`
-	// 启用状态
-	Status int16 `json:"status,omitempty"`
 	// sys_dict.id
 	DictID string `json:"dict_id,omitempty"`
 }
@@ -43,9 +43,9 @@ func (*SysDictItem) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysdictitem.FieldIsDel:
+		case sysdictitem.FieldIsDel, sysdictitem.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case sysdictitem.FieldSort, sysdictitem.FieldValue, sysdictitem.FieldStatus:
+		case sysdictitem.FieldSort, sysdictitem.FieldValue:
 			values[i] = new(sql.NullInt64)
 		case sysdictitem.FieldID, sysdictitem.FieldMemo, sysdictitem.FieldLabel, sysdictitem.FieldDictID:
 			values[i] = new(sql.NullString)
@@ -109,6 +109,12 @@ func (sdi *SysDictItem) assignValues(columns []string, values []interface{}) err
 				sdi.DeletedAt = new(time.Time)
 				*sdi.DeletedAt = value.Time
 			}
+		case sysdictitem.FieldIsActive:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_active", values[i])
+			} else if value.Valid {
+				sdi.IsActive = value.Bool
+			}
 		case sysdictitem.FieldLabel:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field label", values[i])
@@ -120,12 +126,6 @@ func (sdi *SysDictItem) assignValues(columns []string, values []interface{}) err
 				return fmt.Errorf("unexpected type %T for field value", values[i])
 			} else if value.Valid {
 				sdi.Value = int(value.Int64)
-			}
-		case sysdictitem.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
-			} else if value.Valid {
-				sdi.Status = int16(value.Int64)
 			}
 		case sysdictitem.FieldDictID:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -181,14 +181,14 @@ func (sdi *SysDictItem) String() string {
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
+	builder.WriteString("is_active=")
+	builder.WriteString(fmt.Sprintf("%v", sdi.IsActive))
+	builder.WriteString(", ")
 	builder.WriteString("label=")
 	builder.WriteString(sdi.Label)
 	builder.WriteString(", ")
 	builder.WriteString("value=")
 	builder.WriteString(fmt.Sprintf("%v", sdi.Value))
-	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", sdi.Status))
 	builder.WriteString(", ")
 	builder.WriteString("dict_id=")
 	builder.WriteString(sdi.DictID)

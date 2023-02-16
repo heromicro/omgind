@@ -102,6 +102,8 @@ func init() {
 	_ = sysdictitemMixinFields2
 	sysdictitemMixinFields3 := sysdictitemMixin[3].Fields()
 	_ = sysdictitemMixinFields3
+	sysdictitemMixinFields4 := sysdictitemMixin[4].Fields()
+	_ = sysdictitemMixinFields4
 	sysdictitemFields := entity.SysDictItem{}.Fields()
 	_ = sysdictitemFields
 	// sysdictitemDescIsDel is the schema descriptor for is_del field.
@@ -128,12 +130,16 @@ func init() {
 	sysdictitem.DefaultUpdatedAt = sysdictitemDescUpdatedAt.Default.(func() time.Time)
 	// sysdictitem.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysdictitem.UpdateDefaultUpdatedAt = sysdictitemDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// sysdictitemDescIsActive is the schema descriptor for is_active field.
+	sysdictitemDescIsActive := sysdictitemMixinFields4[0].Descriptor()
+	// sysdictitem.DefaultIsActive holds the default value on creation for the is_active field.
+	sysdictitem.DefaultIsActive = sysdictitemDescIsActive.Default.(bool)
 	// sysdictitemDescLabel is the schema descriptor for label field.
 	sysdictitemDescLabel := sysdictitemFields[0].Descriptor()
 	// sysdictitem.LabelValidator is a validator for the "label" field. It is called by the builders before save.
 	sysdictitem.LabelValidator = sysdictitemDescLabel.Validators[0].(func(string) error)
 	// sysdictitemDescDictID is the schema descriptor for dict_id field.
-	sysdictitemDescDictID := sysdictitemFields[3].Descriptor()
+	sysdictitemDescDictID := sysdictitemFields[2].Descriptor()
 	// sysdictitem.DictIDValidator is a validator for the "dict_id" field. It is called by the builders before save.
 	sysdictitem.DictIDValidator = func() func(string) error {
 		validators := sysdictitemDescDictID.Validators
@@ -1018,10 +1024,6 @@ func init() {
 	xxxdemoDescName := xxxdemoFields[1].Descriptor()
 	// xxxdemo.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	xxxdemo.NameValidator = xxxdemoDescName.Validators[0].(func(string) error)
-	// xxxdemoDescStatus is the schema descriptor for status field.
-	xxxdemoDescStatus := xxxdemoFields[2].Descriptor()
-	// xxxdemo.DefaultStatus holds the default value on creation for the status field.
-	xxxdemo.DefaultStatus = xxxdemoDescStatus.Default.(int16)
 	// xxxdemoDescID is the schema descriptor for id field.
 	xxxdemoDescID := xxxdemoMixinFields0[0].Descriptor()
 	// xxxdemo.DefaultID holds the default value on creation for the id field.

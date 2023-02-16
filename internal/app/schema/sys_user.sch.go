@@ -183,7 +183,7 @@ type UserShow struct {
 	LastName  string    `json:"last_name"`  // 真实姓
 	Phone     string    `json:"phone"`      // 手机号
 	Email     string    `json:"email"`      // 邮箱
-	Status    int       `json:"status"`     // 用户状态(1:启用 2:停用)
+	IsActive  *bool     `json:"is_active"`  // 状态
 	CreatedAt time.Time `json:"created_at"` // 创建时间
 	Roles     []*Role   `json:"roles"`      // 授权角色列表
 }

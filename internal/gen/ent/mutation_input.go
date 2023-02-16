@@ -116,9 +116,9 @@ type CreateSysDictItemInput struct {
 	CreatedAt *time.Time
 	UpdatedAt *time.Time
 	DeletedAt *time.Time
+	IsActive  *bool
 	Label     string
 	Value     int
-	Status    int16
 	DictID    string
 }
 
@@ -142,9 +142,11 @@ func (i *CreateSysDictItemInput) Mutate(m *SysDictItemCreate) {
 	if v := i.DeletedAt; v != nil {
 		m.SetDeletedAt(*v)
 	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
 	m.SetLabel(i.Label)
 	m.SetValue(i.Value)
-	m.SetStatus(i.Status)
 	m.SetDictID(i.DictID)
 }
 
@@ -162,9 +164,9 @@ type UpdateSysDictItemInput struct {
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
+	IsActive       *bool
 	Label          *string
 	Value          *int
-	Status         *int16
 	DictID         *string
 }
 
@@ -188,14 +190,14 @@ func (i *UpdateSysDictItemInput) Mutate(m *SysDictItemMutation) {
 	if v := i.DeletedAt; v != nil {
 		m.SetDeletedAt(*v)
 	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
 	if v := i.Label; v != nil {
 		m.SetLabel(*v)
 	}
 	if v := i.Value; v != nil {
 		m.SetValue(*v)
-	}
-	if v := i.Status; v != nil {
-		m.SetStatus(*v)
 	}
 	if v := i.DictID; v != nil {
 		m.SetDictID(*v)
@@ -1197,7 +1199,6 @@ type CreateXxxDemoInput struct {
 	IsActive  *bool
 	Code      string
 	Name      string
-	Status    *int16
 }
 
 // Mutate applies the CreateXxxDemoInput on the XxxDemoCreate builder.
@@ -1225,9 +1226,6 @@ func (i *CreateXxxDemoInput) Mutate(m *XxxDemoCreate) {
 	}
 	m.SetCode(i.Code)
 	m.SetName(i.Name)
-	if v := i.Status; v != nil {
-		m.SetStatus(*v)
-	}
 }
 
 // SetInput applies the change-set in the CreateXxxDemoInput on the create builder.
@@ -1247,7 +1245,6 @@ type UpdateXxxDemoInput struct {
 	IsActive       *bool
 	Code           *string
 	Name           *string
-	Status         *int16
 }
 
 // Mutate applies the UpdateXxxDemoInput on the XxxDemoMutation.
@@ -1278,9 +1275,6 @@ func (i *UpdateXxxDemoInput) Mutate(m *XxxDemoMutation) {
 	}
 	if v := i.Name; v != nil {
 		m.SetName(*v)
-	}
-	if v := i.Status; v != nil {
-		m.SetStatus(*v)
 	}
 }
 

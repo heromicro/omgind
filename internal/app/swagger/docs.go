@@ -755,9 +755,9 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "状态(1:启用 2:禁用)",
-                        "name": "status",
+                        "type": "boolean",
+                        "description": "是否有效",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
@@ -874,9 +874,9 @@ const docTemplate = `{
                 "summary": "查询菜单树",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "状态(1:启用 2:禁用)",
-                        "name": "status",
+                        "type": "boolean",
+                        "description": "是否有效",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
@@ -1463,9 +1463,9 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "状态(1:启用 2:禁用)",
-                        "name": "status",
+                        "type": "boolean",
+                        "description": "是否有效",
+                        "name": "is_active",
                         "in": "query"
                     }
                 ],
@@ -1576,9 +1576,9 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "状态(1:启用 2:禁用)",
-                        "name": "status",
+                        "type": "boolean",
+                        "description": "是否有效",
+                        "name": "is_active",
                         "in": "query"
                     }
                 ],
@@ -1893,9 +1893,9 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "状态(1:启用 2:停用)",
-                        "name": "status",
+                        "type": "boolean",
+                        "description": "是否有效",
+                        "name": "is_active",
                         "in": "query"
                     }
                 ],
@@ -2220,8 +2220,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "code",
-                "name",
-                "status"
+                "is_active",
+                "name"
             ],
             "properties": {
                 "code": {
@@ -2240,6 +2240,10 @@ const docTemplate = `{
                     "description": "唯一标识",
                     "type": "string"
                 },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
                 "memo": {
                     "description": "备注",
                     "type": "string"
@@ -2251,12 +2255,6 @@ const docTemplate = `{
                 "sort": {
                     "type": "integer"
                 },
-                "status": {
-                    "description": "状态(1:启用 2:停用)",
-                    "type": "integer",
-                    "maximum": 2,
-                    "minimum": 1
-                },
                 "updated_at": {
                     "description": "更新时间",
                     "type": "string"
@@ -2266,10 +2264,10 @@ const docTemplate = `{
         "schema.Dict": {
             "type": "object",
             "required": [
+                "is_active",
                 "items",
                 "name_cn",
-                "name_en",
-                "status"
+                "name_en"
             ],
             "properties": {
                 "created_at": {
@@ -2283,6 +2281,10 @@ const docTemplate = `{
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
+                },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
                 },
                 "items": {
                     "description": "字典项列表",
@@ -2307,10 +2309,6 @@ const docTemplate = `{
                     "description": "排序",
                     "type": "integer"
                 },
-                "status": {
-                    "description": "状态",
-                    "type": "integer"
-                },
                 "updated_at": {
                     "description": "更新时间",
                     "type": "string"
@@ -2321,8 +2319,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "dict_id",
+                "is_active",
                 "label",
-                "status",
                 "value"
             ],
             "properties": {
@@ -2342,6 +2340,10 @@ const docTemplate = `{
                     "description": "唯一标识",
                     "type": "string"
                 },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
                 "label": {
                     "description": "显示值",
                     "type": "string"
@@ -2352,10 +2354,6 @@ const docTemplate = `{
                 },
                 "sort": {
                     "description": "排序",
-                    "type": "integer"
-                },
-                "status": {
-                    "description": "状态(1:启用 2:禁用)",
                     "type": "integer"
                 },
                 "updated_at": {
@@ -2414,8 +2412,8 @@ const docTemplate = `{
         "schema.Menu": {
             "type": "object",
             "required": [
-                "name",
-                "status"
+                "is_active",
+                "name"
             ],
             "properties": {
                 "actions": {
@@ -2441,9 +2439,21 @@ const docTemplate = `{
                     "description": "唯一标识",
                     "type": "string"
                 },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
+                "is_leaf": {
+                    "description": "是否子叶",
+                    "type": "boolean"
+                },
                 "is_show": {
                     "description": "是否显示",
                     "type": "boolean"
+                },
+                "level": {
+                    "description": "层级",
+                    "type": "integer"
                 },
                 "memo": {
                     "description": "备注",
@@ -2468,12 +2478,6 @@ const docTemplate = `{
                 "sort": {
                     "description": "排序值",
                     "type": "integer"
-                },
-                "status": {
-                    "description": "状态(1:启用 2:禁用)",
-                    "type": "integer",
-                    "maximum": 2,
-                    "minimum": 1
                 },
                 "updated_at": {
                     "description": "更新时间",
@@ -2564,8 +2568,20 @@ const docTemplate = `{
                     "description": "唯一标识",
                     "type": "string"
                 },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
+                "is_leaf": {
+                    "description": "是否子叶",
+                    "type": "boolean"
+                },
                 "is_show": {
                     "type": "boolean"
+                },
+                "level": {
+                    "description": "层级",
+                    "type": "integer"
                 },
                 "name": {
                     "description": "菜单名称",
@@ -2585,10 +2601,6 @@ const docTemplate = `{
                 },
                 "sort": {
                     "description": "排序值",
-                    "type": "integer"
-                },
-                "status": {
-                    "description": "状态(1:启用 2:禁用)",
                     "type": "integer"
                 }
             }
@@ -2610,9 +2622,9 @@ const docTemplate = `{
         "schema.Role": {
             "type": "object",
             "required": [
+                "is_active",
                 "name",
-                "role_menus",
-                "status"
+                "role_menus"
             ],
             "properties": {
                 "created_at": {
@@ -2626,6 +2638,10 @@ const docTemplate = `{
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
+                },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
                 },
                 "memo": {
                     "description": "备注",
@@ -2645,12 +2661,6 @@ const docTemplate = `{
                 "sort": {
                     "description": "排序值",
                     "type": "integer"
-                },
-                "status": {
-                    "description": "状态(1:启用 2:禁用)",
-                    "type": "integer",
-                    "maximum": 2,
-                    "minimum": 1
                 },
                 "updated_at": {
                     "description": "更新时间",
@@ -2784,8 +2794,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "first_name",
+                "is_active",
                 "last_name",
-                "status",
                 "user_name",
                 "user_roles"
             ],
@@ -2816,6 +2826,10 @@ const docTemplate = `{
                     "description": "唯一标识",
                     "type": "string"
                 },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
                 "last_name": {
                     "description": "真实姓名",
                     "type": "string"
@@ -2831,12 +2845,6 @@ const docTemplate = `{
                 "real_name": {
                     "description": "真实姓名",
                     "type": "string"
-                },
-                "status": {
-                    "description": "用户状态(1:启用 2:停用)",
-                    "type": "integer",
-                    "maximum": 2,
-                    "minimum": 1
                 },
                 "updated_at": {
                     "description": "创建时间",
@@ -2891,6 +2899,10 @@ const docTemplate = `{
                     "description": "唯一标识",
                     "type": "string"
                 },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
                 "last_name": {
                     "description": "真实姓",
                     "type": "string"
@@ -2909,10 +2921,6 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/schema.Role"
                     }
-                },
-                "status": {
-                    "description": "用户状态(1:启用 2:停用)",
-                    "type": "integer"
                 },
                 "user_name": {
                     "description": "用户名",

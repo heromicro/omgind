@@ -23,12 +23,12 @@ const (
 	FieldUpdatedAt = "uptd_at"
 	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
 	FieldDeletedAt = "dltd_at"
+	// FieldIsActive holds the string denoting the is_active field in the database.
+	FieldIsActive = "is_active"
 	// FieldLabel holds the string denoting the label field in the database.
 	FieldLabel = "label"
 	// FieldValue holds the string denoting the value field in the database.
 	FieldValue = "val"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
 	// FieldDictID holds the string denoting the dict_id field in the database.
 	FieldDictID = "dict_id"
 	// Table holds the table name of the sysdictitem in the database.
@@ -44,9 +44,9 @@ var Columns = []string{
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldDeletedAt,
+	FieldIsActive,
 	FieldLabel,
 	FieldValue,
-	FieldStatus,
 	FieldDictID,
 }
 
@@ -75,6 +75,8 @@ var (
 	DefaultUpdatedAt func() time.Time
 	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
 	UpdateDefaultUpdatedAt func() time.Time
+	// DefaultIsActive holds the default value on creation for the "is_active" field.
+	DefaultIsActive bool
 	// LabelValidator is a validator for the "label" field. It is called by the builders before save.
 	LabelValidator func(string) error
 	// DictIDValidator is a validator for the "dict_id" field. It is called by the builders before save.

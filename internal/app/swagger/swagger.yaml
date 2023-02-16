@@ -13,6 +13,9 @@ definitions:
       id:
         description: 唯一标识
         type: string
+      is_active:
+        description: 状态
+        type: boolean
       memo:
         description: 备注
         type: string
@@ -21,18 +24,13 @@ definitions:
         type: string
       sort:
         type: integer
-      status:
-        description: 状态(1:启用 2:停用)
-        maximum: 2
-        minimum: 1
-        type: integer
       updated_at:
         description: 更新时间
         type: string
     required:
     - code
+    - is_active
     - name
-    - status
     type: object
   schema.Dict:
     properties:
@@ -45,6 +43,9 @@ definitions:
       id:
         description: 唯一标识
         type: string
+      is_active:
+        description: 状态
+        type: boolean
       items:
         description: 字典项列表
         items:
@@ -62,17 +63,14 @@ definitions:
       sort:
         description: 排序
         type: integer
-      status:
-        description: 状态
-        type: integer
       updated_at:
         description: 更新时间
         type: string
     required:
+    - is_active
     - items
     - name_cn
     - name_en
-    - status
     type: object
   schema.DictItem:
     properties:
@@ -88,6 +86,9 @@ definitions:
       id:
         description: 唯一标识
         type: string
+      is_active:
+        description: 状态
+        type: boolean
       label:
         description: 显示值
         type: string
@@ -97,9 +98,6 @@ definitions:
       sort:
         description: 排序
         type: integer
-      status:
-        description: 状态(1:启用 2:禁用)
-        type: integer
       updated_at:
         description: 更新时间
         type: string
@@ -108,8 +106,8 @@ definitions:
         type: integer
     required:
     - dict_id
+    - is_active
     - label
-    - status
     - value
     type: object
   schema.ErrorItem:
@@ -158,9 +156,18 @@ definitions:
       id:
         description: 唯一标识
         type: string
+      is_active:
+        description: 状态
+        type: boolean
+      is_leaf:
+        description: 是否子叶
+        type: boolean
       is_show:
         description: 是否显示
         type: boolean
+      level:
+        description: 层级
+        type: integer
       memo:
         description: 备注
         type: string
@@ -179,17 +186,12 @@ definitions:
       sort:
         description: 排序值
         type: integer
-      status:
-        description: 状态(1:启用 2:禁用)
-        maximum: 2
-        minimum: 1
-        type: integer
       updated_at:
         description: 更新时间
         type: string
     required:
+    - is_active
     - name
-    - status
     type: object
   schema.MenuAction:
     properties:
@@ -251,8 +253,17 @@ definitions:
       id:
         description: 唯一标识
         type: string
+      is_active:
+        description: 状态
+        type: boolean
+      is_leaf:
+        description: 是否子叶
+        type: boolean
       is_show:
         type: boolean
+      level:
+        description: 层级
+        type: integer
       name:
         description: 菜单名称
         type: string
@@ -267,9 +278,6 @@ definitions:
         type: string
       sort:
         description: 排序值
-        type: integer
-      status:
-        description: 状态(1:启用 2:禁用)
         type: integer
     type: object
   schema.PaginationResult:
@@ -292,6 +300,9 @@ definitions:
       id:
         description: 唯一标识
         type: string
+      is_active:
+        description: 状态
+        type: boolean
       memo:
         description: 备注
         type: string
@@ -306,18 +317,13 @@ definitions:
       sort:
         description: 排序值
         type: integer
-      status:
-        description: 状态(1:启用 2:禁用)
-        maximum: 2
-        minimum: 1
-        type: integer
       updated_at:
         description: 更新时间
         type: string
     required:
+    - is_active
     - name
     - role_menus
-    - status
     type: object
   schema.RoleMenu:
     properties:
@@ -427,6 +433,9 @@ definitions:
       id:
         description: 唯一标识
         type: string
+      is_active:
+        description: 状态
+        type: boolean
       last_name:
         description: 真实姓名
         type: string
@@ -439,11 +448,6 @@ definitions:
       real_name:
         description: 真实姓名
         type: string
-      status:
-        description: 用户状态(1:启用 2:停用)
-        maximum: 2
-        minimum: 1
-        type: integer
       updated_at:
         description: 创建时间
         type: string
@@ -457,8 +461,8 @@ definitions:
         type: array
     required:
     - first_name
+    - is_active
     - last_name
-    - status
     - user_name
     - user_roles
     type: object
@@ -488,6 +492,9 @@ definitions:
       id:
         description: 唯一标识
         type: string
+      is_active:
+        description: 状态
+        type: boolean
       last_name:
         description: 真实姓
         type: string
@@ -502,9 +509,6 @@ definitions:
         items:
           $ref: '#/definitions/schema.Role'
         type: array
-      status:
-        description: 用户状态(1:启用 2:停用)
-        type: integer
       user_name:
         description: 用户名
         type: string
@@ -1003,10 +1007,10 @@ paths:
         in: query
         name: queryValue
         type: string
-      - description: 状态(1:启用 2:禁用)
+      - description: 是否有效
         in: query
-        name: status
-        type: integer
+        name: is_active
+        type: boolean
       - description: 显示状态(true:显示 false:隐藏)
         in: query
         name: isShow
@@ -1075,10 +1079,10 @@ paths:
   /api/v2/menus.tree:
     get:
       parameters:
-      - description: 状态(1:启用 2:禁用)
+      - description: 是否有效
         in: query
-        name: status
-        type: integer
+        name: is_active
+        type: boolean
       - description: 父级ID
         in: query
         name: parentID
@@ -1440,10 +1444,10 @@ paths:
         in: query
         name: queryValue
         type: string
-      - description: 状态(1:启用 2:禁用)
+      - description: 是否有效
         in: query
-        name: status
-        type: integer
+        name: is_active
+        type: boolean
       responses:
         "200":
           description: OK
@@ -1508,10 +1512,10 @@ paths:
         in: query
         name: queryValue
         type: string
-      - description: 状态(1:启用 2:禁用)
+      - description: 是否有效
         in: query
-        name: status
-        type: integer
+        name: is_active
+        type: boolean
       responses:
         "200":
           description: 查询结果
@@ -1706,10 +1710,10 @@ paths:
         in: query
         name: roleIDs
         type: string
-      - description: 状态(1:启用 2:停用)
+      - description: 是否有效
         in: query
-        name: status
-        type: integer
+        name: is_active
+        type: boolean
       responses:
         "200":
           description: OK

@@ -7,13 +7,13 @@ import (
 // DictItem 字典项对象
 type DictItem struct {
 	ID string `json:"id"` // 唯一标识
-
-	Label  string `json:"label" binding:"required"`   // 显示值
-	Value  int    `json:"value" binding:"required"`   // 字典值
-	Status int    `json:"status" binding:"required"`  // 状态(1:启用 2:禁用)
-	DictID string `json:"dict_id" binding:"required"` // dict.id
-	Memo   string `json:"memo"`                       // 备注
-	Sort   int    `json:"sort"`                       // 排序
+	// "{\"name_cn\":\"性别\",\"name_en\":\"gender\",\"is_active\":true,\"sort\":9999,\"items\":[{\"key\":\"男\",\"label\":\"男\",\"value\":\"1\",\"is_active\":true,\"sort\":9999},{\"key\":\"女\",\"label\":\"女\",\"value\":\"2\",\"is_active\":true,\"sort\":9999}]}"
+	Label    string `json:"label" binding:"required"`     // 显示值
+	Value    int    `json:"value" binding:"required"`     // 字典值
+	IsActive *bool  `json:"is_active" binding:"required"` // 状态
+	DictID   string `json:"dict_id" binding:"required"`   // dict.id
+	Memo     string `json:"memo"`                         // 备注
+	Sort     int    `json:"sort"`                         // 排序
 
 	Creator   string    `json:"creator"`    // 创建者
 	CreatedAt time.Time `json:"created_at"` // 创建时间
@@ -34,7 +34,7 @@ func (di *DictItem) Compare(target *DictItem) bool {
 	if di.Sort != target.Sort {
 		return false
 	}
-	if di.Status != target.Status {
+	if *di.IsActive != *target.IsActive {
 		return false
 	}
 
@@ -66,7 +66,7 @@ type DictItems []*DictItem
 func (a DictItems) ToMap() map[string]*DictItem {
 	m := make(map[string]*DictItem)
 	for _, item := range a {
-		m[item.ID + "-" + item.Label] = item
+		m[item.ID+"-"+item.Label] = item
 	}
 	return m
 }

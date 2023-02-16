@@ -51,6 +51,7 @@ func (a *Dict) Create(c *gin.Context) {
 
 	ctx := c.Request.Context()
 	var item schema.Dict
+
 	if err := ginx.ParseJSON(c, &item); err != nil {
 		ginx.ResError(c, err)
 		return
