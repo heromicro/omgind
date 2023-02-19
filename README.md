@@ -98,6 +98,7 @@ omgind-cli new -d test-omgind -p test-omgind -m
 ```bash
 name: Task
 comment: 任务管理
+mixin: "sort, time, active, memo"
 fields:
   - name: Code
     type: string
