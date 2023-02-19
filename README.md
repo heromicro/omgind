@@ -70,7 +70,7 @@ $ go run cmd/omgind/main.go web -c ./configs/config.toml -m ./configs/model.conf
 make swagger
 
 # OR 使用swag命令
-swag init --parseDependency --generalInfo ./cmd/${APP}/main.go --output ./internal/app/swagger
+swag init -d ./cmd/${APP}/,internal/ --output ./internal/app/swagger
 ```
 
 ## 重新生成依赖注入文件
