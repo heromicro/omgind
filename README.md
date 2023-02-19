@@ -105,8 +105,8 @@ fields:
     comment: 任务编号
     required: true
     binding_options: ""
-    max: 16
-    min: 0
+    max: 16. # 配置最大字符数
+    min: 0   # 配置最少字符数
     
   - name: Name
     type: string
@@ -115,6 +115,14 @@ fields:
     binding_options: ""
     max: 16
     min: 0
+
+  - name: Person
+    type: int32
+    comment: 任务人数
+    required: true
+    binding_options: ""
+    max: 32  # 配置最大值
+    min: 5   # 配置最小值
     
   - name: Memo
     type: string
