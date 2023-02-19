@@ -105,19 +105,23 @@ fields:
     comment: 任务编号
     required: true
     binding_options: ""
-    gorm_options: "size:50;index;"
+    max: 16
+    min: 0
+    
   - name: Name
     type: string
     comment: 任务名称
     required: true
     binding_options: ""
-    gorm_options: "size:50;index;"
+    max: 16
+    min: 0
+    
   - name: Memo
     type: string
     comment: 任务备注
     required: false
     binding_options: ""
-    gorm_options: "size:1024;"
+    
 ```
 
 #### 执行生成命令并运行
