@@ -4,6 +4,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/gotidy/ptr"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/heromicro/omgind/internal/app/schema"
@@ -18,9 +19,9 @@ func TestMenu(t *testing.T) {
 
 	// post /menus
 	addItem := &schema.Menu{
-		Name:       uid.MustString(),
-		ShowStatus: 1,
-		Status:     1,
+		Name:     uid.MustString(),
+		IsShow:   ptr.Bool(true),
+		IsActive: ptr.Bool(true),
 	}
 	engine.ServeHTTP(w, newPostRequest(router, addItem))
 	assert.Equal(t, 200, w.Code)
@@ -35,7 +36,7 @@ func TestMenu(t *testing.T) {
 	err = parseReader(w.Body, &getItem)
 	assert.Nil(t, err)
 	assert.Equal(t, addItem.Name, getItem.Name)
-	assert.Equal(t, addItem.Status, getItem.Status)
+	assert.Equal(t, *addItem.IsActive, *getItem.IsActive)
 	assert.NotEmpty(t, getItem.ID)
 
 	// put /menus/:id

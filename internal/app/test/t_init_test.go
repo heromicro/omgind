@@ -31,8 +31,8 @@ func init() {
 	global.CFG.JWTAuth.Enable = false
 	global.CFG.Casbin.Enable = false
 	global.CFG.Casbin.Model = modelFile
-	global.CFG.Gorm.Debug = false
-	global.CFG.Gorm.DBType = "sqlite3"
+	// global.CFG.Gorm.Debug = false
+	// global.CFG.Gorm.DBType = "sqlite3"
 
 	injector, _, err := app.BuildInjector()
 	if err != nil {

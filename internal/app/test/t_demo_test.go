@@ -4,6 +4,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/gotidy/ptr"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/heromicro/omgind/internal/app/schema"
@@ -18,9 +19,9 @@ func TestDemo(t *testing.T) {
 
 	// post /demos
 	addItem := &schema.Demo{
-		Code:   uid.MustString(),
-		Name:   uid.MustString(),
-		Status: 1,
+		Code:     uid.MustString(),
+		Name:     uid.MustString(),
+		IsActive: ptr.Bool(true),
 	}
 	engine.ServeHTTP(w, newPostRequest(router, addItem))
 	assert.Equal(t, 200, w.Code)
@@ -36,7 +37,7 @@ func TestDemo(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, addItem.Code, getItem.Code)
 	assert.Equal(t, addItem.Name, getItem.Name)
-	assert.Equal(t, addItem.Status, getItem.Status)
+	assert.Equal(t, *addItem.IsActive, *getItem.IsActive)
 	assert.NotEmpty(t, getItem.ID)
 
 	// put /demos/:id

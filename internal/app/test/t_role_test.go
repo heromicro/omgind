@@ -4,6 +4,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/schema"
 	uid "github.com/heromicro/omgind/pkg/helper/uid/ulid"
 
@@ -18,9 +19,9 @@ func TestRole(t *testing.T) {
 
 	// post /menus
 	addMenuItem := &schema.Menu{
-		Name:       uid.MustString(),
-		ShowStatus: 1,
-		Status:     1,
+		Name:     uid.MustString(),
+		IsShow:   ptr.Bool(true),
+		IsActive: ptr.Bool(true),
 	}
 	engine.ServeHTTP(w, newPostRequest(apiPrefix+"v1/menus", addMenuItem))
 	assert.Equal(t, 200, w.Code)
@@ -30,8 +31,8 @@ func TestRole(t *testing.T) {
 
 	// post /roles
 	addItem := &schema.Role{
-		Name:   uid.MustString(),
-		Status: 1,
+		Name:     uid.MustString(),
+		IsActive: ptr.Bool(true),
 		RoleMenus: schema.RoleMenus{
 			&schema.RoleMenu{
 				MenuID: addMenuItemRes.ID,
@@ -51,7 +52,7 @@ func TestRole(t *testing.T) {
 	err = parseReader(w.Body, &getItem)
 	assert.Nil(t, err)
 	assert.Equal(t, addItem.Name, getItem.Name)
-	assert.Equal(t, addItem.Status, getItem.Status)
+	assert.Equal(t, *addItem.IsActive, *getItem.IsActive)
 	assert.NotEmpty(t, getItem.ID)
 
 	// put /roles/:id

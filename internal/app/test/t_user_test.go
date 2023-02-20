@@ -20,9 +20,9 @@ func TestUser(t *testing.T) {
 
 	// post /menus
 	addMenuItem := &schema.Menu{
-		Name:       uid.MustString(),
-		IsShow: 	ptr.Bool(true),
-		Status:     1,
+		Name:     uid.MustString(),
+		IsShow:   ptr.Bool(true),
+		IsActive: ptr.Bool(true),
 	}
 	engine.ServeHTTP(w, newPostRequest(apiPrefix+"v1/menus", addMenuItem))
 	assert.Equal(t, 200, w.Code)
@@ -32,8 +32,8 @@ func TestUser(t *testing.T) {
 
 	// post /roles
 	addRoleItem := &schema.Role{
-		Name:   uid.MustString(),
-		Status: 1,
+		Name:     uid.MustString(),
+		IsActive: ptr.Bool(true),
 		RoleMenus: schema.RoleMenus{
 			&schema.RoleMenu{
 				MenuID: addMenuItemRes.ID,
@@ -50,7 +50,7 @@ func TestUser(t *testing.T) {
 	addItem := &schema.User{
 		UserName: uid.MustString(),
 		RealName: uid.MustString(),
-		Status:   1,
+		IsActive: ptr.Bool(true),
 		Password: hash.MD5String("test"),
 		UserRoles: schema.UserRoles{
 			&schema.UserRole{
@@ -71,7 +71,7 @@ func TestUser(t *testing.T) {
 	err = parseReader(w.Body, &getItem)
 	assert.Nil(t, err)
 	assert.Equal(t, addItem.UserName, getItem.UserName)
-	assert.Equal(t, addItem.Status, getItem.Status)
+	assert.Equal(t, *addItem.IsActive, *getItem.IsActive)
 	assert.NotEmpty(t, getItem.ID)
 
 	// put /users/:id
