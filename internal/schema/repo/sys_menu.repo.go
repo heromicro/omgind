@@ -77,7 +77,7 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 		query = query.Where(sysmenu.ParentPathContains(v))
 	}
 	if v := params.IsActive; v != nil {
-		query = query.Where(sysmenu.IsActive(*v))
+		query = query.Where(sysmenu.IsActiveEQ(*v))
 	}
 	if v := params.IsShow; v != nil {
 		query = query.Where(sysmenu.IsShowEQ(*v))

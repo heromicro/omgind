@@ -80,7 +80,7 @@ func (a *SignIn) Verify(ctx context.Context, userName, password string) (*schema
 	ok, err := hash.CheckPassword(password, item.Password)
 	if err != nil || !ok {
 		return nil, errors.ErrInvalidPassword
-	} else if *item.IsActive {
+	} else if !*item.IsActive {
 		return nil, errors.ErrUserDisable
 	}
 
@@ -117,7 +117,7 @@ func (a *SignIn) checkAndGetUser(ctx context.Context, userID string) (*schema.Us
 		return nil, err
 	} else if user == nil {
 		return nil, errors.ErrInvalidUser
-	} else if *user.IsActive {
+	} else if !*user.IsActive {
 		return nil, errors.ErrUserDisable
 	}
 	return user, nil

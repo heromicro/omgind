@@ -6,8 +6,7 @@ import (
 
 // DictItem 字典项对象
 type DictItem struct {
-	ID string `json:"id"` // 唯一标识
-	// "{\"name_cn\":\"性别\",\"name_en\":\"gender\",\"is_active\":true,\"sort\":9999,\"items\":[{\"key\":\"男\",\"label\":\"男\",\"value\":\"1\",\"is_active\":true,\"sort\":9999},{\"key\":\"女\",\"label\":\"女\",\"value\":\"2\",\"is_active\":true,\"sort\":9999}]}"
+	ID       string `json:"id"`                           // 唯一标识
 	Label    string `json:"label" binding:"required"`     // 显示值
 	Value    int    `json:"value" binding:"required"`     // 字典值
 	IsActive *bool  `json:"is_active" binding:"required"` // 状态
@@ -46,6 +45,8 @@ type DictItemQueryParam struct {
 	PaginationParam
 	DictID string //字典id
 	IDs    []string
+	// QueryValue string `form:"queryValue"` // 模糊查询
+	// IsActive   *bool  `form:"is_active"`
 }
 
 // DictItemQueryOptions 查询可选参数项
