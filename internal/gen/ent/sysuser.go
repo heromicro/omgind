@@ -41,7 +41,7 @@ type SysUser struct {
 	// 电子邮箱
 	Email string `json:"email,omitempty"`
 	// 电话号码
-	Phone string `json:"phone,omitempty"`
+	Mobile string `json:"mobile,omitempty"`
 	// 盐
 	Salt string `json:"salt,omitempty"`
 }
@@ -55,7 +55,7 @@ func (*SysUser) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullBool)
 		case sysuser.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case sysuser.FieldID, sysuser.FieldUserName, sysuser.FieldRealName, sysuser.FieldFirstName, sysuser.FieldLastName, sysuser.FieldPassword, sysuser.FieldEmail, sysuser.FieldPhone, sysuser.FieldSalt:
+		case sysuser.FieldID, sysuser.FieldUserName, sysuser.FieldRealName, sysuser.FieldFirstName, sysuser.FieldLastName, sysuser.FieldPassword, sysuser.FieldEmail, sysuser.FieldMobile, sysuser.FieldSalt:
 			values[i] = new(sql.NullString)
 		case sysuser.FieldCreatedAt, sysuser.FieldUpdatedAt, sysuser.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -146,21 +146,21 @@ func (su *SysUser) assignValues(columns []string, values []interface{}) error {
 			}
 		case sysuser.FieldPassword:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field Password", values[i])
+				return fmt.Errorf("unexpected type %T for field password", values[i])
 			} else if value.Valid {
 				su.Password = value.String
 			}
 		case sysuser.FieldEmail:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field Email", values[i])
+				return fmt.Errorf("unexpected type %T for field email", values[i])
 			} else if value.Valid {
 				su.Email = value.String
 			}
-		case sysuser.FieldPhone:
+		case sysuser.FieldMobile:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field Phone", values[i])
+				return fmt.Errorf("unexpected type %T for field mobile", values[i])
 			} else if value.Valid {
-				su.Phone = value.String
+				su.Mobile = value.String
 			}
 		case sysuser.FieldSalt:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -234,13 +234,13 @@ func (su *SysUser) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	builder.WriteString("Password=<sensitive>")
+	builder.WriteString("password=<sensitive>")
 	builder.WriteString(", ")
-	builder.WriteString("Email=")
+	builder.WriteString("email=")
 	builder.WriteString(su.Email)
 	builder.WriteString(", ")
-	builder.WriteString("Phone=")
-	builder.WriteString(su.Phone)
+	builder.WriteString("mobile=")
+	builder.WriteString(su.Mobile)
 	builder.WriteString(", ")
 	builder.WriteString("salt=")
 	builder.WriteString(su.Salt)

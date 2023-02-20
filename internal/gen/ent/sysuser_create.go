@@ -152,21 +152,21 @@ func (suc *SysUserCreate) SetNillableLastName(s *string) *SysUserCreate {
 	return suc
 }
 
-// SetPassword sets the "Password" field.
+// SetPassword sets the "password" field.
 func (suc *SysUserCreate) SetPassword(s string) *SysUserCreate {
 	suc.mutation.SetPassword(s)
 	return suc
 }
 
-// SetEmail sets the "Email" field.
+// SetEmail sets the "email" field.
 func (suc *SysUserCreate) SetEmail(s string) *SysUserCreate {
 	suc.mutation.SetEmail(s)
 	return suc
 }
 
-// SetPhone sets the "Phone" field.
-func (suc *SysUserCreate) SetPhone(s string) *SysUserCreate {
-	suc.mutation.SetPhone(s)
+// SetMobile sets the "mobile" field.
+func (suc *SysUserCreate) SetMobile(s string) *SysUserCreate {
+	suc.mutation.SetMobile(s)
 	return suc
 }
 
@@ -346,27 +346,27 @@ func (suc *SysUserCreate) check() error {
 		}
 	}
 	if _, ok := suc.mutation.Password(); !ok {
-		return &ValidationError{Name: "Password", err: errors.New(`ent: missing required field "SysUser.Password"`)}
+		return &ValidationError{Name: "password", err: errors.New(`ent: missing required field "SysUser.password"`)}
 	}
 	if v, ok := suc.mutation.Password(); ok {
 		if err := sysuser.PasswordValidator(v); err != nil {
-			return &ValidationError{Name: "Password", err: fmt.Errorf(`ent: validator failed for field "SysUser.Password": %w`, err)}
+			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "SysUser.password": %w`, err)}
 		}
 	}
 	if _, ok := suc.mutation.Email(); !ok {
-		return &ValidationError{Name: "Email", err: errors.New(`ent: missing required field "SysUser.Email"`)}
+		return &ValidationError{Name: "email", err: errors.New(`ent: missing required field "SysUser.email"`)}
 	}
 	if v, ok := suc.mutation.Email(); ok {
 		if err := sysuser.EmailValidator(v); err != nil {
-			return &ValidationError{Name: "Email", err: fmt.Errorf(`ent: validator failed for field "SysUser.Email": %w`, err)}
+			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "SysUser.email": %w`, err)}
 		}
 	}
-	if _, ok := suc.mutation.Phone(); !ok {
-		return &ValidationError{Name: "Phone", err: errors.New(`ent: missing required field "SysUser.Phone"`)}
+	if _, ok := suc.mutation.Mobile(); !ok {
+		return &ValidationError{Name: "mobile", err: errors.New(`ent: missing required field "SysUser.mobile"`)}
 	}
-	if v, ok := suc.mutation.Phone(); ok {
-		if err := sysuser.PhoneValidator(v); err != nil {
-			return &ValidationError{Name: "Phone", err: fmt.Errorf(`ent: validator failed for field "SysUser.Phone": %w`, err)}
+	if v, ok := suc.mutation.Mobile(); ok {
+		if err := sysuser.MobileValidator(v); err != nil {
+			return &ValidationError{Name: "mobile", err: fmt.Errorf(`ent: validator failed for field "SysUser.mobile": %w`, err)}
 		}
 	}
 	if _, ok := suc.mutation.Salt(); !ok {
@@ -509,13 +509,13 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		})
 		_node.Email = value
 	}
-	if value, ok := suc.mutation.Phone(); ok {
+	if value, ok := suc.mutation.Mobile(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysuser.FieldPhone,
+			Column: sysuser.FieldMobile,
 		})
-		_node.Phone = value
+		_node.Mobile = value
 	}
 	if value, ok := suc.mutation.Salt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

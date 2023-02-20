@@ -34,12 +34,12 @@ func (SysUser) Fields() []ent.Field {
 			MaxLen(31).Nillable().Optional().Comment("名"),
 		field.String("last_name").StorageKey("last_name").
 			MaxLen(31).Nillable().Optional().Comment("姓"),
-		field.String("Password").StorageKey("passwd").
+		field.String("password").StorageKey("passwd").
 			MaxLen(256).Sensitive().Comment("密码"),
-		field.String("Email").StorageKey("email").
+		field.String("email").StorageKey("email").
 			MaxLen(256).StructTag(`json:"email,omitempty"`).Comment("电子邮箱"),
-		field.String("Phone").StorageKey("phone").
-			MaxLen(20).StructTag(`json:"phone,omitempty"`).Comment("电话号码"),
+		field.String("mobile").StorageKey("mobile").
+			MaxLen(20).StructTag(`json:"mobile,omitempty"`).Comment("电话号码"),
 		field.String("salt").DefaultFunc(func() string {
 			return str.RandomBetween(10, 16)
 		}).Comment("盐"),

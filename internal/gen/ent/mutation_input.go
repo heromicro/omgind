@@ -978,7 +978,7 @@ type CreateSysUserInput struct {
 	LastName  *string
 	Password  string
 	Email     string
-	Phone     string
+	Mobile    string
 	Salt      *string
 }
 
@@ -1014,7 +1014,7 @@ func (i *CreateSysUserInput) Mutate(m *SysUserCreate) {
 	}
 	m.SetPassword(i.Password)
 	m.SetEmail(i.Email)
-	m.SetPhone(i.Phone)
+	m.SetMobile(i.Mobile)
 	if v := i.Salt; v != nil {
 		m.SetSalt(*v)
 	}
@@ -1042,7 +1042,7 @@ type UpdateSysUserInput struct {
 	ClearLastName  bool
 	Password       *string
 	Email          *string
-	Phone          *string
+	Mobile         *string
 	Salt           *string
 }
 
@@ -1090,8 +1090,8 @@ func (i *UpdateSysUserInput) Mutate(m *SysUserMutation) {
 	if v := i.Email; v != nil {
 		m.SetEmail(*v)
 	}
-	if v := i.Phone; v != nil {
-		m.SetPhone(*v)
+	if v := i.Mobile; v != nil {
+		m.SetMobile(*v)
 	}
 	if v := i.Salt; v != nil {
 		m.SetSalt(*v)

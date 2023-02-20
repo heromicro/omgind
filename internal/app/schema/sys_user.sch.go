@@ -37,7 +37,7 @@ type User struct {
 	FirstName string `json:"first_name" binding:"required"` // 真实姓名
 	LastName  string `json:"last_name" binding:"required"`  // 真实姓名
 	Password  string `json:"password"`                      // 密码
-	Phone     string `json:"phone"`                         // 手机号
+	Mobile    string `json:"mobile"`                        // 手机号
 	Email     string `json:"email"`                         // 邮箱
 	IsActive  *bool  `json:"is_active" binding:"required"`  // 状态
 	Gender    int    `json:"gender" binding:"max=3,min=1"`  // 性别(1:男,2:女)
@@ -181,7 +181,7 @@ type UserShow struct {
 	RealName  string    `json:"real_name"`  // 真实姓名
 	FirstName string    `json:"first_name"` // 真实名
 	LastName  string    `json:"last_name"`  // 真实姓
-	Phone     string    `json:"phone"`      // 手机号
+	Mobile    string    `json:"mobile"`     // 手机号
 	Email     string    `json:"email"`      // 邮箱
 	IsActive  *bool     `json:"is_active"`  // 状态
 	CreatedAt time.Time `json:"created_at"` // 创建时间

@@ -529,7 +529,7 @@ var (
 		{Name: "last_name", Type: field.TypeString, Nullable: true, Size: 31},
 		{Name: "passwd", Type: field.TypeString, Size: 256},
 		{Name: "email", Type: field.TypeString, Size: 256},
-		{Name: "phone", Type: field.TypeString, Size: 20},
+		{Name: "mobile", Type: field.TypeString, Size: 20},
 		{Name: "salt", Type: field.TypeString},
 	}
 	// SysUsersTable holds the schema information for the "sys_users" table.

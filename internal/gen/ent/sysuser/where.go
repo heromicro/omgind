@@ -150,24 +150,24 @@ func LastName(v string) predicate.SysUser {
 	})
 }
 
-// Password applies equality check predicate on the "Password" field. It's identical to PasswordEQ.
+// Password applies equality check predicate on the "password" field. It's identical to PasswordEQ.
 func Password(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPassword), v))
 	})
 }
 
-// Email applies equality check predicate on the "Email" field. It's identical to EmailEQ.
+// Email applies equality check predicate on the "email" field. It's identical to EmailEQ.
 func Email(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldEmail), v))
 	})
 }
 
-// Phone applies equality check predicate on the "Phone" field. It's identical to PhoneEQ.
-func Phone(v string) predicate.SysUser {
+// Mobile applies equality check predicate on the "mobile" field. It's identical to MobileEQ.
+func Mobile(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPhone), v))
+		s.Where(sql.EQ(s.C(FieldMobile), v))
 	})
 }
 
@@ -1010,21 +1010,21 @@ func LastNameContainsFold(v string) predicate.SysUser {
 	})
 }
 
-// PasswordEQ applies the EQ predicate on the "Password" field.
+// PasswordEQ applies the EQ predicate on the "password" field.
 func PasswordEQ(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordNEQ applies the NEQ predicate on the "Password" field.
+// PasswordNEQ applies the NEQ predicate on the "password" field.
 func PasswordNEQ(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordIn applies the In predicate on the "Password" field.
+// PasswordIn applies the In predicate on the "password" field.
 func PasswordIn(vs ...string) predicate.SysUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -1041,7 +1041,7 @@ func PasswordIn(vs ...string) predicate.SysUser {
 	})
 }
 
-// PasswordNotIn applies the NotIn predicate on the "Password" field.
+// PasswordNotIn applies the NotIn predicate on the "password" field.
 func PasswordNotIn(vs ...string) predicate.SysUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -1058,84 +1058,84 @@ func PasswordNotIn(vs ...string) predicate.SysUser {
 	})
 }
 
-// PasswordGT applies the GT predicate on the "Password" field.
+// PasswordGT applies the GT predicate on the "password" field.
 func PasswordGT(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordGTE applies the GTE predicate on the "Password" field.
+// PasswordGTE applies the GTE predicate on the "password" field.
 func PasswordGTE(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordLT applies the LT predicate on the "Password" field.
+// PasswordLT applies the LT predicate on the "password" field.
 func PasswordLT(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordLTE applies the LTE predicate on the "Password" field.
+// PasswordLTE applies the LTE predicate on the "password" field.
 func PasswordLTE(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordContains applies the Contains predicate on the "Password" field.
+// PasswordContains applies the Contains predicate on the "password" field.
 func PasswordContains(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordHasPrefix applies the HasPrefix predicate on the "Password" field.
+// PasswordHasPrefix applies the HasPrefix predicate on the "password" field.
 func PasswordHasPrefix(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordHasSuffix applies the HasSuffix predicate on the "Password" field.
+// PasswordHasSuffix applies the HasSuffix predicate on the "password" field.
 func PasswordHasSuffix(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordEqualFold applies the EqualFold predicate on the "Password" field.
+// PasswordEqualFold applies the EqualFold predicate on the "password" field.
 func PasswordEqualFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldPassword), v))
 	})
 }
 
-// PasswordContainsFold applies the ContainsFold predicate on the "Password" field.
+// PasswordContainsFold applies the ContainsFold predicate on the "password" field.
 func PasswordContainsFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldPassword), v))
 	})
 }
 
-// EmailEQ applies the EQ predicate on the "Email" field.
+// EmailEQ applies the EQ predicate on the "email" field.
 func EmailEQ(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldEmail), v))
 	})
 }
 
-// EmailNEQ applies the NEQ predicate on the "Email" field.
+// EmailNEQ applies the NEQ predicate on the "email" field.
 func EmailNEQ(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldEmail), v))
 	})
 }
 
-// EmailIn applies the In predicate on the "Email" field.
+// EmailIn applies the In predicate on the "email" field.
 func EmailIn(vs ...string) predicate.SysUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -1152,7 +1152,7 @@ func EmailIn(vs ...string) predicate.SysUser {
 	})
 }
 
-// EmailNotIn applies the NotIn predicate on the "Email" field.
+// EmailNotIn applies the NotIn predicate on the "email" field.
 func EmailNotIn(vs ...string) predicate.SysUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
@@ -1169,85 +1169,85 @@ func EmailNotIn(vs ...string) predicate.SysUser {
 	})
 }
 
-// EmailGT applies the GT predicate on the "Email" field.
+// EmailGT applies the GT predicate on the "email" field.
 func EmailGT(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldEmail), v))
 	})
 }
 
-// EmailGTE applies the GTE predicate on the "Email" field.
+// EmailGTE applies the GTE predicate on the "email" field.
 func EmailGTE(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldEmail), v))
 	})
 }
 
-// EmailLT applies the LT predicate on the "Email" field.
+// EmailLT applies the LT predicate on the "email" field.
 func EmailLT(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldEmail), v))
 	})
 }
 
-// EmailLTE applies the LTE predicate on the "Email" field.
+// EmailLTE applies the LTE predicate on the "email" field.
 func EmailLTE(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldEmail), v))
 	})
 }
 
-// EmailContains applies the Contains predicate on the "Email" field.
+// EmailContains applies the Contains predicate on the "email" field.
 func EmailContains(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.Contains(s.C(FieldEmail), v))
 	})
 }
 
-// EmailHasPrefix applies the HasPrefix predicate on the "Email" field.
+// EmailHasPrefix applies the HasPrefix predicate on the "email" field.
 func EmailHasPrefix(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.HasPrefix(s.C(FieldEmail), v))
 	})
 }
 
-// EmailHasSuffix applies the HasSuffix predicate on the "Email" field.
+// EmailHasSuffix applies the HasSuffix predicate on the "email" field.
 func EmailHasSuffix(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldEmail), v))
 	})
 }
 
-// EmailEqualFold applies the EqualFold predicate on the "Email" field.
+// EmailEqualFold applies the EqualFold predicate on the "email" field.
 func EmailEqualFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.EqualFold(s.C(FieldEmail), v))
 	})
 }
 
-// EmailContainsFold applies the ContainsFold predicate on the "Email" field.
+// EmailContainsFold applies the ContainsFold predicate on the "email" field.
 func EmailContainsFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldEmail), v))
 	})
 }
 
-// PhoneEQ applies the EQ predicate on the "Phone" field.
-func PhoneEQ(v string) predicate.SysUser {
+// MobileEQ applies the EQ predicate on the "mobile" field.
+func MobileEQ(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPhone), v))
+		s.Where(sql.EQ(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneNEQ applies the NEQ predicate on the "Phone" field.
-func PhoneNEQ(v string) predicate.SysUser {
+// MobileNEQ applies the NEQ predicate on the "mobile" field.
+func MobileNEQ(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPhone), v))
+		s.Where(sql.NEQ(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneIn applies the In predicate on the "Phone" field.
-func PhoneIn(vs ...string) predicate.SysUser {
+// MobileIn applies the In predicate on the "mobile" field.
+func MobileIn(vs ...string) predicate.SysUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1259,12 +1259,12 @@ func PhoneIn(vs ...string) predicate.SysUser {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldPhone), v...))
+		s.Where(sql.In(s.C(FieldMobile), v...))
 	})
 }
 
-// PhoneNotIn applies the NotIn predicate on the "Phone" field.
-func PhoneNotIn(vs ...string) predicate.SysUser {
+// MobileNotIn applies the NotIn predicate on the "mobile" field.
+func MobileNotIn(vs ...string) predicate.SysUser {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1276,70 +1276,70 @@ func PhoneNotIn(vs ...string) predicate.SysUser {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldPhone), v...))
+		s.Where(sql.NotIn(s.C(FieldMobile), v...))
 	})
 }
 
-// PhoneGT applies the GT predicate on the "Phone" field.
-func PhoneGT(v string) predicate.SysUser {
+// MobileGT applies the GT predicate on the "mobile" field.
+func MobileGT(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPhone), v))
+		s.Where(sql.GT(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneGTE applies the GTE predicate on the "Phone" field.
-func PhoneGTE(v string) predicate.SysUser {
+// MobileGTE applies the GTE predicate on the "mobile" field.
+func MobileGTE(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPhone), v))
+		s.Where(sql.GTE(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneLT applies the LT predicate on the "Phone" field.
-func PhoneLT(v string) predicate.SysUser {
+// MobileLT applies the LT predicate on the "mobile" field.
+func MobileLT(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPhone), v))
+		s.Where(sql.LT(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneLTE applies the LTE predicate on the "Phone" field.
-func PhoneLTE(v string) predicate.SysUser {
+// MobileLTE applies the LTE predicate on the "mobile" field.
+func MobileLTE(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPhone), v))
+		s.Where(sql.LTE(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneContains applies the Contains predicate on the "Phone" field.
-func PhoneContains(v string) predicate.SysUser {
+// MobileContains applies the Contains predicate on the "mobile" field.
+func MobileContains(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldPhone), v))
+		s.Where(sql.Contains(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneHasPrefix applies the HasPrefix predicate on the "Phone" field.
-func PhoneHasPrefix(v string) predicate.SysUser {
+// MobileHasPrefix applies the HasPrefix predicate on the "mobile" field.
+func MobileHasPrefix(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldPhone), v))
+		s.Where(sql.HasPrefix(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneHasSuffix applies the HasSuffix predicate on the "Phone" field.
-func PhoneHasSuffix(v string) predicate.SysUser {
+// MobileHasSuffix applies the HasSuffix predicate on the "mobile" field.
+func MobileHasSuffix(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldPhone), v))
+		s.Where(sql.HasSuffix(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneEqualFold applies the EqualFold predicate on the "Phone" field.
-func PhoneEqualFold(v string) predicate.SysUser {
+// MobileEqualFold applies the EqualFold predicate on the "mobile" field.
+func MobileEqualFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldPhone), v))
+		s.Where(sql.EqualFold(s.C(FieldMobile), v))
 	})
 }
 
-// PhoneContainsFold applies the ContainsFold predicate on the "Phone" field.
-func PhoneContainsFold(v string) predicate.SysUser {
+// MobileContainsFold applies the ContainsFold predicate on the "mobile" field.
+func MobileContainsFold(v string) predicate.SysUser {
 	return predicate.SysUser(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldPhone), v))
+		s.Where(sql.ContainsFold(s.C(FieldMobile), v))
 	})
 }
 

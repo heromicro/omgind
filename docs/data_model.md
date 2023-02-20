@@ -81,7 +81,7 @@
 | password_salt | 密码盐值   | 字符串   |               |
 | real_name     | 真实姓名   | 字符串   |               |
 | email         | 邮箱       | 字符串   |               |
-| phone         | 手机号     | 字符串   |               |
+| mobile         | 手机号     | 字符串   |               |
 | is_active     | 状态       | 数值     |              |
 | creator       | 创建人     | 字符串   |               |
 | created_at    | 创建时间   | 时间格式 |               |

@@ -35,8 +35,8 @@ const (
 	FieldPassword = "passwd"
 	// FieldEmail holds the string denoting the email field in the database.
 	FieldEmail = "email"
-	// FieldPhone holds the string denoting the phone field in the database.
-	FieldPhone = "phone"
+	// FieldMobile holds the string denoting the mobile field in the database.
+	FieldMobile = "mobile"
 	// FieldSalt holds the string denoting the salt field in the database.
 	FieldSalt = "salt"
 	// Table holds the table name of the sysuser in the database.
@@ -58,7 +58,7 @@ var Columns = []string{
 	FieldLastName,
 	FieldPassword,
 	FieldEmail,
-	FieldPhone,
+	FieldMobile,
 	FieldSalt,
 }
 
@@ -93,12 +93,12 @@ var (
 	FirstNameValidator func(string) error
 	// LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
 	LastNameValidator func(string) error
-	// PasswordValidator is a validator for the "Password" field. It is called by the builders before save.
+	// PasswordValidator is a validator for the "password" field. It is called by the builders before save.
 	PasswordValidator func(string) error
-	// EmailValidator is a validator for the "Email" field. It is called by the builders before save.
+	// EmailValidator is a validator for the "email" field. It is called by the builders before save.
 	EmailValidator func(string) error
-	// PhoneValidator is a validator for the "Phone" field. It is called by the builders before save.
-	PhoneValidator func(string) error
+	// MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
+	MobileValidator func(string) error
 	// DefaultSalt holds the default value on creation for the "salt" field.
 	DefaultSalt func() string
 	// DefaultID holds the default value on creation for the "id" field.

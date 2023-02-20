@@ -2834,12 +2834,12 @@ const docTemplate = `{
                     "description": "真实姓名",
                     "type": "string"
                 },
-                "password": {
-                    "description": "密码",
+                "mobile": {
+                    "description": "手机号",
                     "type": "string"
                 },
-                "phone": {
-                    "description": "手机号",
+                "password": {
+                    "description": "密码",
                     "type": "string"
                 },
                 "real_name": {
@@ -2907,7 +2907,7 @@ const docTemplate = `{
                     "description": "真实姓",
                     "type": "string"
                 },
-                "phone": {
+                "mobile": {
                     "description": "手机号",
                     "type": "string"
                 },

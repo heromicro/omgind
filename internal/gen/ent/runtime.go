@@ -862,18 +862,18 @@ func init() {
 	sysuserDescLastName := sysuserFields[3].Descriptor()
 	// sysuser.LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
 	sysuser.LastNameValidator = sysuserDescLastName.Validators[0].(func(string) error)
-	// sysuserDescPassword is the schema descriptor for Password field.
+	// sysuserDescPassword is the schema descriptor for password field.
 	sysuserDescPassword := sysuserFields[4].Descriptor()
-	// sysuser.PasswordValidator is a validator for the "Password" field. It is called by the builders before save.
+	// sysuser.PasswordValidator is a validator for the "password" field. It is called by the builders before save.
 	sysuser.PasswordValidator = sysuserDescPassword.Validators[0].(func(string) error)
-	// sysuserDescEmail is the schema descriptor for Email field.
+	// sysuserDescEmail is the schema descriptor for email field.
 	sysuserDescEmail := sysuserFields[5].Descriptor()
-	// sysuser.EmailValidator is a validator for the "Email" field. It is called by the builders before save.
+	// sysuser.EmailValidator is a validator for the "email" field. It is called by the builders before save.
 	sysuser.EmailValidator = sysuserDescEmail.Validators[0].(func(string) error)
-	// sysuserDescPhone is the schema descriptor for Phone field.
-	sysuserDescPhone := sysuserFields[6].Descriptor()
-	// sysuser.PhoneValidator is a validator for the "Phone" field. It is called by the builders before save.
-	sysuser.PhoneValidator = sysuserDescPhone.Validators[0].(func(string) error)
+	// sysuserDescMobile is the schema descriptor for mobile field.
+	sysuserDescMobile := sysuserFields[6].Descriptor()
+	// sysuser.MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
+	sysuser.MobileValidator = sysuserDescMobile.Validators[0].(func(string) error)
 	// sysuserDescSalt is the schema descriptor for salt field.
 	sysuserDescSalt := sysuserFields[7].Descriptor()
 	// sysuser.DefaultSalt holds the default value on creation for the salt field.

@@ -163,21 +163,21 @@ func (suu *SysUserUpdate) ClearLastName() *SysUserUpdate {
 	return suu
 }
 
-// SetPassword sets the "Password" field.
+// SetPassword sets the "password" field.
 func (suu *SysUserUpdate) SetPassword(s string) *SysUserUpdate {
 	suu.mutation.SetPassword(s)
 	return suu
 }
 
-// SetEmail sets the "Email" field.
+// SetEmail sets the "email" field.
 func (suu *SysUserUpdate) SetEmail(s string) *SysUserUpdate {
 	suu.mutation.SetEmail(s)
 	return suu
 }
 
-// SetPhone sets the "Phone" field.
-func (suu *SysUserUpdate) SetPhone(s string) *SysUserUpdate {
-	suu.mutation.SetPhone(s)
+// SetMobile sets the "mobile" field.
+func (suu *SysUserUpdate) SetMobile(s string) *SysUserUpdate {
+	suu.mutation.SetMobile(s)
 	return suu
 }
 
@@ -288,17 +288,17 @@ func (suu *SysUserUpdate) check() error {
 	}
 	if v, ok := suu.mutation.Password(); ok {
 		if err := sysuser.PasswordValidator(v); err != nil {
-			return &ValidationError{Name: "Password", err: fmt.Errorf(`ent: validator failed for field "SysUser.Password": %w`, err)}
+			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "SysUser.password": %w`, err)}
 		}
 	}
 	if v, ok := suu.mutation.Email(); ok {
 		if err := sysuser.EmailValidator(v); err != nil {
-			return &ValidationError{Name: "Email", err: fmt.Errorf(`ent: validator failed for field "SysUser.Email": %w`, err)}
+			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "SysUser.email": %w`, err)}
 		}
 	}
-	if v, ok := suu.mutation.Phone(); ok {
-		if err := sysuser.PhoneValidator(v); err != nil {
-			return &ValidationError{Name: "Phone", err: fmt.Errorf(`ent: validator failed for field "SysUser.Phone": %w`, err)}
+	if v, ok := suu.mutation.Mobile(); ok {
+		if err := sysuser.MobileValidator(v); err != nil {
+			return &ValidationError{Name: "mobile", err: fmt.Errorf(`ent: validator failed for field "SysUser.mobile": %w`, err)}
 		}
 	}
 	return nil
@@ -423,11 +423,11 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysuser.FieldEmail,
 		})
 	}
-	if value, ok := suu.mutation.Phone(); ok {
+	if value, ok := suu.mutation.Mobile(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysuser.FieldPhone,
+			Column: sysuser.FieldMobile,
 		})
 	}
 	if value, ok := suu.mutation.Salt(); ok {
@@ -591,21 +591,21 @@ func (suuo *SysUserUpdateOne) ClearLastName() *SysUserUpdateOne {
 	return suuo
 }
 
-// SetPassword sets the "Password" field.
+// SetPassword sets the "password" field.
 func (suuo *SysUserUpdateOne) SetPassword(s string) *SysUserUpdateOne {
 	suuo.mutation.SetPassword(s)
 	return suuo
 }
 
-// SetEmail sets the "Email" field.
+// SetEmail sets the "email" field.
 func (suuo *SysUserUpdateOne) SetEmail(s string) *SysUserUpdateOne {
 	suuo.mutation.SetEmail(s)
 	return suuo
 }
 
-// SetPhone sets the "Phone" field.
-func (suuo *SysUserUpdateOne) SetPhone(s string) *SysUserUpdateOne {
-	suuo.mutation.SetPhone(s)
+// SetMobile sets the "mobile" field.
+func (suuo *SysUserUpdateOne) SetMobile(s string) *SysUserUpdateOne {
+	suuo.mutation.SetMobile(s)
 	return suuo
 }
 
@@ -729,17 +729,17 @@ func (suuo *SysUserUpdateOne) check() error {
 	}
 	if v, ok := suuo.mutation.Password(); ok {
 		if err := sysuser.PasswordValidator(v); err != nil {
-			return &ValidationError{Name: "Password", err: fmt.Errorf(`ent: validator failed for field "SysUser.Password": %w`, err)}
+			return &ValidationError{Name: "password", err: fmt.Errorf(`ent: validator failed for field "SysUser.password": %w`, err)}
 		}
 	}
 	if v, ok := suuo.mutation.Email(); ok {
 		if err := sysuser.EmailValidator(v); err != nil {
-			return &ValidationError{Name: "Email", err: fmt.Errorf(`ent: validator failed for field "SysUser.Email": %w`, err)}
+			return &ValidationError{Name: "email", err: fmt.Errorf(`ent: validator failed for field "SysUser.email": %w`, err)}
 		}
 	}
-	if v, ok := suuo.mutation.Phone(); ok {
-		if err := sysuser.PhoneValidator(v); err != nil {
-			return &ValidationError{Name: "Phone", err: fmt.Errorf(`ent: validator failed for field "SysUser.Phone": %w`, err)}
+	if v, ok := suuo.mutation.Mobile(); ok {
+		if err := sysuser.MobileValidator(v); err != nil {
+			return &ValidationError{Name: "mobile", err: fmt.Errorf(`ent: validator failed for field "SysUser.mobile": %w`, err)}
 		}
 	}
 	return nil
@@ -881,11 +881,11 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 			Column: sysuser.FieldEmail,
 		})
 	}
-	if value, ok := suuo.mutation.Phone(); ok {
+	if value, ok := suuo.mutation.Mobile(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysuser.FieldPhone,
+			Column: sysuser.FieldMobile,
 		})
 	}
 	if value, ok := suuo.mutation.Salt(); ok {

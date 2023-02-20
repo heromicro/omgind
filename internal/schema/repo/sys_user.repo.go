@@ -90,7 +90,7 @@ func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...
 	if v := params.QueryValue; v != "" {
 		query = query.Where(sysuser.Or(
 			sysuser.UserNameContains(v), sysuser.RealNameContains(v),
-			sysuser.PhoneContains(v), sysuser.EmailContains(v),
+			sysuser.MobileContains(v), sysuser.EmailContains(v),
 		))
 	}
 
