@@ -43,6 +43,8 @@ func (SysUser) Fields() []ent.Field {
 		field.String("salt").DefaultFunc(func() string {
 			return str.RandomBetween(10, 16)
 		}).Comment("盐"),
+
+		// field.Enum("gender").NamedValues("Male", "M", "Female", "F").StorageKey("gender").Nillable().Optional().Comment("性别"),
 	}
 }
 
