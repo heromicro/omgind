@@ -3,10 +3,9 @@ module github.com/heromicro/omgind
 go 1.18
 
 require (
-	entgo.io/ent v0.11.7
+	entgo.io/ent v0.11.8
 	github.com/99designs/gqlgen v0.17.24
 	github.com/LyricTian/queue v1.3.0
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/casbin/casbin/v2 v2.61.1
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/gzip v0.0.6
@@ -21,10 +20,12 @@ require (
 	github.com/gookit/config/v2 v2.1.8
 	github.com/gotidy/ptr v1.4.0
 	github.com/influxdata/influxdb-client-go/v2 v2.12.2
-	github.com/jackc/pgx/v5 v5.2.0
+	github.com/jackc/pgx/v4 v4.18.0
 	github.com/jinzhu/copier v0.3.5
+	github.com/jinzhu/gorm v1.9.16
 	github.com/json-iterator/go v1.1.12
 	github.com/koding/multiconfig v0.0.0-20171124222453-69c27309b2d7
+	github.com/lib/pq v1.10.7
 	github.com/meehow/go-django-hashers v0.0.0-20171231135116-5e5d6afe52db
 	github.com/mojocn/base64Captcha v1.3.5
 	github.com/oklog/ulid/v2 v2.1.0
@@ -42,10 +43,6 @@ require (
 	github.com/tidwall/buntdb v1.2.10
 	github.com/urfave/cli/v2 v2.24.3
 	gopkg.in/yaml.v2 v2.4.0
-	gorm.io/driver/mysql v1.4.6
-	gorm.io/driver/postgres v1.4.7
-	gorm.io/driver/sqlite v1.4.4
-	gorm.io/gorm v1.24.5
 )
 
 require (
@@ -76,10 +73,15 @@ require (
 	github.com/gookit/goutil v0.5.15 // indirect
 	github.com/hashicorp/hcl/v2 v2.14.1 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
-	github.com/influxdata/influxdb-client-go v1.4.0 // indirect
 	github.com/influxdata/line-protocol v0.0.0-20210922203350-b1ad95c89adf // indirect
+	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
+	github.com/jackc/pgconn v1.14.0 // indirect
+	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgproto3/v2 v2.3.2 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/jackc/pgtype v1.14.0 // indirect
+	github.com/jackc/pgx/v5 v5.3.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
@@ -87,7 +89,6 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
-	github.com/mattn/go-sqlite3 v1.14.16 // indirect
 	github.com/mitchellh/go-wordwrap v0.0.0-20150314170334-ad45545899c7 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -103,7 +104,6 @@ require (
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/tidwall/rtred v0.1.2 // indirect
-	github.com/tidwall/rtree v0.0.0-20180113144539-6cd427091e0e // indirect
 	github.com/tidwall/tinyqueue v0.1.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
 	github.com/vektah/gqlparser/v2 v2.5.1 // indirect

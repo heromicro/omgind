@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"math/rand"
-	"strings"
 	"time"
 
 	mysqlDriver "github.com/go-sql-driver/mysql"
@@ -13,11 +12,7 @@ import (
 	"github.com/oklog/ulid/v2"
 	"github.com/sirupsen/logrus"
 
-	"gorm.io/driver/mysql"
-	"gorm.io/driver/postgres"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
+	"github.com/jinzhu/gorm"
 )
 
 var tableName string
@@ -33,8 +28,9 @@ type Config struct {
 	TablePrefix  string
 }
 
+/*
 // New 创建基于gorm的钩子实例(需要指定表名)
-func New(c *Config) *Hook {
+func New2(c *Config) *Hook {
 	tableName = c.TableName
 
 	var dialector gorm.Dialector
@@ -81,6 +77,26 @@ func New(c *Config) *Hook {
 	// if !db.Migrator().HasTable(new(LogItem)) {
 	db.AutoMigrate(new(LogItem))
 	// }
+	return &Hook{
+		db: db,
+	}
+}
+*/
+
+// New 创建基于gorm的钩子实例(需要指定表名)
+func New(c *Config) *Hook {
+	tableName = c.TableName
+
+	db, err := gorm.Open(c.DBType, c.DSN)
+	if err != nil {
+		panic(err)
+	}
+
+	db.DB().SetMaxIdleConns(c.MaxIdleConns)
+	db.DB().SetMaxOpenConns(c.MaxOpenConns)
+	db.DB().SetConnMaxLifetime(time.Duration(c.MaxLifetime) * time.Second)
+
+	db.AutoMigrate(new(LogItem))
 	return &Hook{
 		db: db,
 	}
@@ -152,11 +168,12 @@ func (h *Hook) Exec(entry *logrus.Entry) error {
 
 // Close 关闭钩子
 func (h *Hook) Close() error {
-	db, err := h.db.DB()
-	if err != nil {
-		return err
-	}
-	return db.Close()
+	/* 	db, err := h.db.DB()
+	   	if err != nil {
+	   		return err
+	   	}
+	   	return db.Close() */
+	return h.db.Close()
 }
 
 // LogItem 存储日志项

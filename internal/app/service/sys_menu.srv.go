@@ -43,7 +43,7 @@ func (a *Menu) InitData(ctx context.Context, dataFile string) error {
 	}
 
 	data, err := a.readData(dataFile)
-	//fmt.Printf(" ------- ===== data: %+v \n", data)
+	// fmt.Printf(" ------- ===== data: %+v \n", data)
 	//fmt.Println(" ------- ===== err: \n", err)
 
 	if err != nil {
@@ -75,6 +75,7 @@ func (a *Menu) createMenus(ctx context.Context, parentID string, list schema.Men
 		sitem := schema.Menu{
 			Name:     tritem.Name,
 			Sort:     tritem.Sort,
+			Level:    tritem.Level,
 			Icon:     tritem.Icon,
 			Router:   tritem.Router,
 			ParentID: parentID,

@@ -17,7 +17,7 @@ import (
 import (
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/heromicro/omgind/internal/app/swagger"
-	_ "github.com/jackc/pgx/v5/stdlib"
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 // Injectors from wire.go:
