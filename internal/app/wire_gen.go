@@ -11,13 +11,12 @@ import (
 	"github.com/heromicro/omgind/internal/app/module/adapter"
 	"github.com/heromicro/omgind/internal/app/service"
 	"github.com/heromicro/omgind/internal/router"
+	"github.com/heromicro/omgind/internal/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 )
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/heromicro/omgind/internal/app/swagger"
-	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 // Injectors from wire.go:
@@ -28,7 +27,7 @@ func BuildInjector() (*Injector, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	client, cleanup2, err := InitEntClient()
+	client, cleanup2, err := schema.New()
 	if err != nil {
 		cleanup()
 		return nil, nil, err
