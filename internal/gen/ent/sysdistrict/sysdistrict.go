@@ -138,12 +138,20 @@ var (
 	DefaultIsActive bool
 	// DefaultIsLeaf holds the default value on creation for the "is_leaf" field.
 	DefaultIsLeaf bool
+	// NameValidator is a validator for the "name" field. It is called by the builders before save.
+	NameValidator func(string) error
+	// SnameValidator is a validator for the "sname" field. It is called by the builders before save.
+	SnameValidator func(string) error
+	// AbbrValidator is a validator for the "abbr" field. It is called by the builders before save.
+	AbbrValidator func(string) error
 	// StcodeValidator is a validator for the "stcode" field. It is called by the builders before save.
 	StcodeValidator func(string) error
 	// InitialsValidator is a validator for the "initials" field. It is called by the builders before save.
 	InitialsValidator func(string) error
 	// PinyinValidator is a validator for the "pinyin" field. It is called by the builders before save.
 	PinyinValidator func(string) error
+	// ParentIDValidator is a validator for the "parent_id" field. It is called by the builders before save.
+	ParentIDValidator func(string) error
 	// AreaCodeValidator is a validator for the "area_code" field. It is called by the builders before save.
 	AreaCodeValidator func(string) error
 	// ZipCodeValidator is a validator for the "zip_code" field. It is called by the builders before save.
@@ -162,6 +170,8 @@ var (
 	DefaultIsReal bool
 	// DefaultIsDirect holds the default value on creation for the "is_direct" field.
 	DefaultIsDirect bool
+	// CreatorValidator is a validator for the "creator" field. It is called by the builders before save.
+	CreatorValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

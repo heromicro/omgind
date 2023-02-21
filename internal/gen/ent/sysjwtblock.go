@@ -20,12 +20,12 @@ type SysJwtBlock struct {
 	IsDel bool `json:"is_del,omitempty"`
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
-	// 创建时间,由程序自动生成
+	// create time
 	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
 	// update time
 	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
 	// delete time,
-	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+	DeletedAt *time.Time `json:"deleted_at,omitempty" sql:"dltd_at"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
 	// jwt

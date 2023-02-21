@@ -707,6 +707,21 @@ func (sdu *SysDistrictUpdate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sdu *SysDistrictUpdate) check() error {
+	if v, ok := sdu.mutation.Name(); ok {
+		if err := sysdistrict.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name": %w`, err)}
+		}
+	}
+	if v, ok := sdu.mutation.Sname(); ok {
+		if err := sysdistrict.SnameValidator(v); err != nil {
+			return &ValidationError{Name: "sname", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname": %w`, err)}
+		}
+	}
+	if v, ok := sdu.mutation.Abbr(); ok {
+		if err := sysdistrict.AbbrValidator(v); err != nil {
+			return &ValidationError{Name: "abbr", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.abbr": %w`, err)}
+		}
+	}
 	if v, ok := sdu.mutation.Stcode(); ok {
 		if err := sysdistrict.StcodeValidator(v); err != nil {
 			return &ValidationError{Name: "stcode", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.stcode": %w`, err)}
@@ -720,6 +735,11 @@ func (sdu *SysDistrictUpdate) check() error {
 	if v, ok := sdu.mutation.Pinyin(); ok {
 		if err := sysdistrict.PinyinValidator(v); err != nil {
 			return &ValidationError{Name: "pinyin", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.pinyin": %w`, err)}
+		}
+	}
+	if v, ok := sdu.mutation.ParentID(); ok {
+		if err := sysdistrict.ParentIDValidator(v); err != nil {
+			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.parent_id": %w`, err)}
 		}
 	}
 	if v, ok := sdu.mutation.AreaCode(); ok {
@@ -750,6 +770,11 @@ func (sdu *SysDistrictUpdate) check() error {
 	if v, ok := sdu.mutation.Suffix(); ok {
 		if err := sysdistrict.SuffixValidator(v); err != nil {
 			return &ValidationError{Name: "suffix", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.suffix": %w`, err)}
+		}
+	}
+	if v, ok := sdu.mutation.Creator(); ok {
+		if err := sysdistrict.CreatorValidator(v); err != nil {
+			return &ValidationError{Name: "creator", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.creator": %w`, err)}
 		}
 	}
 	return nil
@@ -1893,6 +1918,21 @@ func (sduo *SysDistrictUpdateOne) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sduo *SysDistrictUpdateOne) check() error {
+	if v, ok := sduo.mutation.Name(); ok {
+		if err := sysdistrict.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name": %w`, err)}
+		}
+	}
+	if v, ok := sduo.mutation.Sname(); ok {
+		if err := sysdistrict.SnameValidator(v); err != nil {
+			return &ValidationError{Name: "sname", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname": %w`, err)}
+		}
+	}
+	if v, ok := sduo.mutation.Abbr(); ok {
+		if err := sysdistrict.AbbrValidator(v); err != nil {
+			return &ValidationError{Name: "abbr", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.abbr": %w`, err)}
+		}
+	}
 	if v, ok := sduo.mutation.Stcode(); ok {
 		if err := sysdistrict.StcodeValidator(v); err != nil {
 			return &ValidationError{Name: "stcode", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.stcode": %w`, err)}
@@ -1906,6 +1946,11 @@ func (sduo *SysDistrictUpdateOne) check() error {
 	if v, ok := sduo.mutation.Pinyin(); ok {
 		if err := sysdistrict.PinyinValidator(v); err != nil {
 			return &ValidationError{Name: "pinyin", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.pinyin": %w`, err)}
+		}
+	}
+	if v, ok := sduo.mutation.ParentID(); ok {
+		if err := sysdistrict.ParentIDValidator(v); err != nil {
+			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.parent_id": %w`, err)}
 		}
 	}
 	if v, ok := sduo.mutation.AreaCode(); ok {
@@ -1936,6 +1981,11 @@ func (sduo *SysDistrictUpdateOne) check() error {
 	if v, ok := sduo.mutation.Suffix(); ok {
 		if err := sysdistrict.SuffixValidator(v); err != nil {
 			return &ValidationError{Name: "suffix", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.suffix": %w`, err)}
+		}
+	}
+	if v, ok := sduo.mutation.Creator(); ok {
+		if err := sysdistrict.CreatorValidator(v); err != nil {
+			return &ValidationError{Name: "creator", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.creator": %w`, err)}
 		}
 	}
 	return nil

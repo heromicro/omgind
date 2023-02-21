@@ -216,6 +216,18 @@ func init() {
 	sysdistrictDescIsLeaf := sysdistrictMixinFields4[4].Descriptor()
 	// sysdistrict.DefaultIsLeaf holds the default value on creation for the is_leaf field.
 	sysdistrict.DefaultIsLeaf = sysdistrictDescIsLeaf.Default.(bool)
+	// sysdistrictDescName is the schema descriptor for name field.
+	sysdistrictDescName := sysdistrictFields[0].Descriptor()
+	// sysdistrict.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	sysdistrict.NameValidator = sysdistrictDescName.Validators[0].(func(string) error)
+	// sysdistrictDescSname is the schema descriptor for sname field.
+	sysdistrictDescSname := sysdistrictFields[1].Descriptor()
+	// sysdistrict.SnameValidator is a validator for the "sname" field. It is called by the builders before save.
+	sysdistrict.SnameValidator = sysdistrictDescSname.Validators[0].(func(string) error)
+	// sysdistrictDescAbbr is the schema descriptor for abbr field.
+	sysdistrictDescAbbr := sysdistrictFields[2].Descriptor()
+	// sysdistrict.AbbrValidator is a validator for the "abbr" field. It is called by the builders before save.
+	sysdistrict.AbbrValidator = sysdistrictDescAbbr.Validators[0].(func(string) error)
 	// sysdistrictDescStcode is the schema descriptor for stcode field.
 	sysdistrictDescStcode := sysdistrictFields[3].Descriptor()
 	// sysdistrict.StcodeValidator is a validator for the "stcode" field. It is called by the builders before save.
@@ -228,6 +240,10 @@ func init() {
 	sysdistrictDescPinyin := sysdistrictFields[5].Descriptor()
 	// sysdistrict.PinyinValidator is a validator for the "pinyin" field. It is called by the builders before save.
 	sysdistrict.PinyinValidator = sysdistrictDescPinyin.Validators[0].(func(string) error)
+	// sysdistrictDescParentID is the schema descriptor for parent_id field.
+	sysdistrictDescParentID := sysdistrictFields[6].Descriptor()
+	// sysdistrict.ParentIDValidator is a validator for the "parent_id" field. It is called by the builders before save.
+	sysdistrict.ParentIDValidator = sysdistrictDescParentID.Validators[0].(func(string) error)
 	// sysdistrictDescAreaCode is the schema descriptor for area_code field.
 	sysdistrictDescAreaCode := sysdistrictFields[9].Descriptor()
 	// sysdistrict.AreaCodeValidator is a validator for the "area_code" field. It is called by the builders before save.
@@ -264,6 +280,10 @@ func init() {
 	sysdistrictDescIsDirect := sysdistrictFields[17].Descriptor()
 	// sysdistrict.DefaultIsDirect holds the default value on creation for the is_direct field.
 	sysdistrict.DefaultIsDirect = sysdistrictDescIsDirect.Default.(bool)
+	// sysdistrictDescCreator is the schema descriptor for creator field.
+	sysdistrictDescCreator := sysdistrictFields[18].Descriptor()
+	// sysdistrict.CreatorValidator is a validator for the "creator" field. It is called by the builders before save.
+	sysdistrict.CreatorValidator = sysdistrictDescCreator.Validators[0].(func(string) error)
 	// sysdistrictDescID is the schema descriptor for id field.
 	sysdistrictDescID := sysdistrictMixinFields0[0].Descriptor()
 	// sysdistrict.DefaultID holds the default value on creation for the id field.

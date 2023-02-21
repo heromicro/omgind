@@ -49,11 +49,6 @@ var (
 				Columns: []*schema.Column{SysDictsColumns[4]},
 			},
 			{
-				Name:    "sysdict_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysDictsColumns[5]},
-			},
-			{
 				Name:    "sysdict_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysDictsColumns[6]},
@@ -106,11 +101,6 @@ var (
 				Columns: []*schema.Column{SysDictItemsColumns[4]},
 			},
 			{
-				Name:    "sysdictitem_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysDictItemsColumns[5]},
-			},
-			{
 				Name:    "sysdictitem_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysDictItemsColumns[6]},
@@ -137,13 +127,13 @@ var (
 		{Name: "tree_right", Type: field.TypeInt64, Nullable: true},
 		{Name: "is_leaf", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "t_path", Type: field.TypeString, Nullable: true, Size: 2147483647},
-		{Name: "name", Type: field.TypeString, Nullable: true},
-		{Name: "sname", Type: field.TypeString, Nullable: true},
-		{Name: "abbr", Type: field.TypeString, Nullable: true},
+		{Name: "name", Type: field.TypeString, Nullable: true, Size: 128},
+		{Name: "sname", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "abbr", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "stcode", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "initials", Type: field.TypeString, Nullable: true, Size: 32},
 		{Name: "pinyin", Type: field.TypeString, Nullable: true, Size: 128},
-		{Name: "pid", Type: field.TypeString, Nullable: true},
+		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "longitude", Type: field.TypeFloat64, Nullable: true},
 		{Name: "latitude", Type: field.TypeFloat64, Nullable: true},
 		{Name: "area_code", Type: field.TypeString, Nullable: true, Size: 8},
@@ -155,7 +145,7 @@ var (
 		{Name: "is_hot", Type: field.TypeBool, Nullable: true, Default: false},
 		{Name: "is_r", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "is_d", Type: field.TypeBool, Nullable: true, Default: true},
-		{Name: "creator", Type: field.TypeString},
+		{Name: "creator", Type: field.TypeString, Size: 36},
 	}
 	// SysDistrictsTable holds the schema information for the "sys_districts" table.
 	SysDistrictsTable = &schema.Table{
@@ -182,11 +172,6 @@ var (
 				Name:    "sysdistrict_crtd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysDistrictsColumns[3]},
-			},
-			{
-				Name:    "sysdistrict_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[4]},
 			},
 			{
 				Name:    "sysdistrict_dltd_at",
@@ -241,11 +226,6 @@ var (
 				Name:    "sysjwtblock_crtd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysJwtBlocksColumns[3]},
-			},
-			{
-				Name:    "sysjwtblock_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysJwtBlocksColumns[4]},
 			},
 			{
 				Name:    "sysjwtblock_dltd_at",
@@ -363,11 +343,6 @@ var (
 				Columns: []*schema.Column{SysMenusColumns[4]},
 			},
 			{
-				Name:    "sysmenu_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysMenusColumns[5]},
-			},
-			{
 				Name:    "sysmenu_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysMenusColumns[6]},
@@ -435,11 +410,6 @@ var (
 				Columns: []*schema.Column{SysMenuActionsColumns[5]},
 			},
 			{
-				Name:    "sysmenuaction_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysMenuActionsColumns[6]},
-			},
-			{
 				Name:    "sysmenuaction_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysMenuActionsColumns[7]},
@@ -485,11 +455,6 @@ var (
 				Name:    "sysmenuactionresource_crtd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysMenuActionResourcesColumns[4]},
-			},
-			{
-				Name:    "sysmenuactionresource_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysMenuActionResourcesColumns[5]},
 			},
 			{
 				Name:    "sysmenuactionresource_dltd_at",
@@ -547,11 +512,6 @@ var (
 				Columns: []*schema.Column{SysRolesColumns[5]},
 			},
 			{
-				Name:    "sysrole_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysRolesColumns[6]},
-			},
-			{
 				Name:    "sysrole_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysRolesColumns[7]},
@@ -589,11 +549,6 @@ var (
 				Name:    "sysrolemenu_crtd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysRoleMenusColumns[2]},
-			},
-			{
-				Name:    "sysrolemenu_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysRoleMenusColumns[3]},
 			},
 			{
 				Name:    "sysrolemenu_dltd_at",
@@ -647,11 +602,6 @@ var (
 				Columns: []*schema.Column{SysUsersColumns[3]},
 			},
 			{
-				Name:    "sysuser_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysUsersColumns[4]},
-			},
-			{
 				Name:    "sysuser_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysUsersColumns[5]},
@@ -700,11 +650,6 @@ var (
 				Columns: []*schema.Column{SysUserRolesColumns[2]},
 			},
 			{
-				Name:    "sysuserrole_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysUserRolesColumns[3]},
-			},
-			{
 				Name:    "sysuserrole_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysUserRolesColumns[4]},
@@ -749,11 +694,6 @@ var (
 				Name:    "xxxdemo_crtd_at",
 				Unique:  false,
 				Columns: []*schema.Column{XxxDemosColumns[4]},
-			},
-			{
-				Name:    "xxxdemo_uptd_at",
-				Unique:  false,
-				Columns: []*schema.Column{XxxDemosColumns[5]},
 			},
 			{
 				Name:    "xxxdemo_dltd_at",

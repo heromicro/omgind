@@ -596,6 +596,21 @@ func (sdc *SysDistrictCreate) check() error {
 	if _, ok := sdc.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysDistrict.is_active"`)}
 	}
+	if v, ok := sdc.mutation.Name(); ok {
+		if err := sysdistrict.NameValidator(v); err != nil {
+			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name": %w`, err)}
+		}
+	}
+	if v, ok := sdc.mutation.Sname(); ok {
+		if err := sysdistrict.SnameValidator(v); err != nil {
+			return &ValidationError{Name: "sname", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname": %w`, err)}
+		}
+	}
+	if v, ok := sdc.mutation.Abbr(); ok {
+		if err := sysdistrict.AbbrValidator(v); err != nil {
+			return &ValidationError{Name: "abbr", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.abbr": %w`, err)}
+		}
+	}
 	if v, ok := sdc.mutation.Stcode(); ok {
 		if err := sysdistrict.StcodeValidator(v); err != nil {
 			return &ValidationError{Name: "stcode", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.stcode": %w`, err)}
@@ -609,6 +624,11 @@ func (sdc *SysDistrictCreate) check() error {
 	if v, ok := sdc.mutation.Pinyin(); ok {
 		if err := sysdistrict.PinyinValidator(v); err != nil {
 			return &ValidationError{Name: "pinyin", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.pinyin": %w`, err)}
+		}
+	}
+	if v, ok := sdc.mutation.ParentID(); ok {
+		if err := sysdistrict.ParentIDValidator(v); err != nil {
+			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.parent_id": %w`, err)}
 		}
 	}
 	if v, ok := sdc.mutation.AreaCode(); ok {
@@ -643,6 +663,11 @@ func (sdc *SysDistrictCreate) check() error {
 	}
 	if _, ok := sdc.mutation.Creator(); !ok {
 		return &ValidationError{Name: "creator", err: errors.New(`ent: missing required field "SysDistrict.creator"`)}
+	}
+	if v, ok := sdc.mutation.Creator(); ok {
+		if err := sysdistrict.CreatorValidator(v); err != nil {
+			return &ValidationError{Name: "creator", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.creator": %w`, err)}
+		}
 	}
 	if v, ok := sdc.mutation.ID(); ok {
 		if err := sysdistrict.IDValidator(v); err != nil {

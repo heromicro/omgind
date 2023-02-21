@@ -22,12 +22,12 @@ type SysMenuActionResource struct {
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
-	// 创建时间,由程序自动生成
+	// create time
 	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
 	// update time
 	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
 	// delete time,
-	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+	DeletedAt *time.Time `json:"deleted_at,omitempty" sql:"dltd_at"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
 	// 资源HTTP请求方式(支持正则, get, delete, delete, put, patch )
