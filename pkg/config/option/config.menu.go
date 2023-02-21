@@ -1,4 +1,4 @@
-package config
+package option
 
 // Menu 菜单配置参数
 type MenuConfig struct {

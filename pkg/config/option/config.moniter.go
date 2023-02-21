@@ -1,4 +1,4 @@
-package config
+package option
 
 // Monitor 监控配置参数
 type MonitorConfig struct {

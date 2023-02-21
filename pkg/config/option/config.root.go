@@ -1,4 +1,4 @@
-package config
+package option
 
 // Root root用户
 type RootConfig struct {

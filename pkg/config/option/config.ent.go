@@ -1,4 +1,4 @@
-package config
+package option
 
 // Ent 配置参数
 type EntConfig struct {

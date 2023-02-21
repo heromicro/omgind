@@ -1,4 +1,4 @@
-package config
+package option
 
 // system redis配置参数
 type SystemConfig struct {

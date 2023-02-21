@@ -1,4 +1,4 @@
-package config
+package option
 
 // Casbin casbin配置参数
 type CasbinConfig struct {

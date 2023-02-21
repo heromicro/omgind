@@ -1,4 +1,4 @@
-package config
+package option
 
 // HTTP http配置参数
 type HTTPConfig struct {

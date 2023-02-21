@@ -1,4 +1,4 @@
-package config
+package option
 
 // Sqlite3 sqlite3配置参数
 type Sqlite3Config struct {
