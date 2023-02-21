@@ -40,11 +40,11 @@ const (
 	// FieldLongitude holds the string denoting the longitude field in the database.
 	FieldLongitude = "longitude"
 	// FieldLatitude holds the string denoting the latitude field in the database.
-	FieldLatitude = "longitude"
+	FieldLatitude = "latitude"
 	// FieldAreaCode holds the string denoting the area_code field in the database.
 	FieldAreaCode = "area_code"
 	// FieldZipCode holds the string denoting the zip_code field in the database.
-	FieldZipCode = "area_code"
+	FieldZipCode = "zip_code"
 	// FieldMergeName holds the string denoting the merge_name field in the database.
 	FieldMergeName = "mname"
 	// FieldMergeSname holds the string denoting the merge_sname field in the database.

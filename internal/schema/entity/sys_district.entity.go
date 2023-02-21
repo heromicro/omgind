@@ -34,9 +34,9 @@ func (SysDistrict) Fields() []ent.Field {
 		field.String("parent_id").Nillable().Optional().StorageKey("pid").Comment("父级id"),
 
 		field.Float("longitude").Nillable().Optional().StorageKey("longitude").Comment("经度"),
-		field.Float("latitude").Nillable().Optional().StorageKey("longitude").Comment("经度"),
+		field.Float("latitude").Nillable().Optional().StorageKey("latitude").Comment("经度"),
 		field.String("area_code").MaxLen(8).Nillable().Optional().StorageKey("area_code").Comment("电话区号码"),
-		field.String("zip_code").MaxLen(8).Nillable().Optional().StorageKey("area_code").Comment("邮政编码"),
+		field.String("zip_code").MaxLen(8).Nillable().Optional().StorageKey("zip_code").Comment("邮政编码"),
 		field.String("merge_name").MaxLen(256).Nillable().Optional().StorageKey("mname").Comment("带前缀全名称"),
 		field.String("merge_sname").MaxLen(256).Nillable().Optional().StorageKey("msname").Comment("带前缀简名称"),
 		field.String("extra").MaxLen(64).Nillable().Optional().StorageKey("extra").Comment("附加信息"),
