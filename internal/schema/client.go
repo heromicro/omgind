@@ -17,6 +17,7 @@ import (
 	"github.com/simukti/sqldb-logger/logadapter/zerologadapter"
 
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/pkg/config"
 	"github.com/heromicro/omgind/pkg/global"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -27,7 +28,7 @@ import (
 // 初始化ent存储
 func New() (*ent.Client, func(), error) {
 	cfg := global.CFG.Ent
-	cli, cleanFunc, err := NewEntClient()
+	cli, cleanFunc, err := NewEntClient(global.CFG)
 	if err != nil {
 		return nil, cleanFunc, err
 	}
@@ -57,8 +58,8 @@ func New() (*ent.Client, func(), error) {
 }
 
 // NewGormDB 创建DB实例
-func NewEntClient() (*ent.Client, func(), error) {
-	cfg := global.CFG
+func NewEntClient(cfg *config.AppConfig) (*ent.Client, func(), error) {
+	// cfg := global.CFG
 	var dsn string
 
 	switch cfg.Ent.DBType {
