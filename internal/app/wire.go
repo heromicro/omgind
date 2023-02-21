@@ -8,8 +8,8 @@ package app
 import (
 	"github.com/heromicro/omgind/internal/api/v2"
 	"github.com/heromicro/omgind/internal/app/service"
-	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/internal/schema"
+	"github.com/heromicro/omgind/internal/schema/repo"
 
 	// "github.com/heromicro/omgind/internal/app/api_v2/mock"
 	"github.com/google/wire"
@@ -22,7 +22,6 @@ import (
 func BuildInjector() (*Injector, func(), error) {
 	wire.Build(
 		// mock.MockSet,
-		// InitEntClient,
 		schema.ProviderSet,
 
 		InitRedisCli,
