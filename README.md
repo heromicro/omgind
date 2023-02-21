@@ -104,23 +104,22 @@ fields:
     type: string
     comment: 任务编号
     required: true
-    binding_options: ""
     max: 16. # 配置最大字符数
     min: 0   # 配置最少字符数
-    
+    index: unique # true, false unique
+
   - name: Name
     type: string
     comment: 任务名称
     required: true
-    binding_options: ""
     max: 16
     min: 0
+    index: false
 
   - name: Person
     type: int32
     comment: 任务人数
     required: true
-    binding_options: ""
     max: 32  # 配置最大值
     min: 5   # 配置最小值
     
@@ -128,7 +127,7 @@ fields:
     type: string
     comment: 任务备注
     required: false
-    binding_options: ""
+    
     
 ```
 
