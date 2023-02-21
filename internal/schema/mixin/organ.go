@@ -14,7 +14,7 @@ type OrganMixin struct {
 func (OrganMixin) Fields() []ent.Field {
 
 	return []ent.Field{
-		OrganIDField(),
+		FieldOrgID(true, true, false),
 	}
 }
 
@@ -25,6 +25,23 @@ func (a OrganMixin) Indexes() []ent.Index {
 	}
 }
 
-func OrganIDField() ent.Field {
-	return field.String("org_id").MaxLen(36).NotEmpty().Immutable().StorageKey("org_id").Comment("组织id")
+func FieldOrgID(nillable bool, immutable bool, notEmpty bool) ent.Field {
+
+	f := field.String("org_id").MaxLen(36)
+	if nillable {
+		f = f.Nillable().Optional()
+	}
+	if immutable {
+		f = f.Immutable()
+	}
+	if notEmpty {
+		f = f.NotEmpty()
+	}
+
+	return f.StorageKey("org_id").
+		StructTag(`json:"org_id,omitempty" sql:"org_id"`).Comment("organization id")
+}
+
+func IndexOrgID() ent.Index {
+	return index.Fields("org_id")
 }

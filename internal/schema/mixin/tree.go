@@ -21,6 +21,5 @@ func (TreeMixin) Fields() []ent.Field {
 }
 
 func (a TreeMixin) Indexes() []ent.Index {
-
 	return []ent.Index{}
 }

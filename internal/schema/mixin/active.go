@@ -23,3 +23,19 @@ func (a ActiveMixin) Indexes() []ent.Index {
 	}
 }
 
+func FieldActive(nillable bool, dvalue *bool) ent.Field {
+
+	f := field.Bool("is_active")
+	if nillable {
+		f = f.Nillable().Optional()
+	}
+	if dvalue != nil {
+		f = f.Default(*dvalue)
+	}
+	return f.StorageKey("is_active").
+		StructTag(`json:"is_active,omitempty" sql:"is_active"`).Comment("is actvie")
+}
+
+func IndexActive() ent.Index {
+	return index.Fields("is_active")
+}

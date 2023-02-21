@@ -14,7 +14,7 @@ type OwnerMixin struct {
 func (OwnerMixin) Fields() []ent.Field {
 
 	return []ent.Field{
-		OwnerIDField(),
+		FieldOwnerID(true, true, false),
 	}
 }
 
@@ -25,6 +25,22 @@ func (a OwnerMixin) Indexes() []ent.Index {
 	}
 }
 
-func OwnerIDField() ent.Field {
-	return field.String("owner_id").MaxLen(36).NotEmpty().Immutable().StorageKey("o_id").Comment("所有者id")
+func FieldOwnerID(nillable bool, immutable bool, notEmpty bool) ent.Field {
+
+	f := field.String("owner_id").MaxLen(36)
+	if nillable {
+		f = f.Nillable().Optional()
+	}
+	if immutable {
+		f = f.Immutable()
+	}
+	if notEmpty {
+		f = f.NotEmpty()
+	}
+	return f.StorageKey("owner_id").
+		StructTag(`json:"owner_id,omitempty" sql:"owner_id"`).Comment("owner id")
+}
+
+func IndexOwnerID() ent.Index {
+	return index.Fields("owner_id")
 }

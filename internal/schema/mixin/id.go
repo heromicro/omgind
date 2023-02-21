@@ -13,9 +13,9 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
-/////////////////////////
+// ///////////////////////
 // 使用ulid 作为主键
-/////////////////////////
+// ///////////////////////
 type IDMixin struct {
 	mixin.Schema
 }
@@ -83,7 +83,6 @@ func IdField() ent.Field {
 	// return field.UUID("id", uuid.UUID{}).Default(uuid.New)
 
 	//return field.String("id").DefaultFunc(uid.MustString()).MaxLen(36).Immutable().NotEmpty().Comment("主键")
-
 	return field.String("id").MaxLen(36).NotEmpty().Immutable().DefaultFunc(func() string {
 
 		seed := time.Now().UnixNano()

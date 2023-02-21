@@ -18,22 +18,22 @@ func (TimeMixin) Fields() []ent.Field {
 
 		field.Time("created_at").
 			StorageKey("crtd_at").
-			//StructTag(`json:"created_at,omitempty" sql:"crtd_at"`).
+			StructTag(`json:"created_at,omitempty" sql:"crtd_at"`).
 			Immutable().
 			Default(time.Now).
 			Comment("创建时间,由程序自动生成"),
 
 		field.Time("updated_at").
 			StorageKey("uptd_at").
-			//StructTag(`json:"updated_at,omitempty" sql:"uptd_at"`).
+			StructTag(`json:"updated_at,omitempty" sql:"uptd_at"`).
 			Default(time.Now).
 			UpdateDefault(time.Now).
-			Comment("更新时间,由程序自动生成"),
+			Comment("update time"),
 
 		field.Time("deleted_at").
 			StorageKey("dltd_at").Nillable().Optional().
 			StructTag(`json:"deleted_at,omitempty"`).
-			Comment("删除时间,"),
+			Comment("delete time,"),
 	}
 }
 
@@ -48,13 +48,39 @@ func (TimeMixin) Indexes() []ent.Index {
 func FieldCreateAt() ent.Field {
 	return field.Time("created_at").
 		StorageKey("crtd_at").
-		//StructTag(`json:"created_at,omitempty" sql:"crtd_at"`).
+		StructTag(`json:"created_at,omitempty" sql:"crtd_at"`).
 		Immutable().
-		Default(time.Now).Comment("创建时间,由程序自动生成")
+		Default(time.Now).Comment("create time")
+}
+
+func FielUpdatedAt() ent.Field {
+
+	return field.Time("updated_at").
+		StorageKey("uptd_at").
+		StructTag(`json:"updated_at,omitempty" sql:"uptd_at"`).
+		Default(time.Now).
+		UpdateDefault(time.Now).
+		Comment("update time")
+}
+
+func FielDeletedAt() ent.Field {
+
+	return field.Time("deleted_at").
+		StorageKey("dltd_at").Nillable().Optional().
+		StructTag(`json:"deleted_at,omitempty" sql:"dltd_at"`).
+		Comment("delete time,")
 }
 
 func IndexCreateAt() ent.Index {
 	return index.Fields("created_at")
+}
+
+func IndexUpdatedAt() ent.Index {
+	return index.Fields("updated_at")
+}
+
+func IndexDeletedAt() ent.Index {
+	return index.Fields("deleted_at")
 }
 
 // TODO:: Hooks
