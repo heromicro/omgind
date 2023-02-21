@@ -35,6 +35,19 @@ func (f SysDictItemFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value,
 	return f(ctx, mv)
 }
 
+// The SysDistrictFunc type is an adapter to allow the use of ordinary
+// function as SysDistrict mutator.
+type SysDistrictFunc func(context.Context, *ent.SysDistrictMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SysDistrictFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.SysDistrictMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysDistrictMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The SysJwtBlockFunc type is an adapter to allow the use of ordinary
 // function as SysJwtBlock mutator.
 type SysJwtBlockFunc func(context.Context, *ent.SysJwtBlockMutation) (ent.Value, error)

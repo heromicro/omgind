@@ -216,6 +216,382 @@ func (u *SysDictItemUpdateOne) SetInput(i UpdateSysDictItemInput) *SysDictItemUp
 	return u
 }
 
+// CreateSysDistrictInput represents a mutation input for creating sysdistricts.
+type CreateSysDistrictInput struct {
+	IsDel      *bool
+	Sort       *int32
+	CreatedAt  *time.Time
+	UpdatedAt  *time.Time
+	DeletedAt  *time.Time
+	IsActive   *bool
+	Name       *string
+	Sname      *string
+	Abbr       *string
+	Stcode     *string
+	Initials   *string
+	Pinyin     *string
+	ParentID   *string
+	Longitude  *float64
+	Latitude   *float64
+	AreaCode   *string
+	ZipCode    *string
+	MergeName  *string
+	MergeSname *string
+	Extra      *string
+	Suffix     *string
+	IsHot      *bool
+	IsReal     *bool
+	IsDirect   *bool
+	TreeID     *int32
+	TreeLevel  *int32
+	TreeLeft   *int64
+	TreeRight  *int64
+	IsLeaf     *bool
+	TreePath   *string
+	Creator    string
+}
+
+// Mutate applies the CreateSysDistrictInput on the SysDistrictCreate builder.
+func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if v := i.Sname; v != nil {
+		m.SetSname(*v)
+	}
+	if v := i.Abbr; v != nil {
+		m.SetAbbr(*v)
+	}
+	if v := i.Stcode; v != nil {
+		m.SetStcode(*v)
+	}
+	if v := i.Initials; v != nil {
+		m.SetInitials(*v)
+	}
+	if v := i.Pinyin; v != nil {
+		m.SetPinyin(*v)
+	}
+	if v := i.ParentID; v != nil {
+		m.SetParentID(*v)
+	}
+	if v := i.Longitude; v != nil {
+		m.SetLongitude(*v)
+	}
+	if v := i.Latitude; v != nil {
+		m.SetLatitude(*v)
+	}
+	if v := i.AreaCode; v != nil {
+		m.SetAreaCode(*v)
+	}
+	if v := i.ZipCode; v != nil {
+		m.SetZipCode(*v)
+	}
+	if v := i.MergeName; v != nil {
+		m.SetMergeName(*v)
+	}
+	if v := i.MergeSname; v != nil {
+		m.SetMergeSname(*v)
+	}
+	if v := i.Extra; v != nil {
+		m.SetExtra(*v)
+	}
+	if v := i.Suffix; v != nil {
+		m.SetSuffix(*v)
+	}
+	if v := i.IsHot; v != nil {
+		m.SetIsHot(*v)
+	}
+	if v := i.IsReal; v != nil {
+		m.SetIsReal(*v)
+	}
+	if v := i.IsDirect; v != nil {
+		m.SetIsDirect(*v)
+	}
+	if v := i.TreeID; v != nil {
+		m.SetTreeID(*v)
+	}
+	if v := i.TreeLevel; v != nil {
+		m.SetTreeLevel(*v)
+	}
+	if v := i.TreeLeft; v != nil {
+		m.SetTreeLeft(*v)
+	}
+	if v := i.TreeRight; v != nil {
+		m.SetTreeRight(*v)
+	}
+	if v := i.IsLeaf; v != nil {
+		m.SetIsLeaf(*v)
+	}
+	if v := i.TreePath; v != nil {
+		m.SetTreePath(*v)
+	}
+	m.SetCreator(i.Creator)
+}
+
+// SetInput applies the change-set in the CreateSysDistrictInput on the create builder.
+func (c *SysDistrictCreate) SetInput(i CreateSysDistrictInput) *SysDistrictCreate {
+	i.Mutate(c)
+	return c
+}
+
+// UpdateSysDistrictInput represents a mutation input for updating sysdistricts.
+type UpdateSysDistrictInput struct {
+	IsDel           *bool
+	Sort            *int32
+	UpdatedAt       *time.Time
+	DeletedAt       *time.Time
+	ClearDeletedAt  bool
+	IsActive        *bool
+	Name            *string
+	ClearName       bool
+	Sname           *string
+	ClearSname      bool
+	Abbr            *string
+	ClearAbbr       bool
+	Stcode          *string
+	ClearStcode     bool
+	Initials        *string
+	ClearInitials   bool
+	Pinyin          *string
+	ClearPinyin     bool
+	ParentID        *string
+	ClearParentID   bool
+	Longitude       *float64
+	ClearLongitude  bool
+	Latitude        *float64
+	ClearLatitude   bool
+	AreaCode        *string
+	ClearAreaCode   bool
+	ZipCode         *string
+	ClearZipCode    bool
+	MergeName       *string
+	ClearMergeName  bool
+	MergeSname      *string
+	ClearMergeSname bool
+	Extra           *string
+	ClearExtra      bool
+	Suffix          *string
+	ClearSuffix     bool
+	IsHot           *bool
+	ClearIsHot      bool
+	IsReal          *bool
+	ClearIsReal     bool
+	IsDirect        *bool
+	ClearIsDirect   bool
+	TreeID          *int32
+	ClearTreeID     bool
+	TreeLevel       *int32
+	ClearTreeLevel  bool
+	TreeLeft        *int64
+	ClearTreeLeft   bool
+	TreeRight       *int64
+	ClearTreeRight  bool
+	IsLeaf          *bool
+	ClearIsLeaf     bool
+	TreePath        *string
+	ClearTreePath   bool
+	Creator         *string
+}
+
+// Mutate applies the UpdateSysDistrictInput on the SysDistrictMutation.
+func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if i.ClearName {
+		m.ClearName()
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if i.ClearSname {
+		m.ClearSname()
+	}
+	if v := i.Sname; v != nil {
+		m.SetSname(*v)
+	}
+	if i.ClearAbbr {
+		m.ClearAbbr()
+	}
+	if v := i.Abbr; v != nil {
+		m.SetAbbr(*v)
+	}
+	if i.ClearStcode {
+		m.ClearStcode()
+	}
+	if v := i.Stcode; v != nil {
+		m.SetStcode(*v)
+	}
+	if i.ClearInitials {
+		m.ClearInitials()
+	}
+	if v := i.Initials; v != nil {
+		m.SetInitials(*v)
+	}
+	if i.ClearPinyin {
+		m.ClearPinyin()
+	}
+	if v := i.Pinyin; v != nil {
+		m.SetPinyin(*v)
+	}
+	if i.ClearParentID {
+		m.ClearParentID()
+	}
+	if v := i.ParentID; v != nil {
+		m.SetParentID(*v)
+	}
+	if i.ClearLongitude {
+		m.ClearLongitude()
+	}
+	if v := i.Longitude; v != nil {
+		m.SetLongitude(*v)
+	}
+	if i.ClearLatitude {
+		m.ClearLatitude()
+	}
+	if v := i.Latitude; v != nil {
+		m.SetLatitude(*v)
+	}
+	if i.ClearAreaCode {
+		m.ClearAreaCode()
+	}
+	if v := i.AreaCode; v != nil {
+		m.SetAreaCode(*v)
+	}
+	if i.ClearZipCode {
+		m.ClearZipCode()
+	}
+	if v := i.ZipCode; v != nil {
+		m.SetZipCode(*v)
+	}
+	if i.ClearMergeName {
+		m.ClearMergeName()
+	}
+	if v := i.MergeName; v != nil {
+		m.SetMergeName(*v)
+	}
+	if i.ClearMergeSname {
+		m.ClearMergeSname()
+	}
+	if v := i.MergeSname; v != nil {
+		m.SetMergeSname(*v)
+	}
+	if i.ClearExtra {
+		m.ClearExtra()
+	}
+	if v := i.Extra; v != nil {
+		m.SetExtra(*v)
+	}
+	if i.ClearSuffix {
+		m.ClearSuffix()
+	}
+	if v := i.Suffix; v != nil {
+		m.SetSuffix(*v)
+	}
+	if i.ClearIsHot {
+		m.ClearIsHot()
+	}
+	if v := i.IsHot; v != nil {
+		m.SetIsHot(*v)
+	}
+	if i.ClearIsReal {
+		m.ClearIsReal()
+	}
+	if v := i.IsReal; v != nil {
+		m.SetIsReal(*v)
+	}
+	if i.ClearIsDirect {
+		m.ClearIsDirect()
+	}
+	if v := i.IsDirect; v != nil {
+		m.SetIsDirect(*v)
+	}
+	if i.ClearTreeID {
+		m.ClearTreeID()
+	}
+	if v := i.TreeID; v != nil {
+		m.SetTreeID(*v)
+	}
+	if i.ClearTreeLevel {
+		m.ClearTreeLevel()
+	}
+	if v := i.TreeLevel; v != nil {
+		m.SetTreeLevel(*v)
+	}
+	if i.ClearTreeLeft {
+		m.ClearTreeLeft()
+	}
+	if v := i.TreeLeft; v != nil {
+		m.SetTreeLeft(*v)
+	}
+	if i.ClearTreeRight {
+		m.ClearTreeRight()
+	}
+	if v := i.TreeRight; v != nil {
+		m.SetTreeRight(*v)
+	}
+	if i.ClearIsLeaf {
+		m.ClearIsLeaf()
+	}
+	if v := i.IsLeaf; v != nil {
+		m.SetIsLeaf(*v)
+	}
+	if i.ClearTreePath {
+		m.ClearTreePath()
+	}
+	if v := i.TreePath; v != nil {
+		m.SetTreePath(*v)
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the UpdateSysDistrictInput on the update builder.
+func (u *SysDistrictUpdate) SetInput(i UpdateSysDistrictInput) *SysDistrictUpdate {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// SetInput applies the change-set in the UpdateSysDistrictInput on the update-one builder.
+func (u *SysDistrictUpdateOne) SetInput(i UpdateSysDistrictInput) *SysDistrictUpdateOne {
+	i.Mutate(u.Mutation())
+	return u
+}
+
 // CreateSysJwtBlockInput represents a mutation input for creating sysjwtblocks.
 type CreateSysJwtBlockInput struct {
 	IsDel     *bool

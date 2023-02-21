@@ -26,6 +26,7 @@ type config struct {
 type hooks struct {
 	SysDict               []ent.Hook
 	SysDictItem           []ent.Hook
+	SysDistrict           []ent.Hook
 	SysJwtBlock           []ent.Hook
 	SysLogging            []ent.Hook
 	SysMenu               []ent.Hook

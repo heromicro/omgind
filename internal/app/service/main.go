@@ -4,11 +4,13 @@ import "github.com/google/wire"
 
 // ServiceSet 注入
 var ServiceSet = wire.NewSet(
-	UserSet,
-	MenuSet,
-	RoleSet,
+	SysUserSet,
+	SysMenuSet,
+	SysRoleSet,
 	SignInSet,
 
 	DictSet,
 	DemoSet,
+
+	SysDistrictSet,
 )

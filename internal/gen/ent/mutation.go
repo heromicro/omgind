@@ -12,6 +12,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
@@ -37,6 +38,7 @@ const (
 	// Node types.
 	TypeSysDict               = "SysDict"
 	TypeSysDictItem           = "SysDictItem"
+	TypeSysDistrict           = "SysDistrict"
 	TypeSysJwtBlock           = "SysJwtBlock"
 	TypeSysLogging            = "SysLogging"
 	TypeSysMenu               = "SysMenu"
@@ -1748,6 +1750,2661 @@ func (m *SysDictItemMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *SysDictItemMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown SysDictItem edge %s", name)
+}
+
+// SysDistrictMutation represents an operation that mutates the SysDistrict nodes in the graph.
+type SysDistrictMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *string
+	is_del        *bool
+	sort          *int32
+	addsort       *int32
+	created_at    *time.Time
+	updated_at    *time.Time
+	deleted_at    *time.Time
+	is_active     *bool
+	name          *string
+	sname         *string
+	abbr          *string
+	stcode        *string
+	initials      *string
+	pinyin        *string
+	parent_id     *string
+	longitude     *float64
+	addlongitude  *float64
+	latitude      *float64
+	addlatitude   *float64
+	area_code     *string
+	zip_code      *string
+	merge_name    *string
+	merge_sname   *string
+	extra         *string
+	suffix        *string
+	is_hot        *bool
+	is_real       *bool
+	is_direct     *bool
+	tree_id       *int32
+	addtree_id    *int32
+	tree_level    *int32
+	addtree_level *int32
+	tree_left     *int64
+	addtree_left  *int64
+	tree_right    *int64
+	addtree_right *int64
+	is_leaf       *bool
+	tree_path     *string
+	creator       *string
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*SysDistrict, error)
+	predicates    []predicate.SysDistrict
+}
+
+var _ ent.Mutation = (*SysDistrictMutation)(nil)
+
+// sysdistrictOption allows management of the mutation configuration using functional options.
+type sysdistrictOption func(*SysDistrictMutation)
+
+// newSysDistrictMutation creates new mutation for the SysDistrict entity.
+func newSysDistrictMutation(c config, op Op, opts ...sysdistrictOption) *SysDistrictMutation {
+	m := &SysDistrictMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeSysDistrict,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withSysDistrictID sets the ID field of the mutation.
+func withSysDistrictID(id string) sysdistrictOption {
+	return func(m *SysDistrictMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *SysDistrict
+		)
+		m.oldValue = func(ctx context.Context) (*SysDistrict, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().SysDistrict.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withSysDistrict sets the old SysDistrict of the mutation.
+func withSysDistrict(node *SysDistrict) sysdistrictOption {
+	return func(m *SysDistrictMutation) {
+		m.oldValue = func(context.Context) (*SysDistrict, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m SysDistrictMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m SysDistrictMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of SysDistrict entities.
+func (m *SysDistrictMutation) SetID(id string) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *SysDistrictMutation) ID() (id string, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *SysDistrictMutation) IDs(ctx context.Context) ([]string, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []string{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().SysDistrict.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *SysDistrictMutation) SetIsDel(b bool) {
+	m.is_del = &b
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *SysDistrictMutation) IsDel() (r bool, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldIsDel(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *SysDistrictMutation) ResetIsDel() {
+	m.is_del = nil
+}
+
+// SetSort sets the "sort" field.
+func (m *SysDistrictMutation) SetSort(i int32) {
+	m.sort = &i
+	m.addsort = nil
+}
+
+// Sort returns the value of the "sort" field in the mutation.
+func (m *SysDistrictMutation) Sort() (r int32, exists bool) {
+	v := m.sort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSort returns the old "sort" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldSort(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSort is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSort requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSort: %w", err)
+	}
+	return oldValue.Sort, nil
+}
+
+// AddSort adds i to the "sort" field.
+func (m *SysDistrictMutation) AddSort(i int32) {
+	if m.addsort != nil {
+		*m.addsort += i
+	} else {
+		m.addsort = &i
+	}
+}
+
+// AddedSort returns the value that was added to the "sort" field in this mutation.
+func (m *SysDistrictMutation) AddedSort() (r int32, exists bool) {
+	v := m.addsort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSort resets all changes to the "sort" field.
+func (m *SysDistrictMutation) ResetSort() {
+	m.sort = nil
+	m.addsort = nil
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *SysDistrictMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *SysDistrictMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *SysDistrictMutation) ResetCreatedAt() {
+	m.created_at = nil
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (m *SysDistrictMutation) SetUpdatedAt(t time.Time) {
+	m.updated_at = &t
+}
+
+// UpdatedAt returns the value of the "updated_at" field in the mutation.
+func (m *SysDistrictMutation) UpdatedAt() (r time.Time, exists bool) {
+	v := m.updated_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdatedAt returns the old "updated_at" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldUpdatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdatedAt: %w", err)
+	}
+	return oldValue.UpdatedAt, nil
+}
+
+// ResetUpdatedAt resets all changes to the "updated_at" field.
+func (m *SysDistrictMutation) ResetUpdatedAt() {
+	m.updated_at = nil
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (m *SysDistrictMutation) SetDeletedAt(t time.Time) {
+	m.deleted_at = &t
+}
+
+// DeletedAt returns the value of the "deleted_at" field in the mutation.
+func (m *SysDistrictMutation) DeletedAt() (r time.Time, exists bool) {
+	v := m.deleted_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeletedAt returns the old "deleted_at" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldDeletedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDeletedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeletedAt: %w", err)
+	}
+	return oldValue.DeletedAt, nil
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (m *SysDistrictMutation) ClearDeletedAt() {
+	m.deleted_at = nil
+	m.clearedFields[sysdistrict.FieldDeletedAt] = struct{}{}
+}
+
+// DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
+func (m *SysDistrictMutation) DeletedAtCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldDeletedAt]
+	return ok
+}
+
+// ResetDeletedAt resets all changes to the "deleted_at" field.
+func (m *SysDistrictMutation) ResetDeletedAt() {
+	m.deleted_at = nil
+	delete(m.clearedFields, sysdistrict.FieldDeletedAt)
+}
+
+// SetIsActive sets the "is_active" field.
+func (m *SysDistrictMutation) SetIsActive(b bool) {
+	m.is_active = &b
+}
+
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysDistrictMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsActive returns the old "is_active" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldIsActive(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
+	}
+	return oldValue.IsActive, nil
+}
+
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysDistrictMutation) ResetIsActive() {
+	m.is_active = nil
+}
+
+// SetName sets the "name" field.
+func (m *SysDistrictMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *SysDistrictMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ClearName clears the value of the "name" field.
+func (m *SysDistrictMutation) ClearName() {
+	m.name = nil
+	m.clearedFields[sysdistrict.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *SysDistrictMutation) NameCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldName]
+	return ok
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *SysDistrictMutation) ResetName() {
+	m.name = nil
+	delete(m.clearedFields, sysdistrict.FieldName)
+}
+
+// SetSname sets the "sname" field.
+func (m *SysDistrictMutation) SetSname(s string) {
+	m.sname = &s
+}
+
+// Sname returns the value of the "sname" field in the mutation.
+func (m *SysDistrictMutation) Sname() (r string, exists bool) {
+	v := m.sname
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSname returns the old "sname" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldSname(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSname is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSname requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSname: %w", err)
+	}
+	return oldValue.Sname, nil
+}
+
+// ClearSname clears the value of the "sname" field.
+func (m *SysDistrictMutation) ClearSname() {
+	m.sname = nil
+	m.clearedFields[sysdistrict.FieldSname] = struct{}{}
+}
+
+// SnameCleared returns if the "sname" field was cleared in this mutation.
+func (m *SysDistrictMutation) SnameCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldSname]
+	return ok
+}
+
+// ResetSname resets all changes to the "sname" field.
+func (m *SysDistrictMutation) ResetSname() {
+	m.sname = nil
+	delete(m.clearedFields, sysdistrict.FieldSname)
+}
+
+// SetAbbr sets the "abbr" field.
+func (m *SysDistrictMutation) SetAbbr(s string) {
+	m.abbr = &s
+}
+
+// Abbr returns the value of the "abbr" field in the mutation.
+func (m *SysDistrictMutation) Abbr() (r string, exists bool) {
+	v := m.abbr
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAbbr returns the old "abbr" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldAbbr(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldAbbr is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldAbbr requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAbbr: %w", err)
+	}
+	return oldValue.Abbr, nil
+}
+
+// ClearAbbr clears the value of the "abbr" field.
+func (m *SysDistrictMutation) ClearAbbr() {
+	m.abbr = nil
+	m.clearedFields[sysdistrict.FieldAbbr] = struct{}{}
+}
+
+// AbbrCleared returns if the "abbr" field was cleared in this mutation.
+func (m *SysDistrictMutation) AbbrCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldAbbr]
+	return ok
+}
+
+// ResetAbbr resets all changes to the "abbr" field.
+func (m *SysDistrictMutation) ResetAbbr() {
+	m.abbr = nil
+	delete(m.clearedFields, sysdistrict.FieldAbbr)
+}
+
+// SetStcode sets the "stcode" field.
+func (m *SysDistrictMutation) SetStcode(s string) {
+	m.stcode = &s
+}
+
+// Stcode returns the value of the "stcode" field in the mutation.
+func (m *SysDistrictMutation) Stcode() (r string, exists bool) {
+	v := m.stcode
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStcode returns the old "stcode" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldStcode(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldStcode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldStcode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStcode: %w", err)
+	}
+	return oldValue.Stcode, nil
+}
+
+// ClearStcode clears the value of the "stcode" field.
+func (m *SysDistrictMutation) ClearStcode() {
+	m.stcode = nil
+	m.clearedFields[sysdistrict.FieldStcode] = struct{}{}
+}
+
+// StcodeCleared returns if the "stcode" field was cleared in this mutation.
+func (m *SysDistrictMutation) StcodeCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldStcode]
+	return ok
+}
+
+// ResetStcode resets all changes to the "stcode" field.
+func (m *SysDistrictMutation) ResetStcode() {
+	m.stcode = nil
+	delete(m.clearedFields, sysdistrict.FieldStcode)
+}
+
+// SetInitials sets the "initials" field.
+func (m *SysDistrictMutation) SetInitials(s string) {
+	m.initials = &s
+}
+
+// Initials returns the value of the "initials" field in the mutation.
+func (m *SysDistrictMutation) Initials() (r string, exists bool) {
+	v := m.initials
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldInitials returns the old "initials" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldInitials(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldInitials is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldInitials requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldInitials: %w", err)
+	}
+	return oldValue.Initials, nil
+}
+
+// ClearInitials clears the value of the "initials" field.
+func (m *SysDistrictMutation) ClearInitials() {
+	m.initials = nil
+	m.clearedFields[sysdistrict.FieldInitials] = struct{}{}
+}
+
+// InitialsCleared returns if the "initials" field was cleared in this mutation.
+func (m *SysDistrictMutation) InitialsCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldInitials]
+	return ok
+}
+
+// ResetInitials resets all changes to the "initials" field.
+func (m *SysDistrictMutation) ResetInitials() {
+	m.initials = nil
+	delete(m.clearedFields, sysdistrict.FieldInitials)
+}
+
+// SetPinyin sets the "pinyin" field.
+func (m *SysDistrictMutation) SetPinyin(s string) {
+	m.pinyin = &s
+}
+
+// Pinyin returns the value of the "pinyin" field in the mutation.
+func (m *SysDistrictMutation) Pinyin() (r string, exists bool) {
+	v := m.pinyin
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldPinyin returns the old "pinyin" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldPinyin(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldPinyin is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldPinyin requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldPinyin: %w", err)
+	}
+	return oldValue.Pinyin, nil
+}
+
+// ClearPinyin clears the value of the "pinyin" field.
+func (m *SysDistrictMutation) ClearPinyin() {
+	m.pinyin = nil
+	m.clearedFields[sysdistrict.FieldPinyin] = struct{}{}
+}
+
+// PinyinCleared returns if the "pinyin" field was cleared in this mutation.
+func (m *SysDistrictMutation) PinyinCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldPinyin]
+	return ok
+}
+
+// ResetPinyin resets all changes to the "pinyin" field.
+func (m *SysDistrictMutation) ResetPinyin() {
+	m.pinyin = nil
+	delete(m.clearedFields, sysdistrict.FieldPinyin)
+}
+
+// SetParentID sets the "parent_id" field.
+func (m *SysDistrictMutation) SetParentID(s string) {
+	m.parent_id = &s
+}
+
+// ParentID returns the value of the "parent_id" field in the mutation.
+func (m *SysDistrictMutation) ParentID() (r string, exists bool) {
+	v := m.parent_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldParentID returns the old "parent_id" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldParentID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldParentID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldParentID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldParentID: %w", err)
+	}
+	return oldValue.ParentID, nil
+}
+
+// ClearParentID clears the value of the "parent_id" field.
+func (m *SysDistrictMutation) ClearParentID() {
+	m.parent_id = nil
+	m.clearedFields[sysdistrict.FieldParentID] = struct{}{}
+}
+
+// ParentIDCleared returns if the "parent_id" field was cleared in this mutation.
+func (m *SysDistrictMutation) ParentIDCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldParentID]
+	return ok
+}
+
+// ResetParentID resets all changes to the "parent_id" field.
+func (m *SysDistrictMutation) ResetParentID() {
+	m.parent_id = nil
+	delete(m.clearedFields, sysdistrict.FieldParentID)
+}
+
+// SetLongitude sets the "longitude" field.
+func (m *SysDistrictMutation) SetLongitude(f float64) {
+	m.longitude = &f
+	m.addlongitude = nil
+}
+
+// Longitude returns the value of the "longitude" field in the mutation.
+func (m *SysDistrictMutation) Longitude() (r float64, exists bool) {
+	v := m.longitude
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLongitude returns the old "longitude" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldLongitude(ctx context.Context) (v *float64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLongitude is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLongitude requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLongitude: %w", err)
+	}
+	return oldValue.Longitude, nil
+}
+
+// AddLongitude adds f to the "longitude" field.
+func (m *SysDistrictMutation) AddLongitude(f float64) {
+	if m.addlongitude != nil {
+		*m.addlongitude += f
+	} else {
+		m.addlongitude = &f
+	}
+}
+
+// AddedLongitude returns the value that was added to the "longitude" field in this mutation.
+func (m *SysDistrictMutation) AddedLongitude() (r float64, exists bool) {
+	v := m.addlongitude
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearLongitude clears the value of the "longitude" field.
+func (m *SysDistrictMutation) ClearLongitude() {
+	m.longitude = nil
+	m.addlongitude = nil
+	m.clearedFields[sysdistrict.FieldLongitude] = struct{}{}
+}
+
+// LongitudeCleared returns if the "longitude" field was cleared in this mutation.
+func (m *SysDistrictMutation) LongitudeCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldLongitude]
+	return ok
+}
+
+// ResetLongitude resets all changes to the "longitude" field.
+func (m *SysDistrictMutation) ResetLongitude() {
+	m.longitude = nil
+	m.addlongitude = nil
+	delete(m.clearedFields, sysdistrict.FieldLongitude)
+}
+
+// SetLatitude sets the "latitude" field.
+func (m *SysDistrictMutation) SetLatitude(f float64) {
+	m.latitude = &f
+	m.addlatitude = nil
+}
+
+// Latitude returns the value of the "latitude" field in the mutation.
+func (m *SysDistrictMutation) Latitude() (r float64, exists bool) {
+	v := m.latitude
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLatitude returns the old "latitude" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldLatitude(ctx context.Context) (v *float64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLatitude is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLatitude requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLatitude: %w", err)
+	}
+	return oldValue.Latitude, nil
+}
+
+// AddLatitude adds f to the "latitude" field.
+func (m *SysDistrictMutation) AddLatitude(f float64) {
+	if m.addlatitude != nil {
+		*m.addlatitude += f
+	} else {
+		m.addlatitude = &f
+	}
+}
+
+// AddedLatitude returns the value that was added to the "latitude" field in this mutation.
+func (m *SysDistrictMutation) AddedLatitude() (r float64, exists bool) {
+	v := m.addlatitude
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearLatitude clears the value of the "latitude" field.
+func (m *SysDistrictMutation) ClearLatitude() {
+	m.latitude = nil
+	m.addlatitude = nil
+	m.clearedFields[sysdistrict.FieldLatitude] = struct{}{}
+}
+
+// LatitudeCleared returns if the "latitude" field was cleared in this mutation.
+func (m *SysDistrictMutation) LatitudeCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldLatitude]
+	return ok
+}
+
+// ResetLatitude resets all changes to the "latitude" field.
+func (m *SysDistrictMutation) ResetLatitude() {
+	m.latitude = nil
+	m.addlatitude = nil
+	delete(m.clearedFields, sysdistrict.FieldLatitude)
+}
+
+// SetAreaCode sets the "area_code" field.
+func (m *SysDistrictMutation) SetAreaCode(s string) {
+	m.area_code = &s
+}
+
+// AreaCode returns the value of the "area_code" field in the mutation.
+func (m *SysDistrictMutation) AreaCode() (r string, exists bool) {
+	v := m.area_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAreaCode returns the old "area_code" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldAreaCode(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldAreaCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldAreaCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAreaCode: %w", err)
+	}
+	return oldValue.AreaCode, nil
+}
+
+// ClearAreaCode clears the value of the "area_code" field.
+func (m *SysDistrictMutation) ClearAreaCode() {
+	m.area_code = nil
+	m.clearedFields[sysdistrict.FieldAreaCode] = struct{}{}
+}
+
+// AreaCodeCleared returns if the "area_code" field was cleared in this mutation.
+func (m *SysDistrictMutation) AreaCodeCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldAreaCode]
+	return ok
+}
+
+// ResetAreaCode resets all changes to the "area_code" field.
+func (m *SysDistrictMutation) ResetAreaCode() {
+	m.area_code = nil
+	delete(m.clearedFields, sysdistrict.FieldAreaCode)
+}
+
+// SetZipCode sets the "zip_code" field.
+func (m *SysDistrictMutation) SetZipCode(s string) {
+	m.zip_code = &s
+}
+
+// ZipCode returns the value of the "zip_code" field in the mutation.
+func (m *SysDistrictMutation) ZipCode() (r string, exists bool) {
+	v := m.zip_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldZipCode returns the old "zip_code" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldZipCode(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldZipCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldZipCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldZipCode: %w", err)
+	}
+	return oldValue.ZipCode, nil
+}
+
+// ClearZipCode clears the value of the "zip_code" field.
+func (m *SysDistrictMutation) ClearZipCode() {
+	m.zip_code = nil
+	m.clearedFields[sysdistrict.FieldZipCode] = struct{}{}
+}
+
+// ZipCodeCleared returns if the "zip_code" field was cleared in this mutation.
+func (m *SysDistrictMutation) ZipCodeCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldZipCode]
+	return ok
+}
+
+// ResetZipCode resets all changes to the "zip_code" field.
+func (m *SysDistrictMutation) ResetZipCode() {
+	m.zip_code = nil
+	delete(m.clearedFields, sysdistrict.FieldZipCode)
+}
+
+// SetMergeName sets the "merge_name" field.
+func (m *SysDistrictMutation) SetMergeName(s string) {
+	m.merge_name = &s
+}
+
+// MergeName returns the value of the "merge_name" field in the mutation.
+func (m *SysDistrictMutation) MergeName() (r string, exists bool) {
+	v := m.merge_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMergeName returns the old "merge_name" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldMergeName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMergeName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMergeName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMergeName: %w", err)
+	}
+	return oldValue.MergeName, nil
+}
+
+// ClearMergeName clears the value of the "merge_name" field.
+func (m *SysDistrictMutation) ClearMergeName() {
+	m.merge_name = nil
+	m.clearedFields[sysdistrict.FieldMergeName] = struct{}{}
+}
+
+// MergeNameCleared returns if the "merge_name" field was cleared in this mutation.
+func (m *SysDistrictMutation) MergeNameCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldMergeName]
+	return ok
+}
+
+// ResetMergeName resets all changes to the "merge_name" field.
+func (m *SysDistrictMutation) ResetMergeName() {
+	m.merge_name = nil
+	delete(m.clearedFields, sysdistrict.FieldMergeName)
+}
+
+// SetMergeSname sets the "merge_sname" field.
+func (m *SysDistrictMutation) SetMergeSname(s string) {
+	m.merge_sname = &s
+}
+
+// MergeSname returns the value of the "merge_sname" field in the mutation.
+func (m *SysDistrictMutation) MergeSname() (r string, exists bool) {
+	v := m.merge_sname
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMergeSname returns the old "merge_sname" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldMergeSname(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMergeSname is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMergeSname requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMergeSname: %w", err)
+	}
+	return oldValue.MergeSname, nil
+}
+
+// ClearMergeSname clears the value of the "merge_sname" field.
+func (m *SysDistrictMutation) ClearMergeSname() {
+	m.merge_sname = nil
+	m.clearedFields[sysdistrict.FieldMergeSname] = struct{}{}
+}
+
+// MergeSnameCleared returns if the "merge_sname" field was cleared in this mutation.
+func (m *SysDistrictMutation) MergeSnameCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldMergeSname]
+	return ok
+}
+
+// ResetMergeSname resets all changes to the "merge_sname" field.
+func (m *SysDistrictMutation) ResetMergeSname() {
+	m.merge_sname = nil
+	delete(m.clearedFields, sysdistrict.FieldMergeSname)
+}
+
+// SetExtra sets the "extra" field.
+func (m *SysDistrictMutation) SetExtra(s string) {
+	m.extra = &s
+}
+
+// Extra returns the value of the "extra" field in the mutation.
+func (m *SysDistrictMutation) Extra() (r string, exists bool) {
+	v := m.extra
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldExtra returns the old "extra" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldExtra(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldExtra is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldExtra requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldExtra: %w", err)
+	}
+	return oldValue.Extra, nil
+}
+
+// ClearExtra clears the value of the "extra" field.
+func (m *SysDistrictMutation) ClearExtra() {
+	m.extra = nil
+	m.clearedFields[sysdistrict.FieldExtra] = struct{}{}
+}
+
+// ExtraCleared returns if the "extra" field was cleared in this mutation.
+func (m *SysDistrictMutation) ExtraCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldExtra]
+	return ok
+}
+
+// ResetExtra resets all changes to the "extra" field.
+func (m *SysDistrictMutation) ResetExtra() {
+	m.extra = nil
+	delete(m.clearedFields, sysdistrict.FieldExtra)
+}
+
+// SetSuffix sets the "suffix" field.
+func (m *SysDistrictMutation) SetSuffix(s string) {
+	m.suffix = &s
+}
+
+// Suffix returns the value of the "suffix" field in the mutation.
+func (m *SysDistrictMutation) Suffix() (r string, exists bool) {
+	v := m.suffix
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSuffix returns the old "suffix" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldSuffix(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSuffix is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSuffix requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSuffix: %w", err)
+	}
+	return oldValue.Suffix, nil
+}
+
+// ClearSuffix clears the value of the "suffix" field.
+func (m *SysDistrictMutation) ClearSuffix() {
+	m.suffix = nil
+	m.clearedFields[sysdistrict.FieldSuffix] = struct{}{}
+}
+
+// SuffixCleared returns if the "suffix" field was cleared in this mutation.
+func (m *SysDistrictMutation) SuffixCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldSuffix]
+	return ok
+}
+
+// ResetSuffix resets all changes to the "suffix" field.
+func (m *SysDistrictMutation) ResetSuffix() {
+	m.suffix = nil
+	delete(m.clearedFields, sysdistrict.FieldSuffix)
+}
+
+// SetIsHot sets the "is_hot" field.
+func (m *SysDistrictMutation) SetIsHot(b bool) {
+	m.is_hot = &b
+}
+
+// IsHot returns the value of the "is_hot" field in the mutation.
+func (m *SysDistrictMutation) IsHot() (r bool, exists bool) {
+	v := m.is_hot
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsHot returns the old "is_hot" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldIsHot(ctx context.Context) (v *bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsHot is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsHot requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsHot: %w", err)
+	}
+	return oldValue.IsHot, nil
+}
+
+// ClearIsHot clears the value of the "is_hot" field.
+func (m *SysDistrictMutation) ClearIsHot() {
+	m.is_hot = nil
+	m.clearedFields[sysdistrict.FieldIsHot] = struct{}{}
+}
+
+// IsHotCleared returns if the "is_hot" field was cleared in this mutation.
+func (m *SysDistrictMutation) IsHotCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldIsHot]
+	return ok
+}
+
+// ResetIsHot resets all changes to the "is_hot" field.
+func (m *SysDistrictMutation) ResetIsHot() {
+	m.is_hot = nil
+	delete(m.clearedFields, sysdistrict.FieldIsHot)
+}
+
+// SetIsReal sets the "is_real" field.
+func (m *SysDistrictMutation) SetIsReal(b bool) {
+	m.is_real = &b
+}
+
+// IsReal returns the value of the "is_real" field in the mutation.
+func (m *SysDistrictMutation) IsReal() (r bool, exists bool) {
+	v := m.is_real
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsReal returns the old "is_real" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldIsReal(ctx context.Context) (v *bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsReal is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsReal requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsReal: %w", err)
+	}
+	return oldValue.IsReal, nil
+}
+
+// ClearIsReal clears the value of the "is_real" field.
+func (m *SysDistrictMutation) ClearIsReal() {
+	m.is_real = nil
+	m.clearedFields[sysdistrict.FieldIsReal] = struct{}{}
+}
+
+// IsRealCleared returns if the "is_real" field was cleared in this mutation.
+func (m *SysDistrictMutation) IsRealCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldIsReal]
+	return ok
+}
+
+// ResetIsReal resets all changes to the "is_real" field.
+func (m *SysDistrictMutation) ResetIsReal() {
+	m.is_real = nil
+	delete(m.clearedFields, sysdistrict.FieldIsReal)
+}
+
+// SetIsDirect sets the "is_direct" field.
+func (m *SysDistrictMutation) SetIsDirect(b bool) {
+	m.is_direct = &b
+}
+
+// IsDirect returns the value of the "is_direct" field in the mutation.
+func (m *SysDistrictMutation) IsDirect() (r bool, exists bool) {
+	v := m.is_direct
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDirect returns the old "is_direct" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldIsDirect(ctx context.Context) (v *bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDirect is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDirect requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDirect: %w", err)
+	}
+	return oldValue.IsDirect, nil
+}
+
+// ClearIsDirect clears the value of the "is_direct" field.
+func (m *SysDistrictMutation) ClearIsDirect() {
+	m.is_direct = nil
+	m.clearedFields[sysdistrict.FieldIsDirect] = struct{}{}
+}
+
+// IsDirectCleared returns if the "is_direct" field was cleared in this mutation.
+func (m *SysDistrictMutation) IsDirectCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldIsDirect]
+	return ok
+}
+
+// ResetIsDirect resets all changes to the "is_direct" field.
+func (m *SysDistrictMutation) ResetIsDirect() {
+	m.is_direct = nil
+	delete(m.clearedFields, sysdistrict.FieldIsDirect)
+}
+
+// SetTreeID sets the "tree_id" field.
+func (m *SysDistrictMutation) SetTreeID(i int32) {
+	m.tree_id = &i
+	m.addtree_id = nil
+}
+
+// TreeID returns the value of the "tree_id" field in the mutation.
+func (m *SysDistrictMutation) TreeID() (r int32, exists bool) {
+	v := m.tree_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTreeID returns the old "tree_id" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldTreeID(ctx context.Context) (v *int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTreeID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTreeID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTreeID: %w", err)
+	}
+	return oldValue.TreeID, nil
+}
+
+// AddTreeID adds i to the "tree_id" field.
+func (m *SysDistrictMutation) AddTreeID(i int32) {
+	if m.addtree_id != nil {
+		*m.addtree_id += i
+	} else {
+		m.addtree_id = &i
+	}
+}
+
+// AddedTreeID returns the value that was added to the "tree_id" field in this mutation.
+func (m *SysDistrictMutation) AddedTreeID() (r int32, exists bool) {
+	v := m.addtree_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearTreeID clears the value of the "tree_id" field.
+func (m *SysDistrictMutation) ClearTreeID() {
+	m.tree_id = nil
+	m.addtree_id = nil
+	m.clearedFields[sysdistrict.FieldTreeID] = struct{}{}
+}
+
+// TreeIDCleared returns if the "tree_id" field was cleared in this mutation.
+func (m *SysDistrictMutation) TreeIDCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldTreeID]
+	return ok
+}
+
+// ResetTreeID resets all changes to the "tree_id" field.
+func (m *SysDistrictMutation) ResetTreeID() {
+	m.tree_id = nil
+	m.addtree_id = nil
+	delete(m.clearedFields, sysdistrict.FieldTreeID)
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (m *SysDistrictMutation) SetTreeLevel(i int32) {
+	m.tree_level = &i
+	m.addtree_level = nil
+}
+
+// TreeLevel returns the value of the "tree_level" field in the mutation.
+func (m *SysDistrictMutation) TreeLevel() (r int32, exists bool) {
+	v := m.tree_level
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTreeLevel returns the old "tree_level" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldTreeLevel(ctx context.Context) (v *int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTreeLevel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTreeLevel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTreeLevel: %w", err)
+	}
+	return oldValue.TreeLevel, nil
+}
+
+// AddTreeLevel adds i to the "tree_level" field.
+func (m *SysDistrictMutation) AddTreeLevel(i int32) {
+	if m.addtree_level != nil {
+		*m.addtree_level += i
+	} else {
+		m.addtree_level = &i
+	}
+}
+
+// AddedTreeLevel returns the value that was added to the "tree_level" field in this mutation.
+func (m *SysDistrictMutation) AddedTreeLevel() (r int32, exists bool) {
+	v := m.addtree_level
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearTreeLevel clears the value of the "tree_level" field.
+func (m *SysDistrictMutation) ClearTreeLevel() {
+	m.tree_level = nil
+	m.addtree_level = nil
+	m.clearedFields[sysdistrict.FieldTreeLevel] = struct{}{}
+}
+
+// TreeLevelCleared returns if the "tree_level" field was cleared in this mutation.
+func (m *SysDistrictMutation) TreeLevelCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldTreeLevel]
+	return ok
+}
+
+// ResetTreeLevel resets all changes to the "tree_level" field.
+func (m *SysDistrictMutation) ResetTreeLevel() {
+	m.tree_level = nil
+	m.addtree_level = nil
+	delete(m.clearedFields, sysdistrict.FieldTreeLevel)
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (m *SysDistrictMutation) SetTreeLeft(i int64) {
+	m.tree_left = &i
+	m.addtree_left = nil
+}
+
+// TreeLeft returns the value of the "tree_left" field in the mutation.
+func (m *SysDistrictMutation) TreeLeft() (r int64, exists bool) {
+	v := m.tree_left
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTreeLeft returns the old "tree_left" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldTreeLeft(ctx context.Context) (v *int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTreeLeft is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTreeLeft requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTreeLeft: %w", err)
+	}
+	return oldValue.TreeLeft, nil
+}
+
+// AddTreeLeft adds i to the "tree_left" field.
+func (m *SysDistrictMutation) AddTreeLeft(i int64) {
+	if m.addtree_left != nil {
+		*m.addtree_left += i
+	} else {
+		m.addtree_left = &i
+	}
+}
+
+// AddedTreeLeft returns the value that was added to the "tree_left" field in this mutation.
+func (m *SysDistrictMutation) AddedTreeLeft() (r int64, exists bool) {
+	v := m.addtree_left
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearTreeLeft clears the value of the "tree_left" field.
+func (m *SysDistrictMutation) ClearTreeLeft() {
+	m.tree_left = nil
+	m.addtree_left = nil
+	m.clearedFields[sysdistrict.FieldTreeLeft] = struct{}{}
+}
+
+// TreeLeftCleared returns if the "tree_left" field was cleared in this mutation.
+func (m *SysDistrictMutation) TreeLeftCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldTreeLeft]
+	return ok
+}
+
+// ResetTreeLeft resets all changes to the "tree_left" field.
+func (m *SysDistrictMutation) ResetTreeLeft() {
+	m.tree_left = nil
+	m.addtree_left = nil
+	delete(m.clearedFields, sysdistrict.FieldTreeLeft)
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (m *SysDistrictMutation) SetTreeRight(i int64) {
+	m.tree_right = &i
+	m.addtree_right = nil
+}
+
+// TreeRight returns the value of the "tree_right" field in the mutation.
+func (m *SysDistrictMutation) TreeRight() (r int64, exists bool) {
+	v := m.tree_right
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTreeRight returns the old "tree_right" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldTreeRight(ctx context.Context) (v *int64, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTreeRight is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTreeRight requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTreeRight: %w", err)
+	}
+	return oldValue.TreeRight, nil
+}
+
+// AddTreeRight adds i to the "tree_right" field.
+func (m *SysDistrictMutation) AddTreeRight(i int64) {
+	if m.addtree_right != nil {
+		*m.addtree_right += i
+	} else {
+		m.addtree_right = &i
+	}
+}
+
+// AddedTreeRight returns the value that was added to the "tree_right" field in this mutation.
+func (m *SysDistrictMutation) AddedTreeRight() (r int64, exists bool) {
+	v := m.addtree_right
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ClearTreeRight clears the value of the "tree_right" field.
+func (m *SysDistrictMutation) ClearTreeRight() {
+	m.tree_right = nil
+	m.addtree_right = nil
+	m.clearedFields[sysdistrict.FieldTreeRight] = struct{}{}
+}
+
+// TreeRightCleared returns if the "tree_right" field was cleared in this mutation.
+func (m *SysDistrictMutation) TreeRightCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldTreeRight]
+	return ok
+}
+
+// ResetTreeRight resets all changes to the "tree_right" field.
+func (m *SysDistrictMutation) ResetTreeRight() {
+	m.tree_right = nil
+	m.addtree_right = nil
+	delete(m.clearedFields, sysdistrict.FieldTreeRight)
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (m *SysDistrictMutation) SetIsLeaf(b bool) {
+	m.is_leaf = &b
+}
+
+// IsLeaf returns the value of the "is_leaf" field in the mutation.
+func (m *SysDistrictMutation) IsLeaf() (r bool, exists bool) {
+	v := m.is_leaf
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsLeaf returns the old "is_leaf" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldIsLeaf(ctx context.Context) (v *bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsLeaf is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsLeaf requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsLeaf: %w", err)
+	}
+	return oldValue.IsLeaf, nil
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (m *SysDistrictMutation) ClearIsLeaf() {
+	m.is_leaf = nil
+	m.clearedFields[sysdistrict.FieldIsLeaf] = struct{}{}
+}
+
+// IsLeafCleared returns if the "is_leaf" field was cleared in this mutation.
+func (m *SysDistrictMutation) IsLeafCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldIsLeaf]
+	return ok
+}
+
+// ResetIsLeaf resets all changes to the "is_leaf" field.
+func (m *SysDistrictMutation) ResetIsLeaf() {
+	m.is_leaf = nil
+	delete(m.clearedFields, sysdistrict.FieldIsLeaf)
+}
+
+// SetTreePath sets the "tree_path" field.
+func (m *SysDistrictMutation) SetTreePath(s string) {
+	m.tree_path = &s
+}
+
+// TreePath returns the value of the "tree_path" field in the mutation.
+func (m *SysDistrictMutation) TreePath() (r string, exists bool) {
+	v := m.tree_path
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTreePath returns the old "tree_path" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldTreePath(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTreePath is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTreePath requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTreePath: %w", err)
+	}
+	return oldValue.TreePath, nil
+}
+
+// ClearTreePath clears the value of the "tree_path" field.
+func (m *SysDistrictMutation) ClearTreePath() {
+	m.tree_path = nil
+	m.clearedFields[sysdistrict.FieldTreePath] = struct{}{}
+}
+
+// TreePathCleared returns if the "tree_path" field was cleared in this mutation.
+func (m *SysDistrictMutation) TreePathCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldTreePath]
+	return ok
+}
+
+// ResetTreePath resets all changes to the "tree_path" field.
+func (m *SysDistrictMutation) ResetTreePath() {
+	m.tree_path = nil
+	delete(m.clearedFields, sysdistrict.FieldTreePath)
+}
+
+// SetCreator sets the "creator" field.
+func (m *SysDistrictMutation) SetCreator(s string) {
+	m.creator = &s
+}
+
+// Creator returns the value of the "creator" field in the mutation.
+func (m *SysDistrictMutation) Creator() (r string, exists bool) {
+	v := m.creator
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreator returns the old "creator" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldCreator(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreator is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreator requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreator: %w", err)
+	}
+	return oldValue.Creator, nil
+}
+
+// ResetCreator resets all changes to the "creator" field.
+func (m *SysDistrictMutation) ResetCreator() {
+	m.creator = nil
+}
+
+// Where appends a list predicates to the SysDistrictMutation builder.
+func (m *SysDistrictMutation) Where(ps ...predicate.SysDistrict) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// Op returns the operation name.
+func (m *SysDistrictMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (SysDistrict).
+func (m *SysDistrictMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *SysDistrictMutation) Fields() []string {
+	fields := make([]string, 0, 31)
+	if m.is_del != nil {
+		fields = append(fields, sysdistrict.FieldIsDel)
+	}
+	if m.sort != nil {
+		fields = append(fields, sysdistrict.FieldSort)
+	}
+	if m.created_at != nil {
+		fields = append(fields, sysdistrict.FieldCreatedAt)
+	}
+	if m.updated_at != nil {
+		fields = append(fields, sysdistrict.FieldUpdatedAt)
+	}
+	if m.deleted_at != nil {
+		fields = append(fields, sysdistrict.FieldDeletedAt)
+	}
+	if m.is_active != nil {
+		fields = append(fields, sysdistrict.FieldIsActive)
+	}
+	if m.name != nil {
+		fields = append(fields, sysdistrict.FieldName)
+	}
+	if m.sname != nil {
+		fields = append(fields, sysdistrict.FieldSname)
+	}
+	if m.abbr != nil {
+		fields = append(fields, sysdistrict.FieldAbbr)
+	}
+	if m.stcode != nil {
+		fields = append(fields, sysdistrict.FieldStcode)
+	}
+	if m.initials != nil {
+		fields = append(fields, sysdistrict.FieldInitials)
+	}
+	if m.pinyin != nil {
+		fields = append(fields, sysdistrict.FieldPinyin)
+	}
+	if m.parent_id != nil {
+		fields = append(fields, sysdistrict.FieldParentID)
+	}
+	if m.longitude != nil {
+		fields = append(fields, sysdistrict.FieldLongitude)
+	}
+	if m.latitude != nil {
+		fields = append(fields, sysdistrict.FieldLatitude)
+	}
+	if m.area_code != nil {
+		fields = append(fields, sysdistrict.FieldAreaCode)
+	}
+	if m.zip_code != nil {
+		fields = append(fields, sysdistrict.FieldZipCode)
+	}
+	if m.merge_name != nil {
+		fields = append(fields, sysdistrict.FieldMergeName)
+	}
+	if m.merge_sname != nil {
+		fields = append(fields, sysdistrict.FieldMergeSname)
+	}
+	if m.extra != nil {
+		fields = append(fields, sysdistrict.FieldExtra)
+	}
+	if m.suffix != nil {
+		fields = append(fields, sysdistrict.FieldSuffix)
+	}
+	if m.is_hot != nil {
+		fields = append(fields, sysdistrict.FieldIsHot)
+	}
+	if m.is_real != nil {
+		fields = append(fields, sysdistrict.FieldIsReal)
+	}
+	if m.is_direct != nil {
+		fields = append(fields, sysdistrict.FieldIsDirect)
+	}
+	if m.tree_id != nil {
+		fields = append(fields, sysdistrict.FieldTreeID)
+	}
+	if m.tree_level != nil {
+		fields = append(fields, sysdistrict.FieldTreeLevel)
+	}
+	if m.tree_left != nil {
+		fields = append(fields, sysdistrict.FieldTreeLeft)
+	}
+	if m.tree_right != nil {
+		fields = append(fields, sysdistrict.FieldTreeRight)
+	}
+	if m.is_leaf != nil {
+		fields = append(fields, sysdistrict.FieldIsLeaf)
+	}
+	if m.tree_path != nil {
+		fields = append(fields, sysdistrict.FieldTreePath)
+	}
+	if m.creator != nil {
+		fields = append(fields, sysdistrict.FieldCreator)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *SysDistrictMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case sysdistrict.FieldIsDel:
+		return m.IsDel()
+	case sysdistrict.FieldSort:
+		return m.Sort()
+	case sysdistrict.FieldCreatedAt:
+		return m.CreatedAt()
+	case sysdistrict.FieldUpdatedAt:
+		return m.UpdatedAt()
+	case sysdistrict.FieldDeletedAt:
+		return m.DeletedAt()
+	case sysdistrict.FieldIsActive:
+		return m.IsActive()
+	case sysdistrict.FieldName:
+		return m.Name()
+	case sysdistrict.FieldSname:
+		return m.Sname()
+	case sysdistrict.FieldAbbr:
+		return m.Abbr()
+	case sysdistrict.FieldStcode:
+		return m.Stcode()
+	case sysdistrict.FieldInitials:
+		return m.Initials()
+	case sysdistrict.FieldPinyin:
+		return m.Pinyin()
+	case sysdistrict.FieldParentID:
+		return m.ParentID()
+	case sysdistrict.FieldLongitude:
+		return m.Longitude()
+	case sysdistrict.FieldLatitude:
+		return m.Latitude()
+	case sysdistrict.FieldAreaCode:
+		return m.AreaCode()
+	case sysdistrict.FieldZipCode:
+		return m.ZipCode()
+	case sysdistrict.FieldMergeName:
+		return m.MergeName()
+	case sysdistrict.FieldMergeSname:
+		return m.MergeSname()
+	case sysdistrict.FieldExtra:
+		return m.Extra()
+	case sysdistrict.FieldSuffix:
+		return m.Suffix()
+	case sysdistrict.FieldIsHot:
+		return m.IsHot()
+	case sysdistrict.FieldIsReal:
+		return m.IsReal()
+	case sysdistrict.FieldIsDirect:
+		return m.IsDirect()
+	case sysdistrict.FieldTreeID:
+		return m.TreeID()
+	case sysdistrict.FieldTreeLevel:
+		return m.TreeLevel()
+	case sysdistrict.FieldTreeLeft:
+		return m.TreeLeft()
+	case sysdistrict.FieldTreeRight:
+		return m.TreeRight()
+	case sysdistrict.FieldIsLeaf:
+		return m.IsLeaf()
+	case sysdistrict.FieldTreePath:
+		return m.TreePath()
+	case sysdistrict.FieldCreator:
+		return m.Creator()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *SysDistrictMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case sysdistrict.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case sysdistrict.FieldSort:
+		return m.OldSort(ctx)
+	case sysdistrict.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	case sysdistrict.FieldUpdatedAt:
+		return m.OldUpdatedAt(ctx)
+	case sysdistrict.FieldDeletedAt:
+		return m.OldDeletedAt(ctx)
+	case sysdistrict.FieldIsActive:
+		return m.OldIsActive(ctx)
+	case sysdistrict.FieldName:
+		return m.OldName(ctx)
+	case sysdistrict.FieldSname:
+		return m.OldSname(ctx)
+	case sysdistrict.FieldAbbr:
+		return m.OldAbbr(ctx)
+	case sysdistrict.FieldStcode:
+		return m.OldStcode(ctx)
+	case sysdistrict.FieldInitials:
+		return m.OldInitials(ctx)
+	case sysdistrict.FieldPinyin:
+		return m.OldPinyin(ctx)
+	case sysdistrict.FieldParentID:
+		return m.OldParentID(ctx)
+	case sysdistrict.FieldLongitude:
+		return m.OldLongitude(ctx)
+	case sysdistrict.FieldLatitude:
+		return m.OldLatitude(ctx)
+	case sysdistrict.FieldAreaCode:
+		return m.OldAreaCode(ctx)
+	case sysdistrict.FieldZipCode:
+		return m.OldZipCode(ctx)
+	case sysdistrict.FieldMergeName:
+		return m.OldMergeName(ctx)
+	case sysdistrict.FieldMergeSname:
+		return m.OldMergeSname(ctx)
+	case sysdistrict.FieldExtra:
+		return m.OldExtra(ctx)
+	case sysdistrict.FieldSuffix:
+		return m.OldSuffix(ctx)
+	case sysdistrict.FieldIsHot:
+		return m.OldIsHot(ctx)
+	case sysdistrict.FieldIsReal:
+		return m.OldIsReal(ctx)
+	case sysdistrict.FieldIsDirect:
+		return m.OldIsDirect(ctx)
+	case sysdistrict.FieldTreeID:
+		return m.OldTreeID(ctx)
+	case sysdistrict.FieldTreeLevel:
+		return m.OldTreeLevel(ctx)
+	case sysdistrict.FieldTreeLeft:
+		return m.OldTreeLeft(ctx)
+	case sysdistrict.FieldTreeRight:
+		return m.OldTreeRight(ctx)
+	case sysdistrict.FieldIsLeaf:
+		return m.OldIsLeaf(ctx)
+	case sysdistrict.FieldTreePath:
+		return m.OldTreePath(ctx)
+	case sysdistrict.FieldCreator:
+		return m.OldCreator(ctx)
+	}
+	return nil, fmt.Errorf("unknown SysDistrict field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *SysDistrictMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case sysdistrict.FieldIsDel:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case sysdistrict.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSort(v)
+		return nil
+	case sysdistrict.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	case sysdistrict.FieldUpdatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdatedAt(v)
+		return nil
+	case sysdistrict.FieldDeletedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeletedAt(v)
+		return nil
+	case sysdistrict.FieldIsActive:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsActive(v)
+		return nil
+	case sysdistrict.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case sysdistrict.FieldSname:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSname(v)
+		return nil
+	case sysdistrict.FieldAbbr:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAbbr(v)
+		return nil
+	case sysdistrict.FieldStcode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStcode(v)
+		return nil
+	case sysdistrict.FieldInitials:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetInitials(v)
+		return nil
+	case sysdistrict.FieldPinyin:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetPinyin(v)
+		return nil
+	case sysdistrict.FieldParentID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetParentID(v)
+		return nil
+	case sysdistrict.FieldLongitude:
+		v, ok := value.(float64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLongitude(v)
+		return nil
+	case sysdistrict.FieldLatitude:
+		v, ok := value.(float64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLatitude(v)
+		return nil
+	case sysdistrict.FieldAreaCode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAreaCode(v)
+		return nil
+	case sysdistrict.FieldZipCode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetZipCode(v)
+		return nil
+	case sysdistrict.FieldMergeName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMergeName(v)
+		return nil
+	case sysdistrict.FieldMergeSname:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMergeSname(v)
+		return nil
+	case sysdistrict.FieldExtra:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetExtra(v)
+		return nil
+	case sysdistrict.FieldSuffix:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSuffix(v)
+		return nil
+	case sysdistrict.FieldIsHot:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsHot(v)
+		return nil
+	case sysdistrict.FieldIsReal:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsReal(v)
+		return nil
+	case sysdistrict.FieldIsDirect:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDirect(v)
+		return nil
+	case sysdistrict.FieldTreeID:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTreeID(v)
+		return nil
+	case sysdistrict.FieldTreeLevel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTreeLevel(v)
+		return nil
+	case sysdistrict.FieldTreeLeft:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTreeLeft(v)
+		return nil
+	case sysdistrict.FieldTreeRight:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTreeRight(v)
+		return nil
+	case sysdistrict.FieldIsLeaf:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsLeaf(v)
+		return nil
+	case sysdistrict.FieldTreePath:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTreePath(v)
+		return nil
+	case sysdistrict.FieldCreator:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreator(v)
+		return nil
+	}
+	return fmt.Errorf("unknown SysDistrict field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *SysDistrictMutation) AddedFields() []string {
+	var fields []string
+	if m.addsort != nil {
+		fields = append(fields, sysdistrict.FieldSort)
+	}
+	if m.addlongitude != nil {
+		fields = append(fields, sysdistrict.FieldLongitude)
+	}
+	if m.addlatitude != nil {
+		fields = append(fields, sysdistrict.FieldLatitude)
+	}
+	if m.addtree_id != nil {
+		fields = append(fields, sysdistrict.FieldTreeID)
+	}
+	if m.addtree_level != nil {
+		fields = append(fields, sysdistrict.FieldTreeLevel)
+	}
+	if m.addtree_left != nil {
+		fields = append(fields, sysdistrict.FieldTreeLeft)
+	}
+	if m.addtree_right != nil {
+		fields = append(fields, sysdistrict.FieldTreeRight)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *SysDistrictMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case sysdistrict.FieldSort:
+		return m.AddedSort()
+	case sysdistrict.FieldLongitude:
+		return m.AddedLongitude()
+	case sysdistrict.FieldLatitude:
+		return m.AddedLatitude()
+	case sysdistrict.FieldTreeID:
+		return m.AddedTreeID()
+	case sysdistrict.FieldTreeLevel:
+		return m.AddedTreeLevel()
+	case sysdistrict.FieldTreeLeft:
+		return m.AddedTreeLeft()
+	case sysdistrict.FieldTreeRight:
+		return m.AddedTreeRight()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *SysDistrictMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case sysdistrict.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSort(v)
+		return nil
+	case sysdistrict.FieldLongitude:
+		v, ok := value.(float64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLongitude(v)
+		return nil
+	case sysdistrict.FieldLatitude:
+		v, ok := value.(float64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddLatitude(v)
+		return nil
+	case sysdistrict.FieldTreeID:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddTreeID(v)
+		return nil
+	case sysdistrict.FieldTreeLevel:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddTreeLevel(v)
+		return nil
+	case sysdistrict.FieldTreeLeft:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddTreeLeft(v)
+		return nil
+	case sysdistrict.FieldTreeRight:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddTreeRight(v)
+		return nil
+	}
+	return fmt.Errorf("unknown SysDistrict numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *SysDistrictMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(sysdistrict.FieldDeletedAt) {
+		fields = append(fields, sysdistrict.FieldDeletedAt)
+	}
+	if m.FieldCleared(sysdistrict.FieldName) {
+		fields = append(fields, sysdistrict.FieldName)
+	}
+	if m.FieldCleared(sysdistrict.FieldSname) {
+		fields = append(fields, sysdistrict.FieldSname)
+	}
+	if m.FieldCleared(sysdistrict.FieldAbbr) {
+		fields = append(fields, sysdistrict.FieldAbbr)
+	}
+	if m.FieldCleared(sysdistrict.FieldStcode) {
+		fields = append(fields, sysdistrict.FieldStcode)
+	}
+	if m.FieldCleared(sysdistrict.FieldInitials) {
+		fields = append(fields, sysdistrict.FieldInitials)
+	}
+	if m.FieldCleared(sysdistrict.FieldPinyin) {
+		fields = append(fields, sysdistrict.FieldPinyin)
+	}
+	if m.FieldCleared(sysdistrict.FieldParentID) {
+		fields = append(fields, sysdistrict.FieldParentID)
+	}
+	if m.FieldCleared(sysdistrict.FieldLongitude) {
+		fields = append(fields, sysdistrict.FieldLongitude)
+	}
+	if m.FieldCleared(sysdistrict.FieldLatitude) {
+		fields = append(fields, sysdistrict.FieldLatitude)
+	}
+	if m.FieldCleared(sysdistrict.FieldAreaCode) {
+		fields = append(fields, sysdistrict.FieldAreaCode)
+	}
+	if m.FieldCleared(sysdistrict.FieldZipCode) {
+		fields = append(fields, sysdistrict.FieldZipCode)
+	}
+	if m.FieldCleared(sysdistrict.FieldMergeName) {
+		fields = append(fields, sysdistrict.FieldMergeName)
+	}
+	if m.FieldCleared(sysdistrict.FieldMergeSname) {
+		fields = append(fields, sysdistrict.FieldMergeSname)
+	}
+	if m.FieldCleared(sysdistrict.FieldExtra) {
+		fields = append(fields, sysdistrict.FieldExtra)
+	}
+	if m.FieldCleared(sysdistrict.FieldSuffix) {
+		fields = append(fields, sysdistrict.FieldSuffix)
+	}
+	if m.FieldCleared(sysdistrict.FieldIsHot) {
+		fields = append(fields, sysdistrict.FieldIsHot)
+	}
+	if m.FieldCleared(sysdistrict.FieldIsReal) {
+		fields = append(fields, sysdistrict.FieldIsReal)
+	}
+	if m.FieldCleared(sysdistrict.FieldIsDirect) {
+		fields = append(fields, sysdistrict.FieldIsDirect)
+	}
+	if m.FieldCleared(sysdistrict.FieldTreeID) {
+		fields = append(fields, sysdistrict.FieldTreeID)
+	}
+	if m.FieldCleared(sysdistrict.FieldTreeLevel) {
+		fields = append(fields, sysdistrict.FieldTreeLevel)
+	}
+	if m.FieldCleared(sysdistrict.FieldTreeLeft) {
+		fields = append(fields, sysdistrict.FieldTreeLeft)
+	}
+	if m.FieldCleared(sysdistrict.FieldTreeRight) {
+		fields = append(fields, sysdistrict.FieldTreeRight)
+	}
+	if m.FieldCleared(sysdistrict.FieldIsLeaf) {
+		fields = append(fields, sysdistrict.FieldIsLeaf)
+	}
+	if m.FieldCleared(sysdistrict.FieldTreePath) {
+		fields = append(fields, sysdistrict.FieldTreePath)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *SysDistrictMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *SysDistrictMutation) ClearField(name string) error {
+	switch name {
+	case sysdistrict.FieldDeletedAt:
+		m.ClearDeletedAt()
+		return nil
+	case sysdistrict.FieldName:
+		m.ClearName()
+		return nil
+	case sysdistrict.FieldSname:
+		m.ClearSname()
+		return nil
+	case sysdistrict.FieldAbbr:
+		m.ClearAbbr()
+		return nil
+	case sysdistrict.FieldStcode:
+		m.ClearStcode()
+		return nil
+	case sysdistrict.FieldInitials:
+		m.ClearInitials()
+		return nil
+	case sysdistrict.FieldPinyin:
+		m.ClearPinyin()
+		return nil
+	case sysdistrict.FieldParentID:
+		m.ClearParentID()
+		return nil
+	case sysdistrict.FieldLongitude:
+		m.ClearLongitude()
+		return nil
+	case sysdistrict.FieldLatitude:
+		m.ClearLatitude()
+		return nil
+	case sysdistrict.FieldAreaCode:
+		m.ClearAreaCode()
+		return nil
+	case sysdistrict.FieldZipCode:
+		m.ClearZipCode()
+		return nil
+	case sysdistrict.FieldMergeName:
+		m.ClearMergeName()
+		return nil
+	case sysdistrict.FieldMergeSname:
+		m.ClearMergeSname()
+		return nil
+	case sysdistrict.FieldExtra:
+		m.ClearExtra()
+		return nil
+	case sysdistrict.FieldSuffix:
+		m.ClearSuffix()
+		return nil
+	case sysdistrict.FieldIsHot:
+		m.ClearIsHot()
+		return nil
+	case sysdistrict.FieldIsReal:
+		m.ClearIsReal()
+		return nil
+	case sysdistrict.FieldIsDirect:
+		m.ClearIsDirect()
+		return nil
+	case sysdistrict.FieldTreeID:
+		m.ClearTreeID()
+		return nil
+	case sysdistrict.FieldTreeLevel:
+		m.ClearTreeLevel()
+		return nil
+	case sysdistrict.FieldTreeLeft:
+		m.ClearTreeLeft()
+		return nil
+	case sysdistrict.FieldTreeRight:
+		m.ClearTreeRight()
+		return nil
+	case sysdistrict.FieldIsLeaf:
+		m.ClearIsLeaf()
+		return nil
+	case sysdistrict.FieldTreePath:
+		m.ClearTreePath()
+		return nil
+	}
+	return fmt.Errorf("unknown SysDistrict nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *SysDistrictMutation) ResetField(name string) error {
+	switch name {
+	case sysdistrict.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case sysdistrict.FieldSort:
+		m.ResetSort()
+		return nil
+	case sysdistrict.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	case sysdistrict.FieldUpdatedAt:
+		m.ResetUpdatedAt()
+		return nil
+	case sysdistrict.FieldDeletedAt:
+		m.ResetDeletedAt()
+		return nil
+	case sysdistrict.FieldIsActive:
+		m.ResetIsActive()
+		return nil
+	case sysdistrict.FieldName:
+		m.ResetName()
+		return nil
+	case sysdistrict.FieldSname:
+		m.ResetSname()
+		return nil
+	case sysdistrict.FieldAbbr:
+		m.ResetAbbr()
+		return nil
+	case sysdistrict.FieldStcode:
+		m.ResetStcode()
+		return nil
+	case sysdistrict.FieldInitials:
+		m.ResetInitials()
+		return nil
+	case sysdistrict.FieldPinyin:
+		m.ResetPinyin()
+		return nil
+	case sysdistrict.FieldParentID:
+		m.ResetParentID()
+		return nil
+	case sysdistrict.FieldLongitude:
+		m.ResetLongitude()
+		return nil
+	case sysdistrict.FieldLatitude:
+		m.ResetLatitude()
+		return nil
+	case sysdistrict.FieldAreaCode:
+		m.ResetAreaCode()
+		return nil
+	case sysdistrict.FieldZipCode:
+		m.ResetZipCode()
+		return nil
+	case sysdistrict.FieldMergeName:
+		m.ResetMergeName()
+		return nil
+	case sysdistrict.FieldMergeSname:
+		m.ResetMergeSname()
+		return nil
+	case sysdistrict.FieldExtra:
+		m.ResetExtra()
+		return nil
+	case sysdistrict.FieldSuffix:
+		m.ResetSuffix()
+		return nil
+	case sysdistrict.FieldIsHot:
+		m.ResetIsHot()
+		return nil
+	case sysdistrict.FieldIsReal:
+		m.ResetIsReal()
+		return nil
+	case sysdistrict.FieldIsDirect:
+		m.ResetIsDirect()
+		return nil
+	case sysdistrict.FieldTreeID:
+		m.ResetTreeID()
+		return nil
+	case sysdistrict.FieldTreeLevel:
+		m.ResetTreeLevel()
+		return nil
+	case sysdistrict.FieldTreeLeft:
+		m.ResetTreeLeft()
+		return nil
+	case sysdistrict.FieldTreeRight:
+		m.ResetTreeRight()
+		return nil
+	case sysdistrict.FieldIsLeaf:
+		m.ResetIsLeaf()
+		return nil
+	case sysdistrict.FieldTreePath:
+		m.ResetTreePath()
+		return nil
+	case sysdistrict.FieldCreator:
+		m.ResetCreator()
+		return nil
+	}
+	return fmt.Errorf("unknown SysDistrict field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *SysDistrictMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *SysDistrictMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *SysDistrictMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *SysDistrictMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *SysDistrictMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *SysDistrictMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *SysDistrictMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown SysDistrict unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *SysDistrictMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown SysDistrict edge %s", name)
 }
 
 // SysJwtBlockMutation represents an operation that mutates the SysJwtBlock nodes in the graph.

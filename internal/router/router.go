@@ -33,7 +33,8 @@ type Router struct {
 	RoleAPIV2 *api_v2.Role
 	UserAPIV2 *api_v2.User
 
-	SignInAPIV2 *api_v2.SignIn
+	SignInAPIV2      *api_v2.SignIn
+	SysDistrictAPIV2 *api_v2.SysDistrict
 }
 
 // Register 注册路由

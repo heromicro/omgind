@@ -399,6 +399,90 @@ definitions:
     - OKStatus
     - ErrorStatus
     - FailStatus
+  schema.SysDistrict:
+    properties:
+      abbr:
+        description: 简称
+        type: string
+      area_code:
+        description: 电话区号码
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      creator:
+        description: 创建者
+        type: string
+      extra:
+        description: 带前缀简名称
+        type: string
+      id:
+        description: 唯一标识
+        type: string
+      initials:
+        description: 简拼
+        type: string
+      is_direct:
+        description: 是否是直辖
+        type: boolean
+      is_hot:
+        description: 热门城市
+        type: boolean
+      is_leaf:
+        description: 是否是子叶
+        type: boolean
+      is_real:
+        description: 是否虚拟区域
+        type: boolean
+      latitude:
+        description: 经度
+        type: number
+      longitude:
+        description: 经度
+        type: number
+      merge_name:
+        description: 带前缀全名称
+        type: string
+      merge_sname:
+        description: 带前缀简名称
+        type: string
+      name:
+        description: 名称
+        type: string
+      pinyin:
+        description: 简拼
+        type: string
+      sname:
+        description: 短名称
+        type: string
+      st_code:
+        description: 统计局区域编码
+        type: string
+      suffix:
+        description: 带前缀简名称
+        type: string
+      tree_id:
+        description: 是否是直辖
+        type: integer
+      tree_left:
+        description: 层级
+        type: integer
+      tree_level:
+        description: 层级
+        type: integer
+      tree_right:
+        description: 层级
+        type: integer
+      updated_at:
+        description: 更新时间
+        type: string
+      zip_code:
+        description: 邮政编码
+        type: string
+    required:
+    - name
+    - sname
+    type: object
   schema.UpdatePasswordParam:
     properties:
       new_password:
@@ -1687,6 +1771,246 @@ paths:
       summary: 启用数据
       tags:
       - 角色管理
+  /api/v2/sysdistricts:
+    get:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - default: 1
+        description: 分页索引
+        in: query
+        name: current
+        required: true
+        type: integer
+      - default: 10
+        description: 分页大小
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      - description: 查询值
+        in: query
+        name: queryValue
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              allOf:
+              - $ref: '#/definitions/schema.ListResult'
+              - properties:
+                  list:
+                    items:
+                      $ref: '#/definitions/schema.SysDistrict'
+                    type: array
+                  pagination:
+                    $ref: '#/definitions/schema.PaginationResult'
+                type: object
+            type: array
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询数据
+      tags:
+      - 行政区域
+    post:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 创建数据
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysDistrict'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.IDResult'
+        "400":
+          description: '{error:{code:0,message:无效的请求参数}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建数据
+      tags:
+      - 行政区域
+  /api/v2/sysdistricts/{id}:
+    delete:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{status:OK}'
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除数据
+      tags:
+      - 行政区域
+    get:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SysDistrict'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "404":
+          description: '{error:{code:0,message:资源不存在}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询指定数据
+      tags:
+      - 行政区域
+    put:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 更新数据
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysDistrict'
+      responses:
+        "200":
+          description: '{status:OK}'
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "400":
+          description: '{error:{code:0,message:无效的请求参数}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新数据
+      tags:
+      - 行政区域
+  /api/v2/sysdistricts/{id}/disable:
+    patch:
+      parameters:
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{status:OK}'
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 禁用数据
+      tags:
+      - 行政区域
+  /api/v2/sysdistricts/{id}/enable:
+    patch:
+      parameters:
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{status:OK}'
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 启用数据
+      tags:
+      - 行政区域
   /api/v2/users:
     get:
       parameters:

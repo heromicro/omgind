@@ -17,7 +17,7 @@ import (
 )
 
 // MenuSet 注入Menu
-var MenuSet = wire.NewSet(wire.Struct(new(Menu), "*"))
+var SysMenuSet = wire.NewSet(wire.Struct(new(Menu), "*"))
 
 // Menu 菜单管理
 type Menu struct {

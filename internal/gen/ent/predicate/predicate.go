@@ -12,6 +12,9 @@ type SysDict func(*sql.Selector)
 // SysDictItem is the predicate function for sysdictitem builders.
 type SysDictItem func(*sql.Selector)
 
+// SysDistrict is the predicate function for sysdistrict builders.
+type SysDistrict func(*sql.Selector)
+
 // SysJwtBlock is the predicate function for sysjwtblock builders.
 type SysJwtBlock func(*sql.Selector)
 

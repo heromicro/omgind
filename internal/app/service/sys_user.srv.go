@@ -15,7 +15,7 @@ import (
 )
 
 // UserSet 注入User
-var UserSet = wire.NewSet(wire.Struct(new(User), "*"))
+var SysUserSet = wire.NewSet(wire.Struct(new(User), "*"))
 
 // User 用户管理
 type User struct {

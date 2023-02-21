@@ -138,15 +138,25 @@ func BuildInjector() (*Injector, func(), error) {
 		SigninSrv: signIn,
 		Vcode:     vcode,
 	}
+	sysDistrict := &repo.SysDistrict{
+		EntCli: client,
+	}
+	serviceSysDistrict := &service.SysDistrict{
+		SysDistrictRepo: sysDistrict,
+	}
+	api_v2SysDistrict := &api_v2.SysDistrict{
+		SysDistrictSrv: serviceSysDistrict,
+	}
 	routerRouter := &router.Router{
-		Auth:           auther,
-		CasbinEnforcer: syncedEnforcer,
-		DictApiV2:      api_v2Dict,
-		DemoAPIV2:      api_v2Demo,
-		MenuAPIV2:      api_v2Menu,
-		RoleAPIV2:      api_v2Role,
-		UserAPIV2:      api_v2User,
-		SignInAPIV2:    api_v2SignIn,
+		Auth:             auther,
+		CasbinEnforcer:   syncedEnforcer,
+		DictApiV2:        api_v2Dict,
+		DemoAPIV2:        api_v2Demo,
+		MenuAPIV2:        api_v2Menu,
+		RoleAPIV2:        api_v2Role,
+		UserAPIV2:        api_v2User,
+		SignInAPIV2:      api_v2SignIn,
+		SysDistrictAPIV2: api_v2SysDistrict,
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{

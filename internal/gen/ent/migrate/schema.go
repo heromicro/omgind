@@ -122,6 +122,84 @@ var (
 			},
 		},
 	}
+	// SysDistrictsColumns holds the columns for the "sys_districts" table.
+	SysDistrictsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString, Size: 36},
+		{Name: "is_del", Type: field.TypeBool, Default: false},
+		{Name: "sort", Type: field.TypeInt32, Default: 9999},
+		{Name: "crtd_at", Type: field.TypeTime},
+		{Name: "uptd_at", Type: field.TypeTime},
+		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
+		{Name: "name", Type: field.TypeString, Nullable: true},
+		{Name: "sname", Type: field.TypeString, Nullable: true},
+		{Name: "abbr", Type: field.TypeString, Nullable: true},
+		{Name: "stcode", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "initials", Type: field.TypeString, Nullable: true, Size: 32},
+		{Name: "pinyin", Type: field.TypeString, Nullable: true, Size: 128},
+		{Name: "pid", Type: field.TypeString, Nullable: true},
+		{Name: "longitude", Type: field.TypeFloat64, Nullable: true},
+		{Name: "longitude", Type: field.TypeFloat64, Nullable: true},
+		{Name: "area_code", Type: field.TypeString, Nullable: true, Size: 8},
+		{Name: "area_code", Type: field.TypeString, Nullable: true, Size: 8},
+		{Name: "mname", Type: field.TypeString, Nullable: true, Size: 256},
+		{Name: "msname", Type: field.TypeString, Nullable: true, Size: 256},
+		{Name: "extra", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "suffix", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "is_hot", Type: field.TypeBool, Nullable: true, Default: false},
+		{Name: "is_r", Type: field.TypeBool, Nullable: true, Default: true},
+		{Name: "is_d", Type: field.TypeBool, Nullable: true, Default: true},
+		{Name: "tree_id", Type: field.TypeInt32, Nullable: true},
+		{Name: "tree_level", Type: field.TypeInt32, Nullable: true},
+		{Name: "tree_left", Type: field.TypeInt64, Nullable: true},
+		{Name: "tree_right", Type: field.TypeInt64, Nullable: true},
+		{Name: "is_leaf", Type: field.TypeBool, Nullable: true, Default: true},
+		{Name: "t_path", Type: field.TypeString, Nullable: true, Size: 2147483647},
+		{Name: "creator", Type: field.TypeString},
+	}
+	// SysDistrictsTable holds the schema information for the "sys_districts" table.
+	SysDistrictsTable = &schema.Table{
+		Name:       "sys_districts",
+		Columns:    SysDistrictsColumns,
+		PrimaryKey: []*schema.Column{SysDistrictsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "sysdistrict_id",
+				Unique:  true,
+				Columns: []*schema.Column{SysDistrictsColumns[0]},
+			},
+			{
+				Name:    "sysdistrict_is_del",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[1]},
+			},
+			{
+				Name:    "sysdistrict_sort",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[2]},
+			},
+			{
+				Name:    "sysdistrict_crtd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[3]},
+			},
+			{
+				Name:    "sysdistrict_uptd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[4]},
+			},
+			{
+				Name:    "sysdistrict_dltd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[5]},
+			},
+			{
+				Name:    "sysdistrict_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[6]},
+			},
+		},
+	}
 	// SysJwtBlocksColumns holds the columns for the "sys_jwt_blocks" table.
 	SysJwtBlocksColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
@@ -683,6 +761,7 @@ var (
 	Tables = []*schema.Table{
 		SysDictsTable,
 		SysDictItemsTable,
+		SysDistrictsTable,
 		SysJwtBlocksTable,
 		SysLoggingTable,
 		SysMenusTable,

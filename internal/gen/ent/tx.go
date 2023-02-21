@@ -16,6 +16,8 @@ type Tx struct {
 	SysDict *SysDictClient
 	// SysDictItem is the client for interacting with the SysDictItem builders.
 	SysDictItem *SysDictItemClient
+	// SysDistrict is the client for interacting with the SysDistrict builders.
+	SysDistrict *SysDistrictClient
 	// SysJwtBlock is the client for interacting with the SysJwtBlock builders.
 	SysJwtBlock *SysJwtBlockClient
 	// SysLogging is the client for interacting with the SysLogging builders.
@@ -173,6 +175,7 @@ func (tx *Tx) Client() *Client {
 func (tx *Tx) init() {
 	tx.SysDict = NewSysDictClient(tx.config)
 	tx.SysDictItem = NewSysDictItemClient(tx.config)
+	tx.SysDistrict = NewSysDistrictClient(tx.config)
 	tx.SysJwtBlock = NewSysJwtBlockClient(tx.config)
 	tx.SysLogging = NewSysLoggingClient(tx.config)
 	tx.SysMenu = NewSysMenuClient(tx.config)

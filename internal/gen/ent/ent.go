@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
@@ -44,6 +45,7 @@ func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
 		sysdict.Table:               sysdict.ValidColumn,
 		sysdictitem.Table:           sysdictitem.ValidColumn,
+		sysdistrict.Table:           sysdistrict.ValidColumn,
 		sysjwtblock.Table:           sysjwtblock.ValidColumn,
 		syslogging.Table:            syslogging.ValidColumn,
 		sysmenu.Table:               sysmenu.ValidColumn,

@@ -15,7 +15,7 @@ import (
 )
 
 // RoleSet 注入Role
-var RoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
+var SysRoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 
 // Role 角色管理
 type Role struct {

@@ -11,6 +11,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
@@ -35,6 +36,8 @@ type Client struct {
 	SysDict *SysDictClient
 	// SysDictItem is the client for interacting with the SysDictItem builders.
 	SysDictItem *SysDictItemClient
+	// SysDistrict is the client for interacting with the SysDistrict builders.
+	SysDistrict *SysDistrictClient
 	// SysJwtBlock is the client for interacting with the SysJwtBlock builders.
 	SysJwtBlock *SysJwtBlockClient
 	// SysLogging is the client for interacting with the SysLogging builders.
@@ -70,6 +73,7 @@ func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.SysDict = NewSysDictClient(c.config)
 	c.SysDictItem = NewSysDictItemClient(c.config)
+	c.SysDistrict = NewSysDistrictClient(c.config)
 	c.SysJwtBlock = NewSysJwtBlockClient(c.config)
 	c.SysLogging = NewSysLoggingClient(c.config)
 	c.SysMenu = NewSysMenuClient(c.config)
@@ -115,6 +119,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		config:                cfg,
 		SysDict:               NewSysDictClient(cfg),
 		SysDictItem:           NewSysDictItemClient(cfg),
+		SysDistrict:           NewSysDistrictClient(cfg),
 		SysJwtBlock:           NewSysJwtBlockClient(cfg),
 		SysLogging:            NewSysLoggingClient(cfg),
 		SysMenu:               NewSysMenuClient(cfg),
@@ -146,6 +151,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		config:                cfg,
 		SysDict:               NewSysDictClient(cfg),
 		SysDictItem:           NewSysDictItemClient(cfg),
+		SysDistrict:           NewSysDistrictClient(cfg),
 		SysJwtBlock:           NewSysJwtBlockClient(cfg),
 		SysLogging:            NewSysLoggingClient(cfg),
 		SysMenu:               NewSysMenuClient(cfg),
@@ -187,6 +193,7 @@ func (c *Client) Close() error {
 func (c *Client) Use(hooks ...Hook) {
 	c.SysDict.Use(hooks...)
 	c.SysDictItem.Use(hooks...)
+	c.SysDistrict.Use(hooks...)
 	c.SysJwtBlock.Use(hooks...)
 	c.SysLogging.Use(hooks...)
 	c.SysMenu.Use(hooks...)
@@ -377,6 +384,96 @@ func (c *SysDictItemClient) GetX(ctx context.Context, id string) *SysDictItem {
 // Hooks returns the client hooks.
 func (c *SysDictItemClient) Hooks() []Hook {
 	return c.hooks.SysDictItem
+}
+
+// SysDistrictClient is a client for the SysDistrict schema.
+type SysDistrictClient struct {
+	config
+}
+
+// NewSysDistrictClient returns a client for the SysDistrict from the given config.
+func NewSysDistrictClient(c config) *SysDistrictClient {
+	return &SysDistrictClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `sysdistrict.Hooks(f(g(h())))`.
+func (c *SysDistrictClient) Use(hooks ...Hook) {
+	c.hooks.SysDistrict = append(c.hooks.SysDistrict, hooks...)
+}
+
+// Create returns a builder for creating a SysDistrict entity.
+func (c *SysDistrictClient) Create() *SysDistrictCreate {
+	mutation := newSysDistrictMutation(c.config, OpCreate)
+	return &SysDistrictCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of SysDistrict entities.
+func (c *SysDistrictClient) CreateBulk(builders ...*SysDistrictCreate) *SysDistrictCreateBulk {
+	return &SysDistrictCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for SysDistrict.
+func (c *SysDistrictClient) Update() *SysDistrictUpdate {
+	mutation := newSysDistrictMutation(c.config, OpUpdate)
+	return &SysDistrictUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SysDistrictClient) UpdateOne(sd *SysDistrict) *SysDistrictUpdateOne {
+	mutation := newSysDistrictMutation(c.config, OpUpdateOne, withSysDistrict(sd))
+	return &SysDistrictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SysDistrictClient) UpdateOneID(id string) *SysDistrictUpdateOne {
+	mutation := newSysDistrictMutation(c.config, OpUpdateOne, withSysDistrictID(id))
+	return &SysDistrictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for SysDistrict.
+func (c *SysDistrictClient) Delete() *SysDistrictDelete {
+	mutation := newSysDistrictMutation(c.config, OpDelete)
+	return &SysDistrictDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *SysDistrictClient) DeleteOne(sd *SysDistrict) *SysDistrictDeleteOne {
+	return c.DeleteOneID(sd.ID)
+}
+
+// DeleteOne returns a builder for deleting the given entity by its id.
+func (c *SysDistrictClient) DeleteOneID(id string) *SysDistrictDeleteOne {
+	builder := c.Delete().Where(sysdistrict.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SysDistrictDeleteOne{builder}
+}
+
+// Query returns a query builder for SysDistrict.
+func (c *SysDistrictClient) Query() *SysDistrictQuery {
+	return &SysDistrictQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a SysDistrict entity by its id.
+func (c *SysDistrictClient) Get(ctx context.Context, id string) (*SysDistrict, error) {
+	return c.Query().Where(sysdistrict.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SysDistrictClient) GetX(ctx context.Context, id string) *SysDistrict {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *SysDistrictClient) Hooks() []Hook {
+	return c.hooks.SysDistrict
 }
 
 // SysJwtBlockClient is a client for the SysJwtBlock schema.

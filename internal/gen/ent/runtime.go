@@ -7,6 +7,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
@@ -163,6 +164,111 @@ func init() {
 	// sysdictitem.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	sysdictitem.IDValidator = func() func(string) error {
 		validators := sysdictitemDescID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(id string) error {
+			for _, fn := range fns {
+				if err := fn(id); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	sysdistrictMixin := entity.SysDistrict{}.Mixin()
+	sysdistrictMixinFields0 := sysdistrictMixin[0].Fields()
+	_ = sysdistrictMixinFields0
+	sysdistrictMixinFields1 := sysdistrictMixin[1].Fields()
+	_ = sysdistrictMixinFields1
+	sysdistrictMixinFields2 := sysdistrictMixin[2].Fields()
+	_ = sysdistrictMixinFields2
+	sysdistrictMixinFields3 := sysdistrictMixin[3].Fields()
+	_ = sysdistrictMixinFields3
+	sysdistrictFields := entity.SysDistrict{}.Fields()
+	_ = sysdistrictFields
+	// sysdistrictDescIsDel is the schema descriptor for is_del field.
+	sysdistrictDescIsDel := sysdistrictMixinFields0[1].Descriptor()
+	// sysdistrict.DefaultIsDel holds the default value on creation for the is_del field.
+	sysdistrict.DefaultIsDel = sysdistrictDescIsDel.Default.(bool)
+	// sysdistrictDescSort is the schema descriptor for sort field.
+	sysdistrictDescSort := sysdistrictMixinFields1[0].Descriptor()
+	// sysdistrict.DefaultSort holds the default value on creation for the sort field.
+	sysdistrict.DefaultSort = sysdistrictDescSort.Default.(int32)
+	// sysdistrictDescCreatedAt is the schema descriptor for created_at field.
+	sysdistrictDescCreatedAt := sysdistrictMixinFields2[0].Descriptor()
+	// sysdistrict.DefaultCreatedAt holds the default value on creation for the created_at field.
+	sysdistrict.DefaultCreatedAt = sysdistrictDescCreatedAt.Default.(func() time.Time)
+	// sysdistrictDescUpdatedAt is the schema descriptor for updated_at field.
+	sysdistrictDescUpdatedAt := sysdistrictMixinFields2[1].Descriptor()
+	// sysdistrict.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	sysdistrict.DefaultUpdatedAt = sysdistrictDescUpdatedAt.Default.(func() time.Time)
+	// sysdistrict.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	sysdistrict.UpdateDefaultUpdatedAt = sysdistrictDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// sysdistrictDescIsActive is the schema descriptor for is_active field.
+	sysdistrictDescIsActive := sysdistrictMixinFields3[0].Descriptor()
+	// sysdistrict.DefaultIsActive holds the default value on creation for the is_active field.
+	sysdistrict.DefaultIsActive = sysdistrictDescIsActive.Default.(bool)
+	// sysdistrictDescStcode is the schema descriptor for stcode field.
+	sysdistrictDescStcode := sysdistrictFields[3].Descriptor()
+	// sysdistrict.StcodeValidator is a validator for the "stcode" field. It is called by the builders before save.
+	sysdistrict.StcodeValidator = sysdistrictDescStcode.Validators[0].(func(string) error)
+	// sysdistrictDescInitials is the schema descriptor for initials field.
+	sysdistrictDescInitials := sysdistrictFields[4].Descriptor()
+	// sysdistrict.InitialsValidator is a validator for the "initials" field. It is called by the builders before save.
+	sysdistrict.InitialsValidator = sysdistrictDescInitials.Validators[0].(func(string) error)
+	// sysdistrictDescPinyin is the schema descriptor for pinyin field.
+	sysdistrictDescPinyin := sysdistrictFields[5].Descriptor()
+	// sysdistrict.PinyinValidator is a validator for the "pinyin" field. It is called by the builders before save.
+	sysdistrict.PinyinValidator = sysdistrictDescPinyin.Validators[0].(func(string) error)
+	// sysdistrictDescAreaCode is the schema descriptor for area_code field.
+	sysdistrictDescAreaCode := sysdistrictFields[9].Descriptor()
+	// sysdistrict.AreaCodeValidator is a validator for the "area_code" field. It is called by the builders before save.
+	sysdistrict.AreaCodeValidator = sysdistrictDescAreaCode.Validators[0].(func(string) error)
+	// sysdistrictDescZipCode is the schema descriptor for zip_code field.
+	sysdistrictDescZipCode := sysdistrictFields[10].Descriptor()
+	// sysdistrict.ZipCodeValidator is a validator for the "zip_code" field. It is called by the builders before save.
+	sysdistrict.ZipCodeValidator = sysdistrictDescZipCode.Validators[0].(func(string) error)
+	// sysdistrictDescMergeName is the schema descriptor for merge_name field.
+	sysdistrictDescMergeName := sysdistrictFields[11].Descriptor()
+	// sysdistrict.MergeNameValidator is a validator for the "merge_name" field. It is called by the builders before save.
+	sysdistrict.MergeNameValidator = sysdistrictDescMergeName.Validators[0].(func(string) error)
+	// sysdistrictDescMergeSname is the schema descriptor for merge_sname field.
+	sysdistrictDescMergeSname := sysdistrictFields[12].Descriptor()
+	// sysdistrict.MergeSnameValidator is a validator for the "merge_sname" field. It is called by the builders before save.
+	sysdistrict.MergeSnameValidator = sysdistrictDescMergeSname.Validators[0].(func(string) error)
+	// sysdistrictDescExtra is the schema descriptor for extra field.
+	sysdistrictDescExtra := sysdistrictFields[13].Descriptor()
+	// sysdistrict.ExtraValidator is a validator for the "extra" field. It is called by the builders before save.
+	sysdistrict.ExtraValidator = sysdistrictDescExtra.Validators[0].(func(string) error)
+	// sysdistrictDescSuffix is the schema descriptor for suffix field.
+	sysdistrictDescSuffix := sysdistrictFields[14].Descriptor()
+	// sysdistrict.SuffixValidator is a validator for the "suffix" field. It is called by the builders before save.
+	sysdistrict.SuffixValidator = sysdistrictDescSuffix.Validators[0].(func(string) error)
+	// sysdistrictDescIsHot is the schema descriptor for is_hot field.
+	sysdistrictDescIsHot := sysdistrictFields[15].Descriptor()
+	// sysdistrict.DefaultIsHot holds the default value on creation for the is_hot field.
+	sysdistrict.DefaultIsHot = sysdistrictDescIsHot.Default.(bool)
+	// sysdistrictDescIsReal is the schema descriptor for is_real field.
+	sysdistrictDescIsReal := sysdistrictFields[16].Descriptor()
+	// sysdistrict.DefaultIsReal holds the default value on creation for the is_real field.
+	sysdistrict.DefaultIsReal = sysdistrictDescIsReal.Default.(bool)
+	// sysdistrictDescIsDirect is the schema descriptor for is_direct field.
+	sysdistrictDescIsDirect := sysdistrictFields[17].Descriptor()
+	// sysdistrict.DefaultIsDirect holds the default value on creation for the is_direct field.
+	sysdistrict.DefaultIsDirect = sysdistrictDescIsDirect.Default.(bool)
+	// sysdistrictDescIsLeaf is the schema descriptor for is_leaf field.
+	sysdistrictDescIsLeaf := sysdistrictFields[22].Descriptor()
+	// sysdistrict.DefaultIsLeaf holds the default value on creation for the is_leaf field.
+	sysdistrict.DefaultIsLeaf = sysdistrictDescIsLeaf.Default.(bool)
+	// sysdistrictDescID is the schema descriptor for id field.
+	sysdistrictDescID := sysdistrictMixinFields0[0].Descriptor()
+	// sysdistrict.DefaultID holds the default value on creation for the id field.
+	sysdistrict.DefaultID = sysdistrictDescID.Default.(func() string)
+	// sysdistrict.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	sysdistrict.IDValidator = func() func(string) error {
+		validators := sysdistrictDescID.Validators
 		fns := [...]func(string) error{
 			validators[0].(func(string) error),
 			validators[1].(func(string) error),
