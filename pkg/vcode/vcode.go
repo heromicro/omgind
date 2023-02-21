@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v7"
-	"github.com/heromicro/omgind/pkg/config"
+	"github.com/heromicro/omgind/pkg/config/option"
 	"github.com/heromicro/omgind/pkg/helper/str"
 	"github.com/heromicro/omgind/pkg/helper/uid/uuid"
 	"github.com/heromicro/omgind/pkg/vcode/store"
@@ -26,7 +26,7 @@ type Vcode struct {
 	source string
 }
 
-func New(cli redis.Cmdable, cfg config.CaptchaConfig) *Vcode {
+func New(cli redis.Cmdable, cfg option.CaptchaConfig) *Vcode {
 
 	fmt.Printf(" === captach config %+v \n", cfg)
 

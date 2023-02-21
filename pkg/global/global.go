@@ -20,7 +20,7 @@ import (
 
 var (
 	// CFG 全局配置(需要先执行MustLoad，否则拿不到配置)
-	CFG  = new(config.Config)
+	CFG  = new(config.AppConfig)
 	once sync.Once
 
 	RdsCli redis.Cmdable
