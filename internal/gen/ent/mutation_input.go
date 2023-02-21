@@ -56,6 +56,7 @@ func (c *SysDictCreate) SetInput(i CreateSysDictInput) *SysDictCreate {
 type UpdateSysDictInput struct {
 	IsDel          *bool
 	Memo           *string
+	ClearMemo      bool
 	Sort           *int32
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
@@ -69,6 +70,9 @@ type UpdateSysDictInput struct {
 func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
@@ -160,6 +164,7 @@ func (c *SysDictItemCreate) SetInput(i CreateSysDictItemInput) *SysDictItemCreat
 type UpdateSysDictItemInput struct {
 	IsDel          *bool
 	Memo           *string
+	ClearMemo      bool
 	Sort           *int32
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
@@ -174,6 +179,9 @@ type UpdateSysDictItemInput struct {
 func (i *UpdateSysDictItemInput) Mutate(m *SysDictItemMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
@@ -224,6 +232,12 @@ type CreateSysDistrictInput struct {
 	UpdatedAt  *time.Time
 	DeletedAt  *time.Time
 	IsActive   *bool
+	TreeID     *int64
+	TreeLevel  *int64
+	TreeLeft   *int64
+	TreeRight  *int64
+	IsLeaf     *bool
+	TreePath   *string
 	Name       *string
 	Sname      *string
 	Abbr       *string
@@ -242,12 +256,6 @@ type CreateSysDistrictInput struct {
 	IsHot      *bool
 	IsReal     *bool
 	IsDirect   *bool
-	TreeID     *int32
-	TreeLevel  *int32
-	TreeLeft   *int64
-	TreeRight  *int64
-	IsLeaf     *bool
-	TreePath   *string
 	Creator    string
 }
 
@@ -270,6 +278,24 @@ func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
 	}
 	if v := i.IsActive; v != nil {
 		m.SetIsActive(*v)
+	}
+	if v := i.TreeID; v != nil {
+		m.SetTreeID(*v)
+	}
+	if v := i.TreeLevel; v != nil {
+		m.SetTreeLevel(*v)
+	}
+	if v := i.TreeLeft; v != nil {
+		m.SetTreeLeft(*v)
+	}
+	if v := i.TreeRight; v != nil {
+		m.SetTreeRight(*v)
+	}
+	if v := i.IsLeaf; v != nil {
+		m.SetIsLeaf(*v)
+	}
+	if v := i.TreePath; v != nil {
+		m.SetTreePath(*v)
 	}
 	if v := i.Name; v != nil {
 		m.SetName(*v)
@@ -325,24 +351,6 @@ func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
 	if v := i.IsDirect; v != nil {
 		m.SetIsDirect(*v)
 	}
-	if v := i.TreeID; v != nil {
-		m.SetTreeID(*v)
-	}
-	if v := i.TreeLevel; v != nil {
-		m.SetTreeLevel(*v)
-	}
-	if v := i.TreeLeft; v != nil {
-		m.SetTreeLeft(*v)
-	}
-	if v := i.TreeRight; v != nil {
-		m.SetTreeRight(*v)
-	}
-	if v := i.IsLeaf; v != nil {
-		m.SetIsLeaf(*v)
-	}
-	if v := i.TreePath; v != nil {
-		m.SetTreePath(*v)
-	}
 	m.SetCreator(i.Creator)
 }
 
@@ -360,6 +368,18 @@ type UpdateSysDistrictInput struct {
 	DeletedAt       *time.Time
 	ClearDeletedAt  bool
 	IsActive        *bool
+	TreeID          *int64
+	ClearTreeID     bool
+	TreeLevel       *int64
+	ClearTreeLevel  bool
+	TreeLeft        *int64
+	ClearTreeLeft   bool
+	TreeRight       *int64
+	ClearTreeRight  bool
+	IsLeaf          *bool
+	ClearIsLeaf     bool
+	TreePath        *string
+	ClearTreePath   bool
 	Name            *string
 	ClearName       bool
 	Sname           *string
@@ -396,18 +416,6 @@ type UpdateSysDistrictInput struct {
 	ClearIsReal     bool
 	IsDirect        *bool
 	ClearIsDirect   bool
-	TreeID          *int32
-	ClearTreeID     bool
-	TreeLevel       *int32
-	ClearTreeLevel  bool
-	TreeLeft        *int64
-	ClearTreeLeft   bool
-	TreeRight       *int64
-	ClearTreeRight  bool
-	IsLeaf          *bool
-	ClearIsLeaf     bool
-	TreePath        *string
-	ClearTreePath   bool
 	Creator         *string
 }
 
@@ -430,6 +438,42 @@ func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
 	}
 	if v := i.IsActive; v != nil {
 		m.SetIsActive(*v)
+	}
+	if i.ClearTreeID {
+		m.ClearTreeID()
+	}
+	if v := i.TreeID; v != nil {
+		m.SetTreeID(*v)
+	}
+	if i.ClearTreeLevel {
+		m.ClearTreeLevel()
+	}
+	if v := i.TreeLevel; v != nil {
+		m.SetTreeLevel(*v)
+	}
+	if i.ClearTreeLeft {
+		m.ClearTreeLeft()
+	}
+	if v := i.TreeLeft; v != nil {
+		m.SetTreeLeft(*v)
+	}
+	if i.ClearTreeRight {
+		m.ClearTreeRight()
+	}
+	if v := i.TreeRight; v != nil {
+		m.SetTreeRight(*v)
+	}
+	if i.ClearIsLeaf {
+		m.ClearIsLeaf()
+	}
+	if v := i.IsLeaf; v != nil {
+		m.SetIsLeaf(*v)
+	}
+	if i.ClearTreePath {
+		m.ClearTreePath()
+	}
+	if v := i.TreePath; v != nil {
+		m.SetTreePath(*v)
 	}
 	if i.ClearName {
 		m.ClearName()
@@ -539,42 +583,6 @@ func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
 	if v := i.IsDirect; v != nil {
 		m.SetIsDirect(*v)
 	}
-	if i.ClearTreeID {
-		m.ClearTreeID()
-	}
-	if v := i.TreeID; v != nil {
-		m.SetTreeID(*v)
-	}
-	if i.ClearTreeLevel {
-		m.ClearTreeLevel()
-	}
-	if v := i.TreeLevel; v != nil {
-		m.SetTreeLevel(*v)
-	}
-	if i.ClearTreeLeft {
-		m.ClearTreeLeft()
-	}
-	if v := i.TreeLeft; v != nil {
-		m.SetTreeLeft(*v)
-	}
-	if i.ClearTreeRight {
-		m.ClearTreeRight()
-	}
-	if v := i.TreeRight; v != nil {
-		m.SetTreeRight(*v)
-	}
-	if i.ClearIsLeaf {
-		m.ClearIsLeaf()
-	}
-	if v := i.IsLeaf; v != nil {
-		m.SetIsLeaf(*v)
-	}
-	if i.ClearTreePath {
-		m.ClearTreePath()
-	}
-	if v := i.TreePath; v != nil {
-		m.SetTreePath(*v)
-	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
 	}
@@ -636,6 +644,7 @@ func (c *SysJwtBlockCreate) SetInput(i CreateSysJwtBlockInput) *SysJwtBlockCreat
 type UpdateSysJwtBlockInput struct {
 	IsDel          *bool
 	Memo           *string
+	ClearMemo      bool
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
@@ -647,6 +656,9 @@ type UpdateSysJwtBlockInput struct {
 func (i *UpdateSysJwtBlockInput) Mutate(m *SysJwtBlockMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
@@ -728,6 +740,7 @@ func (c *SysLoggingCreate) SetInput(i CreateSysLoggingInput) *SysLoggingCreate {
 type UpdateSysLoggingInput struct {
 	IsDel      *bool
 	Memo       *string
+	ClearMemo  bool
 	Level      *string
 	TraceID    *string
 	UserID     *string
@@ -741,6 +754,9 @@ type UpdateSysLoggingInput struct {
 func (i *UpdateSysLoggingInput) Mutate(m *SysLoggingMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
@@ -850,6 +866,7 @@ func (c *SysMenuCreate) SetInput(i CreateSysMenuInput) *SysMenuCreate {
 type UpdateSysMenuInput struct {
 	IsDel           *bool
 	Memo            *string
+	ClearMemo       bool
 	Sort            *int32
 	UpdatedAt       *time.Time
 	DeletedAt       *time.Time
@@ -872,6 +889,9 @@ type UpdateSysMenuInput struct {
 func (i *UpdateSysMenuInput) Mutate(m *SysMenuMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
@@ -992,6 +1012,7 @@ type UpdateSysMenuActionInput struct {
 	Sort           *int32
 	IsActive       *bool
 	Memo           *string
+	ClearMemo      bool
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
@@ -1010,6 +1031,9 @@ func (i *UpdateSysMenuActionInput) Mutate(m *SysMenuActionMutation) {
 	}
 	if v := i.IsActive; v != nil {
 		m.SetIsActive(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
@@ -1099,6 +1123,7 @@ type UpdateSysMenuActionResourceInput struct {
 	IsDel          *bool
 	Sort           *int32
 	Memo           *string
+	ClearMemo      bool
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
@@ -1115,6 +1140,9 @@ func (i *UpdateSysMenuActionResourceInput) Mutate(m *SysMenuActionResourceMutati
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
@@ -1204,6 +1232,7 @@ type UpdateSysRoleInput struct {
 	IsActive       *bool
 	Sort           *int32
 	Memo           *string
+	ClearMemo      bool
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
@@ -1220,6 +1249,9 @@ func (i *UpdateSysRoleInput) Mutate(m *SysRoleMutation) {
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
@@ -1614,6 +1646,7 @@ func (c *XxxDemoCreate) SetInput(i CreateXxxDemoInput) *XxxDemoCreate {
 type UpdateXxxDemoInput struct {
 	IsDel          *bool
 	Memo           *string
+	ClearMemo      bool
 	Sort           *int32
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
@@ -1627,6 +1660,9 @@ type UpdateXxxDemoInput struct {
 func (i *UpdateXxxDemoInput) Mutate(m *XxxDemoMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)

@@ -16,6 +16,8 @@ func (SysDistrict) Mixin() []ent.Mixin {
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},
+
+		mixin.MpttTreeMixin{},
 	}
 }
 
@@ -45,13 +47,6 @@ func (SysDistrict) Fields() []ent.Field {
 		field.Bool("is_hot").Default(false).Nillable().Optional().Comment("热门城市"),
 		field.Bool("is_real").Default(true).Nillable().Optional().StorageKey("is_r").Comment("是否虚拟区域"),
 		field.Bool("is_direct").Default(true).Nillable().Optional().StorageKey("is_d").Comment("是否是直辖"),
-
-		field.Int32("tree_id").Nillable().Optional().StorageKey("tree_id").StructTag(`json:"tree_id"`).Comment("tree_id"),
-		field.Int32("tree_level").Nillable().Optional().StorageKey("tree_level").StructTag(`json:"level"`).Comment("层级"),
-		field.Int64("tree_left").Nillable().Optional().StorageKey("tree_left").StructTag(`json:"tree_left"`).Comment("mptt左值"),
-		field.Int64("tree_right").Nillable().Optional().StorageKey("tree_right").StructTag(`json:"tree_right"`).Comment("mptt右值"),
-		field.Bool("is_leaf").Default(true).Nillable().Optional().StorageKey("is_leaf").StructTag(`json:"is_leaf"`).Comment("是否是子叶"),
-		field.Text("tree_path").Nillable().Optional().StorageKey("t_path").StructTag(`json:"tree_path"`),
 
 		field.String("creator").StorageKey("creator").Comment("创建者"),
 	}

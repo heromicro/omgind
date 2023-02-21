@@ -256,9 +256,6 @@ func (src *SysRoleCreate) check() error {
 	if _, ok := src.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysRole.sort"`)}
 	}
-	if _, ok := src.mutation.Memo(); !ok {
-		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "SysRole.memo"`)}
-	}
 	if v, ok := src.mutation.Memo(); ok {
 		if err := sysrole.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysRole.memo": %w`, err)}
@@ -349,7 +346,7 @@ func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: sysrole.FieldMemo,
 		})
-		_node.Memo = value
+		_node.Memo = &value
 	}
 	if value, ok := src.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

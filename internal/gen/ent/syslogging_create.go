@@ -232,9 +232,6 @@ func (slc *SysLoggingCreate) check() error {
 	if _, ok := slc.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysLogging.is_del"`)}
 	}
-	if _, ok := slc.mutation.Memo(); !ok {
-		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "SysLogging.memo"`)}
-	}
 	if v, ok := slc.mutation.Memo(); ok {
 		if err := syslogging.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysLogging.memo": %w`, err)}
@@ -349,7 +346,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: syslogging.FieldMemo,
 		})
-		_node.Memo = value
+		_node.Memo = &value
 	}
 	if value, ok := slc.mutation.Level(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

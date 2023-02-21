@@ -56,6 +56,12 @@ func (xdu *XxxDemoUpdate) SetNillableMemo(s *string) *XxxDemoUpdate {
 	return xdu
 }
 
+// ClearMemo clears the value of the "memo" field.
+func (xdu *XxxDemoUpdate) ClearMemo() *XxxDemoUpdate {
+	xdu.mutation.ClearMemo()
+	return xdu
+}
+
 // SetSort sets the "sort" field.
 func (xdu *XxxDemoUpdate) SetSort(i int32) *XxxDemoUpdate {
 	xdu.mutation.ResetSort()
@@ -255,6 +261,12 @@ func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: xxxdemo.FieldMemo,
 		})
 	}
+	if xdu.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: xxxdemo.FieldMemo,
+		})
+	}
 	if value, ok := xdu.mutation.Sort(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
@@ -354,6 +366,12 @@ func (xduo *XxxDemoUpdateOne) SetNillableMemo(s *string) *XxxDemoUpdateOne {
 	if s != nil {
 		xduo.SetMemo(*s)
 	}
+	return xduo
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (xduo *XxxDemoUpdateOne) ClearMemo() *XxxDemoUpdateOne {
+	xduo.mutation.ClearMemo()
 	return xduo
 }
 
@@ -583,6 +601,12 @@ func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err 
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: xxxdemo.FieldMemo,
+		})
+	}
+	if xduo.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: xxxdemo.FieldMemo,
 		})
 	}

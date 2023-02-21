@@ -77,6 +77,12 @@ func (smaru *SysMenuActionResourceUpdate) SetNillableMemo(s *string) *SysMenuAct
 	return smaru
 }
 
+// ClearMemo clears the value of the "memo" field.
+func (smaru *SysMenuActionResourceUpdate) ClearMemo() *SysMenuActionResourceUpdate {
+	smaru.mutation.ClearMemo()
+	return smaru
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (smaru *SysMenuActionResourceUpdate) SetUpdatedAt(t time.Time) *SysMenuActionResourceUpdate {
 	smaru.mutation.SetUpdatedAt(t)
@@ -280,6 +286,12 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 			Column: sysmenuactionresource.FieldMemo,
 		})
 	}
+	if smaru.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysmenuactionresource.FieldMemo,
+		})
+	}
 	if value, ok := smaru.mutation.UpdatedAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -393,6 +405,12 @@ func (smaruo *SysMenuActionResourceUpdateOne) SetNillableMemo(s *string) *SysMen
 	if s != nil {
 		smaruo.SetMemo(*s)
 	}
+	return smaruo
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (smaruo *SysMenuActionResourceUpdateOne) ClearMemo() *SysMenuActionResourceUpdateOne {
+	smaruo.mutation.ClearMemo()
 	return smaruo
 }
 
@@ -626,6 +644,12 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: sysmenuactionresource.FieldMemo,
+		})
+	}
+	if smaruo.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: sysmenuactionresource.FieldMemo,
 		})
 	}

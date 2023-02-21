@@ -55,6 +55,12 @@ func (slu *SysLoggingUpdate) SetNillableMemo(s *string) *SysLoggingUpdate {
 	return slu
 }
 
+// ClearMemo clears the value of the "memo" field.
+func (slu *SysLoggingUpdate) ClearMemo() *SysLoggingUpdate {
+	slu.mutation.ClearMemo()
+	return slu
+}
+
 // SetLevel sets the "level" field.
 func (slu *SysLoggingUpdate) SetLevel(s string) *SysLoggingUpdate {
 	slu.mutation.SetLevel(s)
@@ -234,6 +240,12 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: syslogging.FieldMemo,
 		})
 	}
+	if slu.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: syslogging.FieldMemo,
+		})
+	}
 	if value, ok := slu.mutation.Level(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -333,6 +345,12 @@ func (sluo *SysLoggingUpdateOne) SetNillableMemo(s *string) *SysLoggingUpdateOne
 	if s != nil {
 		sluo.SetMemo(*s)
 	}
+	return sluo
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (sluo *SysLoggingUpdateOne) ClearMemo() *SysLoggingUpdateOne {
+	sluo.mutation.ClearMemo()
 	return sluo
 }
 
@@ -542,6 +560,12 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: syslogging.FieldMemo,
+		})
+	}
+	if sluo.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: syslogging.FieldMemo,
 		})
 	}

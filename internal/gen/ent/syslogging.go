@@ -13,13 +13,13 @@ import (
 
 // SysLogging is the model entity for the SysLogging schema.
 type SysLogging struct {
-	config `json:"-"`
+	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
-	// 备注
-	Memo string `json:"memo,omitempty"`
+	// memo
+	Memo *string `json:"memo,omitempty" sql:"memo"`
 	// 日志级别
 	Level string `json:"level,omitempty"`
 	// 跟踪ID
@@ -36,8 +36,8 @@ type SysLogging struct {
 	Data *string `json:"data,omitempty"`
 	// 日志数据(json string)
 	ErrorStack string `json:"error_stack,omitempty"`
-	// 创建时间,由程序自动生成
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	// create time
+	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -82,7 +82,8 @@ func (sl *SysLogging) assignValues(columns []string, values []interface{}) error
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sl.Memo = value.String
+				sl.Memo = new(string)
+				*sl.Memo = value.String
 			}
 		case syslogging.FieldLevel:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -170,8 +171,10 @@ func (sl *SysLogging) String() string {
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", sl.IsDel))
 	builder.WriteString(", ")
-	builder.WriteString("memo=")
-	builder.WriteString(sl.Memo)
+	if v := sl.Memo; v != nil {
+		builder.WriteString("memo=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	builder.WriteString("level=")
 	builder.WriteString(sl.Level)

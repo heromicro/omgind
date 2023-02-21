@@ -332,9 +332,6 @@ func (smc *SysMenuCreate) check() error {
 	if _, ok := smc.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysMenu.is_del"`)}
 	}
-	if _, ok := smc.mutation.Memo(); !ok {
-		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "SysMenu.memo"`)}
-	}
 	if v, ok := smc.mutation.Memo(); ok {
 		if err := sysmenu.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysMenu.memo": %w`, err)}
@@ -452,7 +449,7 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: sysmenu.FieldMemo,
 		})
-		_node.Memo = value
+		_node.Memo = &value
 	}
 	if value, ok := smc.mutation.Sort(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

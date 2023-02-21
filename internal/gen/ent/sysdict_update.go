@@ -56,6 +56,12 @@ func (sdu *SysDictUpdate) SetNillableMemo(s *string) *SysDictUpdate {
 	return sdu
 }
 
+// ClearMemo clears the value of the "memo" field.
+func (sdu *SysDictUpdate) ClearMemo() *SysDictUpdate {
+	sdu.mutation.ClearMemo()
+	return sdu
+}
+
 // SetSort sets the "sort" field.
 func (sdu *SysDictUpdate) SetSort(i int32) *SysDictUpdate {
 	sdu.mutation.ResetSort()
@@ -255,6 +261,12 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysdict.FieldMemo,
 		})
 	}
+	if sdu.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysdict.FieldMemo,
+		})
+	}
 	if value, ok := sdu.mutation.Sort(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
@@ -354,6 +366,12 @@ func (sduo *SysDictUpdateOne) SetNillableMemo(s *string) *SysDictUpdateOne {
 	if s != nil {
 		sduo.SetMemo(*s)
 	}
+	return sduo
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (sduo *SysDictUpdateOne) ClearMemo() *SysDictUpdateOne {
+	sduo.mutation.ClearMemo()
 	return sduo
 }
 
@@ -583,6 +601,12 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: sysdict.FieldMemo,
+		})
+	}
+	if sduo.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: sysdict.FieldMemo,
 		})
 	}

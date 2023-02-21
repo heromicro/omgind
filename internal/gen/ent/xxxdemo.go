@@ -13,20 +13,20 @@ import (
 
 // XxxDemo is the model entity for the XxxDemo schema.
 type XxxDemo struct {
-	config `json:"-"`
+	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
-	// 备注
-	Memo string `json:"memo,omitempty"`
-	// 排序, 在数据库里的排序
-	Sort int32 `json:"sort,omitempty"`
+	// memo
+	Memo *string `json:"memo,omitempty" sql:"memo"`
+	// sort
+	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// 创建时间,由程序自动生成
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	// 更新时间,由程序自动生成
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// 删除时间,
+	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	// update time
+	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
@@ -80,7 +80,8 @@ func (xd *XxxDemo) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				xd.Memo = value.String
+				xd.Memo = new(string)
+				*xd.Memo = value.String
 			}
 		case xxxdemo.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -156,8 +157,10 @@ func (xd *XxxDemo) String() string {
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", xd.IsDel))
 	builder.WriteString(", ")
-	builder.WriteString("memo=")
-	builder.WriteString(xd.Memo)
+	if v := xd.Memo; v != nil {
+		builder.WriteString("memo=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", xd.Sort))

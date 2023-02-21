@@ -13,22 +13,22 @@ import (
 
 // SysMenuAction is the model entity for the SysMenuAction schema.
 type SysMenuAction struct {
-	config `json:"-"`
+	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
-	// 排序, 在数据库里的排序
-	Sort int32 `json:"sort,omitempty"`
+	// sort
+	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
-	// 备注
-	Memo string `json:"memo,omitempty"`
+	// memo
+	Memo *string `json:"memo,omitempty" sql:"memo"`
 	// 创建时间,由程序自动生成
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	// 更新时间,由程序自动生成
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// 删除时间,
+	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	// update time
+	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 菜单ID
 	MenuID string `json:"menu_id,omitempty"`
@@ -94,7 +94,8 @@ func (sma *SysMenuAction) assignValues(columns []string, values []interface{}) e
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sma.Memo = value.String
+				sma.Memo = new(string)
+				*sma.Memo = value.String
 			}
 		case sysmenuaction.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -170,8 +171,10 @@ func (sma *SysMenuAction) String() string {
 	builder.WriteString("is_active=")
 	builder.WriteString(fmt.Sprintf("%v", sma.IsActive))
 	builder.WriteString(", ")
-	builder.WriteString("memo=")
-	builder.WriteString(sma.Memo)
+	if v := sma.Memo; v != nil {
+		builder.WriteString("memo=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(sma.CreatedAt.Format(time.ANSIC))

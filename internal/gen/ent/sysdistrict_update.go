@@ -103,6 +103,154 @@ func (sdu *SysDistrictUpdate) SetNillableIsActive(b *bool) *SysDistrictUpdate {
 	return sdu
 }
 
+// SetTreeID sets the "tree_id" field.
+func (sdu *SysDistrictUpdate) SetTreeID(i int64) *SysDistrictUpdate {
+	sdu.mutation.ResetTreeID()
+	sdu.mutation.SetTreeID(i)
+	return sdu
+}
+
+// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableTreeID(i *int64) *SysDistrictUpdate {
+	if i != nil {
+		sdu.SetTreeID(*i)
+	}
+	return sdu
+}
+
+// AddTreeID adds i to the "tree_id" field.
+func (sdu *SysDistrictUpdate) AddTreeID(i int64) *SysDistrictUpdate {
+	sdu.mutation.AddTreeID(i)
+	return sdu
+}
+
+// ClearTreeID clears the value of the "tree_id" field.
+func (sdu *SysDistrictUpdate) ClearTreeID() *SysDistrictUpdate {
+	sdu.mutation.ClearTreeID()
+	return sdu
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (sdu *SysDistrictUpdate) SetTreeLevel(i int64) *SysDistrictUpdate {
+	sdu.mutation.ResetTreeLevel()
+	sdu.mutation.SetTreeLevel(i)
+	return sdu
+}
+
+// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableTreeLevel(i *int64) *SysDistrictUpdate {
+	if i != nil {
+		sdu.SetTreeLevel(*i)
+	}
+	return sdu
+}
+
+// AddTreeLevel adds i to the "tree_level" field.
+func (sdu *SysDistrictUpdate) AddTreeLevel(i int64) *SysDistrictUpdate {
+	sdu.mutation.AddTreeLevel(i)
+	return sdu
+}
+
+// ClearTreeLevel clears the value of the "tree_level" field.
+func (sdu *SysDistrictUpdate) ClearTreeLevel() *SysDistrictUpdate {
+	sdu.mutation.ClearTreeLevel()
+	return sdu
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (sdu *SysDistrictUpdate) SetTreeLeft(i int64) *SysDistrictUpdate {
+	sdu.mutation.ResetTreeLeft()
+	sdu.mutation.SetTreeLeft(i)
+	return sdu
+}
+
+// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableTreeLeft(i *int64) *SysDistrictUpdate {
+	if i != nil {
+		sdu.SetTreeLeft(*i)
+	}
+	return sdu
+}
+
+// AddTreeLeft adds i to the "tree_left" field.
+func (sdu *SysDistrictUpdate) AddTreeLeft(i int64) *SysDistrictUpdate {
+	sdu.mutation.AddTreeLeft(i)
+	return sdu
+}
+
+// ClearTreeLeft clears the value of the "tree_left" field.
+func (sdu *SysDistrictUpdate) ClearTreeLeft() *SysDistrictUpdate {
+	sdu.mutation.ClearTreeLeft()
+	return sdu
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (sdu *SysDistrictUpdate) SetTreeRight(i int64) *SysDistrictUpdate {
+	sdu.mutation.ResetTreeRight()
+	sdu.mutation.SetTreeRight(i)
+	return sdu
+}
+
+// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableTreeRight(i *int64) *SysDistrictUpdate {
+	if i != nil {
+		sdu.SetTreeRight(*i)
+	}
+	return sdu
+}
+
+// AddTreeRight adds i to the "tree_right" field.
+func (sdu *SysDistrictUpdate) AddTreeRight(i int64) *SysDistrictUpdate {
+	sdu.mutation.AddTreeRight(i)
+	return sdu
+}
+
+// ClearTreeRight clears the value of the "tree_right" field.
+func (sdu *SysDistrictUpdate) ClearTreeRight() *SysDistrictUpdate {
+	sdu.mutation.ClearTreeRight()
+	return sdu
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (sdu *SysDistrictUpdate) SetIsLeaf(b bool) *SysDistrictUpdate {
+	sdu.mutation.SetIsLeaf(b)
+	return sdu
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableIsLeaf(b *bool) *SysDistrictUpdate {
+	if b != nil {
+		sdu.SetIsLeaf(*b)
+	}
+	return sdu
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (sdu *SysDistrictUpdate) ClearIsLeaf() *SysDistrictUpdate {
+	sdu.mutation.ClearIsLeaf()
+	return sdu
+}
+
+// SetTreePath sets the "tree_path" field.
+func (sdu *SysDistrictUpdate) SetTreePath(s string) *SysDistrictUpdate {
+	sdu.mutation.SetTreePath(s)
+	return sdu
+}
+
+// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableTreePath(s *string) *SysDistrictUpdate {
+	if s != nil {
+		sdu.SetTreePath(*s)
+	}
+	return sdu
+}
+
+// ClearTreePath clears the value of the "tree_path" field.
+func (sdu *SysDistrictUpdate) ClearTreePath() *SysDistrictUpdate {
+	sdu.mutation.ClearTreePath()
+	return sdu
+}
+
 // SetName sets the "name" field.
 func (sdu *SysDistrictUpdate) SetName(s string) *SysDistrictUpdate {
 	sdu.mutation.SetName(s)
@@ -477,154 +625,6 @@ func (sdu *SysDistrictUpdate) ClearIsDirect() *SysDistrictUpdate {
 	return sdu
 }
 
-// SetTreeID sets the "tree_id" field.
-func (sdu *SysDistrictUpdate) SetTreeID(i int32) *SysDistrictUpdate {
-	sdu.mutation.ResetTreeID()
-	sdu.mutation.SetTreeID(i)
-	return sdu
-}
-
-// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeID(i *int32) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetTreeID(*i)
-	}
-	return sdu
-}
-
-// AddTreeID adds i to the "tree_id" field.
-func (sdu *SysDistrictUpdate) AddTreeID(i int32) *SysDistrictUpdate {
-	sdu.mutation.AddTreeID(i)
-	return sdu
-}
-
-// ClearTreeID clears the value of the "tree_id" field.
-func (sdu *SysDistrictUpdate) ClearTreeID() *SysDistrictUpdate {
-	sdu.mutation.ClearTreeID()
-	return sdu
-}
-
-// SetTreeLevel sets the "tree_level" field.
-func (sdu *SysDistrictUpdate) SetTreeLevel(i int32) *SysDistrictUpdate {
-	sdu.mutation.ResetTreeLevel()
-	sdu.mutation.SetTreeLevel(i)
-	return sdu
-}
-
-// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeLevel(i *int32) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetTreeLevel(*i)
-	}
-	return sdu
-}
-
-// AddTreeLevel adds i to the "tree_level" field.
-func (sdu *SysDistrictUpdate) AddTreeLevel(i int32) *SysDistrictUpdate {
-	sdu.mutation.AddTreeLevel(i)
-	return sdu
-}
-
-// ClearTreeLevel clears the value of the "tree_level" field.
-func (sdu *SysDistrictUpdate) ClearTreeLevel() *SysDistrictUpdate {
-	sdu.mutation.ClearTreeLevel()
-	return sdu
-}
-
-// SetTreeLeft sets the "tree_left" field.
-func (sdu *SysDistrictUpdate) SetTreeLeft(i int64) *SysDistrictUpdate {
-	sdu.mutation.ResetTreeLeft()
-	sdu.mutation.SetTreeLeft(i)
-	return sdu
-}
-
-// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeLeft(i *int64) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetTreeLeft(*i)
-	}
-	return sdu
-}
-
-// AddTreeLeft adds i to the "tree_left" field.
-func (sdu *SysDistrictUpdate) AddTreeLeft(i int64) *SysDistrictUpdate {
-	sdu.mutation.AddTreeLeft(i)
-	return sdu
-}
-
-// ClearTreeLeft clears the value of the "tree_left" field.
-func (sdu *SysDistrictUpdate) ClearTreeLeft() *SysDistrictUpdate {
-	sdu.mutation.ClearTreeLeft()
-	return sdu
-}
-
-// SetTreeRight sets the "tree_right" field.
-func (sdu *SysDistrictUpdate) SetTreeRight(i int64) *SysDistrictUpdate {
-	sdu.mutation.ResetTreeRight()
-	sdu.mutation.SetTreeRight(i)
-	return sdu
-}
-
-// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeRight(i *int64) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetTreeRight(*i)
-	}
-	return sdu
-}
-
-// AddTreeRight adds i to the "tree_right" field.
-func (sdu *SysDistrictUpdate) AddTreeRight(i int64) *SysDistrictUpdate {
-	sdu.mutation.AddTreeRight(i)
-	return sdu
-}
-
-// ClearTreeRight clears the value of the "tree_right" field.
-func (sdu *SysDistrictUpdate) ClearTreeRight() *SysDistrictUpdate {
-	sdu.mutation.ClearTreeRight()
-	return sdu
-}
-
-// SetIsLeaf sets the "is_leaf" field.
-func (sdu *SysDistrictUpdate) SetIsLeaf(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsLeaf(b)
-	return sdu
-}
-
-// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsLeaf(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsLeaf(*b)
-	}
-	return sdu
-}
-
-// ClearIsLeaf clears the value of the "is_leaf" field.
-func (sdu *SysDistrictUpdate) ClearIsLeaf() *SysDistrictUpdate {
-	sdu.mutation.ClearIsLeaf()
-	return sdu
-}
-
-// SetTreePath sets the "tree_path" field.
-func (sdu *SysDistrictUpdate) SetTreePath(s string) *SysDistrictUpdate {
-	sdu.mutation.SetTreePath(s)
-	return sdu
-}
-
-// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreePath(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetTreePath(*s)
-	}
-	return sdu
-}
-
-// ClearTreePath clears the value of the "tree_path" field.
-func (sdu *SysDistrictUpdate) ClearTreePath() *SysDistrictUpdate {
-	sdu.mutation.ClearTreePath()
-	return sdu
-}
-
 // SetCreator sets the "creator" field.
 func (sdu *SysDistrictUpdate) SetCreator(s string) *SysDistrictUpdate {
 	sdu.mutation.SetCreator(s)
@@ -819,6 +819,112 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeBool,
 			Value:  value,
 			Column: sysdistrict.FieldIsActive,
+		})
+	}
+	if value, ok := sdu.mutation.TreeID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeID,
+		})
+	}
+	if value, ok := sdu.mutation.AddedTreeID(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeID,
+		})
+	}
+	if sdu.mutation.TreeIDCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: sysdistrict.FieldTreeID,
+		})
+	}
+	if value, ok := sdu.mutation.TreeLevel(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLevel,
+		})
+	}
+	if value, ok := sdu.mutation.AddedTreeLevel(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLevel,
+		})
+	}
+	if sdu.mutation.TreeLevelCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: sysdistrict.FieldTreeLevel,
+		})
+	}
+	if value, ok := sdu.mutation.TreeLeft(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLeft,
+		})
+	}
+	if value, ok := sdu.mutation.AddedTreeLeft(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLeft,
+		})
+	}
+	if sdu.mutation.TreeLeftCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: sysdistrict.FieldTreeLeft,
+		})
+	}
+	if value, ok := sdu.mutation.TreeRight(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeRight,
+		})
+	}
+	if value, ok := sdu.mutation.AddedTreeRight(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeRight,
+		})
+	}
+	if sdu.mutation.TreeRightCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: sysdistrict.FieldTreeRight,
+		})
+	}
+	if value, ok := sdu.mutation.IsLeaf(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdistrict.FieldIsLeaf,
+		})
+	}
+	if sdu.mutation.IsLeafCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Column: sysdistrict.FieldIsLeaf,
+		})
+	}
+	if value, ok := sdu.mutation.TreePath(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysdistrict.FieldTreePath,
+		})
+	}
+	if sdu.mutation.TreePathCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysdistrict.FieldTreePath,
 		})
 	}
 	if value, ok := sdu.mutation.Name(); ok {
@@ -1069,112 +1175,6 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysdistrict.FieldIsDirect,
 		})
 	}
-	if value, ok := sdu.mutation.TreeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
-	}
-	if value, ok := sdu.mutation.AddedTreeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
-	}
-	if sdu.mutation.TreeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: sysdistrict.FieldTreeID,
-		})
-	}
-	if value, ok := sdu.mutation.TreeLevel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
-	}
-	if value, ok := sdu.mutation.AddedTreeLevel(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
-	}
-	if sdu.mutation.TreeLevelCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: sysdistrict.FieldTreeLevel,
-		})
-	}
-	if value, ok := sdu.mutation.TreeLeft(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
-	}
-	if value, ok := sdu.mutation.AddedTreeLeft(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
-	}
-	if sdu.mutation.TreeLeftCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeLeft,
-		})
-	}
-	if value, ok := sdu.mutation.TreeRight(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
-	}
-	if value, ok := sdu.mutation.AddedTreeRight(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
-	}
-	if sdu.mutation.TreeRightCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeRight,
-		})
-	}
-	if value, ok := sdu.mutation.IsLeaf(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsLeaf,
-		})
-	}
-	if sdu.mutation.IsLeafCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsLeaf,
-		})
-	}
-	if value, ok := sdu.mutation.TreePath(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldTreePath,
-		})
-	}
-	if sdu.mutation.TreePathCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldTreePath,
-		})
-	}
 	if value, ok := sdu.mutation.Creator(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -1273,6 +1273,154 @@ func (sduo *SysDistrictUpdateOne) SetNillableIsActive(b *bool) *SysDistrictUpdat
 	if b != nil {
 		sduo.SetIsActive(*b)
 	}
+	return sduo
+}
+
+// SetTreeID sets the "tree_id" field.
+func (sduo *SysDistrictUpdateOne) SetTreeID(i int64) *SysDistrictUpdateOne {
+	sduo.mutation.ResetTreeID()
+	sduo.mutation.SetTreeID(i)
+	return sduo
+}
+
+// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableTreeID(i *int64) *SysDistrictUpdateOne {
+	if i != nil {
+		sduo.SetTreeID(*i)
+	}
+	return sduo
+}
+
+// AddTreeID adds i to the "tree_id" field.
+func (sduo *SysDistrictUpdateOne) AddTreeID(i int64) *SysDistrictUpdateOne {
+	sduo.mutation.AddTreeID(i)
+	return sduo
+}
+
+// ClearTreeID clears the value of the "tree_id" field.
+func (sduo *SysDistrictUpdateOne) ClearTreeID() *SysDistrictUpdateOne {
+	sduo.mutation.ClearTreeID()
+	return sduo
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (sduo *SysDistrictUpdateOne) SetTreeLevel(i int64) *SysDistrictUpdateOne {
+	sduo.mutation.ResetTreeLevel()
+	sduo.mutation.SetTreeLevel(i)
+	return sduo
+}
+
+// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableTreeLevel(i *int64) *SysDistrictUpdateOne {
+	if i != nil {
+		sduo.SetTreeLevel(*i)
+	}
+	return sduo
+}
+
+// AddTreeLevel adds i to the "tree_level" field.
+func (sduo *SysDistrictUpdateOne) AddTreeLevel(i int64) *SysDistrictUpdateOne {
+	sduo.mutation.AddTreeLevel(i)
+	return sduo
+}
+
+// ClearTreeLevel clears the value of the "tree_level" field.
+func (sduo *SysDistrictUpdateOne) ClearTreeLevel() *SysDistrictUpdateOne {
+	sduo.mutation.ClearTreeLevel()
+	return sduo
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (sduo *SysDistrictUpdateOne) SetTreeLeft(i int64) *SysDistrictUpdateOne {
+	sduo.mutation.ResetTreeLeft()
+	sduo.mutation.SetTreeLeft(i)
+	return sduo
+}
+
+// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableTreeLeft(i *int64) *SysDistrictUpdateOne {
+	if i != nil {
+		sduo.SetTreeLeft(*i)
+	}
+	return sduo
+}
+
+// AddTreeLeft adds i to the "tree_left" field.
+func (sduo *SysDistrictUpdateOne) AddTreeLeft(i int64) *SysDistrictUpdateOne {
+	sduo.mutation.AddTreeLeft(i)
+	return sduo
+}
+
+// ClearTreeLeft clears the value of the "tree_left" field.
+func (sduo *SysDistrictUpdateOne) ClearTreeLeft() *SysDistrictUpdateOne {
+	sduo.mutation.ClearTreeLeft()
+	return sduo
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (sduo *SysDistrictUpdateOne) SetTreeRight(i int64) *SysDistrictUpdateOne {
+	sduo.mutation.ResetTreeRight()
+	sduo.mutation.SetTreeRight(i)
+	return sduo
+}
+
+// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableTreeRight(i *int64) *SysDistrictUpdateOne {
+	if i != nil {
+		sduo.SetTreeRight(*i)
+	}
+	return sduo
+}
+
+// AddTreeRight adds i to the "tree_right" field.
+func (sduo *SysDistrictUpdateOne) AddTreeRight(i int64) *SysDistrictUpdateOne {
+	sduo.mutation.AddTreeRight(i)
+	return sduo
+}
+
+// ClearTreeRight clears the value of the "tree_right" field.
+func (sduo *SysDistrictUpdateOne) ClearTreeRight() *SysDistrictUpdateOne {
+	sduo.mutation.ClearTreeRight()
+	return sduo
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (sduo *SysDistrictUpdateOne) SetIsLeaf(b bool) *SysDistrictUpdateOne {
+	sduo.mutation.SetIsLeaf(b)
+	return sduo
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableIsLeaf(b *bool) *SysDistrictUpdateOne {
+	if b != nil {
+		sduo.SetIsLeaf(*b)
+	}
+	return sduo
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (sduo *SysDistrictUpdateOne) ClearIsLeaf() *SysDistrictUpdateOne {
+	sduo.mutation.ClearIsLeaf()
+	return sduo
+}
+
+// SetTreePath sets the "tree_path" field.
+func (sduo *SysDistrictUpdateOne) SetTreePath(s string) *SysDistrictUpdateOne {
+	sduo.mutation.SetTreePath(s)
+	return sduo
+}
+
+// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableTreePath(s *string) *SysDistrictUpdateOne {
+	if s != nil {
+		sduo.SetTreePath(*s)
+	}
+	return sduo
+}
+
+// ClearTreePath clears the value of the "tree_path" field.
+func (sduo *SysDistrictUpdateOne) ClearTreePath() *SysDistrictUpdateOne {
+	sduo.mutation.ClearTreePath()
 	return sduo
 }
 
@@ -1650,154 +1798,6 @@ func (sduo *SysDistrictUpdateOne) ClearIsDirect() *SysDistrictUpdateOne {
 	return sduo
 }
 
-// SetTreeID sets the "tree_id" field.
-func (sduo *SysDistrictUpdateOne) SetTreeID(i int32) *SysDistrictUpdateOne {
-	sduo.mutation.ResetTreeID()
-	sduo.mutation.SetTreeID(i)
-	return sduo
-}
-
-// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeID(i *int32) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetTreeID(*i)
-	}
-	return sduo
-}
-
-// AddTreeID adds i to the "tree_id" field.
-func (sduo *SysDistrictUpdateOne) AddTreeID(i int32) *SysDistrictUpdateOne {
-	sduo.mutation.AddTreeID(i)
-	return sduo
-}
-
-// ClearTreeID clears the value of the "tree_id" field.
-func (sduo *SysDistrictUpdateOne) ClearTreeID() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreeID()
-	return sduo
-}
-
-// SetTreeLevel sets the "tree_level" field.
-func (sduo *SysDistrictUpdateOne) SetTreeLevel(i int32) *SysDistrictUpdateOne {
-	sduo.mutation.ResetTreeLevel()
-	sduo.mutation.SetTreeLevel(i)
-	return sduo
-}
-
-// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeLevel(i *int32) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetTreeLevel(*i)
-	}
-	return sduo
-}
-
-// AddTreeLevel adds i to the "tree_level" field.
-func (sduo *SysDistrictUpdateOne) AddTreeLevel(i int32) *SysDistrictUpdateOne {
-	sduo.mutation.AddTreeLevel(i)
-	return sduo
-}
-
-// ClearTreeLevel clears the value of the "tree_level" field.
-func (sduo *SysDistrictUpdateOne) ClearTreeLevel() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreeLevel()
-	return sduo
-}
-
-// SetTreeLeft sets the "tree_left" field.
-func (sduo *SysDistrictUpdateOne) SetTreeLeft(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.ResetTreeLeft()
-	sduo.mutation.SetTreeLeft(i)
-	return sduo
-}
-
-// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeLeft(i *int64) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetTreeLeft(*i)
-	}
-	return sduo
-}
-
-// AddTreeLeft adds i to the "tree_left" field.
-func (sduo *SysDistrictUpdateOne) AddTreeLeft(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.AddTreeLeft(i)
-	return sduo
-}
-
-// ClearTreeLeft clears the value of the "tree_left" field.
-func (sduo *SysDistrictUpdateOne) ClearTreeLeft() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreeLeft()
-	return sduo
-}
-
-// SetTreeRight sets the "tree_right" field.
-func (sduo *SysDistrictUpdateOne) SetTreeRight(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.ResetTreeRight()
-	sduo.mutation.SetTreeRight(i)
-	return sduo
-}
-
-// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeRight(i *int64) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetTreeRight(*i)
-	}
-	return sduo
-}
-
-// AddTreeRight adds i to the "tree_right" field.
-func (sduo *SysDistrictUpdateOne) AddTreeRight(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.AddTreeRight(i)
-	return sduo
-}
-
-// ClearTreeRight clears the value of the "tree_right" field.
-func (sduo *SysDistrictUpdateOne) ClearTreeRight() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreeRight()
-	return sduo
-}
-
-// SetIsLeaf sets the "is_leaf" field.
-func (sduo *SysDistrictUpdateOne) SetIsLeaf(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsLeaf(b)
-	return sduo
-}
-
-// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsLeaf(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsLeaf(*b)
-	}
-	return sduo
-}
-
-// ClearIsLeaf clears the value of the "is_leaf" field.
-func (sduo *SysDistrictUpdateOne) ClearIsLeaf() *SysDistrictUpdateOne {
-	sduo.mutation.ClearIsLeaf()
-	return sduo
-}
-
-// SetTreePath sets the "tree_path" field.
-func (sduo *SysDistrictUpdateOne) SetTreePath(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetTreePath(s)
-	return sduo
-}
-
-// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreePath(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetTreePath(*s)
-	}
-	return sduo
-}
-
-// ClearTreePath clears the value of the "tree_path" field.
-func (sduo *SysDistrictUpdateOne) ClearTreePath() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreePath()
-	return sduo
-}
-
 // SetCreator sets the "creator" field.
 func (sduo *SysDistrictUpdateOne) SetCreator(s string) *SysDistrictUpdateOne {
 	sduo.mutation.SetCreator(s)
@@ -2022,6 +2022,112 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Type:   field.TypeBool,
 			Value:  value,
 			Column: sysdistrict.FieldIsActive,
+		})
+	}
+	if value, ok := sduo.mutation.TreeID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeID,
+		})
+	}
+	if value, ok := sduo.mutation.AddedTreeID(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeID,
+		})
+	}
+	if sduo.mutation.TreeIDCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: sysdistrict.FieldTreeID,
+		})
+	}
+	if value, ok := sduo.mutation.TreeLevel(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLevel,
+		})
+	}
+	if value, ok := sduo.mutation.AddedTreeLevel(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLevel,
+		})
+	}
+	if sduo.mutation.TreeLevelCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: sysdistrict.FieldTreeLevel,
+		})
+	}
+	if value, ok := sduo.mutation.TreeLeft(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLeft,
+		})
+	}
+	if value, ok := sduo.mutation.AddedTreeLeft(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLeft,
+		})
+	}
+	if sduo.mutation.TreeLeftCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: sysdistrict.FieldTreeLeft,
+		})
+	}
+	if value, ok := sduo.mutation.TreeRight(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeRight,
+		})
+	}
+	if value, ok := sduo.mutation.AddedTreeRight(); ok {
+		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeRight,
+		})
+	}
+	if sduo.mutation.TreeRightCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: sysdistrict.FieldTreeRight,
+		})
+	}
+	if value, ok := sduo.mutation.IsLeaf(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdistrict.FieldIsLeaf,
+		})
+	}
+	if sduo.mutation.IsLeafCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Column: sysdistrict.FieldIsLeaf,
+		})
+	}
+	if value, ok := sduo.mutation.TreePath(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysdistrict.FieldTreePath,
+		})
+	}
+	if sduo.mutation.TreePathCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysdistrict.FieldTreePath,
 		})
 	}
 	if value, ok := sduo.mutation.Name(); ok {
@@ -2270,112 +2376,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Column: sysdistrict.FieldIsDirect,
-		})
-	}
-	if value, ok := sduo.mutation.TreeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
-	}
-	if value, ok := sduo.mutation.AddedTreeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
-	}
-	if sduo.mutation.TreeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: sysdistrict.FieldTreeID,
-		})
-	}
-	if value, ok := sduo.mutation.TreeLevel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
-	}
-	if value, ok := sduo.mutation.AddedTreeLevel(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
-	}
-	if sduo.mutation.TreeLevelCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: sysdistrict.FieldTreeLevel,
-		})
-	}
-	if value, ok := sduo.mutation.TreeLeft(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
-	}
-	if value, ok := sduo.mutation.AddedTreeLeft(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
-	}
-	if sduo.mutation.TreeLeftCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeLeft,
-		})
-	}
-	if value, ok := sduo.mutation.TreeRight(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
-	}
-	if value, ok := sduo.mutation.AddedTreeRight(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
-	}
-	if sduo.mutation.TreeRightCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeRight,
-		})
-	}
-	if value, ok := sduo.mutation.IsLeaf(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsLeaf,
-		})
-	}
-	if sduo.mutation.IsLeafCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsLeaf,
-		})
-	}
-	if value, ok := sduo.mutation.TreePath(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldTreePath,
-		})
-	}
-	if sduo.mutation.TreePathCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldTreePath,
 		})
 	}
 	if value, ok := sduo.mutation.Creator(); ok {

@@ -186,6 +186,8 @@ func init() {
 	_ = sysdistrictMixinFields2
 	sysdistrictMixinFields3 := sysdistrictMixin[3].Fields()
 	_ = sysdistrictMixinFields3
+	sysdistrictMixinFields4 := sysdistrictMixin[4].Fields()
+	_ = sysdistrictMixinFields4
 	sysdistrictFields := entity.SysDistrict{}.Fields()
 	_ = sysdistrictFields
 	// sysdistrictDescIsDel is the schema descriptor for is_del field.
@@ -210,6 +212,10 @@ func init() {
 	sysdistrictDescIsActive := sysdistrictMixinFields3[0].Descriptor()
 	// sysdistrict.DefaultIsActive holds the default value on creation for the is_active field.
 	sysdistrict.DefaultIsActive = sysdistrictDescIsActive.Default.(bool)
+	// sysdistrictDescIsLeaf is the schema descriptor for is_leaf field.
+	sysdistrictDescIsLeaf := sysdistrictMixinFields4[4].Descriptor()
+	// sysdistrict.DefaultIsLeaf holds the default value on creation for the is_leaf field.
+	sysdistrict.DefaultIsLeaf = sysdistrictDescIsLeaf.Default.(bool)
 	// sysdistrictDescStcode is the schema descriptor for stcode field.
 	sysdistrictDescStcode := sysdistrictFields[3].Descriptor()
 	// sysdistrict.StcodeValidator is a validator for the "stcode" field. It is called by the builders before save.
@@ -258,10 +264,6 @@ func init() {
 	sysdistrictDescIsDirect := sysdistrictFields[17].Descriptor()
 	// sysdistrict.DefaultIsDirect holds the default value on creation for the is_direct field.
 	sysdistrict.DefaultIsDirect = sysdistrictDescIsDirect.Default.(bool)
-	// sysdistrictDescIsLeaf is the schema descriptor for is_leaf field.
-	sysdistrictDescIsLeaf := sysdistrictFields[22].Descriptor()
-	// sysdistrict.DefaultIsLeaf holds the default value on creation for the is_leaf field.
-	sysdistrict.DefaultIsLeaf = sysdistrictDescIsLeaf.Default.(bool)
 	// sysdistrictDescID is the schema descriptor for id field.
 	sysdistrictDescID := sysdistrictMixinFields0[0].Descriptor()
 	// sysdistrict.DefaultID holds the default value on creation for the id field.

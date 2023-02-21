@@ -91,6 +91,12 @@ func (sru *SysRoleUpdate) SetNillableMemo(s *string) *SysRoleUpdate {
 	return sru
 }
 
+// ClearMemo clears the value of the "memo" field.
+func (sru *SysRoleUpdate) ClearMemo() *SysRoleUpdate {
+	sru.mutation.ClearMemo()
+	return sru
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (sru *SysRoleUpdate) SetUpdatedAt(t time.Time) *SysRoleUpdate {
 	sru.mutation.SetUpdatedAt(t)
@@ -265,6 +271,12 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysrole.FieldMemo,
 		})
 	}
+	if sru.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysrole.FieldMemo,
+		})
+	}
 	if value, ok := sru.mutation.UpdatedAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -371,6 +383,12 @@ func (sruo *SysRoleUpdateOne) SetNillableMemo(s *string) *SysRoleUpdateOne {
 	if s != nil {
 		sruo.SetMemo(*s)
 	}
+	return sruo
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (sruo *SysRoleUpdateOne) ClearMemo() *SysRoleUpdateOne {
+	sruo.mutation.ClearMemo()
 	return sruo
 }
 
@@ -575,6 +593,12 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: sysrole.FieldMemo,
+		})
+	}
+	if sruo.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: sysrole.FieldMemo,
 		})
 	}

@@ -56,6 +56,12 @@ func (smu *SysMenuUpdate) SetNillableMemo(s *string) *SysMenuUpdate {
 	return smu
 }
 
+// ClearMemo clears the value of the "memo" field.
+func (smu *SysMenuUpdate) ClearMemo() *SysMenuUpdate {
+	smu.mutation.ClearMemo()
+	return smu
+}
+
 // SetSort sets the "sort" field.
 func (smu *SysMenuUpdate) SetSort(i int32) *SysMenuUpdate {
 	smu.mutation.ResetSort()
@@ -368,6 +374,12 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysmenu.FieldMemo,
 		})
 	}
+	if smu.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysmenu.FieldMemo,
+		})
+	}
 	if value, ok := smu.mutation.Sort(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt32,
@@ -534,6 +546,12 @@ func (smuo *SysMenuUpdateOne) SetNillableMemo(s *string) *SysMenuUpdateOne {
 	if s != nil {
 		smuo.SetMemo(*s)
 	}
+	return smuo
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (smuo *SysMenuUpdateOne) ClearMemo() *SysMenuUpdateOne {
+	smuo.mutation.ClearMemo()
 	return smuo
 }
 
@@ -876,6 +894,12 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: sysmenu.FieldMemo,
+		})
+	}
+	if smuo.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: sysmenu.FieldMemo,
 		})
 	}

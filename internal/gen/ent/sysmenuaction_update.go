@@ -91,6 +91,12 @@ func (smau *SysMenuActionUpdate) SetNillableMemo(s *string) *SysMenuActionUpdate
 	return smau
 }
 
+// ClearMemo clears the value of the "memo" field.
+func (smau *SysMenuActionUpdate) ClearMemo() *SysMenuActionUpdate {
+	smau.mutation.ClearMemo()
+	return smau
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (smau *SysMenuActionUpdate) SetUpdatedAt(t time.Time) *SysMenuActionUpdate {
 	smau.mutation.SetUpdatedAt(t)
@@ -287,6 +293,12 @@ func (smau *SysMenuActionUpdate) sqlSave(ctx context.Context) (n int, err error)
 			Column: sysmenuaction.FieldMemo,
 		})
 	}
+	if smau.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysmenuaction.FieldMemo,
+		})
+	}
 	if value, ok := smau.mutation.UpdatedAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -407,6 +419,12 @@ func (smauo *SysMenuActionUpdateOne) SetNillableMemo(s *string) *SysMenuActionUp
 	if s != nil {
 		smauo.SetMemo(*s)
 	}
+	return smauo
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (smauo *SysMenuActionUpdateOne) ClearMemo() *SysMenuActionUpdateOne {
+	smauo.mutation.ClearMemo()
 	return smauo
 }
 
@@ -633,6 +651,12 @@ func (smauo *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMen
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: sysmenuaction.FieldMemo,
+		})
+	}
+	if smauo.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: sysmenuaction.FieldMemo,
 		})
 	}

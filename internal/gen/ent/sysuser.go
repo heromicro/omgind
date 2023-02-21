@@ -13,18 +13,18 @@ import (
 
 // SysUser is the model entity for the SysUser schema.
 type SysUser struct {
-	config `json:"-"`
+	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
-	// 排序, 在数据库里的排序
-	Sort int32 `json:"sort,omitempty"`
+	// sort
+	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// 创建时间,由程序自动生成
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	// 更新时间,由程序自动生成
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// 删除时间,
+	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	// update time
+	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
@@ -37,7 +37,7 @@ type SysUser struct {
 	// 姓
 	LastName *string `json:"last_name,omitempty"`
 	// 密码
-	Password string `json:"-"`
+	Password string `json:"-" sql:"-"`
 	// 电子邮箱
 	Email string `json:"email,omitempty"`
 	// 电话号码

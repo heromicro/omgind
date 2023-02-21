@@ -232,9 +232,6 @@ func (sjbc *SysJwtBlockCreate) check() error {
 	if _, ok := sjbc.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysJwtBlock.is_del"`)}
 	}
-	if _, ok := sjbc.mutation.Memo(); !ok {
-		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "SysJwtBlock.memo"`)}
-	}
 	if v, ok := sjbc.mutation.Memo(); ok {
 		if err := sysjwtblock.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysJwtBlock.memo": %w`, err)}
@@ -312,7 +309,7 @@ func (sjbc *SysJwtBlockCreate) createSpec() (*SysJwtBlock, *sqlgraph.CreateSpec)
 			Value:  value,
 			Column: sysjwtblock.FieldMemo,
 		})
-		_node.Memo = value
+		_node.Memo = &value
 	}
 	if value, ok := sjbc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

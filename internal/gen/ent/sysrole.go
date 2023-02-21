@@ -13,22 +13,22 @@ import (
 
 // SysRole is the model entity for the SysRole schema.
 type SysRole struct {
-	config `json:"-"`
+	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
-	// 排序, 在数据库里的排序
-	Sort int32 `json:"sort,omitempty"`
-	// 备注
-	Memo string `json:"memo,omitempty"`
+	// sort
+	Sort int32 `json:"sort,omitempty" sql:"sort"`
+	// memo
+	Memo *string `json:"memo,omitempty" sql:"memo"`
 	// 创建时间,由程序自动生成
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	// 更新时间,由程序自动生成
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// 删除时间,
+	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	// update time
+	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 角色名称
 	Name string `json:"name,omitempty"`
@@ -90,7 +90,8 @@ func (sr *SysRole) assignValues(columns []string, values []interface{}) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sr.Memo = value.String
+				sr.Memo = new(string)
+				*sr.Memo = value.String
 			}
 		case sysrole.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -154,8 +155,10 @@ func (sr *SysRole) String() string {
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", sr.Sort))
 	builder.WriteString(", ")
-	builder.WriteString("memo=")
-	builder.WriteString(sr.Memo)
+	if v := sr.Memo; v != nil {
+		builder.WriteString("memo=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(sr.CreatedAt.Format(time.ANSIC))

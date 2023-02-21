@@ -265,9 +265,6 @@ func (smarc *SysMenuActionResourceCreate) check() error {
 	if _, ok := smarc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysMenuActionResource.sort"`)}
 	}
-	if _, ok := smarc.mutation.Memo(); !ok {
-		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "SysMenuActionResource.memo"`)}
-	}
 	if v, ok := smarc.mutation.Memo(); ok {
 		if err := sysmenuactionresource.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysMenuActionResource.memo": %w`, err)}
@@ -369,7 +366,7 @@ func (smarc *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, 
 			Value:  value,
 			Column: sysmenuactionresource.FieldMemo,
 		})
-		_node.Memo = value
+		_node.Memo = &value
 	}
 	if value, ok := smarc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

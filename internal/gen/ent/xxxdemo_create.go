@@ -256,9 +256,6 @@ func (xdc *XxxDemoCreate) check() error {
 	if _, ok := xdc.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "XxxDemo.is_del"`)}
 	}
-	if _, ok := xdc.mutation.Memo(); !ok {
-		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "XxxDemo.memo"`)}
-	}
 	if v, ok := xdc.mutation.Memo(); ok {
 		if err := xxxdemo.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "XxxDemo.memo": %w`, err)}
@@ -347,7 +344,7 @@ func (xdc *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: xxxdemo.FieldMemo,
 		})
-		_node.Memo = value
+		_node.Memo = &value
 	}
 	if value, ok := xdc.mutation.Sort(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

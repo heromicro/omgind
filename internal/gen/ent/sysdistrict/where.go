@@ -122,6 +122,48 @@ func IsActive(v bool) predicate.SysDistrict {
 	})
 }
 
+// TreeID applies equality check predicate on the "tree_id" field. It's identical to TreeIDEQ.
+func TreeID(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreeID), v))
+	})
+}
+
+// TreeLevel applies equality check predicate on the "tree_level" field. It's identical to TreeLevelEQ.
+func TreeLevel(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreeLevel), v))
+	})
+}
+
+// TreeLeft applies equality check predicate on the "tree_left" field. It's identical to TreeLeftEQ.
+func TreeLeft(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreeLeft), v))
+	})
+}
+
+// TreeRight applies equality check predicate on the "tree_right" field. It's identical to TreeRightEQ.
+func TreeRight(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreeRight), v))
+	})
+}
+
+// IsLeaf applies equality check predicate on the "is_leaf" field. It's identical to IsLeafEQ.
+func IsLeaf(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIsLeaf), v))
+	})
+}
+
+// TreePath applies equality check predicate on the "tree_path" field. It's identical to TreePathEQ.
+func TreePath(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreePath), v))
+	})
+}
+
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
@@ -245,48 +287,6 @@ func IsReal(v bool) predicate.SysDistrict {
 func IsDirect(v bool) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldIsDirect), v))
-	})
-}
-
-// TreeID applies equality check predicate on the "tree_id" field. It's identical to TreeIDEQ.
-func TreeID(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreeID), v))
-	})
-}
-
-// TreeLevel applies equality check predicate on the "tree_level" field. It's identical to TreeLevelEQ.
-func TreeLevel(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreeLevel), v))
-	})
-}
-
-// TreeLeft applies equality check predicate on the "tree_left" field. It's identical to TreeLeftEQ.
-func TreeLeft(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreeLeft), v))
-	})
-}
-
-// TreeRight applies equality check predicate on the "tree_right" field. It's identical to TreeRightEQ.
-func TreeRight(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreeRight), v))
-	})
-}
-
-// IsLeaf applies equality check predicate on the "is_leaf" field. It's identical to IsLeafEQ.
-func IsLeaf(v bool) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsLeaf), v))
-	})
-}
-
-// TreePath applies equality check predicate on the "tree_path" field. It's identical to TreePathEQ.
-func TreePath(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreePath), v))
 	})
 }
 
@@ -640,6 +640,519 @@ func IsActiveEQ(v bool) predicate.SysDistrict {
 func IsActiveNEQ(v bool) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldIsActive), v))
+	})
+}
+
+// TreeIDEQ applies the EQ predicate on the "tree_id" field.
+func TreeIDEQ(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreeID), v))
+	})
+}
+
+// TreeIDNEQ applies the NEQ predicate on the "tree_id" field.
+func TreeIDNEQ(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTreeID), v))
+	})
+}
+
+// TreeIDIn applies the In predicate on the "tree_id" field.
+func TreeIDIn(vs ...int64) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTreeID), v...))
+	})
+}
+
+// TreeIDNotIn applies the NotIn predicate on the "tree_id" field.
+func TreeIDNotIn(vs ...int64) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTreeID), v...))
+	})
+}
+
+// TreeIDGT applies the GT predicate on the "tree_id" field.
+func TreeIDGT(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTreeID), v))
+	})
+}
+
+// TreeIDGTE applies the GTE predicate on the "tree_id" field.
+func TreeIDGTE(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTreeID), v))
+	})
+}
+
+// TreeIDLT applies the LT predicate on the "tree_id" field.
+func TreeIDLT(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTreeID), v))
+	})
+}
+
+// TreeIDLTE applies the LTE predicate on the "tree_id" field.
+func TreeIDLTE(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTreeID), v))
+	})
+}
+
+// TreeIDIsNil applies the IsNil predicate on the "tree_id" field.
+func TreeIDIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTreeID)))
+	})
+}
+
+// TreeIDNotNil applies the NotNil predicate on the "tree_id" field.
+func TreeIDNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTreeID)))
+	})
+}
+
+// TreeLevelEQ applies the EQ predicate on the "tree_level" field.
+func TreeLevelEQ(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreeLevel), v))
+	})
+}
+
+// TreeLevelNEQ applies the NEQ predicate on the "tree_level" field.
+func TreeLevelNEQ(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTreeLevel), v))
+	})
+}
+
+// TreeLevelIn applies the In predicate on the "tree_level" field.
+func TreeLevelIn(vs ...int64) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTreeLevel), v...))
+	})
+}
+
+// TreeLevelNotIn applies the NotIn predicate on the "tree_level" field.
+func TreeLevelNotIn(vs ...int64) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTreeLevel), v...))
+	})
+}
+
+// TreeLevelGT applies the GT predicate on the "tree_level" field.
+func TreeLevelGT(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTreeLevel), v))
+	})
+}
+
+// TreeLevelGTE applies the GTE predicate on the "tree_level" field.
+func TreeLevelGTE(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTreeLevel), v))
+	})
+}
+
+// TreeLevelLT applies the LT predicate on the "tree_level" field.
+func TreeLevelLT(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTreeLevel), v))
+	})
+}
+
+// TreeLevelLTE applies the LTE predicate on the "tree_level" field.
+func TreeLevelLTE(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTreeLevel), v))
+	})
+}
+
+// TreeLevelIsNil applies the IsNil predicate on the "tree_level" field.
+func TreeLevelIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTreeLevel)))
+	})
+}
+
+// TreeLevelNotNil applies the NotNil predicate on the "tree_level" field.
+func TreeLevelNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTreeLevel)))
+	})
+}
+
+// TreeLeftEQ applies the EQ predicate on the "tree_left" field.
+func TreeLeftEQ(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreeLeft), v))
+	})
+}
+
+// TreeLeftNEQ applies the NEQ predicate on the "tree_left" field.
+func TreeLeftNEQ(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTreeLeft), v))
+	})
+}
+
+// TreeLeftIn applies the In predicate on the "tree_left" field.
+func TreeLeftIn(vs ...int64) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTreeLeft), v...))
+	})
+}
+
+// TreeLeftNotIn applies the NotIn predicate on the "tree_left" field.
+func TreeLeftNotIn(vs ...int64) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTreeLeft), v...))
+	})
+}
+
+// TreeLeftGT applies the GT predicate on the "tree_left" field.
+func TreeLeftGT(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTreeLeft), v))
+	})
+}
+
+// TreeLeftGTE applies the GTE predicate on the "tree_left" field.
+func TreeLeftGTE(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTreeLeft), v))
+	})
+}
+
+// TreeLeftLT applies the LT predicate on the "tree_left" field.
+func TreeLeftLT(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTreeLeft), v))
+	})
+}
+
+// TreeLeftLTE applies the LTE predicate on the "tree_left" field.
+func TreeLeftLTE(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTreeLeft), v))
+	})
+}
+
+// TreeLeftIsNil applies the IsNil predicate on the "tree_left" field.
+func TreeLeftIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTreeLeft)))
+	})
+}
+
+// TreeLeftNotNil applies the NotNil predicate on the "tree_left" field.
+func TreeLeftNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTreeLeft)))
+	})
+}
+
+// TreeRightEQ applies the EQ predicate on the "tree_right" field.
+func TreeRightEQ(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreeRight), v))
+	})
+}
+
+// TreeRightNEQ applies the NEQ predicate on the "tree_right" field.
+func TreeRightNEQ(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTreeRight), v))
+	})
+}
+
+// TreeRightIn applies the In predicate on the "tree_right" field.
+func TreeRightIn(vs ...int64) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTreeRight), v...))
+	})
+}
+
+// TreeRightNotIn applies the NotIn predicate on the "tree_right" field.
+func TreeRightNotIn(vs ...int64) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTreeRight), v...))
+	})
+}
+
+// TreeRightGT applies the GT predicate on the "tree_right" field.
+func TreeRightGT(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTreeRight), v))
+	})
+}
+
+// TreeRightGTE applies the GTE predicate on the "tree_right" field.
+func TreeRightGTE(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTreeRight), v))
+	})
+}
+
+// TreeRightLT applies the LT predicate on the "tree_right" field.
+func TreeRightLT(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTreeRight), v))
+	})
+}
+
+// TreeRightLTE applies the LTE predicate on the "tree_right" field.
+func TreeRightLTE(v int64) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTreeRight), v))
+	})
+}
+
+// TreeRightIsNil applies the IsNil predicate on the "tree_right" field.
+func TreeRightIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTreeRight)))
+	})
+}
+
+// TreeRightNotNil applies the NotNil predicate on the "tree_right" field.
+func TreeRightNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTreeRight)))
+	})
+}
+
+// IsLeafEQ applies the EQ predicate on the "is_leaf" field.
+func IsLeafEQ(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIsLeaf), v))
+	})
+}
+
+// IsLeafNEQ applies the NEQ predicate on the "is_leaf" field.
+func IsLeafNEQ(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldIsLeaf), v))
+	})
+}
+
+// IsLeafIsNil applies the IsNil predicate on the "is_leaf" field.
+func IsLeafIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldIsLeaf)))
+	})
+}
+
+// IsLeafNotNil applies the NotNil predicate on the "is_leaf" field.
+func IsLeafNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldIsLeaf)))
+	})
+}
+
+// TreePathEQ applies the EQ predicate on the "tree_path" field.
+func TreePathEQ(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathNEQ applies the NEQ predicate on the "tree_path" field.
+func TreePathNEQ(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathIn applies the In predicate on the "tree_path" field.
+func TreePathIn(vs ...string) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTreePath), v...))
+	})
+}
+
+// TreePathNotIn applies the NotIn predicate on the "tree_path" field.
+func TreePathNotIn(vs ...string) predicate.SysDistrict {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTreePath), v...))
+	})
+}
+
+// TreePathGT applies the GT predicate on the "tree_path" field.
+func TreePathGT(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathGTE applies the GTE predicate on the "tree_path" field.
+func TreePathGTE(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathLT applies the LT predicate on the "tree_path" field.
+func TreePathLT(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathLTE applies the LTE predicate on the "tree_path" field.
+func TreePathLTE(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathContains applies the Contains predicate on the "tree_path" field.
+func TreePathContains(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathHasPrefix applies the HasPrefix predicate on the "tree_path" field.
+func TreePathHasPrefix(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathHasSuffix applies the HasSuffix predicate on the "tree_path" field.
+func TreePathHasSuffix(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathIsNil applies the IsNil predicate on the "tree_path" field.
+func TreePathIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTreePath)))
+	})
+}
+
+// TreePathNotNil applies the NotNil predicate on the "tree_path" field.
+func TreePathNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTreePath)))
+	})
+}
+
+// TreePathEqualFold applies the EqualFold predicate on the "tree_path" field.
+func TreePathEqualFold(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTreePath), v))
+	})
+}
+
+// TreePathContainsFold applies the ContainsFold predicate on the "tree_path" field.
+func TreePathContainsFold(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTreePath), v))
 	})
 }
 
@@ -2529,519 +3042,6 @@ func IsDirectIsNil() predicate.SysDistrict {
 func IsDirectNotNil() predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.NotNull(s.C(FieldIsDirect)))
-	})
-}
-
-// TreeIDEQ applies the EQ predicate on the "tree_id" field.
-func TreeIDEQ(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreeID), v))
-	})
-}
-
-// TreeIDNEQ applies the NEQ predicate on the "tree_id" field.
-func TreeIDNEQ(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldTreeID), v))
-	})
-}
-
-// TreeIDIn applies the In predicate on the "tree_id" field.
-func TreeIDIn(vs ...int32) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldTreeID), v...))
-	})
-}
-
-// TreeIDNotIn applies the NotIn predicate on the "tree_id" field.
-func TreeIDNotIn(vs ...int32) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldTreeID), v...))
-	})
-}
-
-// TreeIDGT applies the GT predicate on the "tree_id" field.
-func TreeIDGT(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTreeID), v))
-	})
-}
-
-// TreeIDGTE applies the GTE predicate on the "tree_id" field.
-func TreeIDGTE(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTreeID), v))
-	})
-}
-
-// TreeIDLT applies the LT predicate on the "tree_id" field.
-func TreeIDLT(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTreeID), v))
-	})
-}
-
-// TreeIDLTE applies the LTE predicate on the "tree_id" field.
-func TreeIDLTE(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTreeID), v))
-	})
-}
-
-// TreeIDIsNil applies the IsNil predicate on the "tree_id" field.
-func TreeIDIsNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldTreeID)))
-	})
-}
-
-// TreeIDNotNil applies the NotNil predicate on the "tree_id" field.
-func TreeIDNotNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldTreeID)))
-	})
-}
-
-// TreeLevelEQ applies the EQ predicate on the "tree_level" field.
-func TreeLevelEQ(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreeLevel), v))
-	})
-}
-
-// TreeLevelNEQ applies the NEQ predicate on the "tree_level" field.
-func TreeLevelNEQ(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldTreeLevel), v))
-	})
-}
-
-// TreeLevelIn applies the In predicate on the "tree_level" field.
-func TreeLevelIn(vs ...int32) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldTreeLevel), v...))
-	})
-}
-
-// TreeLevelNotIn applies the NotIn predicate on the "tree_level" field.
-func TreeLevelNotIn(vs ...int32) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldTreeLevel), v...))
-	})
-}
-
-// TreeLevelGT applies the GT predicate on the "tree_level" field.
-func TreeLevelGT(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTreeLevel), v))
-	})
-}
-
-// TreeLevelGTE applies the GTE predicate on the "tree_level" field.
-func TreeLevelGTE(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTreeLevel), v))
-	})
-}
-
-// TreeLevelLT applies the LT predicate on the "tree_level" field.
-func TreeLevelLT(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTreeLevel), v))
-	})
-}
-
-// TreeLevelLTE applies the LTE predicate on the "tree_level" field.
-func TreeLevelLTE(v int32) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTreeLevel), v))
-	})
-}
-
-// TreeLevelIsNil applies the IsNil predicate on the "tree_level" field.
-func TreeLevelIsNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldTreeLevel)))
-	})
-}
-
-// TreeLevelNotNil applies the NotNil predicate on the "tree_level" field.
-func TreeLevelNotNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldTreeLevel)))
-	})
-}
-
-// TreeLeftEQ applies the EQ predicate on the "tree_left" field.
-func TreeLeftEQ(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreeLeft), v))
-	})
-}
-
-// TreeLeftNEQ applies the NEQ predicate on the "tree_left" field.
-func TreeLeftNEQ(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldTreeLeft), v))
-	})
-}
-
-// TreeLeftIn applies the In predicate on the "tree_left" field.
-func TreeLeftIn(vs ...int64) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldTreeLeft), v...))
-	})
-}
-
-// TreeLeftNotIn applies the NotIn predicate on the "tree_left" field.
-func TreeLeftNotIn(vs ...int64) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldTreeLeft), v...))
-	})
-}
-
-// TreeLeftGT applies the GT predicate on the "tree_left" field.
-func TreeLeftGT(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTreeLeft), v))
-	})
-}
-
-// TreeLeftGTE applies the GTE predicate on the "tree_left" field.
-func TreeLeftGTE(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTreeLeft), v))
-	})
-}
-
-// TreeLeftLT applies the LT predicate on the "tree_left" field.
-func TreeLeftLT(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTreeLeft), v))
-	})
-}
-
-// TreeLeftLTE applies the LTE predicate on the "tree_left" field.
-func TreeLeftLTE(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTreeLeft), v))
-	})
-}
-
-// TreeLeftIsNil applies the IsNil predicate on the "tree_left" field.
-func TreeLeftIsNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldTreeLeft)))
-	})
-}
-
-// TreeLeftNotNil applies the NotNil predicate on the "tree_left" field.
-func TreeLeftNotNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldTreeLeft)))
-	})
-}
-
-// TreeRightEQ applies the EQ predicate on the "tree_right" field.
-func TreeRightEQ(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreeRight), v))
-	})
-}
-
-// TreeRightNEQ applies the NEQ predicate on the "tree_right" field.
-func TreeRightNEQ(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldTreeRight), v))
-	})
-}
-
-// TreeRightIn applies the In predicate on the "tree_right" field.
-func TreeRightIn(vs ...int64) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldTreeRight), v...))
-	})
-}
-
-// TreeRightNotIn applies the NotIn predicate on the "tree_right" field.
-func TreeRightNotIn(vs ...int64) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldTreeRight), v...))
-	})
-}
-
-// TreeRightGT applies the GT predicate on the "tree_right" field.
-func TreeRightGT(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTreeRight), v))
-	})
-}
-
-// TreeRightGTE applies the GTE predicate on the "tree_right" field.
-func TreeRightGTE(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTreeRight), v))
-	})
-}
-
-// TreeRightLT applies the LT predicate on the "tree_right" field.
-func TreeRightLT(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTreeRight), v))
-	})
-}
-
-// TreeRightLTE applies the LTE predicate on the "tree_right" field.
-func TreeRightLTE(v int64) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTreeRight), v))
-	})
-}
-
-// TreeRightIsNil applies the IsNil predicate on the "tree_right" field.
-func TreeRightIsNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldTreeRight)))
-	})
-}
-
-// TreeRightNotNil applies the NotNil predicate on the "tree_right" field.
-func TreeRightNotNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldTreeRight)))
-	})
-}
-
-// IsLeafEQ applies the EQ predicate on the "is_leaf" field.
-func IsLeafEQ(v bool) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsLeaf), v))
-	})
-}
-
-// IsLeafNEQ applies the NEQ predicate on the "is_leaf" field.
-func IsLeafNEQ(v bool) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldIsLeaf), v))
-	})
-}
-
-// IsLeafIsNil applies the IsNil predicate on the "is_leaf" field.
-func IsLeafIsNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldIsLeaf)))
-	})
-}
-
-// IsLeafNotNil applies the NotNil predicate on the "is_leaf" field.
-func IsLeafNotNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldIsLeaf)))
-	})
-}
-
-// TreePathEQ applies the EQ predicate on the "tree_path" field.
-func TreePathEQ(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathNEQ applies the NEQ predicate on the "tree_path" field.
-func TreePathNEQ(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathIn applies the In predicate on the "tree_path" field.
-func TreePathIn(vs ...string) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldTreePath), v...))
-	})
-}
-
-// TreePathNotIn applies the NotIn predicate on the "tree_path" field.
-func TreePathNotIn(vs ...string) predicate.SysDistrict {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldTreePath), v...))
-	})
-}
-
-// TreePathGT applies the GT predicate on the "tree_path" field.
-func TreePathGT(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathGTE applies the GTE predicate on the "tree_path" field.
-func TreePathGTE(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathLT applies the LT predicate on the "tree_path" field.
-func TreePathLT(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathLTE applies the LTE predicate on the "tree_path" field.
-func TreePathLTE(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathContains applies the Contains predicate on the "tree_path" field.
-func TreePathContains(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathHasPrefix applies the HasPrefix predicate on the "tree_path" field.
-func TreePathHasPrefix(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathHasSuffix applies the HasSuffix predicate on the "tree_path" field.
-func TreePathHasSuffix(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathIsNil applies the IsNil predicate on the "tree_path" field.
-func TreePathIsNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldTreePath)))
-	})
-}
-
-// TreePathNotNil applies the NotNil predicate on the "tree_path" field.
-func TreePathNotNil() predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldTreePath)))
-	})
-}
-
-// TreePathEqualFold applies the EqualFold predicate on the "tree_path" field.
-func TreePathEqualFold(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldTreePath), v))
-	})
-}
-
-// TreePathContainsFold applies the ContainsFold predicate on the "tree_path" field.
-func TreePathContainsFold(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldTreePath), v))
 	})
 }
 

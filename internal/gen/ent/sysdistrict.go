@@ -13,21 +13,33 @@ import (
 
 // SysDistrict is the model entity for the SysDistrict schema.
 type SysDistrict struct {
-	config `json:"-"`
+	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
-	// 排序, 在数据库里的排序
-	Sort int32 `json:"sort,omitempty"`
+	// sort
+	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// 创建时间,由程序自动生成
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	// 更新时间,由程序自动生成
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	// 删除时间,
+	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	// update time
+	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
+	// tree id
+	TreeID *int64 `json:"tree_id"`
+	// level in tree, toppest level is 1
+	TreeLevel *int64 `json:"level"`
+	// mptt's left
+	TreeLeft *int64 `json:"tree_left"`
+	// mptt's right
+	TreeRight *int64 `json:"tree_right"`
+	// is leaf node
+	IsLeaf *bool `json:"is_leaf"`
+	// tree path,topest is null or zero length string, subber has fathers ids join by slash(/), eg: pid1/pid2
+	TreePath *string `json:"tree_path"`
 	// 名称
 	Name *string `json:"name,omitempty"`
 	// 短名称
@@ -64,18 +76,6 @@ type SysDistrict struct {
 	IsReal *bool `json:"is_real,omitempty"`
 	// 是否是直辖
 	IsDirect *bool `json:"is_direct,omitempty"`
-	// tree_id
-	TreeID *int32 `json:"tree_id"`
-	// 层级
-	TreeLevel *int32 `json:"level"`
-	// mptt左值
-	TreeLeft *int64 `json:"tree_left"`
-	// mptt右值
-	TreeRight *int64 `json:"tree_right"`
-	// 是否是子叶
-	IsLeaf *bool `json:"is_leaf"`
-	// TreePath holds the value of the "tree_path" field.
-	TreePath *string `json:"tree_path"`
 	// 创建者
 	Creator string `json:"creator,omitempty"`
 }
@@ -85,13 +85,13 @@ func (*SysDistrict) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysdistrict.FieldIsDel, sysdistrict.FieldIsActive, sysdistrict.FieldIsHot, sysdistrict.FieldIsReal, sysdistrict.FieldIsDirect, sysdistrict.FieldIsLeaf:
+		case sysdistrict.FieldIsDel, sysdistrict.FieldIsActive, sysdistrict.FieldIsLeaf, sysdistrict.FieldIsHot, sysdistrict.FieldIsReal, sysdistrict.FieldIsDirect:
 			values[i] = new(sql.NullBool)
 		case sysdistrict.FieldLongitude, sysdistrict.FieldLatitude:
 			values[i] = new(sql.NullFloat64)
 		case sysdistrict.FieldSort, sysdistrict.FieldTreeID, sysdistrict.FieldTreeLevel, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
-		case sysdistrict.FieldID, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldAbbr, sysdistrict.FieldStcode, sysdistrict.FieldInitials, sysdistrict.FieldPinyin, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldZipCode, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldExtra, sysdistrict.FieldSuffix, sysdistrict.FieldTreePath, sysdistrict.FieldCreator:
+		case sysdistrict.FieldID, sysdistrict.FieldTreePath, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldAbbr, sysdistrict.FieldStcode, sysdistrict.FieldInitials, sysdistrict.FieldPinyin, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldZipCode, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldExtra, sysdistrict.FieldSuffix, sysdistrict.FieldCreator:
 			values[i] = new(sql.NullString)
 		case sysdistrict.FieldCreatedAt, sysdistrict.FieldUpdatedAt, sysdistrict.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -152,6 +152,48 @@ func (sd *SysDistrict) assignValues(columns []string, values []interface{}) erro
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
 				sd.IsActive = value.Bool
+			}
+		case sysdistrict.FieldTreeID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_id", values[i])
+			} else if value.Valid {
+				sd.TreeID = new(int64)
+				*sd.TreeID = value.Int64
+			}
+		case sysdistrict.FieldTreeLevel:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_level", values[i])
+			} else if value.Valid {
+				sd.TreeLevel = new(int64)
+				*sd.TreeLevel = value.Int64
+			}
+		case sysdistrict.FieldTreeLeft:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_left", values[i])
+			} else if value.Valid {
+				sd.TreeLeft = new(int64)
+				*sd.TreeLeft = value.Int64
+			}
+		case sysdistrict.FieldTreeRight:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_right", values[i])
+			} else if value.Valid {
+				sd.TreeRight = new(int64)
+				*sd.TreeRight = value.Int64
+			}
+		case sysdistrict.FieldIsLeaf:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_leaf", values[i])
+			} else if value.Valid {
+				sd.IsLeaf = new(bool)
+				*sd.IsLeaf = value.Bool
+			}
+		case sysdistrict.FieldTreePath:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_path", values[i])
+			} else if value.Valid {
+				sd.TreePath = new(string)
+				*sd.TreePath = value.String
 			}
 		case sysdistrict.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -279,48 +321,6 @@ func (sd *SysDistrict) assignValues(columns []string, values []interface{}) erro
 				sd.IsDirect = new(bool)
 				*sd.IsDirect = value.Bool
 			}
-		case sysdistrict.FieldTreeID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tree_id", values[i])
-			} else if value.Valid {
-				sd.TreeID = new(int32)
-				*sd.TreeID = int32(value.Int64)
-			}
-		case sysdistrict.FieldTreeLevel:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tree_level", values[i])
-			} else if value.Valid {
-				sd.TreeLevel = new(int32)
-				*sd.TreeLevel = int32(value.Int64)
-			}
-		case sysdistrict.FieldTreeLeft:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tree_left", values[i])
-			} else if value.Valid {
-				sd.TreeLeft = new(int64)
-				*sd.TreeLeft = value.Int64
-			}
-		case sysdistrict.FieldTreeRight:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field tree_right", values[i])
-			} else if value.Valid {
-				sd.TreeRight = new(int64)
-				*sd.TreeRight = value.Int64
-			}
-		case sysdistrict.FieldIsLeaf:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_leaf", values[i])
-			} else if value.Valid {
-				sd.IsLeaf = new(bool)
-				*sd.IsLeaf = value.Bool
-			}
-		case sysdistrict.FieldTreePath:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field tree_path", values[i])
-			} else if value.Valid {
-				sd.TreePath = new(string)
-				*sd.TreePath = value.String
-			}
 		case sysdistrict.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -374,6 +374,36 @@ func (sd *SysDistrict) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
 	builder.WriteString(fmt.Sprintf("%v", sd.IsActive))
+	builder.WriteString(", ")
+	if v := sd.TreeID; v != nil {
+		builder.WriteString("tree_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := sd.TreeLevel; v != nil {
+		builder.WriteString("tree_level=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := sd.TreeLeft; v != nil {
+		builder.WriteString("tree_left=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := sd.TreeRight; v != nil {
+		builder.WriteString("tree_right=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := sd.IsLeaf; v != nil {
+		builder.WriteString("is_leaf=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := sd.TreePath; v != nil {
+		builder.WriteString("tree_path=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	if v := sd.Name; v != nil {
 		builder.WriteString("name=")
@@ -463,36 +493,6 @@ func (sd *SysDistrict) String() string {
 	if v := sd.IsDirect; v != nil {
 		builder.WriteString("is_direct=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := sd.TreeID; v != nil {
-		builder.WriteString("tree_id=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := sd.TreeLevel; v != nil {
-		builder.WriteString("tree_level=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := sd.TreeLeft; v != nil {
-		builder.WriteString("tree_left=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := sd.TreeRight; v != nil {
-		builder.WriteString("tree_right=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := sd.IsLeaf; v != nil {
-		builder.WriteString("is_leaf=")
-		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := sd.TreePath; v != nil {
-		builder.WriteString("tree_path=")
-		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	builder.WriteString("creator=")

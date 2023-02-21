@@ -262,9 +262,6 @@ func (sdic *SysDictItemCreate) check() error {
 	if _, ok := sdic.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysDictItem.is_del"`)}
 	}
-	if _, ok := sdic.mutation.Memo(); !ok {
-		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "SysDictItem.memo"`)}
-	}
 	if v, ok := sdic.mutation.Memo(); ok {
 		if err := sysdictitem.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysDictItem.memo": %w`, err)}
@@ -356,7 +353,7 @@ func (sdic *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec)
 			Value:  value,
 			Column: sysdictitem.FieldMemo,
 		})
-		_node.Memo = value
+		_node.Memo = &value
 	}
 	if value, ok := sdic.mutation.Sort(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

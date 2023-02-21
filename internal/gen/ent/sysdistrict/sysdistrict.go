@@ -23,6 +23,18 @@ const (
 	FieldDeletedAt = "dltd_at"
 	// FieldIsActive holds the string denoting the is_active field in the database.
 	FieldIsActive = "is_active"
+	// FieldTreeID holds the string denoting the tree_id field in the database.
+	FieldTreeID = "tree_id"
+	// FieldTreeLevel holds the string denoting the tree_level field in the database.
+	FieldTreeLevel = "tree_level"
+	// FieldTreeLeft holds the string denoting the tree_left field in the database.
+	FieldTreeLeft = "tree_left"
+	// FieldTreeRight holds the string denoting the tree_right field in the database.
+	FieldTreeRight = "tree_right"
+	// FieldIsLeaf holds the string denoting the is_leaf field in the database.
+	FieldIsLeaf = "is_leaf"
+	// FieldTreePath holds the string denoting the tree_path field in the database.
+	FieldTreePath = "t_path"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
 	// FieldSname holds the string denoting the sname field in the database.
@@ -59,18 +71,6 @@ const (
 	FieldIsReal = "is_r"
 	// FieldIsDirect holds the string denoting the is_direct field in the database.
 	FieldIsDirect = "is_d"
-	// FieldTreeID holds the string denoting the tree_id field in the database.
-	FieldTreeID = "tree_id"
-	// FieldTreeLevel holds the string denoting the tree_level field in the database.
-	FieldTreeLevel = "tree_level"
-	// FieldTreeLeft holds the string denoting the tree_left field in the database.
-	FieldTreeLeft = "tree_left"
-	// FieldTreeRight holds the string denoting the tree_right field in the database.
-	FieldTreeRight = "tree_right"
-	// FieldIsLeaf holds the string denoting the is_leaf field in the database.
-	FieldIsLeaf = "is_leaf"
-	// FieldTreePath holds the string denoting the tree_path field in the database.
-	FieldTreePath = "t_path"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// Table holds the table name of the sysdistrict in the database.
@@ -86,6 +86,12 @@ var Columns = []string{
 	FieldUpdatedAt,
 	FieldDeletedAt,
 	FieldIsActive,
+	FieldTreeID,
+	FieldTreeLevel,
+	FieldTreeLeft,
+	FieldTreeRight,
+	FieldIsLeaf,
+	FieldTreePath,
 	FieldName,
 	FieldSname,
 	FieldAbbr,
@@ -104,12 +110,6 @@ var Columns = []string{
 	FieldIsHot,
 	FieldIsReal,
 	FieldIsDirect,
-	FieldTreeID,
-	FieldTreeLevel,
-	FieldTreeLeft,
-	FieldTreeRight,
-	FieldIsLeaf,
-	FieldTreePath,
 	FieldCreator,
 }
 
@@ -136,6 +136,8 @@ var (
 	UpdateDefaultUpdatedAt func() time.Time
 	// DefaultIsActive holds the default value on creation for the "is_active" field.
 	DefaultIsActive bool
+	// DefaultIsLeaf holds the default value on creation for the "is_leaf" field.
+	DefaultIsLeaf bool
 	// StcodeValidator is a validator for the "stcode" field. It is called by the builders before save.
 	StcodeValidator func(string) error
 	// InitialsValidator is a validator for the "initials" field. It is called by the builders before save.
@@ -160,8 +162,6 @@ var (
 	DefaultIsReal bool
 	// DefaultIsDirect holds the default value on creation for the "is_direct" field.
 	DefaultIsDirect bool
-	// DefaultIsLeaf holds the default value on creation for the "is_leaf" field.
-	DefaultIsLeaf bool
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

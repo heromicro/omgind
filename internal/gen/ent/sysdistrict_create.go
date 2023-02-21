@@ -104,6 +104,90 @@ func (sdc *SysDistrictCreate) SetNillableIsActive(b *bool) *SysDistrictCreate {
 	return sdc
 }
 
+// SetTreeID sets the "tree_id" field.
+func (sdc *SysDistrictCreate) SetTreeID(i int64) *SysDistrictCreate {
+	sdc.mutation.SetTreeID(i)
+	return sdc
+}
+
+// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableTreeID(i *int64) *SysDistrictCreate {
+	if i != nil {
+		sdc.SetTreeID(*i)
+	}
+	return sdc
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (sdc *SysDistrictCreate) SetTreeLevel(i int64) *SysDistrictCreate {
+	sdc.mutation.SetTreeLevel(i)
+	return sdc
+}
+
+// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableTreeLevel(i *int64) *SysDistrictCreate {
+	if i != nil {
+		sdc.SetTreeLevel(*i)
+	}
+	return sdc
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (sdc *SysDistrictCreate) SetTreeLeft(i int64) *SysDistrictCreate {
+	sdc.mutation.SetTreeLeft(i)
+	return sdc
+}
+
+// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableTreeLeft(i *int64) *SysDistrictCreate {
+	if i != nil {
+		sdc.SetTreeLeft(*i)
+	}
+	return sdc
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (sdc *SysDistrictCreate) SetTreeRight(i int64) *SysDistrictCreate {
+	sdc.mutation.SetTreeRight(i)
+	return sdc
+}
+
+// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableTreeRight(i *int64) *SysDistrictCreate {
+	if i != nil {
+		sdc.SetTreeRight(*i)
+	}
+	return sdc
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (sdc *SysDistrictCreate) SetIsLeaf(b bool) *SysDistrictCreate {
+	sdc.mutation.SetIsLeaf(b)
+	return sdc
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableIsLeaf(b *bool) *SysDistrictCreate {
+	if b != nil {
+		sdc.SetIsLeaf(*b)
+	}
+	return sdc
+}
+
+// SetTreePath sets the "tree_path" field.
+func (sdc *SysDistrictCreate) SetTreePath(s string) *SysDistrictCreate {
+	sdc.mutation.SetTreePath(s)
+	return sdc
+}
+
+// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableTreePath(s *string) *SysDistrictCreate {
+	if s != nil {
+		sdc.SetTreePath(*s)
+	}
+	return sdc
+}
+
 // SetName sets the "name" field.
 func (sdc *SysDistrictCreate) SetName(s string) *SysDistrictCreate {
 	sdc.mutation.SetName(s)
@@ -356,90 +440,6 @@ func (sdc *SysDistrictCreate) SetNillableIsDirect(b *bool) *SysDistrictCreate {
 	return sdc
 }
 
-// SetTreeID sets the "tree_id" field.
-func (sdc *SysDistrictCreate) SetTreeID(i int32) *SysDistrictCreate {
-	sdc.mutation.SetTreeID(i)
-	return sdc
-}
-
-// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeID(i *int32) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetTreeID(*i)
-	}
-	return sdc
-}
-
-// SetTreeLevel sets the "tree_level" field.
-func (sdc *SysDistrictCreate) SetTreeLevel(i int32) *SysDistrictCreate {
-	sdc.mutation.SetTreeLevel(i)
-	return sdc
-}
-
-// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeLevel(i *int32) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetTreeLevel(*i)
-	}
-	return sdc
-}
-
-// SetTreeLeft sets the "tree_left" field.
-func (sdc *SysDistrictCreate) SetTreeLeft(i int64) *SysDistrictCreate {
-	sdc.mutation.SetTreeLeft(i)
-	return sdc
-}
-
-// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeLeft(i *int64) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetTreeLeft(*i)
-	}
-	return sdc
-}
-
-// SetTreeRight sets the "tree_right" field.
-func (sdc *SysDistrictCreate) SetTreeRight(i int64) *SysDistrictCreate {
-	sdc.mutation.SetTreeRight(i)
-	return sdc
-}
-
-// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeRight(i *int64) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetTreeRight(*i)
-	}
-	return sdc
-}
-
-// SetIsLeaf sets the "is_leaf" field.
-func (sdc *SysDistrictCreate) SetIsLeaf(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsLeaf(b)
-	return sdc
-}
-
-// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsLeaf(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsLeaf(*b)
-	}
-	return sdc
-}
-
-// SetTreePath sets the "tree_path" field.
-func (sdc *SysDistrictCreate) SetTreePath(s string) *SysDistrictCreate {
-	sdc.mutation.SetTreePath(s)
-	return sdc
-}
-
-// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreePath(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetTreePath(*s)
-	}
-	return sdc
-}
-
 // SetCreator sets the "creator" field.
 func (sdc *SysDistrictCreate) SetCreator(s string) *SysDistrictCreate {
 	sdc.mutation.SetCreator(s)
@@ -557,6 +557,10 @@ func (sdc *SysDistrictCreate) defaults() {
 		v := sysdistrict.DefaultIsActive
 		sdc.mutation.SetIsActive(v)
 	}
+	if _, ok := sdc.mutation.IsLeaf(); !ok {
+		v := sysdistrict.DefaultIsLeaf
+		sdc.mutation.SetIsLeaf(v)
+	}
 	if _, ok := sdc.mutation.IsHot(); !ok {
 		v := sysdistrict.DefaultIsHot
 		sdc.mutation.SetIsHot(v)
@@ -568,10 +572,6 @@ func (sdc *SysDistrictCreate) defaults() {
 	if _, ok := sdc.mutation.IsDirect(); !ok {
 		v := sysdistrict.DefaultIsDirect
 		sdc.mutation.SetIsDirect(v)
-	}
-	if _, ok := sdc.mutation.IsLeaf(); !ok {
-		v := sysdistrict.DefaultIsLeaf
-		sdc.mutation.SetIsLeaf(v)
 	}
 	if _, ok := sdc.mutation.ID(); !ok {
 		v := sysdistrict.DefaultID()
@@ -733,6 +733,54 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 		})
 		_node.IsActive = value
 	}
+	if value, ok := sdc.mutation.TreeID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeID,
+		})
+		_node.TreeID = &value
+	}
+	if value, ok := sdc.mutation.TreeLevel(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLevel,
+		})
+		_node.TreeLevel = &value
+	}
+	if value, ok := sdc.mutation.TreeLeft(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeLeft,
+		})
+		_node.TreeLeft = &value
+	}
+	if value, ok := sdc.mutation.TreeRight(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Value:  value,
+			Column: sysdistrict.FieldTreeRight,
+		})
+		_node.TreeRight = &value
+	}
+	if value, ok := sdc.mutation.IsLeaf(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdistrict.FieldIsLeaf,
+		})
+		_node.IsLeaf = &value
+	}
+	if value, ok := sdc.mutation.TreePath(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysdistrict.FieldTreePath,
+		})
+		_node.TreePath = &value
+	}
 	if value, ok := sdc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -876,54 +924,6 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 			Column: sysdistrict.FieldIsDirect,
 		})
 		_node.IsDirect = &value
-	}
-	if value, ok := sdc.mutation.TreeID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
-		_node.TreeID = &value
-	}
-	if value, ok := sdc.mutation.TreeLevel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
-		_node.TreeLevel = &value
-	}
-	if value, ok := sdc.mutation.TreeLeft(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
-		_node.TreeLeft = &value
-	}
-	if value, ok := sdc.mutation.TreeRight(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
-		_node.TreeRight = &value
-	}
-	if value, ok := sdc.mutation.IsLeaf(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsLeaf,
-		})
-		_node.IsLeaf = &value
-	}
-	if value, ok := sdc.mutation.TreePath(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldTreePath,
-		})
-		_node.TreePath = &value
 	}
 	if value, ok := sdc.mutation.Creator(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

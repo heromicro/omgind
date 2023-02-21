@@ -240,6 +240,20 @@ func MemoHasSuffix(v string) predicate.SysJwtBlock {
 	})
 }
 
+// MemoIsNil applies the IsNil predicate on the "memo" field.
+func MemoIsNil() predicate.SysJwtBlock {
+	return predicate.SysJwtBlock(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldMemo)))
+	})
+}
+
+// MemoNotNil applies the NotNil predicate on the "memo" field.
+func MemoNotNil() predicate.SysJwtBlock {
+	return predicate.SysJwtBlock(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldMemo)))
+	})
+}
+
 // MemoEqualFold applies the EqualFold predicate on the "memo" field.
 func MemoEqualFold(v string) predicate.SysJwtBlock {
 	return predicate.SysJwtBlock(func(s *sql.Selector) {

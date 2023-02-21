@@ -268,9 +268,6 @@ func (smac *SysMenuActionCreate) check() error {
 	if _, ok := smac.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysMenuAction.is_active"`)}
 	}
-	if _, ok := smac.mutation.Memo(); !ok {
-		return &ValidationError{Name: "memo", err: errors.New(`ent: missing required field "SysMenuAction.memo"`)}
-	}
 	if v, ok := smac.mutation.Memo(); ok {
 		if err := sysmenuaction.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysMenuAction.memo": %w`, err)}
@@ -377,7 +374,7 @@ func (smac *SysMenuActionCreate) createSpec() (*SysMenuAction, *sqlgraph.CreateS
 			Value:  value,
 			Column: sysmenuaction.FieldMemo,
 		})
-		_node.Memo = value
+		_node.Memo = &value
 	}
 	if value, ok := smac.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

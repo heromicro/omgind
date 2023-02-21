@@ -56,6 +56,12 @@ func (sjbu *SysJwtBlockUpdate) SetNillableMemo(s *string) *SysJwtBlockUpdate {
 	return sjbu
 }
 
+// ClearMemo clears the value of the "memo" field.
+func (sjbu *SysJwtBlockUpdate) ClearMemo() *SysJwtBlockUpdate {
+	sjbu.mutation.ClearMemo()
+	return sjbu
+}
+
 // SetUpdatedAt sets the "updated_at" field.
 func (sjbu *SysJwtBlockUpdate) SetUpdatedAt(t time.Time) *SysJwtBlockUpdate {
 	sjbu.mutation.SetUpdatedAt(t)
@@ -223,6 +229,12 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysjwtblock.FieldMemo,
 		})
 	}
+	if sjbu.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysjwtblock.FieldMemo,
+		})
+	}
 	if value, ok := sjbu.mutation.UpdatedAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -301,6 +313,12 @@ func (sjbuo *SysJwtBlockUpdateOne) SetNillableMemo(s *string) *SysJwtBlockUpdate
 	if s != nil {
 		sjbuo.SetMemo(*s)
 	}
+	return sjbuo
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (sjbuo *SysJwtBlockUpdateOne) ClearMemo() *SysJwtBlockUpdateOne {
+	sjbuo.mutation.ClearMemo()
 	return sjbuo
 }
 
@@ -498,6 +516,12 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: sysjwtblock.FieldMemo,
+		})
+	}
+	if sjbuo.mutation.MemoCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: sysjwtblock.FieldMemo,
 		})
 	}

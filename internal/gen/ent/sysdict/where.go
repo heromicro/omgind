@@ -254,6 +254,20 @@ func MemoHasSuffix(v string) predicate.SysDict {
 	})
 }
 
+// MemoIsNil applies the IsNil predicate on the "memo" field.
+func MemoIsNil() predicate.SysDict {
+	return predicate.SysDict(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldMemo)))
+	})
+}
+
+// MemoNotNil applies the NotNil predicate on the "memo" field.
+func MemoNotNil() predicate.SysDict {
+	return predicate.SysDict(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldMemo)))
+	})
+}
+
 // MemoEqualFold applies the EqualFold predicate on the "memo" field.
 func MemoEqualFold(v string) predicate.SysDict {
 	return predicate.SysDict(func(s *sql.Selector) {
