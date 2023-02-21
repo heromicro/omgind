@@ -14,34 +14,18 @@ type TimeMixin struct {
 }
 
 func (TimeMixin) Fields() []ent.Field {
+
 	return []ent.Field{
-
-		field.Time("created_at").
-			StorageKey("crtd_at").
-			StructTag(`json:"created_at,omitempty" sql:"crtd_at"`).
-			Immutable().
-			Default(time.Now).
-			Comment("创建时间,由程序自动生成"),
-
-		field.Time("updated_at").
-			StorageKey("uptd_at").
-			StructTag(`json:"updated_at,omitempty" sql:"uptd_at"`).
-			Default(time.Now).
-			UpdateDefault(time.Now).
-			Comment("update time"),
-
-		field.Time("deleted_at").
-			StorageKey("dltd_at").Nillable().Optional().
-			StructTag(`json:"deleted_at,omitempty"`).
-			Comment("delete time,"),
+		FieldCreateAt(),
+		FielUpdatedAt(),
+		FielDeletedAt(),
 	}
 }
 
 func (TimeMixin) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("created_at"),
-		index.Fields("updated_at"),
-		index.Fields("deleted_at"),
+		IndexCreateAt(),
+		IndexDeletedAt(),
 	}
 }
 

@@ -21,7 +21,7 @@ func (m SortMixin) Fields() []ent.Field {
 
 func (m SortMixin) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("sort"),
+		IndexSort(),
 	}
 }
 

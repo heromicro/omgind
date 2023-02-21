@@ -21,7 +21,7 @@ func (OwnerMixin) Fields() []ent.Field {
 func (a OwnerMixin) Indexes() []ent.Index {
 
 	return []ent.Index{
-		index.Fields("owner_id"),
+		IndexOwnerID(),
 	}
 }
 

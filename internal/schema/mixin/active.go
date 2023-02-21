@@ -19,7 +19,7 @@ func (ActiveMixin) Fields() []ent.Field {
 
 func (a ActiveMixin) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("is_active"),
+		IndexActive(),
 	}
 }
 

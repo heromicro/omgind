@@ -21,7 +21,7 @@ func (OrganMixin) Fields() []ent.Field {
 func (a OrganMixin) Indexes() []ent.Index {
 
 	return []ent.Index{
-		index.Fields("org_id"),
+		IndexOrgID(),
 	}
 }
 
