@@ -100,7 +100,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	global.RdsCli = redisCli
 
 	// 初始化依赖注入器
-	injector, injectorCleanFunc, err := BuildInjector()
+	injector, injectorCleanFunc, err := BuildInjector(global.CFG)
 	if err != nil {
 		return nil, err
 	}

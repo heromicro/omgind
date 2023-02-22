@@ -13,6 +13,7 @@ import (
 	"github.com/heromicro/omgind/internal/router"
 	"github.com/heromicro/omgind/internal/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/pkg/config"
 )
 
 import (
@@ -22,12 +23,12 @@ import (
 // Injectors from wire.go:
 
 // BuildInjector 生成注入器
-func BuildInjector() (*Injector, func(), error) {
+func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	auther, cleanup, err := InitAuth()
 	if err != nil {
 		return nil, nil, err
 	}
-	client, cleanup2, err := schema.New()
+	client, cleanup2, err := schema.New(cfg)
 	if err != nil {
 		cleanup()
 		return nil, nil, err

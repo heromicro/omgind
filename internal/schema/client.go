@@ -18,7 +18,6 @@ import (
 
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/pkg/config"
-	"github.com/heromicro/omgind/pkg/global"
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jackc/pgx/v4/stdlib"
@@ -26,9 +25,9 @@ import (
 )
 
 // 初始化ent存储
-func New() (*ent.Client, func(), error) {
-	cfg := global.CFG.Ent
-	cli, cleanFunc, err := NewEntClient(global.CFG)
+func New(acfg *config.AppConfig) (*ent.Client, func(), error) {
+	cfg := acfg.Ent
+	cli, cleanFunc, err := NewEntClient(acfg)
 	if err != nil {
 		return nil, cleanFunc, err
 	}
@@ -59,7 +58,7 @@ func New() (*ent.Client, func(), error) {
 
 // NewGormDB 创建DB实例
 func NewEntClient(cfg *config.AppConfig) (*ent.Client, func(), error) {
-	// cfg := global.CFG
+
 	var dsn string
 
 	switch cfg.Ent.DBType {

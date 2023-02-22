@@ -10,6 +10,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/service"
 	"github.com/heromicro/omgind/internal/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/pkg/config"
 
 	// "github.com/heromicro/omgind/internal/app/api_v2/mock"
 	"github.com/google/wire"
@@ -19,9 +20,11 @@ import (
 )
 
 // BuildInjector 生成注入器
-func BuildInjector() (*Injector, func(), error) {
+func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
+
 	wire.Build(
 		// mock.MockSet,
+		// config.ProviderSet,
 		schema.ProviderSet,
 
 		InitRedisCli,
