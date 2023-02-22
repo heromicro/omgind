@@ -13,7 +13,6 @@ package main
 import (
 	"github.com/heromicro/omgind/cmd/omgind/enter"
 	"github.com/heromicro/omgind/pkg/logger"
-	// "github.com/spf13/cobra"
 )
 
 // VERSION 版本号，可以通过编译的方式指定版本号：go build -ldflags "-X main.VERSION=x.x.x"
@@ -31,6 +30,5 @@ var VERSION = "7.0.0"
 // @contact.email wky@foal.com
 func main() {
 	logger.SetVersion(VERSION)
-	// ctx := logger.NewTagContext(context.Background(), "__main__")
 	enter.Execute()
 }

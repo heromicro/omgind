@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/heromicro/omgind/cmd/omgind/migrate"
 	"github.com/heromicro/omgind/cmd/omgind/version"
 	"github.com/heromicro/omgind/cmd/omgind/web"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -30,6 +32,7 @@ func init() {
 
 	rootCmd.AddCommand(web.Cmd)
 	rootCmd.AddCommand(version.Cmd)
+	rootCmd.AddCommand(migrate.Cmd)
 
 }
 
