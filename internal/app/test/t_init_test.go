@@ -34,7 +34,7 @@ func init() {
 	// global.CFG.Gorm.Debug = false
 	// global.CFG.Gorm.DBType = "sqlite3"
 
-	injector, _, err := app.BuildInjector()
+	injector, _, err := app.BuildInjector(global.CFG)
 	if err != nil {
 		panic(err)
 	}
