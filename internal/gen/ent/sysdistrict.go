@@ -47,7 +47,7 @@ type SysDistrict struct {
 	// 简称Abbreviation
 	Abbr *string `json:"abbr,omitempty"`
 	// 统计局区域编码
-	Stcode *string `json:"stcode,omitempty"`
+	StCode *string `json:"st_code,omitempty"`
 	// 简拼
 	Initials *string `json:"initials,omitempty"`
 	// 简拼
@@ -74,6 +74,8 @@ type SysDistrict struct {
 	IsHot *bool `json:"is_hot,omitempty"`
 	// 是否虚拟区域
 	IsReal *bool `json:"is_real,omitempty"`
+	// 是否虚拟区域
+	IsMain *bool `json:"is_main,omitempty"`
 	// 是否是直辖
 	IsDirect *bool `json:"is_direct,omitempty"`
 	// 创建者
@@ -85,13 +87,13 @@ func (*SysDistrict) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysdistrict.FieldIsDel, sysdistrict.FieldIsActive, sysdistrict.FieldIsLeaf, sysdistrict.FieldIsHot, sysdistrict.FieldIsReal, sysdistrict.FieldIsDirect:
+		case sysdistrict.FieldIsDel, sysdistrict.FieldIsActive, sysdistrict.FieldIsLeaf, sysdistrict.FieldIsHot, sysdistrict.FieldIsReal, sysdistrict.FieldIsMain, sysdistrict.FieldIsDirect:
 			values[i] = new(sql.NullBool)
 		case sysdistrict.FieldLongitude, sysdistrict.FieldLatitude:
 			values[i] = new(sql.NullFloat64)
 		case sysdistrict.FieldSort, sysdistrict.FieldTreeID, sysdistrict.FieldTreeLevel, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
-		case sysdistrict.FieldID, sysdistrict.FieldTreePath, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldAbbr, sysdistrict.FieldStcode, sysdistrict.FieldInitials, sysdistrict.FieldPinyin, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldZipCode, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldExtra, sysdistrict.FieldSuffix, sysdistrict.FieldCreator:
+		case sysdistrict.FieldID, sysdistrict.FieldTreePath, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldAbbr, sysdistrict.FieldStCode, sysdistrict.FieldInitials, sysdistrict.FieldPinyin, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldZipCode, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldExtra, sysdistrict.FieldSuffix, sysdistrict.FieldCreator:
 			values[i] = new(sql.NullString)
 		case sysdistrict.FieldCreatedAt, sysdistrict.FieldUpdatedAt, sysdistrict.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -216,12 +218,12 @@ func (sd *SysDistrict) assignValues(columns []string, values []interface{}) erro
 				sd.Abbr = new(string)
 				*sd.Abbr = value.String
 			}
-		case sysdistrict.FieldStcode:
+		case sysdistrict.FieldStCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field stcode", values[i])
+				return fmt.Errorf("unexpected type %T for field st_code", values[i])
 			} else if value.Valid {
-				sd.Stcode = new(string)
-				*sd.Stcode = value.String
+				sd.StCode = new(string)
+				*sd.StCode = value.String
 			}
 		case sysdistrict.FieldInitials:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -313,6 +315,13 @@ func (sd *SysDistrict) assignValues(columns []string, values []interface{}) erro
 			} else if value.Valid {
 				sd.IsReal = new(bool)
 				*sd.IsReal = value.Bool
+			}
+		case sysdistrict.FieldIsMain:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_main", values[i])
+			} else if value.Valid {
+				sd.IsMain = new(bool)
+				*sd.IsMain = value.Bool
 			}
 		case sysdistrict.FieldIsDirect:
 			if value, ok := values[i].(*sql.NullBool); !ok {
@@ -420,8 +429,8 @@ func (sd *SysDistrict) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Stcode; v != nil {
-		builder.WriteString("stcode=")
+	if v := sd.StCode; v != nil {
+		builder.WriteString("st_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -487,6 +496,11 @@ func (sd *SysDistrict) String() string {
 	builder.WriteString(", ")
 	if v := sd.IsReal; v != nil {
 		builder.WriteString("is_real=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := sd.IsMain; v != nil {
+		builder.WriteString("is_main=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")

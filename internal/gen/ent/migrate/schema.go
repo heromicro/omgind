@@ -144,6 +144,7 @@ var (
 		{Name: "suffix", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "is_hot", Type: field.TypeBool, Nullable: true, Default: false},
 		{Name: "is_r", Type: field.TypeBool, Nullable: true, Default: true},
+		{Name: "is_m", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "is_d", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "creator", Type: field.TypeString, Size: 36},
 	}

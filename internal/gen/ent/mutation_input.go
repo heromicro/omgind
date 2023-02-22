@@ -241,7 +241,7 @@ type CreateSysDistrictInput struct {
 	Name       *string
 	Sname      *string
 	Abbr       *string
-	Stcode     *string
+	StCode     *string
 	Initials   *string
 	Pinyin     *string
 	ParentID   *string
@@ -255,6 +255,7 @@ type CreateSysDistrictInput struct {
 	Suffix     *string
 	IsHot      *bool
 	IsReal     *bool
+	IsMain     *bool
 	IsDirect   *bool
 	Creator    string
 }
@@ -306,8 +307,8 @@ func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
 	if v := i.Abbr; v != nil {
 		m.SetAbbr(*v)
 	}
-	if v := i.Stcode; v != nil {
-		m.SetStcode(*v)
+	if v := i.StCode; v != nil {
+		m.SetStCode(*v)
 	}
 	if v := i.Initials; v != nil {
 		m.SetInitials(*v)
@@ -348,6 +349,9 @@ func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
 	if v := i.IsReal; v != nil {
 		m.SetIsReal(*v)
 	}
+	if v := i.IsMain; v != nil {
+		m.SetIsMain(*v)
+	}
 	if v := i.IsDirect; v != nil {
 		m.SetIsDirect(*v)
 	}
@@ -386,8 +390,8 @@ type UpdateSysDistrictInput struct {
 	ClearSname      bool
 	Abbr            *string
 	ClearAbbr       bool
-	Stcode          *string
-	ClearStcode     bool
+	StCode          *string
+	ClearStCode     bool
 	Initials        *string
 	ClearInitials   bool
 	Pinyin          *string
@@ -414,6 +418,8 @@ type UpdateSysDistrictInput struct {
 	ClearIsHot      bool
 	IsReal          *bool
 	ClearIsReal     bool
+	IsMain          *bool
+	ClearIsMain     bool
 	IsDirect        *bool
 	ClearIsDirect   bool
 	Creator         *string
@@ -493,11 +499,11 @@ func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
 	if v := i.Abbr; v != nil {
 		m.SetAbbr(*v)
 	}
-	if i.ClearStcode {
-		m.ClearStcode()
+	if i.ClearStCode {
+		m.ClearStCode()
 	}
-	if v := i.Stcode; v != nil {
-		m.SetStcode(*v)
+	if v := i.StCode; v != nil {
+		m.SetStCode(*v)
 	}
 	if i.ClearInitials {
 		m.ClearInitials()
@@ -576,6 +582,12 @@ func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
 	}
 	if v := i.IsReal; v != nil {
 		m.SetIsReal(*v)
+	}
+	if i.ClearIsMain {
+		m.ClearIsMain()
+	}
+	if v := i.IsMain; v != nil {
+		m.SetIsMain(*v)
 	}
 	if i.ClearIsDirect {
 		m.ClearIsDirect()

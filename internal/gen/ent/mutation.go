@@ -1816,7 +1816,7 @@ type SysDistrictMutation struct {
 	name          *string
 	sname         *string
 	abbr          *string
-	stcode        *string
+	st_code       *string
 	initials      *string
 	pinyin        *string
 	parent_id     *string
@@ -1832,6 +1832,7 @@ type SysDistrictMutation struct {
 	suffix        *string
 	is_hot        *bool
 	is_real       *bool
+	is_main       *bool
 	is_direct     *bool
 	creator       *string
 	clearedFields map[string]struct{}
@@ -2718,53 +2719,53 @@ func (m *SysDistrictMutation) ResetAbbr() {
 	delete(m.clearedFields, sysdistrict.FieldAbbr)
 }
 
-// SetStcode sets the "stcode" field.
-func (m *SysDistrictMutation) SetStcode(s string) {
-	m.stcode = &s
+// SetStCode sets the "st_code" field.
+func (m *SysDistrictMutation) SetStCode(s string) {
+	m.st_code = &s
 }
 
-// Stcode returns the value of the "stcode" field in the mutation.
-func (m *SysDistrictMutation) Stcode() (r string, exists bool) {
-	v := m.stcode
+// StCode returns the value of the "st_code" field in the mutation.
+func (m *SysDistrictMutation) StCode() (r string, exists bool) {
+	v := m.st_code
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStcode returns the old "stcode" field's value of the SysDistrict entity.
+// OldStCode returns the old "st_code" field's value of the SysDistrict entity.
 // If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysDistrictMutation) OldStcode(ctx context.Context) (v *string, err error) {
+func (m *SysDistrictMutation) OldStCode(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStcode is only allowed on UpdateOne operations")
+		return v, errors.New("OldStCode is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStcode requires an ID field in the mutation")
+		return v, errors.New("OldStCode requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStcode: %w", err)
+		return v, fmt.Errorf("querying old value for OldStCode: %w", err)
 	}
-	return oldValue.Stcode, nil
+	return oldValue.StCode, nil
 }
 
-// ClearStcode clears the value of the "stcode" field.
-func (m *SysDistrictMutation) ClearStcode() {
-	m.stcode = nil
-	m.clearedFields[sysdistrict.FieldStcode] = struct{}{}
+// ClearStCode clears the value of the "st_code" field.
+func (m *SysDistrictMutation) ClearStCode() {
+	m.st_code = nil
+	m.clearedFields[sysdistrict.FieldStCode] = struct{}{}
 }
 
-// StcodeCleared returns if the "stcode" field was cleared in this mutation.
-func (m *SysDistrictMutation) StcodeCleared() bool {
-	_, ok := m.clearedFields[sysdistrict.FieldStcode]
+// StCodeCleared returns if the "st_code" field was cleared in this mutation.
+func (m *SysDistrictMutation) StCodeCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldStCode]
 	return ok
 }
 
-// ResetStcode resets all changes to the "stcode" field.
-func (m *SysDistrictMutation) ResetStcode() {
-	m.stcode = nil
-	delete(m.clearedFields, sysdistrict.FieldStcode)
+// ResetStCode resets all changes to the "st_code" field.
+func (m *SysDistrictMutation) ResetStCode() {
+	m.st_code = nil
+	delete(m.clearedFields, sysdistrict.FieldStCode)
 }
 
 // SetInitials sets the "initials" field.
@@ -3446,6 +3447,55 @@ func (m *SysDistrictMutation) ResetIsReal() {
 	delete(m.clearedFields, sysdistrict.FieldIsReal)
 }
 
+// SetIsMain sets the "is_main" field.
+func (m *SysDistrictMutation) SetIsMain(b bool) {
+	m.is_main = &b
+}
+
+// IsMain returns the value of the "is_main" field in the mutation.
+func (m *SysDistrictMutation) IsMain() (r bool, exists bool) {
+	v := m.is_main
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsMain returns the old "is_main" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldIsMain(ctx context.Context) (v *bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsMain is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsMain requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsMain: %w", err)
+	}
+	return oldValue.IsMain, nil
+}
+
+// ClearIsMain clears the value of the "is_main" field.
+func (m *SysDistrictMutation) ClearIsMain() {
+	m.is_main = nil
+	m.clearedFields[sysdistrict.FieldIsMain] = struct{}{}
+}
+
+// IsMainCleared returns if the "is_main" field was cleared in this mutation.
+func (m *SysDistrictMutation) IsMainCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldIsMain]
+	return ok
+}
+
+// ResetIsMain resets all changes to the "is_main" field.
+func (m *SysDistrictMutation) ResetIsMain() {
+	m.is_main = nil
+	delete(m.clearedFields, sysdistrict.FieldIsMain)
+}
+
 // SetIsDirect sets the "is_direct" field.
 func (m *SysDistrictMutation) SetIsDirect(b bool) {
 	m.is_direct = &b
@@ -3550,7 +3600,7 @@ func (m *SysDistrictMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysDistrictMutation) Fields() []string {
-	fields := make([]string, 0, 31)
+	fields := make([]string, 0, 32)
 	if m.is_del != nil {
 		fields = append(fields, sysdistrict.FieldIsDel)
 	}
@@ -3596,8 +3646,8 @@ func (m *SysDistrictMutation) Fields() []string {
 	if m.abbr != nil {
 		fields = append(fields, sysdistrict.FieldAbbr)
 	}
-	if m.stcode != nil {
-		fields = append(fields, sysdistrict.FieldStcode)
+	if m.st_code != nil {
+		fields = append(fields, sysdistrict.FieldStCode)
 	}
 	if m.initials != nil {
 		fields = append(fields, sysdistrict.FieldInitials)
@@ -3637,6 +3687,9 @@ func (m *SysDistrictMutation) Fields() []string {
 	}
 	if m.is_real != nil {
 		fields = append(fields, sysdistrict.FieldIsReal)
+	}
+	if m.is_main != nil {
+		fields = append(fields, sysdistrict.FieldIsMain)
 	}
 	if m.is_direct != nil {
 		fields = append(fields, sysdistrict.FieldIsDirect)
@@ -3682,8 +3735,8 @@ func (m *SysDistrictMutation) Field(name string) (ent.Value, bool) {
 		return m.Sname()
 	case sysdistrict.FieldAbbr:
 		return m.Abbr()
-	case sysdistrict.FieldStcode:
-		return m.Stcode()
+	case sysdistrict.FieldStCode:
+		return m.StCode()
 	case sysdistrict.FieldInitials:
 		return m.Initials()
 	case sysdistrict.FieldPinyin:
@@ -3710,6 +3763,8 @@ func (m *SysDistrictMutation) Field(name string) (ent.Value, bool) {
 		return m.IsHot()
 	case sysdistrict.FieldIsReal:
 		return m.IsReal()
+	case sysdistrict.FieldIsMain:
+		return m.IsMain()
 	case sysdistrict.FieldIsDirect:
 		return m.IsDirect()
 	case sysdistrict.FieldCreator:
@@ -3753,8 +3808,8 @@ func (m *SysDistrictMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldSname(ctx)
 	case sysdistrict.FieldAbbr:
 		return m.OldAbbr(ctx)
-	case sysdistrict.FieldStcode:
-		return m.OldStcode(ctx)
+	case sysdistrict.FieldStCode:
+		return m.OldStCode(ctx)
 	case sysdistrict.FieldInitials:
 		return m.OldInitials(ctx)
 	case sysdistrict.FieldPinyin:
@@ -3781,6 +3836,8 @@ func (m *SysDistrictMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldIsHot(ctx)
 	case sysdistrict.FieldIsReal:
 		return m.OldIsReal(ctx)
+	case sysdistrict.FieldIsMain:
+		return m.OldIsMain(ctx)
 	case sysdistrict.FieldIsDirect:
 		return m.OldIsDirect(ctx)
 	case sysdistrict.FieldCreator:
@@ -3899,12 +3956,12 @@ func (m *SysDistrictMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetAbbr(v)
 		return nil
-	case sysdistrict.FieldStcode:
+	case sysdistrict.FieldStCode:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStcode(v)
+		m.SetStCode(v)
 		return nil
 	case sysdistrict.FieldInitials:
 		v, ok := value.(string)
@@ -3996,6 +4053,13 @@ func (m *SysDistrictMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIsReal(v)
+		return nil
+	case sysdistrict.FieldIsMain:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsMain(v)
 		return nil
 	case sysdistrict.FieldIsDirect:
 		v, ok := value.(bool)
@@ -4158,8 +4222,8 @@ func (m *SysDistrictMutation) ClearedFields() []string {
 	if m.FieldCleared(sysdistrict.FieldAbbr) {
 		fields = append(fields, sysdistrict.FieldAbbr)
 	}
-	if m.FieldCleared(sysdistrict.FieldStcode) {
-		fields = append(fields, sysdistrict.FieldStcode)
+	if m.FieldCleared(sysdistrict.FieldStCode) {
+		fields = append(fields, sysdistrict.FieldStCode)
 	}
 	if m.FieldCleared(sysdistrict.FieldInitials) {
 		fields = append(fields, sysdistrict.FieldInitials)
@@ -4199,6 +4263,9 @@ func (m *SysDistrictMutation) ClearedFields() []string {
 	}
 	if m.FieldCleared(sysdistrict.FieldIsReal) {
 		fields = append(fields, sysdistrict.FieldIsReal)
+	}
+	if m.FieldCleared(sysdistrict.FieldIsMain) {
+		fields = append(fields, sysdistrict.FieldIsMain)
 	}
 	if m.FieldCleared(sysdistrict.FieldIsDirect) {
 		fields = append(fields, sysdistrict.FieldIsDirect)
@@ -4247,8 +4314,8 @@ func (m *SysDistrictMutation) ClearField(name string) error {
 	case sysdistrict.FieldAbbr:
 		m.ClearAbbr()
 		return nil
-	case sysdistrict.FieldStcode:
-		m.ClearStcode()
+	case sysdistrict.FieldStCode:
+		m.ClearStCode()
 		return nil
 	case sysdistrict.FieldInitials:
 		m.ClearInitials()
@@ -4288,6 +4355,9 @@ func (m *SysDistrictMutation) ClearField(name string) error {
 		return nil
 	case sysdistrict.FieldIsReal:
 		m.ClearIsReal()
+		return nil
+	case sysdistrict.FieldIsMain:
+		m.ClearIsMain()
 		return nil
 	case sysdistrict.FieldIsDirect:
 		m.ClearIsDirect()
@@ -4345,8 +4415,8 @@ func (m *SysDistrictMutation) ResetField(name string) error {
 	case sysdistrict.FieldAbbr:
 		m.ResetAbbr()
 		return nil
-	case sysdistrict.FieldStcode:
-		m.ResetStcode()
+	case sysdistrict.FieldStCode:
+		m.ResetStCode()
 		return nil
 	case sysdistrict.FieldInitials:
 		m.ResetInitials()
@@ -4386,6 +4456,9 @@ func (m *SysDistrictMutation) ResetField(name string) error {
 		return nil
 	case sysdistrict.FieldIsReal:
 		m.ResetIsReal()
+		return nil
+	case sysdistrict.FieldIsMain:
+		m.ResetIsMain()
 		return nil
 	case sysdistrict.FieldIsDirect:
 		m.ResetIsDirect()

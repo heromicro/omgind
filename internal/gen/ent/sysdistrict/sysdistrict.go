@@ -41,8 +41,8 @@ const (
 	FieldSname = "sname"
 	// FieldAbbr holds the string denoting the abbr field in the database.
 	FieldAbbr = "abbr"
-	// FieldStcode holds the string denoting the stcode field in the database.
-	FieldStcode = "stcode"
+	// FieldStCode holds the string denoting the st_code field in the database.
+	FieldStCode = "stcode"
 	// FieldInitials holds the string denoting the initials field in the database.
 	FieldInitials = "initials"
 	// FieldPinyin holds the string denoting the pinyin field in the database.
@@ -69,6 +69,8 @@ const (
 	FieldIsHot = "is_hot"
 	// FieldIsReal holds the string denoting the is_real field in the database.
 	FieldIsReal = "is_r"
+	// FieldIsMain holds the string denoting the is_main field in the database.
+	FieldIsMain = "is_m"
 	// FieldIsDirect holds the string denoting the is_direct field in the database.
 	FieldIsDirect = "is_d"
 	// FieldCreator holds the string denoting the creator field in the database.
@@ -95,7 +97,7 @@ var Columns = []string{
 	FieldName,
 	FieldSname,
 	FieldAbbr,
-	FieldStcode,
+	FieldStCode,
 	FieldInitials,
 	FieldPinyin,
 	FieldParentID,
@@ -109,6 +111,7 @@ var Columns = []string{
 	FieldSuffix,
 	FieldIsHot,
 	FieldIsReal,
+	FieldIsMain,
 	FieldIsDirect,
 	FieldCreator,
 }
@@ -144,8 +147,8 @@ var (
 	SnameValidator func(string) error
 	// AbbrValidator is a validator for the "abbr" field. It is called by the builders before save.
 	AbbrValidator func(string) error
-	// StcodeValidator is a validator for the "stcode" field. It is called by the builders before save.
-	StcodeValidator func(string) error
+	// StCodeValidator is a validator for the "st_code" field. It is called by the builders before save.
+	StCodeValidator func(string) error
 	// InitialsValidator is a validator for the "initials" field. It is called by the builders before save.
 	InitialsValidator func(string) error
 	// PinyinValidator is a validator for the "pinyin" field. It is called by the builders before save.
@@ -168,6 +171,8 @@ var (
 	DefaultIsHot bool
 	// DefaultIsReal holds the default value on creation for the "is_real" field.
 	DefaultIsReal bool
+	// DefaultIsMain holds the default value on creation for the "is_main" field.
+	DefaultIsMain bool
 	// DefaultIsDirect holds the default value on creation for the "is_direct" field.
 	DefaultIsDirect bool
 	// CreatorValidator is a validator for the "creator" field. It is called by the builders before save.

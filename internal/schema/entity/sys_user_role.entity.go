@@ -21,7 +21,7 @@ func (syr SysUserRole) Mixin() []ent.Mixin {
 // Fields of the SysUserRole.
 func (SysUserRole) Fields() []ent.Field {
 	return []ent.Field{
-		//mixin.IdField(),
+		//mixin.IdField_ulid(),
 
 		field.String("user_id").MaxLen(36).NotEmpty().Comment("用户ID, sys_user.id"),
 		field.String("role_id").MaxLen(36).NotEmpty().Comment("角色ID, sys_role.id"),

@@ -24,12 +24,13 @@ func (SysDistrict) Mixin() []ent.Mixin {
 func (SysDistrict) Fields() []ent.Field {
 
 	return []ent.Field{
+
 		field.String("name").MaxLen(128).Nillable().Optional().StorageKey("name").Comment("名称"),
 		field.String("sname").MaxLen(64).Nillable().Optional().StorageKey("sname").Comment("短名称"),
 
 		field.String("abbr").MaxLen(16).Nillable().Optional().StorageKey("abbr").Comment("简称Abbreviation"),
 
-		field.String("stcode").MaxLen(16).Nillable().Optional().StorageKey("stcode").Comment("统计局区域编码"),
+		field.String("st_code").MaxLen(16).Nillable().Optional().StorageKey("stcode").Comment("统计局区域编码"),
 		field.String("initials").MaxLen(32).Nillable().Optional().StorageKey("initials").Comment("简拼"),
 		field.String("pinyin").MaxLen(128).Nillable().Optional().StorageKey("pinyin").Comment("简拼"),
 
@@ -46,6 +47,7 @@ func (SysDistrict) Fields() []ent.Field {
 
 		field.Bool("is_hot").Default(false).Nillable().Optional().Comment("热门城市"),
 		field.Bool("is_real").Default(true).Nillable().Optional().StorageKey("is_r").Comment("是否虚拟区域"),
+		field.Bool("is_main").Default(true).Nillable().Optional().StorageKey("is_m").Comment("是否虚拟区域"),
 		field.Bool("is_direct").Default(true).Nillable().Optional().StorageKey("is_d").Comment("是否是直辖"),
 
 		field.String("creator").MaxLen(36).StorageKey("creator").Comment("创建者"),

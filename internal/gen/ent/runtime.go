@@ -228,10 +228,10 @@ func init() {
 	sysdistrictDescAbbr := sysdistrictFields[2].Descriptor()
 	// sysdistrict.AbbrValidator is a validator for the "abbr" field. It is called by the builders before save.
 	sysdistrict.AbbrValidator = sysdistrictDescAbbr.Validators[0].(func(string) error)
-	// sysdistrictDescStcode is the schema descriptor for stcode field.
-	sysdistrictDescStcode := sysdistrictFields[3].Descriptor()
-	// sysdistrict.StcodeValidator is a validator for the "stcode" field. It is called by the builders before save.
-	sysdistrict.StcodeValidator = sysdistrictDescStcode.Validators[0].(func(string) error)
+	// sysdistrictDescStCode is the schema descriptor for st_code field.
+	sysdistrictDescStCode := sysdistrictFields[3].Descriptor()
+	// sysdistrict.StCodeValidator is a validator for the "st_code" field. It is called by the builders before save.
+	sysdistrict.StCodeValidator = sysdistrictDescStCode.Validators[0].(func(string) error)
 	// sysdistrictDescInitials is the schema descriptor for initials field.
 	sysdistrictDescInitials := sysdistrictFields[4].Descriptor()
 	// sysdistrict.InitialsValidator is a validator for the "initials" field. It is called by the builders before save.
@@ -276,12 +276,16 @@ func init() {
 	sysdistrictDescIsReal := sysdistrictFields[16].Descriptor()
 	// sysdistrict.DefaultIsReal holds the default value on creation for the is_real field.
 	sysdistrict.DefaultIsReal = sysdistrictDescIsReal.Default.(bool)
+	// sysdistrictDescIsMain is the schema descriptor for is_main field.
+	sysdistrictDescIsMain := sysdistrictFields[17].Descriptor()
+	// sysdistrict.DefaultIsMain holds the default value on creation for the is_main field.
+	sysdistrict.DefaultIsMain = sysdistrictDescIsMain.Default.(bool)
 	// sysdistrictDescIsDirect is the schema descriptor for is_direct field.
-	sysdistrictDescIsDirect := sysdistrictFields[17].Descriptor()
+	sysdistrictDescIsDirect := sysdistrictFields[18].Descriptor()
 	// sysdistrict.DefaultIsDirect holds the default value on creation for the is_direct field.
 	sysdistrict.DefaultIsDirect = sysdistrictDescIsDirect.Default.(bool)
 	// sysdistrictDescCreator is the schema descriptor for creator field.
-	sysdistrictDescCreator := sysdistrictFields[18].Descriptor()
+	sysdistrictDescCreator := sysdistrictFields[19].Descriptor()
 	// sysdistrict.CreatorValidator is a validator for the "creator" field. It is called by the builders before save.
 	sysdistrict.CreatorValidator = sysdistrictDescCreator.Validators[0].(func(string) error)
 	// sysdistrictDescID is the schema descriptor for id field.

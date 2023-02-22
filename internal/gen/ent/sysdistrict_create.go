@@ -230,16 +230,16 @@ func (sdc *SysDistrictCreate) SetNillableAbbr(s *string) *SysDistrictCreate {
 	return sdc
 }
 
-// SetStcode sets the "stcode" field.
-func (sdc *SysDistrictCreate) SetStcode(s string) *SysDistrictCreate {
-	sdc.mutation.SetStcode(s)
+// SetStCode sets the "st_code" field.
+func (sdc *SysDistrictCreate) SetStCode(s string) *SysDistrictCreate {
+	sdc.mutation.SetStCode(s)
 	return sdc
 }
 
-// SetNillableStcode sets the "stcode" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableStcode(s *string) *SysDistrictCreate {
+// SetNillableStCode sets the "st_code" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableStCode(s *string) *SysDistrictCreate {
 	if s != nil {
-		sdc.SetStcode(*s)
+		sdc.SetStCode(*s)
 	}
 	return sdc
 }
@@ -426,6 +426,20 @@ func (sdc *SysDistrictCreate) SetNillableIsReal(b *bool) *SysDistrictCreate {
 	return sdc
 }
 
+// SetIsMain sets the "is_main" field.
+func (sdc *SysDistrictCreate) SetIsMain(b bool) *SysDistrictCreate {
+	sdc.mutation.SetIsMain(b)
+	return sdc
+}
+
+// SetNillableIsMain sets the "is_main" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableIsMain(b *bool) *SysDistrictCreate {
+	if b != nil {
+		sdc.SetIsMain(*b)
+	}
+	return sdc
+}
+
 // SetIsDirect sets the "is_direct" field.
 func (sdc *SysDistrictCreate) SetIsDirect(b bool) *SysDistrictCreate {
 	sdc.mutation.SetIsDirect(b)
@@ -569,6 +583,10 @@ func (sdc *SysDistrictCreate) defaults() {
 		v := sysdistrict.DefaultIsReal
 		sdc.mutation.SetIsReal(v)
 	}
+	if _, ok := sdc.mutation.IsMain(); !ok {
+		v := sysdistrict.DefaultIsMain
+		sdc.mutation.SetIsMain(v)
+	}
 	if _, ok := sdc.mutation.IsDirect(); !ok {
 		v := sysdistrict.DefaultIsDirect
 		sdc.mutation.SetIsDirect(v)
@@ -611,9 +629,9 @@ func (sdc *SysDistrictCreate) check() error {
 			return &ValidationError{Name: "abbr", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.abbr": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.Stcode(); ok {
-		if err := sysdistrict.StcodeValidator(v); err != nil {
-			return &ValidationError{Name: "stcode", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.stcode": %w`, err)}
+	if v, ok := sdc.mutation.StCode(); ok {
+		if err := sysdistrict.StCodeValidator(v); err != nil {
+			return &ValidationError{Name: "st_code", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.st_code": %w`, err)}
 		}
 	}
 	if v, ok := sdc.mutation.Initials(); ok {
@@ -830,13 +848,13 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 		})
 		_node.Abbr = &value
 	}
-	if value, ok := sdc.mutation.Stcode(); ok {
+	if value, ok := sdc.mutation.StCode(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysdistrict.FieldStcode,
+			Column: sysdistrict.FieldStCode,
 		})
-		_node.Stcode = &value
+		_node.StCode = &value
 	}
 	if value, ok := sdc.mutation.Initials(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -941,6 +959,14 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 			Column: sysdistrict.FieldIsReal,
 		})
 		_node.IsReal = &value
+	}
+	if value, ok := sdc.mutation.IsMain(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdistrict.FieldIsMain,
+		})
+		_node.IsMain = &value
 	}
 	if value, ok := sdc.mutation.IsDirect(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

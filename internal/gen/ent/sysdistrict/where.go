@@ -185,10 +185,10 @@ func Abbr(v string) predicate.SysDistrict {
 	})
 }
 
-// Stcode applies equality check predicate on the "stcode" field. It's identical to StcodeEQ.
-func Stcode(v string) predicate.SysDistrict {
+// StCode applies equality check predicate on the "st_code" field. It's identical to StCodeEQ.
+func StCode(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldStcode), v))
+		s.Where(sql.EQ(s.C(FieldStCode), v))
 	})
 }
 
@@ -280,6 +280,13 @@ func IsHot(v bool) predicate.SysDistrict {
 func IsReal(v bool) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldIsReal), v))
+	})
+}
+
+// IsMain applies equality check predicate on the "is_main" field. It's identical to IsMainEQ.
+func IsMain(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIsMain), v))
 	})
 }
 
@@ -1531,22 +1538,22 @@ func AbbrContainsFold(v string) predicate.SysDistrict {
 	})
 }
 
-// StcodeEQ applies the EQ predicate on the "stcode" field.
-func StcodeEQ(v string) predicate.SysDistrict {
+// StCodeEQ applies the EQ predicate on the "st_code" field.
+func StCodeEQ(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldStcode), v))
+		s.Where(sql.EQ(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeNEQ applies the NEQ predicate on the "stcode" field.
-func StcodeNEQ(v string) predicate.SysDistrict {
+// StCodeNEQ applies the NEQ predicate on the "st_code" field.
+func StCodeNEQ(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldStcode), v))
+		s.Where(sql.NEQ(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeIn applies the In predicate on the "stcode" field.
-func StcodeIn(vs ...string) predicate.SysDistrict {
+// StCodeIn applies the In predicate on the "st_code" field.
+func StCodeIn(vs ...string) predicate.SysDistrict {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1558,12 +1565,12 @@ func StcodeIn(vs ...string) predicate.SysDistrict {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldStcode), v...))
+		s.Where(sql.In(s.C(FieldStCode), v...))
 	})
 }
 
-// StcodeNotIn applies the NotIn predicate on the "stcode" field.
-func StcodeNotIn(vs ...string) predicate.SysDistrict {
+// StCodeNotIn applies the NotIn predicate on the "st_code" field.
+func StCodeNotIn(vs ...string) predicate.SysDistrict {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1575,84 +1582,84 @@ func StcodeNotIn(vs ...string) predicate.SysDistrict {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldStcode), v...))
+		s.Where(sql.NotIn(s.C(FieldStCode), v...))
 	})
 }
 
-// StcodeGT applies the GT predicate on the "stcode" field.
-func StcodeGT(v string) predicate.SysDistrict {
+// StCodeGT applies the GT predicate on the "st_code" field.
+func StCodeGT(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldStcode), v))
+		s.Where(sql.GT(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeGTE applies the GTE predicate on the "stcode" field.
-func StcodeGTE(v string) predicate.SysDistrict {
+// StCodeGTE applies the GTE predicate on the "st_code" field.
+func StCodeGTE(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldStcode), v))
+		s.Where(sql.GTE(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeLT applies the LT predicate on the "stcode" field.
-func StcodeLT(v string) predicate.SysDistrict {
+// StCodeLT applies the LT predicate on the "st_code" field.
+func StCodeLT(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldStcode), v))
+		s.Where(sql.LT(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeLTE applies the LTE predicate on the "stcode" field.
-func StcodeLTE(v string) predicate.SysDistrict {
+// StCodeLTE applies the LTE predicate on the "st_code" field.
+func StCodeLTE(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldStcode), v))
+		s.Where(sql.LTE(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeContains applies the Contains predicate on the "stcode" field.
-func StcodeContains(v string) predicate.SysDistrict {
+// StCodeContains applies the Contains predicate on the "st_code" field.
+func StCodeContains(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldStcode), v))
+		s.Where(sql.Contains(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeHasPrefix applies the HasPrefix predicate on the "stcode" field.
-func StcodeHasPrefix(v string) predicate.SysDistrict {
+// StCodeHasPrefix applies the HasPrefix predicate on the "st_code" field.
+func StCodeHasPrefix(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldStcode), v))
+		s.Where(sql.HasPrefix(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeHasSuffix applies the HasSuffix predicate on the "stcode" field.
-func StcodeHasSuffix(v string) predicate.SysDistrict {
+// StCodeHasSuffix applies the HasSuffix predicate on the "st_code" field.
+func StCodeHasSuffix(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldStcode), v))
+		s.Where(sql.HasSuffix(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeIsNil applies the IsNil predicate on the "stcode" field.
-func StcodeIsNil() predicate.SysDistrict {
+// StCodeIsNil applies the IsNil predicate on the "st_code" field.
+func StCodeIsNil() predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldStcode)))
+		s.Where(sql.IsNull(s.C(FieldStCode)))
 	})
 }
 
-// StcodeNotNil applies the NotNil predicate on the "stcode" field.
-func StcodeNotNil() predicate.SysDistrict {
+// StCodeNotNil applies the NotNil predicate on the "st_code" field.
+func StCodeNotNil() predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldStcode)))
+		s.Where(sql.NotNull(s.C(FieldStCode)))
 	})
 }
 
-// StcodeEqualFold applies the EqualFold predicate on the "stcode" field.
-func StcodeEqualFold(v string) predicate.SysDistrict {
+// StCodeEqualFold applies the EqualFold predicate on the "st_code" field.
+func StCodeEqualFold(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldStcode), v))
+		s.Where(sql.EqualFold(s.C(FieldStCode), v))
 	})
 }
 
-// StcodeContainsFold applies the ContainsFold predicate on the "stcode" field.
-func StcodeContainsFold(v string) predicate.SysDistrict {
+// StCodeContainsFold applies the ContainsFold predicate on the "st_code" field.
+func StCodeContainsFold(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldStcode), v))
+		s.Where(sql.ContainsFold(s.C(FieldStCode), v))
 	})
 }
 
@@ -3014,6 +3021,34 @@ func IsRealIsNil() predicate.SysDistrict {
 func IsRealNotNil() predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.NotNull(s.C(FieldIsReal)))
+	})
+}
+
+// IsMainEQ applies the EQ predicate on the "is_main" field.
+func IsMainEQ(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIsMain), v))
+	})
+}
+
+// IsMainNEQ applies the NEQ predicate on the "is_main" field.
+func IsMainNEQ(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldIsMain), v))
+	})
+}
+
+// IsMainIsNil applies the IsNil predicate on the "is_main" field.
+func IsMainIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldIsMain)))
+	})
+}
+
+// IsMainNotNil applies the NotNil predicate on the "is_main" field.
+func IsMainNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldIsMain)))
 	})
 }
 

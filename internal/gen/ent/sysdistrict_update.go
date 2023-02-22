@@ -311,23 +311,23 @@ func (sdu *SysDistrictUpdate) ClearAbbr() *SysDistrictUpdate {
 	return sdu
 }
 
-// SetStcode sets the "stcode" field.
-func (sdu *SysDistrictUpdate) SetStcode(s string) *SysDistrictUpdate {
-	sdu.mutation.SetStcode(s)
+// SetStCode sets the "st_code" field.
+func (sdu *SysDistrictUpdate) SetStCode(s string) *SysDistrictUpdate {
+	sdu.mutation.SetStCode(s)
 	return sdu
 }
 
-// SetNillableStcode sets the "stcode" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableStcode(s *string) *SysDistrictUpdate {
+// SetNillableStCode sets the "st_code" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableStCode(s *string) *SysDistrictUpdate {
 	if s != nil {
-		sdu.SetStcode(*s)
+		sdu.SetStCode(*s)
 	}
 	return sdu
 }
 
-// ClearStcode clears the value of the "stcode" field.
-func (sdu *SysDistrictUpdate) ClearStcode() *SysDistrictUpdate {
-	sdu.mutation.ClearStcode()
+// ClearStCode clears the value of the "st_code" field.
+func (sdu *SysDistrictUpdate) ClearStCode() *SysDistrictUpdate {
+	sdu.mutation.ClearStCode()
 	return sdu
 }
 
@@ -605,6 +605,26 @@ func (sdu *SysDistrictUpdate) ClearIsReal() *SysDistrictUpdate {
 	return sdu
 }
 
+// SetIsMain sets the "is_main" field.
+func (sdu *SysDistrictUpdate) SetIsMain(b bool) *SysDistrictUpdate {
+	sdu.mutation.SetIsMain(b)
+	return sdu
+}
+
+// SetNillableIsMain sets the "is_main" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableIsMain(b *bool) *SysDistrictUpdate {
+	if b != nil {
+		sdu.SetIsMain(*b)
+	}
+	return sdu
+}
+
+// ClearIsMain clears the value of the "is_main" field.
+func (sdu *SysDistrictUpdate) ClearIsMain() *SysDistrictUpdate {
+	sdu.mutation.ClearIsMain()
+	return sdu
+}
+
 // SetIsDirect sets the "is_direct" field.
 func (sdu *SysDistrictUpdate) SetIsDirect(b bool) *SysDistrictUpdate {
 	sdu.mutation.SetIsDirect(b)
@@ -722,9 +742,9 @@ func (sdu *SysDistrictUpdate) check() error {
 			return &ValidationError{Name: "abbr", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.abbr": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.Stcode(); ok {
-		if err := sysdistrict.StcodeValidator(v); err != nil {
-			return &ValidationError{Name: "stcode", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.stcode": %w`, err)}
+	if v, ok := sdu.mutation.StCode(); ok {
+		if err := sysdistrict.StCodeValidator(v); err != nil {
+			return &ValidationError{Name: "st_code", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.st_code": %w`, err)}
 		}
 	}
 	if v, ok := sdu.mutation.Initials(); ok {
@@ -991,17 +1011,17 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysdistrict.FieldAbbr,
 		})
 	}
-	if value, ok := sdu.mutation.Stcode(); ok {
+	if value, ok := sdu.mutation.StCode(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysdistrict.FieldStcode,
+			Column: sysdistrict.FieldStCode,
 		})
 	}
-	if sdu.mutation.StcodeCleared() {
+	if sdu.mutation.StCodeCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: sysdistrict.FieldStcode,
+			Column: sysdistrict.FieldStCode,
 		})
 	}
 	if value, ok := sdu.mutation.Initials(); ok {
@@ -1185,6 +1205,19 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Column: sysdistrict.FieldIsReal,
+		})
+	}
+	if value, ok := sdu.mutation.IsMain(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdistrict.FieldIsMain,
+		})
+	}
+	if sdu.mutation.IsMainCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Column: sysdistrict.FieldIsMain,
 		})
 	}
 	if value, ok := sdu.mutation.IsDirect(); ok {
@@ -1509,23 +1542,23 @@ func (sduo *SysDistrictUpdateOne) ClearAbbr() *SysDistrictUpdateOne {
 	return sduo
 }
 
-// SetStcode sets the "stcode" field.
-func (sduo *SysDistrictUpdateOne) SetStcode(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetStcode(s)
+// SetStCode sets the "st_code" field.
+func (sduo *SysDistrictUpdateOne) SetStCode(s string) *SysDistrictUpdateOne {
+	sduo.mutation.SetStCode(s)
 	return sduo
 }
 
-// SetNillableStcode sets the "stcode" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableStcode(s *string) *SysDistrictUpdateOne {
+// SetNillableStCode sets the "st_code" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableStCode(s *string) *SysDistrictUpdateOne {
 	if s != nil {
-		sduo.SetStcode(*s)
+		sduo.SetStCode(*s)
 	}
 	return sduo
 }
 
-// ClearStcode clears the value of the "stcode" field.
-func (sduo *SysDistrictUpdateOne) ClearStcode() *SysDistrictUpdateOne {
-	sduo.mutation.ClearStcode()
+// ClearStCode clears the value of the "st_code" field.
+func (sduo *SysDistrictUpdateOne) ClearStCode() *SysDistrictUpdateOne {
+	sduo.mutation.ClearStCode()
 	return sduo
 }
 
@@ -1803,6 +1836,26 @@ func (sduo *SysDistrictUpdateOne) ClearIsReal() *SysDistrictUpdateOne {
 	return sduo
 }
 
+// SetIsMain sets the "is_main" field.
+func (sduo *SysDistrictUpdateOne) SetIsMain(b bool) *SysDistrictUpdateOne {
+	sduo.mutation.SetIsMain(b)
+	return sduo
+}
+
+// SetNillableIsMain sets the "is_main" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableIsMain(b *bool) *SysDistrictUpdateOne {
+	if b != nil {
+		sduo.SetIsMain(*b)
+	}
+	return sduo
+}
+
+// ClearIsMain clears the value of the "is_main" field.
+func (sduo *SysDistrictUpdateOne) ClearIsMain() *SysDistrictUpdateOne {
+	sduo.mutation.ClearIsMain()
+	return sduo
+}
+
 // SetIsDirect sets the "is_direct" field.
 func (sduo *SysDistrictUpdateOne) SetIsDirect(b bool) *SysDistrictUpdateOne {
 	sduo.mutation.SetIsDirect(b)
@@ -1933,9 +1986,9 @@ func (sduo *SysDistrictUpdateOne) check() error {
 			return &ValidationError{Name: "abbr", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.abbr": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.Stcode(); ok {
-		if err := sysdistrict.StcodeValidator(v); err != nil {
-			return &ValidationError{Name: "stcode", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.stcode": %w`, err)}
+	if v, ok := sduo.mutation.StCode(); ok {
+		if err := sysdistrict.StCodeValidator(v); err != nil {
+			return &ValidationError{Name: "st_code", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.st_code": %w`, err)}
 		}
 	}
 	if v, ok := sduo.mutation.Initials(); ok {
@@ -2219,17 +2272,17 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Column: sysdistrict.FieldAbbr,
 		})
 	}
-	if value, ok := sduo.mutation.Stcode(); ok {
+	if value, ok := sduo.mutation.StCode(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: sysdistrict.FieldStcode,
+			Column: sysdistrict.FieldStCode,
 		})
 	}
-	if sduo.mutation.StcodeCleared() {
+	if sduo.mutation.StCodeCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
-			Column: sysdistrict.FieldStcode,
+			Column: sysdistrict.FieldStCode,
 		})
 	}
 	if value, ok := sduo.mutation.Initials(); ok {
@@ -2413,6 +2466,19 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeBool,
 			Column: sysdistrict.FieldIsReal,
+		})
+	}
+	if value, ok := sduo.mutation.IsMain(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: sysdistrict.FieldIsMain,
+		})
+	}
+	if sduo.mutation.IsMainCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Column: sysdistrict.FieldIsMain,
 		})
 	}
 	if value, ok := sduo.mutation.IsDirect(); ok {
