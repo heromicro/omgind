@@ -6,11 +6,39 @@ import (
 	"github.com/heromicro/omgind/pkg/config/option"
 	"github.com/spf13/viper"
 )
-import "log"
+import (
+	"fmt"
+	"log"
+)
+
+func New(pf string) (*viper.Viper, error) {
+
+	var (
+		err error
+		v   = viper.New()
+	)
+
+	fmt.Println(" ----- ======== ")
+
+	v.SetConfigType("toml")
+	v.SetConfigFile(string(pf))
+
+	// FIXME: change `omgind` to real
+	v.SetEnvPrefix("omgind")
+	v.AutomaticEnv()
+
+	if err := v.ReadInConfig(); err == nil {
+		log.Printf("use config file -> %s\n", v.ConfigFileUsed())
+	} else {
+		return nil, err
+	}
+
+	return v, err
+}
 
 // Config 配置参数
 type AppConfig struct {
-	System       option.SystemConfig `mapstructure:"System"  json:"system"`
+	System       option.SystemConfig `mapstructure:"System"  json:"system" yaml:"system"`
 	HTTP         option.HTTPConfig   `mapstructure:"HTTP" json:"http"`
 	Menu         option.MenuConfig   `mapstructure:"menu" json:"menu"`
 	Casbin       option.CasbinConfig `mapstructure:"Casbin" json:"casbin"`
@@ -38,26 +66,17 @@ func (c *AppConfig) IsDebugMode() bool {
 	return c.System.RunMode == "debug"
 }
 
-func New(pf string) (*viper.Viper, error) {
-
+func NewConfig(name string, v *viper.Viper) *AppConfig {
 	var (
-		err error
-		v   = viper.New()
+		xc AppConfig
 	)
 
-	v.SetConfigFile(string(pf))
-	v.SetConfigType("yml")
-	v.SetConfigType("yaml")
+	v.Unmarshal(&xc)
 
-	// FIXME: change `omgind` to real
-	v.SetEnvPrefix("omgind")
-	v.AutomaticEnv()
+	// xc.readConfig()
+	// go xc.watch()
 
-	if err := v.ReadInConfig(); err == nil {
-		log.Printf("use config file -> %s\n", v.ConfigFileUsed())
-	} else {
-		return nil, err
-	}
-
-	return v, err
+	return &xc
 }
+
+// var ProviderSet = wire.NewSet(New, NewConfig)
