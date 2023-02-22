@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -107,7 +108,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 
 	// 初始化菜单数据
 
-	fmt.Println(" ---- init data from file global.CFG.Menu.Data == ", global.CFG.Menu.Data)
+	log.Println(" ---- init data from file global.CFG.Menu.Data == ", global.CFG.Menu.Data)
 
 	if global.CFG.Menu.Enable && global.CFG.Menu.Data != "" {
 		err = injector.MenuSrv.InitData(ctx, global.CFG.Menu.Data)

@@ -1,7 +1,7 @@
 package mixin
 
 import (
-	"fmt"
+	"log"
 	"math/rand"
 	"time"
 
@@ -66,7 +66,7 @@ func (idg *idGenerator) newULID() pulid.ID {
 
 	id.ULID = ulid.MustNew(ulid.Timestamp(t), entropy)
 
-	fmt.Println(" 0000 ------- 0000 ", id.String())
+	log.Println(" 0000 ------- 0000 ", id.String())
 
 	return id
 }

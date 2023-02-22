@@ -2,13 +2,10 @@ package config
 
 import (
 	"C"
+	"log"
 
 	"github.com/heromicro/omgind/pkg/config/option"
 	"github.com/spf13/viper"
-)
-import (
-	"fmt"
-	"log"
 )
 
 func New(pf string) (*viper.Viper, error) {
@@ -18,7 +15,7 @@ func New(pf string) (*viper.Viper, error) {
 		v   = viper.New()
 	)
 
-	fmt.Println(" ----- ======== ")
+	log.Println(" ----- ======== ")
 
 	v.SetConfigType("toml")
 	v.SetConfigFile(string(pf))
@@ -66,7 +63,7 @@ func (c *AppConfig) IsDebugMode() bool {
 	return c.System.RunMode == "debug"
 }
 
-func NewConfig(name string, v *viper.Viper) *AppConfig {
+func NewConfig(v *viper.Viper) *AppConfig {
 	var (
 		xc AppConfig
 	)

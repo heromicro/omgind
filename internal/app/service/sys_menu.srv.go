@@ -43,8 +43,8 @@ func (a *Menu) InitData(ctx context.Context, dataFile string) error {
 	}
 
 	data, err := a.readData(dataFile)
-	// fmt.Printf(" ------- ===== data: %+v \n", data)
-	//fmt.Println(" ------- ===== err: \n", err)
+	// log.Printf(" ------- ===== data: %+v \n", data)
+	// log.Println(" ------- ===== err: \n", err)
 
 	if err != nil {
 		return err

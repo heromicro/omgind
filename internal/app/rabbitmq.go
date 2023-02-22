@@ -1,7 +1,7 @@
 package app
 
 import (
-	"fmt"
+	"log"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 
@@ -12,7 +12,7 @@ func InitRabbitMQ() (*amqp.Connection, func(), error) {
 	cfg := global.CFG.RabbitMQ
 
 	conn, err := amqp.Dial(cfg.DSN())
-	fmt.Println(" ------- rabbit mq dsn ", cfg.DSN())
+	log.Println(" ------- rabbit mq dsn ", cfg.DSN())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -20,7 +20,7 @@ func InitRabbitMQ() (*amqp.Connection, func(), error) {
 	return conn, func() {
 		err := conn.Close()
 		if err != nil {
-			fmt.Println(" ---- rabbitmq close err: ", err)
+			log.Println(" ---- rabbitmq close err: ", err)
 		}
 	}, nil
 }

@@ -61,7 +61,7 @@ func (a *SignIn) SignIn(c *gin.Context) {
 	var item schema.SignInParam
 
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		//fmt.Println(" ----err- ", err)
+		//log.Println(" ----err- ", err)
 		ginx.ResError(c, err)
 		return
 	}
