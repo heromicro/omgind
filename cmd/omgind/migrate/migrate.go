@@ -17,6 +17,10 @@ func init() {
 	Cmd.AddCommand(CmdDump)
 	Cmd.AddCommand(CmdLoad)
 
+	// PersistentFlags() for all flags only in current cmd
+	Cmd.PersistentFlags().StringP("conf", "c", "", "config file path")
+	Cmd.MarkPersistentFlagRequired("conf")
+
 }
 
 // go run -ldflags "-X main.VERSION=$(RELEASE_TAG)" ./cmd/${APP}/main.go dump -c ./configs/config.toml -m ./configs/model.conf --menu ./configs/menu.yaml

@@ -33,7 +33,7 @@ func (i IDMixin) Fields() []ent.Field {
 
 		// Fixme:: make duplicate primary key
 		//field.String("id").DefaultFunc(uid.MustString()).MaxLen(36).Immutable().NotEmpty().Comment("主键"),
-		IdField(),
+		IdField_ulid(),
 		field.Bool("is_del").Default(false).StructTag(`json:"is_del,omitempty"`).Comment("是否删除"),
 	}
 }
@@ -71,14 +71,14 @@ func (idg *idGenerator) newULID() pulid.ID {
 	return id
 }
 
-func IdField1(prefix string) ent.Field {
+func IdField_uuid(prefix string) ent.Field {
 	idGen := &idGenerator{prefix: prefix}
 
 	return field.UUID("id", pulid.ID{}).Immutable().
 		Unique().Default(idGen.newULID)
 }
 
-func IdField() ent.Field {
+func IdField_ulid() ent.Field {
 	// return field.UUID("id", uuid.UUID{}).Unique().Default(uuid.New)
 	// return field.UUID("id", uuid.UUID{}).Default(uuid.New)
 
@@ -93,3 +93,11 @@ func IdField() ent.Field {
 	})
 
 }
+
+func IdField_int() ent.Field {
+	return field.Int("id").Comment("primary key")
+}
+
+// func IndexID() ent.Index {
+// 	return index.Fields("id").Unique()
+// }
