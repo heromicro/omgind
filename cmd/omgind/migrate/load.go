@@ -85,6 +85,11 @@ var CmdLoad = &cobra.Command{
 
 			for _, item := range districtRaws {
 
+				if item.IsDel {
+					log.Println(cyanOnWhite, " === --== skilp item ", item, chalk.Reset)
+					continue
+				}
+
 				log.Println(greenOnWhite, " ======== -------- item ", item, chalk.Reset)
 
 				district := schema.SysDistrict{
@@ -132,7 +137,7 @@ var CmdLoad = &cobra.Command{
 							} else {
 								district.TreePath = ptr.String(strings.Join([]string{*pdistrict.TreePath, pdistrict.ID}, "/"))
 							}
-							pdistrict.Update().SetIsLeaf(false).Save(ctx)
+							// pdistrict.Update().SetIsLeaf(false).Save(ctx)
 						}
 					}
 				}
@@ -147,7 +152,20 @@ var CmdLoad = &cobra.Command{
 
 				create_district = create_district.SetInput(*create_district_input)
 
+				// left value and right value `
+				// https://blog.csdn.net/yilovexing/article/details/107066591`
 				if pdistrict == nil {
+					log.Println(" --- ---- ===== create_district ")
+					create_district = create_district.SetTreeLeft(1).SetTreeRight(2)
+
+					// create_district_input.TreeLeft = ptr.Int64(1)
+					// create_district_input.TreeRight = ptr.Int64(*create_district_input.TreeLeft + 1)
+
+					log.Println(" --- ---- ===== create_district ", create_district)
+				} else {
+					// create_district = create_district.SetTreeLeft(*pdistrict.TreeLeft + 1).SetTreeRight(*pdistrict.TreeLeft + 2)
+
+					pdistrict.Update().SetIsLeaf(false).Save(ctx)
 
 				}
 
@@ -155,6 +173,16 @@ var CmdLoad = &cobra.Command{
 
 				log.Println(" --------- ==== create_district, ", create_district)
 				sch_district, err := create_district.Save(ctx)
+				if sch_district != nil && pdistrict != nil {
+					// // 修复被破坏平衡的其他节点的左值。大于 parent_id 右值的所有节点的左值加 2。
+					// // 修复被破坏平衡的其他节点的右值。大于等于 parent_id 右值的所有节点的右值加 2
+					// update_district := serviceSysDistrict.EntCli.SysDistrict.Update().Where(sysdistrict.IDNEQ(sch_district.ID))
+					// var count int = 0
+					// count, err = update_district.Where(sysdistrict.TreeRightGT(*pdistrict.TreeRight)).AddTreeLeft(2).Save(ctx)
+					// log.Println(cyanOnWhite, " ====== count ====== ", count)
+					// count, err = update_district.Where(sysdistrict.TreeRightGTE(*pdistrict.TreeRight)).AddTreeRight(2).Save(ctx)
+					// log.Println(cyanOnWhite, " ====== count ====== ", count)
+				}
 
 				if err != nil {
 					log.Println(redOnWhite, " ====== save failed ====== ", district)
