@@ -88,7 +88,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	logger.WithContext(ctx).Printf("服务启动，运行模式：%s，版本号：%s，进程号：%d", global.CFG.System.RunMode, o.Version, os.Getpid())
 
 	// 初始化日志模块
-	loggerCleanFunc, err := InitLogger()
+	loggerCleanFunc, err := InitLogger(global.CFG)
 	if err != nil {
 		return nil, err
 	}
