@@ -134,7 +134,7 @@
           resources:
             - method: PATCH
               path: "/api/v2/sys-users/:id/enable"
-            
+    
     - name: 数据字典
       icon: key
       router: "/system/dict"
@@ -173,6 +173,46 @@
           resources:
             - method: PATCH
               path: "/api/v2/sys-dicts/:id/enable"
+
+    - name: 行政区域
+      icon: key
+      router: "/system/district"
+      sort: 68
+      level: 2
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: POST
+              path: "/api/v2/sys-district"
+        - code: edit
+          name: 编辑
+          resources:
+            - method: GET
+              path: "/api/v2/sys-district/:id"
+            - method: PUT
+              path: "/api/v2/sys-district/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/sys-district/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/sys-district"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/sys-district/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/sys-district/:id/enable"
+
 
 - name: 开发状态
   icon: setting
