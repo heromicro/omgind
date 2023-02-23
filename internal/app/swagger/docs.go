@@ -3159,6 +3159,7 @@ const docTemplate = `{
         "schema.SysDistrict": {
             "type": "object",
             "required": [
+                "is_active",
                 "name",
                 "sname"
             ],
@@ -3191,6 +3192,13 @@ const docTemplate = `{
                     "description": "简拼",
                     "type": "string"
                 },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
+                "is_del": {
+                    "type": "boolean"
+                },
                 "is_direct": {
                     "description": "是否是直辖",
                     "type": "boolean"
@@ -3201,6 +3209,10 @@ const docTemplate = `{
                 },
                 "is_leaf": {
                     "description": "是否是子叶",
+                    "type": "boolean"
+                },
+                "is_main": {
+                    "description": "热门城市",
                     "type": "boolean"
                 },
                 "is_real": {
@@ -3227,6 +3239,10 @@ const docTemplate = `{
                     "description": "名称",
                     "type": "string"
                 },
+                "pid": {
+                    "description": "pid",
+                    "type": "string"
+                },
                 "pinyin": {
                     "description": "简拼",
                     "type": "string"
@@ -3235,12 +3251,15 @@ const docTemplate = `{
                     "description": "短名称",
                     "type": "string"
                 },
+                "sort": {
+                    "type": "integer"
+                },
                 "st_code": {
                     "description": "统计局区域编码",
                     "type": "string"
                 },
                 "suffix": {
-                    "description": "带前缀简名称",
+                    "description": "区域后缀,省/市/区/旗/盟/自治区/",
                     "type": "string"
                 },
                 "tree_id": {
@@ -3254,6 +3273,10 @@ const docTemplate = `{
                 "tree_level": {
                     "description": "层级",
                     "type": "integer"
+                },
+                "tree_path": {
+                    "description": "层级",
+                    "type": "string"
                 },
                 "tree_right": {
                     "description": "层级",
