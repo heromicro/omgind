@@ -59,13 +59,13 @@ func (SysDistrict) Fields() []ent.Field {
 func (SysDistrict) Edges() []ent.Edge {
 
 	return []ent.Edge{
-		edge.To("children", SysDistrict.Type).From("parent").Unique().Field("parent_id"),
+		edge.To("children", SysDistrict.Type).From("parent").Field("parent_id").Unique(),
 	}
 }
 
 func (SysDistrict) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("parent_id"),
+		// index.Fields("parent_id"),
 		index.Fields("is_hot"),
 		index.Fields("is_real"),
 		index.Fields("is_main"),

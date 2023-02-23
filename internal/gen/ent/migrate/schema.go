@@ -203,11 +203,6 @@ var (
 				Columns: []*schema.Column{SysDistrictsColumns[7], SysDistrictsColumns[9], SysDistrictsColumns[10]},
 			},
 			{
-				Name:    "sysdistrict_pid",
-				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[32]},
-			},
-			{
 				Name:    "sysdistrict_is_hot",
 				Unique:  false,
 				Columns: []*schema.Column{SysDistrictsColumns[27]},
