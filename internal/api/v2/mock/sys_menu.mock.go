@@ -24,7 +24,7 @@ type Menu struct{}
 // @Success 200 {object} schema.ListResult{list=schema.Menus,pagination=schema.PaginationResult}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/menus [get]
+// @Router /api/v2/sys-menus [get]
 func (a *Menu) Query(c *gin.Context) {
 }
 
@@ -37,7 +37,7 @@ func (a *Menu) Query(c *gin.Context) {
 // @Success 200 {object} schema.ListResult{list=[]schema.MenuTree} "查询结果"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/menus.tree [get]
+// @Router /api/v2/sys-menus.tree [get]
 func (a *Menu) QueryTree(c *gin.Context) {
 }
 
@@ -50,7 +50,7 @@ func (a *Menu) QueryTree(c *gin.Context) {
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/menus/{id} [get]
+// @Router /api/v2/sys-menus/{id} [get]
 func (a *Menu) Get(c *gin.Context) {
 }
 
@@ -63,7 +63,7 @@ func (a *Menu) Get(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/menus [post]
+// @Router /api/v2/sys-menus [post]
 func (a *Menu) Create(c *gin.Context) {
 }
 
@@ -77,7 +77,7 @@ func (a *Menu) Create(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/menus/{id} [put]
+// @Router /api/v2/sys-menus/{id} [put]
 func (a *Menu) Update(c *gin.Context) {
 }
 
@@ -89,7 +89,7 @@ func (a *Menu) Update(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/menus/{id} [delete]
+// @Router /api/v2/sys-menus/{id} [delete]
 func (a *Menu) Delete(c *gin.Context) {
 }
 
@@ -101,7 +101,7 @@ func (a *Menu) Delete(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/menus/{id}/enable [patch]
+// @Router /api/v2/sys-menus/{id}/enable [patch]
 func (a *Menu) Enable(c *gin.Context) {
 }
 
@@ -113,6 +113,6 @@ func (a *Menu) Enable(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/menus/{id}/disable [patch]
+// @Router /api/v2/sys-menus/{id}/disable [patch]
 func (a *Menu) Disable(c *gin.Context) {
 }

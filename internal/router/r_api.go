@@ -43,20 +43,20 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 			pub.POST("/refresh-token", a.SignInAPIV2.RefreshToken)
 		}
 
-		a.initMenuRouterV2(v2, a.MenuAPIV2, "menus")
-		v2.GET("/menus.tree", a.MenuAPIV2.QueryTree)
+		a.initMenuRouterV2(v2, a.MenuAPIV2, "sys-menus")
+		v2.GET("/sys-menus.tree", a.MenuAPIV2.QueryTree)
 
-		a.initRoleRouterV2(v2, a.RoleAPIV2, "roles")
-		v2.GET("/roles.select", a.RoleAPIV2.QuerySelect)
+		a.initRoleRouterV2(v2, a.RoleAPIV2, "sys-roles")
+		v2.GET("/sys-roles.select", a.RoleAPIV2.QuerySelect)
 
-		a.initUserRouterV2(v2, a.UserAPIV2, "users")
+		a.initUserRouterV2(v2, a.UserAPIV2, "sys-users")
 
-		a.initDictRouterV2(v2, a.DictApiV2, "dicts")
+		a.initDictRouterV2(v2, a.DictApiV2, "sys-dicts")
 		a.initDemoRouterV2(v2, a.DemoAPIV2, "demos")
 
-		a.initSysDistrictRouterV2(v2, a.SysDistrictAPIV2, "sysdistrict")
+		a.initSysDistrictRouterV2(v2, a.SysDistrictAPIV2, "sys-district")
 
-		a.initSysAddressRouterV2(v2, a.SysAddressAPIV2, "sysaddress")
+		a.initSysAddressRouterV2(v2, a.SysAddressAPIV2, "sys-address")
 
 	}
 

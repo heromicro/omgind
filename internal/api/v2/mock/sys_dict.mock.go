@@ -22,7 +22,7 @@ type Dict struct {
 // @Success 200 {object} schema.ListResult{list=schema.Dicts,pagination=schema.PaginationResult}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/dicts [get]
+// @Router /api/v2/sys-dicts [get]
 func (a *Dict) Query(c *gin.Context) {
 }
 
@@ -35,7 +35,7 @@ func (a *Dict) Query(c *gin.Context) {
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/dicts/{id} [get]
+// @Router /api/v2/sys-dicts/{id} [get]
 func (a *Dict) Get(c *gin.Context) {
 }
 
@@ -48,7 +48,7 @@ func (a *Dict) Get(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/dicts [post]
+// @Router /api/v2/sys-dicts [post]
 func (a *Dict) Create(c *gin.Context) {
 }
 
@@ -62,7 +62,7 @@ func (a *Dict) Create(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/dicts/{id} [put]
+// @Router /api/v2/sys-dicts/{id} [put]
 func (a *Dict) Update(c *gin.Context) {
 }
 
@@ -74,7 +74,7 @@ func (a *Dict) Update(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/dicts/{id} [delete]
+// @Router /api/v2/sys-dicts/{id} [delete]
 func (a *Dict) Delete(c *gin.Context) {
 }
 
@@ -86,7 +86,7 @@ func (a *Dict) Delete(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/dicts/{id}/enable [patch]
+// @Router /api/v2/sys-dicts/{id}/enable [patch]
 func (a *Dict) Enable(c *gin.Context) {
 }
 
@@ -98,6 +98,6 @@ func (a *Dict) Enable(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/dicts/{id}/disable [patch]
+// @Router /api/v2/sys-dicts/{id}/disable [patch]
 func (a *Dict) Disable(c *gin.Context) {
 }

@@ -23,7 +23,7 @@ type SysAddress struct {
 // @Success 200 {array} schema.ListResult{list=schema.SysAddresses,pagination=schema.PaginationResult}
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysaddresses [get]
+// @Router /api/v2/sys-addresses [get]
 func (a *SysAddress) Query(c *gin.Context) {
 }
 
@@ -37,7 +37,7 @@ func (a *SysAddress) Query(c *gin.Context) {
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysaddresses/{id} [get]
+// @Router /api/v2/sys-addresses/{id} [get]
 func (a *SysAddress) Get(c *gin.Context) {
 }
 
@@ -51,7 +51,7 @@ func (a *SysAddress) Get(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysaddresses [post]
+// @Router /api/v2/sys-addresses [post]
 func (a *SysAddress) Create(c *gin.Context) {
 }
 
@@ -66,7 +66,7 @@ func (a *SysAddress) Create(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysaddresses/{id} [put]
+// @Router /api/v2/sys-addresses/{id} [put]
 func (a *SysAddress) Update(c *gin.Context) {
 }
 
@@ -79,7 +79,7 @@ func (a *SysAddress) Update(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysaddresses/{id} [delete]
+// @Router /api/v2/sys-addresses/{id} [delete]
 func (a *SysAddress) Delete(c *gin.Context) {
 }
 
@@ -91,7 +91,7 @@ func (a *SysAddress) Delete(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysaddresses/{id}/enable [patch]
+// @Router /api/v2/sys-addresses/{id}/enable [patch]
 func (a *SysAddress) Enable(c *gin.Context) {
 }
 
@@ -103,6 +103,6 @@ func (a *SysAddress) Enable(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysaddresses/{id}/disable [patch]
+// @Router /api/v2/sys-addresses/{id}/disable [patch]
 func (a *SysAddress) Disable(c *gin.Context) {
 }

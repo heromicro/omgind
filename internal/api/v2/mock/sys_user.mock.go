@@ -24,7 +24,7 @@ type User struct {
 // @Success 200 {object} schema.ListResult{list=schema.UserShows,pagination=schema.PaginationResult}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/users [get]
+// @Router /api/v2/sys-users [get]
 func (a *User) Query(c *gin.Context) {
 }
 
@@ -38,7 +38,7 @@ func (a *User) Query(c *gin.Context) {
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/users/{id} [get]
+// @Router /api/v2/sys-users/{id} [get]
 func (a *User) Get(c *gin.Context) {
 }
 
@@ -51,7 +51,7 @@ func (a *User) Get(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/users [post]
+// @Router /api/v2/sys-users [post]
 func (a *User) Create(c *gin.Context) {
 }
 
@@ -65,7 +65,7 @@ func (a *User) Create(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/users/{id} [put]
+// @Router /api/v2/sys-users/{id} [put]
 func (a *User) Update(c *gin.Context) {
 }
 
@@ -77,7 +77,7 @@ func (a *User) Update(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/users/{id} [delete]
+// @Router /api/v2/sys-users/{id} [delete]
 func (a *User) Delete(c *gin.Context) {
 }
 
@@ -89,7 +89,7 @@ func (a *User) Delete(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/users/{id}/enable [patch]
+// @Router /api/v2/sys-users/{id}/enable [patch]
 func (a *User) Enable(c *gin.Context) {
 }
 
@@ -101,6 +101,6 @@ func (a *User) Enable(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/users/{id}/disable [patch]
+// @Router /api/v2/sys-users/{id}/disable [patch]
 func (a *User) Disable(c *gin.Context) {
 }

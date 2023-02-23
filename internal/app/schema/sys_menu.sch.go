@@ -40,7 +40,7 @@ type MenuQueryParam struct {
 	QueryValue       string   `form:"queryValue"` // 模糊查询
 	ParentID         *string  `form:"parentID"`   // 父级内码
 	IsShow           *bool    `form:"isShow"`
-	IsActive         *bool    `form:"is_active"`
+	IsActive         *bool    `form:"is_active"` // 状态
 }
 
 // MenuQueryOptions 查询可选参数项

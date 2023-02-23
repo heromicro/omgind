@@ -23,7 +23,7 @@ type SysDistrict struct {
 // @Success 200 {array} schema.ListResult{list=schema.SysDistricts,pagination=schema.PaginationResult}
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysdistricts [get]
+// @Router /api/v2/sys-districts [get]
 func (a *SysDistrict) Query(c *gin.Context) {
 }
 
@@ -37,7 +37,7 @@ func (a *SysDistrict) Query(c *gin.Context) {
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysdistricts/{id} [get]
+// @Router /api/v2/sys-districts/{id} [get]
 func (a *SysDistrict) Get(c *gin.Context) {
 }
 
@@ -51,7 +51,7 @@ func (a *SysDistrict) Get(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysdistricts [post]
+// @Router /api/v2/sys-districts [post]
 func (a *SysDistrict) Create(c *gin.Context) {
 }
 
@@ -66,7 +66,7 @@ func (a *SysDistrict) Create(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysdistricts/{id} [put]
+// @Router /api/v2/sys-districts/{id} [put]
 func (a *SysDistrict) Update(c *gin.Context) {
 }
 
@@ -79,7 +79,7 @@ func (a *SysDistrict) Update(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysdistricts/{id} [delete]
+// @Router /api/v2/sys-districts/{id} [delete]
 func (a *SysDistrict) Delete(c *gin.Context) {
 }
 
@@ -91,7 +91,7 @@ func (a *SysDistrict) Delete(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysdistricts/{id}/enable [patch]
+// @Router /api/v2/sys-districts/{id}/enable [patch]
 func (a *SysDistrict) Enable(c *gin.Context) {
 }
 
@@ -103,6 +103,6 @@ func (a *SysDistrict) Enable(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/sysdistricts/{id}/disable [patch]
+// @Router /api/v2/sys-districts/{id}/disable [patch]
 func (a *SysDistrict) Disable(c *gin.Context) {
 }

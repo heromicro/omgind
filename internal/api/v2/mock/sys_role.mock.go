@@ -23,7 +23,7 @@ type Role struct {
 // @Success 200 {object} schema.ListResult{list=schema.Roles,pagination=schema.PaginationResult}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/roles [get]
+// @Router /api/v2/sys-roles [get]
 func (a *Role) Query(c *gin.Context) {
 }
 
@@ -37,7 +37,7 @@ func (a *Role) Query(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:未知的查询类型}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/roles.select [get]
+// @Router /api/v2/sys-roles.select [get]
 func (a *Role) QuerySelect(c *gin.Context) {
 }
 
@@ -50,7 +50,7 @@ func (a *Role) QuerySelect(c *gin.Context) {
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/roles/{id} [get]
+// @Router /api/v2/sys-roles/{id} [get]
 func (a *Role) Get(c *gin.Context) {
 }
 
@@ -63,7 +63,7 @@ func (a *Role) Get(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/roles [post]
+// @Router /api/v2/sys-roles [post]
 func (a *Role) Create(c *gin.Context) {
 }
 
@@ -77,7 +77,7 @@ func (a *Role) Create(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/roles/{id} [put]
+// @Router /api/v2/sys-roles/{id} [put]
 func (a *Role) Update(c *gin.Context) {
 }
 
@@ -89,7 +89,7 @@ func (a *Role) Update(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/roles/{id} [delete]
+// @Router /api/v2/sys-roles/{id} [delete]
 func (a *Role) Delete(c *gin.Context) {
 }
 
@@ -101,7 +101,7 @@ func (a *Role) Delete(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/roles/{id}/enable [patch]
+// @Router /api/v2/sys-roles/{id}/enable [patch]
 func (a *Role) Enable(c *gin.Context) {
 }
 
@@ -113,6 +113,6 @@ func (a *Role) Enable(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/roles/{id}/disable [patch]
+// @Router /api/v2/sys-roles/{id}/disable [patch]
 func (a *Role) Disable(c *gin.Context) {
 }
