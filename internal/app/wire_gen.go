@@ -147,6 +147,15 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2SysDistrict := &api_v2.SysDistrict{
 		SysDistrictSrv: serviceSysDistrict,
 	}
+	sysAddress := &repo.SysAddress{
+		EntCli: client,
+	}
+	serviceSysAddress := &service.SysAddress{
+		SysAddressRepo: sysAddress,
+	}
+	api_v2SysAddress := &api_v2.SysAddress{
+		SysAddressSrv: serviceSysAddress,
+	}
 	routerRouter := &router.Router{
 		Auth:             auther,
 		CasbinEnforcer:   syncedEnforcer,
@@ -157,6 +166,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		UserAPIV2:        api_v2User,
 		SignInAPIV2:      api_v2SignIn,
 		SysDistrictAPIV2: api_v2SysDistrict,
+		SysAddressAPIV2:  api_v2SysAddress,
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{
