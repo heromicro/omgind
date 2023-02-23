@@ -31,14 +31,14 @@ func (SysLogging) Fields() []ent.Field {
 	return []ent.Field{
 
 		field.String("level").MaxLen(32).Comment("日志级别"),
-		field.String("trace_id").MaxLen(128).Comment("跟踪ID"),
-		field.String("user_id").MaxLen(128).Comment("用户ID"),
-		field.String("tag").MaxLen(128).Comment("Tag"),
+		field.String("trace_id").MaxLen(128).Nillable().Optional().Comment("跟踪ID"),
+		field.String("user_id").MaxLen(128).Nillable().Optional().Comment("用户ID"),
+		field.String("tag").MaxLen(128).Nillable().Optional().Comment("Tag"),
 
-		field.String("version").MaxLen(64).Comment("版本号"),
-		field.String("message").MaxLen(1024).Comment("消息"),
+		field.String("version").MaxLen(64).Nillable().Optional().Comment("版本号"),
+		field.String("message").MaxLen(1024).Nillable().Optional().Comment("消息"),
 		field.Text("data").Immutable().Optional().Nillable().Comment("日志数据(json string)"),
-		field.Text("error_stack").Comment("日志数据(json string)"),
+		field.Text("error_stack").Nillable().Optional().Comment("日志数据(json string)"),
 
 		mixin.FieldCreateAt(),
 	}

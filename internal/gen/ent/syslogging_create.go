@@ -60,9 +60,25 @@ func (slc *SysLoggingCreate) SetTraceID(s string) *SysLoggingCreate {
 	return slc
 }
 
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableTraceID(s *string) *SysLoggingCreate {
+	if s != nil {
+		slc.SetTraceID(*s)
+	}
+	return slc
+}
+
 // SetUserID sets the "user_id" field.
 func (slc *SysLoggingCreate) SetUserID(s string) *SysLoggingCreate {
 	slc.mutation.SetUserID(s)
+	return slc
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableUserID(s *string) *SysLoggingCreate {
+	if s != nil {
+		slc.SetUserID(*s)
+	}
 	return slc
 }
 
@@ -72,15 +88,39 @@ func (slc *SysLoggingCreate) SetTag(s string) *SysLoggingCreate {
 	return slc
 }
 
+// SetNillableTag sets the "tag" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableTag(s *string) *SysLoggingCreate {
+	if s != nil {
+		slc.SetTag(*s)
+	}
+	return slc
+}
+
 // SetVersion sets the "version" field.
 func (slc *SysLoggingCreate) SetVersion(s string) *SysLoggingCreate {
 	slc.mutation.SetVersion(s)
 	return slc
 }
 
+// SetNillableVersion sets the "version" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableVersion(s *string) *SysLoggingCreate {
+	if s != nil {
+		slc.SetVersion(*s)
+	}
+	return slc
+}
+
 // SetMessage sets the "message" field.
 func (slc *SysLoggingCreate) SetMessage(s string) *SysLoggingCreate {
 	slc.mutation.SetMessage(s)
+	return slc
+}
+
+// SetNillableMessage sets the "message" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableMessage(s *string) *SysLoggingCreate {
+	if s != nil {
+		slc.SetMessage(*s)
+	}
 	return slc
 }
 
@@ -101,6 +141,14 @@ func (slc *SysLoggingCreate) SetNillableData(s *string) *SysLoggingCreate {
 // SetErrorStack sets the "error_stack" field.
 func (slc *SysLoggingCreate) SetErrorStack(s string) *SysLoggingCreate {
 	slc.mutation.SetErrorStack(s)
+	return slc
+}
+
+// SetNillableErrorStack sets the "error_stack" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableErrorStack(s *string) *SysLoggingCreate {
+	if s != nil {
+		slc.SetErrorStack(*s)
+	}
 	return slc
 }
 
@@ -245,48 +293,30 @@ func (slc *SysLoggingCreate) check() error {
 			return &ValidationError{Name: "level", err: fmt.Errorf(`ent: validator failed for field "SysLogging.level": %w`, err)}
 		}
 	}
-	if _, ok := slc.mutation.TraceID(); !ok {
-		return &ValidationError{Name: "trace_id", err: errors.New(`ent: missing required field "SysLogging.trace_id"`)}
-	}
 	if v, ok := slc.mutation.TraceID(); ok {
 		if err := syslogging.TraceIDValidator(v); err != nil {
 			return &ValidationError{Name: "trace_id", err: fmt.Errorf(`ent: validator failed for field "SysLogging.trace_id": %w`, err)}
 		}
-	}
-	if _, ok := slc.mutation.UserID(); !ok {
-		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "SysLogging.user_id"`)}
 	}
 	if v, ok := slc.mutation.UserID(); ok {
 		if err := syslogging.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`ent: validator failed for field "SysLogging.user_id": %w`, err)}
 		}
 	}
-	if _, ok := slc.mutation.Tag(); !ok {
-		return &ValidationError{Name: "tag", err: errors.New(`ent: missing required field "SysLogging.tag"`)}
-	}
 	if v, ok := slc.mutation.Tag(); ok {
 		if err := syslogging.TagValidator(v); err != nil {
 			return &ValidationError{Name: "tag", err: fmt.Errorf(`ent: validator failed for field "SysLogging.tag": %w`, err)}
 		}
-	}
-	if _, ok := slc.mutation.Version(); !ok {
-		return &ValidationError{Name: "version", err: errors.New(`ent: missing required field "SysLogging.version"`)}
 	}
 	if v, ok := slc.mutation.Version(); ok {
 		if err := syslogging.VersionValidator(v); err != nil {
 			return &ValidationError{Name: "version", err: fmt.Errorf(`ent: validator failed for field "SysLogging.version": %w`, err)}
 		}
 	}
-	if _, ok := slc.mutation.Message(); !ok {
-		return &ValidationError{Name: "message", err: errors.New(`ent: missing required field "SysLogging.message"`)}
-	}
 	if v, ok := slc.mutation.Message(); ok {
 		if err := syslogging.MessageValidator(v); err != nil {
 			return &ValidationError{Name: "message", err: fmt.Errorf(`ent: validator failed for field "SysLogging.message": %w`, err)}
 		}
-	}
-	if _, ok := slc.mutation.ErrorStack(); !ok {
-		return &ValidationError{Name: "error_stack", err: errors.New(`ent: missing required field "SysLogging.error_stack"`)}
 	}
 	if _, ok := slc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysLogging.created_at"`)}
@@ -362,7 +392,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: syslogging.FieldTraceID,
 		})
-		_node.TraceID = value
+		_node.TraceID = &value
 	}
 	if value, ok := slc.mutation.UserID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -370,7 +400,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: syslogging.FieldUserID,
 		})
-		_node.UserID = value
+		_node.UserID = &value
 	}
 	if value, ok := slc.mutation.Tag(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -378,7 +408,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: syslogging.FieldTag,
 		})
-		_node.Tag = value
+		_node.Tag = &value
 	}
 	if value, ok := slc.mutation.Version(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -386,7 +416,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: syslogging.FieldVersion,
 		})
-		_node.Version = value
+		_node.Version = &value
 	}
 	if value, ok := slc.mutation.Message(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -394,7 +424,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: syslogging.FieldMessage,
 		})
-		_node.Message = value
+		_node.Message = &value
 	}
 	if value, ok := slc.mutation.Data(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -410,7 +440,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 			Value:  value,
 			Column: syslogging.FieldErrorStack,
 		})
-		_node.ErrorStack = value
+		_node.ErrorStack = &value
 	}
 	if value, ok := slc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

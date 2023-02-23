@@ -7345,7 +7345,7 @@ func (m *SysLoggingMutation) TraceID() (r string, exists bool) {
 // OldTraceID returns the old "trace_id" field's value of the SysLogging entity.
 // If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldTraceID(ctx context.Context) (v string, err error) {
+func (m *SysLoggingMutation) OldTraceID(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTraceID is only allowed on UpdateOne operations")
 	}
@@ -7359,9 +7359,22 @@ func (m *SysLoggingMutation) OldTraceID(ctx context.Context) (v string, err erro
 	return oldValue.TraceID, nil
 }
 
+// ClearTraceID clears the value of the "trace_id" field.
+func (m *SysLoggingMutation) ClearTraceID() {
+	m.trace_id = nil
+	m.clearedFields[syslogging.FieldTraceID] = struct{}{}
+}
+
+// TraceIDCleared returns if the "trace_id" field was cleared in this mutation.
+func (m *SysLoggingMutation) TraceIDCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldTraceID]
+	return ok
+}
+
 // ResetTraceID resets all changes to the "trace_id" field.
 func (m *SysLoggingMutation) ResetTraceID() {
 	m.trace_id = nil
+	delete(m.clearedFields, syslogging.FieldTraceID)
 }
 
 // SetUserID sets the "user_id" field.
@@ -7381,7 +7394,7 @@ func (m *SysLoggingMutation) UserID() (r string, exists bool) {
 // OldUserID returns the old "user_id" field's value of the SysLogging entity.
 // If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldUserID(ctx context.Context) (v string, err error) {
+func (m *SysLoggingMutation) OldUserID(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldUserID is only allowed on UpdateOne operations")
 	}
@@ -7395,9 +7408,22 @@ func (m *SysLoggingMutation) OldUserID(ctx context.Context) (v string, err error
 	return oldValue.UserID, nil
 }
 
+// ClearUserID clears the value of the "user_id" field.
+func (m *SysLoggingMutation) ClearUserID() {
+	m.user_id = nil
+	m.clearedFields[syslogging.FieldUserID] = struct{}{}
+}
+
+// UserIDCleared returns if the "user_id" field was cleared in this mutation.
+func (m *SysLoggingMutation) UserIDCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldUserID]
+	return ok
+}
+
 // ResetUserID resets all changes to the "user_id" field.
 func (m *SysLoggingMutation) ResetUserID() {
 	m.user_id = nil
+	delete(m.clearedFields, syslogging.FieldUserID)
 }
 
 // SetTag sets the "tag" field.
@@ -7417,7 +7443,7 @@ func (m *SysLoggingMutation) Tag() (r string, exists bool) {
 // OldTag returns the old "tag" field's value of the SysLogging entity.
 // If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldTag(ctx context.Context) (v string, err error) {
+func (m *SysLoggingMutation) OldTag(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTag is only allowed on UpdateOne operations")
 	}
@@ -7431,9 +7457,22 @@ func (m *SysLoggingMutation) OldTag(ctx context.Context) (v string, err error) {
 	return oldValue.Tag, nil
 }
 
+// ClearTag clears the value of the "tag" field.
+func (m *SysLoggingMutation) ClearTag() {
+	m.tag = nil
+	m.clearedFields[syslogging.FieldTag] = struct{}{}
+}
+
+// TagCleared returns if the "tag" field was cleared in this mutation.
+func (m *SysLoggingMutation) TagCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldTag]
+	return ok
+}
+
 // ResetTag resets all changes to the "tag" field.
 func (m *SysLoggingMutation) ResetTag() {
 	m.tag = nil
+	delete(m.clearedFields, syslogging.FieldTag)
 }
 
 // SetVersion sets the "version" field.
@@ -7453,7 +7492,7 @@ func (m *SysLoggingMutation) Version() (r string, exists bool) {
 // OldVersion returns the old "version" field's value of the SysLogging entity.
 // If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldVersion(ctx context.Context) (v string, err error) {
+func (m *SysLoggingMutation) OldVersion(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldVersion is only allowed on UpdateOne operations")
 	}
@@ -7467,9 +7506,22 @@ func (m *SysLoggingMutation) OldVersion(ctx context.Context) (v string, err erro
 	return oldValue.Version, nil
 }
 
+// ClearVersion clears the value of the "version" field.
+func (m *SysLoggingMutation) ClearVersion() {
+	m.version = nil
+	m.clearedFields[syslogging.FieldVersion] = struct{}{}
+}
+
+// VersionCleared returns if the "version" field was cleared in this mutation.
+func (m *SysLoggingMutation) VersionCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldVersion]
+	return ok
+}
+
 // ResetVersion resets all changes to the "version" field.
 func (m *SysLoggingMutation) ResetVersion() {
 	m.version = nil
+	delete(m.clearedFields, syslogging.FieldVersion)
 }
 
 // SetMessage sets the "message" field.
@@ -7489,7 +7541,7 @@ func (m *SysLoggingMutation) Message() (r string, exists bool) {
 // OldMessage returns the old "message" field's value of the SysLogging entity.
 // If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldMessage(ctx context.Context) (v string, err error) {
+func (m *SysLoggingMutation) OldMessage(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldMessage is only allowed on UpdateOne operations")
 	}
@@ -7503,9 +7555,22 @@ func (m *SysLoggingMutation) OldMessage(ctx context.Context) (v string, err erro
 	return oldValue.Message, nil
 }
 
+// ClearMessage clears the value of the "message" field.
+func (m *SysLoggingMutation) ClearMessage() {
+	m.message = nil
+	m.clearedFields[syslogging.FieldMessage] = struct{}{}
+}
+
+// MessageCleared returns if the "message" field was cleared in this mutation.
+func (m *SysLoggingMutation) MessageCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldMessage]
+	return ok
+}
+
 // ResetMessage resets all changes to the "message" field.
 func (m *SysLoggingMutation) ResetMessage() {
 	m.message = nil
+	delete(m.clearedFields, syslogging.FieldMessage)
 }
 
 // SetData sets the "data" field.
@@ -7574,7 +7639,7 @@ func (m *SysLoggingMutation) ErrorStack() (r string, exists bool) {
 // OldErrorStack returns the old "error_stack" field's value of the SysLogging entity.
 // If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldErrorStack(ctx context.Context) (v string, err error) {
+func (m *SysLoggingMutation) OldErrorStack(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldErrorStack is only allowed on UpdateOne operations")
 	}
@@ -7588,9 +7653,22 @@ func (m *SysLoggingMutation) OldErrorStack(ctx context.Context) (v string, err e
 	return oldValue.ErrorStack, nil
 }
 
+// ClearErrorStack clears the value of the "error_stack" field.
+func (m *SysLoggingMutation) ClearErrorStack() {
+	m.error_stack = nil
+	m.clearedFields[syslogging.FieldErrorStack] = struct{}{}
+}
+
+// ErrorStackCleared returns if the "error_stack" field was cleared in this mutation.
+func (m *SysLoggingMutation) ErrorStackCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldErrorStack]
+	return ok
+}
+
 // ResetErrorStack resets all changes to the "error_stack" field.
 func (m *SysLoggingMutation) ResetErrorStack() {
 	m.error_stack = nil
+	delete(m.clearedFields, syslogging.FieldErrorStack)
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -7862,8 +7940,26 @@ func (m *SysLoggingMutation) ClearedFields() []string {
 	if m.FieldCleared(syslogging.FieldMemo) {
 		fields = append(fields, syslogging.FieldMemo)
 	}
+	if m.FieldCleared(syslogging.FieldTraceID) {
+		fields = append(fields, syslogging.FieldTraceID)
+	}
+	if m.FieldCleared(syslogging.FieldUserID) {
+		fields = append(fields, syslogging.FieldUserID)
+	}
+	if m.FieldCleared(syslogging.FieldTag) {
+		fields = append(fields, syslogging.FieldTag)
+	}
+	if m.FieldCleared(syslogging.FieldVersion) {
+		fields = append(fields, syslogging.FieldVersion)
+	}
+	if m.FieldCleared(syslogging.FieldMessage) {
+		fields = append(fields, syslogging.FieldMessage)
+	}
 	if m.FieldCleared(syslogging.FieldData) {
 		fields = append(fields, syslogging.FieldData)
+	}
+	if m.FieldCleared(syslogging.FieldErrorStack) {
+		fields = append(fields, syslogging.FieldErrorStack)
 	}
 	return fields
 }
@@ -7882,8 +7978,26 @@ func (m *SysLoggingMutation) ClearField(name string) error {
 	case syslogging.FieldMemo:
 		m.ClearMemo()
 		return nil
+	case syslogging.FieldTraceID:
+		m.ClearTraceID()
+		return nil
+	case syslogging.FieldUserID:
+		m.ClearUserID()
+		return nil
+	case syslogging.FieldTag:
+		m.ClearTag()
+		return nil
+	case syslogging.FieldVersion:
+		m.ClearVersion()
+		return nil
+	case syslogging.FieldMessage:
+		m.ClearMessage()
+		return nil
 	case syslogging.FieldData:
 		m.ClearData()
+		return nil
+	case syslogging.FieldErrorStack:
+		m.ClearErrorStack()
 		return nil
 	}
 	return fmt.Errorf("unknown SysLogging nullable field %s", name)

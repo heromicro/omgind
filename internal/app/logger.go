@@ -8,6 +8,7 @@ import (
 	"github.com/heromicro/omgind/pkg/config"
 	"github.com/heromicro/omgind/pkg/logger"
 	loggerhook "github.com/heromicro/omgind/pkg/logger/hook"
+	loggerentgohook "github.com/heromicro/omgind/pkg/logger/hook/entgo"
 	loggergormhook "github.com/heromicro/omgind/pkg/logger/hook/gorm"
 
 	"github.com/sirupsen/logrus"
@@ -83,6 +84,38 @@ func InitLogger(acfg *config.AppConfig) (func(), error) {
 			)
 			logger.AddHook(h)
 			hook = h
+
+		case c.Hook.IsEntgo():
+			hc := acfg.LogGormHook
+
+			var dsn string
+			switch hc.DBType {
+			case "mysql":
+				dsn = acfg.MySQL.DSN()
+			case "sqlite3":
+				dsn = acfg.Sqlite3.DSN()
+			case "postgres":
+				dsn = acfg.Postgres.DSN()
+			default:
+				return nil, errors.New("unknown logger db")
+			}
+
+			h := loggerhook.New(loggerentgohook.New(&loggerentgohook.Config{
+				DBType:       hc.DBType,
+				DSN:          dsn,
+				MaxLifetime:  hc.MaxLifetime,
+				MaxOpenConns: hc.MaxOpenConns,
+				MaxIdleConns: hc.MaxIdleConns,
+				TableName:    hc.Table,
+			}),
+				loggerhook.SetMaxWorkers(c.HookMaxThread),
+				loggerhook.SetMaxQueues(c.HookMaxBuffer),
+				loggerhook.SetLevels(hookLevels...),
+			)
+			logger.AddHook(h)
+
+			hook = h
+
 		}
 	}
 

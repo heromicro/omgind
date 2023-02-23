@@ -504,6 +504,20 @@ func TraceIDHasSuffix(v string) predicate.SysLogging {
 	})
 }
 
+// TraceIDIsNil applies the IsNil predicate on the "trace_id" field.
+func TraceIDIsNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTraceID)))
+	})
+}
+
+// TraceIDNotNil applies the NotNil predicate on the "trace_id" field.
+func TraceIDNotNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTraceID)))
+	})
+}
+
 // TraceIDEqualFold applies the EqualFold predicate on the "trace_id" field.
 func TraceIDEqualFold(v string) predicate.SysLogging {
 	return predicate.SysLogging(func(s *sql.Selector) {
@@ -612,6 +626,20 @@ func UserIDHasPrefix(v string) predicate.SysLogging {
 func UserIDHasSuffix(v string) predicate.SysLogging {
 	return predicate.SysLogging(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldUserID), v))
+	})
+}
+
+// UserIDIsNil applies the IsNil predicate on the "user_id" field.
+func UserIDIsNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldUserID)))
+	})
+}
+
+// UserIDNotNil applies the NotNil predicate on the "user_id" field.
+func UserIDNotNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldUserID)))
 	})
 }
 
@@ -726,6 +754,20 @@ func TagHasSuffix(v string) predicate.SysLogging {
 	})
 }
 
+// TagIsNil applies the IsNil predicate on the "tag" field.
+func TagIsNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldTag)))
+	})
+}
+
+// TagNotNil applies the NotNil predicate on the "tag" field.
+func TagNotNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldTag)))
+	})
+}
+
 // TagEqualFold applies the EqualFold predicate on the "tag" field.
 func TagEqualFold(v string) predicate.SysLogging {
 	return predicate.SysLogging(func(s *sql.Selector) {
@@ -837,6 +879,20 @@ func VersionHasSuffix(v string) predicate.SysLogging {
 	})
 }
 
+// VersionIsNil applies the IsNil predicate on the "version" field.
+func VersionIsNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldVersion)))
+	})
+}
+
+// VersionNotNil applies the NotNil predicate on the "version" field.
+func VersionNotNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldVersion)))
+	})
+}
+
 // VersionEqualFold applies the EqualFold predicate on the "version" field.
 func VersionEqualFold(v string) predicate.SysLogging {
 	return predicate.SysLogging(func(s *sql.Selector) {
@@ -945,6 +1001,20 @@ func MessageHasPrefix(v string) predicate.SysLogging {
 func MessageHasSuffix(v string) predicate.SysLogging {
 	return predicate.SysLogging(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldMessage), v))
+	})
+}
+
+// MessageIsNil applies the IsNil predicate on the "message" field.
+func MessageIsNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldMessage)))
+	})
+}
+
+// MessageNotNil applies the NotNil predicate on the "message" field.
+func MessageNotNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldMessage)))
 	})
 }
 
@@ -1181,6 +1251,20 @@ func ErrorStackHasPrefix(v string) predicate.SysLogging {
 func ErrorStackHasSuffix(v string) predicate.SysLogging {
 	return predicate.SysLogging(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldErrorStack), v))
+	})
+}
+
+// ErrorStackIsNil applies the IsNil predicate on the "error_stack" field.
+func ErrorStackIsNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldErrorStack)))
+	})
+}
+
+// ErrorStackNotNil applies the NotNil predicate on the "error_stack" field.
+func ErrorStackNotNil() predicate.SysLogging {
+	return predicate.SysLogging(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldErrorStack)))
 	})
 }
 

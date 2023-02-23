@@ -995,13 +995,13 @@ type CreateSysLoggingInput struct {
 	IsDel      *bool
 	Memo       *string
 	Level      string
-	TraceID    string
-	UserID     string
-	Tag        string
-	Version    string
-	Message    string
+	TraceID    *string
+	UserID     *string
+	Tag        *string
+	Version    *string
+	Message    *string
 	Data       *string
-	ErrorStack string
+	ErrorStack *string
 	CreatedAt  *time.Time
 }
 
@@ -1014,15 +1014,27 @@ func (i *CreateSysLoggingInput) Mutate(m *SysLoggingCreate) {
 		m.SetMemo(*v)
 	}
 	m.SetLevel(i.Level)
-	m.SetTraceID(i.TraceID)
-	m.SetUserID(i.UserID)
-	m.SetTag(i.Tag)
-	m.SetVersion(i.Version)
-	m.SetMessage(i.Message)
+	if v := i.TraceID; v != nil {
+		m.SetTraceID(*v)
+	}
+	if v := i.UserID; v != nil {
+		m.SetUserID(*v)
+	}
+	if v := i.Tag; v != nil {
+		m.SetTag(*v)
+	}
+	if v := i.Version; v != nil {
+		m.SetVersion(*v)
+	}
+	if v := i.Message; v != nil {
+		m.SetMessage(*v)
+	}
 	if v := i.Data; v != nil {
 		m.SetData(*v)
 	}
-	m.SetErrorStack(i.ErrorStack)
+	if v := i.ErrorStack; v != nil {
+		m.SetErrorStack(*v)
+	}
 	if v := i.CreatedAt; v != nil {
 		m.SetCreatedAt(*v)
 	}
@@ -1036,16 +1048,22 @@ func (c *SysLoggingCreate) SetInput(i CreateSysLoggingInput) *SysLoggingCreate {
 
 // UpdateSysLoggingInput represents a mutation input for updating sysloggings.
 type UpdateSysLoggingInput struct {
-	IsDel      *bool
-	Memo       *string
-	ClearMemo  bool
-	Level      *string
-	TraceID    *string
-	UserID     *string
-	Tag        *string
-	Version    *string
-	Message    *string
-	ErrorStack *string
+	IsDel           *bool
+	Memo            *string
+	ClearMemo       bool
+	Level           *string
+	TraceID         *string
+	ClearTraceID    bool
+	UserID          *string
+	ClearUserID     bool
+	Tag             *string
+	ClearTag        bool
+	Version         *string
+	ClearVersion    bool
+	Message         *string
+	ClearMessage    bool
+	ErrorStack      *string
+	ClearErrorStack bool
 }
 
 // Mutate applies the UpdateSysLoggingInput on the SysLoggingMutation.
@@ -1062,20 +1080,38 @@ func (i *UpdateSysLoggingInput) Mutate(m *SysLoggingMutation) {
 	if v := i.Level; v != nil {
 		m.SetLevel(*v)
 	}
+	if i.ClearTraceID {
+		m.ClearTraceID()
+	}
 	if v := i.TraceID; v != nil {
 		m.SetTraceID(*v)
+	}
+	if i.ClearUserID {
+		m.ClearUserID()
 	}
 	if v := i.UserID; v != nil {
 		m.SetUserID(*v)
 	}
+	if i.ClearTag {
+		m.ClearTag()
+	}
 	if v := i.Tag; v != nil {
 		m.SetTag(*v)
+	}
+	if i.ClearVersion {
+		m.ClearVersion()
 	}
 	if v := i.Version; v != nil {
 		m.SetVersion(*v)
 	}
+	if i.ClearMessage {
+		m.ClearMessage()
+	}
 	if v := i.Message; v != nil {
 		m.SetMessage(*v)
+	}
+	if i.ClearErrorStack {
+		m.ClearErrorStack()
 	}
 	if v := i.ErrorStack; v != nil {
 		m.SetErrorStack(*v)

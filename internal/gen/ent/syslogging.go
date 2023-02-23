@@ -23,19 +23,19 @@ type SysLogging struct {
 	// 日志级别
 	Level string `json:"level,omitempty"`
 	// 跟踪ID
-	TraceID string `json:"trace_id,omitempty"`
+	TraceID *string `json:"trace_id,omitempty"`
 	// 用户ID
-	UserID string `json:"user_id,omitempty"`
+	UserID *string `json:"user_id,omitempty"`
 	// Tag
-	Tag string `json:"tag,omitempty"`
+	Tag *string `json:"tag,omitempty"`
 	// 版本号
-	Version string `json:"version,omitempty"`
+	Version *string `json:"version,omitempty"`
 	// 消息
-	Message string `json:"message,omitempty"`
+	Message *string `json:"message,omitempty"`
 	// 日志数据(json string)
 	Data *string `json:"data,omitempty"`
 	// 日志数据(json string)
-	ErrorStack string `json:"error_stack,omitempty"`
+	ErrorStack *string `json:"error_stack,omitempty"`
 	// create time
 	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
 }
@@ -95,31 +95,36 @@ func (sl *SysLogging) assignValues(columns []string, values []interface{}) error
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field trace_id", values[i])
 			} else if value.Valid {
-				sl.TraceID = value.String
+				sl.TraceID = new(string)
+				*sl.TraceID = value.String
 			}
 		case syslogging.FieldUserID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				sl.UserID = value.String
+				sl.UserID = new(string)
+				*sl.UserID = value.String
 			}
 		case syslogging.FieldTag:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field tag", values[i])
 			} else if value.Valid {
-				sl.Tag = value.String
+				sl.Tag = new(string)
+				*sl.Tag = value.String
 			}
 		case syslogging.FieldVersion:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field version", values[i])
 			} else if value.Valid {
-				sl.Version = value.String
+				sl.Version = new(string)
+				*sl.Version = value.String
 			}
 		case syslogging.FieldMessage:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field message", values[i])
 			} else if value.Valid {
-				sl.Message = value.String
+				sl.Message = new(string)
+				*sl.Message = value.String
 			}
 		case syslogging.FieldData:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -132,7 +137,8 @@ func (sl *SysLogging) assignValues(columns []string, values []interface{}) error
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field error_stack", values[i])
 			} else if value.Valid {
-				sl.ErrorStack = value.String
+				sl.ErrorStack = new(string)
+				*sl.ErrorStack = value.String
 			}
 		case syslogging.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -179,28 +185,40 @@ func (sl *SysLogging) String() string {
 	builder.WriteString("level=")
 	builder.WriteString(sl.Level)
 	builder.WriteString(", ")
-	builder.WriteString("trace_id=")
-	builder.WriteString(sl.TraceID)
+	if v := sl.TraceID; v != nil {
+		builder.WriteString("trace_id=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
-	builder.WriteString("user_id=")
-	builder.WriteString(sl.UserID)
+	if v := sl.UserID; v != nil {
+		builder.WriteString("user_id=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
-	builder.WriteString("tag=")
-	builder.WriteString(sl.Tag)
+	if v := sl.Tag; v != nil {
+		builder.WriteString("tag=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
-	builder.WriteString("version=")
-	builder.WriteString(sl.Version)
+	if v := sl.Version; v != nil {
+		builder.WriteString("version=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
-	builder.WriteString("message=")
-	builder.WriteString(sl.Message)
+	if v := sl.Message; v != nil {
+		builder.WriteString("message=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	if v := sl.Data; v != nil {
 		builder.WriteString("data=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	builder.WriteString("error_stack=")
-	builder.WriteString(sl.ErrorStack)
+	if v := sl.ErrorStack; v != nil {
+		builder.WriteString("error_stack=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
 	builder.WriteString(sl.CreatedAt.Format(time.ANSIC))

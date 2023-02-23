@@ -73,9 +73,37 @@ func (slu *SysLoggingUpdate) SetTraceID(s string) *SysLoggingUpdate {
 	return slu
 }
 
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (slu *SysLoggingUpdate) SetNillableTraceID(s *string) *SysLoggingUpdate {
+	if s != nil {
+		slu.SetTraceID(*s)
+	}
+	return slu
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (slu *SysLoggingUpdate) ClearTraceID() *SysLoggingUpdate {
+	slu.mutation.ClearTraceID()
+	return slu
+}
+
 // SetUserID sets the "user_id" field.
 func (slu *SysLoggingUpdate) SetUserID(s string) *SysLoggingUpdate {
 	slu.mutation.SetUserID(s)
+	return slu
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (slu *SysLoggingUpdate) SetNillableUserID(s *string) *SysLoggingUpdate {
+	if s != nil {
+		slu.SetUserID(*s)
+	}
+	return slu
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (slu *SysLoggingUpdate) ClearUserID() *SysLoggingUpdate {
+	slu.mutation.ClearUserID()
 	return slu
 }
 
@@ -85,9 +113,37 @@ func (slu *SysLoggingUpdate) SetTag(s string) *SysLoggingUpdate {
 	return slu
 }
 
+// SetNillableTag sets the "tag" field if the given value is not nil.
+func (slu *SysLoggingUpdate) SetNillableTag(s *string) *SysLoggingUpdate {
+	if s != nil {
+		slu.SetTag(*s)
+	}
+	return slu
+}
+
+// ClearTag clears the value of the "tag" field.
+func (slu *SysLoggingUpdate) ClearTag() *SysLoggingUpdate {
+	slu.mutation.ClearTag()
+	return slu
+}
+
 // SetVersion sets the "version" field.
 func (slu *SysLoggingUpdate) SetVersion(s string) *SysLoggingUpdate {
 	slu.mutation.SetVersion(s)
+	return slu
+}
+
+// SetNillableVersion sets the "version" field if the given value is not nil.
+func (slu *SysLoggingUpdate) SetNillableVersion(s *string) *SysLoggingUpdate {
+	if s != nil {
+		slu.SetVersion(*s)
+	}
+	return slu
+}
+
+// ClearVersion clears the value of the "version" field.
+func (slu *SysLoggingUpdate) ClearVersion() *SysLoggingUpdate {
+	slu.mutation.ClearVersion()
 	return slu
 }
 
@@ -97,9 +153,37 @@ func (slu *SysLoggingUpdate) SetMessage(s string) *SysLoggingUpdate {
 	return slu
 }
 
+// SetNillableMessage sets the "message" field if the given value is not nil.
+func (slu *SysLoggingUpdate) SetNillableMessage(s *string) *SysLoggingUpdate {
+	if s != nil {
+		slu.SetMessage(*s)
+	}
+	return slu
+}
+
+// ClearMessage clears the value of the "message" field.
+func (slu *SysLoggingUpdate) ClearMessage() *SysLoggingUpdate {
+	slu.mutation.ClearMessage()
+	return slu
+}
+
 // SetErrorStack sets the "error_stack" field.
 func (slu *SysLoggingUpdate) SetErrorStack(s string) *SysLoggingUpdate {
 	slu.mutation.SetErrorStack(s)
+	return slu
+}
+
+// SetNillableErrorStack sets the "error_stack" field if the given value is not nil.
+func (slu *SysLoggingUpdate) SetNillableErrorStack(s *string) *SysLoggingUpdate {
+	if s != nil {
+		slu.SetErrorStack(*s)
+	}
+	return slu
+}
+
+// ClearErrorStack clears the value of the "error_stack" field.
+func (slu *SysLoggingUpdate) ClearErrorStack() *SysLoggingUpdate {
+	slu.mutation.ClearErrorStack()
 	return slu
 }
 
@@ -260,10 +344,22 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: syslogging.FieldTraceID,
 		})
 	}
+	if slu.mutation.TraceIDCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: syslogging.FieldTraceID,
+		})
+	}
 	if value, ok := slu.mutation.UserID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: syslogging.FieldUserID,
+		})
+	}
+	if slu.mutation.UserIDCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: syslogging.FieldUserID,
 		})
 	}
@@ -274,6 +370,12 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: syslogging.FieldTag,
 		})
 	}
+	if slu.mutation.TagCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: syslogging.FieldTag,
+		})
+	}
 	if value, ok := slu.mutation.Version(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -281,10 +383,22 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: syslogging.FieldVersion,
 		})
 	}
+	if slu.mutation.VersionCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: syslogging.FieldVersion,
+		})
+	}
 	if value, ok := slu.mutation.Message(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: syslogging.FieldMessage,
+		})
+	}
+	if slu.mutation.MessageCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: syslogging.FieldMessage,
 		})
 	}
@@ -298,6 +412,12 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: syslogging.FieldErrorStack,
+		})
+	}
+	if slu.mutation.ErrorStackCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: syslogging.FieldErrorStack,
 		})
 	}
@@ -366,9 +486,37 @@ func (sluo *SysLoggingUpdateOne) SetTraceID(s string) *SysLoggingUpdateOne {
 	return sluo
 }
 
+// SetNillableTraceID sets the "trace_id" field if the given value is not nil.
+func (sluo *SysLoggingUpdateOne) SetNillableTraceID(s *string) *SysLoggingUpdateOne {
+	if s != nil {
+		sluo.SetTraceID(*s)
+	}
+	return sluo
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (sluo *SysLoggingUpdateOne) ClearTraceID() *SysLoggingUpdateOne {
+	sluo.mutation.ClearTraceID()
+	return sluo
+}
+
 // SetUserID sets the "user_id" field.
 func (sluo *SysLoggingUpdateOne) SetUserID(s string) *SysLoggingUpdateOne {
 	sluo.mutation.SetUserID(s)
+	return sluo
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (sluo *SysLoggingUpdateOne) SetNillableUserID(s *string) *SysLoggingUpdateOne {
+	if s != nil {
+		sluo.SetUserID(*s)
+	}
+	return sluo
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (sluo *SysLoggingUpdateOne) ClearUserID() *SysLoggingUpdateOne {
+	sluo.mutation.ClearUserID()
 	return sluo
 }
 
@@ -378,9 +526,37 @@ func (sluo *SysLoggingUpdateOne) SetTag(s string) *SysLoggingUpdateOne {
 	return sluo
 }
 
+// SetNillableTag sets the "tag" field if the given value is not nil.
+func (sluo *SysLoggingUpdateOne) SetNillableTag(s *string) *SysLoggingUpdateOne {
+	if s != nil {
+		sluo.SetTag(*s)
+	}
+	return sluo
+}
+
+// ClearTag clears the value of the "tag" field.
+func (sluo *SysLoggingUpdateOne) ClearTag() *SysLoggingUpdateOne {
+	sluo.mutation.ClearTag()
+	return sluo
+}
+
 // SetVersion sets the "version" field.
 func (sluo *SysLoggingUpdateOne) SetVersion(s string) *SysLoggingUpdateOne {
 	sluo.mutation.SetVersion(s)
+	return sluo
+}
+
+// SetNillableVersion sets the "version" field if the given value is not nil.
+func (sluo *SysLoggingUpdateOne) SetNillableVersion(s *string) *SysLoggingUpdateOne {
+	if s != nil {
+		sluo.SetVersion(*s)
+	}
+	return sluo
+}
+
+// ClearVersion clears the value of the "version" field.
+func (sluo *SysLoggingUpdateOne) ClearVersion() *SysLoggingUpdateOne {
+	sluo.mutation.ClearVersion()
 	return sluo
 }
 
@@ -390,9 +566,37 @@ func (sluo *SysLoggingUpdateOne) SetMessage(s string) *SysLoggingUpdateOne {
 	return sluo
 }
 
+// SetNillableMessage sets the "message" field if the given value is not nil.
+func (sluo *SysLoggingUpdateOne) SetNillableMessage(s *string) *SysLoggingUpdateOne {
+	if s != nil {
+		sluo.SetMessage(*s)
+	}
+	return sluo
+}
+
+// ClearMessage clears the value of the "message" field.
+func (sluo *SysLoggingUpdateOne) ClearMessage() *SysLoggingUpdateOne {
+	sluo.mutation.ClearMessage()
+	return sluo
+}
+
 // SetErrorStack sets the "error_stack" field.
 func (sluo *SysLoggingUpdateOne) SetErrorStack(s string) *SysLoggingUpdateOne {
 	sluo.mutation.SetErrorStack(s)
+	return sluo
+}
+
+// SetNillableErrorStack sets the "error_stack" field if the given value is not nil.
+func (sluo *SysLoggingUpdateOne) SetNillableErrorStack(s *string) *SysLoggingUpdateOne {
+	if s != nil {
+		sluo.SetErrorStack(*s)
+	}
+	return sluo
+}
+
+// ClearErrorStack clears the value of the "error_stack" field.
+func (sluo *SysLoggingUpdateOne) ClearErrorStack() *SysLoggingUpdateOne {
+	sluo.mutation.ClearErrorStack()
 	return sluo
 }
 
@@ -583,10 +787,22 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 			Column: syslogging.FieldTraceID,
 		})
 	}
+	if sluo.mutation.TraceIDCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: syslogging.FieldTraceID,
+		})
+	}
 	if value, ok := sluo.mutation.UserID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: syslogging.FieldUserID,
+		})
+	}
+	if sluo.mutation.UserIDCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: syslogging.FieldUserID,
 		})
 	}
@@ -597,6 +813,12 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 			Column: syslogging.FieldTag,
 		})
 	}
+	if sluo.mutation.TagCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: syslogging.FieldTag,
+		})
+	}
 	if value, ok := sluo.mutation.Version(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -604,10 +826,22 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 			Column: syslogging.FieldVersion,
 		})
 	}
+	if sluo.mutation.VersionCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: syslogging.FieldVersion,
+		})
+	}
 	if value, ok := sluo.mutation.Message(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: syslogging.FieldMessage,
+		})
+	}
+	if sluo.mutation.MessageCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: syslogging.FieldMessage,
 		})
 	}
@@ -621,6 +855,12 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: syslogging.FieldErrorStack,
+		})
+	}
+	if sluo.mutation.ErrorStackCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: syslogging.FieldErrorStack,
 		})
 	}
