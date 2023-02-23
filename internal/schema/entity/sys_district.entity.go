@@ -2,6 +2,7 @@ package entity
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 	"github.com/heromicro/omgind/internal/schema/mixin"
@@ -56,7 +57,10 @@ func (SysDistrict) Fields() []ent.Field {
 }
 
 func (SysDistrict) Edges() []ent.Edge {
-	return []ent.Edge{}
+
+	return []ent.Edge{
+		edge.To("children", SysDistrict.Type).From("parent").Unique().Field("parent_id"),
+	}
 }
 
 func (SysDistrict) Indexes() []ent.Index {

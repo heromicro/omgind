@@ -474,6 +474,26 @@ func (sdc *SysDistrictCreate) SetNillableID(s *string) *SysDistrictCreate {
 	return sdc
 }
 
+// SetParent sets the "parent" edge to the SysDistrict entity.
+func (sdc *SysDistrictCreate) SetParent(s *SysDistrict) *SysDistrictCreate {
+	return sdc.SetParentID(s.ID)
+}
+
+// AddChildIDs adds the "children" edge to the SysDistrict entity by IDs.
+func (sdc *SysDistrictCreate) AddChildIDs(ids ...string) *SysDistrictCreate {
+	sdc.mutation.AddChildIDs(ids...)
+	return sdc
+}
+
+// AddChildren adds the "children" edges to the SysDistrict entity.
+func (sdc *SysDistrictCreate) AddChildren(s ...*SysDistrict) *SysDistrictCreate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return sdc.AddChildIDs(ids...)
+}
+
 // Mutation returns the SysDistrictMutation object of the builder.
 func (sdc *SysDistrictCreate) Mutation() *SysDistrictMutation {
 	return sdc.mutation
@@ -872,14 +892,6 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 		})
 		_node.Pinyin = &value
 	}
-	if value, ok := sdc.mutation.ParentID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldParentID,
-		})
-		_node.ParentID = &value
-	}
 	if value, ok := sdc.mutation.Longitude(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeFloat64,
@@ -983,6 +995,45 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 			Column: sysdistrict.FieldCreator,
 		})
 		_node.Creator = value
+	}
+	if nodes := sdc.mutation.ParentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdistrict.ParentTable,
+			Columns: []string{sysdistrict.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.ParentID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := sdc.mutation.ChildrenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   sysdistrict.ChildrenTable,
+			Columns: []string{sysdistrict.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

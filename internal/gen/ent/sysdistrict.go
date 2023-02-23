@@ -80,6 +80,43 @@ type SysDistrict struct {
 	IsDirect *bool `json:"is_direct,omitempty"`
 	// 创建者
 	Creator string `json:"creator,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the SysDistrictQuery when eager-loading is set.
+	Edges SysDistrictEdges `json:"edges"`
+}
+
+// SysDistrictEdges holds the relations/edges for other nodes in the graph.
+type SysDistrictEdges struct {
+	// Parent holds the value of the parent edge.
+	Parent *SysDistrict `json:"parent,omitempty"`
+	// Children holds the value of the children edge.
+	Children []*SysDistrict `json:"children,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [2]bool
+}
+
+// ParentOrErr returns the Parent value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysDistrictEdges) ParentOrErr() (*SysDistrict, error) {
+	if e.loadedTypes[0] {
+		if e.Parent == nil {
+			// The edge parent was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: sysdistrict.Label}
+		}
+		return e.Parent, nil
+	}
+	return nil, &NotLoadedError{edge: "parent"}
+}
+
+// ChildrenOrErr returns the Children value or an error if the edge
+// was not loaded in eager-loading.
+func (e SysDistrictEdges) ChildrenOrErr() ([]*SysDistrict, error) {
+	if e.loadedTypes[1] {
+		return e.Children, nil
+	}
+	return nil, &NotLoadedError{edge: "children"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -339,6 +376,16 @@ func (sd *SysDistrict) assignValues(columns []string, values []interface{}) erro
 		}
 	}
 	return nil
+}
+
+// QueryParent queries the "parent" edge of the SysDistrict entity.
+func (sd *SysDistrict) QueryParent() *SysDistrictQuery {
+	return (&SysDistrictClient{config: sd.config}).QueryParent(sd)
+}
+
+// QueryChildren queries the "children" edge of the SysDistrict entity.
+func (sd *SysDistrict) QueryChildren() *SysDistrictQuery {
+	return (&SysDistrictClient{config: sd.config}).QueryChildren(sd)
 }
 
 // Update returns a builder for updating this SysDistrict.

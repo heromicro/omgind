@@ -25,6 +25,7 @@ import (
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // Client is the client that holds all ent builders.
@@ -469,6 +470,38 @@ func (c *SysDistrictClient) GetX(ctx context.Context, id string) *SysDistrict {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryParent queries the parent edge of a SysDistrict.
+func (c *SysDistrictClient) QueryParent(sd *SysDistrict) *SysDistrictQuery {
+	query := &SysDistrictQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := sd.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdistrict.Table, sysdistrict.FieldID, id),
+			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a SysDistrict.
+func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
+	query := &SysDistrictQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := sd.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdistrict.Table, sysdistrict.FieldID, id),
+			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.

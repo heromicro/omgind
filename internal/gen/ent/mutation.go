@@ -1793,52 +1793,56 @@ func (m *SysDictItemMutation) ResetEdge(name string) error {
 // SysDistrictMutation represents an operation that mutates the SysDistrict nodes in the graph.
 type SysDistrictMutation struct {
 	config
-	op            Op
-	typ           string
-	id            *string
-	is_del        *bool
-	sort          *int32
-	addsort       *int32
-	created_at    *time.Time
-	updated_at    *time.Time
-	deleted_at    *time.Time
-	is_active     *bool
-	tree_id       *int64
-	addtree_id    *int64
-	tree_level    *int64
-	addtree_level *int64
-	tree_left     *int64
-	addtree_left  *int64
-	tree_right    *int64
-	addtree_right *int64
-	is_leaf       *bool
-	tree_path     *string
-	name          *string
-	sname         *string
-	abbr          *string
-	st_code       *string
-	initials      *string
-	pinyin        *string
-	parent_id     *string
-	longitude     *float64
-	addlongitude  *float64
-	latitude      *float64
-	addlatitude   *float64
-	area_code     *string
-	zip_code      *string
-	merge_name    *string
-	merge_sname   *string
-	extra         *string
-	suffix        *string
-	is_hot        *bool
-	is_real       *bool
-	is_main       *bool
-	is_direct     *bool
-	creator       *string
-	clearedFields map[string]struct{}
-	done          bool
-	oldValue      func(context.Context) (*SysDistrict, error)
-	predicates    []predicate.SysDistrict
+	op              Op
+	typ             string
+	id              *string
+	is_del          *bool
+	sort            *int32
+	addsort         *int32
+	created_at      *time.Time
+	updated_at      *time.Time
+	deleted_at      *time.Time
+	is_active       *bool
+	tree_id         *int64
+	addtree_id      *int64
+	tree_level      *int64
+	addtree_level   *int64
+	tree_left       *int64
+	addtree_left    *int64
+	tree_right      *int64
+	addtree_right   *int64
+	is_leaf         *bool
+	tree_path       *string
+	name            *string
+	sname           *string
+	abbr            *string
+	st_code         *string
+	initials        *string
+	pinyin          *string
+	longitude       *float64
+	addlongitude    *float64
+	latitude        *float64
+	addlatitude     *float64
+	area_code       *string
+	zip_code        *string
+	merge_name      *string
+	merge_sname     *string
+	extra           *string
+	suffix          *string
+	is_hot          *bool
+	is_real         *bool
+	is_main         *bool
+	is_direct       *bool
+	creator         *string
+	clearedFields   map[string]struct{}
+	parent          *string
+	clearedparent   bool
+	children        map[string]struct{}
+	removedchildren map[string]struct{}
+	clearedchildren bool
+	done            bool
+	oldValue        func(context.Context) (*SysDistrict, error)
+	predicates      []predicate.SysDistrict
 }
 
 var _ ent.Mutation = (*SysDistrictMutation)(nil)
@@ -2868,12 +2872,12 @@ func (m *SysDistrictMutation) ResetPinyin() {
 
 // SetParentID sets the "parent_id" field.
 func (m *SysDistrictMutation) SetParentID(s string) {
-	m.parent_id = &s
+	m.parent = &s
 }
 
 // ParentID returns the value of the "parent_id" field in the mutation.
 func (m *SysDistrictMutation) ParentID() (r string, exists bool) {
-	v := m.parent_id
+	v := m.parent
 	if v == nil {
 		return
 	}
@@ -2899,7 +2903,7 @@ func (m *SysDistrictMutation) OldParentID(ctx context.Context) (v *string, err e
 
 // ClearParentID clears the value of the "parent_id" field.
 func (m *SysDistrictMutation) ClearParentID() {
-	m.parent_id = nil
+	m.parent = nil
 	m.clearedFields[sysdistrict.FieldParentID] = struct{}{}
 }
 
@@ -2911,7 +2915,7 @@ func (m *SysDistrictMutation) ParentIDCleared() bool {
 
 // ResetParentID resets all changes to the "parent_id" field.
 func (m *SysDistrictMutation) ResetParentID() {
-	m.parent_id = nil
+	m.parent = nil
 	delete(m.clearedFields, sysdistrict.FieldParentID)
 }
 
@@ -3581,6 +3585,86 @@ func (m *SysDistrictMutation) ResetCreator() {
 	m.creator = nil
 }
 
+// ClearParent clears the "parent" edge to the SysDistrict entity.
+func (m *SysDistrictMutation) ClearParent() {
+	m.clearedparent = true
+}
+
+// ParentCleared reports if the "parent" edge to the SysDistrict entity was cleared.
+func (m *SysDistrictMutation) ParentCleared() bool {
+	return m.ParentIDCleared() || m.clearedparent
+}
+
+// ParentIDs returns the "parent" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// ParentID instead. It exists only for internal usage by the builders.
+func (m *SysDistrictMutation) ParentIDs() (ids []string) {
+	if id := m.parent; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetParent resets all changes to the "parent" edge.
+func (m *SysDistrictMutation) ResetParent() {
+	m.parent = nil
+	m.clearedparent = false
+}
+
+// AddChildIDs adds the "children" edge to the SysDistrict entity by ids.
+func (m *SysDistrictMutation) AddChildIDs(ids ...string) {
+	if m.children == nil {
+		m.children = make(map[string]struct{})
+	}
+	for i := range ids {
+		m.children[ids[i]] = struct{}{}
+	}
+}
+
+// ClearChildren clears the "children" edge to the SysDistrict entity.
+func (m *SysDistrictMutation) ClearChildren() {
+	m.clearedchildren = true
+}
+
+// ChildrenCleared reports if the "children" edge to the SysDistrict entity was cleared.
+func (m *SysDistrictMutation) ChildrenCleared() bool {
+	return m.clearedchildren
+}
+
+// RemoveChildIDs removes the "children" edge to the SysDistrict entity by IDs.
+func (m *SysDistrictMutation) RemoveChildIDs(ids ...string) {
+	if m.removedchildren == nil {
+		m.removedchildren = make(map[string]struct{})
+	}
+	for i := range ids {
+		delete(m.children, ids[i])
+		m.removedchildren[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedChildren returns the removed IDs of the "children" edge to the SysDistrict entity.
+func (m *SysDistrictMutation) RemovedChildrenIDs() (ids []string) {
+	for id := range m.removedchildren {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ChildrenIDs returns the "children" edge IDs in the mutation.
+func (m *SysDistrictMutation) ChildrenIDs() (ids []string) {
+	for id := range m.children {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetChildren resets all changes to the "children" edge.
+func (m *SysDistrictMutation) ResetChildren() {
+	m.children = nil
+	m.clearedchildren = false
+	m.removedchildren = nil
+}
+
 // Where appends a list predicates to the SysDistrictMutation builder.
 func (m *SysDistrictMutation) Where(ps ...predicate.SysDistrict) {
 	m.predicates = append(m.predicates, ps...)
@@ -3655,7 +3739,7 @@ func (m *SysDistrictMutation) Fields() []string {
 	if m.pinyin != nil {
 		fields = append(fields, sysdistrict.FieldPinyin)
 	}
-	if m.parent_id != nil {
+	if m.parent != nil {
 		fields = append(fields, sysdistrict.FieldParentID)
 	}
 	if m.longitude != nil {
@@ -4472,49 +4556,103 @@ func (m *SysDistrictMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *SysDistrictMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 2)
+	if m.parent != nil {
+		edges = append(edges, sysdistrict.EdgeParent)
+	}
+	if m.children != nil {
+		edges = append(edges, sysdistrict.EdgeChildren)
+	}
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
 func (m *SysDistrictMutation) AddedIDs(name string) []ent.Value {
+	switch name {
+	case sysdistrict.EdgeParent:
+		if id := m.parent; id != nil {
+			return []ent.Value{*id}
+		}
+	case sysdistrict.EdgeChildren:
+		ids := make([]ent.Value, 0, len(m.children))
+		for id := range m.children {
+			ids = append(ids, id)
+		}
+		return ids
+	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *SysDistrictMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 2)
+	if m.removedchildren != nil {
+		edges = append(edges, sysdistrict.EdgeChildren)
+	}
 	return edges
 }
 
 // RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
 // the given name in this mutation.
 func (m *SysDistrictMutation) RemovedIDs(name string) []ent.Value {
+	switch name {
+	case sysdistrict.EdgeChildren:
+		ids := make([]ent.Value, 0, len(m.removedchildren))
+		for id := range m.removedchildren {
+			ids = append(ids, id)
+		}
+		return ids
+	}
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *SysDistrictMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 2)
+	if m.clearedparent {
+		edges = append(edges, sysdistrict.EdgeParent)
+	}
+	if m.clearedchildren {
+		edges = append(edges, sysdistrict.EdgeChildren)
+	}
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
 func (m *SysDistrictMutation) EdgeCleared(name string) bool {
+	switch name {
+	case sysdistrict.EdgeParent:
+		return m.clearedparent
+	case sysdistrict.EdgeChildren:
+		return m.clearedchildren
+	}
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
 func (m *SysDistrictMutation) ClearEdge(name string) error {
+	switch name {
+	case sysdistrict.EdgeParent:
+		m.ClearParent()
+		return nil
+	}
 	return fmt.Errorf("unknown SysDistrict unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
 func (m *SysDistrictMutation) ResetEdge(name string) error {
+	switch name {
+	case sysdistrict.EdgeParent:
+		m.ResetParent()
+		return nil
+	case sysdistrict.EdgeChildren:
+		m.ResetChildren()
+		return nil
+	}
 	return fmt.Errorf("unknown SysDistrict edge %s", name)
 }
 

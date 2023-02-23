@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
@@ -23,6 +24,9 @@ type SysDistrictQuery struct {
 	order      []OrderFunc
 	fields     []string
 	predicates []predicate.SysDistrict
+	// eager-loading edges.
+	withParent   *SysDistrictQuery
+	withChildren *SysDistrictQuery
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -57,6 +61,50 @@ func (sdq *SysDistrictQuery) Unique(unique bool) *SysDistrictQuery {
 func (sdq *SysDistrictQuery) Order(o ...OrderFunc) *SysDistrictQuery {
 	sdq.order = append(sdq.order, o...)
 	return sdq
+}
+
+// QueryParent chains the current query on the "parent" edge.
+func (sdq *SysDistrictQuery) QueryParent() *SysDistrictQuery {
+	query := &SysDistrictQuery{config: sdq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sdq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := sdq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdistrict.Table, sysdistrict.FieldID, selector),
+			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryChildren chains the current query on the "children" edge.
+func (sdq *SysDistrictQuery) QueryChildren() *SysDistrictQuery {
+	query := &SysDistrictQuery{config: sdq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sdq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := sdq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdistrict.Table, sysdistrict.FieldID, selector),
+			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first SysDistrict entity from the query.
@@ -235,16 +283,40 @@ func (sdq *SysDistrictQuery) Clone() *SysDistrictQuery {
 		return nil
 	}
 	return &SysDistrictQuery{
-		config:     sdq.config,
-		limit:      sdq.limit,
-		offset:     sdq.offset,
-		order:      append([]OrderFunc{}, sdq.order...),
-		predicates: append([]predicate.SysDistrict{}, sdq.predicates...),
+		config:       sdq.config,
+		limit:        sdq.limit,
+		offset:       sdq.offset,
+		order:        append([]OrderFunc{}, sdq.order...),
+		predicates:   append([]predicate.SysDistrict{}, sdq.predicates...),
+		withParent:   sdq.withParent.Clone(),
+		withChildren: sdq.withChildren.Clone(),
 		// clone intermediate query.
 		sql:    sdq.sql.Clone(),
 		path:   sdq.path,
 		unique: sdq.unique,
 	}
+}
+
+// WithParent tells the query-builder to eager-load the nodes that are connected to
+// the "parent" edge. The optional arguments are used to configure the query builder of the edge.
+func (sdq *SysDistrictQuery) WithParent(opts ...func(*SysDistrictQuery)) *SysDistrictQuery {
+	query := &SysDistrictQuery{config: sdq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	sdq.withParent = query
+	return sdq
+}
+
+// WithChildren tells the query-builder to eager-load the nodes that are connected to
+// the "children" edge. The optional arguments are used to configure the query builder of the edge.
+func (sdq *SysDistrictQuery) WithChildren(opts ...func(*SysDistrictQuery)) *SysDistrictQuery {
+	query := &SysDistrictQuery{config: sdq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	sdq.withChildren = query
+	return sdq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -315,8 +387,12 @@ func (sdq *SysDistrictQuery) prepareQuery(ctx context.Context) error {
 
 func (sdq *SysDistrictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysDistrict, error) {
 	var (
-		nodes = []*SysDistrict{}
-		_spec = sdq.querySpec()
+		nodes       = []*SysDistrict{}
+		_spec       = sdq.querySpec()
+		loadedTypes = [2]bool{
+			sdq.withParent != nil,
+			sdq.withChildren != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		return (*SysDistrict).scanValues(nil, columns)
@@ -324,6 +400,7 @@ func (sdq *SysDistrictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 	_spec.Assign = func(columns []string, values []interface{}) error {
 		node := &SysDistrict{config: sdq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	for i := range hooks {
@@ -335,6 +412,64 @@ func (sdq *SysDistrictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+
+	if query := sdq.withParent; query != nil {
+		ids := make([]string, 0, len(nodes))
+		nodeids := make(map[string][]*SysDistrict)
+		for i := range nodes {
+			if nodes[i].ParentID == nil {
+				continue
+			}
+			fk := *nodes[i].ParentID
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(sysdistrict.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "parent_id" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.Parent = n
+			}
+		}
+	}
+
+	if query := sdq.withChildren; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[string]*SysDistrict)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.Children = []*SysDistrict{}
+		}
+		query.Where(predicate.SysDistrict(func(s *sql.Selector) {
+			s.Where(sql.InValues(sysdistrict.ChildrenColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.ParentID
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "parent_id" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
+			}
+			node.Edges.Children = append(node.Edges.Children, n)
+		}
+	}
+
 	return nodes, nil
 }
 

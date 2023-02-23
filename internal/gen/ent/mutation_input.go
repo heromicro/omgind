@@ -258,6 +258,8 @@ type CreateSysDistrictInput struct {
 	IsMain     *bool
 	IsDirect   *bool
 	Creator    string
+	Parent     *string
+	Children   []string
 }
 
 // Mutate applies the CreateSysDistrictInput on the SysDistrictCreate builder.
@@ -356,6 +358,12 @@ func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
 		m.SetIsDirect(*v)
 	}
 	m.SetCreator(i.Creator)
+	if v := i.Parent; v != nil {
+		m.SetParentID(*v)
+	}
+	if ids := i.Children; len(ids) > 0 {
+		m.AddChildIDs(ids...)
+	}
 }
 
 // SetInput applies the change-set in the CreateSysDistrictInput on the create builder.
@@ -423,6 +431,10 @@ type UpdateSysDistrictInput struct {
 	IsDirect        *bool
 	ClearIsDirect   bool
 	Creator         *string
+	Parent          *string
+	ClearParent     bool
+	AddChildIDs     []string
+	RemoveChildIDs  []string
 }
 
 // Mutate applies the UpdateSysDistrictInput on the SysDistrictMutation.
@@ -597,6 +609,18 @@ func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
 	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
+	}
+	if i.ClearParent {
+		m.ClearParent()
+	}
+	if v := i.Parent; v != nil {
+		m.SetParentID(*v)
+	}
+	if ids := i.AddChildIDs; len(ids) > 0 {
+		m.AddChildIDs(ids...)
+	}
+	if ids := i.RemoveChildIDs; len(ids) > 0 {
+		m.RemoveChildIDs(ids...)
 	}
 }
 

@@ -651,9 +651,56 @@ func (sdu *SysDistrictUpdate) SetCreator(s string) *SysDistrictUpdate {
 	return sdu
 }
 
+// SetParent sets the "parent" edge to the SysDistrict entity.
+func (sdu *SysDistrictUpdate) SetParent(s *SysDistrict) *SysDistrictUpdate {
+	return sdu.SetParentID(s.ID)
+}
+
+// AddChildIDs adds the "children" edge to the SysDistrict entity by IDs.
+func (sdu *SysDistrictUpdate) AddChildIDs(ids ...string) *SysDistrictUpdate {
+	sdu.mutation.AddChildIDs(ids...)
+	return sdu
+}
+
+// AddChildren adds the "children" edges to the SysDistrict entity.
+func (sdu *SysDistrictUpdate) AddChildren(s ...*SysDistrict) *SysDistrictUpdate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return sdu.AddChildIDs(ids...)
+}
+
 // Mutation returns the SysDistrictMutation object of the builder.
 func (sdu *SysDistrictUpdate) Mutation() *SysDistrictMutation {
 	return sdu.mutation
+}
+
+// ClearParent clears the "parent" edge to the SysDistrict entity.
+func (sdu *SysDistrictUpdate) ClearParent() *SysDistrictUpdate {
+	sdu.mutation.ClearParent()
+	return sdu
+}
+
+// ClearChildren clears all "children" edges to the SysDistrict entity.
+func (sdu *SysDistrictUpdate) ClearChildren() *SysDistrictUpdate {
+	sdu.mutation.ClearChildren()
+	return sdu
+}
+
+// RemoveChildIDs removes the "children" edge to SysDistrict entities by IDs.
+func (sdu *SysDistrictUpdate) RemoveChildIDs(ids ...string) *SysDistrictUpdate {
+	sdu.mutation.RemoveChildIDs(ids...)
+	return sdu
+}
+
+// RemoveChildren removes "children" edges to SysDistrict entities.
+func (sdu *SysDistrictUpdate) RemoveChildren(s ...*SysDistrict) *SysDistrictUpdate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return sdu.RemoveChildIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -1050,19 +1097,6 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: sysdistrict.FieldPinyin,
 		})
 	}
-	if value, ok := sdu.mutation.ParentID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldParentID,
-		})
-	}
-	if sdu.mutation.ParentIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldParentID,
-		})
-	}
 	if value, ok := sdu.mutation.Longitude(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeFloat64,
@@ -1239,6 +1273,95 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Value:  value,
 			Column: sysdistrict.FieldCreator,
 		})
+	}
+	if sdu.mutation.ParentCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdistrict.ParentTable,
+			Columns: []string{sysdistrict.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sdu.mutation.ParentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdistrict.ParentTable,
+			Columns: []string{sysdistrict.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if sdu.mutation.ChildrenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   sysdistrict.ChildrenTable,
+			Columns: []string{sysdistrict.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sdu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sdu.mutation.ChildrenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   sysdistrict.ChildrenTable,
+			Columns: []string{sysdistrict.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sdu.mutation.ChildrenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   sysdistrict.ChildrenTable,
+			Columns: []string{sysdistrict.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -1882,9 +2005,56 @@ func (sduo *SysDistrictUpdateOne) SetCreator(s string) *SysDistrictUpdateOne {
 	return sduo
 }
 
+// SetParent sets the "parent" edge to the SysDistrict entity.
+func (sduo *SysDistrictUpdateOne) SetParent(s *SysDistrict) *SysDistrictUpdateOne {
+	return sduo.SetParentID(s.ID)
+}
+
+// AddChildIDs adds the "children" edge to the SysDistrict entity by IDs.
+func (sduo *SysDistrictUpdateOne) AddChildIDs(ids ...string) *SysDistrictUpdateOne {
+	sduo.mutation.AddChildIDs(ids...)
+	return sduo
+}
+
+// AddChildren adds the "children" edges to the SysDistrict entity.
+func (sduo *SysDistrictUpdateOne) AddChildren(s ...*SysDistrict) *SysDistrictUpdateOne {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return sduo.AddChildIDs(ids...)
+}
+
 // Mutation returns the SysDistrictMutation object of the builder.
 func (sduo *SysDistrictUpdateOne) Mutation() *SysDistrictMutation {
 	return sduo.mutation
+}
+
+// ClearParent clears the "parent" edge to the SysDistrict entity.
+func (sduo *SysDistrictUpdateOne) ClearParent() *SysDistrictUpdateOne {
+	sduo.mutation.ClearParent()
+	return sduo
+}
+
+// ClearChildren clears all "children" edges to the SysDistrict entity.
+func (sduo *SysDistrictUpdateOne) ClearChildren() *SysDistrictUpdateOne {
+	sduo.mutation.ClearChildren()
+	return sduo
+}
+
+// RemoveChildIDs removes the "children" edge to SysDistrict entities by IDs.
+func (sduo *SysDistrictUpdateOne) RemoveChildIDs(ids ...string) *SysDistrictUpdateOne {
+	sduo.mutation.RemoveChildIDs(ids...)
+	return sduo
+}
+
+// RemoveChildren removes "children" edges to SysDistrict entities.
+func (sduo *SysDistrictUpdateOne) RemoveChildren(s ...*SysDistrict) *SysDistrictUpdateOne {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return sduo.RemoveChildIDs(ids...)
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
@@ -2311,19 +2481,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Column: sysdistrict.FieldPinyin,
 		})
 	}
-	if value, ok := sduo.mutation.ParentID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldParentID,
-		})
-	}
-	if sduo.mutation.ParentIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldParentID,
-		})
-	}
 	if value, ok := sduo.mutation.Longitude(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeFloat64,
@@ -2500,6 +2657,95 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Value:  value,
 			Column: sysdistrict.FieldCreator,
 		})
+	}
+	if sduo.mutation.ParentCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdistrict.ParentTable,
+			Columns: []string{sysdistrict.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sduo.mutation.ParentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdistrict.ParentTable,
+			Columns: []string{sysdistrict.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if sduo.mutation.ChildrenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   sysdistrict.ChildrenTable,
+			Columns: []string{sysdistrict.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sduo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sduo.mutation.ChildrenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   sysdistrict.ChildrenTable,
+			Columns: []string{sysdistrict.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sduo.mutation.ChildrenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   sysdistrict.ChildrenTable,
+			Columns: []string{sysdistrict.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysdistrict.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_node = &SysDistrict{config: sduo.config}
 	_spec.Assign = _node.assignValues

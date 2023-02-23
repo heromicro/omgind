@@ -75,8 +75,20 @@ const (
 	FieldIsDirect = "is_d"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
+	// EdgeParent holds the string denoting the parent edge name in mutations.
+	EdgeParent = "parent"
+	// EdgeChildren holds the string denoting the children edge name in mutations.
+	EdgeChildren = "children"
 	// Table holds the table name of the sysdistrict in the database.
 	Table = "sys_districts"
+	// ParentTable is the table that holds the parent relation/edge.
+	ParentTable = "sys_districts"
+	// ParentColumn is the table column denoting the parent relation/edge.
+	ParentColumn = "pid"
+	// ChildrenTable is the table that holds the children relation/edge.
+	ChildrenTable = "sys_districts"
+	// ChildrenColumn is the table column denoting the children relation/edge.
+	ChildrenColumn = "pid"
 )
 
 // Columns holds all SQL columns for sysdistrict fields.

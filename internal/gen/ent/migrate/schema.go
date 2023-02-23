@@ -133,7 +133,6 @@ var (
 		{Name: "stcode", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "initials", Type: field.TypeString, Nullable: true, Size: 32},
 		{Name: "pinyin", Type: field.TypeString, Nullable: true, Size: 128},
-		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "longitude", Type: field.TypeFloat64, Nullable: true},
 		{Name: "latitude", Type: field.TypeFloat64, Nullable: true},
 		{Name: "area_code", Type: field.TypeString, Nullable: true, Size: 8},
@@ -147,12 +146,21 @@ var (
 		{Name: "is_m", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "is_d", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "creator", Type: field.TypeString, Size: 36},
+		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// SysDistrictsTable holds the schema information for the "sys_districts" table.
 	SysDistrictsTable = &schema.Table{
 		Name:       "sys_districts",
 		Columns:    SysDistrictsColumns,
 		PrimaryKey: []*schema.Column{SysDistrictsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "sys_districts_sys_districts_children",
+				Columns:    []*schema.Column{SysDistrictsColumns[32]},
+				RefColumns: []*schema.Column{SysDistrictsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "sysdistrict_id",
@@ -197,27 +205,27 @@ var (
 			{
 				Name:    "sysdistrict_pid",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[19]},
+				Columns: []*schema.Column{SysDistrictsColumns[32]},
 			},
 			{
 				Name:    "sysdistrict_is_hot",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[28]},
+				Columns: []*schema.Column{SysDistrictsColumns[27]},
 			},
 			{
 				Name:    "sysdistrict_is_r",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[29]},
+				Columns: []*schema.Column{SysDistrictsColumns[28]},
 			},
 			{
 				Name:    "sysdistrict_is_m",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[30]},
+				Columns: []*schema.Column{SysDistrictsColumns[29]},
 			},
 			{
 				Name:    "sysdistrict_is_d",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[31]},
+				Columns: []*schema.Column{SysDistrictsColumns[30]},
 			},
 		},
 	}
@@ -752,6 +760,7 @@ var (
 )
 
 func init() {
+	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 	SysLoggingTable.Annotation = &entsql.Annotation{
 		Table: "sys_logging",
 	}
