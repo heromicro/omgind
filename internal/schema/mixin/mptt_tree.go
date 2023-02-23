@@ -29,6 +29,8 @@ func (a MpttTreeMixin) Indexes() []ent.Index {
 
 	return []ent.Index{
 		index.Fields("tree_id"),
+		index.Fields("tree_id", "tree_left"),
+		index.Fields("tree_id", "tree_right"),
 		index.Fields("tree_id", "tree_left", "tree_right"),
 	}
 }

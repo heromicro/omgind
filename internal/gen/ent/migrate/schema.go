@@ -198,6 +198,16 @@ var (
 				Columns: []*schema.Column{SysDistrictsColumns[7]},
 			},
 			{
+				Name:    "sysdistrict_tree_id_tree_left",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[7], SysDistrictsColumns[9]},
+			},
+			{
+				Name:    "sysdistrict_tree_id_tree_right",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[7], SysDistrictsColumns[10]},
+			},
+			{
 				Name:    "sysdistrict_tree_id_tree_left_tree_right",
 				Unique:  false,
 				Columns: []*schema.Column{SysDistrictsColumns[7], SysDistrictsColumns[9], SysDistrictsColumns[10]},
