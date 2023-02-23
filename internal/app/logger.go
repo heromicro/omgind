@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/heromicro/omgind/pkg/global"
+	"github.com/heromicro/omgind/pkg/config"
 	"github.com/heromicro/omgind/pkg/logger"
 	loggerhook "github.com/heromicro/omgind/pkg/logger/hook"
 	loggergormhook "github.com/heromicro/omgind/pkg/logger/hook/gorm"
@@ -14,8 +14,9 @@ import (
 )
 
 // InitLogger 初始化日志模块
-func InitLogger() (func(), error) {
-	c := global.CFG.Log
+func InitLogger(acfg *config.AppConfig) (func(), error) {
+
+	c := acfg.Log
 	logger.SetLevel(c.Level)
 	logger.SetFormatter(c.Format)
 
@@ -54,16 +55,16 @@ func InitLogger() (func(), error) {
 
 		switch {
 		case c.Hook.IsGorm():
-			hc := global.CFG.LogGormHook
+			hc := acfg.LogGormHook
 
 			var dsn string
 			switch hc.DBType {
 			case "mysql":
-				dsn = global.CFG.MySQL.DSN()
+				dsn = acfg.MySQL.DSN()
 			case "sqlite3":
-				dsn = global.CFG.Sqlite3.DSN()
+				dsn = acfg.Sqlite3.DSN()
 			case "postgres":
-				dsn = global.CFG.Postgres.DSN()
+				dsn = acfg.Postgres.DSN()
 			default:
 				return nil, errors.New("unknown logger db")
 			}
