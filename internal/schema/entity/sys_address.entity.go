@@ -13,7 +13,7 @@ type SysAddress struct {
 func (SysAddress) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
-		// mixin.OwnerMixin{},
+		mixin.OwnerMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},

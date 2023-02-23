@@ -9,6 +9,7 @@ import (
 // CreateSysAddressInput represents a mutation input for creating sysaddresses.
 type CreateSysAddressInput struct {
 	IsDel     *bool
+	OwnerID   *string
 	Sort      *int32
 	CreatedAt *time.Time
 	UpdatedAt *time.Time
@@ -34,6 +35,9 @@ type CreateSysAddressInput struct {
 func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if v := i.OwnerID; v != nil {
+		m.SetOwnerID(*v)
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
@@ -103,6 +107,8 @@ func (c *SysAddressCreate) SetInput(i CreateSysAddressInput) *SysAddressCreate {
 // UpdateSysAddressInput represents a mutation input for updating sysaddresses.
 type UpdateSysAddressInput struct {
 	IsDel          *bool
+	OwnerID        *string
+	ClearOwnerID   bool
 	Sort           *int32
 	UpdatedAt      *time.Time
 	DeletedAt      *time.Time
@@ -142,6 +148,12 @@ type UpdateSysAddressInput struct {
 func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearOwnerID {
+		m.ClearOwnerID()
+	}
+	if v := i.OwnerID; v != nil {
+		m.SetOwnerID(*v)
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)

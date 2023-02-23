@@ -37,32 +37,38 @@ func init() {
 	_ = sysaddressMixinFields3
 	sysaddressMixinFields4 := sysaddressMixin[4].Fields()
 	_ = sysaddressMixinFields4
+	sysaddressMixinFields5 := sysaddressMixin[5].Fields()
+	_ = sysaddressMixinFields5
 	sysaddressFields := entity.SysAddress{}.Fields()
 	_ = sysaddressFields
 	// sysaddressDescIsDel is the schema descriptor for is_del field.
 	sysaddressDescIsDel := sysaddressMixinFields0[1].Descriptor()
 	// sysaddress.DefaultIsDel holds the default value on creation for the is_del field.
 	sysaddress.DefaultIsDel = sysaddressDescIsDel.Default.(bool)
+	// sysaddressDescOwnerID is the schema descriptor for owner_id field.
+	sysaddressDescOwnerID := sysaddressMixinFields1[0].Descriptor()
+	// sysaddress.OwnerIDValidator is a validator for the "owner_id" field. It is called by the builders before save.
+	sysaddress.OwnerIDValidator = sysaddressDescOwnerID.Validators[0].(func(string) error)
 	// sysaddressDescSort is the schema descriptor for sort field.
-	sysaddressDescSort := sysaddressMixinFields1[0].Descriptor()
+	sysaddressDescSort := sysaddressMixinFields2[0].Descriptor()
 	// sysaddress.DefaultSort holds the default value on creation for the sort field.
 	sysaddress.DefaultSort = sysaddressDescSort.Default.(int32)
 	// sysaddressDescCreatedAt is the schema descriptor for created_at field.
-	sysaddressDescCreatedAt := sysaddressMixinFields2[0].Descriptor()
+	sysaddressDescCreatedAt := sysaddressMixinFields3[0].Descriptor()
 	// sysaddress.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysaddress.DefaultCreatedAt = sysaddressDescCreatedAt.Default.(func() time.Time)
 	// sysaddressDescUpdatedAt is the schema descriptor for updated_at field.
-	sysaddressDescUpdatedAt := sysaddressMixinFields2[1].Descriptor()
+	sysaddressDescUpdatedAt := sysaddressMixinFields3[1].Descriptor()
 	// sysaddress.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysaddress.DefaultUpdatedAt = sysaddressDescUpdatedAt.Default.(func() time.Time)
 	// sysaddress.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysaddress.UpdateDefaultUpdatedAt = sysaddressDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysaddressDescIsActive is the schema descriptor for is_active field.
-	sysaddressDescIsActive := sysaddressMixinFields3[0].Descriptor()
+	sysaddressDescIsActive := sysaddressMixinFields4[0].Descriptor()
 	// sysaddress.DefaultIsActive holds the default value on creation for the is_active field.
 	sysaddress.DefaultIsActive = sysaddressDescIsActive.Default.(bool)
 	// sysaddressDescMemo is the schema descriptor for memo field.
-	sysaddressDescMemo := sysaddressMixinFields4[0].Descriptor()
+	sysaddressDescMemo := sysaddressMixinFields5[0].Descriptor()
 	// sysaddress.DefaultMemo holds the default value on creation for the memo field.
 	sysaddress.DefaultMemo = sysaddressDescMemo.Default.(string)
 	// sysaddress.MemoValidator is a validator for the "memo" field. It is called by the builders before save.

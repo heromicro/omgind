@@ -42,6 +42,26 @@ func (sau *SysAddressUpdate) SetNillableIsDel(b *bool) *SysAddressUpdate {
 	return sau
 }
 
+// SetOwnerID sets the "owner_id" field.
+func (sau *SysAddressUpdate) SetOwnerID(s string) *SysAddressUpdate {
+	sau.mutation.SetOwnerID(s)
+	return sau
+}
+
+// SetNillableOwnerID sets the "owner_id" field if the given value is not nil.
+func (sau *SysAddressUpdate) SetNillableOwnerID(s *string) *SysAddressUpdate {
+	if s != nil {
+		sau.SetOwnerID(*s)
+	}
+	return sau
+}
+
+// ClearOwnerID clears the value of the "owner_id" field.
+func (sau *SysAddressUpdate) ClearOwnerID() *SysAddressUpdate {
+	sau.mutation.ClearOwnerID()
+	return sau
+}
+
 // SetSort sets the "sort" field.
 func (sau *SysAddressUpdate) SetSort(i int32) *SysAddressUpdate {
 	sau.mutation.ResetSort()
@@ -459,6 +479,11 @@ func (sau *SysAddressUpdate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sau *SysAddressUpdate) check() error {
+	if v, ok := sau.mutation.OwnerID(); ok {
+		if err := sysaddress.OwnerIDValidator(v); err != nil {
+			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.owner_id": %w`, err)}
+		}
+	}
 	if v, ok := sau.mutation.Memo(); ok {
 		if err := sysaddress.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysAddress.memo": %w`, err)}
@@ -535,6 +560,19 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeBool,
 			Value:  value,
 			Column: sysaddress.FieldIsDel,
+		})
+	}
+	if value, ok := sau.mutation.OwnerID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysaddress.FieldOwnerID,
+		})
+	}
+	if sau.mutation.OwnerIDCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysaddress.FieldOwnerID,
 		})
 	}
 	if value, ok := sau.mutation.Sort(); ok {
@@ -790,6 +828,26 @@ func (sauo *SysAddressUpdateOne) SetNillableIsDel(b *bool) *SysAddressUpdateOne 
 	if b != nil {
 		sauo.SetIsDel(*b)
 	}
+	return sauo
+}
+
+// SetOwnerID sets the "owner_id" field.
+func (sauo *SysAddressUpdateOne) SetOwnerID(s string) *SysAddressUpdateOne {
+	sauo.mutation.SetOwnerID(s)
+	return sauo
+}
+
+// SetNillableOwnerID sets the "owner_id" field if the given value is not nil.
+func (sauo *SysAddressUpdateOne) SetNillableOwnerID(s *string) *SysAddressUpdateOne {
+	if s != nil {
+		sauo.SetOwnerID(*s)
+	}
+	return sauo
+}
+
+// ClearOwnerID clears the value of the "owner_id" field.
+func (sauo *SysAddressUpdateOne) ClearOwnerID() *SysAddressUpdateOne {
+	sauo.mutation.ClearOwnerID()
 	return sauo
 }
 
@@ -1223,6 +1281,11 @@ func (sauo *SysAddressUpdateOne) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sauo *SysAddressUpdateOne) check() error {
+	if v, ok := sauo.mutation.OwnerID(); ok {
+		if err := sysaddress.OwnerIDValidator(v); err != nil {
+			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.owner_id": %w`, err)}
+		}
+	}
 	if v, ok := sauo.mutation.Memo(); ok {
 		if err := sysaddress.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysAddress.memo": %w`, err)}
@@ -1316,6 +1379,19 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 			Type:   field.TypeBool,
 			Value:  value,
 			Column: sysaddress.FieldIsDel,
+		})
+	}
+	if value, ok := sauo.mutation.OwnerID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysaddress.FieldOwnerID,
+		})
+	}
+	if sauo.mutation.OwnerIDCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: sysaddress.FieldOwnerID,
 		})
 	}
 	if value, ok := sauo.mutation.Sort(); ok {

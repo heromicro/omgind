@@ -60,6 +60,7 @@ type SysAddressMutation struct {
 	typ           string
 	id            *string
 	is_del        *bool
+	owner_id      *string
 	sort          *int32
 	addsort       *int32
 	created_at    *time.Time
@@ -224,6 +225,55 @@ func (m *SysAddressMutation) OldIsDel(ctx context.Context) (v bool, err error) {
 // ResetIsDel resets all changes to the "is_del" field.
 func (m *SysAddressMutation) ResetIsDel() {
 	m.is_del = nil
+}
+
+// SetOwnerID sets the "owner_id" field.
+func (m *SysAddressMutation) SetOwnerID(s string) {
+	m.owner_id = &s
+}
+
+// OwnerID returns the value of the "owner_id" field in the mutation.
+func (m *SysAddressMutation) OwnerID() (r string, exists bool) {
+	v := m.owner_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOwnerID returns the old "owner_id" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldOwnerID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldOwnerID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldOwnerID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOwnerID: %w", err)
+	}
+	return oldValue.OwnerID, nil
+}
+
+// ClearOwnerID clears the value of the "owner_id" field.
+func (m *SysAddressMutation) ClearOwnerID() {
+	m.owner_id = nil
+	m.clearedFields[sysaddress.FieldOwnerID] = struct{}{}
+}
+
+// OwnerIDCleared returns if the "owner_id" field was cleared in this mutation.
+func (m *SysAddressMutation) OwnerIDCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldOwnerID]
+	return ok
+}
+
+// ResetOwnerID resets all changes to the "owner_id" field.
+func (m *SysAddressMutation) ResetOwnerID() {
+	m.owner_id = nil
+	delete(m.clearedFields, sysaddress.FieldOwnerID)
 }
 
 // SetSort sets the "sort" field.
@@ -1144,9 +1194,12 @@ func (m *SysAddressMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysAddressMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 21)
 	if m.is_del != nil {
 		fields = append(fields, sysaddress.FieldIsDel)
+	}
+	if m.owner_id != nil {
+		fields = append(fields, sysaddress.FieldOwnerID)
 	}
 	if m.sort != nil {
 		fields = append(fields, sysaddress.FieldSort)
@@ -1215,6 +1268,8 @@ func (m *SysAddressMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case sysaddress.FieldIsDel:
 		return m.IsDel()
+	case sysaddress.FieldOwnerID:
+		return m.OwnerID()
 	case sysaddress.FieldSort:
 		return m.Sort()
 	case sysaddress.FieldCreatedAt:
@@ -1264,6 +1319,8 @@ func (m *SysAddressMutation) OldField(ctx context.Context, name string) (ent.Val
 	switch name {
 	case sysaddress.FieldIsDel:
 		return m.OldIsDel(ctx)
+	case sysaddress.FieldOwnerID:
+		return m.OldOwnerID(ctx)
 	case sysaddress.FieldSort:
 		return m.OldSort(ctx)
 	case sysaddress.FieldCreatedAt:
@@ -1317,6 +1374,13 @@ func (m *SysAddressMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIsDel(v)
+		return nil
+	case sysaddress.FieldOwnerID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOwnerID(v)
 		return nil
 	case sysaddress.FieldSort:
 		v, ok := value.(int32)
@@ -1496,6 +1560,9 @@ func (m *SysAddressMutation) AddField(name string, value ent.Value) error {
 // mutation.
 func (m *SysAddressMutation) ClearedFields() []string {
 	var fields []string
+	if m.FieldCleared(sysaddress.FieldOwnerID) {
+		fields = append(fields, sysaddress.FieldOwnerID)
+	}
 	if m.FieldCleared(sysaddress.FieldDeletedAt) {
 		fields = append(fields, sysaddress.FieldDeletedAt)
 	}
@@ -1555,6 +1622,9 @@ func (m *SysAddressMutation) FieldCleared(name string) bool {
 // error if the field is not defined in the schema.
 func (m *SysAddressMutation) ClearField(name string) error {
 	switch name {
+	case sysaddress.FieldOwnerID:
+		m.ClearOwnerID()
+		return nil
 	case sysaddress.FieldDeletedAt:
 		m.ClearDeletedAt()
 		return nil
@@ -1610,6 +1680,9 @@ func (m *SysAddressMutation) ResetField(name string) error {
 	switch name {
 	case sysaddress.FieldIsDel:
 		m.ResetIsDel()
+		return nil
+	case sysaddress.FieldOwnerID:
+		m.ResetOwnerID()
 		return nil
 	case sysaddress.FieldSort:
 		m.ResetSort()

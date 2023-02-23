@@ -34,6 +34,20 @@ func (sac *SysAddressCreate) SetNillableIsDel(b *bool) *SysAddressCreate {
 	return sac
 }
 
+// SetOwnerID sets the "owner_id" field.
+func (sac *SysAddressCreate) SetOwnerID(s string) *SysAddressCreate {
+	sac.mutation.SetOwnerID(s)
+	return sac
+}
+
+// SetNillableOwnerID sets the "owner_id" field if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableOwnerID(s *string) *SysAddressCreate {
+	if s != nil {
+		sac.SetOwnerID(*s)
+	}
+	return sac
+}
+
 // SetSort sets the "sort" field.
 func (sac *SysAddressCreate) SetSort(i int32) *SysAddressCreate {
 	sac.mutation.SetSort(i)
@@ -426,6 +440,11 @@ func (sac *SysAddressCreate) check() error {
 	if _, ok := sac.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysAddress.is_del"`)}
 	}
+	if v, ok := sac.mutation.OwnerID(); ok {
+		if err := sysaddress.OwnerIDValidator(v); err != nil {
+			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.owner_id": %w`, err)}
+		}
+	}
 	if _, ok := sac.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysAddress.sort"`)}
 	}
@@ -536,6 +555,14 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 			Column: sysaddress.FieldIsDel,
 		})
 		_node.IsDel = value
+	}
+	if value, ok := sac.mutation.OwnerID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: sysaddress.FieldOwnerID,
+		})
+		_node.OwnerID = &value
 	}
 	if value, ok := sac.mutation.Sort(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

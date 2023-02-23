@@ -18,6 +18,8 @@ type SysAddress struct {
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
+	// owner id
+	OwnerID *string `json:"owner_id,omitempty" sql:"owner_id"`
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// create time
@@ -67,7 +69,7 @@ func (*SysAddress) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullBool)
 		case sysaddress.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case sysaddress.FieldID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvice, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProviceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldName, sysaddress.FieldMobile, sysaddress.FieldCreator:
+		case sysaddress.FieldID, sysaddress.FieldOwnerID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvice, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProviceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldName, sysaddress.FieldMobile, sysaddress.FieldCreator:
 			values[i] = new(sql.NullString)
 		case sysaddress.FieldCreatedAt, sysaddress.FieldUpdatedAt, sysaddress.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -97,6 +99,13 @@ func (sa *SysAddress) assignValues(columns []string, values []interface{}) error
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
 				sa.IsDel = value.Bool
+			}
+		case sysaddress.FieldOwnerID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field owner_id", values[i])
+			} else if value.Valid {
+				sa.OwnerID = new(string)
+				*sa.OwnerID = value.String
 			}
 		case sysaddress.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -257,6 +266,11 @@ func (sa *SysAddress) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v, ", sa.ID))
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", sa.IsDel))
+	builder.WriteString(", ")
+	if v := sa.OwnerID; v != nil {
+		builder.WriteString("owner_id=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", sa.Sort))
