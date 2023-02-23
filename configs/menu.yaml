@@ -134,6 +134,7 @@
           resources:
             - method: PATCH
               path: "/api/v2/sys-users/:id/enable"
+            
     - name: 数据字典
       icon: key
       router: "/system/dict"
