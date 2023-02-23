@@ -6,6 +6,256 @@ import (
 	"time"
 )
 
+// CreateSysAddressInput represents a mutation input for creating sysaddresses.
+type CreateSysAddressInput struct {
+	IsDel     *bool
+	Sort      *int32
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
+	IsActive  *bool
+	Memo      *string
+	Country   *string
+	Provice   *string
+	City      *string
+	County    *string
+	CountryID *string
+	ProviceID *string
+	CityID    *string
+	CountyID  *string
+	ZipCode   *string
+	Daddr     *string
+	Name      *string
+	Mobile    *string
+	Creator   *string
+}
+
+// Mutate applies the CreateSysAddressInput on the SysAddressCreate builder.
+func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.Country; v != nil {
+		m.SetCountry(*v)
+	}
+	if v := i.Provice; v != nil {
+		m.SetProvice(*v)
+	}
+	if v := i.City; v != nil {
+		m.SetCity(*v)
+	}
+	if v := i.County; v != nil {
+		m.SetCounty(*v)
+	}
+	if v := i.CountryID; v != nil {
+		m.SetCountryID(*v)
+	}
+	if v := i.ProviceID; v != nil {
+		m.SetProviceID(*v)
+	}
+	if v := i.CityID; v != nil {
+		m.SetCityID(*v)
+	}
+	if v := i.CountyID; v != nil {
+		m.SetCountyID(*v)
+	}
+	if v := i.ZipCode; v != nil {
+		m.SetZipCode(*v)
+	}
+	if v := i.Daddr; v != nil {
+		m.SetDaddr(*v)
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if v := i.Mobile; v != nil {
+		m.SetMobile(*v)
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the CreateSysAddressInput on the create builder.
+func (c *SysAddressCreate) SetInput(i CreateSysAddressInput) *SysAddressCreate {
+	i.Mutate(c)
+	return c
+}
+
+// UpdateSysAddressInput represents a mutation input for updating sysaddresses.
+type UpdateSysAddressInput struct {
+	IsDel          *bool
+	Sort           *int32
+	UpdatedAt      *time.Time
+	DeletedAt      *time.Time
+	ClearDeletedAt bool
+	IsActive       *bool
+	Memo           *string
+	ClearMemo      bool
+	Country        *string
+	ClearCountry   bool
+	Provice        *string
+	ClearProvice   bool
+	City           *string
+	ClearCity      bool
+	County         *string
+	ClearCounty    bool
+	CountryID      *string
+	ClearCountryID bool
+	ProviceID      *string
+	ClearProviceID bool
+	CityID         *string
+	ClearCityID    bool
+	CountyID       *string
+	ClearCountyID  bool
+	ZipCode        *string
+	ClearZipCode   bool
+	Daddr          *string
+	ClearDaddr     bool
+	Name           *string
+	ClearName      bool
+	Mobile         *string
+	ClearMobile    bool
+	Creator        *string
+	ClearCreator   bool
+}
+
+// Mutate applies the UpdateSysAddressInput on the SysAddressMutation.
+func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if i.ClearCountry {
+		m.ClearCountry()
+	}
+	if v := i.Country; v != nil {
+		m.SetCountry(*v)
+	}
+	if i.ClearProvice {
+		m.ClearProvice()
+	}
+	if v := i.Provice; v != nil {
+		m.SetProvice(*v)
+	}
+	if i.ClearCity {
+		m.ClearCity()
+	}
+	if v := i.City; v != nil {
+		m.SetCity(*v)
+	}
+	if i.ClearCounty {
+		m.ClearCounty()
+	}
+	if v := i.County; v != nil {
+		m.SetCounty(*v)
+	}
+	if i.ClearCountryID {
+		m.ClearCountryID()
+	}
+	if v := i.CountryID; v != nil {
+		m.SetCountryID(*v)
+	}
+	if i.ClearProviceID {
+		m.ClearProviceID()
+	}
+	if v := i.ProviceID; v != nil {
+		m.SetProviceID(*v)
+	}
+	if i.ClearCityID {
+		m.ClearCityID()
+	}
+	if v := i.CityID; v != nil {
+		m.SetCityID(*v)
+	}
+	if i.ClearCountyID {
+		m.ClearCountyID()
+	}
+	if v := i.CountyID; v != nil {
+		m.SetCountyID(*v)
+	}
+	if i.ClearZipCode {
+		m.ClearZipCode()
+	}
+	if v := i.ZipCode; v != nil {
+		m.SetZipCode(*v)
+	}
+	if i.ClearDaddr {
+		m.ClearDaddr()
+	}
+	if v := i.Daddr; v != nil {
+		m.SetDaddr(*v)
+	}
+	if i.ClearName {
+		m.ClearName()
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if i.ClearMobile {
+		m.ClearMobile()
+	}
+	if v := i.Mobile; v != nil {
+		m.SetMobile(*v)
+	}
+	if i.ClearCreator {
+		m.ClearCreator()
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the UpdateSysAddressInput on the update builder.
+func (u *SysAddressUpdate) SetInput(i UpdateSysAddressInput) *SysAddressUpdate {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// SetInput applies the change-set in the UpdateSysAddressInput on the update-one builder.
+func (u *SysAddressUpdateOne) SetInput(i UpdateSysAddressInput) *SysAddressUpdateOne {
+	i.Mutate(u.Mutation())
+	return u
+}
+
 // CreateSysDictInput represents a mutation input for creating sysdicts.
 type CreateSysDictInput struct {
 	IsDel     *bool

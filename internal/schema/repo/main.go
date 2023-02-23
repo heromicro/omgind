@@ -17,4 +17,5 @@ var RepoSet = wire.NewSet(
 	DictSet,
 	DictItemSet,
 	SysDistrictSet,
+	SysAddressSet,
 )

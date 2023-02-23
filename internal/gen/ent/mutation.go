@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
@@ -36,6 +37,7 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
+	TypeSysAddress            = "SysAddress"
 	TypeSysDict               = "SysDict"
 	TypeSysDictItem           = "SysDictItem"
 	TypeSysDistrict           = "SysDistrict"
@@ -50,6 +52,1673 @@ const (
 	TypeSysUserRole           = "SysUserRole"
 	TypeXxxDemo               = "XxxDemo"
 )
+
+// SysAddressMutation represents an operation that mutates the SysAddress nodes in the graph.
+type SysAddressMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *string
+	is_del        *bool
+	sort          *int32
+	addsort       *int32
+	created_at    *time.Time
+	updated_at    *time.Time
+	deleted_at    *time.Time
+	is_active     *bool
+	memo          *string
+	country       *string
+	provice       *string
+	city          *string
+	county        *string
+	country_id    *string
+	provice_id    *string
+	city_id       *string
+	county_id     *string
+	zip_code      *string
+	daddr         *string
+	name          *string
+	mobile        *string
+	creator       *string
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*SysAddress, error)
+	predicates    []predicate.SysAddress
+}
+
+var _ ent.Mutation = (*SysAddressMutation)(nil)
+
+// sysaddressOption allows management of the mutation configuration using functional options.
+type sysaddressOption func(*SysAddressMutation)
+
+// newSysAddressMutation creates new mutation for the SysAddress entity.
+func newSysAddressMutation(c config, op Op, opts ...sysaddressOption) *SysAddressMutation {
+	m := &SysAddressMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeSysAddress,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withSysAddressID sets the ID field of the mutation.
+func withSysAddressID(id string) sysaddressOption {
+	return func(m *SysAddressMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *SysAddress
+		)
+		m.oldValue = func(ctx context.Context) (*SysAddress, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().SysAddress.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withSysAddress sets the old SysAddress of the mutation.
+func withSysAddress(node *SysAddress) sysaddressOption {
+	return func(m *SysAddressMutation) {
+		m.oldValue = func(context.Context) (*SysAddress, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m SysAddressMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m SysAddressMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of SysAddress entities.
+func (m *SysAddressMutation) SetID(id string) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *SysAddressMutation) ID() (id string, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *SysAddressMutation) IDs(ctx context.Context) ([]string, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []string{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().SysAddress.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *SysAddressMutation) SetIsDel(b bool) {
+	m.is_del = &b
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *SysAddressMutation) IsDel() (r bool, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldIsDel(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *SysAddressMutation) ResetIsDel() {
+	m.is_del = nil
+}
+
+// SetSort sets the "sort" field.
+func (m *SysAddressMutation) SetSort(i int32) {
+	m.sort = &i
+	m.addsort = nil
+}
+
+// Sort returns the value of the "sort" field in the mutation.
+func (m *SysAddressMutation) Sort() (r int32, exists bool) {
+	v := m.sort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSort returns the old "sort" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldSort(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSort is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSort requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSort: %w", err)
+	}
+	return oldValue.Sort, nil
+}
+
+// AddSort adds i to the "sort" field.
+func (m *SysAddressMutation) AddSort(i int32) {
+	if m.addsort != nil {
+		*m.addsort += i
+	} else {
+		m.addsort = &i
+	}
+}
+
+// AddedSort returns the value that was added to the "sort" field in this mutation.
+func (m *SysAddressMutation) AddedSort() (r int32, exists bool) {
+	v := m.addsort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSort resets all changes to the "sort" field.
+func (m *SysAddressMutation) ResetSort() {
+	m.sort = nil
+	m.addsort = nil
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *SysAddressMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *SysAddressMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *SysAddressMutation) ResetCreatedAt() {
+	m.created_at = nil
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (m *SysAddressMutation) SetUpdatedAt(t time.Time) {
+	m.updated_at = &t
+}
+
+// UpdatedAt returns the value of the "updated_at" field in the mutation.
+func (m *SysAddressMutation) UpdatedAt() (r time.Time, exists bool) {
+	v := m.updated_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdatedAt returns the old "updated_at" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldUpdatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdatedAt: %w", err)
+	}
+	return oldValue.UpdatedAt, nil
+}
+
+// ResetUpdatedAt resets all changes to the "updated_at" field.
+func (m *SysAddressMutation) ResetUpdatedAt() {
+	m.updated_at = nil
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (m *SysAddressMutation) SetDeletedAt(t time.Time) {
+	m.deleted_at = &t
+}
+
+// DeletedAt returns the value of the "deleted_at" field in the mutation.
+func (m *SysAddressMutation) DeletedAt() (r time.Time, exists bool) {
+	v := m.deleted_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeletedAt returns the old "deleted_at" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldDeletedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDeletedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeletedAt: %w", err)
+	}
+	return oldValue.DeletedAt, nil
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (m *SysAddressMutation) ClearDeletedAt() {
+	m.deleted_at = nil
+	m.clearedFields[sysaddress.FieldDeletedAt] = struct{}{}
+}
+
+// DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
+func (m *SysAddressMutation) DeletedAtCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldDeletedAt]
+	return ok
+}
+
+// ResetDeletedAt resets all changes to the "deleted_at" field.
+func (m *SysAddressMutation) ResetDeletedAt() {
+	m.deleted_at = nil
+	delete(m.clearedFields, sysaddress.FieldDeletedAt)
+}
+
+// SetIsActive sets the "is_active" field.
+func (m *SysAddressMutation) SetIsActive(b bool) {
+	m.is_active = &b
+}
+
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysAddressMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsActive returns the old "is_active" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldIsActive(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
+	}
+	return oldValue.IsActive, nil
+}
+
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysAddressMutation) ResetIsActive() {
+	m.is_active = nil
+}
+
+// SetMemo sets the "memo" field.
+func (m *SysAddressMutation) SetMemo(s string) {
+	m.memo = &s
+}
+
+// Memo returns the value of the "memo" field in the mutation.
+func (m *SysAddressMutation) Memo() (r string, exists bool) {
+	v := m.memo
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMemo returns the old "memo" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldMemo(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMemo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMemo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMemo: %w", err)
+	}
+	return oldValue.Memo, nil
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (m *SysAddressMutation) ClearMemo() {
+	m.memo = nil
+	m.clearedFields[sysaddress.FieldMemo] = struct{}{}
+}
+
+// MemoCleared returns if the "memo" field was cleared in this mutation.
+func (m *SysAddressMutation) MemoCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldMemo]
+	return ok
+}
+
+// ResetMemo resets all changes to the "memo" field.
+func (m *SysAddressMutation) ResetMemo() {
+	m.memo = nil
+	delete(m.clearedFields, sysaddress.FieldMemo)
+}
+
+// SetCountry sets the "country" field.
+func (m *SysAddressMutation) SetCountry(s string) {
+	m.country = &s
+}
+
+// Country returns the value of the "country" field in the mutation.
+func (m *SysAddressMutation) Country() (r string, exists bool) {
+	v := m.country
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCountry returns the old "country" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldCountry(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCountry is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCountry requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCountry: %w", err)
+	}
+	return oldValue.Country, nil
+}
+
+// ClearCountry clears the value of the "country" field.
+func (m *SysAddressMutation) ClearCountry() {
+	m.country = nil
+	m.clearedFields[sysaddress.FieldCountry] = struct{}{}
+}
+
+// CountryCleared returns if the "country" field was cleared in this mutation.
+func (m *SysAddressMutation) CountryCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldCountry]
+	return ok
+}
+
+// ResetCountry resets all changes to the "country" field.
+func (m *SysAddressMutation) ResetCountry() {
+	m.country = nil
+	delete(m.clearedFields, sysaddress.FieldCountry)
+}
+
+// SetProvice sets the "provice" field.
+func (m *SysAddressMutation) SetProvice(s string) {
+	m.provice = &s
+}
+
+// Provice returns the value of the "provice" field in the mutation.
+func (m *SysAddressMutation) Provice() (r string, exists bool) {
+	v := m.provice
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldProvice returns the old "provice" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldProvice(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldProvice is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldProvice requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldProvice: %w", err)
+	}
+	return oldValue.Provice, nil
+}
+
+// ClearProvice clears the value of the "provice" field.
+func (m *SysAddressMutation) ClearProvice() {
+	m.provice = nil
+	m.clearedFields[sysaddress.FieldProvice] = struct{}{}
+}
+
+// ProviceCleared returns if the "provice" field was cleared in this mutation.
+func (m *SysAddressMutation) ProviceCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldProvice]
+	return ok
+}
+
+// ResetProvice resets all changes to the "provice" field.
+func (m *SysAddressMutation) ResetProvice() {
+	m.provice = nil
+	delete(m.clearedFields, sysaddress.FieldProvice)
+}
+
+// SetCity sets the "city" field.
+func (m *SysAddressMutation) SetCity(s string) {
+	m.city = &s
+}
+
+// City returns the value of the "city" field in the mutation.
+func (m *SysAddressMutation) City() (r string, exists bool) {
+	v := m.city
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCity returns the old "city" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldCity(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCity is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCity requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCity: %w", err)
+	}
+	return oldValue.City, nil
+}
+
+// ClearCity clears the value of the "city" field.
+func (m *SysAddressMutation) ClearCity() {
+	m.city = nil
+	m.clearedFields[sysaddress.FieldCity] = struct{}{}
+}
+
+// CityCleared returns if the "city" field was cleared in this mutation.
+func (m *SysAddressMutation) CityCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldCity]
+	return ok
+}
+
+// ResetCity resets all changes to the "city" field.
+func (m *SysAddressMutation) ResetCity() {
+	m.city = nil
+	delete(m.clearedFields, sysaddress.FieldCity)
+}
+
+// SetCounty sets the "county" field.
+func (m *SysAddressMutation) SetCounty(s string) {
+	m.county = &s
+}
+
+// County returns the value of the "county" field in the mutation.
+func (m *SysAddressMutation) County() (r string, exists bool) {
+	v := m.county
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCounty returns the old "county" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldCounty(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCounty is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCounty requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCounty: %w", err)
+	}
+	return oldValue.County, nil
+}
+
+// ClearCounty clears the value of the "county" field.
+func (m *SysAddressMutation) ClearCounty() {
+	m.county = nil
+	m.clearedFields[sysaddress.FieldCounty] = struct{}{}
+}
+
+// CountyCleared returns if the "county" field was cleared in this mutation.
+func (m *SysAddressMutation) CountyCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldCounty]
+	return ok
+}
+
+// ResetCounty resets all changes to the "county" field.
+func (m *SysAddressMutation) ResetCounty() {
+	m.county = nil
+	delete(m.clearedFields, sysaddress.FieldCounty)
+}
+
+// SetCountryID sets the "country_id" field.
+func (m *SysAddressMutation) SetCountryID(s string) {
+	m.country_id = &s
+}
+
+// CountryID returns the value of the "country_id" field in the mutation.
+func (m *SysAddressMutation) CountryID() (r string, exists bool) {
+	v := m.country_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCountryID returns the old "country_id" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldCountryID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCountryID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCountryID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCountryID: %w", err)
+	}
+	return oldValue.CountryID, nil
+}
+
+// ClearCountryID clears the value of the "country_id" field.
+func (m *SysAddressMutation) ClearCountryID() {
+	m.country_id = nil
+	m.clearedFields[sysaddress.FieldCountryID] = struct{}{}
+}
+
+// CountryIDCleared returns if the "country_id" field was cleared in this mutation.
+func (m *SysAddressMutation) CountryIDCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldCountryID]
+	return ok
+}
+
+// ResetCountryID resets all changes to the "country_id" field.
+func (m *SysAddressMutation) ResetCountryID() {
+	m.country_id = nil
+	delete(m.clearedFields, sysaddress.FieldCountryID)
+}
+
+// SetProviceID sets the "provice_id" field.
+func (m *SysAddressMutation) SetProviceID(s string) {
+	m.provice_id = &s
+}
+
+// ProviceID returns the value of the "provice_id" field in the mutation.
+func (m *SysAddressMutation) ProviceID() (r string, exists bool) {
+	v := m.provice_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldProviceID returns the old "provice_id" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldProviceID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldProviceID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldProviceID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldProviceID: %w", err)
+	}
+	return oldValue.ProviceID, nil
+}
+
+// ClearProviceID clears the value of the "provice_id" field.
+func (m *SysAddressMutation) ClearProviceID() {
+	m.provice_id = nil
+	m.clearedFields[sysaddress.FieldProviceID] = struct{}{}
+}
+
+// ProviceIDCleared returns if the "provice_id" field was cleared in this mutation.
+func (m *SysAddressMutation) ProviceIDCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldProviceID]
+	return ok
+}
+
+// ResetProviceID resets all changes to the "provice_id" field.
+func (m *SysAddressMutation) ResetProviceID() {
+	m.provice_id = nil
+	delete(m.clearedFields, sysaddress.FieldProviceID)
+}
+
+// SetCityID sets the "city_id" field.
+func (m *SysAddressMutation) SetCityID(s string) {
+	m.city_id = &s
+}
+
+// CityID returns the value of the "city_id" field in the mutation.
+func (m *SysAddressMutation) CityID() (r string, exists bool) {
+	v := m.city_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCityID returns the old "city_id" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldCityID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCityID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCityID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCityID: %w", err)
+	}
+	return oldValue.CityID, nil
+}
+
+// ClearCityID clears the value of the "city_id" field.
+func (m *SysAddressMutation) ClearCityID() {
+	m.city_id = nil
+	m.clearedFields[sysaddress.FieldCityID] = struct{}{}
+}
+
+// CityIDCleared returns if the "city_id" field was cleared in this mutation.
+func (m *SysAddressMutation) CityIDCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldCityID]
+	return ok
+}
+
+// ResetCityID resets all changes to the "city_id" field.
+func (m *SysAddressMutation) ResetCityID() {
+	m.city_id = nil
+	delete(m.clearedFields, sysaddress.FieldCityID)
+}
+
+// SetCountyID sets the "county_id" field.
+func (m *SysAddressMutation) SetCountyID(s string) {
+	m.county_id = &s
+}
+
+// CountyID returns the value of the "county_id" field in the mutation.
+func (m *SysAddressMutation) CountyID() (r string, exists bool) {
+	v := m.county_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCountyID returns the old "county_id" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldCountyID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCountyID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCountyID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCountyID: %w", err)
+	}
+	return oldValue.CountyID, nil
+}
+
+// ClearCountyID clears the value of the "county_id" field.
+func (m *SysAddressMutation) ClearCountyID() {
+	m.county_id = nil
+	m.clearedFields[sysaddress.FieldCountyID] = struct{}{}
+}
+
+// CountyIDCleared returns if the "county_id" field was cleared in this mutation.
+func (m *SysAddressMutation) CountyIDCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldCountyID]
+	return ok
+}
+
+// ResetCountyID resets all changes to the "county_id" field.
+func (m *SysAddressMutation) ResetCountyID() {
+	m.county_id = nil
+	delete(m.clearedFields, sysaddress.FieldCountyID)
+}
+
+// SetZipCode sets the "zip_code" field.
+func (m *SysAddressMutation) SetZipCode(s string) {
+	m.zip_code = &s
+}
+
+// ZipCode returns the value of the "zip_code" field in the mutation.
+func (m *SysAddressMutation) ZipCode() (r string, exists bool) {
+	v := m.zip_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldZipCode returns the old "zip_code" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldZipCode(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldZipCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldZipCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldZipCode: %w", err)
+	}
+	return oldValue.ZipCode, nil
+}
+
+// ClearZipCode clears the value of the "zip_code" field.
+func (m *SysAddressMutation) ClearZipCode() {
+	m.zip_code = nil
+	m.clearedFields[sysaddress.FieldZipCode] = struct{}{}
+}
+
+// ZipCodeCleared returns if the "zip_code" field was cleared in this mutation.
+func (m *SysAddressMutation) ZipCodeCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldZipCode]
+	return ok
+}
+
+// ResetZipCode resets all changes to the "zip_code" field.
+func (m *SysAddressMutation) ResetZipCode() {
+	m.zip_code = nil
+	delete(m.clearedFields, sysaddress.FieldZipCode)
+}
+
+// SetDaddr sets the "daddr" field.
+func (m *SysAddressMutation) SetDaddr(s string) {
+	m.daddr = &s
+}
+
+// Daddr returns the value of the "daddr" field in the mutation.
+func (m *SysAddressMutation) Daddr() (r string, exists bool) {
+	v := m.daddr
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDaddr returns the old "daddr" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldDaddr(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDaddr is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDaddr requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDaddr: %w", err)
+	}
+	return oldValue.Daddr, nil
+}
+
+// ClearDaddr clears the value of the "daddr" field.
+func (m *SysAddressMutation) ClearDaddr() {
+	m.daddr = nil
+	m.clearedFields[sysaddress.FieldDaddr] = struct{}{}
+}
+
+// DaddrCleared returns if the "daddr" field was cleared in this mutation.
+func (m *SysAddressMutation) DaddrCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldDaddr]
+	return ok
+}
+
+// ResetDaddr resets all changes to the "daddr" field.
+func (m *SysAddressMutation) ResetDaddr() {
+	m.daddr = nil
+	delete(m.clearedFields, sysaddress.FieldDaddr)
+}
+
+// SetName sets the "name" field.
+func (m *SysAddressMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *SysAddressMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ClearName clears the value of the "name" field.
+func (m *SysAddressMutation) ClearName() {
+	m.name = nil
+	m.clearedFields[sysaddress.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *SysAddressMutation) NameCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldName]
+	return ok
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *SysAddressMutation) ResetName() {
+	m.name = nil
+	delete(m.clearedFields, sysaddress.FieldName)
+}
+
+// SetMobile sets the "mobile" field.
+func (m *SysAddressMutation) SetMobile(s string) {
+	m.mobile = &s
+}
+
+// Mobile returns the value of the "mobile" field in the mutation.
+func (m *SysAddressMutation) Mobile() (r string, exists bool) {
+	v := m.mobile
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMobile returns the old "mobile" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldMobile(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMobile is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMobile requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMobile: %w", err)
+	}
+	return oldValue.Mobile, nil
+}
+
+// ClearMobile clears the value of the "mobile" field.
+func (m *SysAddressMutation) ClearMobile() {
+	m.mobile = nil
+	m.clearedFields[sysaddress.FieldMobile] = struct{}{}
+}
+
+// MobileCleared returns if the "mobile" field was cleared in this mutation.
+func (m *SysAddressMutation) MobileCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldMobile]
+	return ok
+}
+
+// ResetMobile resets all changes to the "mobile" field.
+func (m *SysAddressMutation) ResetMobile() {
+	m.mobile = nil
+	delete(m.clearedFields, sysaddress.FieldMobile)
+}
+
+// SetCreator sets the "creator" field.
+func (m *SysAddressMutation) SetCreator(s string) {
+	m.creator = &s
+}
+
+// Creator returns the value of the "creator" field in the mutation.
+func (m *SysAddressMutation) Creator() (r string, exists bool) {
+	v := m.creator
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreator returns the old "creator" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldCreator(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreator is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreator requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreator: %w", err)
+	}
+	return oldValue.Creator, nil
+}
+
+// ClearCreator clears the value of the "creator" field.
+func (m *SysAddressMutation) ClearCreator() {
+	m.creator = nil
+	m.clearedFields[sysaddress.FieldCreator] = struct{}{}
+}
+
+// CreatorCleared returns if the "creator" field was cleared in this mutation.
+func (m *SysAddressMutation) CreatorCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldCreator]
+	return ok
+}
+
+// ResetCreator resets all changes to the "creator" field.
+func (m *SysAddressMutation) ResetCreator() {
+	m.creator = nil
+	delete(m.clearedFields, sysaddress.FieldCreator)
+}
+
+// Where appends a list predicates to the SysAddressMutation builder.
+func (m *SysAddressMutation) Where(ps ...predicate.SysAddress) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// Op returns the operation name.
+func (m *SysAddressMutation) Op() Op {
+	return m.op
+}
+
+// Type returns the node type of this mutation (SysAddress).
+func (m *SysAddressMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *SysAddressMutation) Fields() []string {
+	fields := make([]string, 0, 20)
+	if m.is_del != nil {
+		fields = append(fields, sysaddress.FieldIsDel)
+	}
+	if m.sort != nil {
+		fields = append(fields, sysaddress.FieldSort)
+	}
+	if m.created_at != nil {
+		fields = append(fields, sysaddress.FieldCreatedAt)
+	}
+	if m.updated_at != nil {
+		fields = append(fields, sysaddress.FieldUpdatedAt)
+	}
+	if m.deleted_at != nil {
+		fields = append(fields, sysaddress.FieldDeletedAt)
+	}
+	if m.is_active != nil {
+		fields = append(fields, sysaddress.FieldIsActive)
+	}
+	if m.memo != nil {
+		fields = append(fields, sysaddress.FieldMemo)
+	}
+	if m.country != nil {
+		fields = append(fields, sysaddress.FieldCountry)
+	}
+	if m.provice != nil {
+		fields = append(fields, sysaddress.FieldProvice)
+	}
+	if m.city != nil {
+		fields = append(fields, sysaddress.FieldCity)
+	}
+	if m.county != nil {
+		fields = append(fields, sysaddress.FieldCounty)
+	}
+	if m.country_id != nil {
+		fields = append(fields, sysaddress.FieldCountryID)
+	}
+	if m.provice_id != nil {
+		fields = append(fields, sysaddress.FieldProviceID)
+	}
+	if m.city_id != nil {
+		fields = append(fields, sysaddress.FieldCityID)
+	}
+	if m.county_id != nil {
+		fields = append(fields, sysaddress.FieldCountyID)
+	}
+	if m.zip_code != nil {
+		fields = append(fields, sysaddress.FieldZipCode)
+	}
+	if m.daddr != nil {
+		fields = append(fields, sysaddress.FieldDaddr)
+	}
+	if m.name != nil {
+		fields = append(fields, sysaddress.FieldName)
+	}
+	if m.mobile != nil {
+		fields = append(fields, sysaddress.FieldMobile)
+	}
+	if m.creator != nil {
+		fields = append(fields, sysaddress.FieldCreator)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *SysAddressMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case sysaddress.FieldIsDel:
+		return m.IsDel()
+	case sysaddress.FieldSort:
+		return m.Sort()
+	case sysaddress.FieldCreatedAt:
+		return m.CreatedAt()
+	case sysaddress.FieldUpdatedAt:
+		return m.UpdatedAt()
+	case sysaddress.FieldDeletedAt:
+		return m.DeletedAt()
+	case sysaddress.FieldIsActive:
+		return m.IsActive()
+	case sysaddress.FieldMemo:
+		return m.Memo()
+	case sysaddress.FieldCountry:
+		return m.Country()
+	case sysaddress.FieldProvice:
+		return m.Provice()
+	case sysaddress.FieldCity:
+		return m.City()
+	case sysaddress.FieldCounty:
+		return m.County()
+	case sysaddress.FieldCountryID:
+		return m.CountryID()
+	case sysaddress.FieldProviceID:
+		return m.ProviceID()
+	case sysaddress.FieldCityID:
+		return m.CityID()
+	case sysaddress.FieldCountyID:
+		return m.CountyID()
+	case sysaddress.FieldZipCode:
+		return m.ZipCode()
+	case sysaddress.FieldDaddr:
+		return m.Daddr()
+	case sysaddress.FieldName:
+		return m.Name()
+	case sysaddress.FieldMobile:
+		return m.Mobile()
+	case sysaddress.FieldCreator:
+		return m.Creator()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *SysAddressMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case sysaddress.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case sysaddress.FieldSort:
+		return m.OldSort(ctx)
+	case sysaddress.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	case sysaddress.FieldUpdatedAt:
+		return m.OldUpdatedAt(ctx)
+	case sysaddress.FieldDeletedAt:
+		return m.OldDeletedAt(ctx)
+	case sysaddress.FieldIsActive:
+		return m.OldIsActive(ctx)
+	case sysaddress.FieldMemo:
+		return m.OldMemo(ctx)
+	case sysaddress.FieldCountry:
+		return m.OldCountry(ctx)
+	case sysaddress.FieldProvice:
+		return m.OldProvice(ctx)
+	case sysaddress.FieldCity:
+		return m.OldCity(ctx)
+	case sysaddress.FieldCounty:
+		return m.OldCounty(ctx)
+	case sysaddress.FieldCountryID:
+		return m.OldCountryID(ctx)
+	case sysaddress.FieldProviceID:
+		return m.OldProviceID(ctx)
+	case sysaddress.FieldCityID:
+		return m.OldCityID(ctx)
+	case sysaddress.FieldCountyID:
+		return m.OldCountyID(ctx)
+	case sysaddress.FieldZipCode:
+		return m.OldZipCode(ctx)
+	case sysaddress.FieldDaddr:
+		return m.OldDaddr(ctx)
+	case sysaddress.FieldName:
+		return m.OldName(ctx)
+	case sysaddress.FieldMobile:
+		return m.OldMobile(ctx)
+	case sysaddress.FieldCreator:
+		return m.OldCreator(ctx)
+	}
+	return nil, fmt.Errorf("unknown SysAddress field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *SysAddressMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case sysaddress.FieldIsDel:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case sysaddress.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSort(v)
+		return nil
+	case sysaddress.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	case sysaddress.FieldUpdatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdatedAt(v)
+		return nil
+	case sysaddress.FieldDeletedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeletedAt(v)
+		return nil
+	case sysaddress.FieldIsActive:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsActive(v)
+		return nil
+	case sysaddress.FieldMemo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMemo(v)
+		return nil
+	case sysaddress.FieldCountry:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCountry(v)
+		return nil
+	case sysaddress.FieldProvice:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetProvice(v)
+		return nil
+	case sysaddress.FieldCity:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCity(v)
+		return nil
+	case sysaddress.FieldCounty:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCounty(v)
+		return nil
+	case sysaddress.FieldCountryID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCountryID(v)
+		return nil
+	case sysaddress.FieldProviceID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetProviceID(v)
+		return nil
+	case sysaddress.FieldCityID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCityID(v)
+		return nil
+	case sysaddress.FieldCountyID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCountyID(v)
+		return nil
+	case sysaddress.FieldZipCode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetZipCode(v)
+		return nil
+	case sysaddress.FieldDaddr:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDaddr(v)
+		return nil
+	case sysaddress.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case sysaddress.FieldMobile:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMobile(v)
+		return nil
+	case sysaddress.FieldCreator:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreator(v)
+		return nil
+	}
+	return fmt.Errorf("unknown SysAddress field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *SysAddressMutation) AddedFields() []string {
+	var fields []string
+	if m.addsort != nil {
+		fields = append(fields, sysaddress.FieldSort)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *SysAddressMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case sysaddress.FieldSort:
+		return m.AddedSort()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *SysAddressMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case sysaddress.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSort(v)
+		return nil
+	}
+	return fmt.Errorf("unknown SysAddress numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *SysAddressMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(sysaddress.FieldDeletedAt) {
+		fields = append(fields, sysaddress.FieldDeletedAt)
+	}
+	if m.FieldCleared(sysaddress.FieldMemo) {
+		fields = append(fields, sysaddress.FieldMemo)
+	}
+	if m.FieldCleared(sysaddress.FieldCountry) {
+		fields = append(fields, sysaddress.FieldCountry)
+	}
+	if m.FieldCleared(sysaddress.FieldProvice) {
+		fields = append(fields, sysaddress.FieldProvice)
+	}
+	if m.FieldCleared(sysaddress.FieldCity) {
+		fields = append(fields, sysaddress.FieldCity)
+	}
+	if m.FieldCleared(sysaddress.FieldCounty) {
+		fields = append(fields, sysaddress.FieldCounty)
+	}
+	if m.FieldCleared(sysaddress.FieldCountryID) {
+		fields = append(fields, sysaddress.FieldCountryID)
+	}
+	if m.FieldCleared(sysaddress.FieldProviceID) {
+		fields = append(fields, sysaddress.FieldProviceID)
+	}
+	if m.FieldCleared(sysaddress.FieldCityID) {
+		fields = append(fields, sysaddress.FieldCityID)
+	}
+	if m.FieldCleared(sysaddress.FieldCountyID) {
+		fields = append(fields, sysaddress.FieldCountyID)
+	}
+	if m.FieldCleared(sysaddress.FieldZipCode) {
+		fields = append(fields, sysaddress.FieldZipCode)
+	}
+	if m.FieldCleared(sysaddress.FieldDaddr) {
+		fields = append(fields, sysaddress.FieldDaddr)
+	}
+	if m.FieldCleared(sysaddress.FieldName) {
+		fields = append(fields, sysaddress.FieldName)
+	}
+	if m.FieldCleared(sysaddress.FieldMobile) {
+		fields = append(fields, sysaddress.FieldMobile)
+	}
+	if m.FieldCleared(sysaddress.FieldCreator) {
+		fields = append(fields, sysaddress.FieldCreator)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *SysAddressMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *SysAddressMutation) ClearField(name string) error {
+	switch name {
+	case sysaddress.FieldDeletedAt:
+		m.ClearDeletedAt()
+		return nil
+	case sysaddress.FieldMemo:
+		m.ClearMemo()
+		return nil
+	case sysaddress.FieldCountry:
+		m.ClearCountry()
+		return nil
+	case sysaddress.FieldProvice:
+		m.ClearProvice()
+		return nil
+	case sysaddress.FieldCity:
+		m.ClearCity()
+		return nil
+	case sysaddress.FieldCounty:
+		m.ClearCounty()
+		return nil
+	case sysaddress.FieldCountryID:
+		m.ClearCountryID()
+		return nil
+	case sysaddress.FieldProviceID:
+		m.ClearProviceID()
+		return nil
+	case sysaddress.FieldCityID:
+		m.ClearCityID()
+		return nil
+	case sysaddress.FieldCountyID:
+		m.ClearCountyID()
+		return nil
+	case sysaddress.FieldZipCode:
+		m.ClearZipCode()
+		return nil
+	case sysaddress.FieldDaddr:
+		m.ClearDaddr()
+		return nil
+	case sysaddress.FieldName:
+		m.ClearName()
+		return nil
+	case sysaddress.FieldMobile:
+		m.ClearMobile()
+		return nil
+	case sysaddress.FieldCreator:
+		m.ClearCreator()
+		return nil
+	}
+	return fmt.Errorf("unknown SysAddress nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *SysAddressMutation) ResetField(name string) error {
+	switch name {
+	case sysaddress.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case sysaddress.FieldSort:
+		m.ResetSort()
+		return nil
+	case sysaddress.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	case sysaddress.FieldUpdatedAt:
+		m.ResetUpdatedAt()
+		return nil
+	case sysaddress.FieldDeletedAt:
+		m.ResetDeletedAt()
+		return nil
+	case sysaddress.FieldIsActive:
+		m.ResetIsActive()
+		return nil
+	case sysaddress.FieldMemo:
+		m.ResetMemo()
+		return nil
+	case sysaddress.FieldCountry:
+		m.ResetCountry()
+		return nil
+	case sysaddress.FieldProvice:
+		m.ResetProvice()
+		return nil
+	case sysaddress.FieldCity:
+		m.ResetCity()
+		return nil
+	case sysaddress.FieldCounty:
+		m.ResetCounty()
+		return nil
+	case sysaddress.FieldCountryID:
+		m.ResetCountryID()
+		return nil
+	case sysaddress.FieldProviceID:
+		m.ResetProviceID()
+		return nil
+	case sysaddress.FieldCityID:
+		m.ResetCityID()
+		return nil
+	case sysaddress.FieldCountyID:
+		m.ResetCountyID()
+		return nil
+	case sysaddress.FieldZipCode:
+		m.ResetZipCode()
+		return nil
+	case sysaddress.FieldDaddr:
+		m.ResetDaddr()
+		return nil
+	case sysaddress.FieldName:
+		m.ResetName()
+		return nil
+	case sysaddress.FieldMobile:
+		m.ResetMobile()
+		return nil
+	case sysaddress.FieldCreator:
+		m.ResetCreator()
+		return nil
+	}
+	return fmt.Errorf("unknown SysAddress field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *SysAddressMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *SysAddressMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *SysAddressMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *SysAddressMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *SysAddressMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *SysAddressMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *SysAddressMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown SysAddress unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *SysAddressMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown SysAddress edge %s", name)
+}
 
 // SysDictMutation represents an operation that mutates the SysDict nodes in the graph.
 type SysDictMutation struct {

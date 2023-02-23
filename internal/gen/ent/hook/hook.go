@@ -9,6 +9,19 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent"
 )
 
+// The SysAddressFunc type is an adapter to allow the use of ordinary
+// function as SysAddress mutator.
+type SysAddressFunc func(context.Context, *ent.SysAddressMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SysAddressFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.SysAddressMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysAddressMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The SysDictFunc type is an adapter to allow the use of ordinary
 // function as SysDict mutator.
 type SysDictFunc func(context.Context, *ent.SysDictMutation) (ent.Value, error)

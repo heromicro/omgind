@@ -9,6 +9,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/gen/ent/migrate"
 
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
@@ -33,6 +34,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
+	// SysAddress is the client for interacting with the SysAddress builders.
+	SysAddress *SysAddressClient
 	// SysDict is the client for interacting with the SysDict builders.
 	SysDict *SysDictClient
 	// SysDictItem is the client for interacting with the SysDictItem builders.
@@ -72,6 +75,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
+	c.SysAddress = NewSysAddressClient(c.config)
 	c.SysDict = NewSysDictClient(c.config)
 	c.SysDictItem = NewSysDictItemClient(c.config)
 	c.SysDistrict = NewSysDistrictClient(c.config)
@@ -118,6 +122,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	return &Tx{
 		ctx:                   ctx,
 		config:                cfg,
+		SysAddress:            NewSysAddressClient(cfg),
 		SysDict:               NewSysDictClient(cfg),
 		SysDictItem:           NewSysDictItemClient(cfg),
 		SysDistrict:           NewSysDistrictClient(cfg),
@@ -150,6 +155,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	return &Tx{
 		ctx:                   ctx,
 		config:                cfg,
+		SysAddress:            NewSysAddressClient(cfg),
 		SysDict:               NewSysDictClient(cfg),
 		SysDictItem:           NewSysDictItemClient(cfg),
 		SysDistrict:           NewSysDistrictClient(cfg),
@@ -169,7 +175,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		SysDict.
+//		SysAddress.
 //		Query().
 //		Count(ctx)
 //
@@ -192,6 +198,7 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
+	c.SysAddress.Use(hooks...)
 	c.SysDict.Use(hooks...)
 	c.SysDictItem.Use(hooks...)
 	c.SysDistrict.Use(hooks...)
@@ -205,6 +212,96 @@ func (c *Client) Use(hooks ...Hook) {
 	c.SysUser.Use(hooks...)
 	c.SysUserRole.Use(hooks...)
 	c.XxxDemo.Use(hooks...)
+}
+
+// SysAddressClient is a client for the SysAddress schema.
+type SysAddressClient struct {
+	config
+}
+
+// NewSysAddressClient returns a client for the SysAddress from the given config.
+func NewSysAddressClient(c config) *SysAddressClient {
+	return &SysAddressClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `sysaddress.Hooks(f(g(h())))`.
+func (c *SysAddressClient) Use(hooks ...Hook) {
+	c.hooks.SysAddress = append(c.hooks.SysAddress, hooks...)
+}
+
+// Create returns a builder for creating a SysAddress entity.
+func (c *SysAddressClient) Create() *SysAddressCreate {
+	mutation := newSysAddressMutation(c.config, OpCreate)
+	return &SysAddressCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of SysAddress entities.
+func (c *SysAddressClient) CreateBulk(builders ...*SysAddressCreate) *SysAddressCreateBulk {
+	return &SysAddressCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for SysAddress.
+func (c *SysAddressClient) Update() *SysAddressUpdate {
+	mutation := newSysAddressMutation(c.config, OpUpdate)
+	return &SysAddressUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SysAddressClient) UpdateOne(sa *SysAddress) *SysAddressUpdateOne {
+	mutation := newSysAddressMutation(c.config, OpUpdateOne, withSysAddress(sa))
+	return &SysAddressUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SysAddressClient) UpdateOneID(id string) *SysAddressUpdateOne {
+	mutation := newSysAddressMutation(c.config, OpUpdateOne, withSysAddressID(id))
+	return &SysAddressUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for SysAddress.
+func (c *SysAddressClient) Delete() *SysAddressDelete {
+	mutation := newSysAddressMutation(c.config, OpDelete)
+	return &SysAddressDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *SysAddressClient) DeleteOne(sa *SysAddress) *SysAddressDeleteOne {
+	return c.DeleteOneID(sa.ID)
+}
+
+// DeleteOne returns a builder for deleting the given entity by its id.
+func (c *SysAddressClient) DeleteOneID(id string) *SysAddressDeleteOne {
+	builder := c.Delete().Where(sysaddress.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SysAddressDeleteOne{builder}
+}
+
+// Query returns a query builder for SysAddress.
+func (c *SysAddressClient) Query() *SysAddressQuery {
+	return &SysAddressQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a SysAddress entity by its id.
+func (c *SysAddressClient) Get(ctx context.Context, id string) (*SysAddress, error) {
+	return c.Query().Where(sysaddress.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SysAddressClient) GetX(ctx context.Context, id string) *SysAddress {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *SysAddressClient) Hooks() []Hook {
+	return c.hooks.SysAddress
 }
 
 // SysDictClient is a client for the SysDict schema.

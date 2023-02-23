@@ -56,6 +56,8 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 
 		a.initSysDistrictRouterV2(v2, a.SysDistrictAPIV2, "sysdistrict")
 
+		a.initSysAddressRouterV2(v2, a.SysAddressAPIV2, "sysaddress")
+
 	}
 
 	// app.GET("/ws/*any", gin.WrapH(a.SockIO))

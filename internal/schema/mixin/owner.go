@@ -31,9 +31,9 @@ func FieldOwnerID(nillable bool, immutable bool, notEmpty bool) ent.Field {
 	if nillable {
 		f = f.Nillable().Optional()
 	}
-	if immutable {
-		f = f.Immutable()
-	}
+	// if immutable {
+	// 	f = f.Immutable()
+	// }
 	if notEmpty {
 		f = f.NotEmpty()
 	}

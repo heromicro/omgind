@@ -24,6 +24,7 @@ type config struct {
 
 // hooks per client, for fast access.
 type hooks struct {
+	SysAddress            []ent.Hook
 	SysDict               []ent.Hook
 	SysDictItem           []ent.Hook
 	SysDistrict           []ent.Hook

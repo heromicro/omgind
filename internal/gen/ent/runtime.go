@@ -5,6 +5,7 @@ package ent
 import (
 	"time"
 
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
@@ -25,6 +26,103 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	sysaddressMixin := entity.SysAddress{}.Mixin()
+	sysaddressMixinFields0 := sysaddressMixin[0].Fields()
+	_ = sysaddressMixinFields0
+	sysaddressMixinFields1 := sysaddressMixin[1].Fields()
+	_ = sysaddressMixinFields1
+	sysaddressMixinFields2 := sysaddressMixin[2].Fields()
+	_ = sysaddressMixinFields2
+	sysaddressMixinFields3 := sysaddressMixin[3].Fields()
+	_ = sysaddressMixinFields3
+	sysaddressMixinFields4 := sysaddressMixin[4].Fields()
+	_ = sysaddressMixinFields4
+	sysaddressFields := entity.SysAddress{}.Fields()
+	_ = sysaddressFields
+	// sysaddressDescIsDel is the schema descriptor for is_del field.
+	sysaddressDescIsDel := sysaddressMixinFields0[1].Descriptor()
+	// sysaddress.DefaultIsDel holds the default value on creation for the is_del field.
+	sysaddress.DefaultIsDel = sysaddressDescIsDel.Default.(bool)
+	// sysaddressDescSort is the schema descriptor for sort field.
+	sysaddressDescSort := sysaddressMixinFields1[0].Descriptor()
+	// sysaddress.DefaultSort holds the default value on creation for the sort field.
+	sysaddress.DefaultSort = sysaddressDescSort.Default.(int32)
+	// sysaddressDescCreatedAt is the schema descriptor for created_at field.
+	sysaddressDescCreatedAt := sysaddressMixinFields2[0].Descriptor()
+	// sysaddress.DefaultCreatedAt holds the default value on creation for the created_at field.
+	sysaddress.DefaultCreatedAt = sysaddressDescCreatedAt.Default.(func() time.Time)
+	// sysaddressDescUpdatedAt is the schema descriptor for updated_at field.
+	sysaddressDescUpdatedAt := sysaddressMixinFields2[1].Descriptor()
+	// sysaddress.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	sysaddress.DefaultUpdatedAt = sysaddressDescUpdatedAt.Default.(func() time.Time)
+	// sysaddress.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	sysaddress.UpdateDefaultUpdatedAt = sysaddressDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// sysaddressDescIsActive is the schema descriptor for is_active field.
+	sysaddressDescIsActive := sysaddressMixinFields3[0].Descriptor()
+	// sysaddress.DefaultIsActive holds the default value on creation for the is_active field.
+	sysaddress.DefaultIsActive = sysaddressDescIsActive.Default.(bool)
+	// sysaddressDescMemo is the schema descriptor for memo field.
+	sysaddressDescMemo := sysaddressMixinFields4[0].Descriptor()
+	// sysaddress.DefaultMemo holds the default value on creation for the memo field.
+	sysaddress.DefaultMemo = sysaddressDescMemo.Default.(string)
+	// sysaddress.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
+	sysaddress.MemoValidator = sysaddressDescMemo.Validators[0].(func(string) error)
+	// sysaddressDescCountryID is the schema descriptor for country_id field.
+	sysaddressDescCountryID := sysaddressFields[4].Descriptor()
+	// sysaddress.CountryIDValidator is a validator for the "country_id" field. It is called by the builders before save.
+	sysaddress.CountryIDValidator = sysaddressDescCountryID.Validators[0].(func(string) error)
+	// sysaddressDescProviceID is the schema descriptor for provice_id field.
+	sysaddressDescProviceID := sysaddressFields[5].Descriptor()
+	// sysaddress.ProviceIDValidator is a validator for the "provice_id" field. It is called by the builders before save.
+	sysaddress.ProviceIDValidator = sysaddressDescProviceID.Validators[0].(func(string) error)
+	// sysaddressDescCityID is the schema descriptor for city_id field.
+	sysaddressDescCityID := sysaddressFields[6].Descriptor()
+	// sysaddress.CityIDValidator is a validator for the "city_id" field. It is called by the builders before save.
+	sysaddress.CityIDValidator = sysaddressDescCityID.Validators[0].(func(string) error)
+	// sysaddressDescCountyID is the schema descriptor for county_id field.
+	sysaddressDescCountyID := sysaddressFields[7].Descriptor()
+	// sysaddress.CountyIDValidator is a validator for the "county_id" field. It is called by the builders before save.
+	sysaddress.CountyIDValidator = sysaddressDescCountyID.Validators[0].(func(string) error)
+	// sysaddressDescZipCode is the schema descriptor for zip_code field.
+	sysaddressDescZipCode := sysaddressFields[8].Descriptor()
+	// sysaddress.ZipCodeValidator is a validator for the "zip_code" field. It is called by the builders before save.
+	sysaddress.ZipCodeValidator = sysaddressDescZipCode.Validators[0].(func(string) error)
+	// sysaddressDescDaddr is the schema descriptor for daddr field.
+	sysaddressDescDaddr := sysaddressFields[9].Descriptor()
+	// sysaddress.DaddrValidator is a validator for the "daddr" field. It is called by the builders before save.
+	sysaddress.DaddrValidator = sysaddressDescDaddr.Validators[0].(func(string) error)
+	// sysaddressDescName is the schema descriptor for name field.
+	sysaddressDescName := sysaddressFields[10].Descriptor()
+	// sysaddress.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	sysaddress.NameValidator = sysaddressDescName.Validators[0].(func(string) error)
+	// sysaddressDescMobile is the schema descriptor for mobile field.
+	sysaddressDescMobile := sysaddressFields[11].Descriptor()
+	// sysaddress.MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
+	sysaddress.MobileValidator = sysaddressDescMobile.Validators[0].(func(string) error)
+	// sysaddressDescCreator is the schema descriptor for creator field.
+	sysaddressDescCreator := sysaddressFields[12].Descriptor()
+	// sysaddress.CreatorValidator is a validator for the "creator" field. It is called by the builders before save.
+	sysaddress.CreatorValidator = sysaddressDescCreator.Validators[0].(func(string) error)
+	// sysaddressDescID is the schema descriptor for id field.
+	sysaddressDescID := sysaddressMixinFields0[0].Descriptor()
+	// sysaddress.DefaultID holds the default value on creation for the id field.
+	sysaddress.DefaultID = sysaddressDescID.Default.(func() string)
+	// sysaddress.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	sysaddress.IDValidator = func() func(string) error {
+		validators := sysaddressDescID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(id string) error {
+			for _, fn := range fns {
+				if err := fn(id); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
 	sysdictMixin := entity.SysDict{}.Mixin()
 	sysdictMixinFields0 := sysdictMixin[0].Fields()
 	_ = sysdictMixinFields0

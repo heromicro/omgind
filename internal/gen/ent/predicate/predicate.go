@@ -6,6 +6,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
+// SysAddress is the predicate function for sysaddress builders.
+type SysAddress func(*sql.Selector)
+
 // SysDict is the predicate function for sysdict builders.
 type SysDict func(*sql.Selector)
 
