@@ -194,6 +194,31 @@ var (
 				Unique:  false,
 				Columns: []*schema.Column{SysDistrictsColumns[7], SysDistrictsColumns[9], SysDistrictsColumns[10]},
 			},
+			{
+				Name:    "sysdistrict_pid",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[19]},
+			},
+			{
+				Name:    "sysdistrict_is_hot",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[28]},
+			},
+			{
+				Name:    "sysdistrict_is_r",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[29]},
+			},
+			{
+				Name:    "sysdistrict_is_m",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[30]},
+			},
+			{
+				Name:    "sysdistrict_is_d",
+				Unique:  false,
+				Columns: []*schema.Column{SysDistrictsColumns[31]},
+			},
 		},
 	}
 	// SysJwtBlocksColumns holds the columns for the "sys_jwt_blocks" table.

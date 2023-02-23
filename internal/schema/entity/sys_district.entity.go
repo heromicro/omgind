@@ -3,6 +3,7 @@ package entity
 import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
 	"github.com/heromicro/omgind/internal/schema/mixin"
 )
 
@@ -59,7 +60,13 @@ func (SysDistrict) Edges() []ent.Edge {
 }
 
 func (SysDistrict) Indexes() []ent.Index {
-	return []ent.Index{}
+	return []ent.Index{
+		index.Fields("parent_id"),
+		index.Fields("is_hot"),
+		index.Fields("is_real"),
+		index.Fields("is_main"),
+		index.Fields("is_direct"),
+	}
 }
 
 func (SysDistrict) Hooks() []ent.Hook {
