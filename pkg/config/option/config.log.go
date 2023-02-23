@@ -25,6 +25,9 @@ func (h LogHook) IsGorm() bool {
 func (h LogHook) IsMongo() bool {
 	return h == "mongo"
 }
+func (h LogHook) IsEntgo() bool {
+	return h == "ent" || h == "entgo"
+}
 
 // LogGormHook 日志gorm钩子配置
 type LogGormHook struct {
