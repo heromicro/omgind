@@ -19,7 +19,7 @@
 - 基于 `Casbin` 的 RBAC 访问控制模型 -- **权限控制可以细粒度到按钮 & 接口**
 - 基于 `entgo` 的数据库ORM
 - 基于 `WIRE` 的依赖注入 -- 依赖注入本身的作用是解决了各个模块间层级依赖繁琐的初始化过程
-- 基于 `Logrus & Context` 实现了日志输出，通过结合 Context 实现了统一的 TraceID/UserID 等关键字段的输出(同时支持日志钩子写入到`Gorm`)
+- 基于 `Logrus & Context` 实现了日志输出，通过结合 Context 实现了统一的 TraceID/UserID 等关键字段的输出(同时支持日志钩子写入到`Gorm`/`entgo`)
 - 基于 `JWT` 的用户认证 -- 基于 JWT 的黑名单验证机制
 - 基于 `Swaggo` 自动生成 `Swagger` 文档 -- 独立于接口的 mock 实现
 - 基于 `net/http/httptest` 标准包实现了 API 的单元测试

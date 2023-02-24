@@ -25,6 +25,8 @@ func (h LogHook) IsGorm() bool {
 func (h LogHook) IsMongo() bool {
 	return h == "mongo"
 }
+
+// IsEntgo 是否是ent钩子
 func (h LogHook) IsEntgo() bool {
 	return h == "ent" || h == "entgo"
 }

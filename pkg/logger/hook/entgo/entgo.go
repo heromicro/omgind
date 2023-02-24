@@ -45,7 +45,7 @@ func New(c *Config) *Hook {
 	}
 }
 
-// NewGormDB 创建DB实例
+// NewEnt 创建ent实例
 func NewEntClient(cfg *Config) (*ent.Client, func(), error) {
 
 	db, err := sql.Open(cfg.DBType, cfg.DSN)

@@ -59,7 +59,7 @@
     EnableHook = false
     # 写入钩子的日志级别
     HookLevels = ["info","warn","error"]
-    # 日志钩子(支持：gorm/mongo)
+    # 日志钩子(支持：gorm/entgo)
     Hook = "gorm"
     # 写入钩子的最大工作线程数量
     HookMaxThread = 1

@@ -56,7 +56,7 @@ func New(acfg *config.AppConfig) (*ent.Client, func(), error) {
 	return cli, cleanFunc, nil
 }
 
-// NewGormDB 创建DB实例
+// 创建ent实例
 func NewEntClient(cfg *config.AppConfig) (*ent.Client, func(), error) {
 
 	var dsn string

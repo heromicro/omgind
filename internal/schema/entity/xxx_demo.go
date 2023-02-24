@@ -20,14 +20,6 @@ func (xd XxxDemo) Mixin() []ent.Mixin {
 	}
 }
 
-/*
-	Code   string  `gorm:"column:code;size:50;index;default:'';not null;"`  // 编号
-	Name   string  `gorm:"column:name;size:100;index;default:'';not null;"` // 名称
-	Memo   *string `gorm:"column:memo;size:200;"`                           // 备注
-	IsDel  bool    `gorm:"column:is_del;default:false;index;not null;"`
-
-*/
-
 func (xd XxxDemo) Fields() []ent.Field {
 
 	return []ent.Field{
