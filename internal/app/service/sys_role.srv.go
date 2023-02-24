@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/casbin/casbin/v2"
@@ -91,7 +92,8 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.IDResult, 
 	if err != nil {
 		return nil, err
 	}
-	LoadCasbinPolicy(ctx, a.Enforcer)
+	// FIXME::
+	// LoadCasbinPolicy(ctx, a.Enforcer)
 	return schema.NewIDResult(item.ID), nil
 }
 
@@ -181,11 +183,14 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 			return a.RoleRepo.Update(ctx, id, item)
 		})*/
 
+	log.Println(" ------- ====== ", err)
+
 	if err != nil {
 		return err
 	}
 
-	LoadCasbinPolicy(ctx, a.Enforcer)
+	// FIXME::
+	// LoadCasbinPolicy(ctx, a.Enforcer)
 	return nil
 }
 
@@ -238,8 +243,8 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 	if err != nil {
 		return err
 	}
-
-	LoadCasbinPolicy(ctx, a.Enforcer)
+	// FIXME::
+	// LoadCasbinPolicy(ctx, a.Enforcer)
 	return nil
 }
 
@@ -256,6 +261,7 @@ func (a *Role) UpdateStatus(ctx context.Context, id string, isActive bool) error
 	if err != nil {
 		return err
 	}
-	LoadCasbinPolicy(ctx, a.Enforcer)
+	// FIXME::
+	// LoadCasbinPolicy(ctx, a.Enforcer)
 	return nil
 }

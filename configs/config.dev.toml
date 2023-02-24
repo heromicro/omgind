@@ -37,7 +37,7 @@
 
 [Casbin]
     # 是否启用casbin
-    Enable = true
+    Enable = false
     # debug模式
     Debug = false
     # 模型配置文件(也可以启动服务时使用-m指定)

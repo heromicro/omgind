@@ -115,7 +115,8 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.IDResult, 
 		return nil, err
 	}
 
-	LoadCasbinPolicy(ctx, a.Enforcer)
+	// FIXME::
+	// LoadCasbinPolicy(ctx, a.Enforcer)
 	return schema.NewIDResult(item.ID), nil
 }
 
@@ -196,7 +197,8 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) error {
 		return err
 	}
 
-	LoadCasbinPolicy(ctx, a.Enforcer)
+	// FIXME::
+	// LoadCasbinPolicy(ctx, a.Enforcer)
 	return nil
 }
 
@@ -235,7 +237,8 @@ func (a *User) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	LoadCasbinPolicy(ctx, a.Enforcer)
+	// FIXME::
+	// LoadCasbinPolicy(ctx, a.Enforcer)
 	return nil
 }
 
@@ -254,6 +257,7 @@ func (a *User) UpdateStatus(ctx context.Context, id string, isActive bool) error
 		return err
 	}
 
-	LoadCasbinPolicy(ctx, a.Enforcer)
+	// FIXME::
+	// LoadCasbinPolicy(ctx, a.Enforcer)
 	return nil
 }

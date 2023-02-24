@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 
 	"github.com/casbin/casbin/v2"
 
@@ -38,6 +39,8 @@ func LoadCasbinPolicy(ctx context.Context, e *casbin.SyncedEnforcer) {
 		logger.WithContext(ctx).Infof("The load casbin policy is already in the wait queue")
 		return
 	}
+
+	log.Println(" ------ ====  ")
 
 	chCasbinPolicy <- &chCasbinPolicyItem{
 		ctx: ctx,
