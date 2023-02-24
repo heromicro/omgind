@@ -138,7 +138,7 @@
     - name: 数据字典
       icon: key
       router: "/system/dict"
-      sort: 69
+      sort: 199
       level: 2
       actions:
         - code: add
@@ -177,7 +177,7 @@
     - name: 行政区域
       icon: key
       router: "/system/district"
-      sort: 68
+      sort: 88
       level: 2
       actions:
         - code: add
@@ -212,6 +212,45 @@
           resources:
             - method: PATCH
               path: "/api/v2/sys-district/:id/enable"
+
+    - name: 地址管理
+      icon: key
+      router: "/system/address"
+      sort: 88
+      level: 2
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: POST
+              path: "/api/v2/sys-address"
+        - code: edit
+          name: 编辑
+          resources:
+            - method: GET
+              path: "/api/v2/sys-address/:id"
+            - method: PUT
+              path: "/api/v2/sys-address/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/sys-address/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/sys-address"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/sys-address/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/sys-address/:id/enable"
 
 
 - name: 开发状态
