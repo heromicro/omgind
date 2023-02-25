@@ -491,7 +491,7 @@ definitions:
         description: 是否是子叶
         type: boolean
       is_main:
-        description: 热门城市
+        description: 主要城市
         type: boolean
       is_real:
         description: 是否虚拟区域
@@ -529,7 +529,7 @@ definitions:
         description: 区域后缀,省/市/区/旗/盟/自治区/
         type: string
       tree_id:
-        description: 是否是直辖
+        description: 树id
         type: integer
       tree_left:
         description: 层级
@@ -1586,22 +1586,67 @@ paths:
         in: header
         name: Authorization
         type: string
-      - default: 1
-        description: 分页索引
+      - description: asc, desc
+        in: query
+        name: createdAt_Order
+        type: string
+      - description: 当前页
         in: query
         name: current
-        required: true
         type: integer
-      - default: 10
-        description: 分页大小
+      - description: 简拼
         in: query
+        name: initials
+        type: string
+      - description: 是否是直辖
+        in: query
+        name: isDirect
+        type: boolean
+      - description: 热门城市
+        in: query
+        name: isHot
+        type: boolean
+      - description: 是否是子叶
+        in: query
+        name: isLeaf
+        type: boolean
+      - description: 主要城市
+        in: query
+        name: isMain
+        type: boolean
+      - description: 名称
+        in: query
+        name: name
+        type: string
+      - description: asc desc
+        in: query
+        name: name_Order
+        type: string
+      - description: 是否仅查询count
+        in: query
+        name: onlyCount
+        type: boolean
+      - description: 页大小
+        in: query
+        maximum: 100
         name: pageSize
-        required: true
         type: integer
-      - description: 查询值
+      - description: 是否使用分页查询
+        in: query
+        name: pagination
+        type: boolean
+      - description: 模糊查询
         in: query
         name: queryValue
         type: string
+      - description: 区域后缀,省/市/区/旗/盟/自治区/
+        in: query
+        name: suffix
+        type: string
+      - description: 树id
+        in: query
+        name: treeID
+        type: integer
       responses:
         "200":
           description: OK

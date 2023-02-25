@@ -1439,25 +1439,94 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "分页索引",
-                        "name": "current",
-                        "in": "query",
-                        "required": true
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "createdAt_Order",
+                        "in": "query"
                     },
                     {
                         "type": "integer",
-                        "default": 10,
-                        "description": "分页大小",
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true
+                        "description": "当前页",
+                        "name": "current",
+                        "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "查询值",
+                        "description": "简拼",
+                        "name": "initials",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否是直辖",
+                        "name": "isDirect",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "热门城市",
+                        "name": "isHot",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否是子叶",
+                        "name": "isLeaf",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "主要城市",
+                        "name": "isMain",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "name_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "onlyCount",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否使用分页查询",
+                        "name": "pagination",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模糊查询",
                         "name": "queryValue",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "区域后缀,省/市/区/旗/盟/自治区/",
+                        "name": "suffix",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "树id",
+                        "name": "treeID",
                         "in": "query"
                     }
                 ],
@@ -3707,7 +3776,7 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "is_main": {
-                    "description": "热门城市",
+                    "description": "主要城市",
                     "type": "boolean"
                 },
                 "is_real": {
@@ -3758,7 +3827,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "tree_id": {
-                    "description": "是否是直辖",
+                    "description": "树id",
                     "type": "integer"
                 },
                 "tree_left": {

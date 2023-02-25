@@ -24,13 +24,13 @@ type SysDistrict struct {
 	Sort       int32    `json:"sort"`
 	IsDel      bool     `json:"is_del"`
 
-	IsMain   *bool `json:"is_main"`   // 热门城市
+	IsMain   *bool `json:"is_main"`   // 主要城市
 	IsHot    bool  `json:"is_hot"`    // 热门城市
 	IsReal   bool  `json:"is_real"`   // 是否虚拟区域
 	IsDirect bool  `json:"is_direct"` // 是否是直辖
 
 	IsLeaf    *bool   `json:"is_leaf"`    // 是否是子叶
-	TreeID    *int32  `json:"tree_id"`    // 是否是直辖
+	TreeID    *int32  `json:"tree_id"`    // 树id
 	TreeLevel *int32  `json:"tree_level"` // 层级
 	TreeLeft  *int32  `json:"tree_left"`  // 层级
 	TreeRight *int32  `json:"tree_right"` // 层级
@@ -47,7 +47,17 @@ type SysDistrict struct {
 type SysDistrictQueryParam struct {
 	PaginationParam
 	QueryValue string `form:"queryValue"` // 模糊查询
+	Name       string `form:"name"`       // 名称
+	Initials   string `form:"initials"`   // 简拼
+	Suffix     string `form:"suffix"`     // 区域后缀,省/市/区/旗/盟/自治区/
+	IsMain     *bool  `form:"is_main"`    // 主要城市
+	IsHot      *bool  `form:"is_hot"`     // 热门城市
+	IsDirect   *bool  `form:"is_direct"`  // 是否是直辖
+	IsLeaf     *bool  `form:"is_leaf"`    // 是否是子叶
+	TreeID     *int32 `form:"tree_id"`    // 树id
 
+	CreatedAt_Order string `form:"created_at__order"` // asc, desc
+	Name_Order      string `form:"name__order"`       // asc desc
 }
 
 // SysDistrictQueryOptions 查询可选参数项
