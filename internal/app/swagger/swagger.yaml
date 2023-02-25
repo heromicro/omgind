@@ -297,6 +297,9 @@ definitions:
       creator:
         description: 创建者
         type: string
+      deleted_at:
+        description: 更新时间
+        type: string
       id:
         description: 唯一标识
         type: string
@@ -697,18 +700,43 @@ paths:
   /api/v2/demos:
     get:
       parameters:
-      - default: 1
-        description: 分页索引
+      - description: 编号
+        in: query
+        name: code
+        type: string
+      - description: asc desc
+        in: query
+        name: code_Order
+        type: string
+      - description: asc, desc
+        in: query
+        name: createdAt_Order
+        type: string
+      - description: 当前页
         in: query
         name: current
-        required: true
         type: integer
-      - default: 10
-        description: 分页大小
+      - description: 名称
         in: query
+        name: name
+        type: string
+      - description: asc desc
+        in: query
+        name: name_Order
+        type: string
+      - description: 是否仅查询count
+        in: query
+        name: onlyCount
+        type: boolean
+      - description: 页大小
+        in: query
+        maximum: 100
         name: pageSize
-        required: true
         type: integer
+      - description: 是否使用分页查询
+        in: query
+        name: pagination
+        type: boolean
       - description: 查询值
         in: query
         name: queryValue

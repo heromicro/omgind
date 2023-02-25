@@ -28,20 +28,59 @@ const docTemplate = `{
                 "summary": "查询数据",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "分页索引",
-                        "name": "current",
-                        "in": "query",
-                        "required": true
+                        "type": "string",
+                        "description": "编号",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "code_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "createdAt_Order",
+                        "in": "query"
                     },
                     {
                         "type": "integer",
-                        "default": 10,
-                        "description": "分页大小",
+                        "description": "当前页",
+                        "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "name_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "onlyCount",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "页大小",
                         "name": "pageSize",
-                        "in": "query",
-                        "required": true
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否使用分页查询",
+                        "name": "pagination",
+                        "in": "query"
                     },
                     {
                         "type": "string",
@@ -3399,6 +3438,10 @@ const docTemplate = `{
                 },
                 "creator": {
                     "description": "创建者",
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "description": "更新时间",
                     "type": "string"
                 },
                 "id": {
