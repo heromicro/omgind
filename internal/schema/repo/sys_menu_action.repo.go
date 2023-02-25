@@ -36,7 +36,6 @@ func (a *MenuAction) toSchemaSysMenuActions(mas ent.SysMenuActions) []*schema.Me
 	return list
 }
 
-
 func (a *MenuAction) ToEntCreateSysMenuActionInput(ma *schema.MenuAction) *ent.CreateSysMenuActionInput {
 	createinput := new(ent.CreateSysMenuActionInput)
 	structure.Copy(ma, &createinput)
@@ -50,7 +49,6 @@ func (a *MenuAction) ToEntUpdateSysMenuActionInput(ma *schema.MenuAction) *ent.U
 
 	return updateinput
 }
-
 
 func (a *MenuAction) getQueryOption(opts ...schema.MenuActionQueryOptions) schema.MenuActionQueryOptions {
 	var opt schema.MenuActionQueryOptions
@@ -160,13 +158,13 @@ func (a *MenuAction) Delete(ctx context.Context, id string) error {
 	if err != nil {
 		return err
 	}
-	_, err1 := sys_ma.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := sys_ma.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 	return errors.WithStack(err1)
 }
 
 // DeleteByMenuID 根据菜单ID删除数据
 func (a *MenuAction) DeleteByMenuID(ctx context.Context, menuID string) error {
-	_, err := a.EntCli.SysMenuAction.Update().Where(sysmenuaction.MenuIDEQ(menuID)).SetDeletedAt(time.Now()).Save(ctx)
+	_, err := a.EntCli.SysMenuAction.Update().Where(sysmenuaction.MenuIDEQ(menuID)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 
 	return errors.WithStack(err)
 }

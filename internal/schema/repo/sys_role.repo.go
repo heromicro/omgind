@@ -181,7 +181,7 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 	if err != nil {
 		return errors.ErrNotFound
 	}
-	_, err1 := role.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := role.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 	return errors.WithStack(err1)
 
 }

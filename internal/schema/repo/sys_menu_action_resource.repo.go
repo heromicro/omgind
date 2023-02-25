@@ -25,7 +25,6 @@ type MenuActionResource struct {
 	//TxCli *ent.Tx
 }
 
-
 func (a *MenuActionResource) toSchemaSysMenuActionResource(ma *ent.SysMenuActionResource) *schema.MenuActionResource {
 	item := new(schema.MenuActionResource)
 	structure.Copy(ma, item)
@@ -41,7 +40,6 @@ func (a *MenuActionResource) toSchemaSysMenuActionResources(mas ent.SysMenuActio
 	return list
 }
 
-
 func (a *MenuActionResource) ToEntCreateSysMenuActionResourceInput(ma *schema.MenuActionResource) *ent.CreateSysMenuActionResourceInput {
 	createinput := new(ent.CreateSysMenuActionResourceInput)
 	structure.Copy(ma, &createinput)
@@ -55,7 +53,6 @@ func (a *MenuActionResource) ToEntUpdateSysMenuActionResourceInput(ma *schema.Me
 
 	return updateinput
 }
-
 
 func (a *MenuActionResource) getQueryOption(opts ...schema.MenuActionResourceQueryOptions) schema.MenuActionResourceQueryOptions {
 	var opt schema.MenuActionResourceQueryOptions
@@ -78,7 +75,7 @@ func (a *MenuActionResource) Query(ctx context.Context, params schema.MenuAction
 			s.Where(sql.In(
 				sysmenuactionresource.FieldActionID,
 				sql.Select(sysmenuaction.FieldID).From(sma_t).Where(sql.EQ(sysmenuaction.FieldMenuID, v)),
-				))
+			))
 		})
 		//subQuery := entity.GetMenuActionDB(ctx, a.DB).
 		//	Where("menu_id=?", v).
@@ -93,7 +90,7 @@ func (a *MenuActionResource) Query(ctx context.Context, params schema.MenuAction
 				sysmenuactionresource.FieldActionID,
 				sql.Select(sysmenuaction.FieldID).From(sma_t).Where(sql.In(sysmenuaction.FieldMenuID, strings.Join(v,
 					","))),
-				))
+			))
 		})
 		//subQuery := entity.GetMenuActionDB(ctx, a.DB).Where("menu_id IN (?)", v).Select("id").SubQuery()
 		//db = db.Where("action_id IN ?", subQuery)
@@ -174,7 +171,7 @@ func (a *MenuActionResource) Update(ctx context.Context, id string, item schema.
 
 // Delete 删除数据
 func (a *MenuActionResource) Delete(ctx context.Context, id string) error {
-	_, err := a.EntCli.SysMenuActionResource.UpdateOneID(id).SetDeletedAt(time.Now()).Save(ctx)
+	_, err := a.EntCli.SysMenuActionResource.UpdateOneID(id).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 	if err != nil {
 		return err
 	}
@@ -183,7 +180,7 @@ func (a *MenuActionResource) Delete(ctx context.Context, id string) error {
 
 // DeleteByActionID 根据动作ID删除数据
 func (a *MenuActionResource) DeleteByActionID(ctx context.Context, actionID string) error {
-	_, err := a.EntCli.SysMenuActionResource.Update().Where(sysmenuactionresource.ActionIDEQ(actionID)).SetDeletedAt(time.Now()).Save(ctx)
+	_, err := a.EntCli.SysMenuActionResource.Update().Where(sysmenuactionresource.ActionIDEQ(actionID)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 	return errors.WithStack(err)
 }
 
@@ -195,8 +192,8 @@ func (a *MenuActionResource) DeleteByMenuID(ctx context.Context, menuID string) 
 			sql.In(
 				sysmenuactionresource.FieldActionID,
 				sql.Select(sysmenuaction.FieldID).
-				From(sma_t).
-				Where(sql.EQ(sysmenuaction.FieldMenuID, menuID)),
+					From(sma_t).
+					Where(sql.EQ(sysmenuaction.FieldMenuID, menuID)),
 			),
 		)
 	}).SetIsDel(true).SetDeletedAt(time.Now()).Save(ctx)

@@ -21,7 +21,6 @@ type RoleMenu struct {
 	EntCli *ent.Client
 }
 
-
 func (a *RoleMenu) toSchemaSysRoleMenu(role *ent.SysRoleMenu) *schema.RoleMenu {
 	item := new(schema.RoleMenu)
 	structure.Copy(role, item)
@@ -36,7 +35,6 @@ func (a *RoleMenu) toSchemaSysRoleMenus(roles ent.SysRoleMenus) []*schema.RoleMe
 	return list
 }
 
-
 func (a *RoleMenu) ToEntCreateSysRoleMenuInput(schrole *schema.RoleMenu) *ent.CreateSysRoleMenuInput {
 	createinput := new(ent.CreateSysRoleMenuInput)
 	structure.Copy(schrole, &createinput)
@@ -50,7 +48,6 @@ func (a *RoleMenu) ToEntUpdateSysRoleMenuInput(schrole *schema.RoleMenu) *ent.Up
 
 	return updateinput
 }
-
 
 func (a *RoleMenu) getQueryOption(opts ...schema.RoleMenuQueryOptions) schema.RoleMenuQueryOptions {
 	var opt schema.RoleMenuQueryOptions
@@ -102,7 +99,6 @@ func (a *RoleMenu) Query(ctx context.Context, params schema.RoleMenuQueryParam, 
 	}
 	rlist := ent.SysRoleMenus(list)
 
-
 	qr := &schema.RoleMenuQueryResult{
 		PageResult: pr,
 		Data:       a.toSchemaSysRoleMenus(rlist),
@@ -122,7 +118,7 @@ func (a *RoleMenu) Get(ctx context.Context, id string, opts ...schema.RoleMenuQu
 }
 
 // Create 创建数据
-func (a *RoleMenu) Create(ctx context.Context, item schema.RoleMenu) (*schema.RoleMenu,error) {
+func (a *RoleMenu) Create(ctx context.Context, item schema.RoleMenu) (*schema.RoleMenu, error) {
 
 	iteminput := a.ToEntCreateSysRoleMenuInput(&item)
 	iteminput.CreatedAt = nil
@@ -158,12 +154,12 @@ func (a *RoleMenu) Delete(ctx context.Context, id string) error {
 	if err != nil {
 		return errors.ErrNotFound
 	}
-	_, err1 := rolemenu.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := rolemenu.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 	return errors.WithStack(err1)
 }
 
 // DeleteByRoleID 根据角色ID删除数据
 func (a *RoleMenu) DeleteByRoleID(ctx context.Context, roleID string) error {
-	_, err := a.EntCli.SysRoleMenu.Update().SetDeletedAt(time.Now()).Where(sysrolemenu.RoleIDEQ(roleID)).Save(ctx)
+	_, err := a.EntCli.SysRoleMenu.Update().SetDeletedAt(time.Now()).SetIsDel(true).Where(sysrolemenu.RoleIDEQ(roleID)).Save(ctx)
 	return errors.WithStack(err)
 }

@@ -156,6 +156,6 @@ func (a *DictItem) Delete(ctx context.Context, id string) error {
 	if err != nil {
 		return err
 	}
-	_, err1 := dictitem.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := dictitem.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 	return errors.WithStack(err1)
 }

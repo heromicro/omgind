@@ -63,7 +63,11 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 	query := a.EntCli.XxxDemo.Query().Where(xxxdemo.DeletedAtIsNil())
 
 	if v := params.Code; v != "" {
-		query = query.Where(xxxdemo.CodeEQ(v))
+		query = query.Where(xxxdemo.CodeContains(v))
+	}
+
+	if v := params.Name; v != "" {
+		query = query.Where(xxxdemo.NameContains(v))
 	}
 
 	if v := params.QueryValue; v != "" {
@@ -159,7 +163,7 @@ func (a *Demo) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	_, err1 := xxxdemo.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := xxxdemo.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 
 	return errors.WithStack(err1)
 }

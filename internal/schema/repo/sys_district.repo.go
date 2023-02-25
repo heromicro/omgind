@@ -152,7 +152,7 @@ func (a *SysDistrict) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	_, err1 := r_sysdistrict.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := r_sysdistrict.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 
 	return errors.WithStack(err1)
 }

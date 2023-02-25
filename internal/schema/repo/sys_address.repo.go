@@ -152,7 +152,7 @@ func (a *SysAddress) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	_, err1 := r_sysaddress.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := r_sysaddress.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 
 	return errors.WithStack(err1)
 }

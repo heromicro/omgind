@@ -184,7 +184,7 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 	if err != nil {
 		return err
 	}
-	_, err1 := sys_menu.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := sys_menu.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 	return errors.WithStack(err1)
 }
 

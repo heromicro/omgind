@@ -174,7 +174,7 @@ func (a *Dict) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	_, err1 := dict.Update().SetDeletedAt(time.Now()).Save(ctx)
+	_, err1 := dict.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 
 	return errors.WithStack(err1)
 }
