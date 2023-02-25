@@ -12,6 +12,7 @@ type Role struct {
 	Creator   string     `json:"creator" `                           // 创建者
 	CreatedAt *time.Time `json:"created_at" `                        // 创建时间
 	UpdatedAt *time.Time `json:"updated_at" `                        // 更新时间
+	DeletedAt *time.Time `json:"deleted_at" `                        // 更新时间
 	RoleMenus RoleMenus  `json:"role_menus" binding:"required,gt=0"` // 角色菜单列表
 }
 

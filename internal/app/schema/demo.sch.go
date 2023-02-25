@@ -19,8 +19,14 @@ type Demo struct {
 // DemoQueryParam 查询条件
 type DemoQueryParam struct {
 	PaginationParam
-	Code       string `form:"-"`          // 编号
 	QueryValue string `form:"queryValue"` // 查询值
+	Code       string `form:"code"`       // 编号
+	Name       string `form:"name"`       // 名称
+
+	CreatedAt_Order string `form:"created_at__order"` // asc, desc
+	Code_Order      string `form:"code__order"`       // asc desc
+	Name_Order      string `form:"name__order"`       // asc desc
+
 }
 
 // DemoQueryOptions 示例对象查询可选参数项
