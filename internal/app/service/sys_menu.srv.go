@@ -425,7 +425,7 @@ func (a *Menu) updateActions(ctx context.Context, tx *ent.Tx, menuID string, old
 			return err
 		}
 
-		_, err1 := tx.SysMenuActionResource.Update().Where(sysmenuactionresource.ActionIDEQ(item.ID)).SetIsDel(true).SetDeletedAt(time.Now()).Save(ctx)
+		_, err1 := tx.SysMenuActionResource.Update().Where(sysmenuactionresource.ActionIDEQ(item.ID)).SetIsDel(true).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 		if err1 != nil {
 			return err1
 		}

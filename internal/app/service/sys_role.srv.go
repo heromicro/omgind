@@ -140,7 +140,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 		}
 
 		for _, rmitem := range delRoleMenus {
-			_, err := tx.SysRoleMenu.UpdateOneID(rmitem.ID).SetDeletedAt(time.Now()).Save(ctx)
+			_, err := tx.SysRoleMenu.UpdateOneID(rmitem.ID).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 
 			if err != nil {
 				return err

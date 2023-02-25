@@ -172,7 +172,7 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) error {
 
 		// 删除
 		for _, itm := range delItems {
-			_, err := tx.SysDictItem.Update().Where(sysdictitem.IDEQ(itm.ID)).SetDeletedAt(time.Now()).Save(ctx)
+			_, err := tx.SysDictItem.Update().Where(sysdictitem.IDEQ(itm.ID)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 			if err != nil {
 				if err := tx.Rollback(); err != nil {
 					//
