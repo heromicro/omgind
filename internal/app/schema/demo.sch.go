@@ -3,6 +3,7 @@ package schema
 import "time"
 
 // Demo 示例对象
+// swagger:model
 type Demo struct {
 	ID       string `json:"id" `                          // 唯一标识
 	Code     string `json:"code" binding:"required"`      // 编号
@@ -17,6 +18,7 @@ type Demo struct {
 }
 
 // DemoQueryParam 查询条件
+// swagger:parameters
 type DemoQueryParam struct {
 	PaginationParam
 	QueryValue string `form:"queryValue"` // 查询值

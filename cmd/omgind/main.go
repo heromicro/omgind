@@ -18,16 +18,16 @@ import (
 // VERSION 版本号，可以通过编译的方式指定版本号：go build -ldflags "-X main.VERSION=x.x.x"
 var VERSION = "7.0.0"
 
-// @title omgind
-// @version 7.0.0
-// @description RBAC scaffolding based on GIN + ENT + CASBIN + WIRE.
-// @securityDefinitions.apikey ApiKeyAuth
-// @in header
-// @name Authorization
-// @schemes http https
-// @basePath /
-// @contact.name heromicro
-// @contact.email wky@foal.com
+//	@title						omgind
+//	@version					7.0.0
+//	@description				RBAC scaffolding based on GIN + ENT + CASBIN + WIRE.
+//	@securityDefinitions.apikey	ApiKeyAuth
+//	@in							header
+//	@name						Authorization
+//	@schemes					http https
+//	@basePath					/
+//	@contact.name				heromicro
+//	@contact.email				wky@foal.com
 func main() {
 	logger.SetVersion(VERSION)
 	enter.Execute()
