@@ -86,7 +86,33 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 	}
 
 	// order field
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	if v := params.Sort_Order; v != "" {
+		switch v {
+		case "asc":
+			fallthrough
+		case "ascend":
+			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("sort", schema.OrderByASC))
+		case "desc":
+			fallthrough
+		case "descend":
+			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("sort", schema.OrderByDESC))
+
+		}
+	}
+	if v := params.CreatedAt_Order; v != "" {
+		switch v {
+		case "asc":
+			fallthrough
+		case "ascend":
+			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(xxxdemo.FieldCreatedAt, schema.OrderByASC))
+		case "desc":
+			fallthrough
+		case "descend":
+			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(xxxdemo.FieldCreatedAt, schema.OrderByDESC))
+
+		}
+	}
 
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 

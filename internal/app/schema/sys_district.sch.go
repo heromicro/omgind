@@ -55,6 +55,7 @@ type SysDistrictQueryParam struct {
 	IsDirect   *bool  `form:"is_direct"`  // 是否是直辖
 	IsLeaf     *bool  `form:"is_leaf"`    // 是否是子叶
 	TreeID     *int32 `form:"tree_id"`    // 树id
+	IsActive   *bool  `form:"is_active"`  // 状态
 
 	CreatedAt_Order string `form:"created_at__order"` // asc, desc
 	Name_Order      string `form:"name__order"`       // asc desc

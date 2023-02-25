@@ -24,10 +24,12 @@ type DemoQueryParam struct {
 	QueryValue string `form:"queryValue"` // 查询值
 	Code       string `form:"code"`       // 编号
 	Name       string `form:"name"`       // 名称
+	IsActive   *bool  `form:"is_active"`  // 状态
 
 	CreatedAt_Order string `form:"created_at__order"` // asc, desc
 	Code_Order      string `form:"code__order"`       // asc desc
 	Name_Order      string `form:"name__order"`       // asc desc
+	Sort_Order      string `form:"sort__order"`       // asc desc
 
 }
 
