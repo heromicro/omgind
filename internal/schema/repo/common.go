@@ -20,3 +20,17 @@ func ParseOrder(items []*schema.OrderField) []ent.OrderFunc {
 
 	return orders
 }
+
+func MakeUpOrderField(field string, order string) *schema.OrderField {
+	switch order {
+	case "asc":
+		fallthrough
+	case "ascend":
+		return schema.NewOrderField(field, schema.OrderByASC)
+	case "desc":
+		fallthrough
+	case "descend":
+		return schema.NewOrderField(field, schema.OrderByDESC)
+	}
+	return nil
+}

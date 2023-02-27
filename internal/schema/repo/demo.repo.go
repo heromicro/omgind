@@ -88,29 +88,23 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 	// order field
 	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
 	if v := params.Sort_Order; v != "" {
-		switch v {
-		case "asc":
-			fallthrough
-		case "ascend":
-			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("sort", schema.OrderByASC))
-		case "desc":
-			fallthrough
-		case "descend":
-			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("sort", schema.OrderByDESC))
-
+		of := MakeUpOrderField(xxxdemo.FieldSort, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
 		}
 	}
-	if v := params.CreatedAt_Order; v != "" {
-		switch v {
-		case "asc":
-			fallthrough
-		case "ascend":
-			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(xxxdemo.FieldCreatedAt, schema.OrderByASC))
-		case "desc":
-			fallthrough
-		case "descend":
-			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(xxxdemo.FieldCreatedAt, schema.OrderByDESC))
 
+	if v := params.Code_Order; v != "" {
+		of := MakeUpOrderField(xxxdemo.FieldCode, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.CreatedAt_Order; v != "" {
+		of := MakeUpOrderField(xxxdemo.FieldCreatedAt, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
 		}
 	}
 
