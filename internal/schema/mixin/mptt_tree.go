@@ -16,7 +16,7 @@ func (MpttTreeMixin) Fields() []ent.Field {
 	return []ent.Field{
 
 		field.Int64("tree_id").Nillable().Optional().StorageKey("tree_id").StructTag(`json:"tree_id"`).Comment("tree id"),
-		field.Int64("tree_level").Nillable().Optional().StorageKey("tree_level").StructTag(`json:"level"`).Comment("level in tree, toppest level is 1"),
+		field.Int32("tree_level").Nillable().Optional().StorageKey("tree_level").StructTag(`json:"level"`).Comment("level in tree, toppest level is 1"),
 		field.Int64("tree_left").Nillable().Optional().StorageKey("tree_left").StructTag(`json:"tree_left"`).Comment("mptt's left "),
 		field.Int64("tree_right").Nillable().Optional().StorageKey("tree_right").StructTag(`json:"tree_right"`).Comment("mptt's right"),
 		field.Bool("is_leaf").Default(true).Nillable().Optional().StorageKey("is_leaf").StructTag(`json:"is_leaf"`).Comment("is leaf node"),

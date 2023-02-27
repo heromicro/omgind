@@ -31,7 +31,7 @@ type SysDistrict struct {
 	// tree id
 	TreeID *int64 `json:"tree_id"`
 	// level in tree, toppest level is 1
-	TreeLevel *int64 `json:"level"`
+	TreeLevel *int32 `json:"level"`
 	// mptt's left
 	TreeLeft *int64 `json:"tree_left"`
 	// mptt's right
@@ -203,8 +203,8 @@ func (sd *SysDistrict) assignValues(columns []string, values []interface{}) erro
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_level", values[i])
 			} else if value.Valid {
-				sd.TreeLevel = new(int64)
-				*sd.TreeLevel = value.Int64
+				sd.TreeLevel = new(int32)
+				*sd.TreeLevel = int32(value.Int64)
 			}
 		case sysdistrict.FieldTreeLeft:
 			if value, ok := values[i].(*sql.NullInt64); !ok {

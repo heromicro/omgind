@@ -3547,8 +3547,8 @@ type SysDistrictMutation struct {
 	is_active       *bool
 	tree_id         *int64
 	addtree_id      *int64
-	tree_level      *int64
-	addtree_level   *int64
+	tree_level      *int32
+	addtree_level   *int32
 	tree_left       *int64
 	addtree_left    *int64
 	tree_right      *int64
@@ -4011,13 +4011,13 @@ func (m *SysDistrictMutation) ResetTreeID() {
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (m *SysDistrictMutation) SetTreeLevel(i int64) {
+func (m *SysDistrictMutation) SetTreeLevel(i int32) {
 	m.tree_level = &i
 	m.addtree_level = nil
 }
 
 // TreeLevel returns the value of the "tree_level" field in the mutation.
-func (m *SysDistrictMutation) TreeLevel() (r int64, exists bool) {
+func (m *SysDistrictMutation) TreeLevel() (r int32, exists bool) {
 	v := m.tree_level
 	if v == nil {
 		return
@@ -4028,7 +4028,7 @@ func (m *SysDistrictMutation) TreeLevel() (r int64, exists bool) {
 // OldTreeLevel returns the old "tree_level" field's value of the SysDistrict entity.
 // If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysDistrictMutation) OldTreeLevel(ctx context.Context) (v *int64, err error) {
+func (m *SysDistrictMutation) OldTreeLevel(ctx context.Context) (v *int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTreeLevel is only allowed on UpdateOne operations")
 	}
@@ -4043,7 +4043,7 @@ func (m *SysDistrictMutation) OldTreeLevel(ctx context.Context) (v *int64, err e
 }
 
 // AddTreeLevel adds i to the "tree_level" field.
-func (m *SysDistrictMutation) AddTreeLevel(i int64) {
+func (m *SysDistrictMutation) AddTreeLevel(i int32) {
 	if m.addtree_level != nil {
 		*m.addtree_level += i
 	} else {
@@ -4052,7 +4052,7 @@ func (m *SysDistrictMutation) AddTreeLevel(i int64) {
 }
 
 // AddedTreeLevel returns the value that was added to the "tree_level" field in this mutation.
-func (m *SysDistrictMutation) AddedTreeLevel() (r int64, exists bool) {
+func (m *SysDistrictMutation) AddedTreeLevel() (r int32, exists bool) {
 	v := m.addtree_level
 	if v == nil {
 		return
@@ -5727,7 +5727,7 @@ func (m *SysDistrictMutation) SetField(name string, value ent.Value) error {
 		m.SetTreeID(v)
 		return nil
 	case sysdistrict.FieldTreeLevel:
-		v, ok := value.(int64)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -5976,7 +5976,7 @@ func (m *SysDistrictMutation) AddField(name string, value ent.Value) error {
 		m.AddTreeID(v)
 		return nil
 	case sysdistrict.FieldTreeLevel:
-		v, ok := value.(int64)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}

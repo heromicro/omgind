@@ -119,13 +119,13 @@ func (sdc *SysDistrictCreate) SetNillableTreeID(i *int64) *SysDistrictCreate {
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (sdc *SysDistrictCreate) SetTreeLevel(i int64) *SysDistrictCreate {
+func (sdc *SysDistrictCreate) SetTreeLevel(i int32) *SysDistrictCreate {
 	sdc.mutation.SetTreeLevel(i)
 	return sdc
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeLevel(i *int64) *SysDistrictCreate {
+func (sdc *SysDistrictCreate) SetNillableTreeLevel(i *int32) *SysDistrictCreate {
 	if i != nil {
 		sdc.SetTreeLevel(*i)
 	}
@@ -806,7 +806,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 	}
 	if value, ok := sdc.mutation.TreeLevel(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: sysdistrict.FieldTreeLevel,
 		})

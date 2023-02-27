@@ -131,14 +131,14 @@ func (sdu *SysDistrictUpdate) ClearTreeID() *SysDistrictUpdate {
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (sdu *SysDistrictUpdate) SetTreeLevel(i int64) *SysDistrictUpdate {
+func (sdu *SysDistrictUpdate) SetTreeLevel(i int32) *SysDistrictUpdate {
 	sdu.mutation.ResetTreeLevel()
 	sdu.mutation.SetTreeLevel(i)
 	return sdu
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeLevel(i *int64) *SysDistrictUpdate {
+func (sdu *SysDistrictUpdate) SetNillableTreeLevel(i *int32) *SysDistrictUpdate {
 	if i != nil {
 		sdu.SetTreeLevel(*i)
 	}
@@ -146,7 +146,7 @@ func (sdu *SysDistrictUpdate) SetNillableTreeLevel(i *int64) *SysDistrictUpdate 
 }
 
 // AddTreeLevel adds i to the "tree_level" field.
-func (sdu *SysDistrictUpdate) AddTreeLevel(i int64) *SysDistrictUpdate {
+func (sdu *SysDistrictUpdate) AddTreeLevel(i int32) *SysDistrictUpdate {
 	sdu.mutation.AddTreeLevel(i)
 	return sdu
 }
@@ -935,21 +935,21 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := sdu.mutation.TreeLevel(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: sysdistrict.FieldTreeLevel,
 		})
 	}
 	if value, ok := sdu.mutation.AddedTreeLevel(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: sysdistrict.FieldTreeLevel,
 		})
 	}
 	if sdu.mutation.TreeLevelCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Column: sysdistrict.FieldTreeLevel,
 		})
 	}
@@ -1485,14 +1485,14 @@ func (sduo *SysDistrictUpdateOne) ClearTreeID() *SysDistrictUpdateOne {
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (sduo *SysDistrictUpdateOne) SetTreeLevel(i int64) *SysDistrictUpdateOne {
+func (sduo *SysDistrictUpdateOne) SetTreeLevel(i int32) *SysDistrictUpdateOne {
 	sduo.mutation.ResetTreeLevel()
 	sduo.mutation.SetTreeLevel(i)
 	return sduo
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeLevel(i *int64) *SysDistrictUpdateOne {
+func (sduo *SysDistrictUpdateOne) SetNillableTreeLevel(i *int32) *SysDistrictUpdateOne {
 	if i != nil {
 		sduo.SetTreeLevel(*i)
 	}
@@ -1500,7 +1500,7 @@ func (sduo *SysDistrictUpdateOne) SetNillableTreeLevel(i *int64) *SysDistrictUpd
 }
 
 // AddTreeLevel adds i to the "tree_level" field.
-func (sduo *SysDistrictUpdateOne) AddTreeLevel(i int64) *SysDistrictUpdateOne {
+func (sduo *SysDistrictUpdateOne) AddTreeLevel(i int32) *SysDistrictUpdateOne {
 	sduo.mutation.AddTreeLevel(i)
 	return sduo
 }
@@ -2319,21 +2319,21 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 	}
 	if value, ok := sduo.mutation.TreeLevel(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: sysdistrict.FieldTreeLevel,
 		})
 	}
 	if value, ok := sduo.mutation.AddedTreeLevel(); ok {
 		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Value:  value,
 			Column: sysdistrict.FieldTreeLevel,
 		})
 	}
 	if sduo.mutation.TreeLevelCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
+			Type:   field.TypeInt32,
 			Column: sysdistrict.FieldTreeLevel,
 		})
 	}

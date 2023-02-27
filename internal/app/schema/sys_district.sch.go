@@ -56,18 +56,23 @@ type SysDistrictQueryParam struct {
 	IsHot      *bool  `form:"is_hot"`     // 热门城市
 	IsDirect   *bool  `form:"is_direct"`  // 是否是直辖
 	IsLeaf     *bool  `form:"is_leaf"`    // 是否是子叶
-	TreeID     *int32 `form:"tree_id"`    // 树id
 	IsActive   *bool  `form:"is_active"`  // 状态
+	IsReal     *bool  `form:"is_real"`    // 状态
 
+	TreeID    *int32 `form:"tree_id"`    // 树id
+	TreeLevel *int32 `form:"tree_level"` // tree_level
+
+	TreeLeft    *int64 `form:"tree_left"`     // tree_left 结束
 	TreeLeft_St *int64 `form:"tree_left__st"` // tree_left 结束
 	TreeLeft_Ed *int64 `form:"tree_left__ed"` // tree_left 结束
 
+	TreeRight    *int64 `form:"tree_right"`     // tree_right 结束
 	TreeRight_St *int64 `form:"tree_right__st"` // tree_right 结束
 	TreeRight_Ed *int64 `form:"tree_right__ed"` // tree_right 结束
 
 	CreatedAt_Order string `form:"created_at__order"` // asc, desc
 	Name_Order      string `form:"name__order"`       // asc desc
-	TreeID_Order    string  `form:"tree_id__order"`    // asc desc
+	TreeID_Order    string `form:"tree_id__order"`    // asc desc
 	TreeLevel_Order string `form:"tree_level__order"` // 层级 asc desc
 	TreeLeft_Order  string `form:"tree_left__order"`  // 左值 asc desc
 }

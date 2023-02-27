@@ -131,7 +131,7 @@ func TreeID(v int64) predicate.SysDistrict {
 }
 
 // TreeLevel applies equality check predicate on the "tree_level" field. It's identical to TreeLevelEQ.
-func TreeLevel(v int64) predicate.SysDistrict {
+func TreeLevel(v int32) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTreeLevel), v))
 	})
@@ -742,21 +742,21 @@ func TreeIDNotNil() predicate.SysDistrict {
 }
 
 // TreeLevelEQ applies the EQ predicate on the "tree_level" field.
-func TreeLevelEQ(v int64) predicate.SysDistrict {
+func TreeLevelEQ(v int32) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTreeLevel), v))
 	})
 }
 
 // TreeLevelNEQ applies the NEQ predicate on the "tree_level" field.
-func TreeLevelNEQ(v int64) predicate.SysDistrict {
+func TreeLevelNEQ(v int32) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldTreeLevel), v))
 	})
 }
 
 // TreeLevelIn applies the In predicate on the "tree_level" field.
-func TreeLevelIn(vs ...int64) predicate.SysDistrict {
+func TreeLevelIn(vs ...int32) predicate.SysDistrict {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -773,7 +773,7 @@ func TreeLevelIn(vs ...int64) predicate.SysDistrict {
 }
 
 // TreeLevelNotIn applies the NotIn predicate on the "tree_level" field.
-func TreeLevelNotIn(vs ...int64) predicate.SysDistrict {
+func TreeLevelNotIn(vs ...int32) predicate.SysDistrict {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -790,28 +790,28 @@ func TreeLevelNotIn(vs ...int64) predicate.SysDistrict {
 }
 
 // TreeLevelGT applies the GT predicate on the "tree_level" field.
-func TreeLevelGT(v int64) predicate.SysDistrict {
+func TreeLevelGT(v int32) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldTreeLevel), v))
 	})
 }
 
 // TreeLevelGTE applies the GTE predicate on the "tree_level" field.
-func TreeLevelGTE(v int64) predicate.SysDistrict {
+func TreeLevelGTE(v int32) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldTreeLevel), v))
 	})
 }
 
 // TreeLevelLT applies the LT predicate on the "tree_level" field.
-func TreeLevelLT(v int64) predicate.SysDistrict {
+func TreeLevelLT(v int32) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldTreeLevel), v))
 	})
 }
 
 // TreeLevelLTE applies the LTE predicate on the "tree_level" field.
-func TreeLevelLTE(v int64) predicate.SysDistrict {
+func TreeLevelLTE(v int32) predicate.SysDistrict {
 	return predicate.SysDistrict(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldTreeLevel), v))
 	})

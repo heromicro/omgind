@@ -79,6 +79,10 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 		query = query.Where(sysdistrict.IsMainEQ(*v))
 	}
 
+	if v := params.IsReal; v != nil {
+		query = query.Where(sysdistrict.IsRealEQ(*v))
+	}
+
 	if v := params.IsHot; v != nil {
 		query = query.Where(sysdistrict.IsHotEQ(*v))
 	}
@@ -95,11 +99,22 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 		query = query.Where(sysdistrict.IsActiveEQ(*v))
 	}
 
+	if v := params.TreeLevel; v != nil {
+		query = query.Where(sysdistrict.TreeLevelEQ(*v))
+	}
+	if v := params.TreeLeft; v != nil {
+		query = query.Where(sysdistrict.TreeLeftGTE(*v))
+	}
+
 	if v := params.TreeLeft_St; v != nil {
 		query = query.Where(sysdistrict.TreeLeftGTE(*v))
 	}
 	if v := params.TreeLeft_Ed; v != nil {
 		query = query.Where(sysdistrict.TreeLeftLTE(*v))
+	}
+
+	if v := params.TreeRight; v != nil {
+		query = query.Where(sysdistrict.TreeRightLTE(*v))
 	}
 
 	if v := params.TreeRight_St; v != nil {

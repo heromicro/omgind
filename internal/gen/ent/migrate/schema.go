@@ -190,7 +190,7 @@ var (
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "tree_id", Type: field.TypeInt64, Nullable: true},
-		{Name: "tree_level", Type: field.TypeInt64, Nullable: true},
+		{Name: "tree_level", Type: field.TypeInt32, Nullable: true},
 		{Name: "tree_left", Type: field.TypeInt64, Nullable: true},
 		{Name: "tree_right", Type: field.TypeInt64, Nullable: true},
 		{Name: "is_leaf", Type: field.TypeBool, Nullable: true, Default: true},

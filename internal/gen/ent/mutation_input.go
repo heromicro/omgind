@@ -495,7 +495,7 @@ type CreateSysDistrictInput struct {
 	DeletedAt  *time.Time
 	IsActive   *bool
 	TreeID     *int64
-	TreeLevel  *int64
+	TreeLevel  *int32
 	TreeLeft   *int64
 	TreeRight  *int64
 	IsLeaf     *bool
@@ -644,7 +644,7 @@ type UpdateSysDistrictInput struct {
 	IsActive        *bool
 	TreeID          *int64
 	ClearTreeID     bool
-	TreeLevel       *int64
+	TreeLevel       *int32
 	ClearTreeLevel  bool
 	TreeLeft        *int64
 	ClearTreeLeft   bool
