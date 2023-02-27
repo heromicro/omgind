@@ -26,6 +26,9 @@ type DemoQueryParam struct {
 	Name       string `form:"name"`       // 名称
 	IsActive   *bool  `form:"is_active"`  // 状态
 
+	CreatedAt_St *int64 `form:"created_at__st"` // create_at 开始
+	CreatedAt_Et *int64 `form:"created_at__et"` // create_at 结束
+
 	CreatedAt_Order string `form:"created_at__order"` // asc, desc
 	Code_Order      string `form:"code__order"`       // asc desc
 	Name_Order      string `form:"name__order"`       // asc desc

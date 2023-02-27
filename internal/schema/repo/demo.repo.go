@@ -74,6 +74,16 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 		query = query.Where(xxxdemo.Or(xxxdemo.CodeContains(v), xxxdemo.NameContains(v)))
 	}
 
+	if v := params.CreatedAt_St; v != nil {
+		st := time.UnixMilli(*v)
+		query = query.Where(xxxdemo.CreatedAtGTE(st))
+	}
+
+	if v := params.CreatedAt_Et; v != nil {
+		et := time.UnixMilli(*v)
+		query = query.Where(xxxdemo.CreatedAtLTE(et))
+	}
+
 	count, err := query.Count(ctx)
 	if err != nil {
 		return nil, errors.WithStack(err)

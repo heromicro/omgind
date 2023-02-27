@@ -17,10 +17,11 @@ type SysAddress struct {
 	CountyID  string `json:"county_id"`  // 区/县ID
 
 	ZipCode string `json:"zip_code"` // 邮政编码
-	DAddr   string `json:"d_addr"`   // 详细地址
+	Daddr   string `json:"daddr"`    // 详细地址
 	Name    string `json:"name"`     // 联系人
 	Mobile  string `json:"mobile"`   // 电话
 
+	Sort      int        `json:"sort,omitempty"`
 	Creator   string     `json:"creator"`    // 创建者
 	CreatedAt *time.Time `json:"created_at"` // 创建时间
 	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
