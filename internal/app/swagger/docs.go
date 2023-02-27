@@ -1555,6 +1555,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "pid",
+                        "name": "parentID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "模糊查询",
                         "name": "queryValue",
                         "in": "query"
@@ -1569,6 +1575,48 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "树id",
                         "name": "treeID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "treeID_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "treeLeft_Ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "左值 asc desc",
+                        "name": "treeLeft_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "treeLeft_St",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "层级 asc desc",
+                        "name": "treeLevel_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "treeRight_Ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "treeRight_St",
                         "in": "query"
                     }
                 ],

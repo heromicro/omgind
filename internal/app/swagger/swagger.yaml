@@ -1665,6 +1665,10 @@ paths:
         in: query
         name: pagination
         type: boolean
+      - description: pid
+        in: query
+        name: parentID
+        type: string
       - description: 模糊查询
         in: query
         name: queryValue
@@ -1676,6 +1680,34 @@ paths:
       - description: 树id
         in: query
         name: treeID
+        type: integer
+      - description: asc desc
+        in: query
+        name: treeID_Order
+        type: string
+      - description: tree_left 结束
+        in: query
+        name: treeLeft_Ed
+        type: integer
+      - description: 左值 asc desc
+        in: query
+        name: treeLeft_Order
+        type: string
+      - description: tree_left 结束
+        in: query
+        name: treeLeft_St
+        type: integer
+      - description: 层级 asc desc
+        in: query
+        name: treeLevel_Order
+        type: string
+      - description: tree_right 结束
+        in: query
+        name: treeRight_Ed
+        type: integer
+      - description: tree_right 结束
+        in: query
+        name: treeRight_St
         type: integer
       responses:
         "200":
