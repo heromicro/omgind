@@ -32,8 +32,8 @@ type SysDistrict struct {
 	IsLeaf    *bool   `json:"is_leaf"`    // 是否是子叶
 	TreeID    *int32  `json:"tree_id"`    // 树id
 	TreeLevel *int32  `json:"tree_level"` // 层级
-	TreeLeft  *int32  `json:"tree_left"`  // 层级
-	TreeRight *int32  `json:"tree_right"` // 层级
+	TreeLeft  *int64  `json:"tree_left"`  // 层级
+	TreeRight *int64  `json:"tree_right"` // 层级
 	TreePath  *string `json:"tree_path"`  // 层级
 
 	Creator   string     `json:"creator"`    // 创建者
@@ -46,6 +46,8 @@ type SysDistrict struct {
 // SysDistrictQueryParam 查询条件
 type SysDistrictQueryParam struct {
 	PaginationParam
+
+	ParentID   string `form:"pid"`        // pid
 	QueryValue string `form:"queryValue"` // 模糊查询
 	Name       string `form:"name"`       // 名称
 	Initials   string `form:"initials"`   // 简拼
@@ -57,8 +59,17 @@ type SysDistrictQueryParam struct {
 	TreeID     *int32 `form:"tree_id"`    // 树id
 	IsActive   *bool  `form:"is_active"`  // 状态
 
+	TreeLeft_St *int64 `form:"tree_left__st"` // tree_left 结束
+	TreeLeft_Ed *int64 `form:"tree_left__ed"` // tree_left 结束
+
+	TreeRight_St *int64 `form:"tree_right__st"` // tree_right 结束
+	TreeRight_Ed *int64 `form:"tree_right__ed"` // tree_right 结束
+
 	CreatedAt_Order string `form:"created_at__order"` // asc, desc
 	Name_Order      string `form:"name__order"`       // asc desc
+	TreeID_Order    string  `form:"tree_id__order"`    // asc desc
+	TreeLevel_Order string `form:"tree_level__order"` // 层级 asc desc
+	TreeLeft_Order  string `form:"tree_left__order"`  // 左值 asc desc
 }
 
 // SysDistrictQueryOptions 查询可选参数项

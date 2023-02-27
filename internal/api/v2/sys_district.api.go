@@ -46,6 +46,26 @@ func (a *SysDistrict) Get(c *gin.Context) {
 	ginx.ResSuccess(c, item)
 }
 
+// Get 查询指定数据
+func (a *SysDistrict) GetSubDistrict(c *gin.Context) {
+	ctx := c.Request.Context()
+
+	var params schema.SysDistrictQueryParam
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+
+	pid := c.Param("pid")
+	params.ParentID = pid
+	result, err := a.SysDistrictSrv.Query(ctx, params)
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	ginx.ResPage(c, result.Data, result.PageResult)
+}
+
 // Create 创建数据
 func (a *SysDistrict) Create(c *gin.Context) {
 	ctx := c.Request.Context()

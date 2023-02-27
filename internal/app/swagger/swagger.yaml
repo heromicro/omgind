@@ -428,7 +428,7 @@ definitions:
       creator:
         description: 创建者
         type: string
-      d_addr:
+      daddr:
         description: 详细地址
         type: string
       id:
@@ -446,6 +446,8 @@ definitions:
       provice_id:
         description: 省/市ID
         type: string
+      sort:
+        type: integer
       updated_at:
         description: 更新时间
         type: string
@@ -708,14 +710,26 @@ paths:
         in: query
         name: code_Order
         type: string
+      - description: create_at 结束
+        in: query
+        name: createdAt_Ed
+        type: integer
       - description: asc, desc
         in: query
         name: createdAt_Order
         type: string
+      - description: create_at 开始
+        in: query
+        name: createdAt_St
+        type: integer
       - description: 当前页
         in: query
         name: current
         type: integer
+      - description: 状态
+        in: query
+        name: isActive
+        type: boolean
       - description: 名称
         in: query
         name: name
@@ -741,6 +755,18 @@ paths:
         in: query
         name: queryValue
         type: string
+      - description: create_at 结束
+        in: query
+        name: sort_Ed
+        type: integer
+      - description: asc desc
+        in: query
+        name: sort_Order
+        type: string
+      - description: create_at 结束
+        in: query
+        name: sort_St
+        type: integer
       responses:
         "200":
           description: OK
@@ -1598,6 +1624,10 @@ paths:
         in: query
         name: initials
         type: string
+      - description: 状态
+        in: query
+        name: isActive
+        type: boolean
       - description: 是否是直辖
         in: query
         name: isDirect

@@ -67,17 +67,96 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	query = query.Where(sysdistrict.DeletedAtIsNil())
 	// TODO: 查询条件
 
+	if v := params.ParentID; v != "" {
+		query = query.Where(sysdistrict.ParentIDEQ(v))
+	}
+
+	if v := params.Name; v != "" {
+		query = query.Where(sysdistrict.NameEQ(v))
+	}
+
+	if v := params.IsMain; v != nil {
+		query = query.Where(sysdistrict.IsMainEQ(*v))
+	}
+
+	if v := params.IsHot; v != nil {
+		query = query.Where(sysdistrict.IsHotEQ(*v))
+	}
+
+	if v := params.IsDirect; v != nil {
+		query = query.Where(sysdistrict.IsDirectEQ(*v))
+	}
+
+	if v := params.IsLeaf; v != nil {
+		query = query.Where(sysdistrict.IsLeafEQ(*v))
+	}
+
+	if v := params.IsActive; v != nil {
+		query = query.Where(sysdistrict.IsActiveEQ(*v))
+	}
+
+	if v := params.TreeLeft_St; v != nil {
+		query = query.Where(sysdistrict.TreeLeftGTE(*v))
+	}
+	if v := params.TreeLeft_Ed; v != nil {
+		query = query.Where(sysdistrict.TreeLeftLTE(*v))
+	}
+
+	if v := params.TreeRight_St; v != nil {
+		query = query.Where(sysdistrict.TreeRightGTE(*v))
+	}
+	if v := params.TreeRight_Ed; v != nil {
+		query = query.Where(sysdistrict.TreeRightLTE(*v))
+	}
+
 	count, err := query.Count(ctx)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
+
 	// get total
 	pr := &schema.PaginationResult{Total: count}
 	if params.PaginationParam.OnlyCount {
 		return &schema.SysDistrictQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+
+	if v := params.CreatedAt_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldCreatedAt, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.Name_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldName, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.TreeID_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldTreeID, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.TreeLevel_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldTreeLevel, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.TreeLeft_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldTreeLeft, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()

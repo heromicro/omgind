@@ -40,6 +40,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "create_at 结束",
+                        "name": "createdAt_Ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "asc, desc",
                         "name": "createdAt_Order",
@@ -47,8 +53,20 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
+                        "description": "create_at 开始",
+                        "name": "createdAt_St",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "当前页",
                         "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "isActive",
                         "in": "query"
                     },
                     {
@@ -86,6 +104,24 @@ const docTemplate = `{
                         "type": "string",
                         "description": "查询值",
                         "name": "queryValue",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "create_at 结束",
+                        "name": "sort_Ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "sort_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "create_at 结束",
+                        "name": "sort_St",
                         "in": "query"
                     }
                 ],
@@ -1454,6 +1490,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "简拼",
                         "name": "initials",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "isActive",
                         "in": "query"
                     },
                     {
@@ -3686,7 +3728,7 @@ const docTemplate = `{
                     "description": "创建者",
                     "type": "string"
                 },
-                "d_addr": {
+                "daddr": {
                     "description": "详细地址",
                     "type": "string"
                 },
@@ -3709,6 +3751,9 @@ const docTemplate = `{
                 "provice_id": {
                     "description": "省/市ID",
                     "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
                 },
                 "updated_at": {
                     "description": "更新时间",
