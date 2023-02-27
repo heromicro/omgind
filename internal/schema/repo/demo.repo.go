@@ -79,9 +79,17 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 		query = query.Where(xxxdemo.CreatedAtGTE(st))
 	}
 
-	if v := params.CreatedAt_Et; v != nil {
+	if v := params.CreatedAt_Ed; v != nil {
 		et := time.UnixMilli(*v)
 		query = query.Where(xxxdemo.CreatedAtLTE(et))
+	}
+
+	if v := params.Sort_St; v != nil {
+		query = query.Where(xxxdemo.SortGTE(*v))
+	}
+
+	if v := params.Sort_Ed; v != nil {
+		query = query.Where(xxxdemo.SortLTE(*v))
 	}
 
 	count, err := query.Count(ctx)
