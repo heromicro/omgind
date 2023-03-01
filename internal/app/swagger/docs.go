@@ -1456,7 +1456,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/sys-districts": {
+        "/api/v2/sys-district": {
             "get": {
                 "security": [
                     {
@@ -1523,6 +1523,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "isReal",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "名称",
                         "name": "name",
@@ -1555,8 +1561,26 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "parent.area_code",
+                        "name": "parentAreaCode",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "pid",
                         "name": "parentID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.initials",
+                        "name": "parentInitials",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.pid",
+                        "name": "parentParentID",
                         "in": "query"
                     },
                     {
@@ -1586,6 +1610,12 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "description": "tree_left 结束",
+                        "name": "treeLeft",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
                         "name": "treeLeft_Ed",
                         "in": "query"
                     },
@@ -1602,9 +1632,21 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "tree_level",
+                        "name": "treeLevel",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "层级 asc desc",
                         "name": "treeLevel_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "treeRight",
                         "in": "query"
                     },
                     {
@@ -1717,7 +1759,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/sys-districts/{id}": {
+        "/api/v2/sys-district/{id}": {
             "get": {
                 "security": [
                     {
@@ -1878,7 +1920,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/sys-districts/{id}/disable": {
+        "/api/v2/sys-district/{id}/disable": {
             "patch": {
                 "security": [
                     {
@@ -1920,7 +1962,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/sys-districts/{id}/enable": {
+        "/api/v2/sys-district/{id}/enable": {
             "patch": {
                 "security": [
                     {
@@ -1945,6 +1987,249 @@ const docTemplate = `{
                         "description": "{status:OK}",
                         "schema": {
                             "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/sys-district/{id}/substricts": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "行政区域"
+                ],
+                "summary": "查询数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "createdAt_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页",
+                        "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "简拼",
+                        "name": "initials",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "isActive",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否是直辖",
+                        "name": "isDirect",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "热门城市",
+                        "name": "isHot",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否是子叶",
+                        "name": "isLeaf",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "主要城市",
+                        "name": "isMain",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "isReal",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "name_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "onlyCount",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否使用分页查询",
+                        "name": "pagination",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.area_code",
+                        "name": "parentAreaCode",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "pid",
+                        "name": "parentID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.initials",
+                        "name": "parentInitials",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.pid",
+                        "name": "parentParentID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模糊查询",
+                        "name": "queryValue",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "区域后缀,省/市/区/旗/盟/自治区/",
+                        "name": "suffix",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "树id",
+                        "name": "treeID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "treeID_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "treeLeft",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "treeLeft_Ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "左值 asc desc",
+                        "name": "treeLeft_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "treeLeft_St",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_level",
+                        "name": "treeLevel",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "层级 asc desc",
+                        "name": "treeLevel_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "treeRight",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "treeRight_Ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "treeRight_St",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/schema.ListResult"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/definitions/schema.SysDistrict"
+                                                }
+                                            },
+                                            "pagination": {
+                                                "$ref": "#/definitions/schema.PaginationResult"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     },
                     "401": {
@@ -3849,6 +4134,10 @@ const docTemplate = `{
                     "description": "简拼",
                     "type": "string"
                 },
+                "isLeaf": {
+                    "description": "是否是子叶",
+                    "type": "boolean"
+                },
                 "is_active": {
                     "description": "状态",
                     "type": "boolean"
@@ -3862,10 +4151,6 @@ const docTemplate = `{
                 },
                 "is_hot": {
                     "description": "热门城市",
-                    "type": "boolean"
-                },
-                "is_leaf": {
-                    "description": "是否是子叶",
                     "type": "boolean"
                 },
                 "is_main": {

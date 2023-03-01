@@ -489,14 +489,14 @@ definitions:
       is_hot:
         description: 热门城市
         type: boolean
-      is_leaf:
-        description: 是否是子叶
-        type: boolean
       is_main:
         description: 主要城市
         type: boolean
       is_real:
         description: 是否虚拟区域
+        type: boolean
+      isLeaf:
+        description: 是否是子叶
         type: boolean
       latitude:
         description: 经度
@@ -1605,7 +1605,7 @@ paths:
       summary: 启用数据
       tags:
       - 字典
-  /api/v2/sys-districts:
+  /api/v2/sys-district:
     get:
       parameters:
       - description: Bearer 用户令牌
@@ -1644,6 +1644,10 @@ paths:
         in: query
         name: isMain
         type: boolean
+      - description: 状态
+        in: query
+        name: isReal
+        type: boolean
       - description: 名称
         in: query
         name: name
@@ -1665,9 +1669,21 @@ paths:
         in: query
         name: pagination
         type: boolean
+      - description: parent.area_code
+        in: query
+        name: parentAreaCode
+        type: string
       - description: pid
         in: query
         name: parentID
+        type: string
+      - description: parent.initials
+        in: query
+        name: parentInitials
+        type: string
+      - description: parent.pid
+        in: query
+        name: parentParentID
         type: string
       - description: 模糊查询
         in: query
@@ -1687,6 +1703,10 @@ paths:
         type: string
       - description: tree_left 结束
         in: query
+        name: treeLeft
+        type: integer
+      - description: tree_left 结束
+        in: query
         name: treeLeft_Ed
         type: integer
       - description: 左值 asc desc
@@ -1697,10 +1717,18 @@ paths:
         in: query
         name: treeLeft_St
         type: integer
+      - description: tree_level
+        in: query
+        name: treeLevel
+        type: integer
       - description: 层级 asc desc
         in: query
         name: treeLevel_Order
         type: string
+      - description: tree_right 结束
+        in: query
+        name: treeRight
+        type: integer
       - description: tree_right 结束
         in: query
         name: treeRight_Ed
@@ -1772,7 +1800,7 @@ paths:
       summary: 创建数据
       tags:
       - 行政区域
-  /api/v2/sys-districts/{id}:
+  /api/v2/sys-district/{id}:
     delete:
       parameters:
       - description: Bearer 用户令牌
@@ -1874,7 +1902,7 @@ paths:
       summary: 更新数据
       tags:
       - 行政区域
-  /api/v2/sys-districts/{id}/disable:
+  /api/v2/sys-district/{id}/disable:
     patch:
       parameters:
       - description: 唯一标识
@@ -1900,7 +1928,7 @@ paths:
       summary: 禁用数据
       tags:
       - 行政区域
-  /api/v2/sys-districts/{id}/enable:
+  /api/v2/sys-district/{id}/enable:
     patch:
       parameters:
       - description: 唯一标识
@@ -1924,6 +1952,163 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 启用数据
+      tags:
+      - 行政区域
+  /api/v2/sys-district/{id}/substricts:
+    get:
+      parameters:
+      - description: asc, desc
+        in: query
+        name: createdAt_Order
+        type: string
+      - description: 当前页
+        in: query
+        name: current
+        type: integer
+      - description: 简拼
+        in: query
+        name: initials
+        type: string
+      - description: 状态
+        in: query
+        name: isActive
+        type: boolean
+      - description: 是否是直辖
+        in: query
+        name: isDirect
+        type: boolean
+      - description: 热门城市
+        in: query
+        name: isHot
+        type: boolean
+      - description: 是否是子叶
+        in: query
+        name: isLeaf
+        type: boolean
+      - description: 主要城市
+        in: query
+        name: isMain
+        type: boolean
+      - description: 状态
+        in: query
+        name: isReal
+        type: boolean
+      - description: 名称
+        in: query
+        name: name
+        type: string
+      - description: asc desc
+        in: query
+        name: name_Order
+        type: string
+      - description: 是否仅查询count
+        in: query
+        name: onlyCount
+        type: boolean
+      - description: 页大小
+        in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      - description: 是否使用分页查询
+        in: query
+        name: pagination
+        type: boolean
+      - description: parent.area_code
+        in: query
+        name: parentAreaCode
+        type: string
+      - description: pid
+        in: query
+        name: parentID
+        type: string
+      - description: parent.initials
+        in: query
+        name: parentInitials
+        type: string
+      - description: parent.pid
+        in: query
+        name: parentParentID
+        type: string
+      - description: 模糊查询
+        in: query
+        name: queryValue
+        type: string
+      - description: 区域后缀,省/市/区/旗/盟/自治区/
+        in: query
+        name: suffix
+        type: string
+      - description: 树id
+        in: query
+        name: treeID
+        type: integer
+      - description: asc desc
+        in: query
+        name: treeID_Order
+        type: string
+      - description: tree_left 结束
+        in: query
+        name: treeLeft
+        type: integer
+      - description: tree_left 结束
+        in: query
+        name: treeLeft_Ed
+        type: integer
+      - description: 左值 asc desc
+        in: query
+        name: treeLeft_Order
+        type: string
+      - description: tree_left 结束
+        in: query
+        name: treeLeft_St
+        type: integer
+      - description: tree_level
+        in: query
+        name: treeLevel
+        type: integer
+      - description: 层级 asc desc
+        in: query
+        name: treeLevel_Order
+        type: string
+      - description: tree_right 结束
+        in: query
+        name: treeRight
+        type: integer
+      - description: tree_right 结束
+        in: query
+        name: treeRight_Ed
+        type: integer
+      - description: tree_right 结束
+        in: query
+        name: treeRight_St
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              allOf:
+              - $ref: '#/definitions/schema.ListResult'
+              - properties:
+                  list:
+                    items:
+                      $ref: '#/definitions/schema.SysDistrict'
+                    type: array
+                  pagination:
+                    $ref: '#/definitions/schema.PaginationResult'
+                type: object
+            type: array
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询数据
       tags:
       - 行政区域
   /api/v2/sys-menus:
