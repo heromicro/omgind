@@ -1,6 +1,8 @@
 package api_v2
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"github.com/heromicro/omgind/internal/app/ginx"
@@ -46,19 +48,22 @@ func (a *SysDistrict) Get(c *gin.Context) {
 	ginx.ResSuccess(c, item)
 }
 
-// Get 查询指定数据
-func (a *SysDistrict) GetSubDistrict(c *gin.Context) {
+// Get 所有的行政区
+func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
 	ctx := c.Request.Context()
-
 	var params schema.SysDistrictQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
 		ginx.ResError(c, err)
 		return
 	}
+	var pid string = c.Param("id")
+	params.Current = 1
+	params.PageSize = 10000
 
-	pid := c.Param("pid")
-	params.ParentID = pid
-	result, err := a.SysDistrictSrv.Query(ctx, params)
+	log.Println(" ------- ======= pid ", pid)
+	log.Println(" ------- ======= URL ", c.Request.URL)
+
+	result, err := a.SysDistrictSrv.GetAllSubDistricts(ctx, pid, params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

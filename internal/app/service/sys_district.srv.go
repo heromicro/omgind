@@ -23,6 +23,11 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	return a.SysDistrictRepo.Query(ctx, params, opts...)
 }
 
+// Query 查询数据
+func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
+	return a.SysDistrictRepo.GetAllSubDistricts(ctx, pid, params, opts...)
+}
+
 // Get 查询指定数据
 func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrict, error) {
 	item, err := a.SysDistrictRepo.Get(ctx, id, opts...)

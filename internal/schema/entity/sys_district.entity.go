@@ -52,6 +52,8 @@ func (SysDistrict) Fields() []ent.Field {
 		field.Bool("is_main").Default(true).Nillable().Optional().StorageKey("is_m").Comment("是否虚拟区域"),
 		field.Bool("is_direct").Default(true).Nillable().Optional().StorageKey("is_d").Comment("是否是直辖"),
 
+		// field.JSON("tag", []string{}).Default([]string{}).Optional().Comment("tag"),
+
 		field.String("creator").MaxLen(36).StorageKey("creator").Comment("创建者"),
 	}
 }

@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/heromicro/omgind/internal/app/schema"
@@ -67,8 +68,12 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	query = query.Where(sysdistrict.DeletedAtIsNil())
 	// TODO: 查询条件
 
-	if v := params.ParentID; v != "" {
-		query = query.Where(sysdistrict.ParentIDEQ(v))
+	if v := params.ParentID; v != nil {
+		if *v == "" {
+			query = query.Where(sysdistrict.Or(sysdistrict.ParentIDEQ(*v), sysdistrict.ParentIDIsNil()))
+		} else {
+			query = query.Where(sysdistrict.ParentIDEQ(*v))
+		}
 	}
 
 	if v := params.Name; v != "" {
@@ -124,7 +129,19 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 		query = query.Where(sysdistrict.TreeRightLTE(*v))
 	}
 
+	// 父级area_code
+	if v := params.ParentAreaCode; v != nil {
+		query = query.Where(sysdistrict.HasParentWith(sysdistrict.AreaCodeEQ(*v)))
+	}
+	// 父级pid
+	if v := params.ParentParentID; v != nil {
+		query = query.Where(sysdistrict.HasParentWith(sysdistrict.ParentIDEQ(*v)))
+	}
+
 	count, err := query.Count(ctx)
+	log.Println(" ------- ===== ======== count 11111 ", count)
+	log.Println(" ------- ===== ========  err ", err)
+
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -176,12 +193,178 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
+
+	// log.Println(" ----- === ======== params.Offset() ", params.Offset())
+	// log.Println(" ------- ======= count 22222 ", count)
+
 	if params.Offset() > count {
 		return &schema.SysDistrictQueryResult{PageResult: pr}, nil
 	}
 	query = query.Limit(params.Limit()).Offset(params.Offset())
 
 	list, err1 := query.All(ctx)
+
+	// log.Println(" ----- 00 = ======== list ", list)
+
+	if err1 != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	qr := &schema.SysDistrictQueryResult{
+		PageResult: pr,
+		Data:       a.toSchemaSysDistricts(list),
+	}
+
+	return qr, nil
+}
+
+func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
+	opt := a.getQueryOption(opts...)
+
+	query := a.EntCli.SysDistrict.Query()
+
+	query = query.Where(sysdistrict.DeletedAtIsNil())
+	// TODO: 查询条件
+
+	if pid == "-" {
+		query = query.Where(sysdistrict.Or(sysdistrict.ParentIDEQ(pid), sysdistrict.ParentIDIsNil()))
+	} else {
+		query = query.Where(sysdistrict.ParentIDEQ(pid))
+	}
+
+	if v := params.Name; v != "" {
+		query = query.Where(sysdistrict.NameEQ(v))
+	}
+
+	if v := params.IsMain; v != nil {
+		query = query.Where(sysdistrict.IsMainEQ(*v))
+	}
+
+	if v := params.IsReal; v != nil {
+		query = query.Where(sysdistrict.IsRealEQ(*v))
+	}
+
+	if v := params.IsHot; v != nil {
+		query = query.Where(sysdistrict.IsHotEQ(*v))
+	}
+
+	if v := params.IsDirect; v != nil {
+		query = query.Where(sysdistrict.IsDirectEQ(*v))
+	}
+
+	if v := params.IsLeaf; v != nil {
+		query = query.Where(sysdistrict.IsLeafEQ(*v))
+	}
+
+	if v := params.IsActive; v != nil {
+		query = query.Where(sysdistrict.IsActiveEQ(*v))
+	}
+
+	if v := params.TreeLevel; v != nil {
+		query = query.Where(sysdistrict.TreeLevelEQ(*v))
+	}
+	if v := params.TreeLeft; v != nil {
+		query = query.Where(sysdistrict.TreeLeftGTE(*v))
+	}
+
+	if v := params.TreeLeft_St; v != nil {
+		query = query.Where(sysdistrict.TreeLeftGTE(*v))
+	}
+	if v := params.TreeLeft_Ed; v != nil {
+		query = query.Where(sysdistrict.TreeLeftLTE(*v))
+	}
+
+	if v := params.TreeRight; v != nil {
+		query = query.Where(sysdistrict.TreeRightLTE(*v))
+	}
+
+	if v := params.TreeRight_St; v != nil {
+		query = query.Where(sysdistrict.TreeRightGTE(*v))
+	}
+	if v := params.TreeRight_Ed; v != nil {
+		query = query.Where(sysdistrict.TreeRightLTE(*v))
+	}
+
+	// 父级area_code
+	if v := params.ParentAreaCode; v != nil {
+		query = query.Where(sysdistrict.HasParentWith(sysdistrict.AreaCodeEQ(*v)))
+	}
+	// 父级pid
+	if v := params.ParentParentID; v != nil {
+		query = query.Where(sysdistrict.HasParentWith(sysdistrict.ParentIDEQ(*v)))
+	}
+
+	count, err := query.Count(ctx)
+	// log.Println(" ------- == === ======== count 11111 ", count)
+	// log.Println(" ------- ===== ========  err ", err)
+
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	// get total
+	pr := &schema.PaginationResult{Total: count}
+	if params.PaginationParam.OnlyCount {
+		return &schema.SysDistrictQueryResult{PageResult: pr}, nil
+	}
+
+	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+
+	if v := params.CreatedAt_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldCreatedAt, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.Name_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldName, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.TreeID_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldTreeID, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.TreeLevel_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldTreeLevel, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	if v := params.TreeLeft_Order; v != "" {
+		of := MakeUpOrderField(sysdistrict.FieldTreeLeft, v)
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	query = query.Order(ParseOrder(opt.OrderFields)...)
+
+	pr.Current = params.PaginationParam.GetCurrent()
+	pr.PageSize = params.PaginationParam.GetPageSize()
+
+	// log.Println(" ------- ===== params.Offset() ", params.Offset())
+	// log.Println(" ---- ======= count 22222 ", count)
+
+	if params.Offset() > count {
+		return &schema.SysDistrictQueryResult{PageResult: pr}, nil
+	}
+	query = query.Limit(params.Limit()).Offset(params.Offset())
+
+	//
+	squery := query.Select(sysdistrict.FieldID, sysdistrict.FieldName, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldIsLeaf)
+
+	list, err1 := squery.All(ctx)
+
+	// log.Println(" ------- ===== ===== === list ", list)
+
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}

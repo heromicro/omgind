@@ -29,7 +29,7 @@ type SysDistrict struct {
 	IsReal   bool  `json:"is_real"`   // 是否虚拟区域
 	IsDirect bool  `json:"is_direct"` // 是否是直辖
 
-	IsLeaf    *bool   `json:"is_leaf"`    // 是否是子叶
+	IsLeaf    *bool   `json:"isLeaf"`     // 是否是子叶
 	TreeID    *int32  `json:"tree_id"`    // 树id
 	TreeLevel *int32  `json:"tree_level"` // 层级
 	TreeLeft  *int64  `json:"tree_left"`  // 层级
@@ -47,17 +47,17 @@ type SysDistrict struct {
 type SysDistrictQueryParam struct {
 	PaginationParam
 
-	ParentID   string `form:"pid"`        // pid
-	QueryValue string `form:"queryValue"` // 模糊查询
-	Name       string `form:"name"`       // 名称
-	Initials   string `form:"initials"`   // 简拼
-	Suffix     string `form:"suffix"`     // 区域后缀,省/市/区/旗/盟/自治区/
-	IsMain     *bool  `form:"is_main"`    // 主要城市
-	IsHot      *bool  `form:"is_hot"`     // 热门城市
-	IsDirect   *bool  `form:"is_direct"`  // 是否是直辖
-	IsLeaf     *bool  `form:"is_leaf"`    // 是否是子叶
-	IsActive   *bool  `form:"is_active"`  // 状态
-	IsReal     *bool  `form:"is_real"`    // 状态
+	ParentID   *string `form:"pid"`        // pid
+	QueryValue string  `form:"queryValue"` // 模糊查询
+	Name       string  `form:"name"`       // 名称
+	Initials   string  `form:"initials"`   // 简拼
+	Suffix     string  `form:"suffix"`     // 区域后缀,省/市/区/旗/盟/自治区/
+	IsMain     *bool   `form:"is_main"`    // 主要城市
+	IsHot      *bool   `form:"is_hot"`     // 热门城市
+	IsDirect   *bool   `form:"is_direct"`  // 是否是直辖
+	IsLeaf     *bool   `form:"isLeaf"`     // 是否是子叶
+	IsActive   *bool   `form:"is_active"`  // 状态
+	IsReal     *bool   `form:"is_real"`    // 状态
 
 	TreeID    *int32 `form:"tree_id"`    // 树id
 	TreeLevel *int32 `form:"tree_level"` // tree_level
@@ -75,6 +75,11 @@ type SysDistrictQueryParam struct {
 	TreeID_Order    string `form:"tree_id__order"`    // asc desc
 	TreeLevel_Order string `form:"tree_level__order"` // 层级 asc desc
 	TreeLeft_Order  string `form:"tree_left__order"`  // 左值 asc desc
+
+	ParentInitials *string `form:"p_initials"`  // parent.initials
+	ParentAreaCode *string `form:"p_area_code"` // parent.area_code
+	ParentParentID *string `form:"p_pid"`       // parent.pid
+
 }
 
 // SysDistrictQueryOptions 查询可选参数项
