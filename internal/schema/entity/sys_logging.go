@@ -56,25 +56,3 @@ func (SysLogging) Indexes() []ent.Index {
 		mixin.IndexCreateAt(),
 	}
 }
-
-func (SysLogging) Hooks() []ent.Hook {
-	return []ent.Hook{
-
-		/*
-			hook.On(
-				func(next ent.Mutator) ent.Mutator {
-					return hook.SysLoggingFunc(func(ctx context.Context, m *gen.SysLoggingMutation) (ent.Value, error) {
-						_, ok := m.ID()
-						if !ok {
-							return nil, fmt.Errorf("id is not ok")
-						}
-						return next.Mutate(ctx, m)
-					})
-				},
-				ent.OpCreate,
-			),
-		*/
-		//
-
-	}
-}
