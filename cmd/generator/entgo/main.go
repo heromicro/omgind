@@ -18,7 +18,7 @@ func main() {
 			gen.FeatureModifier,
 			gen.FeatureUpsert,
 		},
-		Package: "kuiper/internal/gen/ent",
+		Package: "github.com/heromicro/omgind/internal/gen/ent",
 		Target:  "./internal/gen/ent",
 		Templates: []*gen.Template{
 			gen.MustParse(gen.NewTemplate("mutation_input").ParseDir("./internal/schema/template")),
