@@ -53,7 +53,3 @@ func (SysAddress) Edges() []ent.Edge {
 func (SysAddress) Indexes() []ent.Index {
 	return []ent.Index{}
 }
-
-func (SysAddress) Hooks() []ent.Hook {
-	return []ent.Hook{}
-}
