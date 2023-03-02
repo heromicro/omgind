@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -22,6 +23,7 @@ type SysMenuActionQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysMenuAction
+	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,6 +347,9 @@ func (smaq *SysMenuActionQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 	}
 	_spec.Node.Schema = smaq.schemaConfig.SysMenuAction
 	ctx = internal.NewSchemaConfigContext(ctx, smaq.schemaConfig)
+	if len(smaq.modifiers) > 0 {
+		_spec.Modifiers = smaq.modifiers
+	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -361,6 +366,9 @@ func (smaq *SysMenuActionQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := smaq.querySpec()
 	_spec.Node.Schema = smaq.schemaConfig.SysMenuAction
 	ctx = internal.NewSchemaConfigContext(ctx, smaq.schemaConfig)
+	if len(smaq.modifiers) > 0 {
+		_spec.Modifiers = smaq.modifiers
+	}
 	_spec.Node.Columns = smaq.ctx.Fields
 	if len(smaq.ctx.Fields) > 0 {
 		_spec.Unique = smaq.ctx.Unique != nil && *smaq.ctx.Unique
@@ -426,6 +434,9 @@ func (smaq *SysMenuActionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	t1.Schema(smaq.schemaConfig.SysMenuAction)
 	ctx = internal.NewSchemaConfigContext(ctx, smaq.schemaConfig)
 	selector.WithContext(ctx)
+	for _, m := range smaq.modifiers {
+		m(selector)
+	}
 	for _, p := range smaq.predicates {
 		p(selector)
 	}
@@ -441,6 +452,32 @@ func (smaq *SysMenuActionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
+}
+
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (smaq *SysMenuActionQuery) ForUpdate(opts ...sql.LockOption) *SysMenuActionQuery {
+	if smaq.driver.Dialect() == dialect.Postgres {
+		smaq.Unique(false)
+	}
+	smaq.modifiers = append(smaq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return smaq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (smaq *SysMenuActionQuery) ForShare(opts ...sql.LockOption) *SysMenuActionQuery {
+	if smaq.driver.Dialect() == dialect.Postgres {
+		smaq.Unique(false)
+	}
+	smaq.modifiers = append(smaq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return smaq
 }
 
 // SysMenuActionGroupBy is the group-by builder for SysMenuAction entities.

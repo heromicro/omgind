@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -22,6 +23,7 @@ type SysAddressQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysAddress
+	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,6 +347,9 @@ func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 	}
 	_spec.Node.Schema = saq.schemaConfig.SysAddress
 	ctx = internal.NewSchemaConfigContext(ctx, saq.schemaConfig)
+	if len(saq.modifiers) > 0 {
+		_spec.Modifiers = saq.modifiers
+	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -361,6 +366,9 @@ func (saq *SysAddressQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := saq.querySpec()
 	_spec.Node.Schema = saq.schemaConfig.SysAddress
 	ctx = internal.NewSchemaConfigContext(ctx, saq.schemaConfig)
+	if len(saq.modifiers) > 0 {
+		_spec.Modifiers = saq.modifiers
+	}
 	_spec.Node.Columns = saq.ctx.Fields
 	if len(saq.ctx.Fields) > 0 {
 		_spec.Unique = saq.ctx.Unique != nil && *saq.ctx.Unique
@@ -426,6 +434,9 @@ func (saq *SysAddressQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	t1.Schema(saq.schemaConfig.SysAddress)
 	ctx = internal.NewSchemaConfigContext(ctx, saq.schemaConfig)
 	selector.WithContext(ctx)
+	for _, m := range saq.modifiers {
+		m(selector)
+	}
 	for _, p := range saq.predicates {
 		p(selector)
 	}
@@ -441,6 +452,32 @@ func (saq *SysAddressQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
+}
+
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (saq *SysAddressQuery) ForUpdate(opts ...sql.LockOption) *SysAddressQuery {
+	if saq.driver.Dialect() == dialect.Postgres {
+		saq.Unique(false)
+	}
+	saq.modifiers = append(saq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return saq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (saq *SysAddressQuery) ForShare(opts ...sql.LockOption) *SysAddressQuery {
+	if saq.driver.Dialect() == dialect.Postgres {
+		saq.Unique(false)
+	}
+	saq.modifiers = append(saq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return saq
 }
 
 // SysAddressGroupBy is the group-by builder for SysAddress entities.

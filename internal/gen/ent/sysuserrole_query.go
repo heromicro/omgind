@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -22,6 +23,7 @@ type SysUserRoleQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysUserRole
+	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,6 +347,9 @@ func (surq *SysUserRoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 	}
 	_spec.Node.Schema = surq.schemaConfig.SysUserRole
 	ctx = internal.NewSchemaConfigContext(ctx, surq.schemaConfig)
+	if len(surq.modifiers) > 0 {
+		_spec.Modifiers = surq.modifiers
+	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -361,6 +366,9 @@ func (surq *SysUserRoleQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := surq.querySpec()
 	_spec.Node.Schema = surq.schemaConfig.SysUserRole
 	ctx = internal.NewSchemaConfigContext(ctx, surq.schemaConfig)
+	if len(surq.modifiers) > 0 {
+		_spec.Modifiers = surq.modifiers
+	}
 	_spec.Node.Columns = surq.ctx.Fields
 	if len(surq.ctx.Fields) > 0 {
 		_spec.Unique = surq.ctx.Unique != nil && *surq.ctx.Unique
@@ -426,6 +434,9 @@ func (surq *SysUserRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	t1.Schema(surq.schemaConfig.SysUserRole)
 	ctx = internal.NewSchemaConfigContext(ctx, surq.schemaConfig)
 	selector.WithContext(ctx)
+	for _, m := range surq.modifiers {
+		m(selector)
+	}
 	for _, p := range surq.predicates {
 		p(selector)
 	}
@@ -441,6 +452,32 @@ func (surq *SysUserRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
+}
+
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (surq *SysUserRoleQuery) ForUpdate(opts ...sql.LockOption) *SysUserRoleQuery {
+	if surq.driver.Dialect() == dialect.Postgres {
+		surq.Unique(false)
+	}
+	surq.modifiers = append(surq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return surq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (surq *SysUserRoleQuery) ForShare(opts ...sql.LockOption) *SysUserRoleQuery {
+	if surq.driver.Dialect() == dialect.Postgres {
+		surq.Unique(false)
+	}
+	surq.modifiers = append(surq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return surq
 }
 
 // SysUserRoleGroupBy is the group-by builder for SysUserRole entities.

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -22,6 +23,7 @@ type SysMenuActionResourceQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysMenuActionResource
+	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,6 +347,9 @@ func (smarq *SysMenuActionResourceQuery) sqlAll(ctx context.Context, hooks ...qu
 	}
 	_spec.Node.Schema = smarq.schemaConfig.SysMenuActionResource
 	ctx = internal.NewSchemaConfigContext(ctx, smarq.schemaConfig)
+	if len(smarq.modifiers) > 0 {
+		_spec.Modifiers = smarq.modifiers
+	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -361,6 +366,9 @@ func (smarq *SysMenuActionResourceQuery) sqlCount(ctx context.Context) (int, err
 	_spec := smarq.querySpec()
 	_spec.Node.Schema = smarq.schemaConfig.SysMenuActionResource
 	ctx = internal.NewSchemaConfigContext(ctx, smarq.schemaConfig)
+	if len(smarq.modifiers) > 0 {
+		_spec.Modifiers = smarq.modifiers
+	}
 	_spec.Node.Columns = smarq.ctx.Fields
 	if len(smarq.ctx.Fields) > 0 {
 		_spec.Unique = smarq.ctx.Unique != nil && *smarq.ctx.Unique
@@ -426,6 +434,9 @@ func (smarq *SysMenuActionResourceQuery) sqlQuery(ctx context.Context) *sql.Sele
 	t1.Schema(smarq.schemaConfig.SysMenuActionResource)
 	ctx = internal.NewSchemaConfigContext(ctx, smarq.schemaConfig)
 	selector.WithContext(ctx)
+	for _, m := range smarq.modifiers {
+		m(selector)
+	}
 	for _, p := range smarq.predicates {
 		p(selector)
 	}
@@ -441,6 +452,32 @@ func (smarq *SysMenuActionResourceQuery) sqlQuery(ctx context.Context) *sql.Sele
 		selector.Limit(*limit)
 	}
 	return selector
+}
+
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (smarq *SysMenuActionResourceQuery) ForUpdate(opts ...sql.LockOption) *SysMenuActionResourceQuery {
+	if smarq.driver.Dialect() == dialect.Postgres {
+		smarq.Unique(false)
+	}
+	smarq.modifiers = append(smarq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return smarq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (smarq *SysMenuActionResourceQuery) ForShare(opts ...sql.LockOption) *SysMenuActionResourceQuery {
+	if smarq.driver.Dialect() == dialect.Postgres {
+		smarq.Unique(false)
+	}
+	smarq.modifiers = append(smarq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return smarq
 }
 
 // SysMenuActionResourceGroupBy is the group-by builder for SysMenuActionResource entities.

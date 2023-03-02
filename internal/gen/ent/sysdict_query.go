@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -22,6 +23,7 @@ type SysDictQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysDict
+	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,6 +347,9 @@ func (sdq *SysDictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 	}
 	_spec.Node.Schema = sdq.schemaConfig.SysDict
 	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
+	if len(sdq.modifiers) > 0 {
+		_spec.Modifiers = sdq.modifiers
+	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -361,6 +366,9 @@ func (sdq *SysDictQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdq.querySpec()
 	_spec.Node.Schema = sdq.schemaConfig.SysDict
 	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
+	if len(sdq.modifiers) > 0 {
+		_spec.Modifiers = sdq.modifiers
+	}
 	_spec.Node.Columns = sdq.ctx.Fields
 	if len(sdq.ctx.Fields) > 0 {
 		_spec.Unique = sdq.ctx.Unique != nil && *sdq.ctx.Unique
@@ -426,6 +434,9 @@ func (sdq *SysDictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	t1.Schema(sdq.schemaConfig.SysDict)
 	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
 	selector.WithContext(ctx)
+	for _, m := range sdq.modifiers {
+		m(selector)
+	}
 	for _, p := range sdq.predicates {
 		p(selector)
 	}
@@ -441,6 +452,32 @@ func (sdq *SysDictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
+}
+
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (sdq *SysDictQuery) ForUpdate(opts ...sql.LockOption) *SysDictQuery {
+	if sdq.driver.Dialect() == dialect.Postgres {
+		sdq.Unique(false)
+	}
+	sdq.modifiers = append(sdq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return sdq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (sdq *SysDictQuery) ForShare(opts ...sql.LockOption) *SysDictQuery {
+	if sdq.driver.Dialect() == dialect.Postgres {
+		sdq.Unique(false)
+	}
+	sdq.modifiers = append(sdq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return sdq
 }
 
 // SysDictGroupBy is the group-by builder for SysDict entities.
