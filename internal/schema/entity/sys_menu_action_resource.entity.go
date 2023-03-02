@@ -14,6 +14,7 @@ type SysMenuActionResource struct {
 func (smar SysMenuActionResource) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.SortMixin{},
 		mixin.MemoMixin{},
 		mixin.TimeMixin{},

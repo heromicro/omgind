@@ -30,20 +30,6 @@ func (sdu *SysDistrictUpdate) Where(ps ...predicate.SysDistrict) *SysDistrictUpd
 	return sdu
 }
 
-// SetIsDel sets the "is_del" field.
-func (sdu *SysDistrictUpdate) SetIsDel(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsDel(b)
-	return sdu
-}
-
-// SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsDel(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsDel(*b)
-	}
-	return sdu
-}
-
 // SetSort sets the "sort" field.
 func (sdu *SysDistrictUpdate) SetSort(i int32) *SysDistrictUpdate {
 	sdu.mutation.ResetSort()
@@ -707,9 +693,7 @@ func (sdu *SysDistrictUpdate) RemoveChildren(s ...*SysDistrict) *SysDistrictUpda
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sdu *SysDistrictUpdate) Save(ctx context.Context) (int, error) {
-	if err := sdu.defaults(); err != nil {
-		return 0, err
-	}
+	sdu.defaults()
 	return withHooks[int, SysDistrictMutation](ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
 }
 
@@ -736,15 +720,11 @@ func (sdu *SysDistrictUpdate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sdu *SysDistrictUpdate) defaults() error {
+func (sdu *SysDistrictUpdate) defaults() {
 	if _, ok := sdu.mutation.UpdatedAt(); !ok {
-		if sysdistrict.UpdateDefaultUpdatedAt == nil {
-			return fmt.Errorf("ent: uninitialized sysdistrict.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
-		}
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sdu.mutation.SetUpdatedAt(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -839,9 +819,6 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := sdu.mutation.IsDel(); ok {
-		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sdu.mutation.Sort(); ok {
 		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
@@ -1142,20 +1119,6 @@ type SysDistrictUpdateOne struct {
 	hooks     []Hook
 	mutation  *SysDistrictMutation
 	modifiers []func(*sql.UpdateBuilder)
-}
-
-// SetIsDel sets the "is_del" field.
-func (sduo *SysDistrictUpdateOne) SetIsDel(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsDel(b)
-	return sduo
-}
-
-// SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsDel(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsDel(*b)
-	}
-	return sduo
 }
 
 // SetSort sets the "sort" field.
@@ -1834,9 +1797,7 @@ func (sduo *SysDistrictUpdateOne) Select(field string, fields ...string) *SysDis
 
 // Save executes the query and returns the updated SysDistrict entity.
 func (sduo *SysDistrictUpdateOne) Save(ctx context.Context) (*SysDistrict, error) {
-	if err := sduo.defaults(); err != nil {
-		return nil, err
-	}
+	sduo.defaults()
 	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
 }
 
@@ -1863,15 +1824,11 @@ func (sduo *SysDistrictUpdateOne) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sduo *SysDistrictUpdateOne) defaults() error {
+func (sduo *SysDistrictUpdateOne) defaults() {
 	if _, ok := sduo.mutation.UpdatedAt(); !ok {
-		if sysdistrict.UpdateDefaultUpdatedAt == nil {
-			return fmt.Errorf("ent: uninitialized sysdistrict.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
-		}
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sduo.mutation.SetUpdatedAt(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -1983,9 +1940,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := sduo.mutation.IsDel(); ok {
-		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sduo.mutation.Sort(); ok {
 		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)

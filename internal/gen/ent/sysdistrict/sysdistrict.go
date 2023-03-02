@@ -4,8 +4,6 @@ package sysdistrict
 
 import (
 	"time"
-
-	"entgo.io/ent"
 )
 
 const (
@@ -13,8 +11,6 @@ const (
 	Label = "sys_district"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldIsDel holds the string denoting the is_del field in the database.
-	FieldIsDel = "is_del"
 	// FieldSort holds the string denoting the sort field in the database.
 	FieldSort = "sort"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
@@ -96,7 +92,6 @@ const (
 // Columns holds all SQL columns for sysdistrict fields.
 var Columns = []string{
 	FieldID,
-	FieldIsDel,
 	FieldSort,
 	FieldCreatedAt,
 	FieldUpdatedAt,
@@ -140,15 +135,7 @@ func ValidColumn(column string) bool {
 	return false
 }
 
-// Note that the variables below are initialized by the runtime
-// package on the initialization of the application. Therefore,
-// it should be imported in the main as follows:
-//
-//	import _ "github.com/heromicro/omgind/internal/gen/ent/runtime"
 var (
-	Hooks [1]ent.Hook
-	// DefaultIsDel holds the default value on creation for the "is_del" field.
-	DefaultIsDel bool
 	// DefaultSort holds the default value on creation for the "sort" field.
 	DefaultSort int32
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.

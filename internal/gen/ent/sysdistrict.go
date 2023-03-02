@@ -16,8 +16,6 @@ type SysDistrict struct {
 	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
-	// 是否删除
-	IsDel bool `json:"is_del,omitempty"`
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// create time
@@ -123,7 +121,7 @@ func (*SysDistrict) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysdistrict.FieldIsDel, sysdistrict.FieldIsActive, sysdistrict.FieldIsLeaf, sysdistrict.FieldIsHot, sysdistrict.FieldIsReal, sysdistrict.FieldIsMain, sysdistrict.FieldIsDirect:
+		case sysdistrict.FieldIsActive, sysdistrict.FieldIsLeaf, sysdistrict.FieldIsHot, sysdistrict.FieldIsReal, sysdistrict.FieldIsMain, sysdistrict.FieldIsDirect:
 			values[i] = new(sql.NullBool)
 		case sysdistrict.FieldLongitude, sysdistrict.FieldLatitude:
 			values[i] = new(sql.NullFloat64)
@@ -153,12 +151,6 @@ func (sd *SysDistrict) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
 				sd.ID = value.String
-			}
-		case sysdistrict.FieldIsDel:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_del", values[i])
-			} else if value.Valid {
-				sd.IsDel = value.Bool
 			}
 		case sysdistrict.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -410,9 +402,6 @@ func (sd *SysDistrict) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysDistrict(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", sd.ID))
-	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sd.IsDel))
-	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", sd.Sort))
 	builder.WriteString(", ")

@@ -23,20 +23,6 @@ type SysDistrictCreate struct {
 	conflict []sql.ConflictOption
 }
 
-// SetIsDel sets the "is_del" field.
-func (sdc *SysDistrictCreate) SetIsDel(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsDel(b)
-	return sdc
-}
-
-// SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsDel(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsDel(*b)
-	}
-	return sdc
-}
-
 // SetSort sets the "sort" field.
 func (sdc *SysDistrictCreate) SetSort(i int32) *SysDistrictCreate {
 	sdc.mutation.SetSort(i)
@@ -504,9 +490,7 @@ func (sdc *SysDistrictCreate) Mutation() *SysDistrictMutation {
 
 // Save creates the SysDistrict in the database.
 func (sdc *SysDistrictCreate) Save(ctx context.Context) (*SysDistrict, error) {
-	if err := sdc.defaults(); err != nil {
-		return nil, err
-	}
+	sdc.defaults()
 	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
 }
 
@@ -533,26 +517,16 @@ func (sdc *SysDistrictCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sdc *SysDistrictCreate) defaults() error {
-	if _, ok := sdc.mutation.IsDel(); !ok {
-		v := sysdistrict.DefaultIsDel
-		sdc.mutation.SetIsDel(v)
-	}
+func (sdc *SysDistrictCreate) defaults() {
 	if _, ok := sdc.mutation.Sort(); !ok {
 		v := sysdistrict.DefaultSort
 		sdc.mutation.SetSort(v)
 	}
 	if _, ok := sdc.mutation.CreatedAt(); !ok {
-		if sysdistrict.DefaultCreatedAt == nil {
-			return fmt.Errorf("ent: uninitialized sysdistrict.DefaultCreatedAt (forgotten import ent/runtime?)")
-		}
 		v := sysdistrict.DefaultCreatedAt()
 		sdc.mutation.SetCreatedAt(v)
 	}
 	if _, ok := sdc.mutation.UpdatedAt(); !ok {
-		if sysdistrict.DefaultUpdatedAt == nil {
-			return fmt.Errorf("ent: uninitialized sysdistrict.DefaultUpdatedAt (forgotten import ent/runtime?)")
-		}
 		v := sysdistrict.DefaultUpdatedAt()
 		sdc.mutation.SetUpdatedAt(v)
 	}
@@ -581,20 +555,13 @@ func (sdc *SysDistrictCreate) defaults() error {
 		sdc.mutation.SetIsDirect(v)
 	}
 	if _, ok := sdc.mutation.ID(); !ok {
-		if sysdistrict.DefaultID == nil {
-			return fmt.Errorf("ent: uninitialized sysdistrict.DefaultID (forgotten import ent/runtime?)")
-		}
 		v := sysdistrict.DefaultID()
 		sdc.mutation.SetID(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (sdc *SysDistrictCreate) check() error {
-	if _, ok := sdc.mutation.IsDel(); !ok {
-		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysDistrict.is_del"`)}
-	}
 	if _, ok := sdc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysDistrict.sort"`)}
 	}
@@ -721,10 +688,6 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 	if id, ok := sdc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
-	}
-	if value, ok := sdc.mutation.IsDel(); ok {
-		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
-		_node.IsDel = value
 	}
 	if value, ok := sdc.mutation.Sort(); ok {
 		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
@@ -894,7 +857,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 // of the `INSERT` statement. For example:
 //
 //	client.SysDistrict.Create().
-//		SetIsDel(v).
+//		SetSort(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -903,7 +866,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.SysDistrictUpsert) {
-//			SetIsDel(v+v).
+//			SetSort(v+v).
 //		}).
 //		Exec(ctx)
 func (sdc *SysDistrictCreate) OnConflict(opts ...sql.ConflictOption) *SysDistrictUpsertOne {
@@ -938,18 +901,6 @@ type (
 		*sql.UpdateSet
 	}
 )
-
-// SetIsDel sets the "is_del" field.
-func (u *SysDistrictUpsert) SetIsDel(v bool) *SysDistrictUpsert {
-	u.Set(sysdistrict.FieldIsDel, v)
-	return u
-}
-
-// UpdateIsDel sets the "is_del" field to the value that was provided on create.
-func (u *SysDistrictUpsert) UpdateIsDel() *SysDistrictUpsert {
-	u.SetExcluded(sysdistrict.FieldIsDel)
-	return u
-}
 
 // SetSort sets the "sort" field.
 func (u *SysDistrictUpsert) SetSort(v int32) *SysDistrictUpsert {
@@ -1558,20 +1509,6 @@ func (u *SysDistrictUpsertOne) Update(set func(*SysDistrictUpsert)) *SysDistrict
 		set(&SysDistrictUpsert{UpdateSet: update})
 	}))
 	return u
-}
-
-// SetIsDel sets the "is_del" field.
-func (u *SysDistrictUpsertOne) SetIsDel(v bool) *SysDistrictUpsertOne {
-	return u.Update(func(s *SysDistrictUpsert) {
-		s.SetIsDel(v)
-	})
-}
-
-// UpdateIsDel sets the "is_del" field to the value that was provided on create.
-func (u *SysDistrictUpsertOne) UpdateIsDel() *SysDistrictUpsertOne {
-	return u.Update(func(s *SysDistrictUpsert) {
-		s.UpdateIsDel()
-	})
 }
 
 // SetSort sets the "sort" field.
@@ -2357,7 +2294,7 @@ func (sdcb *SysDistrictCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.SysDistrictUpsert) {
-//			SetIsDel(v+v).
+//			SetSort(v+v).
 //		}).
 //		Exec(ctx)
 func (sdcb *SysDistrictCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDistrictUpsertBulk {
@@ -2437,20 +2374,6 @@ func (u *SysDistrictUpsertBulk) Update(set func(*SysDistrictUpsert)) *SysDistric
 		set(&SysDistrictUpsert{UpdateSet: update})
 	}))
 	return u
-}
-
-// SetIsDel sets the "is_del" field.
-func (u *SysDistrictUpsertBulk) SetIsDel(v bool) *SysDistrictUpsertBulk {
-	return u.Update(func(s *SysDistrictUpsert) {
-		s.SetIsDel(v)
-	})
-}
-
-// UpdateIsDel sets the "is_del" field to the value that was provided on create.
-func (u *SysDistrictUpsertBulk) UpdateIsDel() *SysDistrictUpsertBulk {
-	return u.Update(func(s *SysDistrictUpsert) {
-		s.UpdateIsDel()
-	})
 }
 
 // SetSort sets the "sort" field.

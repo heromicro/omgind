@@ -182,7 +182,6 @@ var (
 	// SysDistrictsColumns holds the columns for the "sys_districts" table.
 	SysDistrictsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
-		{Name: "is_del", Type: field.TypeBool, Default: false},
 		{Name: "sort", Type: field.TypeInt32, Default: 9999},
 		{Name: "crtd_at", Type: field.TypeTime},
 		{Name: "uptd_at", Type: field.TypeTime},
@@ -223,7 +222,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_districts_sys_districts_children",
-				Columns:    []*schema.Column{SysDistrictsColumns[32]},
+				Columns:    []*schema.Column{SysDistrictsColumns[31]},
 				RefColumns: []*schema.Column{SysDistrictsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -235,69 +234,64 @@ var (
 				Columns: []*schema.Column{SysDistrictsColumns[0]},
 			},
 			{
-				Name:    "sysdistrict_is_del",
+				Name:    "sysdistrict_sort",
 				Unique:  false,
 				Columns: []*schema.Column{SysDistrictsColumns[1]},
 			},
 			{
-				Name:    "sysdistrict_sort",
+				Name:    "sysdistrict_crtd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysDistrictsColumns[2]},
 			},
 			{
-				Name:    "sysdistrict_crtd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[3]},
-			},
-			{
 				Name:    "sysdistrict_dltd_at",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[5]},
+				Columns: []*schema.Column{SysDistrictsColumns[4]},
 			},
 			{
 				Name:    "sysdistrict_is_active",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[6]},
+				Columns: []*schema.Column{SysDistrictsColumns[5]},
 			},
 			{
 				Name:    "sysdistrict_tree_id",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[7]},
+				Columns: []*schema.Column{SysDistrictsColumns[6]},
 			},
 			{
 				Name:    "sysdistrict_tree_id_tree_left",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[7], SysDistrictsColumns[9]},
+				Columns: []*schema.Column{SysDistrictsColumns[6], SysDistrictsColumns[8]},
 			},
 			{
 				Name:    "sysdistrict_tree_id_tree_right",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[7], SysDistrictsColumns[10]},
+				Columns: []*schema.Column{SysDistrictsColumns[6], SysDistrictsColumns[9]},
 			},
 			{
 				Name:    "sysdistrict_tree_id_tree_left_tree_right",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[7], SysDistrictsColumns[9], SysDistrictsColumns[10]},
+				Columns: []*schema.Column{SysDistrictsColumns[6], SysDistrictsColumns[8], SysDistrictsColumns[9]},
 			},
 			{
 				Name:    "sysdistrict_is_hot",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[27]},
+				Columns: []*schema.Column{SysDistrictsColumns[26]},
 			},
 			{
 				Name:    "sysdistrict_is_r",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[28]},
+				Columns: []*schema.Column{SysDistrictsColumns[27]},
 			},
 			{
 				Name:    "sysdistrict_is_m",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[29]},
+				Columns: []*schema.Column{SysDistrictsColumns[28]},
 			},
 			{
 				Name:    "sysdistrict_is_d",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[30]},
+				Columns: []*schema.Column{SysDistrictsColumns[29]},
 			},
 		},
 	}

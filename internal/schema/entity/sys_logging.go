@@ -1,15 +1,10 @@
 package entity
 
 import (
-	"context"
-	"fmt"
-
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 
-	gen "github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/hook"
 	"github.com/heromicro/omgind/internal/schema/mixin"
 )
 
@@ -26,6 +21,7 @@ type SysLogging struct {
 func (SysLogging) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.MemoMixin{},
 	}
 }
@@ -33,6 +29,8 @@ func (SysLogging) Mixin() []ent.Mixin {
 // Fields of the SysLogging.
 func (SysLogging) Fields() []ent.Field {
 	return []ent.Field{
+
+		// mixin.IdField_ulid(),
 
 		field.String("level").MaxLen(32).Nillable().Optional().Comment("日志级别"),
 		field.String("trace_id").MaxLen(128).Nillable().Optional().Comment("跟踪ID"),
@@ -62,19 +60,26 @@ func (SysLogging) Indexes() []ent.Index {
 func (SysLogging) Hooks() []ent.Hook {
 	return []ent.Hook{
 
-		hook.On(
-			func(next ent.Mutator) ent.Mutator {
-				return hook.SysLoggingFunc(func(ctx context.Context, m *gen.SysLoggingMutation) (ent.Value, error) {
-					_, ok := m.ID()
-					if !ok {
-						return nil, fmt.Errorf("id is not ok")
-					}
-					return next.Mutate(ctx, m)
-				})
-			},
-			ent.OpCreate,
-		),
+		/*
+			hook.On(
+				func(next ent.Mutator) ent.Mutator {
+					return hook.SysLoggingFunc(func(ctx context.Context, m *gen.SysLoggingMutation) (ent.Value, error) {
+						id, ok := m.ID()
+						if !ok || id == "" {
+							// return nil, fmt.Errorf("id is not ok")
 
+							seed := time.Now().UnixNano()
+							source := rand.NewSource(seed)
+							entropy := rand.New(source)
+							id = ulid.MustNew(ulid.Timestamp(time.Now()), entropy).String()
+							m.SetID(id)
+						}
+						return next.Mutate(ctx, m)
+					})
+				},
+				ent.OpCreate,
+			),
+		*/
 		//
 
 	}
