@@ -7,11 +7,9 @@ import (
 	"fmt"
 	"math"
 
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 )
@@ -23,7 +21,6 @@ type SysUserQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysUser
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,11 +342,6 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = suq.schemaConfig.SysUser
-	ctx = internal.NewSchemaConfigContext(ctx, suq.schemaConfig)
-	if len(suq.modifiers) > 0 {
-		_spec.Modifiers = suq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -364,11 +356,6 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 
 func (suq *SysUserQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := suq.querySpec()
-	_spec.Node.Schema = suq.schemaConfig.SysUser
-	ctx = internal.NewSchemaConfigContext(ctx, suq.schemaConfig)
-	if len(suq.modifiers) > 0 {
-		_spec.Modifiers = suq.modifiers
-	}
 	_spec.Node.Columns = suq.ctx.Fields
 	if len(suq.ctx.Fields) > 0 {
 		_spec.Unique = suq.ctx.Unique != nil && *suq.ctx.Unique
@@ -431,12 +418,6 @@ func (suq *SysUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if suq.ctx.Unique != nil && *suq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(suq.schemaConfig.SysUser)
-	ctx = internal.NewSchemaConfigContext(ctx, suq.schemaConfig)
-	selector.WithContext(ctx)
-	for _, m := range suq.modifiers {
-		m(selector)
-	}
 	for _, p := range suq.predicates {
 		p(selector)
 	}
@@ -452,38 +433,6 @@ func (suq *SysUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
-// updated, deleted or "selected ... for update" by other sessions, until the transaction is
-// either committed or rolled-back.
-func (suq *SysUserQuery) ForUpdate(opts ...sql.LockOption) *SysUserQuery {
-	if suq.driver.Dialect() == dialect.Postgres {
-		suq.Unique(false)
-	}
-	suq.modifiers = append(suq.modifiers, func(s *sql.Selector) {
-		s.ForUpdate(opts...)
-	})
-	return suq
-}
-
-// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
-// on any rows that are read. Other sessions can read the rows, but cannot modify them
-// until your transaction commits.
-func (suq *SysUserQuery) ForShare(opts ...sql.LockOption) *SysUserQuery {
-	if suq.driver.Dialect() == dialect.Postgres {
-		suq.Unique(false)
-	}
-	suq.modifiers = append(suq.modifiers, func(s *sql.Selector) {
-		s.ForShare(opts...)
-	})
-	return suq
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (suq *SysUserQuery) Modify(modifiers ...func(s *sql.Selector)) *SysUserSelect {
-	suq.modifiers = append(suq.modifiers, modifiers...)
-	return suq.Select()
 }
 
 // SysUserGroupBy is the group-by builder for SysUser entities.
@@ -574,10 +523,4 @@ func (sus *SysUserSelect) sqlScan(ctx context.Context, root *SysUserQuery, v any
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (sus *SysUserSelect) Modify(modifiers ...func(s *sql.Selector)) *SysUserSelect {
-	sus.modifiers = append(sus.modifiers, modifiers...)
-	return sus
 }

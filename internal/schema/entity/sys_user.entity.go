@@ -16,6 +16,7 @@ type SysUser struct {
 func (su SysUser) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},

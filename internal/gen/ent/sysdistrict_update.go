@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 )
@@ -19,9 +18,8 @@ import (
 // SysDistrictUpdate is the builder for updating SysDistrict entities.
 type SysDistrictUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *SysDistrictMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *SysDistrictMutation
 }
 
 // Where appends a list predicates to the SysDistrictUpdate builder.
@@ -707,9 +705,7 @@ func (sdu *SysDistrictUpdate) RemoveChildren(s ...*SysDistrict) *SysDistrictUpda
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sdu *SysDistrictUpdate) Save(ctx context.Context) (int, error) {
-	if err := sdu.defaults(); err != nil {
-		return 0, err
-	}
+	sdu.defaults()
 	return withHooks[int, SysDistrictMutation](ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
 }
 
@@ -736,15 +732,11 @@ func (sdu *SysDistrictUpdate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sdu *SysDistrictUpdate) defaults() error {
+func (sdu *SysDistrictUpdate) defaults() {
 	if _, ok := sdu.mutation.UpdatedAt(); !ok {
-		if sysdistrict.UpdateDefaultUpdatedAt == nil {
-			return fmt.Errorf("ent: uninitialized sysdistrict.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
-		}
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sdu.mutation.SetUpdatedAt(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -820,12 +812,6 @@ func (sdu *SysDistrictUpdate) check() error {
 		}
 	}
 	return nil
-}
-
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sdu *SysDistrictUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdate {
-	sdu.modifiers = append(sdu.modifiers, modifiers...)
-	return sdu
 }
 
 func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
@@ -1040,7 +1026,6 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
-		edge.Schema = sdu.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdu.mutation.ParentIDs(); len(nodes) > 0 {
@@ -1057,7 +1042,6 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
-		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1077,7 +1061,6 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
-		edge.Schema = sdu.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sdu.mutation.ChildrenCleared() {
@@ -1094,7 +1077,6 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
-		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1114,15 +1096,11 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
-		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = sdu.schemaConfig.SysDistrict
-	ctx = internal.NewSchemaConfigContext(ctx, sdu.schemaConfig)
-	_spec.AddModifiers(sdu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdistrict.Label}
@@ -1138,10 +1116,9 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysDistrictUpdateOne is the builder for updating a single SysDistrict entity.
 type SysDistrictUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *SysDistrictMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *SysDistrictMutation
 }
 
 // SetIsDel sets the "is_del" field.
@@ -1834,9 +1811,7 @@ func (sduo *SysDistrictUpdateOne) Select(field string, fields ...string) *SysDis
 
 // Save executes the query and returns the updated SysDistrict entity.
 func (sduo *SysDistrictUpdateOne) Save(ctx context.Context) (*SysDistrict, error) {
-	if err := sduo.defaults(); err != nil {
-		return nil, err
-	}
+	sduo.defaults()
 	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
 }
 
@@ -1863,15 +1838,11 @@ func (sduo *SysDistrictUpdateOne) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sduo *SysDistrictUpdateOne) defaults() error {
+func (sduo *SysDistrictUpdateOne) defaults() {
 	if _, ok := sduo.mutation.UpdatedAt(); !ok {
-		if sysdistrict.UpdateDefaultUpdatedAt == nil {
-			return fmt.Errorf("ent: uninitialized sysdistrict.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
-		}
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sduo.mutation.SetUpdatedAt(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -1947,12 +1918,6 @@ func (sduo *SysDistrictUpdateOne) check() error {
 		}
 	}
 	return nil
-}
-
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sduo *SysDistrictUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdateOne {
-	sduo.modifiers = append(sduo.modifiers, modifiers...)
-	return sduo
 }
 
 func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistrict, err error) {
@@ -2184,7 +2149,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
-		edge.Schema = sduo.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sduo.mutation.ParentIDs(); len(nodes) > 0 {
@@ -2201,7 +2165,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
-		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -2221,7 +2184,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
-		edge.Schema = sduo.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sduo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sduo.mutation.ChildrenCleared() {
@@ -2238,7 +2200,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
-		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -2258,15 +2219,11 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
-		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = sduo.schemaConfig.SysDistrict
-	ctx = internal.NewSchemaConfigContext(ctx, sduo.schemaConfig)
-	_spec.AddModifiers(sduo.modifiers...)
 	_node = &SysDistrict{config: sduo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

@@ -7,11 +7,9 @@ import (
 	"fmt"
 	"math"
 
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
 )
@@ -23,7 +21,6 @@ type SysRoleQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysRole
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,11 +342,6 @@ func (srq *SysRoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = srq.schemaConfig.SysRole
-	ctx = internal.NewSchemaConfigContext(ctx, srq.schemaConfig)
-	if len(srq.modifiers) > 0 {
-		_spec.Modifiers = srq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -364,11 +356,6 @@ func (srq *SysRoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 
 func (srq *SysRoleQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := srq.querySpec()
-	_spec.Node.Schema = srq.schemaConfig.SysRole
-	ctx = internal.NewSchemaConfigContext(ctx, srq.schemaConfig)
-	if len(srq.modifiers) > 0 {
-		_spec.Modifiers = srq.modifiers
-	}
 	_spec.Node.Columns = srq.ctx.Fields
 	if len(srq.ctx.Fields) > 0 {
 		_spec.Unique = srq.ctx.Unique != nil && *srq.ctx.Unique
@@ -431,12 +418,6 @@ func (srq *SysRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if srq.ctx.Unique != nil && *srq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(srq.schemaConfig.SysRole)
-	ctx = internal.NewSchemaConfigContext(ctx, srq.schemaConfig)
-	selector.WithContext(ctx)
-	for _, m := range srq.modifiers {
-		m(selector)
-	}
 	for _, p := range srq.predicates {
 		p(selector)
 	}
@@ -452,38 +433,6 @@ func (srq *SysRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
-// updated, deleted or "selected ... for update" by other sessions, until the transaction is
-// either committed or rolled-back.
-func (srq *SysRoleQuery) ForUpdate(opts ...sql.LockOption) *SysRoleQuery {
-	if srq.driver.Dialect() == dialect.Postgres {
-		srq.Unique(false)
-	}
-	srq.modifiers = append(srq.modifiers, func(s *sql.Selector) {
-		s.ForUpdate(opts...)
-	})
-	return srq
-}
-
-// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
-// on any rows that are read. Other sessions can read the rows, but cannot modify them
-// until your transaction commits.
-func (srq *SysRoleQuery) ForShare(opts ...sql.LockOption) *SysRoleQuery {
-	if srq.driver.Dialect() == dialect.Postgres {
-		srq.Unique(false)
-	}
-	srq.modifiers = append(srq.modifiers, func(s *sql.Selector) {
-		s.ForShare(opts...)
-	})
-	return srq
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (srq *SysRoleQuery) Modify(modifiers ...func(s *sql.Selector)) *SysRoleSelect {
-	srq.modifiers = append(srq.modifiers, modifiers...)
-	return srq.Select()
 }
 
 // SysRoleGroupBy is the group-by builder for SysRole entities.
@@ -574,10 +523,4 @@ func (srs *SysRoleSelect) sqlScan(ctx context.Context, root *SysRoleQuery, v any
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (srs *SysRoleSelect) Modify(modifiers ...func(s *sql.Selector)) *SysRoleSelect {
-	srs.modifiers = append(srs.modifiers, modifiers...)
-	return srs
 }

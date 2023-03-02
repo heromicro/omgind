@@ -1,15 +1,10 @@
 package entity
 
 import (
-	"context"
-	"fmt"
-
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 
-	gen "github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/hook"
 	"github.com/heromicro/omgind/internal/schema/mixin"
 )
 
@@ -26,6 +21,7 @@ type SysLogging struct {
 func (SysLogging) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.MemoMixin{},
 	}
 }
@@ -62,19 +58,20 @@ func (SysLogging) Indexes() []ent.Index {
 func (SysLogging) Hooks() []ent.Hook {
 	return []ent.Hook{
 
-		hook.On(
-			func(next ent.Mutator) ent.Mutator {
-				return hook.SysLoggingFunc(func(ctx context.Context, m *gen.SysLoggingMutation) (ent.Value, error) {
-					_, ok := m.ID()
-					if !ok {
-						return nil, fmt.Errorf("id is not ok")
-					}
-					return next.Mutate(ctx, m)
-				})
-			},
-			ent.OpCreate,
-		),
-
+		/*
+			hook.On(
+				func(next ent.Mutator) ent.Mutator {
+					return hook.SysLoggingFunc(func(ctx context.Context, m *gen.SysLoggingMutation) (ent.Value, error) {
+						_, ok := m.ID()
+						if !ok {
+							return nil, fmt.Errorf("id is not ok")
+						}
+						return next.Mutate(ctx, m)
+					})
+				},
+				ent.OpCreate,
+			),
+		*/
 		//
 
 	}

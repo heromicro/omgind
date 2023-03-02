@@ -8,11 +8,9 @@ import (
 	"fmt"
 	"math"
 
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 )
@@ -26,7 +24,6 @@ type SysDistrictQuery struct {
 	predicates   []predicate.SysDistrict
 	withParent   *SysDistrictQuery
 	withChildren *SysDistrictQuery
-	modifiers    []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -79,9 +76,6 @@ func (sdq *SysDistrictQuery) QueryParent() *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
 		)
-		schemaConfig := sdq.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -104,9 +98,6 @@ func (sdq *SysDistrictQuery) QueryChildren() *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
 		)
-		schemaConfig := sdq.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -427,11 +418,6 @@ func (sdq *SysDistrictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = sdq.schemaConfig.SysDistrict
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
-	if len(sdq.modifiers) > 0 {
-		_spec.Modifiers = sdq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -522,11 +508,6 @@ func (sdq *SysDistrictQuery) loadChildren(ctx context.Context, query *SysDistric
 
 func (sdq *SysDistrictQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdq.querySpec()
-	_spec.Node.Schema = sdq.schemaConfig.SysDistrict
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
-	if len(sdq.modifiers) > 0 {
-		_spec.Modifiers = sdq.modifiers
-	}
 	_spec.Node.Columns = sdq.ctx.Fields
 	if len(sdq.ctx.Fields) > 0 {
 		_spec.Unique = sdq.ctx.Unique != nil && *sdq.ctx.Unique
@@ -589,12 +570,6 @@ func (sdq *SysDistrictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sdq.ctx.Unique != nil && *sdq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(sdq.schemaConfig.SysDistrict)
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
-	selector.WithContext(ctx)
-	for _, m := range sdq.modifiers {
-		m(selector)
-	}
 	for _, p := range sdq.predicates {
 		p(selector)
 	}
@@ -610,38 +585,6 @@ func (sdq *SysDistrictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
-// updated, deleted or "selected ... for update" by other sessions, until the transaction is
-// either committed or rolled-back.
-func (sdq *SysDistrictQuery) ForUpdate(opts ...sql.LockOption) *SysDistrictQuery {
-	if sdq.driver.Dialect() == dialect.Postgres {
-		sdq.Unique(false)
-	}
-	sdq.modifiers = append(sdq.modifiers, func(s *sql.Selector) {
-		s.ForUpdate(opts...)
-	})
-	return sdq
-}
-
-// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
-// on any rows that are read. Other sessions can read the rows, but cannot modify them
-// until your transaction commits.
-func (sdq *SysDistrictQuery) ForShare(opts ...sql.LockOption) *SysDistrictQuery {
-	if sdq.driver.Dialect() == dialect.Postgres {
-		sdq.Unique(false)
-	}
-	sdq.modifiers = append(sdq.modifiers, func(s *sql.Selector) {
-		s.ForShare(opts...)
-	})
-	return sdq
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (sdq *SysDistrictQuery) Modify(modifiers ...func(s *sql.Selector)) *SysDistrictSelect {
-	sdq.modifiers = append(sdq.modifiers, modifiers...)
-	return sdq.Select()
 }
 
 // SysDistrictGroupBy is the group-by builder for SysDistrict entities.
@@ -732,10 +675,4 @@ func (sds *SysDistrictSelect) sqlScan(ctx context.Context, root *SysDistrictQuer
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (sds *SysDistrictSelect) Modify(modifiers ...func(s *sql.Selector)) *SysDistrictSelect {
-	sds.modifiers = append(sds.modifiers, modifiers...)
-	return sds
 }

@@ -9,6 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"entgo.io/ent"
+	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
@@ -24,9 +26,6 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
-
-	"entgo.io/ent"
-	"entgo.io/ent/dialect/sql"
 )
 
 const (

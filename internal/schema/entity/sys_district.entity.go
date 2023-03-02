@@ -1,11 +1,6 @@
 package entity
 
 import (
-	"context"
-	"fmt"
-
-	gen "github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/hook"
 	"github.com/heromicro/omgind/internal/schema/mixin"
 
 	"entgo.io/ent"
@@ -21,6 +16,7 @@ type SysDistrict struct {
 func (SysDistrict) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},
@@ -83,29 +79,31 @@ func (SysDistrict) Indexes() []ent.Index {
 
 func (SysDistrict) Hooks() []ent.Hook {
 	return []ent.Hook{
-		hook.On(
-			func(next ent.Mutator) ent.Mutator {
-				return hook.SysDistrictFunc(func(ctx context.Context, m *gen.SysDistrictMutation) (ent.Value, error) {
-					isLeaf, ok := m.IsLeaf()
-					if !ok {
-						return nil, fmt.Errorf("is_leaf is not ok")
-					}
-					treeRight, ok := m.TreeRight()
-					if !ok {
-						return nil, fmt.Errorf("tree right is not ok")
-					}
-					treeLeft, ok := m.TreeLeft()
-					if !ok {
-						return nil, fmt.Errorf("tree left is not ok")
-					}
+		/*
+			hook.On(
+				func(next ent.Mutator) ent.Mutator {
+					return hook.SysDistrictFunc(func(ctx context.Context, m *gen.SysDistrictMutation) (ent.Value, error) {
+						isLeaf, ok := m.IsLeaf()
+						if !ok {
+							return nil, fmt.Errorf("is_leaf is not ok")
+						}
+						treeRight, ok := m.TreeRight()
+						if !ok {
+							return nil, fmt.Errorf("tree right is not ok")
+						}
+						treeLeft, ok := m.TreeLeft()
+						if !ok {
+							return nil, fmt.Errorf("tree left is not ok")
+						}
 
-					if isLeaf && (treeRight-treeLeft) != 1 {
-						return nil, fmt.Errorf("tree is out of order ")
-					}
-					return next.Mutate(ctx, m)
-				})
-			},
-			ent.OpCreate|ent.OpDelete|ent.OpUpdate,
-		),
+						if isLeaf && (treeRight-treeLeft) != 1 {
+							return nil, fmt.Errorf("tree is out of order ")
+						}
+						return next.Mutate(ctx, m)
+					})
+				},
+				ent.OpCreate|ent.OpDelete|ent.OpUpdate,
+			),
+		*/
 	}
 }

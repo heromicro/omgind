@@ -10,6 +10,10 @@ import (
 
 	"github.com/heromicro/omgind/internal/gen/ent/migrate"
 
+	"entgo.io/ent"
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -24,10 +28,6 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
-
-	"entgo.io/ent/dialect"
-	"entgo.io/ent/dialect/sql"
-	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // Client is the client that holds all ent builders.
@@ -90,6 +90,55 @@ func (c *Client) init() {
 	c.SysUser = NewSysUserClient(c.config)
 	c.SysUserRole = NewSysUserRoleClient(c.config)
 	c.XxxDemo = NewXxxDemoClient(c.config)
+}
+
+type (
+	// config is the configuration for the client and its builder.
+	config struct {
+		// driver used for executing database requests.
+		driver dialect.Driver
+		// debug enable a debug logging.
+		debug bool
+		// log used for logging on debug mode.
+		log func(...any)
+		// hooks to execute on mutations.
+		hooks *hooks
+		// interceptors to execute on queries.
+		inters *inters
+	}
+	// Option function to configure the client.
+	Option func(*config)
+)
+
+// options applies the options on the config object.
+func (c *config) options(opts ...Option) {
+	for _, opt := range opts {
+		opt(c)
+	}
+	if c.debug {
+		c.driver = dialect.Debug(c.driver, c.log)
+	}
+}
+
+// Debug enables debug logging on the ent.Driver.
+func Debug() Option {
+	return func(c *config) {
+		c.debug = true
+	}
+}
+
+// Log sets the logging function for debug mode.
+func Log(fn func(...any)) Option {
+	return func(c *config) {
+		c.log = fn
+	}
+}
+
+// Driver configures the client driver.
+func Driver(driver dialect.Driver) Option {
+	return func(c *config) {
+		c.driver = driver
+	}
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -198,39 +247,25 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.SysAddress.Use(hooks...)
-	c.SysDict.Use(hooks...)
-	c.SysDictItem.Use(hooks...)
-	c.SysDistrict.Use(hooks...)
-	c.SysJwtBlock.Use(hooks...)
-	c.SysLogging.Use(hooks...)
-	c.SysMenu.Use(hooks...)
-	c.SysMenuAction.Use(hooks...)
-	c.SysMenuActionResource.Use(hooks...)
-	c.SysRole.Use(hooks...)
-	c.SysRoleMenu.Use(hooks...)
-	c.SysUser.Use(hooks...)
-	c.SysUserRole.Use(hooks...)
-	c.XxxDemo.Use(hooks...)
+	for _, n := range []interface{ Use(...Hook) }{
+		c.SysAddress, c.SysDict, c.SysDictItem, c.SysDistrict, c.SysJwtBlock,
+		c.SysLogging, c.SysMenu, c.SysMenuAction, c.SysMenuActionResource, c.SysRole,
+		c.SysRoleMenu, c.SysUser, c.SysUserRole, c.XxxDemo,
+	} {
+		n.Use(hooks...)
+	}
 }
 
 // Intercept adds the query interceptors to all the entity clients.
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
-	c.SysAddress.Intercept(interceptors...)
-	c.SysDict.Intercept(interceptors...)
-	c.SysDictItem.Intercept(interceptors...)
-	c.SysDistrict.Intercept(interceptors...)
-	c.SysJwtBlock.Intercept(interceptors...)
-	c.SysLogging.Intercept(interceptors...)
-	c.SysMenu.Intercept(interceptors...)
-	c.SysMenuAction.Intercept(interceptors...)
-	c.SysMenuActionResource.Intercept(interceptors...)
-	c.SysRole.Intercept(interceptors...)
-	c.SysRoleMenu.Intercept(interceptors...)
-	c.SysUser.Intercept(interceptors...)
-	c.SysUserRole.Intercept(interceptors...)
-	c.XxxDemo.Intercept(interceptors...)
+	for _, n := range []interface{ Intercept(...Interceptor) }{
+		c.SysAddress, c.SysDict, c.SysDictItem, c.SysDistrict, c.SysJwtBlock,
+		c.SysLogging, c.SysMenu, c.SysMenuAction, c.SysMenuActionResource, c.SysRole,
+		c.SysRoleMenu, c.SysUser, c.SysUserRole, c.XxxDemo,
+	} {
+		n.Intercept(interceptors...)
+	}
 }
 
 // Mutate implements the ent.Mutator interface.
@@ -726,9 +761,6 @@ func (c *SysDistrictClient) QueryParent(sd *SysDistrict) *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
 		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -745,9 +777,6 @@ func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
 		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -756,8 +785,7 @@ func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
 
 // Hooks returns the client hooks.
 func (c *SysDistrictClient) Hooks() []Hook {
-	hooks := c.hooks.SysDistrict
-	return append(hooks[:len(hooks):len(hooks)], sysdistrict.Hooks[:]...)
+	return c.hooks.SysDistrict
 }
 
 // Interceptors returns the client interceptors.
@@ -993,8 +1021,7 @@ func (c *SysLoggingClient) GetX(ctx context.Context, id string) *SysLogging {
 
 // Hooks returns the client hooks.
 func (c *SysLoggingClient) Hooks() []Hook {
-	hooks := c.hooks.SysLogging
-	return append(hooks[:len(hooks):len(hooks)], syslogging.Hooks[:]...)
+	return c.hooks.SysLogging
 }
 
 // Interceptors returns the client interceptors.
@@ -1960,3 +1987,17 @@ func (c *XxxDemoClient) mutate(ctx context.Context, m *XxxDemoMutation) (Value, 
 		return nil, fmt.Errorf("ent: unknown XxxDemo mutation op: %q", m.Op())
 	}
 }
+
+// hooks and interceptors per client, for fast access.
+type (
+	hooks struct {
+		SysAddress, SysDict, SysDictItem, SysDistrict, SysJwtBlock, SysLogging, SysMenu,
+		SysMenuAction, SysMenuActionResource, SysRole, SysRoleMenu, SysUser,
+		SysUserRole, XxxDemo []ent.Hook
+	}
+	inters struct {
+		SysAddress, SysDict, SysDictItem, SysDistrict, SysJwtBlock, SysLogging, SysMenu,
+		SysMenuAction, SysMenuActionResource, SysRole, SysRoleMenu, SysUser,
+		SysUserRole, XxxDemo []ent.Interceptor
+	}
+)

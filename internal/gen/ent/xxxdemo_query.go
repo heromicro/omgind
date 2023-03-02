@@ -7,11 +7,9 @@ import (
 	"fmt"
 	"math"
 
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
 )
@@ -23,7 +21,6 @@ type XxxDemoQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.XxxDemo
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,11 +342,6 @@ func (xdq *XxxDemoQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Xxx
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = xdq.schemaConfig.XxxDemo
-	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
-	if len(xdq.modifiers) > 0 {
-		_spec.Modifiers = xdq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -364,11 +356,6 @@ func (xdq *XxxDemoQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Xxx
 
 func (xdq *XxxDemoQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := xdq.querySpec()
-	_spec.Node.Schema = xdq.schemaConfig.XxxDemo
-	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
-	if len(xdq.modifiers) > 0 {
-		_spec.Modifiers = xdq.modifiers
-	}
 	_spec.Node.Columns = xdq.ctx.Fields
 	if len(xdq.ctx.Fields) > 0 {
 		_spec.Unique = xdq.ctx.Unique != nil && *xdq.ctx.Unique
@@ -431,12 +418,6 @@ func (xdq *XxxDemoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if xdq.ctx.Unique != nil && *xdq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(xdq.schemaConfig.XxxDemo)
-	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
-	selector.WithContext(ctx)
-	for _, m := range xdq.modifiers {
-		m(selector)
-	}
 	for _, p := range xdq.predicates {
 		p(selector)
 	}
@@ -452,38 +433,6 @@ func (xdq *XxxDemoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
-// updated, deleted or "selected ... for update" by other sessions, until the transaction is
-// either committed or rolled-back.
-func (xdq *XxxDemoQuery) ForUpdate(opts ...sql.LockOption) *XxxDemoQuery {
-	if xdq.driver.Dialect() == dialect.Postgres {
-		xdq.Unique(false)
-	}
-	xdq.modifiers = append(xdq.modifiers, func(s *sql.Selector) {
-		s.ForUpdate(opts...)
-	})
-	return xdq
-}
-
-// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
-// on any rows that are read. Other sessions can read the rows, but cannot modify them
-// until your transaction commits.
-func (xdq *XxxDemoQuery) ForShare(opts ...sql.LockOption) *XxxDemoQuery {
-	if xdq.driver.Dialect() == dialect.Postgres {
-		xdq.Unique(false)
-	}
-	xdq.modifiers = append(xdq.modifiers, func(s *sql.Selector) {
-		s.ForShare(opts...)
-	})
-	return xdq
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (xdq *XxxDemoQuery) Modify(modifiers ...func(s *sql.Selector)) *XxxDemoSelect {
-	xdq.modifiers = append(xdq.modifiers, modifiers...)
-	return xdq.Select()
 }
 
 // XxxDemoGroupBy is the group-by builder for XxxDemo entities.
@@ -574,10 +523,4 @@ func (xds *XxxDemoSelect) sqlScan(ctx context.Context, root *XxxDemoQuery, v any
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (xds *XxxDemoSelect) Modify(modifiers ...func(s *sql.Selector)) *XxxDemoSelect {
-	xds.modifiers = append(xds.modifiers, modifiers...)
-	return xds
 }

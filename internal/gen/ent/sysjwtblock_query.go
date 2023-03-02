@@ -7,11 +7,9 @@ import (
 	"fmt"
 	"math"
 
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 )
@@ -23,7 +21,6 @@ type SysJwtBlockQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysJwtBlock
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,11 +342,6 @@ func (sjbq *SysJwtBlockQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = sjbq.schemaConfig.SysJwtBlock
-	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
-	if len(sjbq.modifiers) > 0 {
-		_spec.Modifiers = sjbq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -364,11 +356,6 @@ func (sjbq *SysJwtBlockQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 
 func (sjbq *SysJwtBlockQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sjbq.querySpec()
-	_spec.Node.Schema = sjbq.schemaConfig.SysJwtBlock
-	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
-	if len(sjbq.modifiers) > 0 {
-		_spec.Modifiers = sjbq.modifiers
-	}
 	_spec.Node.Columns = sjbq.ctx.Fields
 	if len(sjbq.ctx.Fields) > 0 {
 		_spec.Unique = sjbq.ctx.Unique != nil && *sjbq.ctx.Unique
@@ -431,12 +418,6 @@ func (sjbq *SysJwtBlockQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sjbq.ctx.Unique != nil && *sjbq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(sjbq.schemaConfig.SysJwtBlock)
-	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
-	selector.WithContext(ctx)
-	for _, m := range sjbq.modifiers {
-		m(selector)
-	}
 	for _, p := range sjbq.predicates {
 		p(selector)
 	}
@@ -452,38 +433,6 @@ func (sjbq *SysJwtBlockQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
-// updated, deleted or "selected ... for update" by other sessions, until the transaction is
-// either committed or rolled-back.
-func (sjbq *SysJwtBlockQuery) ForUpdate(opts ...sql.LockOption) *SysJwtBlockQuery {
-	if sjbq.driver.Dialect() == dialect.Postgres {
-		sjbq.Unique(false)
-	}
-	sjbq.modifiers = append(sjbq.modifiers, func(s *sql.Selector) {
-		s.ForUpdate(opts...)
-	})
-	return sjbq
-}
-
-// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
-// on any rows that are read. Other sessions can read the rows, but cannot modify them
-// until your transaction commits.
-func (sjbq *SysJwtBlockQuery) ForShare(opts ...sql.LockOption) *SysJwtBlockQuery {
-	if sjbq.driver.Dialect() == dialect.Postgres {
-		sjbq.Unique(false)
-	}
-	sjbq.modifiers = append(sjbq.modifiers, func(s *sql.Selector) {
-		s.ForShare(opts...)
-	})
-	return sjbq
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (sjbq *SysJwtBlockQuery) Modify(modifiers ...func(s *sql.Selector)) *SysJwtBlockSelect {
-	sjbq.modifiers = append(sjbq.modifiers, modifiers...)
-	return sjbq.Select()
 }
 
 // SysJwtBlockGroupBy is the group-by builder for SysJwtBlock entities.
@@ -574,10 +523,4 @@ func (sjbs *SysJwtBlockSelect) sqlScan(ctx context.Context, root *SysJwtBlockQue
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (sjbs *SysJwtBlockSelect) Modify(modifiers ...func(s *sql.Selector)) *SysJwtBlockSelect {
-	sjbs.modifiers = append(sjbs.modifiers, modifiers...)
-	return sjbs
 }

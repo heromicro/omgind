@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
 )
@@ -19,9 +18,8 @@ import (
 // SysRoleMenuUpdate is the builder for updating SysRoleMenu entities.
 type SysRoleMenuUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *SysRoleMenuMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *SysRoleMenuMutation
 }
 
 // Where appends a list predicates to the SysRoleMenuUpdate builder.
@@ -163,12 +161,6 @@ func (srmu *SysRoleMenuUpdate) check() error {
 	return nil
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (srmu *SysRoleMenuUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysRoleMenuUpdate {
-	srmu.modifiers = append(srmu.modifiers, modifiers...)
-	return srmu
-}
-
 func (srmu *SysRoleMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := srmu.check(); err != nil {
 		return n, err
@@ -205,9 +197,6 @@ func (srmu *SysRoleMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if srmu.mutation.ActionIDCleared() {
 		_spec.ClearField(sysrolemenu.FieldActionID, field.TypeString)
 	}
-	_spec.Node.Schema = srmu.schemaConfig.SysRoleMenu
-	ctx = internal.NewSchemaConfigContext(ctx, srmu.schemaConfig)
-	_spec.AddModifiers(srmu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, srmu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysrolemenu.Label}
@@ -223,10 +212,9 @@ func (srmu *SysRoleMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysRoleMenuUpdateOne is the builder for updating a single SysRoleMenu entity.
 type SysRoleMenuUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *SysRoleMenuMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *SysRoleMenuMutation
 }
 
 // SetIsDel sets the "is_del" field.
@@ -375,12 +363,6 @@ func (srmuo *SysRoleMenuUpdateOne) check() error {
 	return nil
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (srmuo *SysRoleMenuUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysRoleMenuUpdateOne {
-	srmuo.modifiers = append(srmuo.modifiers, modifiers...)
-	return srmuo
-}
-
 func (srmuo *SysRoleMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysRoleMenu, err error) {
 	if err := srmuo.check(); err != nil {
 		return _node, err
@@ -434,9 +416,6 @@ func (srmuo *SysRoleMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysRoleM
 	if srmuo.mutation.ActionIDCleared() {
 		_spec.ClearField(sysrolemenu.FieldActionID, field.TypeString)
 	}
-	_spec.Node.Schema = srmuo.schemaConfig.SysRoleMenu
-	ctx = internal.NewSchemaConfigContext(ctx, srmuo.schemaConfig)
-	_spec.AddModifiers(srmuo.modifiers...)
 	_node = &SysRoleMenu{config: srmuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

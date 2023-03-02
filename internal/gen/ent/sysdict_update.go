@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 )
@@ -19,9 +18,8 @@ import (
 // SysDictUpdate is the builder for updating SysDict entities.
 type SysDictUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *SysDictMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *SysDictMutation
 }
 
 // Where appends a list predicates to the SysDictUpdate builder.
@@ -198,12 +196,6 @@ func (sdu *SysDictUpdate) check() error {
 	return nil
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sdu *SysDictUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictUpdate {
-	sdu.modifiers = append(sdu.modifiers, modifiers...)
-	return sdu
-}
-
 func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := sdu.check(); err != nil {
 		return n, err
@@ -249,9 +241,6 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sdu.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 	}
-	_spec.Node.Schema = sdu.schemaConfig.SysDict
-	ctx = internal.NewSchemaConfigContext(ctx, sdu.schemaConfig)
-	_spec.AddModifiers(sdu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdict.Label}
@@ -267,10 +256,9 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysDictUpdateOne is the builder for updating a single SysDict entity.
 type SysDictUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *SysDictMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *SysDictMutation
 }
 
 // SetIsDel sets the "is_del" field.
@@ -454,12 +442,6 @@ func (sduo *SysDictUpdateOne) check() error {
 	return nil
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sduo *SysDictUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictUpdateOne {
-	sduo.modifiers = append(sduo.modifiers, modifiers...)
-	return sduo
-}
-
 func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err error) {
 	if err := sduo.check(); err != nil {
 		return _node, err
@@ -522,9 +504,6 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 	if value, ok := sduo.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 	}
-	_spec.Node.Schema = sduo.schemaConfig.SysDict
-	ctx = internal.NewSchemaConfigContext(ctx, sduo.schemaConfig)
-	_spec.AddModifiers(sduo.modifiers...)
 	_node = &SysDict{config: sduo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
