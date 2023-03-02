@@ -14,6 +14,7 @@ type SysRoleMenu struct {
 func (rm SysRoleMenu) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.TimeMixin{},
 	}
 }

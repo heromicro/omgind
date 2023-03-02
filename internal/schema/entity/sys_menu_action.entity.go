@@ -14,6 +14,7 @@ type SysMenuAction struct {
 func (ma SysMenuAction) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.SortMixin{},
 		mixin.ActiveMixin{},
 		mixin.MemoMixin{},

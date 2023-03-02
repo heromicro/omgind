@@ -34,14 +34,12 @@ func (i IDMixin) Fields() []ent.Field {
 		// Fixme:: make duplicate primary key
 		//field.String("id").DefaultFunc(uid.MustString()).MaxLen(36).Immutable().NotEmpty().Comment("主键"),
 		IdField_ulid(),
-		field.Bool("is_del").Default(false).StructTag(`json:"is_del,omitempty"`).Comment("是否删除"),
 	}
 }
 
 func (i IDMixin) Indexes() []ent.Index {
 	return []ent.Index{
 		index.Fields("id").Unique(),
-		index.Fields("is_del"),
 	}
 }
 

@@ -22,6 +22,7 @@ func (SysLogging) Annotations() []schema.Annotation {
 func (SysLogging) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.MemoMixin{},
 	}
 }

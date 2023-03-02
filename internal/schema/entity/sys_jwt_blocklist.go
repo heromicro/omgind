@@ -13,6 +13,7 @@ type SysJwtBlock struct {
 func (sjb SysJwtBlock) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.MemoMixin{},
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},
