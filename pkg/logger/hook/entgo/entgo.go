@@ -88,11 +88,9 @@ type Hook struct {
 // Exec 执行日志写入
 func (h *Hook) Exec(entry *logrus.Entry) error {
 
-	log.Println(" ------ ==== ===  add one logging entry : ", entry)
+	// log.Println(" ------ ==== ===  add one logging entry : ", entry)
 
 	create_logger := h.eclient.SysLogging.Create()
-
-	log.Println(" ------ === ====  add one logging 1111 ")
 
 	create_logger = create_logger.SetLevel(entry.Level.String())
 	create_logger = create_logger.SetMessage(entry.Message)
@@ -133,7 +131,6 @@ func (h *Hook) Exec(entry *logrus.Entry) error {
 
 	create_logger.SetCreatedAt(time.Now().UnixMilli())
 
-	log.Println(" ------ === ====  add one logging 22222 ")
 	_, err := create_logger.Save(context.Background())
 
 	return err
