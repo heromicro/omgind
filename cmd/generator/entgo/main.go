@@ -24,6 +24,7 @@ func main() {
 		Templates: []*gen.Template{
 			gen.MustParse(gen.NewTemplate("mutation_input").ParseDir("./internal/schema/template")),
 			gen.MustParse(gen.NewTemplate("stringer").ParseDir("./internal/schema/template")),
+			gen.MustParse(gen.NewTemplate("debug").ParseDir("./internal/schema/template")),
 		},
 	}, entc.Extensions(entviz.Extension{}))
 
