@@ -23,11 +23,11 @@ type SysDict struct {
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// delete time,
-	DeletedAt *time.Time `json:"deleted_at,omitempty" sql:"dltd_at"`
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
 	// 字典名（中）
@@ -37,8 +37,8 @@ type SysDict struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysDict) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysDict) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysdict.FieldIsDel, sysdict.FieldIsActive:
@@ -58,7 +58,7 @@ func (*SysDict) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysDict fields.
-func (sd *SysDict) assignValues(columns []string, values []interface{}) error {
+func (sd *SysDict) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -135,7 +135,7 @@ func (sd *SysDict) assignValues(columns []string, values []interface{}) error {
 // Note that you need to call SysDict.Unwrap() before calling this method if this SysDict
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sd *SysDict) Update() *SysDictUpdateOne {
-	return (&SysDictClient{config: sd.config}).UpdateOne(sd)
+	return NewSysDictClient(sd.config).UpdateOne(sd)
 }
 
 // Unwrap unwraps the SysDict entity that was returned from a transaction after it was closed,
@@ -190,9 +190,3 @@ func (sd *SysDict) String() string {
 
 // SysDicts is a parsable slice of SysDict.
 type SysDicts []*SysDict
-
-func (sd SysDicts) config(cfg config) {
-	for _i := range sd {
-		sd[_i].config = cfg
-	}
-}

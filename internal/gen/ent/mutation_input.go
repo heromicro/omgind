@@ -994,7 +994,7 @@ func (u *SysJwtBlockUpdateOne) SetInput(i UpdateSysJwtBlockInput) *SysJwtBlockUp
 type CreateSysLoggingInput struct {
 	IsDel      *bool
 	Memo       *string
-	Level      string
+	Level      *string
 	TraceID    *string
 	UserID     *string
 	Tag        *string
@@ -1002,7 +1002,7 @@ type CreateSysLoggingInput struct {
 	Message    *string
 	Data       *string
 	ErrorStack *string
-	CreatedAt  *time.Time
+	CreatedAt  *int64
 }
 
 // Mutate applies the CreateSysLoggingInput on the SysLoggingCreate builder.
@@ -1013,7 +1013,9 @@ func (i *CreateSysLoggingInput) Mutate(m *SysLoggingCreate) {
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
 	}
-	m.SetLevel(i.Level)
+	if v := i.Level; v != nil {
+		m.SetLevel(*v)
+	}
 	if v := i.TraceID; v != nil {
 		m.SetTraceID(*v)
 	}
@@ -1052,6 +1054,7 @@ type UpdateSysLoggingInput struct {
 	Memo            *string
 	ClearMemo       bool
 	Level           *string
+	ClearLevel      bool
 	TraceID         *string
 	ClearTraceID    bool
 	UserID          *string
@@ -1076,6 +1079,9 @@ func (i *UpdateSysLoggingInput) Mutate(m *SysLoggingMutation) {
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
+	}
+	if i.ClearLevel {
+		m.ClearLevel()
 	}
 	if v := i.Level; v != nil {
 		m.SetLevel(*v)

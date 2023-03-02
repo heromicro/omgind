@@ -15,11 +15,10 @@ type SysAddressFunc func(context.Context, *ent.SysAddressMutation) (ent.Value, e
 
 // Mutate calls f(ctx, m).
 func (f SysAddressFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysAddressMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysAddressMutation", m)
+	if mv, ok := m.(*ent.SysAddressMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysAddressMutation", m)
 }
 
 // The SysDictFunc type is an adapter to allow the use of ordinary
@@ -28,11 +27,10 @@ type SysDictFunc func(context.Context, *ent.SysDictMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
 func (f SysDictFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysDictMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysDictMutation", m)
+	if mv, ok := m.(*ent.SysDictMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysDictMutation", m)
 }
 
 // The SysDictItemFunc type is an adapter to allow the use of ordinary
@@ -41,11 +39,10 @@ type SysDictItemFunc func(context.Context, *ent.SysDictItemMutation) (ent.Value,
 
 // Mutate calls f(ctx, m).
 func (f SysDictItemFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysDictItemMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysDictItemMutation", m)
+	if mv, ok := m.(*ent.SysDictItemMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysDictItemMutation", m)
 }
 
 // The SysDistrictFunc type is an adapter to allow the use of ordinary
@@ -54,11 +51,10 @@ type SysDistrictFunc func(context.Context, *ent.SysDistrictMutation) (ent.Value,
 
 // Mutate calls f(ctx, m).
 func (f SysDistrictFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysDistrictMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysDistrictMutation", m)
+	if mv, ok := m.(*ent.SysDistrictMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysDistrictMutation", m)
 }
 
 // The SysJwtBlockFunc type is an adapter to allow the use of ordinary
@@ -67,11 +63,10 @@ type SysJwtBlockFunc func(context.Context, *ent.SysJwtBlockMutation) (ent.Value,
 
 // Mutate calls f(ctx, m).
 func (f SysJwtBlockFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysJwtBlockMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysJwtBlockMutation", m)
+	if mv, ok := m.(*ent.SysJwtBlockMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysJwtBlockMutation", m)
 }
 
 // The SysLoggingFunc type is an adapter to allow the use of ordinary
@@ -80,11 +75,10 @@ type SysLoggingFunc func(context.Context, *ent.SysLoggingMutation) (ent.Value, e
 
 // Mutate calls f(ctx, m).
 func (f SysLoggingFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysLoggingMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysLoggingMutation", m)
+	if mv, ok := m.(*ent.SysLoggingMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysLoggingMutation", m)
 }
 
 // The SysMenuFunc type is an adapter to allow the use of ordinary
@@ -93,11 +87,10 @@ type SysMenuFunc func(context.Context, *ent.SysMenuMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
 func (f SysMenuFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysMenuMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysMenuMutation", m)
+	if mv, ok := m.(*ent.SysMenuMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysMenuMutation", m)
 }
 
 // The SysMenuActionFunc type is an adapter to allow the use of ordinary
@@ -106,11 +99,10 @@ type SysMenuActionFunc func(context.Context, *ent.SysMenuActionMutation) (ent.Va
 
 // Mutate calls f(ctx, m).
 func (f SysMenuActionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysMenuActionMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysMenuActionMutation", m)
+	if mv, ok := m.(*ent.SysMenuActionMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysMenuActionMutation", m)
 }
 
 // The SysMenuActionResourceFunc type is an adapter to allow the use of ordinary
@@ -119,11 +111,10 @@ type SysMenuActionResourceFunc func(context.Context, *ent.SysMenuActionResourceM
 
 // Mutate calls f(ctx, m).
 func (f SysMenuActionResourceFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysMenuActionResourceMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysMenuActionResourceMutation", m)
+	if mv, ok := m.(*ent.SysMenuActionResourceMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysMenuActionResourceMutation", m)
 }
 
 // The SysRoleFunc type is an adapter to allow the use of ordinary
@@ -132,11 +123,10 @@ type SysRoleFunc func(context.Context, *ent.SysRoleMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
 func (f SysRoleFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysRoleMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysRoleMutation", m)
+	if mv, ok := m.(*ent.SysRoleMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysRoleMutation", m)
 }
 
 // The SysRoleMenuFunc type is an adapter to allow the use of ordinary
@@ -145,11 +135,10 @@ type SysRoleMenuFunc func(context.Context, *ent.SysRoleMenuMutation) (ent.Value,
 
 // Mutate calls f(ctx, m).
 func (f SysRoleMenuFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysRoleMenuMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysRoleMenuMutation", m)
+	if mv, ok := m.(*ent.SysRoleMenuMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysRoleMenuMutation", m)
 }
 
 // The SysUserFunc type is an adapter to allow the use of ordinary
@@ -158,11 +147,10 @@ type SysUserFunc func(context.Context, *ent.SysUserMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
 func (f SysUserFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysUserMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysUserMutation", m)
+	if mv, ok := m.(*ent.SysUserMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysUserMutation", m)
 }
 
 // The SysUserRoleFunc type is an adapter to allow the use of ordinary
@@ -171,11 +159,10 @@ type SysUserRoleFunc func(context.Context, *ent.SysUserRoleMutation) (ent.Value,
 
 // Mutate calls f(ctx, m).
 func (f SysUserRoleFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.SysUserRoleMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysUserRoleMutation", m)
+	if mv, ok := m.(*ent.SysUserRoleMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SysUserRoleMutation", m)
 }
 
 // The XxxDemoFunc type is an adapter to allow the use of ordinary
@@ -184,11 +171,10 @@ type XxxDemoFunc func(context.Context, *ent.XxxDemoMutation) (ent.Value, error)
 
 // Mutate calls f(ctx, m).
 func (f XxxDemoFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-	mv, ok := m.(*ent.XxxDemoMutation)
-	if !ok {
-		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.XxxDemoMutation", m)
+	if mv, ok := m.(*ent.XxxDemoMutation); ok {
+		return f(ctx, mv)
 	}
-	return f(ctx, mv)
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.XxxDemoMutation", m)
 }
 
 // Condition is a hook condition function.
@@ -286,7 +272,6 @@ func HasFields(field string, fields ...string) Condition {
 // If executes the given hook under condition.
 //
 //	hook.If(ComputeAverage, And(HasFields(...), HasAddedFields(...)))
-//
 func If(hk ent.Hook, cond Condition) ent.Hook {
 	return func(next ent.Mutator) ent.Mutator {
 		return ent.MutateFunc(func(ctx context.Context, m ent.Mutation) (ent.Value, error) {
@@ -301,7 +286,6 @@ func If(hk ent.Hook, cond Condition) ent.Hook {
 // On executes the given hook only for the given operation.
 //
 //	hook.On(Log, ent.Delete|ent.Create)
-//
 func On(hk ent.Hook, op ent.Op) ent.Hook {
 	return If(hk, HasOp(op))
 }
@@ -309,7 +293,6 @@ func On(hk ent.Hook, op ent.Op) ent.Hook {
 // Unless skips the given hook only for the given operation.
 //
 //	hook.Unless(Log, ent.Update|ent.UpdateOne)
-//
 func Unless(hk ent.Hook, op ent.Op) ent.Hook {
 	return If(hk, Not(HasOp(op)))
 }
@@ -330,7 +313,6 @@ func FixedError(err error) ent.Hook {
 //			Reject(ent.Delete|ent.Update),
 //		}
 //	}
-//
 func Reject(op ent.Op) ent.Hook {
 	hk := FixedError(fmt.Errorf("%s operation is not allowed", op))
 	return On(hk, op)

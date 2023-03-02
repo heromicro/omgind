@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 )
@@ -18,8 +19,9 @@ import (
 // SysDictItemUpdate is the builder for updating SysDictItem entities.
 type SysDictItemUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysDictItemMutation
+	hooks     []Hook
+	mutation  *SysDictItemMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysDictItemUpdate builder.
@@ -155,41 +157,8 @@ func (sdiu *SysDictItemUpdate) Mutation() *SysDictItemMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sdiu *SysDictItemUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	sdiu.defaults()
-	if len(sdiu.hooks) == 0 {
-		if err = sdiu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = sdiu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDictItemMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sdiu.check(); err != nil {
-				return 0, err
-			}
-			sdiu.mutation = mutation
-			affected, err = sdiu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sdiu.hooks) - 1; i >= 0; i-- {
-			if sdiu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sdiu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sdiu.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysDictItemMutation](ctx, sdiu.sqlSave, sdiu.mutation, sdiu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -242,17 +211,17 @@ func (sdiu *SysDictItemUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sdiu *SysDictItemUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictItemUpdate {
+	sdiu.modifiers = append(sdiu.modifiers, modifiers...)
+	return sdiu
+}
+
 func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysdictitem.Table,
-			Columns: sysdictitem.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdictitem.FieldID,
-			},
-		},
+	if err := sdiu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysdictitem.Table, sysdictitem.Columns, sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString))
 	if ps := sdiu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -261,94 +230,47 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := sdiu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdictitem.FieldIsDel,
-		})
+		_spec.SetField(sysdictitem.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sdiu.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdictitem.FieldMemo,
-		})
+		_spec.SetField(sysdictitem.FieldMemo, field.TypeString, value)
 	}
 	if sdiu.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdictitem.FieldMemo,
-		})
+		_spec.ClearField(sysdictitem.FieldMemo, field.TypeString)
 	}
 	if value, ok := sdiu.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdictitem.FieldSort,
-		})
+		_spec.SetField(sysdictitem.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sdiu.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdictitem.FieldSort,
-		})
+		_spec.AddField(sysdictitem.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sdiu.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdictitem.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdictitem.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sdiu.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdictitem.FieldDeletedAt,
-		})
+		_spec.SetField(sysdictitem.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sdiu.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysdictitem.FieldDeletedAt,
-		})
+		_spec.ClearField(sysdictitem.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sdiu.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdictitem.FieldIsActive,
-		})
+		_spec.SetField(sysdictitem.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sdiu.mutation.Label(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdictitem.FieldLabel,
-		})
+		_spec.SetField(sysdictitem.FieldLabel, field.TypeString, value)
 	}
 	if value, ok := sdiu.mutation.Value(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: sysdictitem.FieldValue,
-		})
+		_spec.SetField(sysdictitem.FieldValue, field.TypeInt, value)
 	}
 	if value, ok := sdiu.mutation.AddedValue(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: sysdictitem.FieldValue,
-		})
+		_spec.AddField(sysdictitem.FieldValue, field.TypeInt, value)
 	}
 	if value, ok := sdiu.mutation.DictID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdictitem.FieldDictID,
-		})
+		_spec.SetField(sysdictitem.FieldDictID, field.TypeString, value)
 	}
+	_spec.Node.Schema = sdiu.schemaConfig.SysDictItem
+	ctx = internal.NewSchemaConfigContext(ctx, sdiu.schemaConfig)
+	_spec.AddModifiers(sdiu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdiu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdictitem.Label}
@@ -357,15 +279,17 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	sdiu.mutation.done = true
 	return n, nil
 }
 
 // SysDictItemUpdateOne is the builder for updating a single SysDictItem entity.
 type SysDictItemUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysDictItemMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysDictItemMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -493,6 +417,12 @@ func (sdiuo *SysDictItemUpdateOne) Mutation() *SysDictItemMutation {
 	return sdiuo.mutation
 }
 
+// Where appends a list predicates to the SysDictItemUpdate builder.
+func (sdiuo *SysDictItemUpdateOne) Where(ps ...predicate.SysDictItem) *SysDictItemUpdateOne {
+	sdiuo.mutation.Where(ps...)
+	return sdiuo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (sdiuo *SysDictItemUpdateOne) Select(field string, fields ...string) *SysDictItemUpdateOne {
@@ -502,47 +432,8 @@ func (sdiuo *SysDictItemUpdateOne) Select(field string, fields ...string) *SysDi
 
 // Save executes the query and returns the updated SysDictItem entity.
 func (sdiuo *SysDictItemUpdateOne) Save(ctx context.Context) (*SysDictItem, error) {
-	var (
-		err  error
-		node *SysDictItem
-	)
 	sdiuo.defaults()
-	if len(sdiuo.hooks) == 0 {
-		if err = sdiuo.check(); err != nil {
-			return nil, err
-		}
-		node, err = sdiuo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDictItemMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sdiuo.check(); err != nil {
-				return nil, err
-			}
-			sdiuo.mutation = mutation
-			node, err = sdiuo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sdiuo.hooks) - 1; i >= 0; i-- {
-			if sdiuo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sdiuo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sdiuo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysDictItem)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysDictItemMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysDictItem, SysDictItemMutation](ctx, sdiuo.sqlSave, sdiuo.mutation, sdiuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -595,17 +486,17 @@ func (sdiuo *SysDictItemUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sdiuo *SysDictItemUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictItemUpdateOne {
+	sdiuo.modifiers = append(sdiuo.modifiers, modifiers...)
+	return sdiuo
+}
+
 func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictItem, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysdictitem.Table,
-			Columns: sysdictitem.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdictitem.FieldID,
-			},
-		},
+	if err := sdiuo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysdictitem.Table, sysdictitem.Columns, sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString))
 	id, ok := sdiuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysDictItem.id" for update`)}
@@ -631,94 +522,47 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 		}
 	}
 	if value, ok := sdiuo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdictitem.FieldIsDel,
-		})
+		_spec.SetField(sysdictitem.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sdiuo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdictitem.FieldMemo,
-		})
+		_spec.SetField(sysdictitem.FieldMemo, field.TypeString, value)
 	}
 	if sdiuo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdictitem.FieldMemo,
-		})
+		_spec.ClearField(sysdictitem.FieldMemo, field.TypeString)
 	}
 	if value, ok := sdiuo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdictitem.FieldSort,
-		})
+		_spec.SetField(sysdictitem.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sdiuo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdictitem.FieldSort,
-		})
+		_spec.AddField(sysdictitem.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sdiuo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdictitem.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdictitem.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sdiuo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdictitem.FieldDeletedAt,
-		})
+		_spec.SetField(sysdictitem.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sdiuo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysdictitem.FieldDeletedAt,
-		})
+		_spec.ClearField(sysdictitem.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sdiuo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdictitem.FieldIsActive,
-		})
+		_spec.SetField(sysdictitem.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sdiuo.mutation.Label(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdictitem.FieldLabel,
-		})
+		_spec.SetField(sysdictitem.FieldLabel, field.TypeString, value)
 	}
 	if value, ok := sdiuo.mutation.Value(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: sysdictitem.FieldValue,
-		})
+		_spec.SetField(sysdictitem.FieldValue, field.TypeInt, value)
 	}
 	if value, ok := sdiuo.mutation.AddedValue(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: sysdictitem.FieldValue,
-		})
+		_spec.AddField(sysdictitem.FieldValue, field.TypeInt, value)
 	}
 	if value, ok := sdiuo.mutation.DictID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdictitem.FieldDictID,
-		})
+		_spec.SetField(sysdictitem.FieldDictID, field.TypeString, value)
 	}
+	_spec.Node.Schema = sdiuo.schemaConfig.SysDictItem
+	ctx = internal.NewSchemaConfigContext(ctx, sdiuo.schemaConfig)
+	_spec.AddModifiers(sdiuo.modifiers...)
 	_node = &SysDictItem{config: sdiuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
@@ -730,5 +574,6 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 		}
 		return nil, err
 	}
+	sdiuo.mutation.done = true
 	return _node, nil
 }

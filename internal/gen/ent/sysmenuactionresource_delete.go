@@ -4,11 +4,11 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 )
@@ -28,34 +28,7 @@ func (smard *SysMenuActionResourceDelete) Where(ps ...predicate.SysMenuActionRes
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (smard *SysMenuActionResourceDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(smard.hooks) == 0 {
-		affected, err = smard.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysMenuActionResourceMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			smard.mutation = mutation
-			affected, err = smard.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(smard.hooks) - 1; i >= 0; i-- {
-			if smard.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = smard.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, smard.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysMenuActionResourceMutation](ctx, smard.sqlExec, smard.mutation, smard.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +41,9 @@ func (smard *SysMenuActionResourceDelete) ExecX(ctx context.Context) int {
 }
 
 func (smard *SysMenuActionResourceDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: sysmenuactionresource.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenuactionresource.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(sysmenuactionresource.Table, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
+	_spec.Node.Schema = smard.schemaConfig.SysMenuActionResource
+	ctx = internal.NewSchemaConfigContext(ctx, smard.schemaConfig)
 	if ps := smard.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +55,19 @@ func (smard *SysMenuActionResourceDelete) sqlExec(ctx context.Context) (int, err
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	smard.mutation.done = true
 	return affected, err
 }
 
 // SysMenuActionResourceDeleteOne is the builder for deleting a single SysMenuActionResource entity.
 type SysMenuActionResourceDeleteOne struct {
 	smard *SysMenuActionResourceDelete
+}
+
+// Where appends a list predicates to the SysMenuActionResourceDelete builder.
+func (smardo *SysMenuActionResourceDeleteOne) Where(ps ...predicate.SysMenuActionResource) *SysMenuActionResourceDeleteOne {
+	smardo.smard.mutation.Where(ps...)
+	return smardo
 }
 
 // Exec executes the deletion query.
@@ -111,5 +85,7 @@ func (smardo *SysMenuActionResourceDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (smardo *SysMenuActionResourceDeleteOne) ExecX(ctx context.Context) {
-	smardo.smard.ExecX(ctx)
+	if err := smardo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

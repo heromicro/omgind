@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 )
@@ -17,8 +18,9 @@ import (
 // SysLoggingUpdate is the builder for updating SysLogging entities.
 type SysLoggingUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysLoggingMutation
+	hooks     []Hook
+	mutation  *SysLoggingMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysLoggingUpdate builder.
@@ -64,6 +66,20 @@ func (slu *SysLoggingUpdate) ClearMemo() *SysLoggingUpdate {
 // SetLevel sets the "level" field.
 func (slu *SysLoggingUpdate) SetLevel(s string) *SysLoggingUpdate {
 	slu.mutation.SetLevel(s)
+	return slu
+}
+
+// SetNillableLevel sets the "level" field if the given value is not nil.
+func (slu *SysLoggingUpdate) SetNillableLevel(s *string) *SysLoggingUpdate {
+	if s != nil {
+		slu.SetLevel(*s)
+	}
+	return slu
+}
+
+// ClearLevel clears the value of the "level" field.
+func (slu *SysLoggingUpdate) ClearLevel() *SysLoggingUpdate {
+	slu.mutation.ClearLevel()
 	return slu
 }
 
@@ -194,40 +210,7 @@ func (slu *SysLoggingUpdate) Mutation() *SysLoggingMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (slu *SysLoggingUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(slu.hooks) == 0 {
-		if err = slu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = slu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysLoggingMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = slu.check(); err != nil {
-				return 0, err
-			}
-			slu.mutation = mutation
-			affected, err = slu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(slu.hooks) - 1; i >= 0; i-- {
-			if slu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = slu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, slu.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysLoggingMutation](ctx, slu.sqlSave, slu.mutation, slu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -292,17 +275,17 @@ func (slu *SysLoggingUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (slu *SysLoggingUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysLoggingUpdate {
+	slu.modifiers = append(slu.modifiers, modifiers...)
+	return slu
+}
+
 func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   syslogging.Table,
-			Columns: syslogging.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: syslogging.FieldID,
-			},
-		},
+	if err := slu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(syslogging.Table, syslogging.Columns, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
 	if ps := slu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -311,116 +294,62 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := slu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: syslogging.FieldIsDel,
-		})
+		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := slu.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldMemo,
-		})
+		_spec.SetField(syslogging.FieldMemo, field.TypeString, value)
 	}
 	if slu.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldMemo,
-		})
+		_spec.ClearField(syslogging.FieldMemo, field.TypeString)
 	}
 	if value, ok := slu.mutation.Level(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldLevel,
-		})
+		_spec.SetField(syslogging.FieldLevel, field.TypeString, value)
+	}
+	if slu.mutation.LevelCleared() {
+		_spec.ClearField(syslogging.FieldLevel, field.TypeString)
 	}
 	if value, ok := slu.mutation.TraceID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldTraceID,
-		})
+		_spec.SetField(syslogging.FieldTraceID, field.TypeString, value)
 	}
 	if slu.mutation.TraceIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldTraceID,
-		})
+		_spec.ClearField(syslogging.FieldTraceID, field.TypeString)
 	}
 	if value, ok := slu.mutation.UserID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldUserID,
-		})
+		_spec.SetField(syslogging.FieldUserID, field.TypeString, value)
 	}
 	if slu.mutation.UserIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldUserID,
-		})
+		_spec.ClearField(syslogging.FieldUserID, field.TypeString)
 	}
 	if value, ok := slu.mutation.Tag(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldTag,
-		})
+		_spec.SetField(syslogging.FieldTag, field.TypeString, value)
 	}
 	if slu.mutation.TagCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldTag,
-		})
+		_spec.ClearField(syslogging.FieldTag, field.TypeString)
 	}
 	if value, ok := slu.mutation.Version(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldVersion,
-		})
+		_spec.SetField(syslogging.FieldVersion, field.TypeString, value)
 	}
 	if slu.mutation.VersionCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldVersion,
-		})
+		_spec.ClearField(syslogging.FieldVersion, field.TypeString)
 	}
 	if value, ok := slu.mutation.Message(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldMessage,
-		})
+		_spec.SetField(syslogging.FieldMessage, field.TypeString, value)
 	}
 	if slu.mutation.MessageCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldMessage,
-		})
+		_spec.ClearField(syslogging.FieldMessage, field.TypeString)
 	}
 	if slu.mutation.DataCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldData,
-		})
+		_spec.ClearField(syslogging.FieldData, field.TypeString)
 	}
 	if value, ok := slu.mutation.ErrorStack(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldErrorStack,
-		})
+		_spec.SetField(syslogging.FieldErrorStack, field.TypeString, value)
 	}
 	if slu.mutation.ErrorStackCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldErrorStack,
-		})
+		_spec.ClearField(syslogging.FieldErrorStack, field.TypeString)
 	}
+	_spec.Node.Schema = slu.schemaConfig.SysLogging
+	ctx = internal.NewSchemaConfigContext(ctx, slu.schemaConfig)
+	_spec.AddModifiers(slu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, slu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{syslogging.Label}
@@ -429,15 +358,17 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	slu.mutation.done = true
 	return n, nil
 }
 
 // SysLoggingUpdateOne is the builder for updating a single SysLogging entity.
 type SysLoggingUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysLoggingMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysLoggingMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -477,6 +408,20 @@ func (sluo *SysLoggingUpdateOne) ClearMemo() *SysLoggingUpdateOne {
 // SetLevel sets the "level" field.
 func (sluo *SysLoggingUpdateOne) SetLevel(s string) *SysLoggingUpdateOne {
 	sluo.mutation.SetLevel(s)
+	return sluo
+}
+
+// SetNillableLevel sets the "level" field if the given value is not nil.
+func (sluo *SysLoggingUpdateOne) SetNillableLevel(s *string) *SysLoggingUpdateOne {
+	if s != nil {
+		sluo.SetLevel(*s)
+	}
+	return sluo
+}
+
+// ClearLevel clears the value of the "level" field.
+func (sluo *SysLoggingUpdateOne) ClearLevel() *SysLoggingUpdateOne {
+	sluo.mutation.ClearLevel()
 	return sluo
 }
 
@@ -605,6 +550,12 @@ func (sluo *SysLoggingUpdateOne) Mutation() *SysLoggingMutation {
 	return sluo.mutation
 }
 
+// Where appends a list predicates to the SysLoggingUpdate builder.
+func (sluo *SysLoggingUpdateOne) Where(ps ...predicate.SysLogging) *SysLoggingUpdateOne {
+	sluo.mutation.Where(ps...)
+	return sluo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (sluo *SysLoggingUpdateOne) Select(field string, fields ...string) *SysLoggingUpdateOne {
@@ -614,46 +565,7 @@ func (sluo *SysLoggingUpdateOne) Select(field string, fields ...string) *SysLogg
 
 // Save executes the query and returns the updated SysLogging entity.
 func (sluo *SysLoggingUpdateOne) Save(ctx context.Context) (*SysLogging, error) {
-	var (
-		err  error
-		node *SysLogging
-	)
-	if len(sluo.hooks) == 0 {
-		if err = sluo.check(); err != nil {
-			return nil, err
-		}
-		node, err = sluo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysLoggingMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sluo.check(); err != nil {
-				return nil, err
-			}
-			sluo.mutation = mutation
-			node, err = sluo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sluo.hooks) - 1; i >= 0; i-- {
-			if sluo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sluo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sluo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysLogging)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysLoggingMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysLogging, SysLoggingMutation](ctx, sluo.sqlSave, sluo.mutation, sluo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -718,17 +630,17 @@ func (sluo *SysLoggingUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sluo *SysLoggingUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysLoggingUpdateOne {
+	sluo.modifiers = append(sluo.modifiers, modifiers...)
+	return sluo
+}
+
 func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   syslogging.Table,
-			Columns: syslogging.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: syslogging.FieldID,
-			},
-		},
+	if err := sluo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(syslogging.Table, syslogging.Columns, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
 	id, ok := sluo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysLogging.id" for update`)}
@@ -754,116 +666,62 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 		}
 	}
 	if value, ok := sluo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: syslogging.FieldIsDel,
-		})
+		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sluo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldMemo,
-		})
+		_spec.SetField(syslogging.FieldMemo, field.TypeString, value)
 	}
 	if sluo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldMemo,
-		})
+		_spec.ClearField(syslogging.FieldMemo, field.TypeString)
 	}
 	if value, ok := sluo.mutation.Level(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldLevel,
-		})
+		_spec.SetField(syslogging.FieldLevel, field.TypeString, value)
+	}
+	if sluo.mutation.LevelCleared() {
+		_spec.ClearField(syslogging.FieldLevel, field.TypeString)
 	}
 	if value, ok := sluo.mutation.TraceID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldTraceID,
-		})
+		_spec.SetField(syslogging.FieldTraceID, field.TypeString, value)
 	}
 	if sluo.mutation.TraceIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldTraceID,
-		})
+		_spec.ClearField(syslogging.FieldTraceID, field.TypeString)
 	}
 	if value, ok := sluo.mutation.UserID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldUserID,
-		})
+		_spec.SetField(syslogging.FieldUserID, field.TypeString, value)
 	}
 	if sluo.mutation.UserIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldUserID,
-		})
+		_spec.ClearField(syslogging.FieldUserID, field.TypeString)
 	}
 	if value, ok := sluo.mutation.Tag(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldTag,
-		})
+		_spec.SetField(syslogging.FieldTag, field.TypeString, value)
 	}
 	if sluo.mutation.TagCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldTag,
-		})
+		_spec.ClearField(syslogging.FieldTag, field.TypeString)
 	}
 	if value, ok := sluo.mutation.Version(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldVersion,
-		})
+		_spec.SetField(syslogging.FieldVersion, field.TypeString, value)
 	}
 	if sluo.mutation.VersionCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldVersion,
-		})
+		_spec.ClearField(syslogging.FieldVersion, field.TypeString)
 	}
 	if value, ok := sluo.mutation.Message(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldMessage,
-		})
+		_spec.SetField(syslogging.FieldMessage, field.TypeString, value)
 	}
 	if sluo.mutation.MessageCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldMessage,
-		})
+		_spec.ClearField(syslogging.FieldMessage, field.TypeString)
 	}
 	if sluo.mutation.DataCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldData,
-		})
+		_spec.ClearField(syslogging.FieldData, field.TypeString)
 	}
 	if value, ok := sluo.mutation.ErrorStack(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldErrorStack,
-		})
+		_spec.SetField(syslogging.FieldErrorStack, field.TypeString, value)
 	}
 	if sluo.mutation.ErrorStackCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: syslogging.FieldErrorStack,
-		})
+		_spec.ClearField(syslogging.FieldErrorStack, field.TypeString)
 	}
+	_spec.Node.Schema = sluo.schemaConfig.SysLogging
+	ctx = internal.NewSchemaConfigContext(ctx, sluo.schemaConfig)
+	_spec.AddModifiers(sluo.modifiers...)
 	_node = &SysLogging{config: sluo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
@@ -875,5 +733,6 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 		}
 		return nil, err
 	}
+	sluo.mutation.done = true
 	return _node, nil
 }

@@ -5,7 +5,6 @@ package ent
 import (
 	"fmt"
 	"strings"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
@@ -21,7 +20,7 @@ type SysLogging struct {
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
 	// 日志级别
-	Level string `json:"level,omitempty"`
+	Level *string `json:"level,omitempty"`
 	// 跟踪ID
 	TraceID *string `json:"trace_id,omitempty"`
 	// 用户ID
@@ -37,20 +36,20 @@ type SysLogging struct {
 	// 日志数据(json string)
 	ErrorStack *string `json:"error_stack,omitempty"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	CreatedAt int64 `json:"created_at,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysLogging) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysLogging) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case syslogging.FieldIsDel:
 			values[i] = new(sql.NullBool)
+		case syslogging.FieldCreatedAt:
+			values[i] = new(sql.NullInt64)
 		case syslogging.FieldID, syslogging.FieldMemo, syslogging.FieldLevel, syslogging.FieldTraceID, syslogging.FieldUserID, syslogging.FieldTag, syslogging.FieldVersion, syslogging.FieldMessage, syslogging.FieldData, syslogging.FieldErrorStack:
 			values[i] = new(sql.NullString)
-		case syslogging.FieldCreatedAt:
-			values[i] = new(sql.NullTime)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysLogging", columns[i])
 		}
@@ -60,7 +59,7 @@ func (*SysLogging) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysLogging fields.
-func (sl *SysLogging) assignValues(columns []string, values []interface{}) error {
+func (sl *SysLogging) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -89,7 +88,8 @@ func (sl *SysLogging) assignValues(columns []string, values []interface{}) error
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field level", values[i])
 			} else if value.Valid {
-				sl.Level = value.String
+				sl.Level = new(string)
+				*sl.Level = value.String
 			}
 		case syslogging.FieldTraceID:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -141,10 +141,10 @@ func (sl *SysLogging) assignValues(columns []string, values []interface{}) error
 				*sl.ErrorStack = value.String
 			}
 		case syslogging.FieldCreatedAt:
-			if value, ok := values[i].(*sql.NullTime); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sl.CreatedAt = value.Time
+				sl.CreatedAt = value.Int64
 			}
 		}
 	}
@@ -155,7 +155,7 @@ func (sl *SysLogging) assignValues(columns []string, values []interface{}) error
 // Note that you need to call SysLogging.Unwrap() before calling this method if this SysLogging
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sl *SysLogging) Update() *SysLoggingUpdateOne {
-	return (&SysLoggingClient{config: sl.config}).UpdateOne(sl)
+	return NewSysLoggingClient(sl.config).UpdateOne(sl)
 }
 
 // Unwrap unwraps the SysLogging entity that was returned from a transaction after it was closed,
@@ -182,8 +182,10 @@ func (sl *SysLogging) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	builder.WriteString("level=")
-	builder.WriteString(sl.Level)
+	if v := sl.Level; v != nil {
+		builder.WriteString("level=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	if v := sl.TraceID; v != nil {
 		builder.WriteString("trace_id=")
@@ -221,16 +223,10 @@ func (sl *SysLogging) String() string {
 	}
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(sl.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(fmt.Sprintf("%v", sl.CreatedAt))
 	builder.WriteByte(')')
 	return builder.String()
 }
 
 // SysLoggings is a parsable slice of SysLogging.
 type SysLoggings []*SysLogging
-
-func (sl SysLoggings) config(cfg config) {
-	for _i := range sl {
-		sl[_i].config = cfg
-	}
-}

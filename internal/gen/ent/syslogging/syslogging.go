@@ -3,7 +3,7 @@
 package syslogging
 
 import (
-	"time"
+	"entgo.io/ent"
 )
 
 const (
@@ -34,7 +34,7 @@ const (
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "crtd_at"
 	// Table holds the table name of the syslogging in the database.
-	Table = "sys_logging"
+	Table = "sys_loggings"
 )
 
 // Columns holds all SQL columns for syslogging fields.
@@ -63,7 +63,13 @@ func ValidColumn(column string) bool {
 	return false
 }
 
+// Note that the variables below are initialized by the runtime
+// package on the initialization of the application. Therefore,
+// it should be imported in the main as follows:
+//
+//	import _ "github.com/heromicro/omgind/internal/gen/ent/runtime"
 var (
+	Hooks [1]ent.Hook
 	// DefaultIsDel holds the default value on creation for the "is_del" field.
 	DefaultIsDel bool
 	// DefaultMemo holds the default value on creation for the "memo" field.
@@ -83,7 +89,7 @@ var (
 	// MessageValidator is a validator for the "message" field. It is called by the builders before save.
 	MessageValidator func(string) error
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
-	DefaultCreatedAt func() time.Time
+	DefaultCreatedAt func() int64
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

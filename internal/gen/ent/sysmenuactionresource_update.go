@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 )
@@ -18,8 +19,9 @@ import (
 // SysMenuActionResourceUpdate is the builder for updating SysMenuActionResource entities.
 type SysMenuActionResourceUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysMenuActionResourceMutation
+	hooks     []Hook
+	mutation  *SysMenuActionResourceMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysMenuActionResourceUpdate builder.
@@ -148,41 +150,8 @@ func (smaru *SysMenuActionResourceUpdate) Mutation() *SysMenuActionResourceMutat
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (smaru *SysMenuActionResourceUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	smaru.defaults()
-	if len(smaru.hooks) == 0 {
-		if err = smaru.check(); err != nil {
-			return 0, err
-		}
-		affected, err = smaru.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysMenuActionResourceMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = smaru.check(); err != nil {
-				return 0, err
-			}
-			smaru.mutation = mutation
-			affected, err = smaru.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(smaru.hooks) - 1; i >= 0; i-- {
-			if smaru.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = smaru.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, smaru.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysMenuActionResourceMutation](ctx, smaru.sqlSave, smaru.mutation, smaru.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -240,17 +209,17 @@ func (smaru *SysMenuActionResourceUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (smaru *SysMenuActionResourceUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionResourceUpdate {
+	smaru.modifiers = append(smaru.modifiers, modifiers...)
+	return smaru
+}
+
 func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysmenuactionresource.Table,
-			Columns: sysmenuactionresource.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenuactionresource.FieldID,
-			},
-		},
+	if err := smaru.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysmenuactionresource.Table, sysmenuactionresource.Columns, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
 	if ps := smaru.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -259,87 +228,44 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 		}
 	}
 	if value, ok := smaru.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenuactionresource.FieldIsDel,
-		})
+		_spec.SetField(sysmenuactionresource.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := smaru.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenuactionresource.FieldSort,
-		})
+		_spec.SetField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := smaru.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenuactionresource.FieldSort,
-		})
+		_spec.AddField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := smaru.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldMemo,
-		})
+		_spec.SetField(sysmenuactionresource.FieldMemo, field.TypeString, value)
 	}
 	if smaru.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenuactionresource.FieldMemo,
-		})
+		_spec.ClearField(sysmenuactionresource.FieldMemo, field.TypeString)
 	}
 	if value, ok := smaru.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenuactionresource.FieldUpdatedAt,
-		})
+		_spec.SetField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := smaru.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenuactionresource.FieldDeletedAt,
-		})
+		_spec.SetField(sysmenuactionresource.FieldDeletedAt, field.TypeTime, value)
 	}
 	if smaru.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysmenuactionresource.FieldDeletedAt,
-		})
+		_spec.ClearField(sysmenuactionresource.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := smaru.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenuactionresource.FieldIsActive,
-		})
+		_spec.SetField(sysmenuactionresource.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := smaru.mutation.Method(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldMethod,
-		})
+		_spec.SetField(sysmenuactionresource.FieldMethod, field.TypeString, value)
 	}
 	if value, ok := smaru.mutation.Path(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldPath,
-		})
+		_spec.SetField(sysmenuactionresource.FieldPath, field.TypeString, value)
 	}
 	if value, ok := smaru.mutation.ActionID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldActionID,
-		})
+		_spec.SetField(sysmenuactionresource.FieldActionID, field.TypeString, value)
 	}
+	_spec.Node.Schema = smaru.schemaConfig.SysMenuActionResource
+	ctx = internal.NewSchemaConfigContext(ctx, smaru.schemaConfig)
+	_spec.AddModifiers(smaru.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, smaru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenuactionresource.Label}
@@ -348,15 +274,17 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 		}
 		return 0, err
 	}
+	smaru.mutation.done = true
 	return n, nil
 }
 
 // SysMenuActionResourceUpdateOne is the builder for updating a single SysMenuActionResource entity.
 type SysMenuActionResourceUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysMenuActionResourceMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysMenuActionResourceMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -477,6 +405,12 @@ func (smaruo *SysMenuActionResourceUpdateOne) Mutation() *SysMenuActionResourceM
 	return smaruo.mutation
 }
 
+// Where appends a list predicates to the SysMenuActionResourceUpdate builder.
+func (smaruo *SysMenuActionResourceUpdateOne) Where(ps ...predicate.SysMenuActionResource) *SysMenuActionResourceUpdateOne {
+	smaruo.mutation.Where(ps...)
+	return smaruo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (smaruo *SysMenuActionResourceUpdateOne) Select(field string, fields ...string) *SysMenuActionResourceUpdateOne {
@@ -486,47 +420,8 @@ func (smaruo *SysMenuActionResourceUpdateOne) Select(field string, fields ...str
 
 // Save executes the query and returns the updated SysMenuActionResource entity.
 func (smaruo *SysMenuActionResourceUpdateOne) Save(ctx context.Context) (*SysMenuActionResource, error) {
-	var (
-		err  error
-		node *SysMenuActionResource
-	)
 	smaruo.defaults()
-	if len(smaruo.hooks) == 0 {
-		if err = smaruo.check(); err != nil {
-			return nil, err
-		}
-		node, err = smaruo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysMenuActionResourceMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = smaruo.check(); err != nil {
-				return nil, err
-			}
-			smaruo.mutation = mutation
-			node, err = smaruo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(smaruo.hooks) - 1; i >= 0; i-- {
-			if smaruo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = smaruo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, smaruo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysMenuActionResource)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysMenuActionResourceMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysMenuActionResource, SysMenuActionResourceMutation](ctx, smaruo.sqlSave, smaruo.mutation, smaruo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -584,17 +479,17 @@ func (smaruo *SysMenuActionResourceUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (smaruo *SysMenuActionResourceUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionResourceUpdateOne {
+	smaruo.modifiers = append(smaruo.modifiers, modifiers...)
+	return smaruo
+}
+
 func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_node *SysMenuActionResource, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysmenuactionresource.Table,
-			Columns: sysmenuactionresource.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenuactionresource.FieldID,
-			},
-		},
+	if err := smaruo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysmenuactionresource.Table, sysmenuactionresource.Columns, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
 	id, ok := smaruo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysMenuActionResource.id" for update`)}
@@ -620,87 +515,44 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 		}
 	}
 	if value, ok := smaruo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenuactionresource.FieldIsDel,
-		})
+		_spec.SetField(sysmenuactionresource.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := smaruo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenuactionresource.FieldSort,
-		})
+		_spec.SetField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := smaruo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenuactionresource.FieldSort,
-		})
+		_spec.AddField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := smaruo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldMemo,
-		})
+		_spec.SetField(sysmenuactionresource.FieldMemo, field.TypeString, value)
 	}
 	if smaruo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenuactionresource.FieldMemo,
-		})
+		_spec.ClearField(sysmenuactionresource.FieldMemo, field.TypeString)
 	}
 	if value, ok := smaruo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenuactionresource.FieldUpdatedAt,
-		})
+		_spec.SetField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := smaruo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenuactionresource.FieldDeletedAt,
-		})
+		_spec.SetField(sysmenuactionresource.FieldDeletedAt, field.TypeTime, value)
 	}
 	if smaruo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysmenuactionresource.FieldDeletedAt,
-		})
+		_spec.ClearField(sysmenuactionresource.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := smaruo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenuactionresource.FieldIsActive,
-		})
+		_spec.SetField(sysmenuactionresource.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := smaruo.mutation.Method(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldMethod,
-		})
+		_spec.SetField(sysmenuactionresource.FieldMethod, field.TypeString, value)
 	}
 	if value, ok := smaruo.mutation.Path(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldPath,
-		})
+		_spec.SetField(sysmenuactionresource.FieldPath, field.TypeString, value)
 	}
 	if value, ok := smaruo.mutation.ActionID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldActionID,
-		})
+		_spec.SetField(sysmenuactionresource.FieldActionID, field.TypeString, value)
 	}
+	_spec.Node.Schema = smaruo.schemaConfig.SysMenuActionResource
+	ctx = internal.NewSchemaConfigContext(ctx, smaruo.schemaConfig)
+	_spec.AddModifiers(smaruo.modifiers...)
 	_node = &SysMenuActionResource{config: smaruo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
@@ -712,5 +564,6 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 		}
 		return nil, err
 	}
+	smaruo.mutation.done = true
 	return _node, nil
 }

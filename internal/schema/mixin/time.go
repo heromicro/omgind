@@ -32,16 +32,26 @@ func (TimeMixin) Indexes() []ent.Index {
 func FieldCreateAt() ent.Field {
 	return field.Time("created_at").
 		StorageKey("crtd_at").
-		StructTag(`json:"created_at,omitempty" sql:"crtd_at"`).
+		StructTag(`json:"created_at,omitempty"`).
 		Immutable().
 		Default(time.Now).Comment("create time")
+}
+
+func FieldCreateAt1() ent.Field {
+	return field.Int64("created_at").
+		StorageKey("crtd_at").
+		StructTag(`json:"created_at,omitempty"`).
+		Immutable().
+		DefaultFunc(func() int64 {
+			return time.Now().UnixMilli()
+		}).Comment("create time")
 }
 
 func FielUpdatedAt() ent.Field {
 
 	return field.Time("updated_at").
 		StorageKey("uptd_at").
-		StructTag(`json:"updated_at,omitempty" sql:"uptd_at"`).
+		StructTag(`json:"updated_at,omitempty"`).
 		Default(time.Now).
 		UpdateDefault(time.Now).
 		Comment("update time")
@@ -51,7 +61,8 @@ func FielDeletedAt() ent.Field {
 
 	return field.Time("deleted_at").
 		StorageKey("dltd_at").Nillable().Optional().
-		StructTag(`json:"deleted_at,omitempty" sql:"dltd_at"`).
+		// StructTag(`json:"deleted_at,omitempty" sql:"dltd_at"`).
+		StructTag(`json:"deleted_at,omitempty"`).
 		Comment("delete time,")
 }
 

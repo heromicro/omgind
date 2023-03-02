@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
@@ -18,6 +20,7 @@ type SysDictCreate struct {
 	config
 	mutation *SysDictMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetIsDel sets the "is_del" field.
@@ -151,50 +154,8 @@ func (sdc *SysDictCreate) Mutation() *SysDictMutation {
 
 // Save creates the SysDict in the database.
 func (sdc *SysDictCreate) Save(ctx context.Context) (*SysDict, error) {
-	var (
-		err  error
-		node *SysDict
-	)
 	sdc.defaults()
-	if len(sdc.hooks) == 0 {
-		if err = sdc.check(); err != nil {
-			return nil, err
-		}
-		node, err = sdc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDictMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sdc.check(); err != nil {
-				return nil, err
-			}
-			sdc.mutation = mutation
-			if node, err = sdc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sdc.hooks) - 1; i >= 0; i-- {
-			if sdc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sdc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sdc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysDict)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysDictMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysDict, SysDictMutation](ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -298,6 +259,9 @@ func (sdc *SysDictCreate) check() error {
 }
 
 func (sdc *SysDictCreate) sqlSave(ctx context.Context) (*SysDict, error) {
+	if err := sdc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := sdc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, sdc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -312,103 +276,451 @@ func (sdc *SysDictCreate) sqlSave(ctx context.Context) (*SysDict, error) {
 			return nil, fmt.Errorf("unexpected SysDict.ID type: %T", _spec.ID.Value)
 		}
 	}
+	sdc.mutation.id = &_node.ID
+	sdc.mutation.done = true
 	return _node, nil
 }
 
 func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysDict{config: sdc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysdict.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdict.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysdict.Table, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
 	)
+	_spec.Schema = sdc.schemaConfig.SysDict
+	_spec.OnConflict = sdc.conflict
 	if id, ok := sdc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := sdc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdict.FieldIsDel,
-		})
+		_spec.SetField(sysdict.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := sdc.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldMemo,
-		})
+		_spec.SetField(sysdict.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := sdc.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdict.FieldSort,
-		})
+		_spec.SetField(sysdict.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := sdc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldCreatedAt,
-		})
+		_spec.SetField(sysdict.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := sdc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := sdc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldDeletedAt,
-		})
+		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := sdc.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdict.FieldIsActive,
-		})
+		_spec.SetField(sysdict.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := sdc.mutation.NameCn(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldNameCn,
-		})
+		_spec.SetField(sysdict.FieldNameCn, field.TypeString, value)
 		_node.NameCn = value
 	}
 	if value, ok := sdc.mutation.NameEn(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldNameEn,
-		})
+		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 		_node.NameEn = value
 	}
 	return _node, _spec
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysDict.Create().
+//		SetIsDel(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysDictUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (sdc *SysDictCreate) OnConflict(opts ...sql.ConflictOption) *SysDictUpsertOne {
+	sdc.conflict = opts
+	return &SysDictUpsertOne{
+		create: sdc,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysDict.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (sdc *SysDictCreate) OnConflictColumns(columns ...string) *SysDictUpsertOne {
+	sdc.conflict = append(sdc.conflict, sql.ConflictColumns(columns...))
+	return &SysDictUpsertOne{
+		create: sdc,
+	}
+}
+
+type (
+	// SysDictUpsertOne is the builder for "upsert"-ing
+	//  one SysDict node.
+	SysDictUpsertOne struct {
+		create *SysDictCreate
+	}
+
+	// SysDictUpsert is the "OnConflict" setter.
+	SysDictUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetIsDel sets the "is_del" field.
+func (u *SysDictUpsert) SetIsDel(v bool) *SysDictUpsert {
+	u.Set(sysdict.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateIsDel() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldIsDel)
+	return u
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysDictUpsert) SetMemo(v string) *SysDictUpsert {
+	u.Set(sysdict.FieldMemo, v)
+	return u
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateMemo() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldMemo)
+	return u
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysDictUpsert) ClearMemo() *SysDictUpsert {
+	u.SetNull(sysdict.FieldMemo)
+	return u
+}
+
+// SetSort sets the "sort" field.
+func (u *SysDictUpsert) SetSort(v int32) *SysDictUpsert {
+	u.Set(sysdict.FieldSort, v)
+	return u
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateSort() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldSort)
+	return u
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysDictUpsert) AddSort(v int32) *SysDictUpsert {
+	u.Add(sysdict.FieldSort, v)
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysDictUpsert) SetUpdatedAt(v time.Time) *SysDictUpsert {
+	u.Set(sysdict.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateUpdatedAt() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldUpdatedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysDictUpsert) SetDeletedAt(v time.Time) *SysDictUpsert {
+	u.Set(sysdict.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateDeletedAt() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysDictUpsert) ClearDeletedAt() *SysDictUpsert {
+	u.SetNull(sysdict.FieldDeletedAt)
+	return u
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysDictUpsert) SetIsActive(v bool) *SysDictUpsert {
+	u.Set(sysdict.FieldIsActive, v)
+	return u
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateIsActive() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldIsActive)
+	return u
+}
+
+// SetNameCn sets the "name_cn" field.
+func (u *SysDictUpsert) SetNameCn(v string) *SysDictUpsert {
+	u.Set(sysdict.FieldNameCn, v)
+	return u
+}
+
+// UpdateNameCn sets the "name_cn" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateNameCn() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldNameCn)
+	return u
+}
+
+// SetNameEn sets the "name_en" field.
+func (u *SysDictUpsert) SetNameEn(v string) *SysDictUpsert {
+	u.Set(sysdict.FieldNameEn, v)
+	return u
+}
+
+// UpdateNameEn sets the "name_en" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateNameEn() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldNameEn)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.SysDict.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysdict.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysDictUpsertOne) UpdateNewValues() *SysDictUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(sysdict.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(sysdict.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysDict.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *SysDictUpsertOne) Ignore() *SysDictUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysDictUpsertOne) DoNothing() *SysDictUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysDictCreate.OnConflict
+// documentation for more info.
+func (u *SysDictUpsertOne) Update(set func(*SysDictUpsert)) *SysDictUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysDictUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysDictUpsertOne) SetIsDel(v bool) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateIsDel() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysDictUpsertOne) SetMemo(v string) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateMemo() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysDictUpsertOne) ClearMemo() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysDictUpsertOne) SetSort(v int32) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysDictUpsertOne) AddSort(v int32) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateSort() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysDictUpsertOne) SetUpdatedAt(v time.Time) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateUpdatedAt() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysDictUpsertOne) SetDeletedAt(v time.Time) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateDeletedAt() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysDictUpsertOne) ClearDeletedAt() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysDictUpsertOne) SetIsActive(v bool) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateIsActive() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetNameCn sets the "name_cn" field.
+func (u *SysDictUpsertOne) SetNameCn(v string) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetNameCn(v)
+	})
+}
+
+// UpdateNameCn sets the "name_cn" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateNameCn() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateNameCn()
+	})
+}
+
+// SetNameEn sets the "name_en" field.
+func (u *SysDictUpsertOne) SetNameEn(v string) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetNameEn(v)
+	})
+}
+
+// UpdateNameEn sets the "name_en" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateNameEn() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateNameEn()
+	})
+}
+
+// Exec executes the query.
+func (u *SysDictUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysDictCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysDictUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *SysDictUpsertOne) ID(ctx context.Context) (id string, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: SysDictUpsertOne.ID is not supported by MySQL driver. Use SysDictUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *SysDictUpsertOne) IDX(ctx context.Context) string {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
 }
 
 // SysDictCreateBulk is the builder for creating many SysDict entities in bulk.
 type SysDictCreateBulk struct {
 	config
 	builders []*SysDictCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the SysDict entities in the database.
@@ -435,6 +747,7 @@ func (sdcb *SysDictCreateBulk) Save(ctx context.Context) ([]*SysDict, error) {
 					_, err = mutators[i+1].Mutate(root, sdcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = sdcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, sdcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -481,6 +794,253 @@ func (sdcb *SysDictCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (sdcb *SysDictCreateBulk) ExecX(ctx context.Context) {
 	if err := sdcb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysDict.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysDictUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (sdcb *SysDictCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDictUpsertBulk {
+	sdcb.conflict = opts
+	return &SysDictUpsertBulk{
+		create: sdcb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysDict.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (sdcb *SysDictCreateBulk) OnConflictColumns(columns ...string) *SysDictUpsertBulk {
+	sdcb.conflict = append(sdcb.conflict, sql.ConflictColumns(columns...))
+	return &SysDictUpsertBulk{
+		create: sdcb,
+	}
+}
+
+// SysDictUpsertBulk is the builder for "upsert"-ing
+// a bulk of SysDict nodes.
+type SysDictUpsertBulk struct {
+	create *SysDictCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.SysDict.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysdict.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysDictUpsertBulk) UpdateNewValues() *SysDictUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(sysdict.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(sysdict.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysDict.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *SysDictUpsertBulk) Ignore() *SysDictUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysDictUpsertBulk) DoNothing() *SysDictUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysDictCreateBulk.OnConflict
+// documentation for more info.
+func (u *SysDictUpsertBulk) Update(set func(*SysDictUpsert)) *SysDictUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysDictUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysDictUpsertBulk) SetIsDel(v bool) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateIsDel() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysDictUpsertBulk) SetMemo(v string) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateMemo() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysDictUpsertBulk) ClearMemo() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysDictUpsertBulk) SetSort(v int32) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysDictUpsertBulk) AddSort(v int32) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateSort() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysDictUpsertBulk) SetUpdatedAt(v time.Time) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateUpdatedAt() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysDictUpsertBulk) SetDeletedAt(v time.Time) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateDeletedAt() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysDictUpsertBulk) ClearDeletedAt() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysDictUpsertBulk) SetIsActive(v bool) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateIsActive() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetNameCn sets the "name_cn" field.
+func (u *SysDictUpsertBulk) SetNameCn(v string) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetNameCn(v)
+	})
+}
+
+// UpdateNameCn sets the "name_cn" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateNameCn() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateNameCn()
+	})
+}
+
+// SetNameEn sets the "name_en" field.
+func (u *SysDictUpsertBulk) SetNameEn(v string) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetNameEn(v)
+	})
+}
+
+// UpdateNameEn sets the "name_en" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateNameEn() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateNameEn()
+	})
+}
+
+// Exec executes the query.
+func (u *SysDictUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the SysDictCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysDictCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysDictUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

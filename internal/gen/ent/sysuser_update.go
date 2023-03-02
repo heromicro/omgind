@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 )
@@ -18,8 +19,9 @@ import (
 // SysUserUpdate is the builder for updating SysUser entities.
 type SysUserUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysUserMutation
+	hooks     []Hook
+	mutation  *SysUserMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysUserUpdate builder.
@@ -202,41 +204,8 @@ func (suu *SysUserUpdate) Mutation() *SysUserMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (suu *SysUserUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	suu.defaults()
-	if len(suu.hooks) == 0 {
-		if err = suu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = suu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysUserMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = suu.check(); err != nil {
-				return 0, err
-			}
-			suu.mutation = mutation
-			affected, err = suu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(suu.hooks) - 1; i >= 0; i-- {
-			if suu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = suu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, suu.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysUserMutation](ctx, suu.sqlSave, suu.mutation, suu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -304,17 +273,17 @@ func (suu *SysUserUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (suu *SysUserUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdate {
+	suu.modifiers = append(suu.modifiers, modifiers...)
+	return suu
+}
+
 func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysuser.Table,
-			Columns: sysuser.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysuser.FieldID,
-			},
-		},
+	if err := suu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysuser.Table, sysuser.Columns, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
 	if ps := suu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -323,120 +292,59 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := suu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuser.FieldIsDel,
-		})
+		_spec.SetField(sysuser.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := suu.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysuser.FieldSort,
-		})
+		_spec.SetField(sysuser.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := suu.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysuser.FieldSort,
-		})
+		_spec.AddField(sysuser.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := suu.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuser.FieldUpdatedAt,
-		})
+		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := suu.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuser.FieldDeletedAt,
-		})
+		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)
 	}
 	if suu.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysuser.FieldDeletedAt,
-		})
+		_spec.ClearField(sysuser.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := suu.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuser.FieldIsActive,
-		})
+		_spec.SetField(sysuser.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := suu.mutation.RealName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldRealName,
-		})
+		_spec.SetField(sysuser.FieldRealName, field.TypeString, value)
 	}
 	if suu.mutation.RealNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysuser.FieldRealName,
-		})
+		_spec.ClearField(sysuser.FieldRealName, field.TypeString)
 	}
 	if value, ok := suu.mutation.FirstName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldFirstName,
-		})
+		_spec.SetField(sysuser.FieldFirstName, field.TypeString, value)
 	}
 	if suu.mutation.FirstNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysuser.FieldFirstName,
-		})
+		_spec.ClearField(sysuser.FieldFirstName, field.TypeString)
 	}
 	if value, ok := suu.mutation.LastName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldLastName,
-		})
+		_spec.SetField(sysuser.FieldLastName, field.TypeString, value)
 	}
 	if suu.mutation.LastNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysuser.FieldLastName,
-		})
+		_spec.ClearField(sysuser.FieldLastName, field.TypeString)
 	}
 	if value, ok := suu.mutation.Password(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldPassword,
-		})
+		_spec.SetField(sysuser.FieldPassword, field.TypeString, value)
 	}
 	if value, ok := suu.mutation.Email(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldEmail,
-		})
+		_spec.SetField(sysuser.FieldEmail, field.TypeString, value)
 	}
 	if value, ok := suu.mutation.Mobile(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldMobile,
-		})
+		_spec.SetField(sysuser.FieldMobile, field.TypeString, value)
 	}
 	if value, ok := suu.mutation.Salt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldSalt,
-		})
+		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 	}
+	_spec.Node.Schema = suu.schemaConfig.SysUser
+	ctx = internal.NewSchemaConfigContext(ctx, suu.schemaConfig)
+	_spec.AddModifiers(suu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, suu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysuser.Label}
@@ -445,15 +353,17 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	suu.mutation.done = true
 	return n, nil
 }
 
 // SysUserUpdateOne is the builder for updating a single SysUser entity.
 type SysUserUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysUserMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysUserMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -628,6 +538,12 @@ func (suuo *SysUserUpdateOne) Mutation() *SysUserMutation {
 	return suuo.mutation
 }
 
+// Where appends a list predicates to the SysUserUpdate builder.
+func (suuo *SysUserUpdateOne) Where(ps ...predicate.SysUser) *SysUserUpdateOne {
+	suuo.mutation.Where(ps...)
+	return suuo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (suuo *SysUserUpdateOne) Select(field string, fields ...string) *SysUserUpdateOne {
@@ -637,47 +553,8 @@ func (suuo *SysUserUpdateOne) Select(field string, fields ...string) *SysUserUpd
 
 // Save executes the query and returns the updated SysUser entity.
 func (suuo *SysUserUpdateOne) Save(ctx context.Context) (*SysUser, error) {
-	var (
-		err  error
-		node *SysUser
-	)
 	suuo.defaults()
-	if len(suuo.hooks) == 0 {
-		if err = suuo.check(); err != nil {
-			return nil, err
-		}
-		node, err = suuo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysUserMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = suuo.check(); err != nil {
-				return nil, err
-			}
-			suuo.mutation = mutation
-			node, err = suuo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(suuo.hooks) - 1; i >= 0; i-- {
-			if suuo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = suuo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, suuo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysUser)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysUserMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysUser, SysUserMutation](ctx, suuo.sqlSave, suuo.mutation, suuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -745,17 +622,17 @@ func (suuo *SysUserUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (suuo *SysUserUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdateOne {
+	suuo.modifiers = append(suuo.modifiers, modifiers...)
+	return suuo
+}
+
 func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysuser.Table,
-			Columns: sysuser.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysuser.FieldID,
-			},
-		},
+	if err := suuo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysuser.Table, sysuser.Columns, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
 	id, ok := suuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysUser.id" for update`)}
@@ -781,120 +658,59 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 	}
 	if value, ok := suuo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuser.FieldIsDel,
-		})
+		_spec.SetField(sysuser.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := suuo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysuser.FieldSort,
-		})
+		_spec.SetField(sysuser.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := suuo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysuser.FieldSort,
-		})
+		_spec.AddField(sysuser.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := suuo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuser.FieldUpdatedAt,
-		})
+		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := suuo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuser.FieldDeletedAt,
-		})
+		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)
 	}
 	if suuo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysuser.FieldDeletedAt,
-		})
+		_spec.ClearField(sysuser.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := suuo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuser.FieldIsActive,
-		})
+		_spec.SetField(sysuser.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := suuo.mutation.RealName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldRealName,
-		})
+		_spec.SetField(sysuser.FieldRealName, field.TypeString, value)
 	}
 	if suuo.mutation.RealNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysuser.FieldRealName,
-		})
+		_spec.ClearField(sysuser.FieldRealName, field.TypeString)
 	}
 	if value, ok := suuo.mutation.FirstName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldFirstName,
-		})
+		_spec.SetField(sysuser.FieldFirstName, field.TypeString, value)
 	}
 	if suuo.mutation.FirstNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysuser.FieldFirstName,
-		})
+		_spec.ClearField(sysuser.FieldFirstName, field.TypeString)
 	}
 	if value, ok := suuo.mutation.LastName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldLastName,
-		})
+		_spec.SetField(sysuser.FieldLastName, field.TypeString, value)
 	}
 	if suuo.mutation.LastNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysuser.FieldLastName,
-		})
+		_spec.ClearField(sysuser.FieldLastName, field.TypeString)
 	}
 	if value, ok := suuo.mutation.Password(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldPassword,
-		})
+		_spec.SetField(sysuser.FieldPassword, field.TypeString, value)
 	}
 	if value, ok := suuo.mutation.Email(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldEmail,
-		})
+		_spec.SetField(sysuser.FieldEmail, field.TypeString, value)
 	}
 	if value, ok := suuo.mutation.Mobile(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldMobile,
-		})
+		_spec.SetField(sysuser.FieldMobile, field.TypeString, value)
 	}
 	if value, ok := suuo.mutation.Salt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldSalt,
-		})
+		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 	}
+	_spec.Node.Schema = suuo.schemaConfig.SysUser
+	ctx = internal.NewSchemaConfigContext(ctx, suuo.schemaConfig)
+	_spec.AddModifiers(suuo.modifiers...)
 	_node = &SysUser{config: suuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
@@ -906,5 +722,6 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 		return nil, err
 	}
+	suuo.mutation.done = true
 	return _node, nil
 }

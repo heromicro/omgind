@@ -2,22 +2,18 @@ package entgo
 
 import (
 	"context"
-	"database/sql"
 	"encoding/json"
-	"os"
+	"log"
 	"time"
 
-	entsql "entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/pkg/logger"
-	"github.com/rs/zerolog"
-	sqldblogger "github.com/simukti/sqldb-logger"
-	"github.com/simukti/sqldb-logger/logadapter/zerologadapter"
-	"github.com/sirupsen/logrus"
 
+	"entgo.io/ent/dialect/sql"
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
+	"github.com/sirupsen/logrus"
 )
 
 var tableName string
@@ -36,6 +32,9 @@ type Config struct {
 func New(c *Config) *Hook {
 
 	eclient, _, err := NewEntClient(c)
+	log.Println(" -------- ===== === ", eclient)
+	log.Println(" -------- ===== === ", err)
+
 	if err != nil {
 		panic(err)
 	}
@@ -48,20 +47,21 @@ func New(c *Config) *Hook {
 // NewEnt 创建ent实例
 func NewEntClient(cfg *Config) (*ent.Client, func(), error) {
 
-	db, err := sql.Open(cfg.DBType, cfg.DSN)
+	drv, err := sql.Open(cfg.DBType, cfg.DSN)
 	if err != nil {
 		return nil, func() {}, err
 	}
 
 	// logging to db
-	loggerAdapter := zerologadapter.New(zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false}))
+	// loggerAdapter := zerologadapter.New(zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout, NoColor: false}))
 
-	db = sqldblogger.OpenDriver(cfg.DSN, db.Driver(), loggerAdapter)
+	// db = sqldblogger.OpenDriver(cfg.DSN, drv.Driver(), loggerAdapter)
 
-	drv := entsql.OpenDB(cfg.DBType, db)
+	// drv := entsql.OpenDB(cfg.DBType, db)
+	db := drv.DB()
 
 	cleanFunc := func() {
-		drv.Close()
+		db.Close()
 	}
 
 	db.SetMaxIdleConns(cfg.MaxIdleConns)
@@ -69,6 +69,7 @@ func NewEntClient(cfg *Config) (*ent.Client, func(), error) {
 	db.SetConnMaxLifetime(time.Duration(cfg.MaxLifetime) * time.Second)
 
 	if err := db.Ping(); err != nil {
+		log.Println(" -------- ===== === ping ", err)
 		return nil, cleanFunc, err
 	}
 
@@ -85,7 +86,11 @@ type Hook struct {
 // Exec 执行日志写入
 func (h *Hook) Exec(entry *logrus.Entry) error {
 
+	log.Println(" ------ =======  add one logging entry : ", entry)
+
 	create_logger := h.eclient.SysLogging.Create()
+
+	log.Println(" ------ =======  add one logging 1111 ")
 
 	create_logger = create_logger.SetLevel(entry.Level.String())
 	create_logger = create_logger.SetMessage(entry.Message)
@@ -124,6 +129,9 @@ func (h *Hook) Exec(entry *logrus.Entry) error {
 		create_logger = create_logger.SetData(data)
 	}
 
+	create_logger.SetCreatedAt(time.Now().UnixMilli())
+
+	log.Println(" ------ =======  add one logging 22222 ")
 	_, err := create_logger.Save(context.Background())
 
 	return err

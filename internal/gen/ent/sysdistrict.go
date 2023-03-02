@@ -21,11 +21,11 @@ type SysDistrict struct {
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// delete time,
-	DeletedAt *time.Time `json:"deleted_at,omitempty" sql:"dltd_at"`
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
 	// tree id
@@ -37,7 +37,7 @@ type SysDistrict struct {
 	// mptt's right
 	TreeRight *int64 `json:"tree_right"`
 	// is leaf node
-	IsLeaf *bool `json:"is_leaf"`
+	IsLeaf *bool `json:"isLeaf"`
 	// tree path,topest is null or zero length string, subber has fathers ids join by slash(/), eg: pid1/pid2
 	TreePath *string `json:"tree_path"`
 	// 名称
@@ -101,8 +101,7 @@ type SysDistrictEdges struct {
 func (e SysDistrictEdges) ParentOrErr() (*SysDistrict, error) {
 	if e.loadedTypes[0] {
 		if e.Parent == nil {
-			// The edge parent was loaded in eager-loading,
-			// but was not found.
+			// Edge was loaded but was not found.
 			return nil, &NotFoundError{label: sysdistrict.Label}
 		}
 		return e.Parent, nil
@@ -120,8 +119,8 @@ func (e SysDistrictEdges) ChildrenOrErr() ([]*SysDistrict, error) {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysDistrict) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysDistrict) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysdistrict.FieldIsDel, sysdistrict.FieldIsActive, sysdistrict.FieldIsLeaf, sysdistrict.FieldIsHot, sysdistrict.FieldIsReal, sysdistrict.FieldIsMain, sysdistrict.FieldIsDirect:
@@ -143,7 +142,7 @@ func (*SysDistrict) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysDistrict fields.
-func (sd *SysDistrict) assignValues(columns []string, values []interface{}) error {
+func (sd *SysDistrict) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -380,19 +379,19 @@ func (sd *SysDistrict) assignValues(columns []string, values []interface{}) erro
 
 // QueryParent queries the "parent" edge of the SysDistrict entity.
 func (sd *SysDistrict) QueryParent() *SysDistrictQuery {
-	return (&SysDistrictClient{config: sd.config}).QueryParent(sd)
+	return NewSysDistrictClient(sd.config).QueryParent(sd)
 }
 
 // QueryChildren queries the "children" edge of the SysDistrict entity.
 func (sd *SysDistrict) QueryChildren() *SysDistrictQuery {
-	return (&SysDistrictClient{config: sd.config}).QueryChildren(sd)
+	return NewSysDistrictClient(sd.config).QueryChildren(sd)
 }
 
 // Update returns a builder for updating this SysDistrict.
 // Note that you need to call SysDistrict.Unwrap() before calling this method if this SysDistrict
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sd *SysDistrict) Update() *SysDistrictUpdateOne {
-	return (&SysDistrictClient{config: sd.config}).UpdateOne(sd)
+	return NewSysDistrictClient(sd.config).UpdateOne(sd)
 }
 
 // Unwrap unwraps the SysDistrict entity that was returned from a transaction after it was closed,
@@ -564,9 +563,3 @@ func (sd *SysDistrict) String() string {
 
 // SysDistricts is a parsable slice of SysDistrict.
 type SysDistricts []*SysDistrict
-
-func (sd SysDistricts) config(cfg config) {
-	for _i := range sd {
-		sd[_i].config = cfg
-	}
-}

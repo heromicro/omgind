@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 )
@@ -18,8 +19,9 @@ import (
 // SysMenuUpdate is the builder for updating SysMenu entities.
 type SysMenuUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysMenuMutation
+	hooks     []Hook
+	mutation  *SysMenuMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysMenuUpdate builder.
@@ -235,41 +237,8 @@ func (smu *SysMenuUpdate) Mutation() *SysMenuMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (smu *SysMenuUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	smu.defaults()
-	if len(smu.hooks) == 0 {
-		if err = smu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = smu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysMenuMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = smu.check(); err != nil {
-				return 0, err
-			}
-			smu.mutation = mutation
-			affected, err = smu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(smu.hooks) - 1; i >= 0; i-- {
-			if smu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = smu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, smu.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysMenuMutation](ctx, smu.sqlSave, smu.mutation, smu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -342,17 +311,17 @@ func (smu *SysMenuUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (smu *SysMenuUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuUpdate {
+	smu.modifiers = append(smu.modifiers, modifiers...)
+	return smu
+}
+
 func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysmenu.Table,
-			Columns: sysmenu.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenu.FieldID,
-			},
-		},
+	if err := smu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysmenu.Table, sysmenu.Columns, sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString))
 	if ps := smu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -361,147 +330,71 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := smu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsDel,
-		})
+		_spec.SetField(sysmenu.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := smu.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldMemo,
-		})
+		_spec.SetField(sysmenu.FieldMemo, field.TypeString, value)
 	}
 	if smu.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldMemo,
-		})
+		_spec.ClearField(sysmenu.FieldMemo, field.TypeString)
 	}
 	if value, ok := smu.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldSort,
-		})
+		_spec.SetField(sysmenu.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := smu.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldSort,
-		})
+		_spec.AddField(sysmenu.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := smu.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenu.FieldUpdatedAt,
-		})
+		_spec.SetField(sysmenu.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := smu.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenu.FieldDeletedAt,
-		})
+		_spec.SetField(sysmenu.FieldDeletedAt, field.TypeTime, value)
 	}
 	if smu.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysmenu.FieldDeletedAt,
-		})
+		_spec.ClearField(sysmenu.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := smu.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsActive,
-		})
+		_spec.SetField(sysmenu.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := smu.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldName,
-		})
+		_spec.SetField(sysmenu.FieldName, field.TypeString, value)
 	}
 	if value, ok := smu.mutation.Icon(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldIcon,
-		})
+		_spec.SetField(sysmenu.FieldIcon, field.TypeString, value)
 	}
 	if value, ok := smu.mutation.Router(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldRouter,
-		})
+		_spec.SetField(sysmenu.FieldRouter, field.TypeString, value)
 	}
 	if value, ok := smu.mutation.IsShow(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsShow,
-		})
+		_spec.SetField(sysmenu.FieldIsShow, field.TypeBool, value)
 	}
 	if value, ok := smu.mutation.ParentID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldParentID,
-		})
+		_spec.SetField(sysmenu.FieldParentID, field.TypeString, value)
 	}
 	if smu.mutation.ParentIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldParentID,
-		})
+		_spec.ClearField(sysmenu.FieldParentID, field.TypeString)
 	}
 	if value, ok := smu.mutation.ParentPath(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldParentPath,
-		})
+		_spec.SetField(sysmenu.FieldParentPath, field.TypeString, value)
 	}
 	if smu.mutation.ParentPathCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldParentPath,
-		})
+		_spec.ClearField(sysmenu.FieldParentPath, field.TypeString)
 	}
 	if value, ok := smu.mutation.Level(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldLevel,
-		})
+		_spec.SetField(sysmenu.FieldLevel, field.TypeInt32, value)
 	}
 	if value, ok := smu.mutation.AddedLevel(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldLevel,
-		})
+		_spec.AddField(sysmenu.FieldLevel, field.TypeInt32, value)
 	}
 	if value, ok := smu.mutation.IsLeaf(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsLeaf,
-		})
+		_spec.SetField(sysmenu.FieldIsLeaf, field.TypeBool, value)
 	}
 	if smu.mutation.IsLeafCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysmenu.FieldIsLeaf,
-		})
+		_spec.ClearField(sysmenu.FieldIsLeaf, field.TypeBool)
 	}
+	_spec.Node.Schema = smu.schemaConfig.SysMenu
+	ctx = internal.NewSchemaConfigContext(ctx, smu.schemaConfig)
+	_spec.AddModifiers(smu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, smu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenu.Label}
@@ -510,15 +403,17 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	smu.mutation.done = true
 	return n, nil
 }
 
 // SysMenuUpdateOne is the builder for updating a single SysMenu entity.
 type SysMenuUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysMenuMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysMenuMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -726,6 +621,12 @@ func (smuo *SysMenuUpdateOne) Mutation() *SysMenuMutation {
 	return smuo.mutation
 }
 
+// Where appends a list predicates to the SysMenuUpdate builder.
+func (smuo *SysMenuUpdateOne) Where(ps ...predicate.SysMenu) *SysMenuUpdateOne {
+	smuo.mutation.Where(ps...)
+	return smuo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (smuo *SysMenuUpdateOne) Select(field string, fields ...string) *SysMenuUpdateOne {
@@ -735,47 +636,8 @@ func (smuo *SysMenuUpdateOne) Select(field string, fields ...string) *SysMenuUpd
 
 // Save executes the query and returns the updated SysMenu entity.
 func (smuo *SysMenuUpdateOne) Save(ctx context.Context) (*SysMenu, error) {
-	var (
-		err  error
-		node *SysMenu
-	)
 	smuo.defaults()
-	if len(smuo.hooks) == 0 {
-		if err = smuo.check(); err != nil {
-			return nil, err
-		}
-		node, err = smuo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysMenuMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = smuo.check(); err != nil {
-				return nil, err
-			}
-			smuo.mutation = mutation
-			node, err = smuo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(smuo.hooks) - 1; i >= 0; i-- {
-			if smuo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = smuo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, smuo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysMenu)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysMenuMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysMenu, SysMenuMutation](ctx, smuo.sqlSave, smuo.mutation, smuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -848,17 +710,17 @@ func (smuo *SysMenuUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (smuo *SysMenuUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuUpdateOne {
+	smuo.modifiers = append(smuo.modifiers, modifiers...)
+	return smuo
+}
+
 func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysmenu.Table,
-			Columns: sysmenu.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenu.FieldID,
-			},
-		},
+	if err := smuo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysmenu.Table, sysmenu.Columns, sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString))
 	id, ok := smuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysMenu.id" for update`)}
@@ -884,147 +746,71 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 		}
 	}
 	if value, ok := smuo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsDel,
-		})
+		_spec.SetField(sysmenu.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := smuo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldMemo,
-		})
+		_spec.SetField(sysmenu.FieldMemo, field.TypeString, value)
 	}
 	if smuo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldMemo,
-		})
+		_spec.ClearField(sysmenu.FieldMemo, field.TypeString)
 	}
 	if value, ok := smuo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldSort,
-		})
+		_spec.SetField(sysmenu.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := smuo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldSort,
-		})
+		_spec.AddField(sysmenu.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := smuo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenu.FieldUpdatedAt,
-		})
+		_spec.SetField(sysmenu.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := smuo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenu.FieldDeletedAt,
-		})
+		_spec.SetField(sysmenu.FieldDeletedAt, field.TypeTime, value)
 	}
 	if smuo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysmenu.FieldDeletedAt,
-		})
+		_spec.ClearField(sysmenu.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := smuo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsActive,
-		})
+		_spec.SetField(sysmenu.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := smuo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldName,
-		})
+		_spec.SetField(sysmenu.FieldName, field.TypeString, value)
 	}
 	if value, ok := smuo.mutation.Icon(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldIcon,
-		})
+		_spec.SetField(sysmenu.FieldIcon, field.TypeString, value)
 	}
 	if value, ok := smuo.mutation.Router(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldRouter,
-		})
+		_spec.SetField(sysmenu.FieldRouter, field.TypeString, value)
 	}
 	if value, ok := smuo.mutation.IsShow(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsShow,
-		})
+		_spec.SetField(sysmenu.FieldIsShow, field.TypeBool, value)
 	}
 	if value, ok := smuo.mutation.ParentID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldParentID,
-		})
+		_spec.SetField(sysmenu.FieldParentID, field.TypeString, value)
 	}
 	if smuo.mutation.ParentIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldParentID,
-		})
+		_spec.ClearField(sysmenu.FieldParentID, field.TypeString)
 	}
 	if value, ok := smuo.mutation.ParentPath(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldParentPath,
-		})
+		_spec.SetField(sysmenu.FieldParentPath, field.TypeString, value)
 	}
 	if smuo.mutation.ParentPathCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysmenu.FieldParentPath,
-		})
+		_spec.ClearField(sysmenu.FieldParentPath, field.TypeString)
 	}
 	if value, ok := smuo.mutation.Level(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldLevel,
-		})
+		_spec.SetField(sysmenu.FieldLevel, field.TypeInt32, value)
 	}
 	if value, ok := smuo.mutation.AddedLevel(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldLevel,
-		})
+		_spec.AddField(sysmenu.FieldLevel, field.TypeInt32, value)
 	}
 	if value, ok := smuo.mutation.IsLeaf(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsLeaf,
-		})
+		_spec.SetField(sysmenu.FieldIsLeaf, field.TypeBool, value)
 	}
 	if smuo.mutation.IsLeafCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysmenu.FieldIsLeaf,
-		})
+		_spec.ClearField(sysmenu.FieldIsLeaf, field.TypeBool)
 	}
+	_spec.Node.Schema = smuo.schemaConfig.SysMenu
+	ctx = internal.NewSchemaConfigContext(ctx, smuo.schemaConfig)
+	_spec.AddModifiers(smuo.modifiers...)
 	_node = &SysMenu{config: smuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
@@ -1036,5 +822,6 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 		}
 		return nil, err
 	}
+	smuo.mutation.done = true
 	return _node, nil
 }

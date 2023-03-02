@@ -5,6 +5,7 @@ package ent
 import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 )
 
 // Option function to configure the client.
@@ -17,28 +18,50 @@ type config struct {
 	// debug enable a debug logging.
 	debug bool
 	// log used for logging on debug mode.
-	log func(...interface{})
+	log func(...any)
 	// hooks to execute on mutations.
 	hooks *hooks
+	// interceptors to execute on queries.
+	inters *inters
+	// schemaConfig contains alternative names for all tables.
+	schemaConfig SchemaConfig
 }
 
-// hooks per client, for fast access.
-type hooks struct {
-	SysAddress            []ent.Hook
-	SysDict               []ent.Hook
-	SysDictItem           []ent.Hook
-	SysDistrict           []ent.Hook
-	SysJwtBlock           []ent.Hook
-	SysLogging            []ent.Hook
-	SysMenu               []ent.Hook
-	SysMenuAction         []ent.Hook
-	SysMenuActionResource []ent.Hook
-	SysRole               []ent.Hook
-	SysRoleMenu           []ent.Hook
-	SysUser               []ent.Hook
-	SysUserRole           []ent.Hook
-	XxxDemo               []ent.Hook
-}
+// hooks and interceptors per client, for fast access.
+type (
+	hooks struct {
+		SysAddress            []ent.Hook
+		SysDict               []ent.Hook
+		SysDictItem           []ent.Hook
+		SysDistrict           []ent.Hook
+		SysJwtBlock           []ent.Hook
+		SysLogging            []ent.Hook
+		SysMenu               []ent.Hook
+		SysMenuAction         []ent.Hook
+		SysMenuActionResource []ent.Hook
+		SysRole               []ent.Hook
+		SysRoleMenu           []ent.Hook
+		SysUser               []ent.Hook
+		SysUserRole           []ent.Hook
+		XxxDemo               []ent.Hook
+	}
+	inters struct {
+		SysAddress            []ent.Interceptor
+		SysDict               []ent.Interceptor
+		SysDictItem           []ent.Interceptor
+		SysDistrict           []ent.Interceptor
+		SysJwtBlock           []ent.Interceptor
+		SysLogging            []ent.Interceptor
+		SysMenu               []ent.Interceptor
+		SysMenuAction         []ent.Interceptor
+		SysMenuActionResource []ent.Interceptor
+		SysRole               []ent.Interceptor
+		SysRoleMenu           []ent.Interceptor
+		SysUser               []ent.Interceptor
+		SysUserRole           []ent.Interceptor
+		XxxDemo               []ent.Interceptor
+	}
+)
 
 // Options applies the options on the config object.
 func (c *config) options(opts ...Option) {
@@ -58,7 +81,7 @@ func Debug() Option {
 }
 
 // Log sets the logging function for debug mode.
-func Log(fn func(...interface{})) Option {
+func Log(fn func(...any)) Option {
 	return func(c *config) {
 		c.log = fn
 	}
@@ -68,5 +91,17 @@ func Log(fn func(...interface{})) Option {
 func Driver(driver dialect.Driver) Option {
 	return func(c *config) {
 		c.driver = driver
+	}
+}
+
+// SchemaConfig represents alternative schema names for all tables
+// that can be passed at runtime.
+type SchemaConfig = internal.SchemaConfig
+
+// AlternateSchemas allows alternate schema names to be
+// passed into ent operations.
+func AlternateSchema(schemaConfig SchemaConfig) Option {
+	return func(c *config) {
+		c.schemaConfig = schemaConfig
 	}
 }

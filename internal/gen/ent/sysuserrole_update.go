@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 )
@@ -18,8 +19,9 @@ import (
 // SysUserRoleUpdate is the builder for updating SysUserRole entities.
 type SysUserRoleUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysUserRoleMutation
+	hooks     []Hook
+	mutation  *SysUserRoleMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysUserRoleUpdate builder.
@@ -87,41 +89,8 @@ func (suru *SysUserRoleUpdate) Mutation() *SysUserRoleMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (suru *SysUserRoleUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	suru.defaults()
-	if len(suru.hooks) == 0 {
-		if err = suru.check(); err != nil {
-			return 0, err
-		}
-		affected, err = suru.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysUserRoleMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = suru.check(); err != nil {
-				return 0, err
-			}
-			suru.mutation = mutation
-			affected, err = suru.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(suru.hooks) - 1; i >= 0; i-- {
-			if suru.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = suru.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, suru.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysUserRoleMutation](ctx, suru.sqlSave, suru.mutation, suru.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -169,17 +138,17 @@ func (suru *SysUserRoleUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (suru *SysUserRoleUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserRoleUpdate {
+	suru.modifiers = append(suru.modifiers, modifiers...)
+	return suru
+}
+
 func (suru *SysUserRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysuserrole.Table,
-			Columns: sysuserrole.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysuserrole.FieldID,
-			},
-		},
+	if err := suru.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysuserrole.Table, sysuserrole.Columns, sqlgraph.NewFieldSpec(sysuserrole.FieldID, field.TypeString))
 	if ps := suru.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -188,46 +157,26 @@ func (suru *SysUserRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := suru.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuserrole.FieldIsDel,
-		})
+		_spec.SetField(sysuserrole.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := suru.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuserrole.FieldUpdatedAt,
-		})
+		_spec.SetField(sysuserrole.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := suru.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuserrole.FieldDeletedAt,
-		})
+		_spec.SetField(sysuserrole.FieldDeletedAt, field.TypeTime, value)
 	}
 	if suru.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysuserrole.FieldDeletedAt,
-		})
+		_spec.ClearField(sysuserrole.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := suru.mutation.UserID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuserrole.FieldUserID,
-		})
+		_spec.SetField(sysuserrole.FieldUserID, field.TypeString, value)
 	}
 	if value, ok := suru.mutation.RoleID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuserrole.FieldRoleID,
-		})
+		_spec.SetField(sysuserrole.FieldRoleID, field.TypeString, value)
 	}
+	_spec.Node.Schema = suru.schemaConfig.SysUserRole
+	ctx = internal.NewSchemaConfigContext(ctx, suru.schemaConfig)
+	_spec.AddModifiers(suru.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, suru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysuserrole.Label}
@@ -236,15 +185,17 @@ func (suru *SysUserRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	suru.mutation.done = true
 	return n, nil
 }
 
 // SysUserRoleUpdateOne is the builder for updating a single SysUserRole entity.
 type SysUserRoleUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysUserRoleMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysUserRoleMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -304,6 +255,12 @@ func (suruo *SysUserRoleUpdateOne) Mutation() *SysUserRoleMutation {
 	return suruo.mutation
 }
 
+// Where appends a list predicates to the SysUserRoleUpdate builder.
+func (suruo *SysUserRoleUpdateOne) Where(ps ...predicate.SysUserRole) *SysUserRoleUpdateOne {
+	suruo.mutation.Where(ps...)
+	return suruo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (suruo *SysUserRoleUpdateOne) Select(field string, fields ...string) *SysUserRoleUpdateOne {
@@ -313,47 +270,8 @@ func (suruo *SysUserRoleUpdateOne) Select(field string, fields ...string) *SysUs
 
 // Save executes the query and returns the updated SysUserRole entity.
 func (suruo *SysUserRoleUpdateOne) Save(ctx context.Context) (*SysUserRole, error) {
-	var (
-		err  error
-		node *SysUserRole
-	)
 	suruo.defaults()
-	if len(suruo.hooks) == 0 {
-		if err = suruo.check(); err != nil {
-			return nil, err
-		}
-		node, err = suruo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysUserRoleMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = suruo.check(); err != nil {
-				return nil, err
-			}
-			suruo.mutation = mutation
-			node, err = suruo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(suruo.hooks) - 1; i >= 0; i-- {
-			if suruo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = suruo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, suruo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysUserRole)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysUserRoleMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysUserRole, SysUserRoleMutation](ctx, suruo.sqlSave, suruo.mutation, suruo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -401,17 +319,17 @@ func (suruo *SysUserRoleUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (suruo *SysUserRoleUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserRoleUpdateOne {
+	suruo.modifiers = append(suruo.modifiers, modifiers...)
+	return suruo
+}
+
 func (suruo *SysUserRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysUserRole, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysuserrole.Table,
-			Columns: sysuserrole.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysuserrole.FieldID,
-			},
-		},
+	if err := suruo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysuserrole.Table, sysuserrole.Columns, sqlgraph.NewFieldSpec(sysuserrole.FieldID, field.TypeString))
 	id, ok := suruo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysUserRole.id" for update`)}
@@ -437,46 +355,26 @@ func (suruo *SysUserRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysUserR
 		}
 	}
 	if value, ok := suruo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuserrole.FieldIsDel,
-		})
+		_spec.SetField(sysuserrole.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := suruo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuserrole.FieldUpdatedAt,
-		})
+		_spec.SetField(sysuserrole.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := suruo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuserrole.FieldDeletedAt,
-		})
+		_spec.SetField(sysuserrole.FieldDeletedAt, field.TypeTime, value)
 	}
 	if suruo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysuserrole.FieldDeletedAt,
-		})
+		_spec.ClearField(sysuserrole.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := suruo.mutation.UserID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuserrole.FieldUserID,
-		})
+		_spec.SetField(sysuserrole.FieldUserID, field.TypeString, value)
 	}
 	if value, ok := suruo.mutation.RoleID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuserrole.FieldRoleID,
-		})
+		_spec.SetField(sysuserrole.FieldRoleID, field.TypeString, value)
 	}
+	_spec.Node.Schema = suruo.schemaConfig.SysUserRole
+	ctx = internal.NewSchemaConfigContext(ctx, suruo.schemaConfig)
+	_spec.AddModifiers(suruo.modifiers...)
 	_node = &SysUserRole{config: suruo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
@@ -488,5 +386,6 @@ func (suruo *SysUserRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysUserR
 		}
 		return nil, err
 	}
+	suruo.mutation.done = true
 	return _node, nil
 }

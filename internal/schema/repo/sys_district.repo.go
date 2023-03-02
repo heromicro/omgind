@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
@@ -223,7 +224,7 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 
 	query := a.EntCli.SysDistrict.Query()
 
-	query = query.Where(sysdistrict.DeletedAtIsNil())
+	query = query.Where(sysdistrict.DeletedAtIsNil(), sysdistrict.IsDelEQ(false))
 	// TODO: 查询条件
 
 	if pid == "-" {
@@ -395,7 +396,51 @@ func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDist
 func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*schema.SysDistrict, error) {
 
 	iteminput := a.ToEntCreateSysDistrictInput(&item)
-	r_sysdistrict, err := a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
+	var r_sysdistrict *ent.SysDistrict
+	var err error
+
+	// check pid
+	if iteminput.ParentID == nil || *iteminput.ParentID == "" {
+		// 树顶级
+		var opt schema.SysDistrictQueryOptions
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
+
+		most, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).First(ctx)
+		if err != nil {
+			if !ent.IsNotFound(err) {
+				return nil, err
+			}
+		}
+
+		if most == nil {
+			iteminput.TreeID = ptr.Int64(1)
+		} else {
+			iteminput.TreeID = ptr.Int64(*most.TreeID + 1)
+		}
+		iteminput.TreeLeft = ptr.Int64(1)
+		iteminput.TreeRight = ptr.Int64(2)
+
+		r_sysdistrict, err = a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
+
+	} else {
+		parent, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(*iteminput.ParentID)).First(ctx)
+		if err != nil {
+			return nil, err
+		}
+		iteminput.TreeID = parent.TreeID
+		iteminput.TreeLeft = parent.TreeRight
+		iteminput.TreeRight = ptr.Int64(*parent.TreeRight + 1)
+
+		WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+
+			r_sysdistrict, err = tx.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
+
+			if err != nil {
+				return err
+			}
+			return nil
+		})
+	}
 
 	if err != nil {
 		return nil, err
@@ -410,6 +455,13 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	oitem, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).Only(ctx)
 	if err != nil {
 		return nil, err
+	}
+
+	// check pid change or not
+	if *oitem.ParentID == item.ParentID {
+
+	} else {
+
 	}
 
 	iteminput := a.ToEntUpdateSysDistrictInput(&item)

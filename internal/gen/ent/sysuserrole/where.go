@@ -11,593 +11,347 @@ import (
 
 // ID filters vertices based on their ID field.
 func ID(id string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldID), id))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
 func IDEQ(id string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldID), id))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
 func IDNEQ(id string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldID), id))
-	})
+	return predicate.SysUserRole(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
 func IDIn(ids ...string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		v := make([]interface{}, len(ids))
-		for i := range v {
-			v[i] = ids[i]
-		}
-		s.Where(sql.In(s.C(FieldID), v...))
-	})
+	return predicate.SysUserRole(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
 func IDNotIn(ids ...string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		v := make([]interface{}, len(ids))
-		for i := range v {
-			v[i] = ids[i]
-		}
-		s.Where(sql.NotIn(s.C(FieldID), v...))
-	})
+	return predicate.SysUserRole(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
 func IDGT(id string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldID), id))
-	})
+	return predicate.SysUserRole(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
 func IDGTE(id string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldID), id))
-	})
+	return predicate.SysUserRole(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
 func IDLT(id string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldID), id))
-	})
+	return predicate.SysUserRole(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
 func IDLTE(id string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldID), id))
-	})
+	return predicate.SysUserRole(sql.FieldLTE(FieldID, id))
 }
 
 // IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
 func IsDel(v bool) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsDel), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldIsDel, v))
 }
 
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldCreatedAt, v))
 }
 
 // UpdatedAt applies equality check predicate on the "updated_at" field. It's identical to UpdatedAtEQ.
 func UpdatedAt(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldUpdatedAt, v))
 }
 
 // DeletedAt applies equality check predicate on the "deleted_at" field. It's identical to DeletedAtEQ.
 func DeletedAt(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldDeletedAt, v))
 }
 
 // UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
 func UserID(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldUserID, v))
 }
 
 // RoleID applies equality check predicate on the "role_id" field. It's identical to RoleIDEQ.
 func RoleID(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldRoleID, v))
 }
 
 // IsDelEQ applies the EQ predicate on the "is_del" field.
 func IsDelEQ(v bool) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsDel), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldIsDel, v))
 }
 
 // IsDelNEQ applies the NEQ predicate on the "is_del" field.
 func IsDelNEQ(v bool) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldIsDel), v))
-	})
+	return predicate.SysUserRole(sql.FieldNEQ(FieldIsDel, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldCreatedAt, v))
 }
 
 // CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
 func CreatedAtNEQ(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldNEQ(FieldCreatedAt, v))
 }
 
 // CreatedAtIn applies the In predicate on the "created_at" field.
 func CreatedAtIn(vs ...time.Time) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCreatedAt), v...))
-	})
+	return predicate.SysUserRole(sql.FieldIn(FieldCreatedAt, vs...))
 }
 
 // CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
 func CreatedAtNotIn(vs ...time.Time) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCreatedAt), v...))
-	})
+	return predicate.SysUserRole(sql.FieldNotIn(FieldCreatedAt, vs...))
 }
 
 // CreatedAtGT applies the GT predicate on the "created_at" field.
 func CreatedAtGT(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldGT(FieldCreatedAt, v))
 }
 
 // CreatedAtGTE applies the GTE predicate on the "created_at" field.
 func CreatedAtGTE(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldGTE(FieldCreatedAt, v))
 }
 
 // CreatedAtLT applies the LT predicate on the "created_at" field.
 func CreatedAtLT(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldLT(FieldCreatedAt, v))
 }
 
 // CreatedAtLTE applies the LTE predicate on the "created_at" field.
 func CreatedAtLTE(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldLTE(FieldCreatedAt, v))
 }
 
 // UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
 func UpdatedAtEQ(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldUpdatedAt, v))
 }
 
 // UpdatedAtNEQ applies the NEQ predicate on the "updated_at" field.
 func UpdatedAtNEQ(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldNEQ(FieldUpdatedAt, v))
 }
 
 // UpdatedAtIn applies the In predicate on the "updated_at" field.
 func UpdatedAtIn(vs ...time.Time) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldUpdatedAt), v...))
-	})
+	return predicate.SysUserRole(sql.FieldIn(FieldUpdatedAt, vs...))
 }
 
 // UpdatedAtNotIn applies the NotIn predicate on the "updated_at" field.
 func UpdatedAtNotIn(vs ...time.Time) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldUpdatedAt), v...))
-	})
+	return predicate.SysUserRole(sql.FieldNotIn(FieldUpdatedAt, vs...))
 }
 
 // UpdatedAtGT applies the GT predicate on the "updated_at" field.
 func UpdatedAtGT(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldGT(FieldUpdatedAt, v))
 }
 
 // UpdatedAtGTE applies the GTE predicate on the "updated_at" field.
 func UpdatedAtGTE(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldGTE(FieldUpdatedAt, v))
 }
 
 // UpdatedAtLT applies the LT predicate on the "updated_at" field.
 func UpdatedAtLT(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldLT(FieldUpdatedAt, v))
 }
 
 // UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
 func UpdatedAtLTE(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldLTE(FieldUpdatedAt, v))
 }
 
 // DeletedAtEQ applies the EQ predicate on the "deleted_at" field.
 func DeletedAtEQ(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldDeletedAt, v))
 }
 
 // DeletedAtNEQ applies the NEQ predicate on the "deleted_at" field.
 func DeletedAtNEQ(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldNEQ(FieldDeletedAt, v))
 }
 
 // DeletedAtIn applies the In predicate on the "deleted_at" field.
 func DeletedAtIn(vs ...time.Time) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldDeletedAt), v...))
-	})
+	return predicate.SysUserRole(sql.FieldIn(FieldDeletedAt, vs...))
 }
 
 // DeletedAtNotIn applies the NotIn predicate on the "deleted_at" field.
 func DeletedAtNotIn(vs ...time.Time) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldDeletedAt), v...))
-	})
+	return predicate.SysUserRole(sql.FieldNotIn(FieldDeletedAt, vs...))
 }
 
 // DeletedAtGT applies the GT predicate on the "deleted_at" field.
 func DeletedAtGT(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldGT(FieldDeletedAt, v))
 }
 
 // DeletedAtGTE applies the GTE predicate on the "deleted_at" field.
 func DeletedAtGTE(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldGTE(FieldDeletedAt, v))
 }
 
 // DeletedAtLT applies the LT predicate on the "deleted_at" field.
 func DeletedAtLT(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldLT(FieldDeletedAt, v))
 }
 
 // DeletedAtLTE applies the LTE predicate on the "deleted_at" field.
 func DeletedAtLTE(v time.Time) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysUserRole(sql.FieldLTE(FieldDeletedAt, v))
 }
 
 // DeletedAtIsNil applies the IsNil predicate on the "deleted_at" field.
 func DeletedAtIsNil() predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldDeletedAt)))
-	})
+	return predicate.SysUserRole(sql.FieldIsNull(FieldDeletedAt))
 }
 
 // DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
 func DeletedAtNotNil() predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldDeletedAt)))
-	})
+	return predicate.SysUserRole(sql.FieldNotNull(FieldDeletedAt))
 }
 
 // UserIDEQ applies the EQ predicate on the "user_id" field.
 func UserIDEQ(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldUserID, v))
 }
 
 // UserIDNEQ applies the NEQ predicate on the "user_id" field.
 func UserIDNEQ(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldNEQ(FieldUserID, v))
 }
 
 // UserIDIn applies the In predicate on the "user_id" field.
 func UserIDIn(vs ...string) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldUserID), v...))
-	})
+	return predicate.SysUserRole(sql.FieldIn(FieldUserID, vs...))
 }
 
 // UserIDNotIn applies the NotIn predicate on the "user_id" field.
 func UserIDNotIn(vs ...string) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldUserID), v...))
-	})
+	return predicate.SysUserRole(sql.FieldNotIn(FieldUserID, vs...))
 }
 
 // UserIDGT applies the GT predicate on the "user_id" field.
 func UserIDGT(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldGT(FieldUserID, v))
 }
 
 // UserIDGTE applies the GTE predicate on the "user_id" field.
 func UserIDGTE(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldGTE(FieldUserID, v))
 }
 
 // UserIDLT applies the LT predicate on the "user_id" field.
 func UserIDLT(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldLT(FieldUserID, v))
 }
 
 // UserIDLTE applies the LTE predicate on the "user_id" field.
 func UserIDLTE(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldLTE(FieldUserID, v))
 }
 
 // UserIDContains applies the Contains predicate on the "user_id" field.
 func UserIDContains(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldContains(FieldUserID, v))
 }
 
 // UserIDHasPrefix applies the HasPrefix predicate on the "user_id" field.
 func UserIDHasPrefix(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldHasPrefix(FieldUserID, v))
 }
 
 // UserIDHasSuffix applies the HasSuffix predicate on the "user_id" field.
 func UserIDHasSuffix(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldHasSuffix(FieldUserID, v))
 }
 
 // UserIDEqualFold applies the EqualFold predicate on the "user_id" field.
 func UserIDEqualFold(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldEqualFold(FieldUserID, v))
 }
 
 // UserIDContainsFold applies the ContainsFold predicate on the "user_id" field.
 func UserIDContainsFold(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldUserID), v))
-	})
+	return predicate.SysUserRole(sql.FieldContainsFold(FieldUserID, v))
 }
 
 // RoleIDEQ applies the EQ predicate on the "role_id" field.
 func RoleIDEQ(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldEQ(FieldRoleID, v))
 }
 
 // RoleIDNEQ applies the NEQ predicate on the "role_id" field.
 func RoleIDNEQ(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldNEQ(FieldRoleID, v))
 }
 
 // RoleIDIn applies the In predicate on the "role_id" field.
 func RoleIDIn(vs ...string) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldRoleID), v...))
-	})
+	return predicate.SysUserRole(sql.FieldIn(FieldRoleID, vs...))
 }
 
 // RoleIDNotIn applies the NotIn predicate on the "role_id" field.
 func RoleIDNotIn(vs ...string) predicate.SysUserRole {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldRoleID), v...))
-	})
+	return predicate.SysUserRole(sql.FieldNotIn(FieldRoleID, vs...))
 }
 
 // RoleIDGT applies the GT predicate on the "role_id" field.
 func RoleIDGT(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldGT(FieldRoleID, v))
 }
 
 // RoleIDGTE applies the GTE predicate on the "role_id" field.
 func RoleIDGTE(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldGTE(FieldRoleID, v))
 }
 
 // RoleIDLT applies the LT predicate on the "role_id" field.
 func RoleIDLT(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldLT(FieldRoleID, v))
 }
 
 // RoleIDLTE applies the LTE predicate on the "role_id" field.
 func RoleIDLTE(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldLTE(FieldRoleID, v))
 }
 
 // RoleIDContains applies the Contains predicate on the "role_id" field.
 func RoleIDContains(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldContains(FieldRoleID, v))
 }
 
 // RoleIDHasPrefix applies the HasPrefix predicate on the "role_id" field.
 func RoleIDHasPrefix(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldHasPrefix(FieldRoleID, v))
 }
 
 // RoleIDHasSuffix applies the HasSuffix predicate on the "role_id" field.
 func RoleIDHasSuffix(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldHasSuffix(FieldRoleID, v))
 }
 
 // RoleIDEqualFold applies the EqualFold predicate on the "role_id" field.
 func RoleIDEqualFold(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldEqualFold(FieldRoleID, v))
 }
 
 // RoleIDContainsFold applies the ContainsFold predicate on the "role_id" field.
 func RoleIDContainsFold(v string) predicate.SysUserRole {
-	return predicate.SysUserRole(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldRoleID), v))
-	})
+	return predicate.SysUserRole(sql.FieldContainsFold(FieldRoleID, v))
 }
 
 // And groups predicates with the AND operator between them.

@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
 )
@@ -18,8 +19,9 @@ import (
 // SysRoleMenuUpdate is the builder for updating SysRoleMenu entities.
 type SysRoleMenuUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysRoleMenuMutation
+	hooks     []Hook
+	mutation  *SysRoleMenuMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysRoleMenuUpdate builder.
@@ -107,41 +109,8 @@ func (srmu *SysRoleMenuUpdate) Mutation() *SysRoleMenuMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (srmu *SysRoleMenuUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	srmu.defaults()
-	if len(srmu.hooks) == 0 {
-		if err = srmu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = srmu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysRoleMenuMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = srmu.check(); err != nil {
-				return 0, err
-			}
-			srmu.mutation = mutation
-			affected, err = srmu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(srmu.hooks) - 1; i >= 0; i-- {
-			if srmu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = srmu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, srmu.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysRoleMenuMutation](ctx, srmu.sqlSave, srmu.mutation, srmu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -194,17 +163,17 @@ func (srmu *SysRoleMenuUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (srmu *SysRoleMenuUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysRoleMenuUpdate {
+	srmu.modifiers = append(srmu.modifiers, modifiers...)
+	return srmu
+}
+
 func (srmu *SysRoleMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysrolemenu.Table,
-			Columns: sysrolemenu.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysrolemenu.FieldID,
-			},
-		},
+	if err := srmu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysrolemenu.Table, sysrolemenu.Columns, sqlgraph.NewFieldSpec(sysrolemenu.FieldID, field.TypeString))
 	if ps := srmu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -213,59 +182,32 @@ func (srmu *SysRoleMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := srmu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrolemenu.FieldIsDel,
-		})
+		_spec.SetField(sysrolemenu.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := srmu.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrolemenu.FieldUpdatedAt,
-		})
+		_spec.SetField(sysrolemenu.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := srmu.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrolemenu.FieldDeletedAt,
-		})
+		_spec.SetField(sysrolemenu.FieldDeletedAt, field.TypeTime, value)
 	}
 	if srmu.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysrolemenu.FieldDeletedAt,
-		})
+		_spec.ClearField(sysrolemenu.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := srmu.mutation.RoleID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldRoleID,
-		})
+		_spec.SetField(sysrolemenu.FieldRoleID, field.TypeString, value)
 	}
 	if value, ok := srmu.mutation.MenuID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldMenuID,
-		})
+		_spec.SetField(sysrolemenu.FieldMenuID, field.TypeString, value)
 	}
 	if value, ok := srmu.mutation.ActionID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldActionID,
-		})
+		_spec.SetField(sysrolemenu.FieldActionID, field.TypeString, value)
 	}
 	if srmu.mutation.ActionIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysrolemenu.FieldActionID,
-		})
+		_spec.ClearField(sysrolemenu.FieldActionID, field.TypeString)
 	}
+	_spec.Node.Schema = srmu.schemaConfig.SysRoleMenu
+	ctx = internal.NewSchemaConfigContext(ctx, srmu.schemaConfig)
+	_spec.AddModifiers(srmu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, srmu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysrolemenu.Label}
@@ -274,15 +216,17 @@ func (srmu *SysRoleMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	srmu.mutation.done = true
 	return n, nil
 }
 
 // SysRoleMenuUpdateOne is the builder for updating a single SysRoleMenu entity.
 type SysRoleMenuUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysRoleMenuMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysRoleMenuMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -362,6 +306,12 @@ func (srmuo *SysRoleMenuUpdateOne) Mutation() *SysRoleMenuMutation {
 	return srmuo.mutation
 }
 
+// Where appends a list predicates to the SysRoleMenuUpdate builder.
+func (srmuo *SysRoleMenuUpdateOne) Where(ps ...predicate.SysRoleMenu) *SysRoleMenuUpdateOne {
+	srmuo.mutation.Where(ps...)
+	return srmuo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (srmuo *SysRoleMenuUpdateOne) Select(field string, fields ...string) *SysRoleMenuUpdateOne {
@@ -371,47 +321,8 @@ func (srmuo *SysRoleMenuUpdateOne) Select(field string, fields ...string) *SysRo
 
 // Save executes the query and returns the updated SysRoleMenu entity.
 func (srmuo *SysRoleMenuUpdateOne) Save(ctx context.Context) (*SysRoleMenu, error) {
-	var (
-		err  error
-		node *SysRoleMenu
-	)
 	srmuo.defaults()
-	if len(srmuo.hooks) == 0 {
-		if err = srmuo.check(); err != nil {
-			return nil, err
-		}
-		node, err = srmuo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysRoleMenuMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = srmuo.check(); err != nil {
-				return nil, err
-			}
-			srmuo.mutation = mutation
-			node, err = srmuo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(srmuo.hooks) - 1; i >= 0; i-- {
-			if srmuo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = srmuo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, srmuo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysRoleMenu)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysRoleMenuMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysRoleMenu, SysRoleMenuMutation](ctx, srmuo.sqlSave, srmuo.mutation, srmuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -464,17 +375,17 @@ func (srmuo *SysRoleMenuUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (srmuo *SysRoleMenuUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysRoleMenuUpdateOne {
+	srmuo.modifiers = append(srmuo.modifiers, modifiers...)
+	return srmuo
+}
+
 func (srmuo *SysRoleMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysRoleMenu, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysrolemenu.Table,
-			Columns: sysrolemenu.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysrolemenu.FieldID,
-			},
-		},
+	if err := srmuo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysrolemenu.Table, sysrolemenu.Columns, sqlgraph.NewFieldSpec(sysrolemenu.FieldID, field.TypeString))
 	id, ok := srmuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysRoleMenu.id" for update`)}
@@ -500,59 +411,32 @@ func (srmuo *SysRoleMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysRoleM
 		}
 	}
 	if value, ok := srmuo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrolemenu.FieldIsDel,
-		})
+		_spec.SetField(sysrolemenu.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := srmuo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrolemenu.FieldUpdatedAt,
-		})
+		_spec.SetField(sysrolemenu.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := srmuo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrolemenu.FieldDeletedAt,
-		})
+		_spec.SetField(sysrolemenu.FieldDeletedAt, field.TypeTime, value)
 	}
 	if srmuo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysrolemenu.FieldDeletedAt,
-		})
+		_spec.ClearField(sysrolemenu.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := srmuo.mutation.RoleID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldRoleID,
-		})
+		_spec.SetField(sysrolemenu.FieldRoleID, field.TypeString, value)
 	}
 	if value, ok := srmuo.mutation.MenuID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldMenuID,
-		})
+		_spec.SetField(sysrolemenu.FieldMenuID, field.TypeString, value)
 	}
 	if value, ok := srmuo.mutation.ActionID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldActionID,
-		})
+		_spec.SetField(sysrolemenu.FieldActionID, field.TypeString, value)
 	}
 	if srmuo.mutation.ActionIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysrolemenu.FieldActionID,
-		})
+		_spec.ClearField(sysrolemenu.FieldActionID, field.TypeString)
 	}
+	_spec.Node.Schema = srmuo.schemaConfig.SysRoleMenu
+	ctx = internal.NewSchemaConfigContext(ctx, srmuo.schemaConfig)
+	_spec.AddModifiers(srmuo.modifiers...)
 	_node = &SysRoleMenu{config: srmuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
@@ -564,5 +448,6 @@ func (srmuo *SysRoleMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysRoleM
 		}
 		return nil, err
 	}
+	srmuo.mutation.done = true
 	return _node, nil
 }

@@ -4,11 +4,11 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
 )
@@ -28,34 +28,7 @@ func (srd *SysRoleDelete) Where(ps ...predicate.SysRole) *SysRoleDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (srd *SysRoleDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(srd.hooks) == 0 {
-		affected, err = srd.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysRoleMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			srd.mutation = mutation
-			affected, err = srd.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(srd.hooks) - 1; i >= 0; i-- {
-			if srd.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = srd.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, srd.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysRoleMutation](ctx, srd.sqlExec, srd.mutation, srd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +41,9 @@ func (srd *SysRoleDelete) ExecX(ctx context.Context) int {
 }
 
 func (srd *SysRoleDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: sysrole.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysrole.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(sysrole.Table, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
+	_spec.Node.Schema = srd.schemaConfig.SysRole
+	ctx = internal.NewSchemaConfigContext(ctx, srd.schemaConfig)
 	if ps := srd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +55,19 @@ func (srd *SysRoleDelete) sqlExec(ctx context.Context) (int, error) {
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	srd.mutation.done = true
 	return affected, err
 }
 
 // SysRoleDeleteOne is the builder for deleting a single SysRole entity.
 type SysRoleDeleteOne struct {
 	srd *SysRoleDelete
+}
+
+// Where appends a list predicates to the SysRoleDelete builder.
+func (srdo *SysRoleDeleteOne) Where(ps ...predicate.SysRole) *SysRoleDeleteOne {
+	srdo.srd.mutation.Where(ps...)
+	return srdo
 }
 
 // Exec executes the deletion query.
@@ -111,5 +85,7 @@ func (srdo *SysRoleDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (srdo *SysRoleDeleteOne) ExecX(ctx context.Context) {
-	srdo.srd.ExecX(ctx)
+	if err := srdo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

@@ -4,11 +4,11 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 )
@@ -28,34 +28,7 @@ func (surd *SysUserRoleDelete) Where(ps ...predicate.SysUserRole) *SysUserRoleDe
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (surd *SysUserRoleDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(surd.hooks) == 0 {
-		affected, err = surd.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysUserRoleMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			surd.mutation = mutation
-			affected, err = surd.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(surd.hooks) - 1; i >= 0; i-- {
-			if surd.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = surd.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, surd.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysUserRoleMutation](ctx, surd.sqlExec, surd.mutation, surd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +41,9 @@ func (surd *SysUserRoleDelete) ExecX(ctx context.Context) int {
 }
 
 func (surd *SysUserRoleDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: sysuserrole.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysuserrole.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(sysuserrole.Table, sqlgraph.NewFieldSpec(sysuserrole.FieldID, field.TypeString))
+	_spec.Node.Schema = surd.schemaConfig.SysUserRole
+	ctx = internal.NewSchemaConfigContext(ctx, surd.schemaConfig)
 	if ps := surd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +55,19 @@ func (surd *SysUserRoleDelete) sqlExec(ctx context.Context) (int, error) {
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	surd.mutation.done = true
 	return affected, err
 }
 
 // SysUserRoleDeleteOne is the builder for deleting a single SysUserRole entity.
 type SysUserRoleDeleteOne struct {
 	surd *SysUserRoleDelete
+}
+
+// Where appends a list predicates to the SysUserRoleDelete builder.
+func (surdo *SysUserRoleDeleteOne) Where(ps ...predicate.SysUserRole) *SysUserRoleDeleteOne {
+	surdo.surd.mutation.Where(ps...)
+	return surdo
 }
 
 // Exec executes the deletion query.
@@ -111,5 +85,7 @@ func (surdo *SysUserRoleDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (surdo *SysUserRoleDeleteOne) ExecX(ctx context.Context) {
-	surdo.surd.ExecX(ctx)
+	if err := surdo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

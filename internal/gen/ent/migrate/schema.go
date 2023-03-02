@@ -3,7 +3,6 @@
 package migrate
 
 import (
-	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/dialect/sql/schema"
 	"entgo.io/ent/schema/field"
 )
@@ -346,12 +345,12 @@ var (
 			},
 		},
 	}
-	// SysLoggingColumns holds the columns for the "sys_logging" table.
-	SysLoggingColumns = []*schema.Column{
+	// SysLoggingsColumns holds the columns for the "sys_loggings" table.
+	SysLoggingsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
 		{Name: "is_del", Type: field.TypeBool, Default: false},
 		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
-		{Name: "level", Type: field.TypeString, Size: 32},
+		{Name: "level", Type: field.TypeString, Nullable: true, Size: 32},
 		{Name: "trace_id", Type: field.TypeString, Nullable: true, Size: 128},
 		{Name: "user_id", Type: field.TypeString, Nullable: true, Size: 128},
 		{Name: "tag", Type: field.TypeString, Nullable: true, Size: 128},
@@ -359,48 +358,48 @@ var (
 		{Name: "message", Type: field.TypeString, Nullable: true, Size: 1024},
 		{Name: "data", Type: field.TypeString, Nullable: true, Size: 2147483647},
 		{Name: "error_stack", Type: field.TypeString, Nullable: true, Size: 2147483647},
-		{Name: "crtd_at", Type: field.TypeTime},
+		{Name: "crtd_at", Type: field.TypeInt64},
 	}
-	// SysLoggingTable holds the schema information for the "sys_logging" table.
-	SysLoggingTable = &schema.Table{
-		Name:       "sys_logging",
-		Columns:    SysLoggingColumns,
-		PrimaryKey: []*schema.Column{SysLoggingColumns[0]},
+	// SysLoggingsTable holds the schema information for the "sys_loggings" table.
+	SysLoggingsTable = &schema.Table{
+		Name:       "sys_loggings",
+		Columns:    SysLoggingsColumns,
+		PrimaryKey: []*schema.Column{SysLoggingsColumns[0]},
 		Indexes: []*schema.Index{
 			{
 				Name:    "syslogging_id",
 				Unique:  true,
-				Columns: []*schema.Column{SysLoggingColumns[0]},
+				Columns: []*schema.Column{SysLoggingsColumns[0]},
 			},
 			{
 				Name:    "syslogging_is_del",
 				Unique:  false,
-				Columns: []*schema.Column{SysLoggingColumns[1]},
+				Columns: []*schema.Column{SysLoggingsColumns[1]},
 			},
 			{
 				Name:    "syslogging_level",
 				Unique:  false,
-				Columns: []*schema.Column{SysLoggingColumns[3]},
+				Columns: []*schema.Column{SysLoggingsColumns[3]},
 			},
 			{
 				Name:    "syslogging_trace_id",
 				Unique:  false,
-				Columns: []*schema.Column{SysLoggingColumns[4]},
+				Columns: []*schema.Column{SysLoggingsColumns[4]},
 			},
 			{
 				Name:    "syslogging_user_id",
 				Unique:  false,
-				Columns: []*schema.Column{SysLoggingColumns[5]},
+				Columns: []*schema.Column{SysLoggingsColumns[5]},
 			},
 			{
 				Name:    "syslogging_tag",
 				Unique:  false,
-				Columns: []*schema.Column{SysLoggingColumns[6]},
+				Columns: []*schema.Column{SysLoggingsColumns[6]},
 			},
 			{
 				Name:    "syslogging_crtd_at",
 				Unique:  false,
-				Columns: []*schema.Column{SysLoggingColumns[11]},
+				Columns: []*schema.Column{SysLoggingsColumns[11]},
 			},
 		},
 	}
@@ -821,7 +820,7 @@ var (
 		SysDictItemsTable,
 		SysDistrictsTable,
 		SysJwtBlocksTable,
-		SysLoggingTable,
+		SysLoggingsTable,
 		SysMenusTable,
 		SysMenuActionsTable,
 		SysMenuActionResourcesTable,
@@ -835,7 +834,4 @@ var (
 
 func init() {
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
-	SysLoggingTable.Annotation = &entsql.Annotation{
-		Table: "sys_logging",
-	}
 }

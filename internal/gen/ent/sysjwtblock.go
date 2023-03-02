@@ -21,11 +21,11 @@ type SysJwtBlock struct {
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// delete time,
-	DeletedAt *time.Time `json:"deleted_at,omitempty" sql:"dltd_at"`
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
 	// jwt
@@ -33,8 +33,8 @@ type SysJwtBlock struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysJwtBlock) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysJwtBlock) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysjwtblock.FieldIsDel, sysjwtblock.FieldIsActive:
@@ -52,7 +52,7 @@ func (*SysJwtBlock) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysJwtBlock fields.
-func (sjb *SysJwtBlock) assignValues(columns []string, values []interface{}) error {
+func (sjb *SysJwtBlock) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -117,7 +117,7 @@ func (sjb *SysJwtBlock) assignValues(columns []string, values []interface{}) err
 // Note that you need to call SysJwtBlock.Unwrap() before calling this method if this SysJwtBlock
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sjb *SysJwtBlock) Update() *SysJwtBlockUpdateOne {
-	return (&SysJwtBlockClient{config: sjb.config}).UpdateOne(sjb)
+	return NewSysJwtBlockClient(sjb.config).UpdateOne(sjb)
 }
 
 // Unwrap unwraps the SysJwtBlock entity that was returned from a transaction after it was closed,
@@ -166,9 +166,3 @@ func (sjb *SysJwtBlock) String() string {
 
 // SysJwtBlocks is a parsable slice of SysJwtBlock.
 type SysJwtBlocks []*SysJwtBlock
-
-func (sjb SysJwtBlocks) config(cfg config) {
-	for _i := range sjb {
-		sjb[_i].config = cfg
-	}
-}

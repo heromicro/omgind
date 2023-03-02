@@ -7,9 +7,11 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 )
@@ -17,12 +19,11 @@ import (
 // SysJwtBlockQuery is the builder for querying SysJwtBlock entities.
 type SysJwtBlockQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
+	ctx        *QueryContext
 	order      []OrderFunc
-	fields     []string
+	inters     []Interceptor
 	predicates []predicate.SysJwtBlock
+	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -34,26 +35,26 @@ func (sjbq *SysJwtBlockQuery) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockQue
 	return sjbq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (sjbq *SysJwtBlockQuery) Limit(limit int) *SysJwtBlockQuery {
-	sjbq.limit = &limit
+	sjbq.ctx.Limit = &limit
 	return sjbq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (sjbq *SysJwtBlockQuery) Offset(offset int) *SysJwtBlockQuery {
-	sjbq.offset = &offset
+	sjbq.ctx.Offset = &offset
 	return sjbq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (sjbq *SysJwtBlockQuery) Unique(unique bool) *SysJwtBlockQuery {
-	sjbq.unique = &unique
+	sjbq.ctx.Unique = &unique
 	return sjbq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (sjbq *SysJwtBlockQuery) Order(o ...OrderFunc) *SysJwtBlockQuery {
 	sjbq.order = append(sjbq.order, o...)
 	return sjbq
@@ -62,7 +63,7 @@ func (sjbq *SysJwtBlockQuery) Order(o ...OrderFunc) *SysJwtBlockQuery {
 // First returns the first SysJwtBlock entity from the query.
 // Returns a *NotFoundError when no SysJwtBlock was found.
 func (sjbq *SysJwtBlockQuery) First(ctx context.Context) (*SysJwtBlock, error) {
-	nodes, err := sjbq.Limit(1).All(ctx)
+	nodes, err := sjbq.Limit(1).All(setContextOp(ctx, sjbq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (sjbq *SysJwtBlockQuery) FirstX(ctx context.Context) *SysJwtBlock {
 // Returns a *NotFoundError when no SysJwtBlock ID was found.
 func (sjbq *SysJwtBlockQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sjbq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = sjbq.Limit(1).IDs(setContextOp(ctx, sjbq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (sjbq *SysJwtBlockQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysJwtBlock entity is found.
 // Returns a *NotFoundError when no SysJwtBlock entities are found.
 func (sjbq *SysJwtBlockQuery) Only(ctx context.Context) (*SysJwtBlock, error) {
-	nodes, err := sjbq.Limit(2).All(ctx)
+	nodes, err := sjbq.Limit(2).All(setContextOp(ctx, sjbq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (sjbq *SysJwtBlockQuery) OnlyX(ctx context.Context) *SysJwtBlock {
 // Returns a *NotFoundError when no entities are found.
 func (sjbq *SysJwtBlockQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sjbq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = sjbq.Limit(2).IDs(setContextOp(ctx, sjbq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,10 +162,12 @@ func (sjbq *SysJwtBlockQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysJwtBlocks.
 func (sjbq *SysJwtBlockQuery) All(ctx context.Context) ([]*SysJwtBlock, error) {
+	ctx = setContextOp(ctx, sjbq.ctx, "All")
 	if err := sjbq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return sjbq.sqlAll(ctx)
+	qr := querierAll[[]*SysJwtBlock, *SysJwtBlockQuery]()
+	return withInterceptors[[]*SysJwtBlock](ctx, sjbq, qr, sjbq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -177,9 +180,12 @@ func (sjbq *SysJwtBlockQuery) AllX(ctx context.Context) []*SysJwtBlock {
 }
 
 // IDs executes the query and returns a list of SysJwtBlock IDs.
-func (sjbq *SysJwtBlockQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := sjbq.Select(sysjwtblock.FieldID).Scan(ctx, &ids); err != nil {
+func (sjbq *SysJwtBlockQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if sjbq.ctx.Unique == nil && sjbq.path != nil {
+		sjbq.Unique(true)
+	}
+	ctx = setContextOp(ctx, sjbq.ctx, "IDs")
+	if err = sjbq.Select(sysjwtblock.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -196,10 +202,11 @@ func (sjbq *SysJwtBlockQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (sjbq *SysJwtBlockQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, sjbq.ctx, "Count")
 	if err := sjbq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return sjbq.sqlCount(ctx)
+	return withInterceptors[int](ctx, sjbq, querierCount[*SysJwtBlockQuery](), sjbq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -213,10 +220,15 @@ func (sjbq *SysJwtBlockQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (sjbq *SysJwtBlockQuery) Exist(ctx context.Context) (bool, error) {
-	if err := sjbq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, sjbq.ctx, "Exist")
+	switch _, err := sjbq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return sjbq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -236,14 +248,13 @@ func (sjbq *SysJwtBlockQuery) Clone() *SysJwtBlockQuery {
 	}
 	return &SysJwtBlockQuery{
 		config:     sjbq.config,
-		limit:      sjbq.limit,
-		offset:     sjbq.offset,
+		ctx:        sjbq.ctx.Clone(),
 		order:      append([]OrderFunc{}, sjbq.order...),
+		inters:     append([]Interceptor{}, sjbq.inters...),
 		predicates: append([]predicate.SysJwtBlock{}, sjbq.predicates...),
 		// clone intermediate query.
-		sql:    sjbq.sql.Clone(),
-		path:   sjbq.path,
-		unique: sjbq.unique,
+		sql:  sjbq.sql.Clone(),
+		path: sjbq.path,
 	}
 }
 
@@ -261,18 +272,12 @@ func (sjbq *SysJwtBlockQuery) Clone() *SysJwtBlockQuery {
 //		GroupBy(sysjwtblock.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (sjbq *SysJwtBlockQuery) GroupBy(field string, fields ...string) *SysJwtBlockGroupBy {
-	grbuild := &SysJwtBlockGroupBy{config: sjbq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := sjbq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return sjbq.sqlQuery(ctx), nil
-	}
+	sjbq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysJwtBlockGroupBy{build: sjbq}
+	grbuild.flds = &sjbq.ctx.Fields
 	grbuild.label = sysjwtblock.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -288,17 +293,31 @@ func (sjbq *SysJwtBlockQuery) GroupBy(field string, fields ...string) *SysJwtBlo
 //	client.SysJwtBlock.Query().
 //		Select(sysjwtblock.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (sjbq *SysJwtBlockQuery) Select(fields ...string) *SysJwtBlockSelect {
-	sjbq.fields = append(sjbq.fields, fields...)
-	selbuild := &SysJwtBlockSelect{SysJwtBlockQuery: sjbq}
-	selbuild.label = sysjwtblock.Label
-	selbuild.flds, selbuild.scan = &sjbq.fields, selbuild.Scan
-	return selbuild
+	sjbq.ctx.Fields = append(sjbq.ctx.Fields, fields...)
+	sbuild := &SysJwtBlockSelect{SysJwtBlockQuery: sjbq}
+	sbuild.label = sysjwtblock.Label
+	sbuild.flds, sbuild.scan = &sjbq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a SysJwtBlockSelect configured with the given aggregations.
+func (sjbq *SysJwtBlockQuery) Aggregate(fns ...AggregateFunc) *SysJwtBlockSelect {
+	return sjbq.Select().Aggregate(fns...)
 }
 
 func (sjbq *SysJwtBlockQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range sjbq.fields {
+	for _, inter := range sjbq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, sjbq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range sjbq.ctx.Fields {
 		if !sysjwtblock.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -318,13 +337,18 @@ func (sjbq *SysJwtBlockQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 		nodes = []*SysJwtBlock{}
 		_spec = sjbq.querySpec()
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysJwtBlock).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysJwtBlock{config: sjbq.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
+	}
+	_spec.Node.Schema = sjbq.schemaConfig.SysJwtBlock
+	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
+	if len(sjbq.modifiers) > 0 {
+		_spec.Modifiers = sjbq.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
@@ -340,38 +364,27 @@ func (sjbq *SysJwtBlockQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 
 func (sjbq *SysJwtBlockQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sjbq.querySpec()
-	_spec.Node.Columns = sjbq.fields
-	if len(sjbq.fields) > 0 {
-		_spec.Unique = sjbq.unique != nil && *sjbq.unique
+	_spec.Node.Schema = sjbq.schemaConfig.SysJwtBlock
+	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
+	if len(sjbq.modifiers) > 0 {
+		_spec.Modifiers = sjbq.modifiers
+	}
+	_spec.Node.Columns = sjbq.ctx.Fields
+	if len(sjbq.ctx.Fields) > 0 {
+		_spec.Unique = sjbq.ctx.Unique != nil && *sjbq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, sjbq.driver, _spec)
 }
 
-func (sjbq *SysJwtBlockQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := sjbq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (sjbq *SysJwtBlockQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysjwtblock.Table,
-			Columns: sysjwtblock.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysjwtblock.FieldID,
-			},
-		},
-		From:   sjbq.sql,
-		Unique: true,
-	}
-	if unique := sjbq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(sysjwtblock.Table, sysjwtblock.Columns, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
+	_spec.From = sjbq.sql
+	if unique := sjbq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if sjbq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := sjbq.fields; len(fields) > 0 {
+	if fields := sjbq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysjwtblock.FieldID)
 		for i := range fields {
@@ -387,10 +400,10 @@ func (sjbq *SysJwtBlockQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := sjbq.limit; limit != nil {
+	if limit := sjbq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := sjbq.offset; offset != nil {
+	if offset := sjbq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := sjbq.order; len(ps) > 0 {
@@ -406,7 +419,7 @@ func (sjbq *SysJwtBlockQuery) querySpec() *sqlgraph.QuerySpec {
 func (sjbq *SysJwtBlockQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(sjbq.driver.Dialect())
 	t1 := builder.Table(sysjwtblock.Table)
-	columns := sjbq.fields
+	columns := sjbq.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysjwtblock.Columns
 	}
@@ -415,8 +428,14 @@ func (sjbq *SysJwtBlockQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector = sjbq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if sjbq.unique != nil && *sjbq.unique {
+	if sjbq.ctx.Unique != nil && *sjbq.ctx.Unique {
 		selector.Distinct()
+	}
+	t1.Schema(sjbq.schemaConfig.SysJwtBlock)
+	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
+	selector.WithContext(ctx)
+	for _, m := range sjbq.modifiers {
+		m(selector)
 	}
 	for _, p := range sjbq.predicates {
 		p(selector)
@@ -424,26 +443,53 @@ func (sjbq *SysJwtBlockQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	for _, p := range sjbq.order {
 		p(selector)
 	}
-	if offset := sjbq.offset; offset != nil {
+	if offset := sjbq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := sjbq.limit; limit != nil {
+	if limit := sjbq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
 }
 
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (sjbq *SysJwtBlockQuery) ForUpdate(opts ...sql.LockOption) *SysJwtBlockQuery {
+	if sjbq.driver.Dialect() == dialect.Postgres {
+		sjbq.Unique(false)
+	}
+	sjbq.modifiers = append(sjbq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return sjbq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (sjbq *SysJwtBlockQuery) ForShare(opts ...sql.LockOption) *SysJwtBlockQuery {
+	if sjbq.driver.Dialect() == dialect.Postgres {
+		sjbq.Unique(false)
+	}
+	sjbq.modifiers = append(sjbq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return sjbq
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sjbq *SysJwtBlockQuery) Modify(modifiers ...func(s *sql.Selector)) *SysJwtBlockSelect {
+	sjbq.modifiers = append(sjbq.modifiers, modifiers...)
+	return sjbq.Select()
+}
+
 // SysJwtBlockGroupBy is the group-by builder for SysJwtBlock entities.
 type SysJwtBlockGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *SysJwtBlockQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -452,77 +498,86 @@ func (sjbgb *SysJwtBlockGroupBy) Aggregate(fns ...AggregateFunc) *SysJwtBlockGro
 	return sjbgb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (sjbgb *SysJwtBlockGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := sjbgb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (sjbgb *SysJwtBlockGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, sjbgb.build.ctx, "GroupBy")
+	if err := sjbgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	sjbgb.sql = query
-	return sjbgb.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysJwtBlockQuery, *SysJwtBlockGroupBy](ctx, sjbgb.build, sjbgb, sjbgb.build.inters, v)
 }
 
-func (sjbgb *SysJwtBlockGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range sjbgb.fields {
-		if !sysjwtblock.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
-	}
-	selector := sjbgb.sqlQuery()
-	if err := selector.Err(); err != nil {
-		return err
-	}
-	rows := &sql.Rows{}
-	query, args := selector.Query()
-	if err := sjbgb.driver.Query(ctx, query, args, rows); err != nil {
-		return err
-	}
-	defer rows.Close()
-	return sql.ScanSlice(rows, v)
-}
-
-func (sjbgb *SysJwtBlockGroupBy) sqlQuery() *sql.Selector {
-	selector := sjbgb.sql.Select()
+func (sjbgb *SysJwtBlockGroupBy) sqlScan(ctx context.Context, root *SysJwtBlockQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
 	aggregation := make([]string, 0, len(sjbgb.fns))
 	for _, fn := range sjbgb.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(sjbgb.fields)+len(sjbgb.fns))
-		for _, f := range sjbgb.fields {
+		columns := make([]string, 0, len(*sjbgb.flds)+len(sjbgb.fns))
+		for _, f := range *sjbgb.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	return selector.GroupBy(selector.Columns(sjbgb.fields...)...)
+	selector.GroupBy(selector.Columns(*sjbgb.flds...)...)
+	if err := selector.Err(); err != nil {
+		return err
+	}
+	rows := &sql.Rows{}
+	query, args := selector.Query()
+	if err := sjbgb.build.driver.Query(ctx, query, args, rows); err != nil {
+		return err
+	}
+	defer rows.Close()
+	return sql.ScanSlice(rows, v)
 }
 
 // SysJwtBlockSelect is the builder for selecting fields of SysJwtBlock entities.
 type SysJwtBlockSelect struct {
 	*SysJwtBlockQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (sjbs *SysJwtBlockSelect) Aggregate(fns ...AggregateFunc) *SysJwtBlockSelect {
+	sjbs.fns = append(sjbs.fns, fns...)
+	return sjbs
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sjbs *SysJwtBlockSelect) Scan(ctx context.Context, v interface{}) error {
+func (sjbs *SysJwtBlockSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, sjbs.ctx, "Select")
 	if err := sjbs.prepareQuery(ctx); err != nil {
 		return err
 	}
-	sjbs.sql = sjbs.SysJwtBlockQuery.sqlQuery(ctx)
-	return sjbs.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysJwtBlockQuery, *SysJwtBlockSelect](ctx, sjbs.SysJwtBlockQuery, sjbs, sjbs.inters, v)
 }
 
-func (sjbs *SysJwtBlockSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (sjbs *SysJwtBlockSelect) sqlScan(ctx context.Context, root *SysJwtBlockQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(sjbs.fns))
+	for _, fn := range sjbs.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*sjbs.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := sjbs.sql.Query()
+	query, args := selector.Query()
 	if err := sjbs.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sjbs *SysJwtBlockSelect) Modify(modifiers ...func(s *sql.Selector)) *SysJwtBlockSelect {
+	sjbs.modifiers = append(sjbs.modifiers, modifiers...)
+	return sjbs
 }

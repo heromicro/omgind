@@ -11,2441 +11,1467 @@ import (
 
 // ID filters vertices based on their ID field.
 func ID(id string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldID), id))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldID, id))
 }
 
 // IDEQ applies the EQ predicate on the ID field.
 func IDEQ(id string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldID), id))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldID, id))
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
 func IDNEQ(id string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldID), id))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldID, id))
 }
 
 // IDIn applies the In predicate on the ID field.
 func IDIn(ids ...string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		v := make([]interface{}, len(ids))
-		for i := range v {
-			v[i] = ids[i]
-		}
-		s.Where(sql.In(s.C(FieldID), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldID, ids...))
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
 func IDNotIn(ids ...string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		v := make([]interface{}, len(ids))
-		for i := range v {
-			v[i] = ids[i]
-		}
-		s.Where(sql.NotIn(s.C(FieldID), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldID, ids...))
 }
 
 // IDGT applies the GT predicate on the ID field.
 func IDGT(id string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldID), id))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldID, id))
 }
 
 // IDGTE applies the GTE predicate on the ID field.
 func IDGTE(id string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldID), id))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldID, id))
 }
 
 // IDLT applies the LT predicate on the ID field.
 func IDLT(id string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldID), id))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldID, id))
 }
 
 // IDLTE applies the LTE predicate on the ID field.
 func IDLTE(id string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldID), id))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldID, id))
 }
 
 // IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
 func IsDel(v bool) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsDel), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldIsDel, v))
 }
 
 // OwnerID applies equality check predicate on the "owner_id" field. It's identical to OwnerIDEQ.
 func OwnerID(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldOwnerID, v))
 }
 
 // Sort applies equality check predicate on the "sort" field. It's identical to SortEQ.
 func Sort(v int32) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSort), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldSort, v))
 }
 
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCreatedAt, v))
 }
 
 // UpdatedAt applies equality check predicate on the "updated_at" field. It's identical to UpdatedAtEQ.
 func UpdatedAt(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldUpdatedAt, v))
 }
 
 // DeletedAt applies equality check predicate on the "deleted_at" field. It's identical to DeletedAtEQ.
 func DeletedAt(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldDeletedAt, v))
 }
 
 // IsActive applies equality check predicate on the "is_active" field. It's identical to IsActiveEQ.
 func IsActive(v bool) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsActive), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldIsActive, v))
 }
 
 // Memo applies equality check predicate on the "memo" field. It's identical to MemoEQ.
 func Memo(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldMemo, v))
 }
 
 // Country applies equality check predicate on the "country" field. It's identical to CountryEQ.
 func Country(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCountry, v))
 }
 
 // Provice applies equality check predicate on the "provice" field. It's identical to ProviceEQ.
 func Provice(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldProvice, v))
 }
 
 // City applies equality check predicate on the "city" field. It's identical to CityEQ.
 func City(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCity, v))
 }
 
 // County applies equality check predicate on the "county" field. It's identical to CountyEQ.
 func County(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCounty, v))
 }
 
 // CountryID applies equality check predicate on the "country_id" field. It's identical to CountryIDEQ.
 func CountryID(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCountryID, v))
 }
 
 // ProviceID applies equality check predicate on the "provice_id" field. It's identical to ProviceIDEQ.
 func ProviceID(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldProviceID, v))
 }
 
 // CityID applies equality check predicate on the "city_id" field. It's identical to CityIDEQ.
 func CityID(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCityID, v))
 }
 
 // CountyID applies equality check predicate on the "county_id" field. It's identical to CountyIDEQ.
 func CountyID(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCountyID, v))
 }
 
 // ZipCode applies equality check predicate on the "zip_code" field. It's identical to ZipCodeEQ.
 func ZipCode(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldZipCode, v))
 }
 
 // Daddr applies equality check predicate on the "daddr" field. It's identical to DaddrEQ.
 func Daddr(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldDaddr, v))
 }
 
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldName, v))
 }
 
 // Mobile applies equality check predicate on the "mobile" field. It's identical to MobileEQ.
 func Mobile(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldMobile, v))
 }
 
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
 func Creator(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCreator, v))
 }
 
 // IsDelEQ applies the EQ predicate on the "is_del" field.
 func IsDelEQ(v bool) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsDel), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldIsDel, v))
 }
 
 // IsDelNEQ applies the NEQ predicate on the "is_del" field.
 func IsDelNEQ(v bool) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldIsDel), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldIsDel, v))
 }
 
 // OwnerIDEQ applies the EQ predicate on the "owner_id" field.
 func OwnerIDEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldOwnerID, v))
 }
 
 // OwnerIDNEQ applies the NEQ predicate on the "owner_id" field.
 func OwnerIDNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldOwnerID, v))
 }
 
 // OwnerIDIn applies the In predicate on the "owner_id" field.
 func OwnerIDIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldOwnerID), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldOwnerID, vs...))
 }
 
 // OwnerIDNotIn applies the NotIn predicate on the "owner_id" field.
 func OwnerIDNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldOwnerID), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldOwnerID, vs...))
 }
 
 // OwnerIDGT applies the GT predicate on the "owner_id" field.
 func OwnerIDGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldOwnerID, v))
 }
 
 // OwnerIDGTE applies the GTE predicate on the "owner_id" field.
 func OwnerIDGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldOwnerID, v))
 }
 
 // OwnerIDLT applies the LT predicate on the "owner_id" field.
 func OwnerIDLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldOwnerID, v))
 }
 
 // OwnerIDLTE applies the LTE predicate on the "owner_id" field.
 func OwnerIDLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldOwnerID, v))
 }
 
 // OwnerIDContains applies the Contains predicate on the "owner_id" field.
 func OwnerIDContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldOwnerID, v))
 }
 
 // OwnerIDHasPrefix applies the HasPrefix predicate on the "owner_id" field.
 func OwnerIDHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldOwnerID, v))
 }
 
 // OwnerIDHasSuffix applies the HasSuffix predicate on the "owner_id" field.
 func OwnerIDHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldOwnerID, v))
 }
 
 // OwnerIDIsNil applies the IsNil predicate on the "owner_id" field.
 func OwnerIDIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldOwnerID)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldOwnerID))
 }
 
 // OwnerIDNotNil applies the NotNil predicate on the "owner_id" field.
 func OwnerIDNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldOwnerID)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldOwnerID))
 }
 
 // OwnerIDEqualFold applies the EqualFold predicate on the "owner_id" field.
 func OwnerIDEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldOwnerID, v))
 }
 
 // OwnerIDContainsFold applies the ContainsFold predicate on the "owner_id" field.
 func OwnerIDContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldOwnerID), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldOwnerID, v))
 }
 
 // SortEQ applies the EQ predicate on the "sort" field.
 func SortEQ(v int32) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldSort), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldSort, v))
 }
 
 // SortNEQ applies the NEQ predicate on the "sort" field.
 func SortNEQ(v int32) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldSort), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldSort, v))
 }
 
 // SortIn applies the In predicate on the "sort" field.
 func SortIn(vs ...int32) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldSort), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldSort, vs...))
 }
 
 // SortNotIn applies the NotIn predicate on the "sort" field.
 func SortNotIn(vs ...int32) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldSort), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldSort, vs...))
 }
 
 // SortGT applies the GT predicate on the "sort" field.
 func SortGT(v int32) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldSort), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldSort, v))
 }
 
 // SortGTE applies the GTE predicate on the "sort" field.
 func SortGTE(v int32) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldSort), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldSort, v))
 }
 
 // SortLT applies the LT predicate on the "sort" field.
 func SortLT(v int32) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldSort), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldSort, v))
 }
 
 // SortLTE applies the LTE predicate on the "sort" field.
 func SortLTE(v int32) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldSort), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldSort, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
 func CreatedAtEQ(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCreatedAt, v))
 }
 
 // CreatedAtNEQ applies the NEQ predicate on the "created_at" field.
 func CreatedAtNEQ(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldCreatedAt, v))
 }
 
 // CreatedAtIn applies the In predicate on the "created_at" field.
 func CreatedAtIn(vs ...time.Time) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCreatedAt), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldCreatedAt, vs...))
 }
 
 // CreatedAtNotIn applies the NotIn predicate on the "created_at" field.
 func CreatedAtNotIn(vs ...time.Time) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCreatedAt), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldCreatedAt, vs...))
 }
 
 // CreatedAtGT applies the GT predicate on the "created_at" field.
 func CreatedAtGT(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldCreatedAt, v))
 }
 
 // CreatedAtGTE applies the GTE predicate on the "created_at" field.
 func CreatedAtGTE(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldCreatedAt, v))
 }
 
 // CreatedAtLT applies the LT predicate on the "created_at" field.
 func CreatedAtLT(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldCreatedAt, v))
 }
 
 // CreatedAtLTE applies the LTE predicate on the "created_at" field.
 func CreatedAtLTE(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCreatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldCreatedAt, v))
 }
 
 // UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
 func UpdatedAtEQ(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldUpdatedAt, v))
 }
 
 // UpdatedAtNEQ applies the NEQ predicate on the "updated_at" field.
 func UpdatedAtNEQ(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldUpdatedAt, v))
 }
 
 // UpdatedAtIn applies the In predicate on the "updated_at" field.
 func UpdatedAtIn(vs ...time.Time) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldUpdatedAt), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldUpdatedAt, vs...))
 }
 
 // UpdatedAtNotIn applies the NotIn predicate on the "updated_at" field.
 func UpdatedAtNotIn(vs ...time.Time) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldUpdatedAt), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldUpdatedAt, vs...))
 }
 
 // UpdatedAtGT applies the GT predicate on the "updated_at" field.
 func UpdatedAtGT(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldUpdatedAt, v))
 }
 
 // UpdatedAtGTE applies the GTE predicate on the "updated_at" field.
 func UpdatedAtGTE(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldUpdatedAt, v))
 }
 
 // UpdatedAtLT applies the LT predicate on the "updated_at" field.
 func UpdatedAtLT(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldUpdatedAt, v))
 }
 
 // UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
 func UpdatedAtLTE(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUpdatedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldUpdatedAt, v))
 }
 
 // DeletedAtEQ applies the EQ predicate on the "deleted_at" field.
 func DeletedAtEQ(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldDeletedAt, v))
 }
 
 // DeletedAtNEQ applies the NEQ predicate on the "deleted_at" field.
 func DeletedAtNEQ(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldDeletedAt, v))
 }
 
 // DeletedAtIn applies the In predicate on the "deleted_at" field.
 func DeletedAtIn(vs ...time.Time) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldDeletedAt), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldDeletedAt, vs...))
 }
 
 // DeletedAtNotIn applies the NotIn predicate on the "deleted_at" field.
 func DeletedAtNotIn(vs ...time.Time) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldDeletedAt), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldDeletedAt, vs...))
 }
 
 // DeletedAtGT applies the GT predicate on the "deleted_at" field.
 func DeletedAtGT(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldDeletedAt, v))
 }
 
 // DeletedAtGTE applies the GTE predicate on the "deleted_at" field.
 func DeletedAtGTE(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldDeletedAt, v))
 }
 
 // DeletedAtLT applies the LT predicate on the "deleted_at" field.
 func DeletedAtLT(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldDeletedAt, v))
 }
 
 // DeletedAtLTE applies the LTE predicate on the "deleted_at" field.
 func DeletedAtLTE(v time.Time) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDeletedAt), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldDeletedAt, v))
 }
 
 // DeletedAtIsNil applies the IsNil predicate on the "deleted_at" field.
 func DeletedAtIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldDeletedAt)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldDeletedAt))
 }
 
 // DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
 func DeletedAtNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldDeletedAt)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldDeletedAt))
 }
 
 // IsActiveEQ applies the EQ predicate on the "is_active" field.
 func IsActiveEQ(v bool) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldIsActive), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldIsActive, v))
 }
 
 // IsActiveNEQ applies the NEQ predicate on the "is_active" field.
 func IsActiveNEQ(v bool) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldIsActive), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldIsActive, v))
 }
 
 // MemoEQ applies the EQ predicate on the "memo" field.
 func MemoEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldMemo, v))
 }
 
 // MemoNEQ applies the NEQ predicate on the "memo" field.
 func MemoNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldMemo, v))
 }
 
 // MemoIn applies the In predicate on the "memo" field.
 func MemoIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldMemo), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldMemo, vs...))
 }
 
 // MemoNotIn applies the NotIn predicate on the "memo" field.
 func MemoNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldMemo), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldMemo, vs...))
 }
 
 // MemoGT applies the GT predicate on the "memo" field.
 func MemoGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldMemo, v))
 }
 
 // MemoGTE applies the GTE predicate on the "memo" field.
 func MemoGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldMemo, v))
 }
 
 // MemoLT applies the LT predicate on the "memo" field.
 func MemoLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldMemo, v))
 }
 
 // MemoLTE applies the LTE predicate on the "memo" field.
 func MemoLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldMemo, v))
 }
 
 // MemoContains applies the Contains predicate on the "memo" field.
 func MemoContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldMemo, v))
 }
 
 // MemoHasPrefix applies the HasPrefix predicate on the "memo" field.
 func MemoHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldMemo, v))
 }
 
 // MemoHasSuffix applies the HasSuffix predicate on the "memo" field.
 func MemoHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldMemo, v))
 }
 
 // MemoIsNil applies the IsNil predicate on the "memo" field.
 func MemoIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldMemo)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldMemo))
 }
 
 // MemoNotNil applies the NotNil predicate on the "memo" field.
 func MemoNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldMemo)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldMemo))
 }
 
 // MemoEqualFold applies the EqualFold predicate on the "memo" field.
 func MemoEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldMemo, v))
 }
 
 // MemoContainsFold applies the ContainsFold predicate on the "memo" field.
 func MemoContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldMemo), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldMemo, v))
 }
 
 // CountryEQ applies the EQ predicate on the "country" field.
 func CountryEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCountry, v))
 }
 
 // CountryNEQ applies the NEQ predicate on the "country" field.
 func CountryNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldCountry, v))
 }
 
 // CountryIn applies the In predicate on the "country" field.
 func CountryIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCountry), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldCountry, vs...))
 }
 
 // CountryNotIn applies the NotIn predicate on the "country" field.
 func CountryNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCountry), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldCountry, vs...))
 }
 
 // CountryGT applies the GT predicate on the "country" field.
 func CountryGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldCountry, v))
 }
 
 // CountryGTE applies the GTE predicate on the "country" field.
 func CountryGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldCountry, v))
 }
 
 // CountryLT applies the LT predicate on the "country" field.
 func CountryLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldCountry, v))
 }
 
 // CountryLTE applies the LTE predicate on the "country" field.
 func CountryLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldCountry, v))
 }
 
 // CountryContains applies the Contains predicate on the "country" field.
 func CountryContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldCountry, v))
 }
 
 // CountryHasPrefix applies the HasPrefix predicate on the "country" field.
 func CountryHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldCountry, v))
 }
 
 // CountryHasSuffix applies the HasSuffix predicate on the "country" field.
 func CountryHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldCountry, v))
 }
 
 // CountryIsNil applies the IsNil predicate on the "country" field.
 func CountryIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldCountry)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldCountry))
 }
 
 // CountryNotNil applies the NotNil predicate on the "country" field.
 func CountryNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldCountry)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldCountry))
 }
 
 // CountryEqualFold applies the EqualFold predicate on the "country" field.
 func CountryEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldCountry, v))
 }
 
 // CountryContainsFold applies the ContainsFold predicate on the "country" field.
 func CountryContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldCountry), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldCountry, v))
 }
 
 // ProviceEQ applies the EQ predicate on the "provice" field.
 func ProviceEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldProvice, v))
 }
 
 // ProviceNEQ applies the NEQ predicate on the "provice" field.
 func ProviceNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldProvice, v))
 }
 
 // ProviceIn applies the In predicate on the "provice" field.
 func ProviceIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldProvice), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldProvice, vs...))
 }
 
 // ProviceNotIn applies the NotIn predicate on the "provice" field.
 func ProviceNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldProvice), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldProvice, vs...))
 }
 
 // ProviceGT applies the GT predicate on the "provice" field.
 func ProviceGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldProvice, v))
 }
 
 // ProviceGTE applies the GTE predicate on the "provice" field.
 func ProviceGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldProvice, v))
 }
 
 // ProviceLT applies the LT predicate on the "provice" field.
 func ProviceLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldProvice, v))
 }
 
 // ProviceLTE applies the LTE predicate on the "provice" field.
 func ProviceLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldProvice, v))
 }
 
 // ProviceContains applies the Contains predicate on the "provice" field.
 func ProviceContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldProvice, v))
 }
 
 // ProviceHasPrefix applies the HasPrefix predicate on the "provice" field.
 func ProviceHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldProvice, v))
 }
 
 // ProviceHasSuffix applies the HasSuffix predicate on the "provice" field.
 func ProviceHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldProvice, v))
 }
 
 // ProviceIsNil applies the IsNil predicate on the "provice" field.
 func ProviceIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldProvice)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldProvice))
 }
 
 // ProviceNotNil applies the NotNil predicate on the "provice" field.
 func ProviceNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldProvice)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldProvice))
 }
 
 // ProviceEqualFold applies the EqualFold predicate on the "provice" field.
 func ProviceEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldProvice, v))
 }
 
 // ProviceContainsFold applies the ContainsFold predicate on the "provice" field.
 func ProviceContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldProvice), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldProvice, v))
 }
 
 // CityEQ applies the EQ predicate on the "city" field.
 func CityEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCity, v))
 }
 
 // CityNEQ applies the NEQ predicate on the "city" field.
 func CityNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldCity, v))
 }
 
 // CityIn applies the In predicate on the "city" field.
 func CityIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCity), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldCity, vs...))
 }
 
 // CityNotIn applies the NotIn predicate on the "city" field.
 func CityNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCity), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldCity, vs...))
 }
 
 // CityGT applies the GT predicate on the "city" field.
 func CityGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldCity, v))
 }
 
 // CityGTE applies the GTE predicate on the "city" field.
 func CityGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldCity, v))
 }
 
 // CityLT applies the LT predicate on the "city" field.
 func CityLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldCity, v))
 }
 
 // CityLTE applies the LTE predicate on the "city" field.
 func CityLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldCity, v))
 }
 
 // CityContains applies the Contains predicate on the "city" field.
 func CityContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldCity, v))
 }
 
 // CityHasPrefix applies the HasPrefix predicate on the "city" field.
 func CityHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldCity, v))
 }
 
 // CityHasSuffix applies the HasSuffix predicate on the "city" field.
 func CityHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldCity, v))
 }
 
 // CityIsNil applies the IsNil predicate on the "city" field.
 func CityIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldCity)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldCity))
 }
 
 // CityNotNil applies the NotNil predicate on the "city" field.
 func CityNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldCity)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldCity))
 }
 
 // CityEqualFold applies the EqualFold predicate on the "city" field.
 func CityEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldCity, v))
 }
 
 // CityContainsFold applies the ContainsFold predicate on the "city" field.
 func CityContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldCity), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldCity, v))
 }
 
 // CountyEQ applies the EQ predicate on the "county" field.
 func CountyEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCounty, v))
 }
 
 // CountyNEQ applies the NEQ predicate on the "county" field.
 func CountyNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldCounty, v))
 }
 
 // CountyIn applies the In predicate on the "county" field.
 func CountyIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCounty), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldCounty, vs...))
 }
 
 // CountyNotIn applies the NotIn predicate on the "county" field.
 func CountyNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCounty), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldCounty, vs...))
 }
 
 // CountyGT applies the GT predicate on the "county" field.
 func CountyGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldCounty, v))
 }
 
 // CountyGTE applies the GTE predicate on the "county" field.
 func CountyGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldCounty, v))
 }
 
 // CountyLT applies the LT predicate on the "county" field.
 func CountyLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldCounty, v))
 }
 
 // CountyLTE applies the LTE predicate on the "county" field.
 func CountyLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldCounty, v))
 }
 
 // CountyContains applies the Contains predicate on the "county" field.
 func CountyContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldCounty, v))
 }
 
 // CountyHasPrefix applies the HasPrefix predicate on the "county" field.
 func CountyHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldCounty, v))
 }
 
 // CountyHasSuffix applies the HasSuffix predicate on the "county" field.
 func CountyHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldCounty, v))
 }
 
 // CountyIsNil applies the IsNil predicate on the "county" field.
 func CountyIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldCounty)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldCounty))
 }
 
 // CountyNotNil applies the NotNil predicate on the "county" field.
 func CountyNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldCounty)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldCounty))
 }
 
 // CountyEqualFold applies the EqualFold predicate on the "county" field.
 func CountyEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldCounty, v))
 }
 
 // CountyContainsFold applies the ContainsFold predicate on the "county" field.
 func CountyContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldCounty), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldCounty, v))
 }
 
 // CountryIDEQ applies the EQ predicate on the "country_id" field.
 func CountryIDEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCountryID, v))
 }
 
 // CountryIDNEQ applies the NEQ predicate on the "country_id" field.
 func CountryIDNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldCountryID, v))
 }
 
 // CountryIDIn applies the In predicate on the "country_id" field.
 func CountryIDIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCountryID), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldCountryID, vs...))
 }
 
 // CountryIDNotIn applies the NotIn predicate on the "country_id" field.
 func CountryIDNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCountryID), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldCountryID, vs...))
 }
 
 // CountryIDGT applies the GT predicate on the "country_id" field.
 func CountryIDGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldCountryID, v))
 }
 
 // CountryIDGTE applies the GTE predicate on the "country_id" field.
 func CountryIDGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldCountryID, v))
 }
 
 // CountryIDLT applies the LT predicate on the "country_id" field.
 func CountryIDLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldCountryID, v))
 }
 
 // CountryIDLTE applies the LTE predicate on the "country_id" field.
 func CountryIDLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldCountryID, v))
 }
 
 // CountryIDContains applies the Contains predicate on the "country_id" field.
 func CountryIDContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldCountryID, v))
 }
 
 // CountryIDHasPrefix applies the HasPrefix predicate on the "country_id" field.
 func CountryIDHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldCountryID, v))
 }
 
 // CountryIDHasSuffix applies the HasSuffix predicate on the "country_id" field.
 func CountryIDHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldCountryID, v))
 }
 
 // CountryIDIsNil applies the IsNil predicate on the "country_id" field.
 func CountryIDIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldCountryID)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldCountryID))
 }
 
 // CountryIDNotNil applies the NotNil predicate on the "country_id" field.
 func CountryIDNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldCountryID)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldCountryID))
 }
 
 // CountryIDEqualFold applies the EqualFold predicate on the "country_id" field.
 func CountryIDEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldCountryID, v))
 }
 
 // CountryIDContainsFold applies the ContainsFold predicate on the "country_id" field.
 func CountryIDContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldCountryID), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldCountryID, v))
 }
 
 // ProviceIDEQ applies the EQ predicate on the "provice_id" field.
 func ProviceIDEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldProviceID, v))
 }
 
 // ProviceIDNEQ applies the NEQ predicate on the "provice_id" field.
 func ProviceIDNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldProviceID, v))
 }
 
 // ProviceIDIn applies the In predicate on the "provice_id" field.
 func ProviceIDIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldProviceID), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldProviceID, vs...))
 }
 
 // ProviceIDNotIn applies the NotIn predicate on the "provice_id" field.
 func ProviceIDNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldProviceID), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldProviceID, vs...))
 }
 
 // ProviceIDGT applies the GT predicate on the "provice_id" field.
 func ProviceIDGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldProviceID, v))
 }
 
 // ProviceIDGTE applies the GTE predicate on the "provice_id" field.
 func ProviceIDGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldProviceID, v))
 }
 
 // ProviceIDLT applies the LT predicate on the "provice_id" field.
 func ProviceIDLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldProviceID, v))
 }
 
 // ProviceIDLTE applies the LTE predicate on the "provice_id" field.
 func ProviceIDLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldProviceID, v))
 }
 
 // ProviceIDContains applies the Contains predicate on the "provice_id" field.
 func ProviceIDContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldProviceID, v))
 }
 
 // ProviceIDHasPrefix applies the HasPrefix predicate on the "provice_id" field.
 func ProviceIDHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldProviceID, v))
 }
 
 // ProviceIDHasSuffix applies the HasSuffix predicate on the "provice_id" field.
 func ProviceIDHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldProviceID, v))
 }
 
 // ProviceIDIsNil applies the IsNil predicate on the "provice_id" field.
 func ProviceIDIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldProviceID)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldProviceID))
 }
 
 // ProviceIDNotNil applies the NotNil predicate on the "provice_id" field.
 func ProviceIDNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldProviceID)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldProviceID))
 }
 
 // ProviceIDEqualFold applies the EqualFold predicate on the "provice_id" field.
 func ProviceIDEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldProviceID, v))
 }
 
 // ProviceIDContainsFold applies the ContainsFold predicate on the "provice_id" field.
 func ProviceIDContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldProviceID), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldProviceID, v))
 }
 
 // CityIDEQ applies the EQ predicate on the "city_id" field.
 func CityIDEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCityID, v))
 }
 
 // CityIDNEQ applies the NEQ predicate on the "city_id" field.
 func CityIDNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldCityID, v))
 }
 
 // CityIDIn applies the In predicate on the "city_id" field.
 func CityIDIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCityID), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldCityID, vs...))
 }
 
 // CityIDNotIn applies the NotIn predicate on the "city_id" field.
 func CityIDNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCityID), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldCityID, vs...))
 }
 
 // CityIDGT applies the GT predicate on the "city_id" field.
 func CityIDGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldCityID, v))
 }
 
 // CityIDGTE applies the GTE predicate on the "city_id" field.
 func CityIDGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldCityID, v))
 }
 
 // CityIDLT applies the LT predicate on the "city_id" field.
 func CityIDLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldCityID, v))
 }
 
 // CityIDLTE applies the LTE predicate on the "city_id" field.
 func CityIDLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldCityID, v))
 }
 
 // CityIDContains applies the Contains predicate on the "city_id" field.
 func CityIDContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldCityID, v))
 }
 
 // CityIDHasPrefix applies the HasPrefix predicate on the "city_id" field.
 func CityIDHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldCityID, v))
 }
 
 // CityIDHasSuffix applies the HasSuffix predicate on the "city_id" field.
 func CityIDHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldCityID, v))
 }
 
 // CityIDIsNil applies the IsNil predicate on the "city_id" field.
 func CityIDIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldCityID)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldCityID))
 }
 
 // CityIDNotNil applies the NotNil predicate on the "city_id" field.
 func CityIDNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldCityID)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldCityID))
 }
 
 // CityIDEqualFold applies the EqualFold predicate on the "city_id" field.
 func CityIDEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldCityID, v))
 }
 
 // CityIDContainsFold applies the ContainsFold predicate on the "city_id" field.
 func CityIDContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldCityID), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldCityID, v))
 }
 
 // CountyIDEQ applies the EQ predicate on the "county_id" field.
 func CountyIDEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCountyID, v))
 }
 
 // CountyIDNEQ applies the NEQ predicate on the "county_id" field.
 func CountyIDNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldCountyID, v))
 }
 
 // CountyIDIn applies the In predicate on the "county_id" field.
 func CountyIDIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCountyID), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldCountyID, vs...))
 }
 
 // CountyIDNotIn applies the NotIn predicate on the "county_id" field.
 func CountyIDNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCountyID), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldCountyID, vs...))
 }
 
 // CountyIDGT applies the GT predicate on the "county_id" field.
 func CountyIDGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldCountyID, v))
 }
 
 // CountyIDGTE applies the GTE predicate on the "county_id" field.
 func CountyIDGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldCountyID, v))
 }
 
 // CountyIDLT applies the LT predicate on the "county_id" field.
 func CountyIDLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldCountyID, v))
 }
 
 // CountyIDLTE applies the LTE predicate on the "county_id" field.
 func CountyIDLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldCountyID, v))
 }
 
 // CountyIDContains applies the Contains predicate on the "county_id" field.
 func CountyIDContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldCountyID, v))
 }
 
 // CountyIDHasPrefix applies the HasPrefix predicate on the "county_id" field.
 func CountyIDHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldCountyID, v))
 }
 
 // CountyIDHasSuffix applies the HasSuffix predicate on the "county_id" field.
 func CountyIDHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldCountyID, v))
 }
 
 // CountyIDIsNil applies the IsNil predicate on the "county_id" field.
 func CountyIDIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldCountyID)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldCountyID))
 }
 
 // CountyIDNotNil applies the NotNil predicate on the "county_id" field.
 func CountyIDNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldCountyID)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldCountyID))
 }
 
 // CountyIDEqualFold applies the EqualFold predicate on the "county_id" field.
 func CountyIDEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldCountyID, v))
 }
 
 // CountyIDContainsFold applies the ContainsFold predicate on the "county_id" field.
 func CountyIDContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldCountyID), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldCountyID, v))
 }
 
 // ZipCodeEQ applies the EQ predicate on the "zip_code" field.
 func ZipCodeEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldZipCode, v))
 }
 
 // ZipCodeNEQ applies the NEQ predicate on the "zip_code" field.
 func ZipCodeNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldZipCode, v))
 }
 
 // ZipCodeIn applies the In predicate on the "zip_code" field.
 func ZipCodeIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldZipCode), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldZipCode, vs...))
 }
 
 // ZipCodeNotIn applies the NotIn predicate on the "zip_code" field.
 func ZipCodeNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldZipCode), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldZipCode, vs...))
 }
 
 // ZipCodeGT applies the GT predicate on the "zip_code" field.
 func ZipCodeGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldZipCode, v))
 }
 
 // ZipCodeGTE applies the GTE predicate on the "zip_code" field.
 func ZipCodeGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldZipCode, v))
 }
 
 // ZipCodeLT applies the LT predicate on the "zip_code" field.
 func ZipCodeLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldZipCode, v))
 }
 
 // ZipCodeLTE applies the LTE predicate on the "zip_code" field.
 func ZipCodeLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldZipCode, v))
 }
 
 // ZipCodeContains applies the Contains predicate on the "zip_code" field.
 func ZipCodeContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldZipCode, v))
 }
 
 // ZipCodeHasPrefix applies the HasPrefix predicate on the "zip_code" field.
 func ZipCodeHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldZipCode, v))
 }
 
 // ZipCodeHasSuffix applies the HasSuffix predicate on the "zip_code" field.
 func ZipCodeHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldZipCode, v))
 }
 
 // ZipCodeIsNil applies the IsNil predicate on the "zip_code" field.
 func ZipCodeIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldZipCode)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldZipCode))
 }
 
 // ZipCodeNotNil applies the NotNil predicate on the "zip_code" field.
 func ZipCodeNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldZipCode)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldZipCode))
 }
 
 // ZipCodeEqualFold applies the EqualFold predicate on the "zip_code" field.
 func ZipCodeEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldZipCode, v))
 }
 
 // ZipCodeContainsFold applies the ContainsFold predicate on the "zip_code" field.
 func ZipCodeContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldZipCode), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldZipCode, v))
 }
 
 // DaddrEQ applies the EQ predicate on the "daddr" field.
 func DaddrEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldDaddr, v))
 }
 
 // DaddrNEQ applies the NEQ predicate on the "daddr" field.
 func DaddrNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldDaddr, v))
 }
 
 // DaddrIn applies the In predicate on the "daddr" field.
 func DaddrIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldDaddr), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldDaddr, vs...))
 }
 
 // DaddrNotIn applies the NotIn predicate on the "daddr" field.
 func DaddrNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldDaddr), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldDaddr, vs...))
 }
 
 // DaddrGT applies the GT predicate on the "daddr" field.
 func DaddrGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldDaddr, v))
 }
 
 // DaddrGTE applies the GTE predicate on the "daddr" field.
 func DaddrGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldDaddr, v))
 }
 
 // DaddrLT applies the LT predicate on the "daddr" field.
 func DaddrLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldDaddr, v))
 }
 
 // DaddrLTE applies the LTE predicate on the "daddr" field.
 func DaddrLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldDaddr, v))
 }
 
 // DaddrContains applies the Contains predicate on the "daddr" field.
 func DaddrContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldDaddr, v))
 }
 
 // DaddrHasPrefix applies the HasPrefix predicate on the "daddr" field.
 func DaddrHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldDaddr, v))
 }
 
 // DaddrHasSuffix applies the HasSuffix predicate on the "daddr" field.
 func DaddrHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldDaddr, v))
 }
 
 // DaddrIsNil applies the IsNil predicate on the "daddr" field.
 func DaddrIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldDaddr)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldDaddr))
 }
 
 // DaddrNotNil applies the NotNil predicate on the "daddr" field.
 func DaddrNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldDaddr)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldDaddr))
 }
 
 // DaddrEqualFold applies the EqualFold predicate on the "daddr" field.
 func DaddrEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldDaddr, v))
 }
 
 // DaddrContainsFold applies the ContainsFold predicate on the "daddr" field.
 func DaddrContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldDaddr), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldDaddr, v))
 }
 
 // NameEQ applies the EQ predicate on the "name" field.
 func NameEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldName, v))
 }
 
 // NameNEQ applies the NEQ predicate on the "name" field.
 func NameNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldName, v))
 }
 
 // NameIn applies the In predicate on the "name" field.
 func NameIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldName), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldName, vs...))
 }
 
 // NameNotIn applies the NotIn predicate on the "name" field.
 func NameNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldName), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldName, vs...))
 }
 
 // NameGT applies the GT predicate on the "name" field.
 func NameGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldName, v))
 }
 
 // NameGTE applies the GTE predicate on the "name" field.
 func NameGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldName, v))
 }
 
 // NameLT applies the LT predicate on the "name" field.
 func NameLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldName, v))
 }
 
 // NameLTE applies the LTE predicate on the "name" field.
 func NameLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldName, v))
 }
 
 // NameContains applies the Contains predicate on the "name" field.
 func NameContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldName, v))
 }
 
 // NameHasPrefix applies the HasPrefix predicate on the "name" field.
 func NameHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldName, v))
 }
 
 // NameHasSuffix applies the HasSuffix predicate on the "name" field.
 func NameHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldName, v))
 }
 
 // NameIsNil applies the IsNil predicate on the "name" field.
 func NameIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldName)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldName))
 }
 
 // NameNotNil applies the NotNil predicate on the "name" field.
 func NameNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldName)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldName))
 }
 
 // NameEqualFold applies the EqualFold predicate on the "name" field.
 func NameEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldName, v))
 }
 
 // NameContainsFold applies the ContainsFold predicate on the "name" field.
 func NameContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldName), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldName, v))
 }
 
 // MobileEQ applies the EQ predicate on the "mobile" field.
 func MobileEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldMobile, v))
 }
 
 // MobileNEQ applies the NEQ predicate on the "mobile" field.
 func MobileNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldMobile, v))
 }
 
 // MobileIn applies the In predicate on the "mobile" field.
 func MobileIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldMobile), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldMobile, vs...))
 }
 
 // MobileNotIn applies the NotIn predicate on the "mobile" field.
 func MobileNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldMobile), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldMobile, vs...))
 }
 
 // MobileGT applies the GT predicate on the "mobile" field.
 func MobileGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldMobile, v))
 }
 
 // MobileGTE applies the GTE predicate on the "mobile" field.
 func MobileGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldMobile, v))
 }
 
 // MobileLT applies the LT predicate on the "mobile" field.
 func MobileLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldMobile, v))
 }
 
 // MobileLTE applies the LTE predicate on the "mobile" field.
 func MobileLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldMobile, v))
 }
 
 // MobileContains applies the Contains predicate on the "mobile" field.
 func MobileContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldMobile, v))
 }
 
 // MobileHasPrefix applies the HasPrefix predicate on the "mobile" field.
 func MobileHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldMobile, v))
 }
 
 // MobileHasSuffix applies the HasSuffix predicate on the "mobile" field.
 func MobileHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldMobile, v))
 }
 
 // MobileIsNil applies the IsNil predicate on the "mobile" field.
 func MobileIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldMobile)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldMobile))
 }
 
 // MobileNotNil applies the NotNil predicate on the "mobile" field.
 func MobileNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldMobile)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldMobile))
 }
 
 // MobileEqualFold applies the EqualFold predicate on the "mobile" field.
 func MobileEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldMobile, v))
 }
 
 // MobileContainsFold applies the ContainsFold predicate on the "mobile" field.
 func MobileContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldMobile), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldMobile, v))
 }
 
 // CreatorEQ applies the EQ predicate on the "creator" field.
 func CreatorEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldEQ(FieldCreator, v))
 }
 
 // CreatorNEQ applies the NEQ predicate on the "creator" field.
 func CreatorNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldNEQ(FieldCreator, v))
 }
 
 // CreatorIn applies the In predicate on the "creator" field.
 func CreatorIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldCreator), v...))
-	})
+	return predicate.SysAddress(sql.FieldIn(FieldCreator, vs...))
 }
 
 // CreatorNotIn applies the NotIn predicate on the "creator" field.
 func CreatorNotIn(vs ...string) predicate.SysAddress {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SysAddress(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldCreator), v...))
-	})
+	return predicate.SysAddress(sql.FieldNotIn(FieldCreator, vs...))
 }
 
 // CreatorGT applies the GT predicate on the "creator" field.
 func CreatorGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldGT(FieldCreator, v))
 }
 
 // CreatorGTE applies the GTE predicate on the "creator" field.
 func CreatorGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldGTE(FieldCreator, v))
 }
 
 // CreatorLT applies the LT predicate on the "creator" field.
 func CreatorLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldLT(FieldCreator, v))
 }
 
 // CreatorLTE applies the LTE predicate on the "creator" field.
 func CreatorLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldLTE(FieldCreator, v))
 }
 
 // CreatorContains applies the Contains predicate on the "creator" field.
 func CreatorContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldContains(FieldCreator, v))
 }
 
 // CreatorHasPrefix applies the HasPrefix predicate on the "creator" field.
 func CreatorHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldCreator, v))
 }
 
 // CreatorHasSuffix applies the HasSuffix predicate on the "creator" field.
 func CreatorHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldCreator, v))
 }
 
 // CreatorIsNil applies the IsNil predicate on the "creator" field.
 func CreatorIsNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldCreator)))
-	})
+	return predicate.SysAddress(sql.FieldIsNull(FieldCreator))
 }
 
 // CreatorNotNil applies the NotNil predicate on the "creator" field.
 func CreatorNotNil() predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldCreator)))
-	})
+	return predicate.SysAddress(sql.FieldNotNull(FieldCreator))
 }
 
 // CreatorEqualFold applies the EqualFold predicate on the "creator" field.
 func CreatorEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldEqualFold(FieldCreator, v))
 }
 
 // CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
 func CreatorContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldCreator), v))
-	})
+	return predicate.SysAddress(sql.FieldContainsFold(FieldCreator, v))
 }
 
 // And groups predicates with the AND operator between them.

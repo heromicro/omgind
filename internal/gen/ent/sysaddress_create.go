@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
@@ -18,6 +20,7 @@ type SysAddressCreate struct {
 	config
 	mutation *SysAddressMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetIsDel sets the "is_del" field.
@@ -335,50 +338,8 @@ func (sac *SysAddressCreate) Mutation() *SysAddressMutation {
 
 // Save creates the SysAddress in the database.
 func (sac *SysAddressCreate) Save(ctx context.Context) (*SysAddress, error) {
-	var (
-		err  error
-		node *SysAddress
-	)
 	sac.defaults()
-	if len(sac.hooks) == 0 {
-		if err = sac.check(); err != nil {
-			return nil, err
-		}
-		node, err = sac.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysAddressMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sac.check(); err != nil {
-				return nil, err
-			}
-			sac.mutation = mutation
-			if node, err = sac.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sac.hooks) - 1; i >= 0; i-- {
-			if sac.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sac.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sac.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysAddress)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysAddressMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysAddress, SysAddressMutation](ctx, sac.sqlSave, sac.mutation, sac.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -516,6 +477,9 @@ func (sac *SysAddressCreate) check() error {
 }
 
 func (sac *SysAddressCreate) sqlSave(ctx context.Context) (*SysAddress, error) {
+	if err := sac.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := sac.createSpec()
 	if err := sqlgraph.CreateNode(ctx, sac.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -530,199 +494,993 @@ func (sac *SysAddressCreate) sqlSave(ctx context.Context) (*SysAddress, error) {
 			return nil, fmt.Errorf("unexpected SysAddress.ID type: %T", _spec.ID.Value)
 		}
 	}
+	sac.mutation.id = &_node.ID
+	sac.mutation.done = true
 	return _node, nil
 }
 
 func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysAddress{config: sac.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysaddress.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysaddress.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysaddress.Table, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
 	)
+	_spec.Schema = sac.schemaConfig.SysAddress
+	_spec.OnConflict = sac.conflict
 	if id, ok := sac.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := sac.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysaddress.FieldIsDel,
-		})
+		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := sac.mutation.OwnerID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldOwnerID,
-		})
+		_spec.SetField(sysaddress.FieldOwnerID, field.TypeString, value)
 		_node.OwnerID = &value
 	}
 	if value, ok := sac.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysaddress.FieldSort,
-		})
+		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := sac.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldCreatedAt,
-		})
+		_spec.SetField(sysaddress.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := sac.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldUpdatedAt,
-		})
+		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := sac.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldDeletedAt,
-		})
+		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := sac.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysaddress.FieldIsActive,
-		})
+		_spec.SetField(sysaddress.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := sac.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldMemo,
-		})
+		_spec.SetField(sysaddress.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := sac.mutation.Country(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountry,
-		})
+		_spec.SetField(sysaddress.FieldCountry, field.TypeString, value)
 		_node.Country = &value
 	}
 	if value, ok := sac.mutation.Provice(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldProvice,
-		})
+		_spec.SetField(sysaddress.FieldProvice, field.TypeString, value)
 		_node.Provice = &value
 	}
 	if value, ok := sac.mutation.City(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCity,
-		})
+		_spec.SetField(sysaddress.FieldCity, field.TypeString, value)
 		_node.City = &value
 	}
 	if value, ok := sac.mutation.County(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCounty,
-		})
+		_spec.SetField(sysaddress.FieldCounty, field.TypeString, value)
 		_node.County = &value
 	}
 	if value, ok := sac.mutation.CountryID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountryID,
-		})
+		_spec.SetField(sysaddress.FieldCountryID, field.TypeString, value)
 		_node.CountryID = &value
 	}
 	if value, ok := sac.mutation.ProviceID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldProviceID,
-		})
+		_spec.SetField(sysaddress.FieldProviceID, field.TypeString, value)
 		_node.ProviceID = &value
 	}
 	if value, ok := sac.mutation.CityID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCityID,
-		})
+		_spec.SetField(sysaddress.FieldCityID, field.TypeString, value)
 		_node.CityID = &value
 	}
 	if value, ok := sac.mutation.CountyID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountyID,
-		})
+		_spec.SetField(sysaddress.FieldCountyID, field.TypeString, value)
 		_node.CountyID = &value
 	}
 	if value, ok := sac.mutation.ZipCode(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldZipCode,
-		})
+		_spec.SetField(sysaddress.FieldZipCode, field.TypeString, value)
 		_node.ZipCode = &value
 	}
 	if value, ok := sac.mutation.Daddr(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldDaddr,
-		})
+		_spec.SetField(sysaddress.FieldDaddr, field.TypeString, value)
 		_node.Daddr = &value
 	}
 	if value, ok := sac.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldName,
-		})
+		_spec.SetField(sysaddress.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
 	if value, ok := sac.mutation.Mobile(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldMobile,
-		})
+		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
 		_node.Mobile = &value
 	}
 	if value, ok := sac.mutation.Creator(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCreator,
-		})
+		_spec.SetField(sysaddress.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
 	}
 	return _node, _spec
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysAddress.Create().
+//		SetIsDel(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysAddressUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (sac *SysAddressCreate) OnConflict(opts ...sql.ConflictOption) *SysAddressUpsertOne {
+	sac.conflict = opts
+	return &SysAddressUpsertOne{
+		create: sac,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysAddress.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (sac *SysAddressCreate) OnConflictColumns(columns ...string) *SysAddressUpsertOne {
+	sac.conflict = append(sac.conflict, sql.ConflictColumns(columns...))
+	return &SysAddressUpsertOne{
+		create: sac,
+	}
+}
+
+type (
+	// SysAddressUpsertOne is the builder for "upsert"-ing
+	//  one SysAddress node.
+	SysAddressUpsertOne struct {
+		create *SysAddressCreate
+	}
+
+	// SysAddressUpsert is the "OnConflict" setter.
+	SysAddressUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetIsDel sets the "is_del" field.
+func (u *SysAddressUpsert) SetIsDel(v bool) *SysAddressUpsert {
+	u.Set(sysaddress.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateIsDel() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldIsDel)
+	return u
+}
+
+// SetOwnerID sets the "owner_id" field.
+func (u *SysAddressUpsert) SetOwnerID(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldOwnerID, v)
+	return u
+}
+
+// UpdateOwnerID sets the "owner_id" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateOwnerID() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldOwnerID)
+	return u
+}
+
+// ClearOwnerID clears the value of the "owner_id" field.
+func (u *SysAddressUpsert) ClearOwnerID() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldOwnerID)
+	return u
+}
+
+// SetSort sets the "sort" field.
+func (u *SysAddressUpsert) SetSort(v int32) *SysAddressUpsert {
+	u.Set(sysaddress.FieldSort, v)
+	return u
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateSort() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldSort)
+	return u
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysAddressUpsert) AddSort(v int32) *SysAddressUpsert {
+	u.Add(sysaddress.FieldSort, v)
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysAddressUpsert) SetUpdatedAt(v time.Time) *SysAddressUpsert {
+	u.Set(sysaddress.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateUpdatedAt() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldUpdatedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysAddressUpsert) SetDeletedAt(v time.Time) *SysAddressUpsert {
+	u.Set(sysaddress.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateDeletedAt() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysAddressUpsert) ClearDeletedAt() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldDeletedAt)
+	return u
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysAddressUpsert) SetIsActive(v bool) *SysAddressUpsert {
+	u.Set(sysaddress.FieldIsActive, v)
+	return u
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateIsActive() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldIsActive)
+	return u
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysAddressUpsert) SetMemo(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldMemo, v)
+	return u
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateMemo() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldMemo)
+	return u
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysAddressUpsert) ClearMemo() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldMemo)
+	return u
+}
+
+// SetCountry sets the "country" field.
+func (u *SysAddressUpsert) SetCountry(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldCountry, v)
+	return u
+}
+
+// UpdateCountry sets the "country" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateCountry() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldCountry)
+	return u
+}
+
+// ClearCountry clears the value of the "country" field.
+func (u *SysAddressUpsert) ClearCountry() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldCountry)
+	return u
+}
+
+// SetProvice sets the "provice" field.
+func (u *SysAddressUpsert) SetProvice(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldProvice, v)
+	return u
+}
+
+// UpdateProvice sets the "provice" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateProvice() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldProvice)
+	return u
+}
+
+// ClearProvice clears the value of the "provice" field.
+func (u *SysAddressUpsert) ClearProvice() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldProvice)
+	return u
+}
+
+// SetCity sets the "city" field.
+func (u *SysAddressUpsert) SetCity(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldCity, v)
+	return u
+}
+
+// UpdateCity sets the "city" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateCity() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldCity)
+	return u
+}
+
+// ClearCity clears the value of the "city" field.
+func (u *SysAddressUpsert) ClearCity() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldCity)
+	return u
+}
+
+// SetCounty sets the "county" field.
+func (u *SysAddressUpsert) SetCounty(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldCounty, v)
+	return u
+}
+
+// UpdateCounty sets the "county" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateCounty() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldCounty)
+	return u
+}
+
+// ClearCounty clears the value of the "county" field.
+func (u *SysAddressUpsert) ClearCounty() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldCounty)
+	return u
+}
+
+// SetCountryID sets the "country_id" field.
+func (u *SysAddressUpsert) SetCountryID(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldCountryID, v)
+	return u
+}
+
+// UpdateCountryID sets the "country_id" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateCountryID() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldCountryID)
+	return u
+}
+
+// ClearCountryID clears the value of the "country_id" field.
+func (u *SysAddressUpsert) ClearCountryID() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldCountryID)
+	return u
+}
+
+// SetProviceID sets the "provice_id" field.
+func (u *SysAddressUpsert) SetProviceID(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldProviceID, v)
+	return u
+}
+
+// UpdateProviceID sets the "provice_id" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateProviceID() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldProviceID)
+	return u
+}
+
+// ClearProviceID clears the value of the "provice_id" field.
+func (u *SysAddressUpsert) ClearProviceID() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldProviceID)
+	return u
+}
+
+// SetCityID sets the "city_id" field.
+func (u *SysAddressUpsert) SetCityID(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldCityID, v)
+	return u
+}
+
+// UpdateCityID sets the "city_id" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateCityID() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldCityID)
+	return u
+}
+
+// ClearCityID clears the value of the "city_id" field.
+func (u *SysAddressUpsert) ClearCityID() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldCityID)
+	return u
+}
+
+// SetCountyID sets the "county_id" field.
+func (u *SysAddressUpsert) SetCountyID(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldCountyID, v)
+	return u
+}
+
+// UpdateCountyID sets the "county_id" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateCountyID() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldCountyID)
+	return u
+}
+
+// ClearCountyID clears the value of the "county_id" field.
+func (u *SysAddressUpsert) ClearCountyID() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldCountyID)
+	return u
+}
+
+// SetZipCode sets the "zip_code" field.
+func (u *SysAddressUpsert) SetZipCode(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldZipCode, v)
+	return u
+}
+
+// UpdateZipCode sets the "zip_code" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateZipCode() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldZipCode)
+	return u
+}
+
+// ClearZipCode clears the value of the "zip_code" field.
+func (u *SysAddressUpsert) ClearZipCode() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldZipCode)
+	return u
+}
+
+// SetDaddr sets the "daddr" field.
+func (u *SysAddressUpsert) SetDaddr(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldDaddr, v)
+	return u
+}
+
+// UpdateDaddr sets the "daddr" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateDaddr() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldDaddr)
+	return u
+}
+
+// ClearDaddr clears the value of the "daddr" field.
+func (u *SysAddressUpsert) ClearDaddr() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldDaddr)
+	return u
+}
+
+// SetName sets the "name" field.
+func (u *SysAddressUpsert) SetName(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldName, v)
+	return u
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateName() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldName)
+	return u
+}
+
+// ClearName clears the value of the "name" field.
+func (u *SysAddressUpsert) ClearName() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldName)
+	return u
+}
+
+// SetMobile sets the "mobile" field.
+func (u *SysAddressUpsert) SetMobile(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldMobile, v)
+	return u
+}
+
+// UpdateMobile sets the "mobile" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateMobile() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldMobile)
+	return u
+}
+
+// ClearMobile clears the value of the "mobile" field.
+func (u *SysAddressUpsert) ClearMobile() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldMobile)
+	return u
+}
+
+// SetCreator sets the "creator" field.
+func (u *SysAddressUpsert) SetCreator(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldCreator, v)
+	return u
+}
+
+// UpdateCreator sets the "creator" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateCreator() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldCreator)
+	return u
+}
+
+// ClearCreator clears the value of the "creator" field.
+func (u *SysAddressUpsert) ClearCreator() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldCreator)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.SysAddress.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysaddress.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysAddressUpsertOne) UpdateNewValues() *SysAddressUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(sysaddress.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(sysaddress.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysAddress.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *SysAddressUpsertOne) Ignore() *SysAddressUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysAddressUpsertOne) DoNothing() *SysAddressUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysAddressCreate.OnConflict
+// documentation for more info.
+func (u *SysAddressUpsertOne) Update(set func(*SysAddressUpsert)) *SysAddressUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysAddressUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysAddressUpsertOne) SetIsDel(v bool) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateIsDel() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetOwnerID sets the "owner_id" field.
+func (u *SysAddressUpsertOne) SetOwnerID(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetOwnerID(v)
+	})
+}
+
+// UpdateOwnerID sets the "owner_id" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateOwnerID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateOwnerID()
+	})
+}
+
+// ClearOwnerID clears the value of the "owner_id" field.
+func (u *SysAddressUpsertOne) ClearOwnerID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearOwnerID()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysAddressUpsertOne) SetSort(v int32) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysAddressUpsertOne) AddSort(v int32) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateSort() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysAddressUpsertOne) SetUpdatedAt(v time.Time) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateUpdatedAt() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysAddressUpsertOne) SetDeletedAt(v time.Time) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateDeletedAt() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysAddressUpsertOne) ClearDeletedAt() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysAddressUpsertOne) SetIsActive(v bool) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateIsActive() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysAddressUpsertOne) SetMemo(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateMemo() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysAddressUpsertOne) ClearMemo() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetCountry sets the "country" field.
+func (u *SysAddressUpsertOne) SetCountry(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCountry(v)
+	})
+}
+
+// UpdateCountry sets the "country" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateCountry() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCountry()
+	})
+}
+
+// ClearCountry clears the value of the "country" field.
+func (u *SysAddressUpsertOne) ClearCountry() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCountry()
+	})
+}
+
+// SetProvice sets the "provice" field.
+func (u *SysAddressUpsertOne) SetProvice(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetProvice(v)
+	})
+}
+
+// UpdateProvice sets the "provice" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateProvice() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateProvice()
+	})
+}
+
+// ClearProvice clears the value of the "provice" field.
+func (u *SysAddressUpsertOne) ClearProvice() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearProvice()
+	})
+}
+
+// SetCity sets the "city" field.
+func (u *SysAddressUpsertOne) SetCity(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCity(v)
+	})
+}
+
+// UpdateCity sets the "city" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateCity() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCity()
+	})
+}
+
+// ClearCity clears the value of the "city" field.
+func (u *SysAddressUpsertOne) ClearCity() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCity()
+	})
+}
+
+// SetCounty sets the "county" field.
+func (u *SysAddressUpsertOne) SetCounty(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCounty(v)
+	})
+}
+
+// UpdateCounty sets the "county" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateCounty() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCounty()
+	})
+}
+
+// ClearCounty clears the value of the "county" field.
+func (u *SysAddressUpsertOne) ClearCounty() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCounty()
+	})
+}
+
+// SetCountryID sets the "country_id" field.
+func (u *SysAddressUpsertOne) SetCountryID(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCountryID(v)
+	})
+}
+
+// UpdateCountryID sets the "country_id" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateCountryID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCountryID()
+	})
+}
+
+// ClearCountryID clears the value of the "country_id" field.
+func (u *SysAddressUpsertOne) ClearCountryID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCountryID()
+	})
+}
+
+// SetProviceID sets the "provice_id" field.
+func (u *SysAddressUpsertOne) SetProviceID(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetProviceID(v)
+	})
+}
+
+// UpdateProviceID sets the "provice_id" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateProviceID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateProviceID()
+	})
+}
+
+// ClearProviceID clears the value of the "provice_id" field.
+func (u *SysAddressUpsertOne) ClearProviceID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearProviceID()
+	})
+}
+
+// SetCityID sets the "city_id" field.
+func (u *SysAddressUpsertOne) SetCityID(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCityID(v)
+	})
+}
+
+// UpdateCityID sets the "city_id" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateCityID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCityID()
+	})
+}
+
+// ClearCityID clears the value of the "city_id" field.
+func (u *SysAddressUpsertOne) ClearCityID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCityID()
+	})
+}
+
+// SetCountyID sets the "county_id" field.
+func (u *SysAddressUpsertOne) SetCountyID(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCountyID(v)
+	})
+}
+
+// UpdateCountyID sets the "county_id" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateCountyID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCountyID()
+	})
+}
+
+// ClearCountyID clears the value of the "county_id" field.
+func (u *SysAddressUpsertOne) ClearCountyID() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCountyID()
+	})
+}
+
+// SetZipCode sets the "zip_code" field.
+func (u *SysAddressUpsertOne) SetZipCode(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetZipCode(v)
+	})
+}
+
+// UpdateZipCode sets the "zip_code" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateZipCode() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateZipCode()
+	})
+}
+
+// ClearZipCode clears the value of the "zip_code" field.
+func (u *SysAddressUpsertOne) ClearZipCode() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearZipCode()
+	})
+}
+
+// SetDaddr sets the "daddr" field.
+func (u *SysAddressUpsertOne) SetDaddr(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetDaddr(v)
+	})
+}
+
+// UpdateDaddr sets the "daddr" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateDaddr() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateDaddr()
+	})
+}
+
+// ClearDaddr clears the value of the "daddr" field.
+func (u *SysAddressUpsertOne) ClearDaddr() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearDaddr()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *SysAddressUpsertOne) SetName(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateName() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateName()
+	})
+}
+
+// ClearName clears the value of the "name" field.
+func (u *SysAddressUpsertOne) ClearName() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearName()
+	})
+}
+
+// SetMobile sets the "mobile" field.
+func (u *SysAddressUpsertOne) SetMobile(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetMobile(v)
+	})
+}
+
+// UpdateMobile sets the "mobile" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateMobile() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateMobile()
+	})
+}
+
+// ClearMobile clears the value of the "mobile" field.
+func (u *SysAddressUpsertOne) ClearMobile() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearMobile()
+	})
+}
+
+// SetCreator sets the "creator" field.
+func (u *SysAddressUpsertOne) SetCreator(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCreator(v)
+	})
+}
+
+// UpdateCreator sets the "creator" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateCreator() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCreator()
+	})
+}
+
+// ClearCreator clears the value of the "creator" field.
+func (u *SysAddressUpsertOne) ClearCreator() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCreator()
+	})
+}
+
+// Exec executes the query.
+func (u *SysAddressUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysAddressCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysAddressUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *SysAddressUpsertOne) ID(ctx context.Context) (id string, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: SysAddressUpsertOne.ID is not supported by MySQL driver. Use SysAddressUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *SysAddressUpsertOne) IDX(ctx context.Context) string {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
 }
 
 // SysAddressCreateBulk is the builder for creating many SysAddress entities in bulk.
 type SysAddressCreateBulk struct {
 	config
 	builders []*SysAddressCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the SysAddress entities in the database.
@@ -749,6 +1507,7 @@ func (sacb *SysAddressCreateBulk) Save(ctx context.Context) ([]*SysAddress, erro
 					_, err = mutators[i+1].Mutate(root, sacb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = sacb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, sacb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -795,6 +1554,519 @@ func (sacb *SysAddressCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (sacb *SysAddressCreateBulk) ExecX(ctx context.Context) {
 	if err := sacb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysAddress.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysAddressUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (sacb *SysAddressCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysAddressUpsertBulk {
+	sacb.conflict = opts
+	return &SysAddressUpsertBulk{
+		create: sacb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysAddress.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (sacb *SysAddressCreateBulk) OnConflictColumns(columns ...string) *SysAddressUpsertBulk {
+	sacb.conflict = append(sacb.conflict, sql.ConflictColumns(columns...))
+	return &SysAddressUpsertBulk{
+		create: sacb,
+	}
+}
+
+// SysAddressUpsertBulk is the builder for "upsert"-ing
+// a bulk of SysAddress nodes.
+type SysAddressUpsertBulk struct {
+	create *SysAddressCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.SysAddress.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysaddress.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysAddressUpsertBulk) UpdateNewValues() *SysAddressUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(sysaddress.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(sysaddress.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysAddress.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *SysAddressUpsertBulk) Ignore() *SysAddressUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysAddressUpsertBulk) DoNothing() *SysAddressUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysAddressCreateBulk.OnConflict
+// documentation for more info.
+func (u *SysAddressUpsertBulk) Update(set func(*SysAddressUpsert)) *SysAddressUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysAddressUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysAddressUpsertBulk) SetIsDel(v bool) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateIsDel() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetOwnerID sets the "owner_id" field.
+func (u *SysAddressUpsertBulk) SetOwnerID(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetOwnerID(v)
+	})
+}
+
+// UpdateOwnerID sets the "owner_id" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateOwnerID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateOwnerID()
+	})
+}
+
+// ClearOwnerID clears the value of the "owner_id" field.
+func (u *SysAddressUpsertBulk) ClearOwnerID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearOwnerID()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysAddressUpsertBulk) SetSort(v int32) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysAddressUpsertBulk) AddSort(v int32) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateSort() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysAddressUpsertBulk) SetUpdatedAt(v time.Time) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateUpdatedAt() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysAddressUpsertBulk) SetDeletedAt(v time.Time) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateDeletedAt() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysAddressUpsertBulk) ClearDeletedAt() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysAddressUpsertBulk) SetIsActive(v bool) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateIsActive() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysAddressUpsertBulk) SetMemo(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateMemo() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysAddressUpsertBulk) ClearMemo() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetCountry sets the "country" field.
+func (u *SysAddressUpsertBulk) SetCountry(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCountry(v)
+	})
+}
+
+// UpdateCountry sets the "country" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateCountry() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCountry()
+	})
+}
+
+// ClearCountry clears the value of the "country" field.
+func (u *SysAddressUpsertBulk) ClearCountry() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCountry()
+	})
+}
+
+// SetProvice sets the "provice" field.
+func (u *SysAddressUpsertBulk) SetProvice(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetProvice(v)
+	})
+}
+
+// UpdateProvice sets the "provice" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateProvice() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateProvice()
+	})
+}
+
+// ClearProvice clears the value of the "provice" field.
+func (u *SysAddressUpsertBulk) ClearProvice() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearProvice()
+	})
+}
+
+// SetCity sets the "city" field.
+func (u *SysAddressUpsertBulk) SetCity(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCity(v)
+	})
+}
+
+// UpdateCity sets the "city" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateCity() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCity()
+	})
+}
+
+// ClearCity clears the value of the "city" field.
+func (u *SysAddressUpsertBulk) ClearCity() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCity()
+	})
+}
+
+// SetCounty sets the "county" field.
+func (u *SysAddressUpsertBulk) SetCounty(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCounty(v)
+	})
+}
+
+// UpdateCounty sets the "county" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateCounty() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCounty()
+	})
+}
+
+// ClearCounty clears the value of the "county" field.
+func (u *SysAddressUpsertBulk) ClearCounty() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCounty()
+	})
+}
+
+// SetCountryID sets the "country_id" field.
+func (u *SysAddressUpsertBulk) SetCountryID(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCountryID(v)
+	})
+}
+
+// UpdateCountryID sets the "country_id" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateCountryID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCountryID()
+	})
+}
+
+// ClearCountryID clears the value of the "country_id" field.
+func (u *SysAddressUpsertBulk) ClearCountryID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCountryID()
+	})
+}
+
+// SetProviceID sets the "provice_id" field.
+func (u *SysAddressUpsertBulk) SetProviceID(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetProviceID(v)
+	})
+}
+
+// UpdateProviceID sets the "provice_id" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateProviceID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateProviceID()
+	})
+}
+
+// ClearProviceID clears the value of the "provice_id" field.
+func (u *SysAddressUpsertBulk) ClearProviceID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearProviceID()
+	})
+}
+
+// SetCityID sets the "city_id" field.
+func (u *SysAddressUpsertBulk) SetCityID(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCityID(v)
+	})
+}
+
+// UpdateCityID sets the "city_id" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateCityID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCityID()
+	})
+}
+
+// ClearCityID clears the value of the "city_id" field.
+func (u *SysAddressUpsertBulk) ClearCityID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCityID()
+	})
+}
+
+// SetCountyID sets the "county_id" field.
+func (u *SysAddressUpsertBulk) SetCountyID(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCountyID(v)
+	})
+}
+
+// UpdateCountyID sets the "county_id" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateCountyID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCountyID()
+	})
+}
+
+// ClearCountyID clears the value of the "county_id" field.
+func (u *SysAddressUpsertBulk) ClearCountyID() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCountyID()
+	})
+}
+
+// SetZipCode sets the "zip_code" field.
+func (u *SysAddressUpsertBulk) SetZipCode(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetZipCode(v)
+	})
+}
+
+// UpdateZipCode sets the "zip_code" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateZipCode() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateZipCode()
+	})
+}
+
+// ClearZipCode clears the value of the "zip_code" field.
+func (u *SysAddressUpsertBulk) ClearZipCode() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearZipCode()
+	})
+}
+
+// SetDaddr sets the "daddr" field.
+func (u *SysAddressUpsertBulk) SetDaddr(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetDaddr(v)
+	})
+}
+
+// UpdateDaddr sets the "daddr" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateDaddr() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateDaddr()
+	})
+}
+
+// ClearDaddr clears the value of the "daddr" field.
+func (u *SysAddressUpsertBulk) ClearDaddr() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearDaddr()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *SysAddressUpsertBulk) SetName(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateName() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateName()
+	})
+}
+
+// ClearName clears the value of the "name" field.
+func (u *SysAddressUpsertBulk) ClearName() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearName()
+	})
+}
+
+// SetMobile sets the "mobile" field.
+func (u *SysAddressUpsertBulk) SetMobile(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetMobile(v)
+	})
+}
+
+// UpdateMobile sets the "mobile" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateMobile() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateMobile()
+	})
+}
+
+// ClearMobile clears the value of the "mobile" field.
+func (u *SysAddressUpsertBulk) ClearMobile() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearMobile()
+	})
+}
+
+// SetCreator sets the "creator" field.
+func (u *SysAddressUpsertBulk) SetCreator(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetCreator(v)
+	})
+}
+
+// UpdateCreator sets the "creator" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateCreator() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateCreator()
+	})
+}
+
+// ClearCreator clears the value of the "creator" field.
+func (u *SysAddressUpsertBulk) ClearCreator() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearCreator()
+	})
+}
+
+// Exec executes the query.
+func (u *SysAddressUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the SysAddressCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysAddressCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysAddressUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

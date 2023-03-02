@@ -7,9 +7,11 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 )
@@ -17,12 +19,11 @@ import (
 // SysMenuQuery is the builder for querying SysMenu entities.
 type SysMenuQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
+	ctx        *QueryContext
 	order      []OrderFunc
-	fields     []string
+	inters     []Interceptor
 	predicates []predicate.SysMenu
+	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -34,26 +35,26 @@ func (smq *SysMenuQuery) Where(ps ...predicate.SysMenu) *SysMenuQuery {
 	return smq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (smq *SysMenuQuery) Limit(limit int) *SysMenuQuery {
-	smq.limit = &limit
+	smq.ctx.Limit = &limit
 	return smq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (smq *SysMenuQuery) Offset(offset int) *SysMenuQuery {
-	smq.offset = &offset
+	smq.ctx.Offset = &offset
 	return smq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (smq *SysMenuQuery) Unique(unique bool) *SysMenuQuery {
-	smq.unique = &unique
+	smq.ctx.Unique = &unique
 	return smq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (smq *SysMenuQuery) Order(o ...OrderFunc) *SysMenuQuery {
 	smq.order = append(smq.order, o...)
 	return smq
@@ -62,7 +63,7 @@ func (smq *SysMenuQuery) Order(o ...OrderFunc) *SysMenuQuery {
 // First returns the first SysMenu entity from the query.
 // Returns a *NotFoundError when no SysMenu was found.
 func (smq *SysMenuQuery) First(ctx context.Context) (*SysMenu, error) {
-	nodes, err := smq.Limit(1).All(ctx)
+	nodes, err := smq.Limit(1).All(setContextOp(ctx, smq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (smq *SysMenuQuery) FirstX(ctx context.Context) *SysMenu {
 // Returns a *NotFoundError when no SysMenu ID was found.
 func (smq *SysMenuQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = smq.Limit(1).IDs(setContextOp(ctx, smq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (smq *SysMenuQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysMenu entity is found.
 // Returns a *NotFoundError when no SysMenu entities are found.
 func (smq *SysMenuQuery) Only(ctx context.Context) (*SysMenu, error) {
-	nodes, err := smq.Limit(2).All(ctx)
+	nodes, err := smq.Limit(2).All(setContextOp(ctx, smq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (smq *SysMenuQuery) OnlyX(ctx context.Context) *SysMenu {
 // Returns a *NotFoundError when no entities are found.
 func (smq *SysMenuQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = smq.Limit(2).IDs(setContextOp(ctx, smq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,10 +162,12 @@ func (smq *SysMenuQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysMenus.
 func (smq *SysMenuQuery) All(ctx context.Context) ([]*SysMenu, error) {
+	ctx = setContextOp(ctx, smq.ctx, "All")
 	if err := smq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return smq.sqlAll(ctx)
+	qr := querierAll[[]*SysMenu, *SysMenuQuery]()
+	return withInterceptors[[]*SysMenu](ctx, smq, qr, smq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -177,9 +180,12 @@ func (smq *SysMenuQuery) AllX(ctx context.Context) []*SysMenu {
 }
 
 // IDs executes the query and returns a list of SysMenu IDs.
-func (smq *SysMenuQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := smq.Select(sysmenu.FieldID).Scan(ctx, &ids); err != nil {
+func (smq *SysMenuQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if smq.ctx.Unique == nil && smq.path != nil {
+		smq.Unique(true)
+	}
+	ctx = setContextOp(ctx, smq.ctx, "IDs")
+	if err = smq.Select(sysmenu.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -196,10 +202,11 @@ func (smq *SysMenuQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (smq *SysMenuQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, smq.ctx, "Count")
 	if err := smq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return smq.sqlCount(ctx)
+	return withInterceptors[int](ctx, smq, querierCount[*SysMenuQuery](), smq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -213,10 +220,15 @@ func (smq *SysMenuQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (smq *SysMenuQuery) Exist(ctx context.Context) (bool, error) {
-	if err := smq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, smq.ctx, "Exist")
+	switch _, err := smq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return smq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -236,14 +248,13 @@ func (smq *SysMenuQuery) Clone() *SysMenuQuery {
 	}
 	return &SysMenuQuery{
 		config:     smq.config,
-		limit:      smq.limit,
-		offset:     smq.offset,
+		ctx:        smq.ctx.Clone(),
 		order:      append([]OrderFunc{}, smq.order...),
+		inters:     append([]Interceptor{}, smq.inters...),
 		predicates: append([]predicate.SysMenu{}, smq.predicates...),
 		// clone intermediate query.
-		sql:    smq.sql.Clone(),
-		path:   smq.path,
-		unique: smq.unique,
+		sql:  smq.sql.Clone(),
+		path: smq.path,
 	}
 }
 
@@ -261,18 +272,12 @@ func (smq *SysMenuQuery) Clone() *SysMenuQuery {
 //		GroupBy(sysmenu.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (smq *SysMenuQuery) GroupBy(field string, fields ...string) *SysMenuGroupBy {
-	grbuild := &SysMenuGroupBy{config: smq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := smq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return smq.sqlQuery(ctx), nil
-	}
+	smq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysMenuGroupBy{build: smq}
+	grbuild.flds = &smq.ctx.Fields
 	grbuild.label = sysmenu.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -288,17 +293,31 @@ func (smq *SysMenuQuery) GroupBy(field string, fields ...string) *SysMenuGroupBy
 //	client.SysMenu.Query().
 //		Select(sysmenu.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (smq *SysMenuQuery) Select(fields ...string) *SysMenuSelect {
-	smq.fields = append(smq.fields, fields...)
-	selbuild := &SysMenuSelect{SysMenuQuery: smq}
-	selbuild.label = sysmenu.Label
-	selbuild.flds, selbuild.scan = &smq.fields, selbuild.Scan
-	return selbuild
+	smq.ctx.Fields = append(smq.ctx.Fields, fields...)
+	sbuild := &SysMenuSelect{SysMenuQuery: smq}
+	sbuild.label = sysmenu.Label
+	sbuild.flds, sbuild.scan = &smq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a SysMenuSelect configured with the given aggregations.
+func (smq *SysMenuQuery) Aggregate(fns ...AggregateFunc) *SysMenuSelect {
+	return smq.Select().Aggregate(fns...)
 }
 
 func (smq *SysMenuQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range smq.fields {
+	for _, inter := range smq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, smq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range smq.ctx.Fields {
 		if !sysmenu.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -318,13 +337,18 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		nodes = []*SysMenu{}
 		_spec = smq.querySpec()
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysMenu).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysMenu{config: smq.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
+	}
+	_spec.Node.Schema = smq.schemaConfig.SysMenu
+	ctx = internal.NewSchemaConfigContext(ctx, smq.schemaConfig)
+	if len(smq.modifiers) > 0 {
+		_spec.Modifiers = smq.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
@@ -340,38 +364,27 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 
 func (smq *SysMenuQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := smq.querySpec()
-	_spec.Node.Columns = smq.fields
-	if len(smq.fields) > 0 {
-		_spec.Unique = smq.unique != nil && *smq.unique
+	_spec.Node.Schema = smq.schemaConfig.SysMenu
+	ctx = internal.NewSchemaConfigContext(ctx, smq.schemaConfig)
+	if len(smq.modifiers) > 0 {
+		_spec.Modifiers = smq.modifiers
+	}
+	_spec.Node.Columns = smq.ctx.Fields
+	if len(smq.ctx.Fields) > 0 {
+		_spec.Unique = smq.ctx.Unique != nil && *smq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, smq.driver, _spec)
 }
 
-func (smq *SysMenuQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := smq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (smq *SysMenuQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysmenu.Table,
-			Columns: sysmenu.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenu.FieldID,
-			},
-		},
-		From:   smq.sql,
-		Unique: true,
-	}
-	if unique := smq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(sysmenu.Table, sysmenu.Columns, sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString))
+	_spec.From = smq.sql
+	if unique := smq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if smq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := smq.fields; len(fields) > 0 {
+	if fields := smq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysmenu.FieldID)
 		for i := range fields {
@@ -387,10 +400,10 @@ func (smq *SysMenuQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := smq.limit; limit != nil {
+	if limit := smq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := smq.offset; offset != nil {
+	if offset := smq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := smq.order; len(ps) > 0 {
@@ -406,7 +419,7 @@ func (smq *SysMenuQuery) querySpec() *sqlgraph.QuerySpec {
 func (smq *SysMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(smq.driver.Dialect())
 	t1 := builder.Table(sysmenu.Table)
-	columns := smq.fields
+	columns := smq.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysmenu.Columns
 	}
@@ -415,8 +428,14 @@ func (smq *SysMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector = smq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if smq.unique != nil && *smq.unique {
+	if smq.ctx.Unique != nil && *smq.ctx.Unique {
 		selector.Distinct()
+	}
+	t1.Schema(smq.schemaConfig.SysMenu)
+	ctx = internal.NewSchemaConfigContext(ctx, smq.schemaConfig)
+	selector.WithContext(ctx)
+	for _, m := range smq.modifiers {
+		m(selector)
 	}
 	for _, p := range smq.predicates {
 		p(selector)
@@ -424,26 +443,53 @@ func (smq *SysMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	for _, p := range smq.order {
 		p(selector)
 	}
-	if offset := smq.offset; offset != nil {
+	if offset := smq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := smq.limit; limit != nil {
+	if limit := smq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
 }
 
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (smq *SysMenuQuery) ForUpdate(opts ...sql.LockOption) *SysMenuQuery {
+	if smq.driver.Dialect() == dialect.Postgres {
+		smq.Unique(false)
+	}
+	smq.modifiers = append(smq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return smq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (smq *SysMenuQuery) ForShare(opts ...sql.LockOption) *SysMenuQuery {
+	if smq.driver.Dialect() == dialect.Postgres {
+		smq.Unique(false)
+	}
+	smq.modifiers = append(smq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return smq
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (smq *SysMenuQuery) Modify(modifiers ...func(s *sql.Selector)) *SysMenuSelect {
+	smq.modifiers = append(smq.modifiers, modifiers...)
+	return smq.Select()
+}
+
 // SysMenuGroupBy is the group-by builder for SysMenu entities.
 type SysMenuGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *SysMenuQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -452,77 +498,86 @@ func (smgb *SysMenuGroupBy) Aggregate(fns ...AggregateFunc) *SysMenuGroupBy {
 	return smgb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (smgb *SysMenuGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := smgb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (smgb *SysMenuGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, smgb.build.ctx, "GroupBy")
+	if err := smgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	smgb.sql = query
-	return smgb.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysMenuQuery, *SysMenuGroupBy](ctx, smgb.build, smgb, smgb.build.inters, v)
 }
 
-func (smgb *SysMenuGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range smgb.fields {
-		if !sysmenu.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
-	}
-	selector := smgb.sqlQuery()
-	if err := selector.Err(); err != nil {
-		return err
-	}
-	rows := &sql.Rows{}
-	query, args := selector.Query()
-	if err := smgb.driver.Query(ctx, query, args, rows); err != nil {
-		return err
-	}
-	defer rows.Close()
-	return sql.ScanSlice(rows, v)
-}
-
-func (smgb *SysMenuGroupBy) sqlQuery() *sql.Selector {
-	selector := smgb.sql.Select()
+func (smgb *SysMenuGroupBy) sqlScan(ctx context.Context, root *SysMenuQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
 	aggregation := make([]string, 0, len(smgb.fns))
 	for _, fn := range smgb.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(smgb.fields)+len(smgb.fns))
-		for _, f := range smgb.fields {
+		columns := make([]string, 0, len(*smgb.flds)+len(smgb.fns))
+		for _, f := range *smgb.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	return selector.GroupBy(selector.Columns(smgb.fields...)...)
+	selector.GroupBy(selector.Columns(*smgb.flds...)...)
+	if err := selector.Err(); err != nil {
+		return err
+	}
+	rows := &sql.Rows{}
+	query, args := selector.Query()
+	if err := smgb.build.driver.Query(ctx, query, args, rows); err != nil {
+		return err
+	}
+	defer rows.Close()
+	return sql.ScanSlice(rows, v)
 }
 
 // SysMenuSelect is the builder for selecting fields of SysMenu entities.
 type SysMenuSelect struct {
 	*SysMenuQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (sms *SysMenuSelect) Aggregate(fns ...AggregateFunc) *SysMenuSelect {
+	sms.fns = append(sms.fns, fns...)
+	return sms
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sms *SysMenuSelect) Scan(ctx context.Context, v interface{}) error {
+func (sms *SysMenuSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, sms.ctx, "Select")
 	if err := sms.prepareQuery(ctx); err != nil {
 		return err
 	}
-	sms.sql = sms.SysMenuQuery.sqlQuery(ctx)
-	return sms.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysMenuQuery, *SysMenuSelect](ctx, sms.SysMenuQuery, sms, sms.inters, v)
 }
 
-func (sms *SysMenuSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (sms *SysMenuSelect) sqlScan(ctx context.Context, root *SysMenuQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(sms.fns))
+	for _, fn := range sms.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*sms.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := sms.sql.Query()
+	query, args := selector.Query()
 	if err := sms.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sms *SysMenuSelect) Modify(modifiers ...func(s *sql.Selector)) *SysMenuSelect {
+	sms.modifiers = append(sms.modifiers, modifiers...)
+	return sms
 }

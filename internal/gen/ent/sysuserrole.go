@@ -13,17 +13,17 @@ import (
 
 // SysUserRole is the model entity for the SysUserRole schema.
 type SysUserRole struct {
-	config `json:"-" sql:"-"`
+	config `json:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty" sql:"crtd_at"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty" sql:"uptd_at"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// delete time,
-	DeletedAt *time.Time `json:"deleted_at,omitempty" sql:"dltd_at"`
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 用户ID, sys_user.id
 	UserID string `json:"user_id,omitempty"`
 	// 角色ID, sys_role.id
@@ -31,8 +31,8 @@ type SysUserRole struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysUserRole) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysUserRole) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysuserrole.FieldIsDel:
@@ -50,7 +50,7 @@ func (*SysUserRole) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysUserRole fields.
-func (sur *SysUserRole) assignValues(columns []string, values []interface{}) error {
+func (sur *SysUserRole) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -108,7 +108,7 @@ func (sur *SysUserRole) assignValues(columns []string, values []interface{}) err
 // Note that you need to call SysUserRole.Unwrap() before calling this method if this SysUserRole
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sur *SysUserRole) Update() *SysUserRoleUpdateOne {
-	return (&SysUserRoleClient{config: sur.config}).UpdateOne(sur)
+	return NewSysUserRoleClient(sur.config).UpdateOne(sur)
 }
 
 // Unwrap unwraps the SysUserRole entity that was returned from a transaction after it was closed,
@@ -152,9 +152,3 @@ func (sur *SysUserRole) String() string {
 
 // SysUserRoles is a parsable slice of SysUserRole.
 type SysUserRoles []*SysUserRole
-
-func (sur SysUserRoles) config(cfg config) {
-	for _i := range sur {
-		sur[_i].config = cfg
-	}
-}

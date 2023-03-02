@@ -26,6 +26,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
 
 	"entgo.io/ent"
+	"entgo.io/ent/dialect/sql"
 )
 
 const (
@@ -1180,9 +1181,24 @@ func (m *SysAddressMutation) Where(ps ...predicate.SysAddress) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysAddressMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysAddressMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysAddress, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysAddressMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysAddressMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysAddress).
@@ -2294,9 +2310,24 @@ func (m *SysDictMutation) Where(ps ...predicate.SysDict) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysDictMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysDictMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysDict, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysDictMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysDictMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysDict).
@@ -3178,9 +3209,24 @@ func (m *SysDictItemMutation) Where(ps ...predicate.SysDictItem) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysDictItemMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysDictItemMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysDictItem, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysDictItemMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysDictItemMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysDictItem).
@@ -5412,9 +5458,24 @@ func (m *SysDistrictMutation) Where(ps ...predicate.SysDistrict) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysDistrictMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysDistrictMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysDistrict, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysDistrictMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysDistrictMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysDistrict).
@@ -6804,9 +6865,24 @@ func (m *SysJwtBlockMutation) Where(ps ...predicate.SysJwtBlock) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysJwtBlockMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysJwtBlockMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysJwtBlock, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysJwtBlockMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysJwtBlockMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysJwtBlock).
@@ -7096,7 +7172,8 @@ type SysLoggingMutation struct {
 	message       *string
 	data          *string
 	error_stack   *string
-	created_at    *time.Time
+	created_at    *int64
+	addcreated_at *int64
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*SysLogging, error)
@@ -7309,7 +7386,7 @@ func (m *SysLoggingMutation) Level() (r string, exists bool) {
 // OldLevel returns the old "level" field's value of the SysLogging entity.
 // If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldLevel(ctx context.Context) (v string, err error) {
+func (m *SysLoggingMutation) OldLevel(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldLevel is only allowed on UpdateOne operations")
 	}
@@ -7323,9 +7400,22 @@ func (m *SysLoggingMutation) OldLevel(ctx context.Context) (v string, err error)
 	return oldValue.Level, nil
 }
 
+// ClearLevel clears the value of the "level" field.
+func (m *SysLoggingMutation) ClearLevel() {
+	m.level = nil
+	m.clearedFields[syslogging.FieldLevel] = struct{}{}
+}
+
+// LevelCleared returns if the "level" field was cleared in this mutation.
+func (m *SysLoggingMutation) LevelCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldLevel]
+	return ok
+}
+
 // ResetLevel resets all changes to the "level" field.
 func (m *SysLoggingMutation) ResetLevel() {
 	m.level = nil
+	delete(m.clearedFields, syslogging.FieldLevel)
 }
 
 // SetTraceID sets the "trace_id" field.
@@ -7672,12 +7762,13 @@ func (m *SysLoggingMutation) ResetErrorStack() {
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (m *SysLoggingMutation) SetCreatedAt(t time.Time) {
-	m.created_at = &t
+func (m *SysLoggingMutation) SetCreatedAt(i int64) {
+	m.created_at = &i
+	m.addcreated_at = nil
 }
 
 // CreatedAt returns the value of the "created_at" field in the mutation.
-func (m *SysLoggingMutation) CreatedAt() (r time.Time, exists bool) {
+func (m *SysLoggingMutation) CreatedAt() (r int64, exists bool) {
 	v := m.created_at
 	if v == nil {
 		return
@@ -7688,7 +7779,7 @@ func (m *SysLoggingMutation) CreatedAt() (r time.Time, exists bool) {
 // OldCreatedAt returns the old "created_at" field's value of the SysLogging entity.
 // If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
+func (m *SysLoggingMutation) OldCreatedAt(ctx context.Context) (v int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
 	}
@@ -7702,9 +7793,28 @@ func (m *SysLoggingMutation) OldCreatedAt(ctx context.Context) (v time.Time, err
 	return oldValue.CreatedAt, nil
 }
 
+// AddCreatedAt adds i to the "created_at" field.
+func (m *SysLoggingMutation) AddCreatedAt(i int64) {
+	if m.addcreated_at != nil {
+		*m.addcreated_at += i
+	} else {
+		m.addcreated_at = &i
+	}
+}
+
+// AddedCreatedAt returns the value that was added to the "created_at" field in this mutation.
+func (m *SysLoggingMutation) AddedCreatedAt() (r int64, exists bool) {
+	v := m.addcreated_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ResetCreatedAt resets all changes to the "created_at" field.
 func (m *SysLoggingMutation) ResetCreatedAt() {
 	m.created_at = nil
+	m.addcreated_at = nil
 }
 
 // Where appends a list predicates to the SysLoggingMutation builder.
@@ -7712,9 +7822,24 @@ func (m *SysLoggingMutation) Where(ps ...predicate.SysLogging) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysLoggingMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysLoggingMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysLogging, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysLoggingMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysLoggingMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysLogging).
@@ -7901,7 +8026,7 @@ func (m *SysLoggingMutation) SetField(name string, value ent.Value) error {
 		m.SetErrorStack(v)
 		return nil
 	case syslogging.FieldCreatedAt:
-		v, ok := value.(time.Time)
+		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -7914,13 +8039,21 @@ func (m *SysLoggingMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *SysLoggingMutation) AddedFields() []string {
-	return nil
+	var fields []string
+	if m.addcreated_at != nil {
+		fields = append(fields, syslogging.FieldCreatedAt)
+	}
+	return fields
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *SysLoggingMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case syslogging.FieldCreatedAt:
+		return m.AddedCreatedAt()
+	}
 	return nil, false
 }
 
@@ -7929,6 +8062,13 @@ func (m *SysLoggingMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *SysLoggingMutation) AddField(name string, value ent.Value) error {
 	switch name {
+	case syslogging.FieldCreatedAt:
+		v, ok := value.(int64)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddCreatedAt(v)
+		return nil
 	}
 	return fmt.Errorf("unknown SysLogging numeric field %s", name)
 }
@@ -7939,6 +8079,9 @@ func (m *SysLoggingMutation) ClearedFields() []string {
 	var fields []string
 	if m.FieldCleared(syslogging.FieldMemo) {
 		fields = append(fields, syslogging.FieldMemo)
+	}
+	if m.FieldCleared(syslogging.FieldLevel) {
+		fields = append(fields, syslogging.FieldLevel)
 	}
 	if m.FieldCleared(syslogging.FieldTraceID) {
 		fields = append(fields, syslogging.FieldTraceID)
@@ -7977,6 +8120,9 @@ func (m *SysLoggingMutation) ClearField(name string) error {
 	switch name {
 	case syslogging.FieldMemo:
 		m.ClearMemo()
+		return nil
+	case syslogging.FieldLevel:
+		m.ClearLevel()
 		return nil
 	case syslogging.FieldTraceID:
 		m.ClearTraceID()
@@ -8875,9 +9021,24 @@ func (m *SysMenuMutation) Where(ps ...predicate.SysMenu) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysMenuMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysMenuMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysMenu, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysMenuMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysMenuMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysMenu).
@@ -9870,9 +10031,24 @@ func (m *SysMenuActionMutation) Where(ps ...predicate.SysMenuAction) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysMenuActionMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysMenuActionMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysMenuAction, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysMenuActionMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysMenuActionMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysMenuAction).
@@ -10750,9 +10926,24 @@ func (m *SysMenuActionResourceMutation) Where(ps ...predicate.SysMenuActionResou
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysMenuActionResourceMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysMenuActionResourceMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysMenuActionResource, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysMenuActionResourceMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysMenuActionResourceMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysMenuActionResource).
@@ -11556,9 +11747,24 @@ func (m *SysRoleMutation) Where(ps ...predicate.SysRole) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysRoleMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysRoleMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysRole, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysRoleMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysRoleMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysRole).
@@ -12270,9 +12476,24 @@ func (m *SysRoleMenuMutation) Where(ps ...predicate.SysRoleMenu) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysRoleMenuMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysRoleMenuMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysRoleMenu, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysRoleMenuMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysRoleMenuMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysRoleMenu).
@@ -13258,9 +13479,24 @@ func (m *SysUserMutation) Where(ps ...predicate.SysUser) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysUserMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysUserMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysUser, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysUserMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysUserMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysUser).
@@ -14036,9 +14272,24 @@ func (m *SysUserRoleMutation) Where(ps ...predicate.SysUserRole) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the SysUserRoleMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysUserRoleMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysUserRole, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *SysUserRoleMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysUserRoleMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (SysUserRole).
@@ -14790,9 +15041,24 @@ func (m *XxxDemoMutation) Where(ps ...predicate.XxxDemo) {
 	m.predicates = append(m.predicates, ps...)
 }
 
+// WhereP appends storage-level predicates to the XxxDemoMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *XxxDemoMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.XxxDemo, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
 // Op returns the operation name.
 func (m *XxxDemoMutation) Op() Op {
 	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *XxxDemoMutation) SetOp(op Op) {
+	m.op = op
 }
 
 // Type returns the node type of this mutation (XxxDemo).

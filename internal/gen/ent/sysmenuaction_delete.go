@@ -4,11 +4,11 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 )
@@ -28,34 +28,7 @@ func (smad *SysMenuActionDelete) Where(ps ...predicate.SysMenuAction) *SysMenuAc
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (smad *SysMenuActionDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(smad.hooks) == 0 {
-		affected, err = smad.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysMenuActionMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			smad.mutation = mutation
-			affected, err = smad.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(smad.hooks) - 1; i >= 0; i-- {
-			if smad.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = smad.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, smad.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysMenuActionMutation](ctx, smad.sqlExec, smad.mutation, smad.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +41,9 @@ func (smad *SysMenuActionDelete) ExecX(ctx context.Context) int {
 }
 
 func (smad *SysMenuActionDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: sysmenuaction.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenuaction.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(sysmenuaction.Table, sqlgraph.NewFieldSpec(sysmenuaction.FieldID, field.TypeString))
+	_spec.Node.Schema = smad.schemaConfig.SysMenuAction
+	ctx = internal.NewSchemaConfigContext(ctx, smad.schemaConfig)
 	if ps := smad.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +55,19 @@ func (smad *SysMenuActionDelete) sqlExec(ctx context.Context) (int, error) {
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	smad.mutation.done = true
 	return affected, err
 }
 
 // SysMenuActionDeleteOne is the builder for deleting a single SysMenuAction entity.
 type SysMenuActionDeleteOne struct {
 	smad *SysMenuActionDelete
+}
+
+// Where appends a list predicates to the SysMenuActionDelete builder.
+func (smado *SysMenuActionDeleteOne) Where(ps ...predicate.SysMenuAction) *SysMenuActionDeleteOne {
+	smado.smad.mutation.Where(ps...)
+	return smado
 }
 
 // Exec executes the deletion query.
@@ -111,5 +85,7 @@ func (smado *SysMenuActionDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (smado *SysMenuActionDeleteOne) ExecX(ctx context.Context) {
-	smado.smad.ExecX(ctx)
+	if err := smado.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

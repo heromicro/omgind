@@ -6,8 +6,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
@@ -18,6 +19,7 @@ type SysLoggingCreate struct {
 	config
 	mutation *SysLoggingMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetIsDel sets the "is_del" field.
@@ -51,6 +53,14 @@ func (slc *SysLoggingCreate) SetNillableMemo(s *string) *SysLoggingCreate {
 // SetLevel sets the "level" field.
 func (slc *SysLoggingCreate) SetLevel(s string) *SysLoggingCreate {
 	slc.mutation.SetLevel(s)
+	return slc
+}
+
+// SetNillableLevel sets the "level" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableLevel(s *string) *SysLoggingCreate {
+	if s != nil {
+		slc.SetLevel(*s)
+	}
 	return slc
 }
 
@@ -153,15 +163,15 @@ func (slc *SysLoggingCreate) SetNillableErrorStack(s *string) *SysLoggingCreate 
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (slc *SysLoggingCreate) SetCreatedAt(t time.Time) *SysLoggingCreate {
-	slc.mutation.SetCreatedAt(t)
+func (slc *SysLoggingCreate) SetCreatedAt(i int64) *SysLoggingCreate {
+	slc.mutation.SetCreatedAt(i)
 	return slc
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableCreatedAt(t *time.Time) *SysLoggingCreate {
-	if t != nil {
-		slc.SetCreatedAt(*t)
+func (slc *SysLoggingCreate) SetNillableCreatedAt(i *int64) *SysLoggingCreate {
+	if i != nil {
+		slc.SetCreatedAt(*i)
 	}
 	return slc
 }
@@ -187,50 +197,10 @@ func (slc *SysLoggingCreate) Mutation() *SysLoggingMutation {
 
 // Save creates the SysLogging in the database.
 func (slc *SysLoggingCreate) Save(ctx context.Context) (*SysLogging, error) {
-	var (
-		err  error
-		node *SysLogging
-	)
-	slc.defaults()
-	if len(slc.hooks) == 0 {
-		if err = slc.check(); err != nil {
-			return nil, err
-		}
-		node, err = slc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysLoggingMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = slc.check(); err != nil {
-				return nil, err
-			}
-			slc.mutation = mutation
-			if node, err = slc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(slc.hooks) - 1; i >= 0; i-- {
-			if slc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = slc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, slc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysLogging)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysLoggingMutation", v)
-		}
-		node = nv
+	if err := slc.defaults(); err != nil {
+		return nil, err
 	}
-	return node, err
+	return withHooks[*SysLogging, SysLoggingMutation](ctx, slc.sqlSave, slc.mutation, slc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -256,7 +226,7 @@ func (slc *SysLoggingCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (slc *SysLoggingCreate) defaults() {
+func (slc *SysLoggingCreate) defaults() error {
 	if _, ok := slc.mutation.IsDel(); !ok {
 		v := syslogging.DefaultIsDel
 		slc.mutation.SetIsDel(v)
@@ -266,13 +236,20 @@ func (slc *SysLoggingCreate) defaults() {
 		slc.mutation.SetMemo(v)
 	}
 	if _, ok := slc.mutation.CreatedAt(); !ok {
+		if syslogging.DefaultCreatedAt == nil {
+			return fmt.Errorf("ent: uninitialized syslogging.DefaultCreatedAt (forgotten import ent/runtime?)")
+		}
 		v := syslogging.DefaultCreatedAt()
 		slc.mutation.SetCreatedAt(v)
 	}
 	if _, ok := slc.mutation.ID(); !ok {
+		if syslogging.DefaultID == nil {
+			return fmt.Errorf("ent: uninitialized syslogging.DefaultID (forgotten import ent/runtime?)")
+		}
 		v := syslogging.DefaultID()
 		slc.mutation.SetID(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -284,9 +261,6 @@ func (slc *SysLoggingCreate) check() error {
 		if err := syslogging.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysLogging.memo": %w`, err)}
 		}
-	}
-	if _, ok := slc.mutation.Level(); !ok {
-		return &ValidationError{Name: "level", err: errors.New(`ent: missing required field "SysLogging.level"`)}
 	}
 	if v, ok := slc.mutation.Level(); ok {
 		if err := syslogging.LevelValidator(v); err != nil {
@@ -330,6 +304,9 @@ func (slc *SysLoggingCreate) check() error {
 }
 
 func (slc *SysLoggingCreate) sqlSave(ctx context.Context) (*SysLogging, error) {
+	if err := slc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := slc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, slc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -344,119 +321,553 @@ func (slc *SysLoggingCreate) sqlSave(ctx context.Context) (*SysLogging, error) {
 			return nil, fmt.Errorf("unexpected SysLogging.ID type: %T", _spec.ID.Value)
 		}
 	}
+	slc.mutation.id = &_node.ID
+	slc.mutation.done = true
 	return _node, nil
 }
 
 func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysLogging{config: slc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: syslogging.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: syslogging.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(syslogging.Table, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
 	)
+	_spec.Schema = slc.schemaConfig.SysLogging
+	_spec.OnConflict = slc.conflict
 	if id, ok := slc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := slc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: syslogging.FieldIsDel,
-		})
+		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := slc.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldMemo,
-		})
+		_spec.SetField(syslogging.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := slc.mutation.Level(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldLevel,
-		})
-		_node.Level = value
+		_spec.SetField(syslogging.FieldLevel, field.TypeString, value)
+		_node.Level = &value
 	}
 	if value, ok := slc.mutation.TraceID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldTraceID,
-		})
+		_spec.SetField(syslogging.FieldTraceID, field.TypeString, value)
 		_node.TraceID = &value
 	}
 	if value, ok := slc.mutation.UserID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldUserID,
-		})
+		_spec.SetField(syslogging.FieldUserID, field.TypeString, value)
 		_node.UserID = &value
 	}
 	if value, ok := slc.mutation.Tag(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldTag,
-		})
+		_spec.SetField(syslogging.FieldTag, field.TypeString, value)
 		_node.Tag = &value
 	}
 	if value, ok := slc.mutation.Version(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldVersion,
-		})
+		_spec.SetField(syslogging.FieldVersion, field.TypeString, value)
 		_node.Version = &value
 	}
 	if value, ok := slc.mutation.Message(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldMessage,
-		})
+		_spec.SetField(syslogging.FieldMessage, field.TypeString, value)
 		_node.Message = &value
 	}
 	if value, ok := slc.mutation.Data(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldData,
-		})
+		_spec.SetField(syslogging.FieldData, field.TypeString, value)
 		_node.Data = &value
 	}
 	if value, ok := slc.mutation.ErrorStack(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldErrorStack,
-		})
+		_spec.SetField(syslogging.FieldErrorStack, field.TypeString, value)
 		_node.ErrorStack = &value
 	}
 	if value, ok := slc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: syslogging.FieldCreatedAt,
-		})
+		_spec.SetField(syslogging.FieldCreatedAt, field.TypeInt64, value)
 		_node.CreatedAt = value
 	}
 	return _node, _spec
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysLogging.Create().
+//		SetIsDel(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysLoggingUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (slc *SysLoggingCreate) OnConflict(opts ...sql.ConflictOption) *SysLoggingUpsertOne {
+	slc.conflict = opts
+	return &SysLoggingUpsertOne{
+		create: slc,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysLogging.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (slc *SysLoggingCreate) OnConflictColumns(columns ...string) *SysLoggingUpsertOne {
+	slc.conflict = append(slc.conflict, sql.ConflictColumns(columns...))
+	return &SysLoggingUpsertOne{
+		create: slc,
+	}
+}
+
+type (
+	// SysLoggingUpsertOne is the builder for "upsert"-ing
+	//  one SysLogging node.
+	SysLoggingUpsertOne struct {
+		create *SysLoggingCreate
+	}
+
+	// SysLoggingUpsert is the "OnConflict" setter.
+	SysLoggingUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetIsDel sets the "is_del" field.
+func (u *SysLoggingUpsert) SetIsDel(v bool) *SysLoggingUpsert {
+	u.Set(syslogging.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateIsDel() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldIsDel)
+	return u
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysLoggingUpsert) SetMemo(v string) *SysLoggingUpsert {
+	u.Set(syslogging.FieldMemo, v)
+	return u
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateMemo() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldMemo)
+	return u
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysLoggingUpsert) ClearMemo() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldMemo)
+	return u
+}
+
+// SetLevel sets the "level" field.
+func (u *SysLoggingUpsert) SetLevel(v string) *SysLoggingUpsert {
+	u.Set(syslogging.FieldLevel, v)
+	return u
+}
+
+// UpdateLevel sets the "level" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateLevel() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldLevel)
+	return u
+}
+
+// ClearLevel clears the value of the "level" field.
+func (u *SysLoggingUpsert) ClearLevel() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldLevel)
+	return u
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *SysLoggingUpsert) SetTraceID(v string) *SysLoggingUpsert {
+	u.Set(syslogging.FieldTraceID, v)
+	return u
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateTraceID() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldTraceID)
+	return u
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *SysLoggingUpsert) ClearTraceID() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldTraceID)
+	return u
+}
+
+// SetUserID sets the "user_id" field.
+func (u *SysLoggingUpsert) SetUserID(v string) *SysLoggingUpsert {
+	u.Set(syslogging.FieldUserID, v)
+	return u
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateUserID() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldUserID)
+	return u
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (u *SysLoggingUpsert) ClearUserID() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldUserID)
+	return u
+}
+
+// SetTag sets the "tag" field.
+func (u *SysLoggingUpsert) SetTag(v string) *SysLoggingUpsert {
+	u.Set(syslogging.FieldTag, v)
+	return u
+}
+
+// UpdateTag sets the "tag" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateTag() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldTag)
+	return u
+}
+
+// ClearTag clears the value of the "tag" field.
+func (u *SysLoggingUpsert) ClearTag() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldTag)
+	return u
+}
+
+// SetVersion sets the "version" field.
+func (u *SysLoggingUpsert) SetVersion(v string) *SysLoggingUpsert {
+	u.Set(syslogging.FieldVersion, v)
+	return u
+}
+
+// UpdateVersion sets the "version" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateVersion() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldVersion)
+	return u
+}
+
+// ClearVersion clears the value of the "version" field.
+func (u *SysLoggingUpsert) ClearVersion() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldVersion)
+	return u
+}
+
+// SetMessage sets the "message" field.
+func (u *SysLoggingUpsert) SetMessage(v string) *SysLoggingUpsert {
+	u.Set(syslogging.FieldMessage, v)
+	return u
+}
+
+// UpdateMessage sets the "message" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateMessage() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldMessage)
+	return u
+}
+
+// ClearMessage clears the value of the "message" field.
+func (u *SysLoggingUpsert) ClearMessage() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldMessage)
+	return u
+}
+
+// SetErrorStack sets the "error_stack" field.
+func (u *SysLoggingUpsert) SetErrorStack(v string) *SysLoggingUpsert {
+	u.Set(syslogging.FieldErrorStack, v)
+	return u
+}
+
+// UpdateErrorStack sets the "error_stack" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateErrorStack() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldErrorStack)
+	return u
+}
+
+// ClearErrorStack clears the value of the "error_stack" field.
+func (u *SysLoggingUpsert) ClearErrorStack() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldErrorStack)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.SysLogging.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(syslogging.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysLoggingUpsertOne) UpdateNewValues() *SysLoggingUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(syslogging.FieldID)
+		}
+		if _, exists := u.create.mutation.Data(); exists {
+			s.SetIgnore(syslogging.FieldData)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(syslogging.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysLogging.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *SysLoggingUpsertOne) Ignore() *SysLoggingUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysLoggingUpsertOne) DoNothing() *SysLoggingUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysLoggingCreate.OnConflict
+// documentation for more info.
+func (u *SysLoggingUpsertOne) Update(set func(*SysLoggingUpsert)) *SysLoggingUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysLoggingUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysLoggingUpsertOne) SetIsDel(v bool) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateIsDel() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysLoggingUpsertOne) SetMemo(v string) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateMemo() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysLoggingUpsertOne) ClearMemo() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetLevel sets the "level" field.
+func (u *SysLoggingUpsertOne) SetLevel(v string) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetLevel(v)
+	})
+}
+
+// UpdateLevel sets the "level" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateLevel() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateLevel()
+	})
+}
+
+// ClearLevel clears the value of the "level" field.
+func (u *SysLoggingUpsertOne) ClearLevel() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearLevel()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *SysLoggingUpsertOne) SetTraceID(v string) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateTraceID() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *SysLoggingUpsertOne) ClearTraceID() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearTraceID()
+	})
+}
+
+// SetUserID sets the "user_id" field.
+func (u *SysLoggingUpsertOne) SetUserID(v string) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetUserID(v)
+	})
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateUserID() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateUserID()
+	})
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (u *SysLoggingUpsertOne) ClearUserID() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearUserID()
+	})
+}
+
+// SetTag sets the "tag" field.
+func (u *SysLoggingUpsertOne) SetTag(v string) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetTag(v)
+	})
+}
+
+// UpdateTag sets the "tag" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateTag() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateTag()
+	})
+}
+
+// ClearTag clears the value of the "tag" field.
+func (u *SysLoggingUpsertOne) ClearTag() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearTag()
+	})
+}
+
+// SetVersion sets the "version" field.
+func (u *SysLoggingUpsertOne) SetVersion(v string) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetVersion(v)
+	})
+}
+
+// UpdateVersion sets the "version" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateVersion() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateVersion()
+	})
+}
+
+// ClearVersion clears the value of the "version" field.
+func (u *SysLoggingUpsertOne) ClearVersion() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearVersion()
+	})
+}
+
+// SetMessage sets the "message" field.
+func (u *SysLoggingUpsertOne) SetMessage(v string) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetMessage(v)
+	})
+}
+
+// UpdateMessage sets the "message" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateMessage() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateMessage()
+	})
+}
+
+// ClearMessage clears the value of the "message" field.
+func (u *SysLoggingUpsertOne) ClearMessage() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearMessage()
+	})
+}
+
+// SetErrorStack sets the "error_stack" field.
+func (u *SysLoggingUpsertOne) SetErrorStack(v string) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetErrorStack(v)
+	})
+}
+
+// UpdateErrorStack sets the "error_stack" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateErrorStack() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateErrorStack()
+	})
+}
+
+// ClearErrorStack clears the value of the "error_stack" field.
+func (u *SysLoggingUpsertOne) ClearErrorStack() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearErrorStack()
+	})
+}
+
+// Exec executes the query.
+func (u *SysLoggingUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysLoggingCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysLoggingUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *SysLoggingUpsertOne) ID(ctx context.Context) (id string, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: SysLoggingUpsertOne.ID is not supported by MySQL driver. Use SysLoggingUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *SysLoggingUpsertOne) IDX(ctx context.Context) string {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
 }
 
 // SysLoggingCreateBulk is the builder for creating many SysLogging entities in bulk.
 type SysLoggingCreateBulk struct {
 	config
 	builders []*SysLoggingCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the SysLogging entities in the database.
@@ -483,6 +894,7 @@ func (slcb *SysLoggingCreateBulk) Save(ctx context.Context) ([]*SysLogging, erro
 					_, err = mutators[i+1].Mutate(root, slcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = slcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, slcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -529,6 +941,305 @@ func (slcb *SysLoggingCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (slcb *SysLoggingCreateBulk) ExecX(ctx context.Context) {
 	if err := slcb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysLogging.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysLoggingUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (slcb *SysLoggingCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysLoggingUpsertBulk {
+	slcb.conflict = opts
+	return &SysLoggingUpsertBulk{
+		create: slcb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysLogging.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (slcb *SysLoggingCreateBulk) OnConflictColumns(columns ...string) *SysLoggingUpsertBulk {
+	slcb.conflict = append(slcb.conflict, sql.ConflictColumns(columns...))
+	return &SysLoggingUpsertBulk{
+		create: slcb,
+	}
+}
+
+// SysLoggingUpsertBulk is the builder for "upsert"-ing
+// a bulk of SysLogging nodes.
+type SysLoggingUpsertBulk struct {
+	create *SysLoggingCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.SysLogging.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(syslogging.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysLoggingUpsertBulk) UpdateNewValues() *SysLoggingUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(syslogging.FieldID)
+			}
+			if _, exists := b.mutation.Data(); exists {
+				s.SetIgnore(syslogging.FieldData)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(syslogging.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysLogging.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *SysLoggingUpsertBulk) Ignore() *SysLoggingUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysLoggingUpsertBulk) DoNothing() *SysLoggingUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysLoggingCreateBulk.OnConflict
+// documentation for more info.
+func (u *SysLoggingUpsertBulk) Update(set func(*SysLoggingUpsert)) *SysLoggingUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysLoggingUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysLoggingUpsertBulk) SetIsDel(v bool) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateIsDel() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysLoggingUpsertBulk) SetMemo(v string) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateMemo() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysLoggingUpsertBulk) ClearMemo() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetLevel sets the "level" field.
+func (u *SysLoggingUpsertBulk) SetLevel(v string) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetLevel(v)
+	})
+}
+
+// UpdateLevel sets the "level" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateLevel() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateLevel()
+	})
+}
+
+// ClearLevel clears the value of the "level" field.
+func (u *SysLoggingUpsertBulk) ClearLevel() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearLevel()
+	})
+}
+
+// SetTraceID sets the "trace_id" field.
+func (u *SysLoggingUpsertBulk) SetTraceID(v string) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetTraceID(v)
+	})
+}
+
+// UpdateTraceID sets the "trace_id" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateTraceID() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateTraceID()
+	})
+}
+
+// ClearTraceID clears the value of the "trace_id" field.
+func (u *SysLoggingUpsertBulk) ClearTraceID() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearTraceID()
+	})
+}
+
+// SetUserID sets the "user_id" field.
+func (u *SysLoggingUpsertBulk) SetUserID(v string) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetUserID(v)
+	})
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateUserID() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateUserID()
+	})
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (u *SysLoggingUpsertBulk) ClearUserID() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearUserID()
+	})
+}
+
+// SetTag sets the "tag" field.
+func (u *SysLoggingUpsertBulk) SetTag(v string) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetTag(v)
+	})
+}
+
+// UpdateTag sets the "tag" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateTag() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateTag()
+	})
+}
+
+// ClearTag clears the value of the "tag" field.
+func (u *SysLoggingUpsertBulk) ClearTag() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearTag()
+	})
+}
+
+// SetVersion sets the "version" field.
+func (u *SysLoggingUpsertBulk) SetVersion(v string) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetVersion(v)
+	})
+}
+
+// UpdateVersion sets the "version" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateVersion() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateVersion()
+	})
+}
+
+// ClearVersion clears the value of the "version" field.
+func (u *SysLoggingUpsertBulk) ClearVersion() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearVersion()
+	})
+}
+
+// SetMessage sets the "message" field.
+func (u *SysLoggingUpsertBulk) SetMessage(v string) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetMessage(v)
+	})
+}
+
+// UpdateMessage sets the "message" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateMessage() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateMessage()
+	})
+}
+
+// ClearMessage clears the value of the "message" field.
+func (u *SysLoggingUpsertBulk) ClearMessage() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearMessage()
+	})
+}
+
+// SetErrorStack sets the "error_stack" field.
+func (u *SysLoggingUpsertBulk) SetErrorStack(v string) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetErrorStack(v)
+	})
+}
+
+// UpdateErrorStack sets the "error_stack" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateErrorStack() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateErrorStack()
+	})
+}
+
+// ClearErrorStack clears the value of the "error_stack" field.
+func (u *SysLoggingUpsertBulk) ClearErrorStack() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearErrorStack()
+	})
+}
+
+// Exec executes the query.
+func (u *SysLoggingUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the SysLoggingCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysLoggingCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysLoggingUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

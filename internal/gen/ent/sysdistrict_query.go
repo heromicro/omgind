@@ -8,9 +8,11 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 )
@@ -18,15 +20,13 @@ import (
 // SysDistrictQuery is the builder for querying SysDistrict entities.
 type SysDistrictQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
-	order      []OrderFunc
-	fields     []string
-	predicates []predicate.SysDistrict
-	// eager-loading edges.
+	ctx          *QueryContext
+	order        []OrderFunc
+	inters       []Interceptor
+	predicates   []predicate.SysDistrict
 	withParent   *SysDistrictQuery
 	withChildren *SysDistrictQuery
+	modifiers    []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -38,26 +38,26 @@ func (sdq *SysDistrictQuery) Where(ps ...predicate.SysDistrict) *SysDistrictQuer
 	return sdq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (sdq *SysDistrictQuery) Limit(limit int) *SysDistrictQuery {
-	sdq.limit = &limit
+	sdq.ctx.Limit = &limit
 	return sdq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (sdq *SysDistrictQuery) Offset(offset int) *SysDistrictQuery {
-	sdq.offset = &offset
+	sdq.ctx.Offset = &offset
 	return sdq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (sdq *SysDistrictQuery) Unique(unique bool) *SysDistrictQuery {
-	sdq.unique = &unique
+	sdq.ctx.Unique = &unique
 	return sdq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (sdq *SysDistrictQuery) Order(o ...OrderFunc) *SysDistrictQuery {
 	sdq.order = append(sdq.order, o...)
 	return sdq
@@ -65,7 +65,7 @@ func (sdq *SysDistrictQuery) Order(o ...OrderFunc) *SysDistrictQuery {
 
 // QueryParent chains the current query on the "parent" edge.
 func (sdq *SysDistrictQuery) QueryParent() *SysDistrictQuery {
-	query := &SysDistrictQuery{config: sdq.config}
+	query := (&SysDistrictClient{config: sdq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := sdq.prepareQuery(ctx); err != nil {
 			return nil, err
@@ -79,6 +79,9 @@ func (sdq *SysDistrictQuery) QueryParent() *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
 		)
+		schemaConfig := sdq.schemaConfig
+		step.To.Schema = schemaConfig.SysDistrict
+		step.Edge.Schema = schemaConfig.SysDistrict
 		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -87,7 +90,7 @@ func (sdq *SysDistrictQuery) QueryParent() *SysDistrictQuery {
 
 // QueryChildren chains the current query on the "children" edge.
 func (sdq *SysDistrictQuery) QueryChildren() *SysDistrictQuery {
-	query := &SysDistrictQuery{config: sdq.config}
+	query := (&SysDistrictClient{config: sdq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := sdq.prepareQuery(ctx); err != nil {
 			return nil, err
@@ -101,6 +104,9 @@ func (sdq *SysDistrictQuery) QueryChildren() *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
 		)
+		schemaConfig := sdq.schemaConfig
+		step.To.Schema = schemaConfig.SysDistrict
+		step.Edge.Schema = schemaConfig.SysDistrict
 		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -110,7 +116,7 @@ func (sdq *SysDistrictQuery) QueryChildren() *SysDistrictQuery {
 // First returns the first SysDistrict entity from the query.
 // Returns a *NotFoundError when no SysDistrict was found.
 func (sdq *SysDistrictQuery) First(ctx context.Context) (*SysDistrict, error) {
-	nodes, err := sdq.Limit(1).All(ctx)
+	nodes, err := sdq.Limit(1).All(setContextOp(ctx, sdq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +139,7 @@ func (sdq *SysDistrictQuery) FirstX(ctx context.Context) *SysDistrict {
 // Returns a *NotFoundError when no SysDistrict ID was found.
 func (sdq *SysDistrictQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = sdq.Limit(1).IDs(setContextOp(ctx, sdq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -156,7 +162,7 @@ func (sdq *SysDistrictQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysDistrict entity is found.
 // Returns a *NotFoundError when no SysDistrict entities are found.
 func (sdq *SysDistrictQuery) Only(ctx context.Context) (*SysDistrict, error) {
-	nodes, err := sdq.Limit(2).All(ctx)
+	nodes, err := sdq.Limit(2).All(setContextOp(ctx, sdq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +190,7 @@ func (sdq *SysDistrictQuery) OnlyX(ctx context.Context) *SysDistrict {
 // Returns a *NotFoundError when no entities are found.
 func (sdq *SysDistrictQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = sdq.Limit(2).IDs(setContextOp(ctx, sdq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -209,10 +215,12 @@ func (sdq *SysDistrictQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysDistricts.
 func (sdq *SysDistrictQuery) All(ctx context.Context) ([]*SysDistrict, error) {
+	ctx = setContextOp(ctx, sdq.ctx, "All")
 	if err := sdq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return sdq.sqlAll(ctx)
+	qr := querierAll[[]*SysDistrict, *SysDistrictQuery]()
+	return withInterceptors[[]*SysDistrict](ctx, sdq, qr, sdq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -225,9 +233,12 @@ func (sdq *SysDistrictQuery) AllX(ctx context.Context) []*SysDistrict {
 }
 
 // IDs executes the query and returns a list of SysDistrict IDs.
-func (sdq *SysDistrictQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := sdq.Select(sysdistrict.FieldID).Scan(ctx, &ids); err != nil {
+func (sdq *SysDistrictQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if sdq.ctx.Unique == nil && sdq.path != nil {
+		sdq.Unique(true)
+	}
+	ctx = setContextOp(ctx, sdq.ctx, "IDs")
+	if err = sdq.Select(sysdistrict.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -244,10 +255,11 @@ func (sdq *SysDistrictQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (sdq *SysDistrictQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, sdq.ctx, "Count")
 	if err := sdq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return sdq.sqlCount(ctx)
+	return withInterceptors[int](ctx, sdq, querierCount[*SysDistrictQuery](), sdq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -261,10 +273,15 @@ func (sdq *SysDistrictQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (sdq *SysDistrictQuery) Exist(ctx context.Context) (bool, error) {
-	if err := sdq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, sdq.ctx, "Exist")
+	switch _, err := sdq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return sdq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -284,23 +301,22 @@ func (sdq *SysDistrictQuery) Clone() *SysDistrictQuery {
 	}
 	return &SysDistrictQuery{
 		config:       sdq.config,
-		limit:        sdq.limit,
-		offset:       sdq.offset,
+		ctx:          sdq.ctx.Clone(),
 		order:        append([]OrderFunc{}, sdq.order...),
+		inters:       append([]Interceptor{}, sdq.inters...),
 		predicates:   append([]predicate.SysDistrict{}, sdq.predicates...),
 		withParent:   sdq.withParent.Clone(),
 		withChildren: sdq.withChildren.Clone(),
 		// clone intermediate query.
-		sql:    sdq.sql.Clone(),
-		path:   sdq.path,
-		unique: sdq.unique,
+		sql:  sdq.sql.Clone(),
+		path: sdq.path,
 	}
 }
 
 // WithParent tells the query-builder to eager-load the nodes that are connected to
 // the "parent" edge. The optional arguments are used to configure the query builder of the edge.
 func (sdq *SysDistrictQuery) WithParent(opts ...func(*SysDistrictQuery)) *SysDistrictQuery {
-	query := &SysDistrictQuery{config: sdq.config}
+	query := (&SysDistrictClient{config: sdq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
@@ -311,7 +327,7 @@ func (sdq *SysDistrictQuery) WithParent(opts ...func(*SysDistrictQuery)) *SysDis
 // WithChildren tells the query-builder to eager-load the nodes that are connected to
 // the "children" edge. The optional arguments are used to configure the query builder of the edge.
 func (sdq *SysDistrictQuery) WithChildren(opts ...func(*SysDistrictQuery)) *SysDistrictQuery {
-	query := &SysDistrictQuery{config: sdq.config}
+	query := (&SysDistrictClient{config: sdq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
@@ -333,18 +349,12 @@ func (sdq *SysDistrictQuery) WithChildren(opts ...func(*SysDistrictQuery)) *SysD
 //		GroupBy(sysdistrict.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (sdq *SysDistrictQuery) GroupBy(field string, fields ...string) *SysDistrictGroupBy {
-	grbuild := &SysDistrictGroupBy{config: sdq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := sdq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return sdq.sqlQuery(ctx), nil
-	}
+	sdq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysDistrictGroupBy{build: sdq}
+	grbuild.flds = &sdq.ctx.Fields
 	grbuild.label = sysdistrict.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -360,17 +370,31 @@ func (sdq *SysDistrictQuery) GroupBy(field string, fields ...string) *SysDistric
 //	client.SysDistrict.Query().
 //		Select(sysdistrict.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (sdq *SysDistrictQuery) Select(fields ...string) *SysDistrictSelect {
-	sdq.fields = append(sdq.fields, fields...)
-	selbuild := &SysDistrictSelect{SysDistrictQuery: sdq}
-	selbuild.label = sysdistrict.Label
-	selbuild.flds, selbuild.scan = &sdq.fields, selbuild.Scan
-	return selbuild
+	sdq.ctx.Fields = append(sdq.ctx.Fields, fields...)
+	sbuild := &SysDistrictSelect{SysDistrictQuery: sdq}
+	sbuild.label = sysdistrict.Label
+	sbuild.flds, sbuild.scan = &sdq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a SysDistrictSelect configured with the given aggregations.
+func (sdq *SysDistrictQuery) Aggregate(fns ...AggregateFunc) *SysDistrictSelect {
+	return sdq.Select().Aggregate(fns...)
 }
 
 func (sdq *SysDistrictQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range sdq.fields {
+	for _, inter := range sdq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, sdq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range sdq.ctx.Fields {
 		if !sysdistrict.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -394,14 +418,19 @@ func (sdq *SysDistrictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 			sdq.withChildren != nil,
 		}
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysDistrict).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysDistrict{config: sdq.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
+	}
+	_spec.Node.Schema = sdq.schemaConfig.SysDistrict
+	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
+	if len(sdq.modifiers) > 0 {
+		_spec.Modifiers = sdq.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
@@ -412,101 +441,108 @@ func (sdq *SysDistrictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-
 	if query := sdq.withParent; query != nil {
-		ids := make([]string, 0, len(nodes))
-		nodeids := make(map[string][]*SysDistrict)
-		for i := range nodes {
-			if nodes[i].ParentID == nil {
-				continue
-			}
-			fk := *nodes[i].ParentID
-			if _, ok := nodeids[fk]; !ok {
-				ids = append(ids, fk)
-			}
-			nodeids[fk] = append(nodeids[fk], nodes[i])
-		}
-		query.Where(sysdistrict.IDIn(ids...))
-		neighbors, err := query.All(ctx)
-		if err != nil {
+		if err := sdq.loadParent(ctx, query, nodes, nil,
+			func(n *SysDistrict, e *SysDistrict) { n.Edges.Parent = e }); err != nil {
 			return nil, err
 		}
-		for _, n := range neighbors {
-			nodes, ok := nodeids[n.ID]
-			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "parent_id" returned %v`, n.ID)
-			}
-			for i := range nodes {
-				nodes[i].Edges.Parent = n
-			}
-		}
 	}
-
 	if query := sdq.withChildren; query != nil {
-		fks := make([]driver.Value, 0, len(nodes))
-		nodeids := make(map[string]*SysDistrict)
-		for i := range nodes {
-			fks = append(fks, nodes[i].ID)
-			nodeids[nodes[i].ID] = nodes[i]
-			nodes[i].Edges.Children = []*SysDistrict{}
-		}
-		query.Where(predicate.SysDistrict(func(s *sql.Selector) {
-			s.Where(sql.InValues(sysdistrict.ChildrenColumn, fks...))
-		}))
-		neighbors, err := query.All(ctx)
-		if err != nil {
+		if err := sdq.loadChildren(ctx, query, nodes,
+			func(n *SysDistrict) { n.Edges.Children = []*SysDistrict{} },
+			func(n *SysDistrict, e *SysDistrict) { n.Edges.Children = append(n.Edges.Children, e) }); err != nil {
 			return nil, err
 		}
-		for _, n := range neighbors {
-			fk := n.ParentID
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "parent_id" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
-			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
-			}
-			node.Edges.Children = append(node.Edges.Children, n)
+	}
+	return nodes, nil
+}
+
+func (sdq *SysDistrictQuery) loadParent(ctx context.Context, query *SysDistrictQuery, nodes []*SysDistrict, init func(*SysDistrict), assign func(*SysDistrict, *SysDistrict)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*SysDistrict)
+	for i := range nodes {
+		if nodes[i].ParentID == nil {
+			continue
+		}
+		fk := *nodes[i].ParentID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(sysdistrict.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "parent_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
 		}
 	}
-
-	return nodes, nil
+	return nil
+}
+func (sdq *SysDistrictQuery) loadChildren(ctx context.Context, query *SysDistrictQuery, nodes []*SysDistrict, init func(*SysDistrict), assign func(*SysDistrict, *SysDistrict)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*SysDistrict)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.SysDistrict(func(s *sql.Selector) {
+		s.Where(sql.InValues(sysdistrict.ChildrenColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.ParentID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "parent_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (sdq *SysDistrictQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdq.querySpec()
-	_spec.Node.Columns = sdq.fields
-	if len(sdq.fields) > 0 {
-		_spec.Unique = sdq.unique != nil && *sdq.unique
+	_spec.Node.Schema = sdq.schemaConfig.SysDistrict
+	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
+	if len(sdq.modifiers) > 0 {
+		_spec.Modifiers = sdq.modifiers
+	}
+	_spec.Node.Columns = sdq.ctx.Fields
+	if len(sdq.ctx.Fields) > 0 {
+		_spec.Unique = sdq.ctx.Unique != nil && *sdq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, sdq.driver, _spec)
 }
 
-func (sdq *SysDistrictQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := sdq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (sdq *SysDistrictQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysdistrict.Table,
-			Columns: sysdistrict.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdistrict.FieldID,
-			},
-		},
-		From:   sdq.sql,
-		Unique: true,
-	}
-	if unique := sdq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(sysdistrict.Table, sysdistrict.Columns, sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString))
+	_spec.From = sdq.sql
+	if unique := sdq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if sdq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := sdq.fields; len(fields) > 0 {
+	if fields := sdq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysdistrict.FieldID)
 		for i := range fields {
@@ -522,10 +558,10 @@ func (sdq *SysDistrictQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := sdq.limit; limit != nil {
+	if limit := sdq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := sdq.offset; offset != nil {
+	if offset := sdq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := sdq.order; len(ps) > 0 {
@@ -541,7 +577,7 @@ func (sdq *SysDistrictQuery) querySpec() *sqlgraph.QuerySpec {
 func (sdq *SysDistrictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(sdq.driver.Dialect())
 	t1 := builder.Table(sysdistrict.Table)
-	columns := sdq.fields
+	columns := sdq.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysdistrict.Columns
 	}
@@ -550,8 +586,14 @@ func (sdq *SysDistrictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector = sdq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if sdq.unique != nil && *sdq.unique {
+	if sdq.ctx.Unique != nil && *sdq.ctx.Unique {
 		selector.Distinct()
+	}
+	t1.Schema(sdq.schemaConfig.SysDistrict)
+	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
+	selector.WithContext(ctx)
+	for _, m := range sdq.modifiers {
+		m(selector)
 	}
 	for _, p := range sdq.predicates {
 		p(selector)
@@ -559,26 +601,53 @@ func (sdq *SysDistrictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	for _, p := range sdq.order {
 		p(selector)
 	}
-	if offset := sdq.offset; offset != nil {
+	if offset := sdq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := sdq.limit; limit != nil {
+	if limit := sdq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
 }
 
+// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
+// updated, deleted or "selected ... for update" by other sessions, until the transaction is
+// either committed or rolled-back.
+func (sdq *SysDistrictQuery) ForUpdate(opts ...sql.LockOption) *SysDistrictQuery {
+	if sdq.driver.Dialect() == dialect.Postgres {
+		sdq.Unique(false)
+	}
+	sdq.modifiers = append(sdq.modifiers, func(s *sql.Selector) {
+		s.ForUpdate(opts...)
+	})
+	return sdq
+}
+
+// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
+// on any rows that are read. Other sessions can read the rows, but cannot modify them
+// until your transaction commits.
+func (sdq *SysDistrictQuery) ForShare(opts ...sql.LockOption) *SysDistrictQuery {
+	if sdq.driver.Dialect() == dialect.Postgres {
+		sdq.Unique(false)
+	}
+	sdq.modifiers = append(sdq.modifiers, func(s *sql.Selector) {
+		s.ForShare(opts...)
+	})
+	return sdq
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sdq *SysDistrictQuery) Modify(modifiers ...func(s *sql.Selector)) *SysDistrictSelect {
+	sdq.modifiers = append(sdq.modifiers, modifiers...)
+	return sdq.Select()
+}
+
 // SysDistrictGroupBy is the group-by builder for SysDistrict entities.
 type SysDistrictGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *SysDistrictQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -587,77 +656,86 @@ func (sdgb *SysDistrictGroupBy) Aggregate(fns ...AggregateFunc) *SysDistrictGrou
 	return sdgb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (sdgb *SysDistrictGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := sdgb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (sdgb *SysDistrictGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, sdgb.build.ctx, "GroupBy")
+	if err := sdgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	sdgb.sql = query
-	return sdgb.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysDistrictQuery, *SysDistrictGroupBy](ctx, sdgb.build, sdgb, sdgb.build.inters, v)
 }
 
-func (sdgb *SysDistrictGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range sdgb.fields {
-		if !sysdistrict.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
-	}
-	selector := sdgb.sqlQuery()
-	if err := selector.Err(); err != nil {
-		return err
-	}
-	rows := &sql.Rows{}
-	query, args := selector.Query()
-	if err := sdgb.driver.Query(ctx, query, args, rows); err != nil {
-		return err
-	}
-	defer rows.Close()
-	return sql.ScanSlice(rows, v)
-}
-
-func (sdgb *SysDistrictGroupBy) sqlQuery() *sql.Selector {
-	selector := sdgb.sql.Select()
+func (sdgb *SysDistrictGroupBy) sqlScan(ctx context.Context, root *SysDistrictQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
 	aggregation := make([]string, 0, len(sdgb.fns))
 	for _, fn := range sdgb.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(sdgb.fields)+len(sdgb.fns))
-		for _, f := range sdgb.fields {
+		columns := make([]string, 0, len(*sdgb.flds)+len(sdgb.fns))
+		for _, f := range *sdgb.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	return selector.GroupBy(selector.Columns(sdgb.fields...)...)
+	selector.GroupBy(selector.Columns(*sdgb.flds...)...)
+	if err := selector.Err(); err != nil {
+		return err
+	}
+	rows := &sql.Rows{}
+	query, args := selector.Query()
+	if err := sdgb.build.driver.Query(ctx, query, args, rows); err != nil {
+		return err
+	}
+	defer rows.Close()
+	return sql.ScanSlice(rows, v)
 }
 
 // SysDistrictSelect is the builder for selecting fields of SysDistrict entities.
 type SysDistrictSelect struct {
 	*SysDistrictQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (sds *SysDistrictSelect) Aggregate(fns ...AggregateFunc) *SysDistrictSelect {
+	sds.fns = append(sds.fns, fns...)
+	return sds
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sds *SysDistrictSelect) Scan(ctx context.Context, v interface{}) error {
+func (sds *SysDistrictSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, sds.ctx, "Select")
 	if err := sds.prepareQuery(ctx); err != nil {
 		return err
 	}
-	sds.sql = sds.SysDistrictQuery.sqlQuery(ctx)
-	return sds.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysDistrictQuery, *SysDistrictSelect](ctx, sds.SysDistrictQuery, sds, sds.inters, v)
 }
 
-func (sds *SysDistrictSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (sds *SysDistrictSelect) sqlScan(ctx context.Context, root *SysDistrictQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(sds.fns))
+	for _, fn := range sds.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*sds.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := sds.sql.Query()
+	query, args := selector.Query()
 	if err := sds.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sds *SysDistrictSelect) Modify(modifiers ...func(s *sql.Selector)) *SysDistrictSelect {
+	sds.modifiers = append(sds.modifiers, modifiers...)
+	return sds
 }

@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 )
@@ -18,8 +19,9 @@ import (
 // SysDistrictUpdate is the builder for updating SysDistrict entities.
 type SysDistrictUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysDistrictMutation
+	hooks     []Hook
+	mutation  *SysDistrictMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysDistrictUpdate builder.
@@ -705,41 +707,10 @@ func (sdu *SysDistrictUpdate) RemoveChildren(s ...*SysDistrict) *SysDistrictUpda
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sdu *SysDistrictUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	sdu.defaults()
-	if len(sdu.hooks) == 0 {
-		if err = sdu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = sdu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDistrictMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sdu.check(); err != nil {
-				return 0, err
-			}
-			sdu.mutation = mutation
-			affected, err = sdu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sdu.hooks) - 1; i >= 0; i-- {
-			if sdu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sdu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sdu.mutation); err != nil {
-			return 0, err
-		}
+	if err := sdu.defaults(); err != nil {
+		return 0, err
 	}
-	return affected, err
+	return withHooks[int, SysDistrictMutation](ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -765,11 +736,15 @@ func (sdu *SysDistrictUpdate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sdu *SysDistrictUpdate) defaults() {
+func (sdu *SysDistrictUpdate) defaults() error {
 	if _, ok := sdu.mutation.UpdatedAt(); !ok {
+		if sysdistrict.UpdateDefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized sysdistrict.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sdu.mutation.SetUpdatedAt(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -847,17 +822,17 @@ func (sdu *SysDistrictUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sdu *SysDistrictUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdate {
+	sdu.modifiers = append(sdu.modifiers, modifiers...)
+	return sdu
+}
+
 func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysdistrict.Table,
-			Columns: sysdistrict.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdistrict.FieldID,
-			},
-		},
+	if err := sdu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysdistrict.Table, sysdistrict.Columns, sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString))
 	if ps := sdu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -866,413 +841,190 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := sdu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsDel,
-		})
+		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sdu.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldSort,
-		})
+		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sdu.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldSort,
-		})
+		_spec.AddField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sdu.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdistrict.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sdu.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdistrict.FieldDeletedAt,
-		})
+		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sdu.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysdistrict.FieldDeletedAt,
-		})
+		_spec.ClearField(sysdistrict.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sdu.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsActive,
-		})
+		_spec.SetField(sysdistrict.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sdu.mutation.TreeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
+		_spec.SetField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 	}
 	if value, ok := sdu.mutation.AddedTreeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
+		_spec.AddField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 	}
 	if sdu.mutation.TreeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeID,
-		})
+		_spec.ClearField(sysdistrict.FieldTreeID, field.TypeInt64)
 	}
 	if value, ok := sdu.mutation.TreeLevel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
+		_spec.SetField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 	}
 	if value, ok := sdu.mutation.AddedTreeLevel(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
+		_spec.AddField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 	}
 	if sdu.mutation.TreeLevelCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: sysdistrict.FieldTreeLevel,
-		})
+		_spec.ClearField(sysdistrict.FieldTreeLevel, field.TypeInt32)
 	}
 	if value, ok := sdu.mutation.TreeLeft(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
+		_spec.SetField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 	}
 	if value, ok := sdu.mutation.AddedTreeLeft(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
+		_spec.AddField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 	}
 	if sdu.mutation.TreeLeftCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeLeft,
-		})
+		_spec.ClearField(sysdistrict.FieldTreeLeft, field.TypeInt64)
 	}
 	if value, ok := sdu.mutation.TreeRight(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
+		_spec.SetField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 	}
 	if value, ok := sdu.mutation.AddedTreeRight(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
+		_spec.AddField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 	}
 	if sdu.mutation.TreeRightCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeRight,
-		})
+		_spec.ClearField(sysdistrict.FieldTreeRight, field.TypeInt64)
 	}
 	if value, ok := sdu.mutation.IsLeaf(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsLeaf,
-		})
+		_spec.SetField(sysdistrict.FieldIsLeaf, field.TypeBool, value)
 	}
 	if sdu.mutation.IsLeafCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsLeaf,
-		})
+		_spec.ClearField(sysdistrict.FieldIsLeaf, field.TypeBool)
 	}
 	if value, ok := sdu.mutation.TreePath(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldTreePath,
-		})
+		_spec.SetField(sysdistrict.FieldTreePath, field.TypeString, value)
 	}
 	if sdu.mutation.TreePathCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldTreePath,
-		})
+		_spec.ClearField(sysdistrict.FieldTreePath, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldName,
-		})
+		_spec.SetField(sysdistrict.FieldName, field.TypeString, value)
 	}
 	if sdu.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldName,
-		})
+		_spec.ClearField(sysdistrict.FieldName, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Sname(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldSname,
-		})
+		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 	}
 	if sdu.mutation.SnameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldSname,
-		})
+		_spec.ClearField(sysdistrict.FieldSname, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Abbr(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldAbbr,
-		})
+		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)
 	}
 	if sdu.mutation.AbbrCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldAbbr,
-		})
+		_spec.ClearField(sysdistrict.FieldAbbr, field.TypeString)
 	}
 	if value, ok := sdu.mutation.StCode(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldStCode,
-		})
+		_spec.SetField(sysdistrict.FieldStCode, field.TypeString, value)
 	}
 	if sdu.mutation.StCodeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldStCode,
-		})
+		_spec.ClearField(sysdistrict.FieldStCode, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Initials(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldInitials,
-		})
+		_spec.SetField(sysdistrict.FieldInitials, field.TypeString, value)
 	}
 	if sdu.mutation.InitialsCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldInitials,
-		})
+		_spec.ClearField(sysdistrict.FieldInitials, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Pinyin(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldPinyin,
-		})
+		_spec.SetField(sysdistrict.FieldPinyin, field.TypeString, value)
 	}
 	if sdu.mutation.PinyinCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldPinyin,
-		})
+		_spec.ClearField(sysdistrict.FieldPinyin, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Longitude(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLongitude,
-		})
+		_spec.SetField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 	}
 	if value, ok := sdu.mutation.AddedLongitude(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLongitude,
-		})
+		_spec.AddField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 	}
 	if sdu.mutation.LongitudeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Column: sysdistrict.FieldLongitude,
-		})
+		_spec.ClearField(sysdistrict.FieldLongitude, field.TypeFloat64)
 	}
 	if value, ok := sdu.mutation.Latitude(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLatitude,
-		})
+		_spec.SetField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 	}
 	if value, ok := sdu.mutation.AddedLatitude(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLatitude,
-		})
+		_spec.AddField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 	}
 	if sdu.mutation.LatitudeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Column: sysdistrict.FieldLatitude,
-		})
+		_spec.ClearField(sysdistrict.FieldLatitude, field.TypeFloat64)
 	}
 	if value, ok := sdu.mutation.AreaCode(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldAreaCode,
-		})
+		_spec.SetField(sysdistrict.FieldAreaCode, field.TypeString, value)
 	}
 	if sdu.mutation.AreaCodeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldAreaCode,
-		})
+		_spec.ClearField(sysdistrict.FieldAreaCode, field.TypeString)
 	}
 	if value, ok := sdu.mutation.ZipCode(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldZipCode,
-		})
+		_spec.SetField(sysdistrict.FieldZipCode, field.TypeString, value)
 	}
 	if sdu.mutation.ZipCodeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldZipCode,
-		})
+		_spec.ClearField(sysdistrict.FieldZipCode, field.TypeString)
 	}
 	if value, ok := sdu.mutation.MergeName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldMergeName,
-		})
+		_spec.SetField(sysdistrict.FieldMergeName, field.TypeString, value)
 	}
 	if sdu.mutation.MergeNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldMergeName,
-		})
+		_spec.ClearField(sysdistrict.FieldMergeName, field.TypeString)
 	}
 	if value, ok := sdu.mutation.MergeSname(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldMergeSname,
-		})
+		_spec.SetField(sysdistrict.FieldMergeSname, field.TypeString, value)
 	}
 	if sdu.mutation.MergeSnameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldMergeSname,
-		})
+		_spec.ClearField(sysdistrict.FieldMergeSname, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Extra(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldExtra,
-		})
+		_spec.SetField(sysdistrict.FieldExtra, field.TypeString, value)
 	}
 	if sdu.mutation.ExtraCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldExtra,
-		})
+		_spec.ClearField(sysdistrict.FieldExtra, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Suffix(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldSuffix,
-		})
+		_spec.SetField(sysdistrict.FieldSuffix, field.TypeString, value)
 	}
 	if sdu.mutation.SuffixCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldSuffix,
-		})
+		_spec.ClearField(sysdistrict.FieldSuffix, field.TypeString)
 	}
 	if value, ok := sdu.mutation.IsHot(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsHot,
-		})
+		_spec.SetField(sysdistrict.FieldIsHot, field.TypeBool, value)
 	}
 	if sdu.mutation.IsHotCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsHot,
-		})
+		_spec.ClearField(sysdistrict.FieldIsHot, field.TypeBool)
 	}
 	if value, ok := sdu.mutation.IsReal(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsReal,
-		})
+		_spec.SetField(sysdistrict.FieldIsReal, field.TypeBool, value)
 	}
 	if sdu.mutation.IsRealCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsReal,
-		})
+		_spec.ClearField(sysdistrict.FieldIsReal, field.TypeBool)
 	}
 	if value, ok := sdu.mutation.IsMain(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsMain,
-		})
+		_spec.SetField(sysdistrict.FieldIsMain, field.TypeBool, value)
 	}
 	if sdu.mutation.IsMainCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsMain,
-		})
+		_spec.ClearField(sysdistrict.FieldIsMain, field.TypeBool)
 	}
 	if value, ok := sdu.mutation.IsDirect(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsDirect,
-		})
+		_spec.SetField(sysdistrict.FieldIsDirect, field.TypeBool, value)
 	}
 	if sdu.mutation.IsDirectCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsDirect,
-		})
+		_spec.ClearField(sysdistrict.FieldIsDirect, field.TypeBool)
 	}
 	if value, ok := sdu.mutation.Creator(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldCreator,
-		})
+		_spec.SetField(sysdistrict.FieldCreator, field.TypeString, value)
 	}
 	if sdu.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1288,6 +1040,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdu.mutation.ParentIDs(); len(nodes) > 0 {
@@ -1304,6 +1057,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1323,6 +1077,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sdu.mutation.ChildrenCleared() {
@@ -1339,6 +1094,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1358,11 +1114,15 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	_spec.Node.Schema = sdu.schemaConfig.SysDistrict
+	ctx = internal.NewSchemaConfigContext(ctx, sdu.schemaConfig)
+	_spec.AddModifiers(sdu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdistrict.Label}
@@ -1371,15 +1131,17 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	sdu.mutation.done = true
 	return n, nil
 }
 
 // SysDistrictUpdateOne is the builder for updating a single SysDistrict entity.
 type SysDistrictUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysDistrictMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysDistrictMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -2057,6 +1819,12 @@ func (sduo *SysDistrictUpdateOne) RemoveChildren(s ...*SysDistrict) *SysDistrict
 	return sduo.RemoveChildIDs(ids...)
 }
 
+// Where appends a list predicates to the SysDistrictUpdate builder.
+func (sduo *SysDistrictUpdateOne) Where(ps ...predicate.SysDistrict) *SysDistrictUpdateOne {
+	sduo.mutation.Where(ps...)
+	return sduo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (sduo *SysDistrictUpdateOne) Select(field string, fields ...string) *SysDistrictUpdateOne {
@@ -2066,47 +1834,10 @@ func (sduo *SysDistrictUpdateOne) Select(field string, fields ...string) *SysDis
 
 // Save executes the query and returns the updated SysDistrict entity.
 func (sduo *SysDistrictUpdateOne) Save(ctx context.Context) (*SysDistrict, error) {
-	var (
-		err  error
-		node *SysDistrict
-	)
-	sduo.defaults()
-	if len(sduo.hooks) == 0 {
-		if err = sduo.check(); err != nil {
-			return nil, err
-		}
-		node, err = sduo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDistrictMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sduo.check(); err != nil {
-				return nil, err
-			}
-			sduo.mutation = mutation
-			node, err = sduo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sduo.hooks) - 1; i >= 0; i-- {
-			if sduo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sduo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sduo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysDistrict)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysDistrictMutation", v)
-		}
-		node = nv
+	if err := sduo.defaults(); err != nil {
+		return nil, err
 	}
-	return node, err
+	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -2132,11 +1863,15 @@ func (sduo *SysDistrictUpdateOne) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sduo *SysDistrictUpdateOne) defaults() {
+func (sduo *SysDistrictUpdateOne) defaults() error {
 	if _, ok := sduo.mutation.UpdatedAt(); !ok {
+		if sysdistrict.UpdateDefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized sysdistrict.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sduo.mutation.SetUpdatedAt(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -2214,17 +1949,17 @@ func (sduo *SysDistrictUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sduo *SysDistrictUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdateOne {
+	sduo.modifiers = append(sduo.modifiers, modifiers...)
+	return sduo
+}
+
 func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistrict, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysdistrict.Table,
-			Columns: sysdistrict.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdistrict.FieldID,
-			},
-		},
+	if err := sduo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysdistrict.Table, sysdistrict.Columns, sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString))
 	id, ok := sduo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysDistrict.id" for update`)}
@@ -2250,413 +1985,190 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		}
 	}
 	if value, ok := sduo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsDel,
-		})
+		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sduo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldSort,
-		})
+		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sduo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldSort,
-		})
+		_spec.AddField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sduo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdistrict.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sduo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdistrict.FieldDeletedAt,
-		})
+		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sduo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysdistrict.FieldDeletedAt,
-		})
+		_spec.ClearField(sysdistrict.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sduo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsActive,
-		})
+		_spec.SetField(sysdistrict.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sduo.mutation.TreeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
+		_spec.SetField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 	}
 	if value, ok := sduo.mutation.AddedTreeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
+		_spec.AddField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 	}
 	if sduo.mutation.TreeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeID,
-		})
+		_spec.ClearField(sysdistrict.FieldTreeID, field.TypeInt64)
 	}
 	if value, ok := sduo.mutation.TreeLevel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
+		_spec.SetField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 	}
 	if value, ok := sduo.mutation.AddedTreeLevel(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
+		_spec.AddField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 	}
 	if sduo.mutation.TreeLevelCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: sysdistrict.FieldTreeLevel,
-		})
+		_spec.ClearField(sysdistrict.FieldTreeLevel, field.TypeInt32)
 	}
 	if value, ok := sduo.mutation.TreeLeft(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
+		_spec.SetField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 	}
 	if value, ok := sduo.mutation.AddedTreeLeft(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
+		_spec.AddField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 	}
 	if sduo.mutation.TreeLeftCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeLeft,
-		})
+		_spec.ClearField(sysdistrict.FieldTreeLeft, field.TypeInt64)
 	}
 	if value, ok := sduo.mutation.TreeRight(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
+		_spec.SetField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 	}
 	if value, ok := sduo.mutation.AddedTreeRight(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
+		_spec.AddField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 	}
 	if sduo.mutation.TreeRightCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Column: sysdistrict.FieldTreeRight,
-		})
+		_spec.ClearField(sysdistrict.FieldTreeRight, field.TypeInt64)
 	}
 	if value, ok := sduo.mutation.IsLeaf(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsLeaf,
-		})
+		_spec.SetField(sysdistrict.FieldIsLeaf, field.TypeBool, value)
 	}
 	if sduo.mutation.IsLeafCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsLeaf,
-		})
+		_spec.ClearField(sysdistrict.FieldIsLeaf, field.TypeBool)
 	}
 	if value, ok := sduo.mutation.TreePath(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldTreePath,
-		})
+		_spec.SetField(sysdistrict.FieldTreePath, field.TypeString, value)
 	}
 	if sduo.mutation.TreePathCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldTreePath,
-		})
+		_spec.ClearField(sysdistrict.FieldTreePath, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldName,
-		})
+		_spec.SetField(sysdistrict.FieldName, field.TypeString, value)
 	}
 	if sduo.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldName,
-		})
+		_spec.ClearField(sysdistrict.FieldName, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Sname(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldSname,
-		})
+		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 	}
 	if sduo.mutation.SnameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldSname,
-		})
+		_spec.ClearField(sysdistrict.FieldSname, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Abbr(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldAbbr,
-		})
+		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)
 	}
 	if sduo.mutation.AbbrCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldAbbr,
-		})
+		_spec.ClearField(sysdistrict.FieldAbbr, field.TypeString)
 	}
 	if value, ok := sduo.mutation.StCode(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldStCode,
-		})
+		_spec.SetField(sysdistrict.FieldStCode, field.TypeString, value)
 	}
 	if sduo.mutation.StCodeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldStCode,
-		})
+		_spec.ClearField(sysdistrict.FieldStCode, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Initials(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldInitials,
-		})
+		_spec.SetField(sysdistrict.FieldInitials, field.TypeString, value)
 	}
 	if sduo.mutation.InitialsCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldInitials,
-		})
+		_spec.ClearField(sysdistrict.FieldInitials, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Pinyin(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldPinyin,
-		})
+		_spec.SetField(sysdistrict.FieldPinyin, field.TypeString, value)
 	}
 	if sduo.mutation.PinyinCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldPinyin,
-		})
+		_spec.ClearField(sysdistrict.FieldPinyin, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Longitude(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLongitude,
-		})
+		_spec.SetField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 	}
 	if value, ok := sduo.mutation.AddedLongitude(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLongitude,
-		})
+		_spec.AddField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 	}
 	if sduo.mutation.LongitudeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Column: sysdistrict.FieldLongitude,
-		})
+		_spec.ClearField(sysdistrict.FieldLongitude, field.TypeFloat64)
 	}
 	if value, ok := sduo.mutation.Latitude(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLatitude,
-		})
+		_spec.SetField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 	}
 	if value, ok := sduo.mutation.AddedLatitude(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLatitude,
-		})
+		_spec.AddField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 	}
 	if sduo.mutation.LatitudeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Column: sysdistrict.FieldLatitude,
-		})
+		_spec.ClearField(sysdistrict.FieldLatitude, field.TypeFloat64)
 	}
 	if value, ok := sduo.mutation.AreaCode(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldAreaCode,
-		})
+		_spec.SetField(sysdistrict.FieldAreaCode, field.TypeString, value)
 	}
 	if sduo.mutation.AreaCodeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldAreaCode,
-		})
+		_spec.ClearField(sysdistrict.FieldAreaCode, field.TypeString)
 	}
 	if value, ok := sduo.mutation.ZipCode(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldZipCode,
-		})
+		_spec.SetField(sysdistrict.FieldZipCode, field.TypeString, value)
 	}
 	if sduo.mutation.ZipCodeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldZipCode,
-		})
+		_spec.ClearField(sysdistrict.FieldZipCode, field.TypeString)
 	}
 	if value, ok := sduo.mutation.MergeName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldMergeName,
-		})
+		_spec.SetField(sysdistrict.FieldMergeName, field.TypeString, value)
 	}
 	if sduo.mutation.MergeNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldMergeName,
-		})
+		_spec.ClearField(sysdistrict.FieldMergeName, field.TypeString)
 	}
 	if value, ok := sduo.mutation.MergeSname(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldMergeSname,
-		})
+		_spec.SetField(sysdistrict.FieldMergeSname, field.TypeString, value)
 	}
 	if sduo.mutation.MergeSnameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldMergeSname,
-		})
+		_spec.ClearField(sysdistrict.FieldMergeSname, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Extra(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldExtra,
-		})
+		_spec.SetField(sysdistrict.FieldExtra, field.TypeString, value)
 	}
 	if sduo.mutation.ExtraCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldExtra,
-		})
+		_spec.ClearField(sysdistrict.FieldExtra, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Suffix(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldSuffix,
-		})
+		_spec.SetField(sysdistrict.FieldSuffix, field.TypeString, value)
 	}
 	if sduo.mutation.SuffixCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdistrict.FieldSuffix,
-		})
+		_spec.ClearField(sysdistrict.FieldSuffix, field.TypeString)
 	}
 	if value, ok := sduo.mutation.IsHot(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsHot,
-		})
+		_spec.SetField(sysdistrict.FieldIsHot, field.TypeBool, value)
 	}
 	if sduo.mutation.IsHotCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsHot,
-		})
+		_spec.ClearField(sysdistrict.FieldIsHot, field.TypeBool)
 	}
 	if value, ok := sduo.mutation.IsReal(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsReal,
-		})
+		_spec.SetField(sysdistrict.FieldIsReal, field.TypeBool, value)
 	}
 	if sduo.mutation.IsRealCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsReal,
-		})
+		_spec.ClearField(sysdistrict.FieldIsReal, field.TypeBool)
 	}
 	if value, ok := sduo.mutation.IsMain(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsMain,
-		})
+		_spec.SetField(sysdistrict.FieldIsMain, field.TypeBool, value)
 	}
 	if sduo.mutation.IsMainCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsMain,
-		})
+		_spec.ClearField(sysdistrict.FieldIsMain, field.TypeBool)
 	}
 	if value, ok := sduo.mutation.IsDirect(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsDirect,
-		})
+		_spec.SetField(sysdistrict.FieldIsDirect, field.TypeBool, value)
 	}
 	if sduo.mutation.IsDirectCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Column: sysdistrict.FieldIsDirect,
-		})
+		_spec.ClearField(sysdistrict.FieldIsDirect, field.TypeBool)
 	}
 	if value, ok := sduo.mutation.Creator(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldCreator,
-		})
+		_spec.SetField(sysdistrict.FieldCreator, field.TypeString, value)
 	}
 	if sduo.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -2672,6 +2184,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sduo.mutation.ParentIDs(); len(nodes) > 0 {
@@ -2688,6 +2201,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -2707,6 +2221,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sduo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sduo.mutation.ChildrenCleared() {
@@ -2723,6 +2238,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -2742,11 +2258,15 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	_spec.Node.Schema = sduo.schemaConfig.SysDistrict
+	ctx = internal.NewSchemaConfigContext(ctx, sduo.schemaConfig)
+	_spec.AddModifiers(sduo.modifiers...)
 	_node = &SysDistrict{config: sduo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
@@ -2758,5 +2278,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		}
 		return nil, err
 	}
+	sduo.mutation.done = true
 	return _node, nil
 }
