@@ -8,7 +8,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 )
@@ -42,8 +41,6 @@ func (sdid *SysDictItemDelete) ExecX(ctx context.Context) int {
 
 func (sdid *SysDictItemDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysdictitem.Table, sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString))
-	_spec.Node.Schema = sdid.schemaConfig.SysDictItem
-	ctx = internal.NewSchemaConfigContext(ctx, sdid.schemaConfig)
 	if ps := sdid.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

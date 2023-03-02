@@ -7,11 +7,9 @@ import (
 	"fmt"
 	"math"
 
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
 )
@@ -23,7 +21,6 @@ type SysRoleMenuQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysRoleMenu
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,11 +342,6 @@ func (srmq *SysRoleMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = srmq.schemaConfig.SysRoleMenu
-	ctx = internal.NewSchemaConfigContext(ctx, srmq.schemaConfig)
-	if len(srmq.modifiers) > 0 {
-		_spec.Modifiers = srmq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -364,11 +356,6 @@ func (srmq *SysRoleMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 
 func (srmq *SysRoleMenuQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := srmq.querySpec()
-	_spec.Node.Schema = srmq.schemaConfig.SysRoleMenu
-	ctx = internal.NewSchemaConfigContext(ctx, srmq.schemaConfig)
-	if len(srmq.modifiers) > 0 {
-		_spec.Modifiers = srmq.modifiers
-	}
 	_spec.Node.Columns = srmq.ctx.Fields
 	if len(srmq.ctx.Fields) > 0 {
 		_spec.Unique = srmq.ctx.Unique != nil && *srmq.ctx.Unique
@@ -431,12 +418,6 @@ func (srmq *SysRoleMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if srmq.ctx.Unique != nil && *srmq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(srmq.schemaConfig.SysRoleMenu)
-	ctx = internal.NewSchemaConfigContext(ctx, srmq.schemaConfig)
-	selector.WithContext(ctx)
-	for _, m := range srmq.modifiers {
-		m(selector)
-	}
 	for _, p := range srmq.predicates {
 		p(selector)
 	}
@@ -452,38 +433,6 @@ func (srmq *SysRoleMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
-// updated, deleted or "selected ... for update" by other sessions, until the transaction is
-// either committed or rolled-back.
-func (srmq *SysRoleMenuQuery) ForUpdate(opts ...sql.LockOption) *SysRoleMenuQuery {
-	if srmq.driver.Dialect() == dialect.Postgres {
-		srmq.Unique(false)
-	}
-	srmq.modifiers = append(srmq.modifiers, func(s *sql.Selector) {
-		s.ForUpdate(opts...)
-	})
-	return srmq
-}
-
-// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
-// on any rows that are read. Other sessions can read the rows, but cannot modify them
-// until your transaction commits.
-func (srmq *SysRoleMenuQuery) ForShare(opts ...sql.LockOption) *SysRoleMenuQuery {
-	if srmq.driver.Dialect() == dialect.Postgres {
-		srmq.Unique(false)
-	}
-	srmq.modifiers = append(srmq.modifiers, func(s *sql.Selector) {
-		s.ForShare(opts...)
-	})
-	return srmq
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (srmq *SysRoleMenuQuery) Modify(modifiers ...func(s *sql.Selector)) *SysRoleMenuSelect {
-	srmq.modifiers = append(srmq.modifiers, modifiers...)
-	return srmq.Select()
 }
 
 // SysRoleMenuGroupBy is the group-by builder for SysRoleMenu entities.
@@ -574,10 +523,4 @@ func (srms *SysRoleMenuSelect) sqlScan(ctx context.Context, root *SysRoleMenuQue
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (srms *SysRoleMenuSelect) Modify(modifiers ...func(s *sql.Selector)) *SysRoleMenuSelect {
-	srms.modifiers = append(srms.modifiers, modifiers...)
-	return srms
 }

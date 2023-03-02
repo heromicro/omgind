@@ -7,11 +7,9 @@ import (
 	"fmt"
 	"math"
 
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 )
@@ -23,7 +21,6 @@ type SysMenuQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysMenu
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,11 +342,6 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = smq.schemaConfig.SysMenu
-	ctx = internal.NewSchemaConfigContext(ctx, smq.schemaConfig)
-	if len(smq.modifiers) > 0 {
-		_spec.Modifiers = smq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -364,11 +356,6 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 
 func (smq *SysMenuQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := smq.querySpec()
-	_spec.Node.Schema = smq.schemaConfig.SysMenu
-	ctx = internal.NewSchemaConfigContext(ctx, smq.schemaConfig)
-	if len(smq.modifiers) > 0 {
-		_spec.Modifiers = smq.modifiers
-	}
 	_spec.Node.Columns = smq.ctx.Fields
 	if len(smq.ctx.Fields) > 0 {
 		_spec.Unique = smq.ctx.Unique != nil && *smq.ctx.Unique
@@ -431,12 +418,6 @@ func (smq *SysMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if smq.ctx.Unique != nil && *smq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(smq.schemaConfig.SysMenu)
-	ctx = internal.NewSchemaConfigContext(ctx, smq.schemaConfig)
-	selector.WithContext(ctx)
-	for _, m := range smq.modifiers {
-		m(selector)
-	}
 	for _, p := range smq.predicates {
 		p(selector)
 	}
@@ -452,38 +433,6 @@ func (smq *SysMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
-// updated, deleted or "selected ... for update" by other sessions, until the transaction is
-// either committed or rolled-back.
-func (smq *SysMenuQuery) ForUpdate(opts ...sql.LockOption) *SysMenuQuery {
-	if smq.driver.Dialect() == dialect.Postgres {
-		smq.Unique(false)
-	}
-	smq.modifiers = append(smq.modifiers, func(s *sql.Selector) {
-		s.ForUpdate(opts...)
-	})
-	return smq
-}
-
-// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
-// on any rows that are read. Other sessions can read the rows, but cannot modify them
-// until your transaction commits.
-func (smq *SysMenuQuery) ForShare(opts ...sql.LockOption) *SysMenuQuery {
-	if smq.driver.Dialect() == dialect.Postgres {
-		smq.Unique(false)
-	}
-	smq.modifiers = append(smq.modifiers, func(s *sql.Selector) {
-		s.ForShare(opts...)
-	})
-	return smq
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (smq *SysMenuQuery) Modify(modifiers ...func(s *sql.Selector)) *SysMenuSelect {
-	smq.modifiers = append(smq.modifiers, modifiers...)
-	return smq.Select()
 }
 
 // SysMenuGroupBy is the group-by builder for SysMenu entities.
@@ -574,10 +523,4 @@ func (sms *SysMenuSelect) sqlScan(ctx context.Context, root *SysMenuQuery, v any
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (sms *SysMenuSelect) Modify(modifiers ...func(s *sql.Selector)) *SysMenuSelect {
-	sms.modifiers = append(sms.modifiers, modifiers...)
-	return sms
 }

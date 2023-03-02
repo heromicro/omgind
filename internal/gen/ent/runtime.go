@@ -298,28 +298,34 @@ func init() {
 	_ = sysdistrictMixinFields3
 	sysdistrictMixinFields4 := sysdistrictMixin[4].Fields()
 	_ = sysdistrictMixinFields4
+	sysdistrictMixinFields5 := sysdistrictMixin[5].Fields()
+	_ = sysdistrictMixinFields5
 	sysdistrictFields := entity.SysDistrict{}.Fields()
 	_ = sysdistrictFields
+	// sysdistrictDescIsDel is the schema descriptor for is_del field.
+	sysdistrictDescIsDel := sysdistrictMixinFields1[0].Descriptor()
+	// sysdistrict.DefaultIsDel holds the default value on creation for the is_del field.
+	sysdistrict.DefaultIsDel = sysdistrictDescIsDel.Default.(bool)
 	// sysdistrictDescSort is the schema descriptor for sort field.
-	sysdistrictDescSort := sysdistrictMixinFields1[0].Descriptor()
+	sysdistrictDescSort := sysdistrictMixinFields2[0].Descriptor()
 	// sysdistrict.DefaultSort holds the default value on creation for the sort field.
 	sysdistrict.DefaultSort = sysdistrictDescSort.Default.(int32)
 	// sysdistrictDescCreatedAt is the schema descriptor for created_at field.
-	sysdistrictDescCreatedAt := sysdistrictMixinFields2[0].Descriptor()
+	sysdistrictDescCreatedAt := sysdistrictMixinFields3[0].Descriptor()
 	// sysdistrict.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysdistrict.DefaultCreatedAt = sysdistrictDescCreatedAt.Default.(func() time.Time)
 	// sysdistrictDescUpdatedAt is the schema descriptor for updated_at field.
-	sysdistrictDescUpdatedAt := sysdistrictMixinFields2[1].Descriptor()
+	sysdistrictDescUpdatedAt := sysdistrictMixinFields3[1].Descriptor()
 	// sysdistrict.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysdistrict.DefaultUpdatedAt = sysdistrictDescUpdatedAt.Default.(func() time.Time)
 	// sysdistrict.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysdistrict.UpdateDefaultUpdatedAt = sysdistrictDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysdistrictDescIsActive is the schema descriptor for is_active field.
-	sysdistrictDescIsActive := sysdistrictMixinFields3[0].Descriptor()
+	sysdistrictDescIsActive := sysdistrictMixinFields4[0].Descriptor()
 	// sysdistrict.DefaultIsActive holds the default value on creation for the is_active field.
 	sysdistrict.DefaultIsActive = sysdistrictDescIsActive.Default.(bool)
 	// sysdistrictDescIsLeaf is the schema descriptor for is_leaf field.
-	sysdistrictDescIsLeaf := sysdistrictMixinFields4[4].Descriptor()
+	sysdistrictDescIsLeaf := sysdistrictMixinFields5[4].Descriptor()
 	// sysdistrict.DefaultIsLeaf holds the default value on creation for the is_leaf field.
 	sysdistrict.DefaultIsLeaf = sysdistrictDescIsLeaf.Default.(bool)
 	// sysdistrictDescName is the schema descriptor for name field.

@@ -64,15 +64,9 @@ func (SysLogging) Hooks() []ent.Hook {
 			hook.On(
 				func(next ent.Mutator) ent.Mutator {
 					return hook.SysLoggingFunc(func(ctx context.Context, m *gen.SysLoggingMutation) (ent.Value, error) {
-						id, ok := m.ID()
-						if !ok || id == "" {
-							// return nil, fmt.Errorf("id is not ok")
-
-							seed := time.Now().UnixNano()
-							source := rand.NewSource(seed)
-							entropy := rand.New(source)
-							id = ulid.MustNew(ulid.Timestamp(time.Now()), entropy).String()
-							m.SetID(id)
+						_, ok := m.ID()
+						if !ok {
+							return nil, fmt.Errorf("id is not ok")
 						}
 						return next.Mutate(ctx, m)
 					})

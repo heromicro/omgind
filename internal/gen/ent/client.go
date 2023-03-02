@@ -28,8 +28,6 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
-
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 )
 
 // Client is the client that holds all ent builders.
@@ -107,8 +105,6 @@ type (
 		hooks *hooks
 		// interceptors to execute on queries.
 		inters *inters
-		// schemaConfig contains alternative names for all tables.
-		schemaConfig SchemaConfig
 	}
 	// Option function to configure the client.
 	Option func(*config)
@@ -765,9 +761,6 @@ func (c *SysDistrictClient) QueryParent(sd *SysDistrict) *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
 		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -784,9 +777,6 @@ func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
 		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -2011,15 +2001,3 @@ type (
 		SysUserRole, XxxDemo []ent.Interceptor
 	}
 )
-
-// SchemaConfig represents alternative schema names for all tables
-// that can be passed at runtime.
-type SchemaConfig = internal.SchemaConfig
-
-// AlternateSchemas allows alternate schema names to be
-// passed into ent operations.
-func AlternateSchema(schemaConfig SchemaConfig) Option {
-	return func(c *config) {
-		c.schemaConfig = schemaConfig
-	}
-}

@@ -86,10 +86,10 @@ func IndexDeletedAt() ent.Index {
 //		}, ent.OpCreate|ent.OpUpdate|ent.OpUpdateOne),
 //		//func(next ent.Mutator) ent.Mutator {
 //		//
-//		//	//	log.Println(" +++++ ----- ======= 111 ")
+//		//	//	log.Println(" +++++ ----- ==== === 111 ")
 //		//
 //		//	return ent.MutateFunc(func(ctx context.Context, m ent.Mutation) (ent.Value, error) {
-//		//		//		log.Println(" +++++ ----- ======= 222 ")
+//		//		//		log.Println(" +++++ ----- ==== === 222 ")
 //		//		//
 //		//		//		switch op := m.Op(); {
 //		//		//		case op.Is(ent.OpCreate):

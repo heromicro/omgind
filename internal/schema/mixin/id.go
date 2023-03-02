@@ -33,16 +33,7 @@ func (i IDMixin) Fields() []ent.Field {
 
 		// Fixme:: make duplicate primary key
 		//field.String("id").DefaultFunc(uid.MustString()).MaxLen(36).Immutable().NotEmpty().Comment("主键"),
-
-		field.String("id").MaxLen(36).NotEmpty().Immutable().DefaultFunc(func() string {
-			seed := time.Now().UnixNano()
-			source := rand.NewSource(seed)
-			entropy := rand.New(source)
-			return ulid.MustNew(ulid.Timestamp(time.Now()), entropy).String()
-		}),
-
-		// IdField_ulid(),
-		// field.Bool("is_del").Default(false).StructTag(`json:"is_del,omitempty"`).Comment("是否删除"),
+		IdField_ulid(),
 	}
 }
 

@@ -93,7 +93,7 @@ var CmdLoad = &cobra.Command{
 					continue
 				}
 
-				log.Println(greenOnWhite, " ======== -------- item ", item, chalk.Reset)
+				log.Println(greenOnWhite, " ==== ==== -------- item ", item, chalk.Reset)
 
 				// if total > 2 {
 				// 	break
@@ -224,7 +224,7 @@ var CmdLoad = &cobra.Command{
 
 			// eclient.SysDistrict.CreateBulk(districts...)
 
-			// log.Println(" ======== -------- ====== ", districts)
+			// log.Println(" == ====== -------- ====== ", districts)
 
 		default:
 			return errors.New(fmt.Sprintf("%s not supported", format))

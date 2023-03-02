@@ -60,8 +60,8 @@ func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
 	params.Current = 1
 	params.PageSize = 10000
 
-	log.Println(" ------- ======= pid ", pid)
-	log.Println(" ------- ======= URL ", c.Request.URL)
+	log.Println(" ------- === ==== pid ", pid)
+	log.Println(" ------- ==== === URL ", c.Request.URL)
 
 	result, err := a.SysDistrictSrv.GetAllSubDistricts(ctx, pid, params)
 	if err != nil {

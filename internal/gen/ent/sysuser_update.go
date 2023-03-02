@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 )
@@ -19,9 +18,8 @@ import (
 // SysUserUpdate is the builder for updating SysUser entities.
 type SysUserUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *SysUserMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *SysUserMutation
 }
 
 // Where appends a list predicates to the SysUserUpdate builder.
@@ -273,12 +271,6 @@ func (suu *SysUserUpdate) check() error {
 	return nil
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (suu *SysUserUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdate {
-	suu.modifiers = append(suu.modifiers, modifiers...)
-	return suu
-}
-
 func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := suu.check(); err != nil {
 		return n, err
@@ -342,9 +334,6 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := suu.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 	}
-	_spec.Node.Schema = suu.schemaConfig.SysUser
-	ctx = internal.NewSchemaConfigContext(ctx, suu.schemaConfig)
-	_spec.AddModifiers(suu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, suu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysuser.Label}
@@ -360,10 +349,9 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysUserUpdateOne is the builder for updating a single SysUser entity.
 type SysUserUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *SysUserMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *SysUserMutation
 }
 
 // SetIsDel sets the "is_del" field.
@@ -622,12 +610,6 @@ func (suuo *SysUserUpdateOne) check() error {
 	return nil
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (suuo *SysUserUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdateOne {
-	suuo.modifiers = append(suuo.modifiers, modifiers...)
-	return suuo
-}
-
 func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err error) {
 	if err := suuo.check(); err != nil {
 		return _node, err
@@ -708,9 +690,6 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 	if value, ok := suuo.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 	}
-	_spec.Node.Schema = suuo.schemaConfig.SysUser
-	ctx = internal.NewSchemaConfigContext(ctx, suuo.schemaConfig)
-	_spec.AddModifiers(suuo.modifiers...)
 	_node = &SysUser{config: suuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

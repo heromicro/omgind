@@ -7,11 +7,9 @@ import (
 	"fmt"
 	"math"
 
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 )
@@ -23,7 +21,6 @@ type SysLoggingQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysLogging
-	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -345,11 +342,6 @@ func (slq *SysLoggingQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = slq.schemaConfig.SysLogging
-	ctx = internal.NewSchemaConfigContext(ctx, slq.schemaConfig)
-	if len(slq.modifiers) > 0 {
-		_spec.Modifiers = slq.modifiers
-	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -364,11 +356,6 @@ func (slq *SysLoggingQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 
 func (slq *SysLoggingQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := slq.querySpec()
-	_spec.Node.Schema = slq.schemaConfig.SysLogging
-	ctx = internal.NewSchemaConfigContext(ctx, slq.schemaConfig)
-	if len(slq.modifiers) > 0 {
-		_spec.Modifiers = slq.modifiers
-	}
 	_spec.Node.Columns = slq.ctx.Fields
 	if len(slq.ctx.Fields) > 0 {
 		_spec.Unique = slq.ctx.Unique != nil && *slq.ctx.Unique
@@ -431,12 +418,6 @@ func (slq *SysLoggingQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if slq.ctx.Unique != nil && *slq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(slq.schemaConfig.SysLogging)
-	ctx = internal.NewSchemaConfigContext(ctx, slq.schemaConfig)
-	selector.WithContext(ctx)
-	for _, m := range slq.modifiers {
-		m(selector)
-	}
 	for _, p := range slq.predicates {
 		p(selector)
 	}
@@ -452,38 +433,6 @@ func (slq *SysLoggingQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector.Limit(*limit)
 	}
 	return selector
-}
-
-// ForUpdate locks the selected rows against concurrent updates, and prevent them from being
-// updated, deleted or "selected ... for update" by other sessions, until the transaction is
-// either committed or rolled-back.
-func (slq *SysLoggingQuery) ForUpdate(opts ...sql.LockOption) *SysLoggingQuery {
-	if slq.driver.Dialect() == dialect.Postgres {
-		slq.Unique(false)
-	}
-	slq.modifiers = append(slq.modifiers, func(s *sql.Selector) {
-		s.ForUpdate(opts...)
-	})
-	return slq
-}
-
-// ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
-// on any rows that are read. Other sessions can read the rows, but cannot modify them
-// until your transaction commits.
-func (slq *SysLoggingQuery) ForShare(opts ...sql.LockOption) *SysLoggingQuery {
-	if slq.driver.Dialect() == dialect.Postgres {
-		slq.Unique(false)
-	}
-	slq.modifiers = append(slq.modifiers, func(s *sql.Selector) {
-		s.ForShare(opts...)
-	})
-	return slq
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (slq *SysLoggingQuery) Modify(modifiers ...func(s *sql.Selector)) *SysLoggingSelect {
-	slq.modifiers = append(slq.modifiers, modifiers...)
-	return slq.Select()
 }
 
 // SysLoggingGroupBy is the group-by builder for SysLogging entities.
@@ -574,10 +523,4 @@ func (sls *SysLoggingSelect) sqlScan(ctx context.Context, root *SysLoggingQuery,
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-// Modify adds a query modifier for attaching custom logic to queries.
-func (sls *SysLoggingSelect) Modify(modifiers ...func(s *sql.Selector)) *SysLoggingSelect {
-	sls.modifiers = append(sls.modifiers, modifiers...)
-	return sls
 }

@@ -15,7 +15,7 @@ func New(pf string) (*viper.Viper, error) {
 		v   = viper.New()
 	)
 
-	log.Println(" ----- ======== ")
+	log.Println(" ----- ===== === ")
 
 	v.SetConfigType("toml")
 	v.SetConfigFile(string(pf))

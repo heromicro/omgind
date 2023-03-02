@@ -16,6 +16,7 @@ type SysDistrict struct {
 func (SysDistrict) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},
@@ -104,6 +105,5 @@ func (SysDistrict) Hooks() []ent.Hook {
 				ent.OpCreate|ent.OpDelete|ent.OpUpdate,
 			),
 		*/
-
 	}
 }

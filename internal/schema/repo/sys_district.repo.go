@@ -140,8 +140,8 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	}
 
 	count, err := query.Count(ctx)
-	log.Println(" ------- ===== ======== count 11111 ", count)
-	log.Println(" ------- ===== ========  err ", err)
+	log.Println(" ------- ===== === ===== count 11111 ", count)
+	log.Println(" ------- ===== ==== ====  err ", err)
 
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -195,8 +195,8 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
 
-	// log.Println(" ----- === ======== params.Offset() ", params.Offset())
-	// log.Println(" ------- ======= count 22222 ", count)
+	// log.Println(" ----- === ==== ==== params.Offset() ", params.Offset())
+	// log.Println(" ------- ==== === count 22222 ", count)
 
 	if params.Offset() > count {
 		return &schema.SysDistrictQueryResult{PageResult: pr}, nil
@@ -205,7 +205,7 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 
 	list, err1 := query.All(ctx)
 
-	// log.Println(" ----- 00 = ======== list ", list)
+	// log.Println(" ----- 00 = ==== ==== list ", list)
 
 	if err1 != nil {
 		return nil, errors.WithStack(err)
@@ -296,8 +296,8 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 	}
 
 	count, err := query.Count(ctx)
-	// log.Println(" ------- == === ======== count 11111 ", count)
-	// log.Println(" ------- ===== ========  err ", err)
+	// log.Println(" ------- == === === ===== count 11111 ", count)
+	// log.Println(" ------- ===== ==== ====  err ", err)
 
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -352,7 +352,7 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 	pr.PageSize = params.PaginationParam.GetPageSize()
 
 	// log.Println(" ------- ===== params.Offset() ", params.Offset())
-	// log.Println(" ---- ======= count 22222 ", count)
+	// log.Println(" ---- === ==== count 22222 ", count)
 
 	if params.Offset() > count {
 		return &schema.SysDistrictQueryResult{PageResult: pr}, nil

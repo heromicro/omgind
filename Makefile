@@ -28,8 +28,8 @@ wire:
 
 entc:
 	@#entc generate ./internal/schema/entity --target ./internal/gen/ent
-	@#ent generate ./internal/schema/entity --template ./internal/schema/template --target ./internal/gen/ent
-	@go run cmd/generator/entgo/main.go
+	@ent generate ./internal/schema/entity --template ./internal/schema/template --target ./internal/gen/ent
+	@#go run cmd/generator/entgo/main.go
 	
 test:
 	cd ./internal/app/test && go test -v

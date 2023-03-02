@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 )
@@ -19,9 +18,8 @@ import (
 // SysMenuActionUpdate is the builder for updating SysMenuAction entities.
 type SysMenuActionUpdate struct {
 	config
-	hooks     []Hook
-	mutation  *SysMenuActionMutation
-	modifiers []func(*sql.UpdateBuilder)
+	hooks    []Hook
+	mutation *SysMenuActionMutation
 }
 
 // Where appends a list predicates to the SysMenuActionUpdate builder.
@@ -209,12 +207,6 @@ func (smau *SysMenuActionUpdate) check() error {
 	return nil
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (smau *SysMenuActionUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionUpdate {
-	smau.modifiers = append(smau.modifiers, modifiers...)
-	return smau
-}
-
 func (smau *SysMenuActionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := smau.check(); err != nil {
 		return n, err
@@ -263,9 +255,6 @@ func (smau *SysMenuActionUpdate) sqlSave(ctx context.Context) (n int, err error)
 	if value, ok := smau.mutation.Name(); ok {
 		_spec.SetField(sysmenuaction.FieldName, field.TypeString, value)
 	}
-	_spec.Node.Schema = smau.schemaConfig.SysMenuAction
-	ctx = internal.NewSchemaConfigContext(ctx, smau.schemaConfig)
-	_spec.AddModifiers(smau.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, smau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenuaction.Label}
@@ -281,10 +270,9 @@ func (smau *SysMenuActionUpdate) sqlSave(ctx context.Context) (n int, err error)
 // SysMenuActionUpdateOne is the builder for updating a single SysMenuAction entity.
 type SysMenuActionUpdateOne struct {
 	config
-	fields    []string
-	hooks     []Hook
-	mutation  *SysMenuActionMutation
-	modifiers []func(*sql.UpdateBuilder)
+	fields   []string
+	hooks    []Hook
+	mutation *SysMenuActionMutation
 }
 
 // SetIsDel sets the "is_del" field.
@@ -479,12 +467,6 @@ func (smauo *SysMenuActionUpdateOne) check() error {
 	return nil
 }
 
-// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (smauo *SysMenuActionUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionUpdateOne {
-	smauo.modifiers = append(smauo.modifiers, modifiers...)
-	return smauo
-}
-
 func (smauo *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMenuAction, err error) {
 	if err := smauo.check(); err != nil {
 		return _node, err
@@ -550,9 +532,6 @@ func (smauo *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMen
 	if value, ok := smauo.mutation.Name(); ok {
 		_spec.SetField(sysmenuaction.FieldName, field.TypeString, value)
 	}
-	_spec.Node.Schema = smauo.schemaConfig.SysMenuAction
-	ctx = internal.NewSchemaConfigContext(ctx, smauo.schemaConfig)
-	_spec.AddModifiers(smauo.modifiers...)
 	_node = &SysMenuAction{config: smauo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

@@ -106,7 +106,7 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 	query = query.Limit(params.Limit()).Offset(params.Offset())
 
 	list, err := query.All(ctx)
-	// log.Println(" -------  err ======== ", err)
+	// log.Println(" -------  err ===== === ", err)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

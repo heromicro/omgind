@@ -76,7 +76,7 @@ func (a *Role) Get(c *gin.Context) {
 // Create 创建数据
 func (a *Role) Create(c *gin.Context) {
 
-	log.Println(" -------- 0000000 ======= ")
+	log.Println(" -------- 0000000 === ==== ")
 
 	ctx := c.Request.Context()
 	var item schema.Role
@@ -92,7 +92,7 @@ func (a *Role) Create(c *gin.Context) {
 		return
 	}
 
-	log.Println(" -------- vvvvvv ======= ", result)
+	log.Println(" -------- vvvvvv == ===== ", result)
 
 	ginx.ResSuccess(c, result)
 }
