@@ -707,7 +707,9 @@ func (sdu *SysDistrictUpdate) RemoveChildren(s ...*SysDistrict) *SysDistrictUpda
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sdu *SysDistrictUpdate) Save(ctx context.Context) (int, error) {
-	sdu.defaults()
+	if err := sdu.defaults(); err != nil {
+		return 0, err
+	}
 	return withHooks[int, SysDistrictMutation](ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
 }
 
@@ -734,11 +736,15 @@ func (sdu *SysDistrictUpdate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sdu *SysDistrictUpdate) defaults() {
+func (sdu *SysDistrictUpdate) defaults() error {
 	if _, ok := sdu.mutation.UpdatedAt(); !ok {
+		if sysdistrict.UpdateDefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized sysdistrict.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sdu.mutation.SetUpdatedAt(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -1828,7 +1834,9 @@ func (sduo *SysDistrictUpdateOne) Select(field string, fields ...string) *SysDis
 
 // Save executes the query and returns the updated SysDistrict entity.
 func (sduo *SysDistrictUpdateOne) Save(ctx context.Context) (*SysDistrict, error) {
-	sduo.defaults()
+	if err := sduo.defaults(); err != nil {
+		return nil, err
+	}
 	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
 }
 
@@ -1855,11 +1863,15 @@ func (sduo *SysDistrictUpdateOne) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sduo *SysDistrictUpdateOne) defaults() {
+func (sduo *SysDistrictUpdateOne) defaults() error {
 	if _, ok := sduo.mutation.UpdatedAt(); !ok {
+		if sysdistrict.UpdateDefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized sysdistrict.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sduo.mutation.SetUpdatedAt(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.

@@ -504,7 +504,9 @@ func (sdc *SysDistrictCreate) Mutation() *SysDistrictMutation {
 
 // Save creates the SysDistrict in the database.
 func (sdc *SysDistrictCreate) Save(ctx context.Context) (*SysDistrict, error) {
-	sdc.defaults()
+	if err := sdc.defaults(); err != nil {
+		return nil, err
+	}
 	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
 }
 
@@ -531,7 +533,7 @@ func (sdc *SysDistrictCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sdc *SysDistrictCreate) defaults() {
+func (sdc *SysDistrictCreate) defaults() error {
 	if _, ok := sdc.mutation.IsDel(); !ok {
 		v := sysdistrict.DefaultIsDel
 		sdc.mutation.SetIsDel(v)
@@ -541,10 +543,16 @@ func (sdc *SysDistrictCreate) defaults() {
 		sdc.mutation.SetSort(v)
 	}
 	if _, ok := sdc.mutation.CreatedAt(); !ok {
+		if sysdistrict.DefaultCreatedAt == nil {
+			return fmt.Errorf("ent: uninitialized sysdistrict.DefaultCreatedAt (forgotten import ent/runtime?)")
+		}
 		v := sysdistrict.DefaultCreatedAt()
 		sdc.mutation.SetCreatedAt(v)
 	}
 	if _, ok := sdc.mutation.UpdatedAt(); !ok {
+		if sysdistrict.DefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized sysdistrict.DefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
 		v := sysdistrict.DefaultUpdatedAt()
 		sdc.mutation.SetUpdatedAt(v)
 	}
@@ -573,9 +581,13 @@ func (sdc *SysDistrictCreate) defaults() {
 		sdc.mutation.SetIsDirect(v)
 	}
 	if _, ok := sdc.mutation.ID(); !ok {
+		if sysdistrict.DefaultID == nil {
+			return fmt.Errorf("ent: uninitialized sysdistrict.DefaultID (forgotten import ent/runtime?)")
+		}
 		v := sysdistrict.DefaultID()
 		sdc.mutation.SetID(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.

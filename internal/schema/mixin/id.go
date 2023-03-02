@@ -16,6 +16,7 @@ import (
 // ///////////////////////
 // 使用ulid 作为主键
 // ///////////////////////
+
 type IDMixin struct {
 	mixin.Schema
 }

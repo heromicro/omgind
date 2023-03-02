@@ -19,6 +19,8 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/pkg/config"
 
+	_ "github.com/heromicro/omgind/internal/gen/ent/runtime"
+
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"

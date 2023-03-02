@@ -197,7 +197,9 @@ func (slc *SysLoggingCreate) Mutation() *SysLoggingMutation {
 
 // Save creates the SysLogging in the database.
 func (slc *SysLoggingCreate) Save(ctx context.Context) (*SysLogging, error) {
-	slc.defaults()
+	if err := slc.defaults(); err != nil {
+		return nil, err
+	}
 	return withHooks[*SysLogging, SysLoggingMutation](ctx, slc.sqlSave, slc.mutation, slc.hooks)
 }
 
@@ -224,7 +226,7 @@ func (slc *SysLoggingCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (slc *SysLoggingCreate) defaults() {
+func (slc *SysLoggingCreate) defaults() error {
 	if _, ok := slc.mutation.IsDel(); !ok {
 		v := syslogging.DefaultIsDel
 		slc.mutation.SetIsDel(v)
@@ -234,13 +236,20 @@ func (slc *SysLoggingCreate) defaults() {
 		slc.mutation.SetMemo(v)
 	}
 	if _, ok := slc.mutation.CreatedAt(); !ok {
+		if syslogging.DefaultCreatedAt == nil {
+			return fmt.Errorf("ent: uninitialized syslogging.DefaultCreatedAt (forgotten import ent/runtime?)")
+		}
 		v := syslogging.DefaultCreatedAt()
 		slc.mutation.SetCreatedAt(v)
 	}
 	if _, ok := slc.mutation.ID(); !ok {
+		if syslogging.DefaultID == nil {
+			return fmt.Errorf("ent: uninitialized syslogging.DefaultID (forgotten import ent/runtime?)")
+		}
 		v := syslogging.DefaultID()
 		slc.mutation.SetID(v)
 	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.

@@ -795,7 +795,8 @@ func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
 
 // Hooks returns the client hooks.
 func (c *SysDistrictClient) Hooks() []Hook {
-	return c.hooks.SysDistrict
+	hooks := c.hooks.SysDistrict
+	return append(hooks[:len(hooks):len(hooks)], sysdistrict.Hooks[:]...)
 }
 
 // Interceptors returns the client interceptors.
@@ -1031,7 +1032,8 @@ func (c *SysLoggingClient) GetX(ctx context.Context, id string) *SysLogging {
 
 // Hooks returns the client hooks.
 func (c *SysLoggingClient) Hooks() []Hook {
-	return c.hooks.SysLogging
+	hooks := c.hooks.SysLogging
+	return append(hooks[:len(hooks):len(hooks)], syslogging.Hooks[:]...)
 }
 
 // Interceptors returns the client interceptors.
