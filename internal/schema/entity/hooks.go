@@ -13,6 +13,8 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/hook"
 )
 
+// doc https://entgo.io/docs/hooks/#hooks-registration
+
 func (SysAddress) Hooks() []ent.Hook {
 	return []ent.Hook{
 		//
