@@ -18,8 +18,9 @@ import (
 // SysLoggingUpdate is the builder for updating SysLogging entities.
 type SysLoggingUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysLoggingMutation
+	hooks     []Hook
+	mutation  *SysLoggingMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysLoggingUpdate builder.
@@ -274,6 +275,12 @@ func (slu *SysLoggingUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (slu *SysLoggingUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysLoggingUpdate {
+	slu.modifiers = append(slu.modifiers, modifiers...)
+	return slu
+}
+
 func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := slu.check(); err != nil {
 		return n, err
@@ -342,6 +349,7 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = slu.schemaConfig.SysLogging
 	ctx = internal.NewSchemaConfigContext(ctx, slu.schemaConfig)
+	_spec.AddModifiers(slu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, slu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{syslogging.Label}
@@ -357,9 +365,10 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysLoggingUpdateOne is the builder for updating a single SysLogging entity.
 type SysLoggingUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysLoggingMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysLoggingMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -621,6 +630,12 @@ func (sluo *SysLoggingUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sluo *SysLoggingUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysLoggingUpdateOne {
+	sluo.modifiers = append(sluo.modifiers, modifiers...)
+	return sluo
+}
+
 func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging, err error) {
 	if err := sluo.check(); err != nil {
 		return _node, err
@@ -706,6 +721,7 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 	}
 	_spec.Node.Schema = sluo.schemaConfig.SysLogging
 	ctx = internal.NewSchemaConfigContext(ctx, sluo.schemaConfig)
+	_spec.AddModifiers(sluo.modifiers...)
 	_node = &SysLogging{config: sluo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

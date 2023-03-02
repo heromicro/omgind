@@ -480,6 +480,12 @@ func (sdq *SysDictQuery) ForShare(opts ...sql.LockOption) *SysDictQuery {
 	return sdq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sdq *SysDictQuery) Modify(modifiers ...func(s *sql.Selector)) *SysDictSelect {
+	sdq.modifiers = append(sdq.modifiers, modifiers...)
+	return sdq.Select()
+}
+
 // SysDictGroupBy is the group-by builder for SysDict entities.
 type SysDictGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (sds *SysDictSelect) sqlScan(ctx context.Context, root *SysDictQuery, v any
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sds *SysDictSelect) Modify(modifiers ...func(s *sql.Selector)) *SysDictSelect {
+	sds.modifiers = append(sds.modifiers, modifiers...)
+	return sds
 }

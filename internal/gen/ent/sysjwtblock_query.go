@@ -480,6 +480,12 @@ func (sjbq *SysJwtBlockQuery) ForShare(opts ...sql.LockOption) *SysJwtBlockQuery
 	return sjbq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sjbq *SysJwtBlockQuery) Modify(modifiers ...func(s *sql.Selector)) *SysJwtBlockSelect {
+	sjbq.modifiers = append(sjbq.modifiers, modifiers...)
+	return sjbq.Select()
+}
+
 // SysJwtBlockGroupBy is the group-by builder for SysJwtBlock entities.
 type SysJwtBlockGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (sjbs *SysJwtBlockSelect) sqlScan(ctx context.Context, root *SysJwtBlockQue
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sjbs *SysJwtBlockSelect) Modify(modifiers ...func(s *sql.Selector)) *SysJwtBlockSelect {
+	sjbs.modifiers = append(sjbs.modifiers, modifiers...)
+	return sjbs
 }

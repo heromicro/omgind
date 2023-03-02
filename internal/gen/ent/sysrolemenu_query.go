@@ -480,6 +480,12 @@ func (srmq *SysRoleMenuQuery) ForShare(opts ...sql.LockOption) *SysRoleMenuQuery
 	return srmq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (srmq *SysRoleMenuQuery) Modify(modifiers ...func(s *sql.Selector)) *SysRoleMenuSelect {
+	srmq.modifiers = append(srmq.modifiers, modifiers...)
+	return srmq.Select()
+}
+
 // SysRoleMenuGroupBy is the group-by builder for SysRoleMenu entities.
 type SysRoleMenuGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (srms *SysRoleMenuSelect) sqlScan(ctx context.Context, root *SysRoleMenuQue
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (srms *SysRoleMenuSelect) Modify(modifiers ...func(s *sql.Selector)) *SysRoleMenuSelect {
+	srms.modifiers = append(srms.modifiers, modifiers...)
+	return srms
 }

@@ -638,6 +638,12 @@ func (sdq *SysDistrictQuery) ForShare(opts ...sql.LockOption) *SysDistrictQuery 
 	return sdq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sdq *SysDistrictQuery) Modify(modifiers ...func(s *sql.Selector)) *SysDistrictSelect {
+	sdq.modifiers = append(sdq.modifiers, modifiers...)
+	return sdq.Select()
+}
+
 // SysDistrictGroupBy is the group-by builder for SysDistrict entities.
 type SysDistrictGroupBy struct {
 	selector
@@ -726,4 +732,10 @@ func (sds *SysDistrictSelect) sqlScan(ctx context.Context, root *SysDistrictQuer
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sds *SysDistrictSelect) Modify(modifiers ...func(s *sql.Selector)) *SysDistrictSelect {
+	sds.modifiers = append(sds.modifiers, modifiers...)
+	return sds
 }

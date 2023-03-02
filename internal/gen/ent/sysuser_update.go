@@ -19,8 +19,9 @@ import (
 // SysUserUpdate is the builder for updating SysUser entities.
 type SysUserUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysUserMutation
+	hooks     []Hook
+	mutation  *SysUserMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysUserUpdate builder.
@@ -272,6 +273,12 @@ func (suu *SysUserUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (suu *SysUserUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdate {
+	suu.modifiers = append(suu.modifiers, modifiers...)
+	return suu
+}
+
 func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := suu.check(); err != nil {
 		return n, err
@@ -337,6 +344,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = suu.schemaConfig.SysUser
 	ctx = internal.NewSchemaConfigContext(ctx, suu.schemaConfig)
+	_spec.AddModifiers(suu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, suu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysuser.Label}
@@ -352,9 +360,10 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysUserUpdateOne is the builder for updating a single SysUser entity.
 type SysUserUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysUserMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysUserMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -613,6 +622,12 @@ func (suuo *SysUserUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (suuo *SysUserUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdateOne {
+	suuo.modifiers = append(suuo.modifiers, modifiers...)
+	return suuo
+}
+
 func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err error) {
 	if err := suuo.check(); err != nil {
 		return _node, err
@@ -695,6 +710,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 	}
 	_spec.Node.Schema = suuo.schemaConfig.SysUser
 	ctx = internal.NewSchemaConfigContext(ctx, suuo.schemaConfig)
+	_spec.AddModifiers(suuo.modifiers...)
 	_node = &SysUser{config: suuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

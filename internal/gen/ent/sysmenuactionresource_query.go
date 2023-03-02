@@ -480,6 +480,12 @@ func (smarq *SysMenuActionResourceQuery) ForShare(opts ...sql.LockOption) *SysMe
 	return smarq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (smarq *SysMenuActionResourceQuery) Modify(modifiers ...func(s *sql.Selector)) *SysMenuActionResourceSelect {
+	smarq.modifiers = append(smarq.modifiers, modifiers...)
+	return smarq.Select()
+}
+
 // SysMenuActionResourceGroupBy is the group-by builder for SysMenuActionResource entities.
 type SysMenuActionResourceGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (smars *SysMenuActionResourceSelect) sqlScan(ctx context.Context, root *Sys
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (smars *SysMenuActionResourceSelect) Modify(modifiers ...func(s *sql.Selector)) *SysMenuActionResourceSelect {
+	smars.modifiers = append(smars.modifiers, modifiers...)
+	return smars
 }

@@ -19,8 +19,9 @@ import (
 // SysJwtBlockUpdate is the builder for updating SysJwtBlock entities.
 type SysJwtBlockUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysJwtBlockMutation
+	hooks     []Hook
+	mutation  *SysJwtBlockMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysJwtBlockUpdate builder.
@@ -165,6 +166,12 @@ func (sjbu *SysJwtBlockUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sjbu *SysJwtBlockUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysJwtBlockUpdate {
+	sjbu.modifiers = append(sjbu.modifiers, modifiers...)
+	return sjbu
+}
+
 func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := sjbu.check(); err != nil {
 		return n, err
@@ -203,6 +210,7 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = sjbu.schemaConfig.SysJwtBlock
 	ctx = internal.NewSchemaConfigContext(ctx, sjbu.schemaConfig)
+	_spec.AddModifiers(sjbu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sjbu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysjwtblock.Label}
@@ -218,9 +226,10 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysJwtBlockUpdateOne is the builder for updating a single SysJwtBlock entity.
 type SysJwtBlockUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysJwtBlockMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysJwtBlockMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -372,6 +381,12 @@ func (sjbuo *SysJwtBlockUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sjbuo *SysJwtBlockUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysJwtBlockUpdateOne {
+	sjbuo.modifiers = append(sjbuo.modifiers, modifiers...)
+	return sjbuo
+}
+
 func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBlock, err error) {
 	if err := sjbuo.check(); err != nil {
 		return _node, err
@@ -427,6 +442,7 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 	}
 	_spec.Node.Schema = sjbuo.schemaConfig.SysJwtBlock
 	ctx = internal.NewSchemaConfigContext(ctx, sjbuo.schemaConfig)
+	_spec.AddModifiers(sjbuo.modifiers...)
 	_node = &SysJwtBlock{config: sjbuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

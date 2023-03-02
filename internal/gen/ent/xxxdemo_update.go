@@ -19,8 +19,9 @@ import (
 // XxxDemoUpdate is the builder for updating XxxDemo entities.
 type XxxDemoUpdate struct {
 	config
-	hooks    []Hook
-	mutation *XxxDemoMutation
+	hooks     []Hook
+	mutation  *XxxDemoMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the XxxDemoUpdate builder.
@@ -197,6 +198,12 @@ func (xdu *XxxDemoUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (xdu *XxxDemoUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *XxxDemoUpdate {
+	xdu.modifiers = append(xdu.modifiers, modifiers...)
+	return xdu
+}
+
 func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := xdu.check(); err != nil {
 		return n, err
@@ -244,6 +251,7 @@ func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = xdu.schemaConfig.XxxDemo
 	ctx = internal.NewSchemaConfigContext(ctx, xdu.schemaConfig)
+	_spec.AddModifiers(xdu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, xdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{xxxdemo.Label}
@@ -259,9 +267,10 @@ func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // XxxDemoUpdateOne is the builder for updating a single XxxDemo entity.
 type XxxDemoUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *XxxDemoMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *XxxDemoMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -445,6 +454,12 @@ func (xduo *XxxDemoUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (xduo *XxxDemoUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *XxxDemoUpdateOne {
+	xduo.modifiers = append(xduo.modifiers, modifiers...)
+	return xduo
+}
+
 func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err error) {
 	if err := xduo.check(); err != nil {
 		return _node, err
@@ -509,6 +524,7 @@ func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err 
 	}
 	_spec.Node.Schema = xduo.schemaConfig.XxxDemo
 	ctx = internal.NewSchemaConfigContext(ctx, xduo.schemaConfig)
+	_spec.AddModifiers(xduo.modifiers...)
 	_node = &XxxDemo{config: xduo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

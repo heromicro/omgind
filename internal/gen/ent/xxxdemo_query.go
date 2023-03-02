@@ -480,6 +480,12 @@ func (xdq *XxxDemoQuery) ForShare(opts ...sql.LockOption) *XxxDemoQuery {
 	return xdq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (xdq *XxxDemoQuery) Modify(modifiers ...func(s *sql.Selector)) *XxxDemoSelect {
+	xdq.modifiers = append(xdq.modifiers, modifiers...)
+	return xdq.Select()
+}
+
 // XxxDemoGroupBy is the group-by builder for XxxDemo entities.
 type XxxDemoGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (xds *XxxDemoSelect) sqlScan(ctx context.Context, root *XxxDemoQuery, v any
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (xds *XxxDemoSelect) Modify(modifiers ...func(s *sql.Selector)) *XxxDemoSelect {
+	xds.modifiers = append(xds.modifiers, modifiers...)
+	return xds
 }

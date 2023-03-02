@@ -480,6 +480,12 @@ func (saq *SysAddressQuery) ForShare(opts ...sql.LockOption) *SysAddressQuery {
 	return saq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (saq *SysAddressQuery) Modify(modifiers ...func(s *sql.Selector)) *SysAddressSelect {
+	saq.modifiers = append(saq.modifiers, modifiers...)
+	return saq.Select()
+}
+
 // SysAddressGroupBy is the group-by builder for SysAddress entities.
 type SysAddressGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (sas *SysAddressSelect) sqlScan(ctx context.Context, root *SysAddressQuery,
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sas *SysAddressSelect) Modify(modifiers ...func(s *sql.Selector)) *SysAddressSelect {
+	sas.modifiers = append(sas.modifiers, modifiers...)
+	return sas
 }

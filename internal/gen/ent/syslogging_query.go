@@ -480,6 +480,12 @@ func (slq *SysLoggingQuery) ForShare(opts ...sql.LockOption) *SysLoggingQuery {
 	return slq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (slq *SysLoggingQuery) Modify(modifiers ...func(s *sql.Selector)) *SysLoggingSelect {
+	slq.modifiers = append(slq.modifiers, modifiers...)
+	return slq.Select()
+}
+
 // SysLoggingGroupBy is the group-by builder for SysLogging entities.
 type SysLoggingGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (sls *SysLoggingSelect) sqlScan(ctx context.Context, root *SysLoggingQuery,
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sls *SysLoggingSelect) Modify(modifiers ...func(s *sql.Selector)) *SysLoggingSelect {
+	sls.modifiers = append(sls.modifiers, modifiers...)
+	return sls
 }

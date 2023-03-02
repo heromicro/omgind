@@ -19,8 +19,9 @@ import (
 // SysUserRoleUpdate is the builder for updating SysUserRole entities.
 type SysUserRoleUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysUserRoleMutation
+	hooks     []Hook
+	mutation  *SysUserRoleMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysUserRoleUpdate builder.
@@ -137,6 +138,12 @@ func (suru *SysUserRoleUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (suru *SysUserRoleUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserRoleUpdate {
+	suru.modifiers = append(suru.modifiers, modifiers...)
+	return suru
+}
+
 func (suru *SysUserRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := suru.check(); err != nil {
 		return n, err
@@ -169,6 +176,7 @@ func (suru *SysUserRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = suru.schemaConfig.SysUserRole
 	ctx = internal.NewSchemaConfigContext(ctx, suru.schemaConfig)
+	_spec.AddModifiers(suru.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, suru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysuserrole.Label}
@@ -184,9 +192,10 @@ func (suru *SysUserRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysUserRoleUpdateOne is the builder for updating a single SysUserRole entity.
 type SysUserRoleUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysUserRoleMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysUserRoleMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -310,6 +319,12 @@ func (suruo *SysUserRoleUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (suruo *SysUserRoleUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserRoleUpdateOne {
+	suruo.modifiers = append(suruo.modifiers, modifiers...)
+	return suruo
+}
+
 func (suruo *SysUserRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysUserRole, err error) {
 	if err := suruo.check(); err != nil {
 		return _node, err
@@ -359,6 +374,7 @@ func (suruo *SysUserRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysUserR
 	}
 	_spec.Node.Schema = suruo.schemaConfig.SysUserRole
 	ctx = internal.NewSchemaConfigContext(ctx, suruo.schemaConfig)
+	_spec.AddModifiers(suruo.modifiers...)
 	_node = &SysUserRole{config: suruo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

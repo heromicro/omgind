@@ -19,8 +19,9 @@ import (
 // SysDictItemUpdate is the builder for updating SysDictItem entities.
 type SysDictItemUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysDictItemMutation
+	hooks     []Hook
+	mutation  *SysDictItemMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysDictItemUpdate builder.
@@ -210,6 +211,12 @@ func (sdiu *SysDictItemUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sdiu *SysDictItemUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictItemUpdate {
+	sdiu.modifiers = append(sdiu.modifiers, modifiers...)
+	return sdiu
+}
+
 func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := sdiu.check(); err != nil {
 		return n, err
@@ -263,6 +270,7 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = sdiu.schemaConfig.SysDictItem
 	ctx = internal.NewSchemaConfigContext(ctx, sdiu.schemaConfig)
+	_spec.AddModifiers(sdiu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdiu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdictitem.Label}
@@ -278,9 +286,10 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysDictItemUpdateOne is the builder for updating a single SysDictItem entity.
 type SysDictItemUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysDictItemMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysDictItemMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -477,6 +486,12 @@ func (sdiuo *SysDictItemUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sdiuo *SysDictItemUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictItemUpdateOne {
+	sdiuo.modifiers = append(sdiuo.modifiers, modifiers...)
+	return sdiuo
+}
+
 func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictItem, err error) {
 	if err := sdiuo.check(); err != nil {
 		return _node, err
@@ -547,6 +562,7 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 	}
 	_spec.Node.Schema = sdiuo.schemaConfig.SysDictItem
 	ctx = internal.NewSchemaConfigContext(ctx, sdiuo.schemaConfig)
+	_spec.AddModifiers(sdiuo.modifiers...)
 	_node = &SysDictItem{config: sdiuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

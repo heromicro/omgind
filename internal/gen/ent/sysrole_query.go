@@ -480,6 +480,12 @@ func (srq *SysRoleQuery) ForShare(opts ...sql.LockOption) *SysRoleQuery {
 	return srq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (srq *SysRoleQuery) Modify(modifiers ...func(s *sql.Selector)) *SysRoleSelect {
+	srq.modifiers = append(srq.modifiers, modifiers...)
+	return srq.Select()
+}
+
 // SysRoleGroupBy is the group-by builder for SysRole entities.
 type SysRoleGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (srs *SysRoleSelect) sqlScan(ctx context.Context, root *SysRoleQuery, v any
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (srs *SysRoleSelect) Modify(modifiers ...func(s *sql.Selector)) *SysRoleSelect {
+	srs.modifiers = append(srs.modifiers, modifiers...)
+	return srs
 }

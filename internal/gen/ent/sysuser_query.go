@@ -480,6 +480,12 @@ func (suq *SysUserQuery) ForShare(opts ...sql.LockOption) *SysUserQuery {
 	return suq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (suq *SysUserQuery) Modify(modifiers ...func(s *sql.Selector)) *SysUserSelect {
+	suq.modifiers = append(suq.modifiers, modifiers...)
+	return suq.Select()
+}
+
 // SysUserGroupBy is the group-by builder for SysUser entities.
 type SysUserGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (sus *SysUserSelect) sqlScan(ctx context.Context, root *SysUserQuery, v any
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (sus *SysUserSelect) Modify(modifiers ...func(s *sql.Selector)) *SysUserSelect {
+	sus.modifiers = append(sus.modifiers, modifiers...)
+	return sus
 }

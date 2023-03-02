@@ -480,6 +480,12 @@ func (smaq *SysMenuActionQuery) ForShare(opts ...sql.LockOption) *SysMenuActionQ
 	return smaq
 }
 
+// Modify adds a query modifier for attaching custom logic to queries.
+func (smaq *SysMenuActionQuery) Modify(modifiers ...func(s *sql.Selector)) *SysMenuActionSelect {
+	smaq.modifiers = append(smaq.modifiers, modifiers...)
+	return smaq.Select()
+}
+
 // SysMenuActionGroupBy is the group-by builder for SysMenuAction entities.
 type SysMenuActionGroupBy struct {
 	selector
@@ -568,4 +574,10 @@ func (smas *SysMenuActionSelect) sqlScan(ctx context.Context, root *SysMenuActio
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
+}
+
+// Modify adds a query modifier for attaching custom logic to queries.
+func (smas *SysMenuActionSelect) Modify(modifiers ...func(s *sql.Selector)) *SysMenuActionSelect {
+	smas.modifiers = append(smas.modifiers, modifiers...)
+	return smas
 }

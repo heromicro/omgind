@@ -19,8 +19,9 @@ import (
 // SysAddressUpdate is the builder for updating SysAddress entities.
 type SysAddressUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysAddressMutation
+	hooks     []Hook
+	mutation  *SysAddressMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysAddressUpdate builder.
@@ -505,6 +506,12 @@ func (sau *SysAddressUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sau *SysAddressUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAddressUpdate {
+	sau.modifiers = append(sau.modifiers, modifiers...)
+	return sau
+}
+
 func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := sau.check(); err != nil {
 		return n, err
@@ -630,6 +637,7 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = sau.schemaConfig.SysAddress
 	ctx = internal.NewSchemaConfigContext(ctx, sau.schemaConfig)
+	_spec.AddModifiers(sau.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysaddress.Label}
@@ -645,9 +653,10 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysAddressUpdateOne is the builder for updating a single SysAddress entity.
 type SysAddressUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysAddressMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysAddressMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -1139,6 +1148,12 @@ func (sauo *SysAddressUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sauo *SysAddressUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAddressUpdateOne {
+	sauo.modifiers = append(sauo.modifiers, modifiers...)
+	return sauo
+}
+
 func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress, err error) {
 	if err := sauo.check(); err != nil {
 		return _node, err
@@ -1281,6 +1296,7 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 	}
 	_spec.Node.Schema = sauo.schemaConfig.SysAddress
 	ctx = internal.NewSchemaConfigContext(ctx, sauo.schemaConfig)
+	_spec.AddModifiers(sauo.modifiers...)
 	_node = &SysAddress{config: sauo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

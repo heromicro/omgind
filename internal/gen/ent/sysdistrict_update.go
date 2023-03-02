@@ -19,8 +19,9 @@ import (
 // SysDistrictUpdate is the builder for updating SysDistrict entities.
 type SysDistrictUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysDistrictMutation
+	hooks     []Hook
+	mutation  *SysDistrictMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysDistrictUpdate builder.
@@ -815,6 +816,12 @@ func (sdu *SysDistrictUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sdu *SysDistrictUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdate {
+	sdu.modifiers = append(sdu.modifiers, modifiers...)
+	return sdu
+}
+
 func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := sdu.check(); err != nil {
 		return n, err
@@ -1109,6 +1116,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = sdu.schemaConfig.SysDistrict
 	ctx = internal.NewSchemaConfigContext(ctx, sdu.schemaConfig)
+	_spec.AddModifiers(sdu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdistrict.Label}
@@ -1124,9 +1132,10 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysDistrictUpdateOne is the builder for updating a single SysDistrict entity.
 type SysDistrictUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysDistrictMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysDistrictMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -1928,6 +1937,12 @@ func (sduo *SysDistrictUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (sduo *SysDistrictUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdateOne {
+	sduo.modifiers = append(sduo.modifiers, modifiers...)
+	return sduo
+}
+
 func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistrict, err error) {
 	if err := sduo.check(); err != nil {
 		return _node, err
@@ -2239,6 +2254,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 	}
 	_spec.Node.Schema = sduo.schemaConfig.SysDistrict
 	ctx = internal.NewSchemaConfigContext(ctx, sduo.schemaConfig)
+	_spec.AddModifiers(sduo.modifiers...)
 	_node = &SysDistrict{config: sduo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

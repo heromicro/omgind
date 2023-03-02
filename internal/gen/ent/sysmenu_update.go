@@ -19,8 +19,9 @@ import (
 // SysMenuUpdate is the builder for updating SysMenu entities.
 type SysMenuUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysMenuMutation
+	hooks     []Hook
+	mutation  *SysMenuMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysMenuUpdate builder.
@@ -310,6 +311,12 @@ func (smu *SysMenuUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (smu *SysMenuUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuUpdate {
+	smu.modifiers = append(smu.modifiers, modifiers...)
+	return smu
+}
+
 func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := smu.check(); err != nil {
 		return n, err
@@ -387,6 +394,7 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	_spec.Node.Schema = smu.schemaConfig.SysMenu
 	ctx = internal.NewSchemaConfigContext(ctx, smu.schemaConfig)
+	_spec.AddModifiers(smu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, smu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenu.Label}
@@ -402,9 +410,10 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 // SysMenuUpdateOne is the builder for updating a single SysMenu entity.
 type SysMenuUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysMenuMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysMenuMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -701,6 +710,12 @@ func (smuo *SysMenuUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (smuo *SysMenuUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuUpdateOne {
+	smuo.modifiers = append(smuo.modifiers, modifiers...)
+	return smuo
+}
+
 func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err error) {
 	if err := smuo.check(); err != nil {
 		return _node, err
@@ -795,6 +810,7 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 	}
 	_spec.Node.Schema = smuo.schemaConfig.SysMenu
 	ctx = internal.NewSchemaConfigContext(ctx, smuo.schemaConfig)
+	_spec.AddModifiers(smuo.modifiers...)
 	_node = &SysMenu{config: smuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

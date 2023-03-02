@@ -19,8 +19,9 @@ import (
 // SysMenuActionResourceUpdate is the builder for updating SysMenuActionResource entities.
 type SysMenuActionResourceUpdate struct {
 	config
-	hooks    []Hook
-	mutation *SysMenuActionResourceMutation
+	hooks     []Hook
+	mutation  *SysMenuActionResourceMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // Where appends a list predicates to the SysMenuActionResourceUpdate builder.
@@ -208,6 +209,12 @@ func (smaru *SysMenuActionResourceUpdate) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (smaru *SysMenuActionResourceUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionResourceUpdate {
+	smaru.modifiers = append(smaru.modifiers, modifiers...)
+	return smaru
+}
+
 func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if err := smaru.check(); err != nil {
 		return n, err
@@ -258,6 +265,7 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 	}
 	_spec.Node.Schema = smaru.schemaConfig.SysMenuActionResource
 	ctx = internal.NewSchemaConfigContext(ctx, smaru.schemaConfig)
+	_spec.AddModifiers(smaru.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, smaru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenuactionresource.Label}
@@ -273,9 +281,10 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 // SysMenuActionResourceUpdateOne is the builder for updating a single SysMenuActionResource entity.
 type SysMenuActionResourceUpdateOne struct {
 	config
-	fields   []string
-	hooks    []Hook
-	mutation *SysMenuActionResourceMutation
+	fields    []string
+	hooks     []Hook
+	mutation  *SysMenuActionResourceMutation
+	modifiers []func(*sql.UpdateBuilder)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -470,6 +479,12 @@ func (smaruo *SysMenuActionResourceUpdateOne) check() error {
 	return nil
 }
 
+// Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
+func (smaruo *SysMenuActionResourceUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionResourceUpdateOne {
+	smaruo.modifiers = append(smaruo.modifiers, modifiers...)
+	return smaruo
+}
+
 func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_node *SysMenuActionResource, err error) {
 	if err := smaruo.check(); err != nil {
 		return _node, err
@@ -537,6 +552,7 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 	}
 	_spec.Node.Schema = smaruo.schemaConfig.SysMenuActionResource
 	ctx = internal.NewSchemaConfigContext(ctx, smaruo.schemaConfig)
+	_spec.AddModifiers(smaruo.modifiers...)
 	_node = &SysMenuActionResource{config: smaruo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
