@@ -1,6 +1,6 @@
 module github.com/heromicro/omgind
 
-go 1.18
+go 1.20
 
 require (
 	entgo.io/ent v0.11.9

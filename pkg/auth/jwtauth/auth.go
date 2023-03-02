@@ -15,7 +15,7 @@ var defaultOptions = options{
 	expired:       7200,
 	signingMethod: jwt.SigningMethodHS512,
 	signingKey:    []byte(defaultKey),
-	keyfunc: func(t *jwt.Token) (interface{}, error) {
+	keyfunc: func(t *jwt.Token) (any, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, auth.ErrInvalidToken
 		}
@@ -25,7 +25,7 @@ var defaultOptions = options{
 
 type options struct {
 	signingMethod jwt.SigningMethod
-	signingKey    interface{}
+	signingKey    any
 	keyfunc       jwt.Keyfunc
 	expired       int
 	tokenType     string
@@ -42,7 +42,7 @@ func SetSigningMethod(method jwt.SigningMethod) Option {
 }
 
 // SetSigningKey 设定签名key
-func SetSigningKey(key interface{}) Option {
+func SetSigningKey(key any) Option {
 	return func(o *options) {
 		o.signingKey = key
 	}

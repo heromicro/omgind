@@ -81,7 +81,7 @@ func (id *ID) UnmarshalBinary(data []byte) error {
 
 // Scan implements the sql.Scanner interface. It supports scanning
 // a string or byte slice.
-func (id *ID) Scan(src interface{}) error {
+func (id *ID) Scan(src any) error {
 	switch x := src.(type) {
 	case nil:
 		return nil
@@ -99,7 +99,7 @@ func (id *ID) Scan(src interface{}) error {
 // type can be created that calls String().
 //
 //	// stringValuer wraps a ULID as a string-based driver.Valuer.
-// 	type stringValuer ULID
+//	type stringValuer ULID
 //
 //	func (id stringValuer) Value() (driver.Value, error) {
 //		return ULID(id).String(), nil
@@ -121,7 +121,7 @@ func MarshalID(id ID) graphql.Marshaler {
 }
 
 // UnmarshalID unmarshals ULID.
-func UnmarshalID(v interface{}) (id ID, err error) {
+func UnmarshalID(v any) (id ID, err error) {
 	str, ok := v.(string)
 	if !ok {
 		return id, fmt.Errorf("ids must be strings")

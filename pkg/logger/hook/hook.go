@@ -34,7 +34,7 @@ type FilterHandle func(*logrus.Entry) *logrus.Entry
 type options struct {
 	maxQueues  int
 	maxWorkers int
-	extra      map[string]interface{}
+	extra      map[string]any
 	filter     FilterHandle
 	levels     []logrus.Level
 }
@@ -54,7 +54,7 @@ func SetMaxWorkers(maxWorkers int) Option {
 }
 
 // SetExtra set extended parameters
-func SetExtra(extra map[string]interface{}) Option {
+func SetExtra(extra map[string]any) Option {
 	return func(o *options) {
 		o.extra = extra
 	}
@@ -114,7 +114,7 @@ func (h *Hook) Levels() []logrus.Level {
 // Fire is called when a log event is fired
 func (h *Hook) Fire(entry *logrus.Entry) error {
 	entry = h.copyEntry(entry)
-	h.q.Push(queue.NewJob(entry, func(v interface{}) {
+	h.q.Push(queue.NewJob(entry, func(v any) {
 		h.exec(v.(*logrus.Entry))
 	}))
 	return nil

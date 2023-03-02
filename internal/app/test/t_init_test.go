@@ -46,13 +46,13 @@ type ResID struct {
 	ID string `json:"id,omitempty"`
 }
 
-func toReader(v interface{}) io.Reader {
+func toReader(v any) io.Reader {
 	buf := new(bytes.Buffer)
 	_ = json.NewEncoder(buf).Encode(v)
 	return buf
 }
 
-func parseReader(r io.Reader, v interface{}) error {
+func parseReader(r io.Reader, v any) error {
 	return json.NewDecoder(r).Decode(v)
 }
 
@@ -92,31 +92,31 @@ type PaginationResult struct {
 }
 
 type PageResult struct {
-	List       interface{}       `json:"list"`
+	List       any               `json:"list"`
 	Pagination *PaginationResult `json:"pagination"`
 }
 
-func parsePageReader(r io.Reader, v interface{}) error {
+func parsePageReader(r io.Reader, v any) error {
 	result := &PageResult{List: v}
 	return parseReader(r, result)
 }
 
-func newPostRequest(formatRouter string, v interface{}, args ...interface{}) *http.Request {
+func newPostRequest(formatRouter string, v any, args ...any) *http.Request {
 	req, _ := http.NewRequest("POST", fmt.Sprintf(formatRouter, args...), toReader(v))
 	return req
 }
 
-func newPutRequest(formatRouter string, v interface{}, args ...interface{}) *http.Request {
+func newPutRequest(formatRouter string, v any, args ...any) *http.Request {
 	req, _ := http.NewRequest("PUT", fmt.Sprintf(formatRouter, args...), toReader(v))
 	return req
 }
 
-func newDeleteRequest(formatRouter string, args ...interface{}) *http.Request {
+func newDeleteRequest(formatRouter string, args ...any) *http.Request {
 	req, _ := http.NewRequest("DELETE", fmt.Sprintf(formatRouter, args...), nil)
 	return req
 }
 
-func newGetRequest(formatRouter string, params map[string]string, args ...interface{}) *http.Request {
+func newGetRequest(formatRouter string, params map[string]string, args ...any) *http.Request {
 	values := make(url.Values)
 	for k, v := range params {
 		values.Set(k, v)

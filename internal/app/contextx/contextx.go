@@ -14,12 +14,12 @@ type (
 )
 
 // NewTrans 创建事务的上下文
-func NewTrans(ctx context.Context, trans interface{}) context.Context {
+func NewTrans(ctx context.Context, trans any) context.Context {
 	return context.WithValue(ctx, transCtx{}, trans)
 }
 
 // FromTrans 从上下文中获取事务
-func FromTrans(ctx context.Context) (interface{}, bool) {
+func FromTrans(ctx context.Context) (any, bool) {
 	v := ctx.Value(transCtx{})
 	return v, v != nil
 }

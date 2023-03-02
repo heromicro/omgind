@@ -62,5 +62,5 @@ func (rs *RedisStore) Verify(id, answer string, clear bool) bool {
 
 // Logger Define the log output interface
 type Logger interface {
-	Printf(format string, args ...interface{})
+	Printf(format string, args ...any)
 }

@@ -47,7 +47,7 @@ func NewStoreWithClusterClient(cli *redis.ClusterClient, keyPrefix string) *Stor
 
 type redisClienter interface {
 	Get(key string) *redis.StringCmd
-	Set(key string, value interface{}, expiration time.Duration) *redis.StatusCmd
+	Set(key string, value any, expiration time.Duration) *redis.StatusCmd
 	Expire(key string, expiration time.Duration) *redis.BoolCmd
 	Exists(keys ...string) *redis.IntCmd
 	TxPipeline() redis.Pipeliner

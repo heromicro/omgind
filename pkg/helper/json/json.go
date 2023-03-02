@@ -15,7 +15,7 @@ var (
 )
 
 // MarshalToString JSON编码为字符串
-func MarshalToString(v interface{}) string {
+func MarshalToString(v any) string {
 	s, err := jsoniter.MarshalToString(v)
 	if err != nil {
 		return ""

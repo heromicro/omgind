@@ -25,7 +25,7 @@ func LoggerMiddleware(skippers ...SkipperFunc) gin.HandlerFunc {
 		entry := logger.WithContext(logger.NewTagContext(c.Request.Context(), "__request__"))
 
 		start := time.Now()
-		fields := make(map[string]interface{})
+		fields := make(map[string]any)
 		fields["ip"] = c.ClientIP()
 		fields["method"] = method
 		fields["url"] = c.Request.URL.String()

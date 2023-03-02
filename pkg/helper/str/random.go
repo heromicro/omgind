@@ -105,7 +105,7 @@ func RandBetween(min, max int) int {
 
 // Rand 默认随机生成6-32位的随机字符串(长度类型皆随机)
 // 如果传入不同的参数,则分别对应不同的函数
-func Rand(args ...interface{}) string {
+func Rand(args ...any) string {
 	switch len(args) {
 	case 1:
 		return Random(args[0].(int))

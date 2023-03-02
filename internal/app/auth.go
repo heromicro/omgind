@@ -17,7 +17,7 @@ func InitAuth() (auth.Auther, func(), error) {
 	var opts []jwtauth.Option
 	opts = append(opts, jwtauth.SetExpired(cfg.Expired))
 	opts = append(opts, jwtauth.SetSigningKey([]byte(cfg.SigningKey)))
-	opts = append(opts, jwtauth.SetKeyfunc(func(t *jwt.Token) (interface{}, error) {
+	opts = append(opts, jwtauth.SetKeyfunc(func(t *jwt.Token) (any, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, auth.ErrInvalidToken
 		}

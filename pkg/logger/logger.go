@@ -142,7 +142,7 @@ func WithContext(ctx context.Context) *Entry {
 		ctx = context.Background()
 	}
 
-	fields := map[string]interface{}{
+	fields := map[string]any{
 		VersionKey: version,
 	}
 

@@ -29,7 +29,7 @@ type (
 	// Options are copier options.
 	Options struct {
 		// Context given to WithContext() method.
-		Context map[string]interface{}
+		Context map[string]any
 		// Reversed reverses struct tag checkings.
 		Reversed bool
 	}
@@ -37,20 +37,20 @@ type (
 
 // DeepCopier deep copies a struct to/from a struct.
 type DeepCopier struct {
-	dst      interface{}
-	src      interface{}
-	ctx      map[string]interface{}
+	dst      any
+	src      any
+	ctx      map[string]any
 	included []string
 	excluded []string
 }
 
 // Copy sets source or destination.
-func Copy(src interface{}) *DeepCopier {
+func Copy(src any) *DeepCopier {
 	return &DeepCopier{src: src, included: make([]string, 0, 0), excluded: make([]string, 0, 0)}
 }
 
 // WithContext injects the given context into the builder instance.
-func (dc *DeepCopier) WithContext(ctx map[string]interface{}) *DeepCopier {
+func (dc *DeepCopier) WithContext(ctx map[string]any) *DeepCopier {
 	dc.ctx = ctx
 	return dc
 }
@@ -66,20 +66,20 @@ func (dc *DeepCopier) Exclude(exclude []string) *DeepCopier {
 }
 
 // To sets the destination.
-func (dc *DeepCopier) To(dst interface{}) error {
+func (dc *DeepCopier) To(dst any) error {
 	dc.dst = dst
 	return process(dc, dc.dst, dc.src, Options{Context: dc.ctx})
 }
 
 // From sets the given the source as destination and destination as source.
-func (dc *DeepCopier) From(src interface{}) error {
+func (dc *DeepCopier) From(src any) error {
 	dc.dst = dc.src
 	dc.src = src
 	return process(dc, dc.dst, dc.src, Options{Context: dc.ctx, Reversed: true})
 }
 
 // process handles copy.
-func process(dc *DeepCopier, dst interface{}, src interface{}, args ...Options) error {
+func process(dc *DeepCopier, dst any, src any, args ...Options) error {
 	var (
 		options        = Options{}
 		srcValue       = reflect.Indirect(reflect.ValueOf(src))
@@ -305,7 +305,7 @@ func getTagOptions(value string) TagOptions {
 }
 
 // getRelatedField returns first matching field.
-func getRelatedField(instance interface{}, name string) (string, TagOptions) {
+func getRelatedField(instance any, name string) (string, TagOptions) {
 	var (
 		value      = reflect.Indirect(reflect.ValueOf(instance))
 		fieldName  string
@@ -338,7 +338,7 @@ func getRelatedField(instance interface{}, name string) (string, TagOptions) {
 }
 
 // getMethodNames returns instance's method names.
-func getMethodNames(instance interface{}) []string {
+func getMethodNames(instance any) []string {
 	var methods []string
 
 	t := reflect.TypeOf(instance)
@@ -350,7 +350,7 @@ func getMethodNames(instance interface{}) []string {
 }
 
 // getFieldNames returns instance's field names.
-func getFieldNames(instance interface{}) []string {
+func getFieldNames(instance any) []string {
 	var (
 		fields []string
 		v      = reflect.Indirect(reflect.ValueOf(instance))

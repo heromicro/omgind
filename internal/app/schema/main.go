@@ -32,7 +32,7 @@ type ErrorItem struct {
 
 // ListResult 响应列表数据
 type ListResult struct {
-	List       interface{}       `json:"list"`
+	List       any               `json:"list"`
 	Pagination *PaginationResult `json:"pagination,omitempty"`
 }
 

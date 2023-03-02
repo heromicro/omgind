@@ -55,7 +55,7 @@ func GetBody(c *gin.Context) []byte {
 }
 
 // ParseJSON 解析请求JSON
-func ParseJSON(c *gin.Context, obj interface{}) error {
+func ParseJSON(c *gin.Context, obj any) error {
 	if err := c.ShouldBindJSON(obj); err != nil {
 		fmt.Printf(" 00000 ---- %+v \n", err)
 		return errors.Wrap400Response(err, fmt.Sprintf("解析请求参数发生错误 - %s", err.Error()))
@@ -64,7 +64,7 @@ func ParseJSON(c *gin.Context, obj interface{}) error {
 }
 
 // ParseQuery 解析Query参数
-func ParseQuery(c *gin.Context, obj interface{}) error {
+func ParseQuery(c *gin.Context, obj any) error {
 	if err := c.ShouldBindQuery(obj); err != nil {
 		return errors.Wrap400Response(err, fmt.Sprintf("解析请求参数发生错误 - %s", err.Error()))
 	}
@@ -72,7 +72,7 @@ func ParseQuery(c *gin.Context, obj interface{}) error {
 }
 
 // ParseForm 解析Form请求
-func ParseForm(c *gin.Context, obj interface{}) error {
+func ParseForm(c *gin.Context, obj any) error {
 	if err := c.ShouldBindWith(obj, binding.Form); err != nil {
 		return errors.Wrap400Response(err, fmt.Sprintf("解析请求参数发生错误 - %s", err.Error()))
 	}
@@ -85,12 +85,12 @@ func ResOK(c *gin.Context) {
 }
 
 // ResList 响应列表数据
-func ResList(c *gin.Context, v interface{}) {
+func ResList(c *gin.Context, v any) {
 	ResSuccess(c, schema.ListResult{List: v})
 }
 
 // ResPage 响应分页数据
-func ResPage(c *gin.Context, v interface{}, pr *schema.PaginationResult) {
+func ResPage(c *gin.Context, v any, pr *schema.PaginationResult) {
 	list := schema.ListResult{
 		List:       v,
 		Pagination: pr,
@@ -99,12 +99,12 @@ func ResPage(c *gin.Context, v interface{}, pr *schema.PaginationResult) {
 }
 
 // ResSuccess 响应成功
-func ResSuccess(c *gin.Context, v interface{}) {
+func ResSuccess(c *gin.Context, v any) {
 	ResJSON(c, http.StatusOK, v)
 }
 
 // ResJSON 响应JSON数据
-func ResJSON(c *gin.Context, status int, v interface{}) {
+func ResJSON(c *gin.Context, status int, v any) {
 	buf, err := json.Marshal(v)
 	if err != nil {
 		panic(err)

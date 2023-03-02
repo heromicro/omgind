@@ -26,7 +26,7 @@ func UnWrapResponse(err error) *ResponseError {
 }
 
 // WrapResponse 包装响应错误
-func WrapResponse(err error, code, statusCode int, msg string, args ...interface{}) error {
+func WrapResponse(err error, code, statusCode int, msg string, args ...any) error {
 	res := &ResponseError{
 		Code:       code,
 		Message:    fmt.Sprintf(msg, args...),
@@ -37,17 +37,17 @@ func WrapResponse(err error, code, statusCode int, msg string, args ...interface
 }
 
 // Wrap400Response 包装错误码为400的响应错误
-func Wrap400Response(err error, msg string, args ...interface{}) error {
+func Wrap400Response(err error, msg string, args ...any) error {
 	return WrapResponse(err, 400, 400, msg, args...)
 }
 
 // Wrap500Response 包装错误码为500的响应错误
-func Wrap500Response(err error, msg string, args ...interface{}) error {
+func Wrap500Response(err error, msg string, args ...any) error {
 	return WrapResponse(err, 500, 500, msg, args...)
 }
 
 // NewResponse 创建响应错误
-func NewResponse(code, statusCode int, msg string, args ...interface{}) error {
+func NewResponse(code, statusCode int, msg string, args ...any) error {
 	res := &ResponseError{
 		Code:       code,
 		Message:    fmt.Sprintf(msg, args...),
@@ -57,11 +57,11 @@ func NewResponse(code, statusCode int, msg string, args ...interface{}) error {
 }
 
 // New400Response 创建错误码为400的响应错误
-func New400Response(msg string, args ...interface{}) error {
+func New400Response(msg string, args ...any) error {
 	return NewResponse(400, 400, msg, args...)
 }
 
 // New500Response 创建错误码为500的响应错误
-func New500Response(msg string, args ...interface{}) error {
+func New500Response(msg string, args ...any) error {
 	return NewResponse(500, 500, msg, args...)
 }
