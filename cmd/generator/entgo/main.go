@@ -22,6 +22,7 @@ func main() {
 		Target:  "./internal/gen/ent",
 		Templates: []*gen.Template{
 			gen.MustParse(gen.NewTemplate("mutation_input").ParseDir("./internal/schema/template")),
+			gen.MustParse(gen.NewTemplate("stringer").ParseDir("./internal/schema/template")),
 		},
 	})
 
