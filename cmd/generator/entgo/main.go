@@ -5,6 +5,7 @@ import (
 
 	"entgo.io/ent/entc"
 	"entgo.io/ent/entc/gen"
+	"github.com/hedwigz/entviz"
 )
 
 func main() {
@@ -24,7 +25,7 @@ func main() {
 			gen.MustParse(gen.NewTemplate("mutation_input").ParseDir("./internal/schema/template")),
 			gen.MustParse(gen.NewTemplate("stringer").ParseDir("./internal/schema/template")),
 		},
-	})
+	}, entc.Extensions(entviz.Extension{}))
 
 	if err != nil {
 		log.Fatalf("running ent codegen: %v", err)
