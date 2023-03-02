@@ -187,50 +187,8 @@ func (slc *SysLoggingCreate) Mutation() *SysLoggingMutation {
 
 // Save creates the SysLogging in the database.
 func (slc *SysLoggingCreate) Save(ctx context.Context) (*SysLogging, error) {
-	var (
-		err  error
-		node *SysLogging
-	)
 	slc.defaults()
-	if len(slc.hooks) == 0 {
-		if err = slc.check(); err != nil {
-			return nil, err
-		}
-		node, err = slc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysLoggingMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = slc.check(); err != nil {
-				return nil, err
-			}
-			slc.mutation = mutation
-			if node, err = slc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(slc.hooks) - 1; i >= 0; i-- {
-			if slc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = slc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, slc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysLogging)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysLoggingMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysLogging, SysLoggingMutation](ctx, slc.sqlSave, slc.mutation, slc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -330,6 +288,9 @@ func (slc *SysLoggingCreate) check() error {
 }
 
 func (slc *SysLoggingCreate) sqlSave(ctx context.Context) (*SysLogging, error) {
+	if err := slc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := slc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, slc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -344,110 +305,62 @@ func (slc *SysLoggingCreate) sqlSave(ctx context.Context) (*SysLogging, error) {
 			return nil, fmt.Errorf("unexpected SysLogging.ID type: %T", _spec.ID.Value)
 		}
 	}
+	slc.mutation.id = &_node.ID
+	slc.mutation.done = true
 	return _node, nil
 }
 
 func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysLogging{config: slc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: syslogging.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: syslogging.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(syslogging.Table, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
 	)
 	if id, ok := slc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := slc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: syslogging.FieldIsDel,
-		})
+		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := slc.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldMemo,
-		})
+		_spec.SetField(syslogging.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := slc.mutation.Level(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldLevel,
-		})
+		_spec.SetField(syslogging.FieldLevel, field.TypeString, value)
 		_node.Level = value
 	}
 	if value, ok := slc.mutation.TraceID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldTraceID,
-		})
+		_spec.SetField(syslogging.FieldTraceID, field.TypeString, value)
 		_node.TraceID = &value
 	}
 	if value, ok := slc.mutation.UserID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldUserID,
-		})
+		_spec.SetField(syslogging.FieldUserID, field.TypeString, value)
 		_node.UserID = &value
 	}
 	if value, ok := slc.mutation.Tag(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldTag,
-		})
+		_spec.SetField(syslogging.FieldTag, field.TypeString, value)
 		_node.Tag = &value
 	}
 	if value, ok := slc.mutation.Version(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldVersion,
-		})
+		_spec.SetField(syslogging.FieldVersion, field.TypeString, value)
 		_node.Version = &value
 	}
 	if value, ok := slc.mutation.Message(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldMessage,
-		})
+		_spec.SetField(syslogging.FieldMessage, field.TypeString, value)
 		_node.Message = &value
 	}
 	if value, ok := slc.mutation.Data(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldData,
-		})
+		_spec.SetField(syslogging.FieldData, field.TypeString, value)
 		_node.Data = &value
 	}
 	if value, ok := slc.mutation.ErrorStack(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: syslogging.FieldErrorStack,
-		})
+		_spec.SetField(syslogging.FieldErrorStack, field.TypeString, value)
 		_node.ErrorStack = &value
 	}
 	if value, ok := slc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: syslogging.FieldCreatedAt,
-		})
+		_spec.SetField(syslogging.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	return _node, _spec

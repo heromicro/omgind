@@ -151,50 +151,8 @@ func (xdc *XxxDemoCreate) Mutation() *XxxDemoMutation {
 
 // Save creates the XxxDemo in the database.
 func (xdc *XxxDemoCreate) Save(ctx context.Context) (*XxxDemo, error) {
-	var (
-		err  error
-		node *XxxDemo
-	)
 	xdc.defaults()
-	if len(xdc.hooks) == 0 {
-		if err = xdc.check(); err != nil {
-			return nil, err
-		}
-		node, err = xdc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*XxxDemoMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = xdc.check(); err != nil {
-				return nil, err
-			}
-			xdc.mutation = mutation
-			if node, err = xdc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(xdc.hooks) - 1; i >= 0; i-- {
-			if xdc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = xdc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, xdc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*XxxDemo)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from XxxDemoMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*XxxDemo, XxxDemoMutation](ctx, xdc.sqlSave, xdc.mutation, xdc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -298,6 +256,9 @@ func (xdc *XxxDemoCreate) check() error {
 }
 
 func (xdc *XxxDemoCreate) sqlSave(ctx context.Context) (*XxxDemo, error) {
+	if err := xdc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := xdc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, xdc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -312,94 +273,54 @@ func (xdc *XxxDemoCreate) sqlSave(ctx context.Context) (*XxxDemo, error) {
 			return nil, fmt.Errorf("unexpected XxxDemo.ID type: %T", _spec.ID.Value)
 		}
 	}
+	xdc.mutation.id = &_node.ID
+	xdc.mutation.done = true
 	return _node, nil
 }
 
 func (xdc *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
 	var (
 		_node = &XxxDemo{config: xdc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: xxxdemo.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: xxxdemo.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(xxxdemo.Table, sqlgraph.NewFieldSpec(xxxdemo.FieldID, field.TypeString))
 	)
 	if id, ok := xdc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := xdc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: xxxdemo.FieldIsDel,
-		})
+		_spec.SetField(xxxdemo.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := xdc.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldMemo,
-		})
+		_spec.SetField(xxxdemo.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := xdc.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: xxxdemo.FieldSort,
-		})
+		_spec.SetField(xxxdemo.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := xdc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: xxxdemo.FieldCreatedAt,
-		})
+		_spec.SetField(xxxdemo.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := xdc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: xxxdemo.FieldUpdatedAt,
-		})
+		_spec.SetField(xxxdemo.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := xdc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: xxxdemo.FieldDeletedAt,
-		})
+		_spec.SetField(xxxdemo.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := xdc.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: xxxdemo.FieldIsActive,
-		})
+		_spec.SetField(xxxdemo.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := xdc.mutation.Code(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldCode,
-		})
+		_spec.SetField(xxxdemo.FieldCode, field.TypeString, value)
 		_node.Code = value
 	}
 	if value, ok := xdc.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldName,
-		})
+		_spec.SetField(xxxdemo.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
 	return _node, _spec

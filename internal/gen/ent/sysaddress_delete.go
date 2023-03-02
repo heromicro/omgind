@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -28,34 +27,7 @@ func (sad *SysAddressDelete) Where(ps ...predicate.SysAddress) *SysAddressDelete
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sad *SysAddressDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(sad.hooks) == 0 {
-		affected, err = sad.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysAddressMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			sad.mutation = mutation
-			affected, err = sad.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sad.hooks) - 1; i >= 0; i-- {
-			if sad.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sad.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sad.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysAddressMutation](ctx, sad.sqlExec, sad.mutation, sad.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +40,7 @@ func (sad *SysAddressDelete) ExecX(ctx context.Context) int {
 }
 
 func (sad *SysAddressDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: sysaddress.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysaddress.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(sysaddress.Table, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
 	if ps := sad.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +52,19 @@ func (sad *SysAddressDelete) sqlExec(ctx context.Context) (int, error) {
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	sad.mutation.done = true
 	return affected, err
 }
 
 // SysAddressDeleteOne is the builder for deleting a single SysAddress entity.
 type SysAddressDeleteOne struct {
 	sad *SysAddressDelete
+}
+
+// Where appends a list predicates to the SysAddressDelete builder.
+func (sado *SysAddressDeleteOne) Where(ps ...predicate.SysAddress) *SysAddressDeleteOne {
+	sado.sad.mutation.Where(ps...)
+	return sado
 }
 
 // Exec executes the deletion query.
@@ -111,5 +82,7 @@ func (sado *SysAddressDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (sado *SysAddressDeleteOne) ExecX(ctx context.Context) {
-	sado.sad.ExecX(ctx)
+	if err := sado.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

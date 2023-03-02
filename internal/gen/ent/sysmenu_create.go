@@ -219,50 +219,8 @@ func (smc *SysMenuCreate) Mutation() *SysMenuMutation {
 
 // Save creates the SysMenu in the database.
 func (smc *SysMenuCreate) Save(ctx context.Context) (*SysMenu, error) {
-	var (
-		err  error
-		node *SysMenu
-	)
 	smc.defaults()
-	if len(smc.hooks) == 0 {
-		if err = smc.check(); err != nil {
-			return nil, err
-		}
-		node, err = smc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysMenuMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = smc.check(); err != nil {
-				return nil, err
-			}
-			smc.mutation = mutation
-			if node, err = smc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(smc.hooks) - 1; i >= 0; i-- {
-			if smc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = smc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, smc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysMenu)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysMenuMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysMenu, SysMenuMutation](ctx, smc.sqlSave, smc.mutation, smc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -403,6 +361,9 @@ func (smc *SysMenuCreate) check() error {
 }
 
 func (smc *SysMenuCreate) sqlSave(ctx context.Context) (*SysMenu, error) {
+	if err := smc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := smc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, smc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -417,142 +378,78 @@ func (smc *SysMenuCreate) sqlSave(ctx context.Context) (*SysMenu, error) {
 			return nil, fmt.Errorf("unexpected SysMenu.ID type: %T", _spec.ID.Value)
 		}
 	}
+	smc.mutation.id = &_node.ID
+	smc.mutation.done = true
 	return _node, nil
 }
 
 func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysMenu{config: smc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysmenu.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenu.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysmenu.Table, sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString))
 	)
 	if id, ok := smc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := smc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsDel,
-		})
+		_spec.SetField(sysmenu.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := smc.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldMemo,
-		})
+		_spec.SetField(sysmenu.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := smc.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldSort,
-		})
+		_spec.SetField(sysmenu.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := smc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenu.FieldCreatedAt,
-		})
+		_spec.SetField(sysmenu.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := smc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenu.FieldUpdatedAt,
-		})
+		_spec.SetField(sysmenu.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := smc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenu.FieldDeletedAt,
-		})
+		_spec.SetField(sysmenu.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := smc.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsActive,
-		})
+		_spec.SetField(sysmenu.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := smc.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldName,
-		})
+		_spec.SetField(sysmenu.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
 	if value, ok := smc.mutation.Icon(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldIcon,
-		})
+		_spec.SetField(sysmenu.FieldIcon, field.TypeString, value)
 		_node.Icon = value
 	}
 	if value, ok := smc.mutation.Router(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldRouter,
-		})
+		_spec.SetField(sysmenu.FieldRouter, field.TypeString, value)
 		_node.Router = value
 	}
 	if value, ok := smc.mutation.IsShow(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsShow,
-		})
+		_spec.SetField(sysmenu.FieldIsShow, field.TypeBool, value)
 		_node.IsShow = value
 	}
 	if value, ok := smc.mutation.ParentID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldParentID,
-		})
+		_spec.SetField(sysmenu.FieldParentID, field.TypeString, value)
 		_node.ParentID = &value
 	}
 	if value, ok := smc.mutation.ParentPath(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenu.FieldParentPath,
-		})
+		_spec.SetField(sysmenu.FieldParentPath, field.TypeString, value)
 		_node.ParentPath = &value
 	}
 	if value, ok := smc.mutation.Level(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenu.FieldLevel,
-		})
+		_spec.SetField(sysmenu.FieldLevel, field.TypeInt32, value)
 		_node.Level = value
 	}
 	if value, ok := smc.mutation.IsLeaf(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenu.FieldIsLeaf,
-		})
+		_spec.SetField(sysmenu.FieldIsLeaf, field.TypeBool, value)
 		_node.IsLeaf = &value
 	}
 	return _node, _spec

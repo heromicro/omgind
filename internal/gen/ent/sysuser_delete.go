@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -28,34 +27,7 @@ func (sud *SysUserDelete) Where(ps ...predicate.SysUser) *SysUserDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sud *SysUserDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(sud.hooks) == 0 {
-		affected, err = sud.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysUserMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			sud.mutation = mutation
-			affected, err = sud.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sud.hooks) - 1; i >= 0; i-- {
-			if sud.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sud.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sud.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysUserMutation](ctx, sud.sqlExec, sud.mutation, sud.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +40,7 @@ func (sud *SysUserDelete) ExecX(ctx context.Context) int {
 }
 
 func (sud *SysUserDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: sysuser.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysuser.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(sysuser.Table, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
 	if ps := sud.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +52,19 @@ func (sud *SysUserDelete) sqlExec(ctx context.Context) (int, error) {
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	sud.mutation.done = true
 	return affected, err
 }
 
 // SysUserDeleteOne is the builder for deleting a single SysUser entity.
 type SysUserDeleteOne struct {
 	sud *SysUserDelete
+}
+
+// Where appends a list predicates to the SysUserDelete builder.
+func (sudo *SysUserDeleteOne) Where(ps ...predicate.SysUser) *SysUserDeleteOne {
+	sudo.sud.mutation.Where(ps...)
+	return sudo
 }
 
 // Exec executes the deletion query.
@@ -111,5 +82,7 @@ func (sudo *SysUserDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (sudo *SysUserDeleteOne) ExecX(ctx context.Context) {
-	sudo.sud.ExecX(ctx)
+	if err := sudo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

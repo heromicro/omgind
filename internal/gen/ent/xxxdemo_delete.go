@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -28,34 +27,7 @@ func (xdd *XxxDemoDelete) Where(ps ...predicate.XxxDemo) *XxxDemoDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (xdd *XxxDemoDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(xdd.hooks) == 0 {
-		affected, err = xdd.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*XxxDemoMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			xdd.mutation = mutation
-			affected, err = xdd.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(xdd.hooks) - 1; i >= 0; i-- {
-			if xdd.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = xdd.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, xdd.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, XxxDemoMutation](ctx, xdd.sqlExec, xdd.mutation, xdd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +40,7 @@ func (xdd *XxxDemoDelete) ExecX(ctx context.Context) int {
 }
 
 func (xdd *XxxDemoDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: xxxdemo.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: xxxdemo.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(xxxdemo.Table, sqlgraph.NewFieldSpec(xxxdemo.FieldID, field.TypeString))
 	if ps := xdd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +52,19 @@ func (xdd *XxxDemoDelete) sqlExec(ctx context.Context) (int, error) {
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	xdd.mutation.done = true
 	return affected, err
 }
 
 // XxxDemoDeleteOne is the builder for deleting a single XxxDemo entity.
 type XxxDemoDeleteOne struct {
 	xdd *XxxDemoDelete
+}
+
+// Where appends a list predicates to the XxxDemoDelete builder.
+func (xddo *XxxDemoDeleteOne) Where(ps ...predicate.XxxDemo) *XxxDemoDeleteOne {
+	xddo.xdd.mutation.Where(ps...)
+	return xddo
 }
 
 // Exec executes the deletion query.
@@ -111,5 +82,7 @@ func (xddo *XxxDemoDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (xddo *XxxDemoDeleteOne) ExecX(ctx context.Context) {
-	xddo.xdd.ExecX(ctx)
+	if err := xddo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

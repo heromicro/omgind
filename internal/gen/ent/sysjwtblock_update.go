@@ -115,41 +115,8 @@ func (sjbu *SysJwtBlockUpdate) Mutation() *SysJwtBlockMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sjbu *SysJwtBlockUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	sjbu.defaults()
-	if len(sjbu.hooks) == 0 {
-		if err = sjbu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = sjbu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysJwtBlockMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sjbu.check(); err != nil {
-				return 0, err
-			}
-			sjbu.mutation = mutation
-			affected, err = sjbu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sjbu.hooks) - 1; i >= 0; i-- {
-			if sjbu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sjbu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sjbu.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysJwtBlockMutation](ctx, sjbu.sqlSave, sjbu.mutation, sjbu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -198,16 +165,10 @@ func (sjbu *SysJwtBlockUpdate) check() error {
 }
 
 func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysjwtblock.Table,
-			Columns: sysjwtblock.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysjwtblock.FieldID,
-			},
-		},
+	if err := sjbu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysjwtblock.Table, sysjwtblock.Columns, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
 	if ps := sjbu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -216,58 +177,28 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := sjbu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysjwtblock.FieldIsDel,
-		})
+		_spec.SetField(sysjwtblock.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sjbu.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysjwtblock.FieldMemo,
-		})
+		_spec.SetField(sysjwtblock.FieldMemo, field.TypeString, value)
 	}
 	if sjbu.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysjwtblock.FieldMemo,
-		})
+		_spec.ClearField(sysjwtblock.FieldMemo, field.TypeString)
 	}
 	if value, ok := sjbu.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysjwtblock.FieldUpdatedAt,
-		})
+		_spec.SetField(sysjwtblock.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sjbu.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysjwtblock.FieldDeletedAt,
-		})
+		_spec.SetField(sysjwtblock.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sjbu.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysjwtblock.FieldDeletedAt,
-		})
+		_spec.ClearField(sysjwtblock.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sjbu.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysjwtblock.FieldIsActive,
-		})
+		_spec.SetField(sysjwtblock.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sjbu.mutation.Jwt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysjwtblock.FieldJwt,
-		})
+		_spec.SetField(sysjwtblock.FieldJwt, field.TypeString, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, sjbu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -277,6 +208,7 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	sjbu.mutation.done = true
 	return n, nil
 }
 
@@ -373,6 +305,12 @@ func (sjbuo *SysJwtBlockUpdateOne) Mutation() *SysJwtBlockMutation {
 	return sjbuo.mutation
 }
 
+// Where appends a list predicates to the SysJwtBlockUpdate builder.
+func (sjbuo *SysJwtBlockUpdateOne) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockUpdateOne {
+	sjbuo.mutation.Where(ps...)
+	return sjbuo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (sjbuo *SysJwtBlockUpdateOne) Select(field string, fields ...string) *SysJwtBlockUpdateOne {
@@ -382,47 +320,8 @@ func (sjbuo *SysJwtBlockUpdateOne) Select(field string, fields ...string) *SysJw
 
 // Save executes the query and returns the updated SysJwtBlock entity.
 func (sjbuo *SysJwtBlockUpdateOne) Save(ctx context.Context) (*SysJwtBlock, error) {
-	var (
-		err  error
-		node *SysJwtBlock
-	)
 	sjbuo.defaults()
-	if len(sjbuo.hooks) == 0 {
-		if err = sjbuo.check(); err != nil {
-			return nil, err
-		}
-		node, err = sjbuo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysJwtBlockMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sjbuo.check(); err != nil {
-				return nil, err
-			}
-			sjbuo.mutation = mutation
-			node, err = sjbuo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sjbuo.hooks) - 1; i >= 0; i-- {
-			if sjbuo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sjbuo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sjbuo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysJwtBlock)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysJwtBlockMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysJwtBlock, SysJwtBlockMutation](ctx, sjbuo.sqlSave, sjbuo.mutation, sjbuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -471,16 +370,10 @@ func (sjbuo *SysJwtBlockUpdateOne) check() error {
 }
 
 func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBlock, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysjwtblock.Table,
-			Columns: sysjwtblock.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysjwtblock.FieldID,
-			},
-		},
+	if err := sjbuo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysjwtblock.Table, sysjwtblock.Columns, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
 	id, ok := sjbuo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysJwtBlock.id" for update`)}
@@ -506,58 +399,28 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 		}
 	}
 	if value, ok := sjbuo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysjwtblock.FieldIsDel,
-		})
+		_spec.SetField(sysjwtblock.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sjbuo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysjwtblock.FieldMemo,
-		})
+		_spec.SetField(sysjwtblock.FieldMemo, field.TypeString, value)
 	}
 	if sjbuo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysjwtblock.FieldMemo,
-		})
+		_spec.ClearField(sysjwtblock.FieldMemo, field.TypeString)
 	}
 	if value, ok := sjbuo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysjwtblock.FieldUpdatedAt,
-		})
+		_spec.SetField(sysjwtblock.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sjbuo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysjwtblock.FieldDeletedAt,
-		})
+		_spec.SetField(sysjwtblock.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sjbuo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysjwtblock.FieldDeletedAt,
-		})
+		_spec.ClearField(sysjwtblock.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sjbuo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysjwtblock.FieldIsActive,
-		})
+		_spec.SetField(sysjwtblock.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sjbuo.mutation.Jwt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysjwtblock.FieldJwt,
-		})
+		_spec.SetField(sysjwtblock.FieldJwt, field.TypeString, value)
 	}
 	_node = &SysJwtBlock{config: sjbuo.config}
 	_spec.Assign = _node.assignValues
@@ -570,5 +433,6 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 		}
 		return nil, err
 	}
+	sjbuo.mutation.done = true
 	return _node, nil
 }

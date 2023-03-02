@@ -17,11 +17,9 @@ import (
 // SysMenuActionQuery is the builder for querying SysMenuAction entities.
 type SysMenuActionQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
+	ctx        *QueryContext
 	order      []OrderFunc
-	fields     []string
+	inters     []Interceptor
 	predicates []predicate.SysMenuAction
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -34,26 +32,26 @@ func (smaq *SysMenuActionQuery) Where(ps ...predicate.SysMenuAction) *SysMenuAct
 	return smaq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (smaq *SysMenuActionQuery) Limit(limit int) *SysMenuActionQuery {
-	smaq.limit = &limit
+	smaq.ctx.Limit = &limit
 	return smaq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (smaq *SysMenuActionQuery) Offset(offset int) *SysMenuActionQuery {
-	smaq.offset = &offset
+	smaq.ctx.Offset = &offset
 	return smaq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (smaq *SysMenuActionQuery) Unique(unique bool) *SysMenuActionQuery {
-	smaq.unique = &unique
+	smaq.ctx.Unique = &unique
 	return smaq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (smaq *SysMenuActionQuery) Order(o ...OrderFunc) *SysMenuActionQuery {
 	smaq.order = append(smaq.order, o...)
 	return smaq
@@ -62,7 +60,7 @@ func (smaq *SysMenuActionQuery) Order(o ...OrderFunc) *SysMenuActionQuery {
 // First returns the first SysMenuAction entity from the query.
 // Returns a *NotFoundError when no SysMenuAction was found.
 func (smaq *SysMenuActionQuery) First(ctx context.Context) (*SysMenuAction, error) {
-	nodes, err := smaq.Limit(1).All(ctx)
+	nodes, err := smaq.Limit(1).All(setContextOp(ctx, smaq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +83,7 @@ func (smaq *SysMenuActionQuery) FirstX(ctx context.Context) *SysMenuAction {
 // Returns a *NotFoundError when no SysMenuAction ID was found.
 func (smaq *SysMenuActionQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smaq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = smaq.Limit(1).IDs(setContextOp(ctx, smaq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +106,7 @@ func (smaq *SysMenuActionQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysMenuAction entity is found.
 // Returns a *NotFoundError when no SysMenuAction entities are found.
 func (smaq *SysMenuActionQuery) Only(ctx context.Context) (*SysMenuAction, error) {
-	nodes, err := smaq.Limit(2).All(ctx)
+	nodes, err := smaq.Limit(2).All(setContextOp(ctx, smaq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +134,7 @@ func (smaq *SysMenuActionQuery) OnlyX(ctx context.Context) *SysMenuAction {
 // Returns a *NotFoundError when no entities are found.
 func (smaq *SysMenuActionQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smaq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = smaq.Limit(2).IDs(setContextOp(ctx, smaq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,10 +159,12 @@ func (smaq *SysMenuActionQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysMenuActions.
 func (smaq *SysMenuActionQuery) All(ctx context.Context) ([]*SysMenuAction, error) {
+	ctx = setContextOp(ctx, smaq.ctx, "All")
 	if err := smaq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return smaq.sqlAll(ctx)
+	qr := querierAll[[]*SysMenuAction, *SysMenuActionQuery]()
+	return withInterceptors[[]*SysMenuAction](ctx, smaq, qr, smaq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -177,9 +177,12 @@ func (smaq *SysMenuActionQuery) AllX(ctx context.Context) []*SysMenuAction {
 }
 
 // IDs executes the query and returns a list of SysMenuAction IDs.
-func (smaq *SysMenuActionQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := smaq.Select(sysmenuaction.FieldID).Scan(ctx, &ids); err != nil {
+func (smaq *SysMenuActionQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if smaq.ctx.Unique == nil && smaq.path != nil {
+		smaq.Unique(true)
+	}
+	ctx = setContextOp(ctx, smaq.ctx, "IDs")
+	if err = smaq.Select(sysmenuaction.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -196,10 +199,11 @@ func (smaq *SysMenuActionQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (smaq *SysMenuActionQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, smaq.ctx, "Count")
 	if err := smaq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return smaq.sqlCount(ctx)
+	return withInterceptors[int](ctx, smaq, querierCount[*SysMenuActionQuery](), smaq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -213,10 +217,15 @@ func (smaq *SysMenuActionQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (smaq *SysMenuActionQuery) Exist(ctx context.Context) (bool, error) {
-	if err := smaq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, smaq.ctx, "Exist")
+	switch _, err := smaq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return smaq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -236,14 +245,13 @@ func (smaq *SysMenuActionQuery) Clone() *SysMenuActionQuery {
 	}
 	return &SysMenuActionQuery{
 		config:     smaq.config,
-		limit:      smaq.limit,
-		offset:     smaq.offset,
+		ctx:        smaq.ctx.Clone(),
 		order:      append([]OrderFunc{}, smaq.order...),
+		inters:     append([]Interceptor{}, smaq.inters...),
 		predicates: append([]predicate.SysMenuAction{}, smaq.predicates...),
 		// clone intermediate query.
-		sql:    smaq.sql.Clone(),
-		path:   smaq.path,
-		unique: smaq.unique,
+		sql:  smaq.sql.Clone(),
+		path: smaq.path,
 	}
 }
 
@@ -261,18 +269,12 @@ func (smaq *SysMenuActionQuery) Clone() *SysMenuActionQuery {
 //		GroupBy(sysmenuaction.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (smaq *SysMenuActionQuery) GroupBy(field string, fields ...string) *SysMenuActionGroupBy {
-	grbuild := &SysMenuActionGroupBy{config: smaq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := smaq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return smaq.sqlQuery(ctx), nil
-	}
+	smaq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysMenuActionGroupBy{build: smaq}
+	grbuild.flds = &smaq.ctx.Fields
 	grbuild.label = sysmenuaction.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -288,17 +290,31 @@ func (smaq *SysMenuActionQuery) GroupBy(field string, fields ...string) *SysMenu
 //	client.SysMenuAction.Query().
 //		Select(sysmenuaction.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (smaq *SysMenuActionQuery) Select(fields ...string) *SysMenuActionSelect {
-	smaq.fields = append(smaq.fields, fields...)
-	selbuild := &SysMenuActionSelect{SysMenuActionQuery: smaq}
-	selbuild.label = sysmenuaction.Label
-	selbuild.flds, selbuild.scan = &smaq.fields, selbuild.Scan
-	return selbuild
+	smaq.ctx.Fields = append(smaq.ctx.Fields, fields...)
+	sbuild := &SysMenuActionSelect{SysMenuActionQuery: smaq}
+	sbuild.label = sysmenuaction.Label
+	sbuild.flds, sbuild.scan = &smaq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a SysMenuActionSelect configured with the given aggregations.
+func (smaq *SysMenuActionQuery) Aggregate(fns ...AggregateFunc) *SysMenuActionSelect {
+	return smaq.Select().Aggregate(fns...)
 }
 
 func (smaq *SysMenuActionQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range smaq.fields {
+	for _, inter := range smaq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, smaq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range smaq.ctx.Fields {
 		if !sysmenuaction.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -318,10 +334,10 @@ func (smaq *SysMenuActionQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 		nodes = []*SysMenuAction{}
 		_spec = smaq.querySpec()
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysMenuAction).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysMenuAction{config: smaq.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
@@ -340,38 +356,22 @@ func (smaq *SysMenuActionQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 
 func (smaq *SysMenuActionQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := smaq.querySpec()
-	_spec.Node.Columns = smaq.fields
-	if len(smaq.fields) > 0 {
-		_spec.Unique = smaq.unique != nil && *smaq.unique
+	_spec.Node.Columns = smaq.ctx.Fields
+	if len(smaq.ctx.Fields) > 0 {
+		_spec.Unique = smaq.ctx.Unique != nil && *smaq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, smaq.driver, _spec)
 }
 
-func (smaq *SysMenuActionQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := smaq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (smaq *SysMenuActionQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysmenuaction.Table,
-			Columns: sysmenuaction.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenuaction.FieldID,
-			},
-		},
-		From:   smaq.sql,
-		Unique: true,
-	}
-	if unique := smaq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(sysmenuaction.Table, sysmenuaction.Columns, sqlgraph.NewFieldSpec(sysmenuaction.FieldID, field.TypeString))
+	_spec.From = smaq.sql
+	if unique := smaq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if smaq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := smaq.fields; len(fields) > 0 {
+	if fields := smaq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysmenuaction.FieldID)
 		for i := range fields {
@@ -387,10 +387,10 @@ func (smaq *SysMenuActionQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := smaq.limit; limit != nil {
+	if limit := smaq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := smaq.offset; offset != nil {
+	if offset := smaq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := smaq.order; len(ps) > 0 {
@@ -406,7 +406,7 @@ func (smaq *SysMenuActionQuery) querySpec() *sqlgraph.QuerySpec {
 func (smaq *SysMenuActionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(smaq.driver.Dialect())
 	t1 := builder.Table(sysmenuaction.Table)
-	columns := smaq.fields
+	columns := smaq.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysmenuaction.Columns
 	}
@@ -415,7 +415,7 @@ func (smaq *SysMenuActionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector = smaq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if smaq.unique != nil && *smaq.unique {
+	if smaq.ctx.Unique != nil && *smaq.ctx.Unique {
 		selector.Distinct()
 	}
 	for _, p := range smaq.predicates {
@@ -424,12 +424,12 @@ func (smaq *SysMenuActionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	for _, p := range smaq.order {
 		p(selector)
 	}
-	if offset := smaq.offset; offset != nil {
+	if offset := smaq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := smaq.limit; limit != nil {
+	if limit := smaq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -437,13 +437,8 @@ func (smaq *SysMenuActionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 
 // SysMenuActionGroupBy is the group-by builder for SysMenuAction entities.
 type SysMenuActionGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *SysMenuActionQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -452,74 +447,77 @@ func (smagb *SysMenuActionGroupBy) Aggregate(fns ...AggregateFunc) *SysMenuActio
 	return smagb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (smagb *SysMenuActionGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := smagb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (smagb *SysMenuActionGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, smagb.build.ctx, "GroupBy")
+	if err := smagb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	smagb.sql = query
-	return smagb.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysMenuActionQuery, *SysMenuActionGroupBy](ctx, smagb.build, smagb, smagb.build.inters, v)
 }
 
-func (smagb *SysMenuActionGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range smagb.fields {
-		if !sysmenuaction.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
+func (smagb *SysMenuActionGroupBy) sqlScan(ctx context.Context, root *SysMenuActionQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
+	aggregation := make([]string, 0, len(smagb.fns))
+	for _, fn := range smagb.fns {
+		aggregation = append(aggregation, fn(selector))
 	}
-	selector := smagb.sqlQuery()
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(*smagb.flds)+len(smagb.fns))
+		for _, f := range *smagb.flds {
+			columns = append(columns, selector.C(f))
+		}
+		columns = append(columns, aggregation...)
+		selector.Select(columns...)
+	}
+	selector.GroupBy(selector.Columns(*smagb.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := smagb.driver.Query(ctx, query, args, rows); err != nil {
+	if err := smagb.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (smagb *SysMenuActionGroupBy) sqlQuery() *sql.Selector {
-	selector := smagb.sql.Select()
-	aggregation := make([]string, 0, len(smagb.fns))
-	for _, fn := range smagb.fns {
-		aggregation = append(aggregation, fn(selector))
-	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
-	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(smagb.fields)+len(smagb.fns))
-		for _, f := range smagb.fields {
-			columns = append(columns, selector.C(f))
-		}
-		columns = append(columns, aggregation...)
-		selector.Select(columns...)
-	}
-	return selector.GroupBy(selector.Columns(smagb.fields...)...)
-}
-
 // SysMenuActionSelect is the builder for selecting fields of SysMenuAction entities.
 type SysMenuActionSelect struct {
 	*SysMenuActionQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (smas *SysMenuActionSelect) Aggregate(fns ...AggregateFunc) *SysMenuActionSelect {
+	smas.fns = append(smas.fns, fns...)
+	return smas
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (smas *SysMenuActionSelect) Scan(ctx context.Context, v interface{}) error {
+func (smas *SysMenuActionSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, smas.ctx, "Select")
 	if err := smas.prepareQuery(ctx); err != nil {
 		return err
 	}
-	smas.sql = smas.SysMenuActionQuery.sqlQuery(ctx)
-	return smas.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysMenuActionQuery, *SysMenuActionSelect](ctx, smas.SysMenuActionQuery, smas, smas.inters, v)
 }
 
-func (smas *SysMenuActionSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (smas *SysMenuActionSelect) sqlScan(ctx context.Context, root *SysMenuActionQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(smas.fns))
+	for _, fn := range smas.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*smas.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := smas.sql.Query()
+	query, args := selector.Query()
 	if err := smas.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}

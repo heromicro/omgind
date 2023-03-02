@@ -35,8 +35,8 @@ type SysRole struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysRole) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysRole) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysrole.FieldIsDel, sysrole.FieldIsActive:
@@ -56,7 +56,7 @@ func (*SysRole) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysRole fields.
-func (sr *SysRole) assignValues(columns []string, values []interface{}) error {
+func (sr *SysRole) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -127,7 +127,7 @@ func (sr *SysRole) assignValues(columns []string, values []interface{}) error {
 // Note that you need to call SysRole.Unwrap() before calling this method if this SysRole
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sr *SysRole) Update() *SysRoleUpdateOne {
-	return (&SysRoleClient{config: sr.config}).UpdateOne(sr)
+	return NewSysRoleClient(sr.config).UpdateOne(sr)
 }
 
 // Unwrap unwraps the SysRole entity that was returned from a transaction after it was closed,
@@ -179,9 +179,3 @@ func (sr *SysRole) String() string {
 
 // SysRoles is a parsable slice of SysRole.
 type SysRoles []*SysRole
-
-func (sr SysRoles) config(cfg config) {
-	for _i := range sr {
-		sr[_i].config = cfg
-	}
-}

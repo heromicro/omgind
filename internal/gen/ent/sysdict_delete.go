@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -28,34 +27,7 @@ func (sdd *SysDictDelete) Where(ps ...predicate.SysDict) *SysDictDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sdd *SysDictDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(sdd.hooks) == 0 {
-		affected, err = sdd.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDictMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			sdd.mutation = mutation
-			affected, err = sdd.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sdd.hooks) - 1; i >= 0; i-- {
-			if sdd.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sdd.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sdd.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysDictMutation](ctx, sdd.sqlExec, sdd.mutation, sdd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +40,7 @@ func (sdd *SysDictDelete) ExecX(ctx context.Context) int {
 }
 
 func (sdd *SysDictDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: sysdict.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdict.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(sysdict.Table, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
 	if ps := sdd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +52,19 @@ func (sdd *SysDictDelete) sqlExec(ctx context.Context) (int, error) {
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	sdd.mutation.done = true
 	return affected, err
 }
 
 // SysDictDeleteOne is the builder for deleting a single SysDict entity.
 type SysDictDeleteOne struct {
 	sdd *SysDictDelete
+}
+
+// Where appends a list predicates to the SysDictDelete builder.
+func (sddo *SysDictDeleteOne) Where(ps ...predicate.SysDict) *SysDictDeleteOne {
+	sddo.sdd.mutation.Where(ps...)
+	return sddo
 }
 
 // Exec executes the deletion query.
@@ -111,5 +82,7 @@ func (sddo *SysDictDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (sddo *SysDictDeleteOne) ExecX(ctx context.Context) {
-	sddo.sdd.ExecX(ctx)
+	if err := sddo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

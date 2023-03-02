@@ -123,50 +123,8 @@ func (srmc *SysRoleMenuCreate) Mutation() *SysRoleMenuMutation {
 
 // Save creates the SysRoleMenu in the database.
 func (srmc *SysRoleMenuCreate) Save(ctx context.Context) (*SysRoleMenu, error) {
-	var (
-		err  error
-		node *SysRoleMenu
-	)
 	srmc.defaults()
-	if len(srmc.hooks) == 0 {
-		if err = srmc.check(); err != nil {
-			return nil, err
-		}
-		node, err = srmc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysRoleMenuMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = srmc.check(); err != nil {
-				return nil, err
-			}
-			srmc.mutation = mutation
-			if node, err = srmc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(srmc.hooks) - 1; i >= 0; i-- {
-			if srmc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = srmc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, srmc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysRoleMenu)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysRoleMenuMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysRoleMenu, SysRoleMenuMutation](ctx, srmc.sqlSave, srmc.mutation, srmc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -252,6 +210,9 @@ func (srmc *SysRoleMenuCreate) check() error {
 }
 
 func (srmc *SysRoleMenuCreate) sqlSave(ctx context.Context) (*SysRoleMenu, error) {
+	if err := srmc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := srmc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, srmc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -266,78 +227,46 @@ func (srmc *SysRoleMenuCreate) sqlSave(ctx context.Context) (*SysRoleMenu, error
 			return nil, fmt.Errorf("unexpected SysRoleMenu.ID type: %T", _spec.ID.Value)
 		}
 	}
+	srmc.mutation.id = &_node.ID
+	srmc.mutation.done = true
 	return _node, nil
 }
 
 func (srmc *SysRoleMenuCreate) createSpec() (*SysRoleMenu, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysRoleMenu{config: srmc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysrolemenu.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysrolemenu.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysrolemenu.Table, sqlgraph.NewFieldSpec(sysrolemenu.FieldID, field.TypeString))
 	)
 	if id, ok := srmc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := srmc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrolemenu.FieldIsDel,
-		})
+		_spec.SetField(sysrolemenu.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := srmc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrolemenu.FieldCreatedAt,
-		})
+		_spec.SetField(sysrolemenu.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := srmc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrolemenu.FieldUpdatedAt,
-		})
+		_spec.SetField(sysrolemenu.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := srmc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrolemenu.FieldDeletedAt,
-		})
+		_spec.SetField(sysrolemenu.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := srmc.mutation.RoleID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldRoleID,
-		})
+		_spec.SetField(sysrolemenu.FieldRoleID, field.TypeString, value)
 		_node.RoleID = value
 	}
 	if value, ok := srmc.mutation.MenuID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldMenuID,
-		})
+		_spec.SetField(sysrolemenu.FieldMenuID, field.TypeString, value)
 		_node.MenuID = value
 	}
 	if value, ok := srmc.mutation.ActionID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrolemenu.FieldActionID,
-		})
+		_spec.SetField(sysrolemenu.FieldActionID, field.TypeString, value)
 		_node.ActionID = &value
 	}
 	return _node, _spec

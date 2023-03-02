@@ -151,50 +151,8 @@ func (sdc *SysDictCreate) Mutation() *SysDictMutation {
 
 // Save creates the SysDict in the database.
 func (sdc *SysDictCreate) Save(ctx context.Context) (*SysDict, error) {
-	var (
-		err  error
-		node *SysDict
-	)
 	sdc.defaults()
-	if len(sdc.hooks) == 0 {
-		if err = sdc.check(); err != nil {
-			return nil, err
-		}
-		node, err = sdc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDictMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sdc.check(); err != nil {
-				return nil, err
-			}
-			sdc.mutation = mutation
-			if node, err = sdc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sdc.hooks) - 1; i >= 0; i-- {
-			if sdc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sdc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sdc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysDict)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysDictMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysDict, SysDictMutation](ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -298,6 +256,9 @@ func (sdc *SysDictCreate) check() error {
 }
 
 func (sdc *SysDictCreate) sqlSave(ctx context.Context) (*SysDict, error) {
+	if err := sdc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := sdc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, sdc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -312,94 +273,54 @@ func (sdc *SysDictCreate) sqlSave(ctx context.Context) (*SysDict, error) {
 			return nil, fmt.Errorf("unexpected SysDict.ID type: %T", _spec.ID.Value)
 		}
 	}
+	sdc.mutation.id = &_node.ID
+	sdc.mutation.done = true
 	return _node, nil
 }
 
 func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysDict{config: sdc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysdict.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdict.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysdict.Table, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
 	)
 	if id, ok := sdc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := sdc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdict.FieldIsDel,
-		})
+		_spec.SetField(sysdict.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := sdc.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldMemo,
-		})
+		_spec.SetField(sysdict.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := sdc.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdict.FieldSort,
-		})
+		_spec.SetField(sysdict.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := sdc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldCreatedAt,
-		})
+		_spec.SetField(sysdict.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := sdc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := sdc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldDeletedAt,
-		})
+		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := sdc.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdict.FieldIsActive,
-		})
+		_spec.SetField(sysdict.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := sdc.mutation.NameCn(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldNameCn,
-		})
+		_spec.SetField(sysdict.FieldNameCn, field.TypeString, value)
 		_node.NameCn = value
 	}
 	if value, ok := sdc.mutation.NameEn(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldNameEn,
-		})
+		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 		_node.NameEn = value
 	}
 	return _node, _spec

@@ -131,50 +131,8 @@ func (sjbc *SysJwtBlockCreate) Mutation() *SysJwtBlockMutation {
 
 // Save creates the SysJwtBlock in the database.
 func (sjbc *SysJwtBlockCreate) Save(ctx context.Context) (*SysJwtBlock, error) {
-	var (
-		err  error
-		node *SysJwtBlock
-	)
 	sjbc.defaults()
-	if len(sjbc.hooks) == 0 {
-		if err = sjbc.check(); err != nil {
-			return nil, err
-		}
-		node, err = sjbc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysJwtBlockMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sjbc.check(); err != nil {
-				return nil, err
-			}
-			sjbc.mutation = mutation
-			if node, err = sjbc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sjbc.hooks) - 1; i >= 0; i-- {
-			if sjbc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sjbc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sjbc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysJwtBlock)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysJwtBlockMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysJwtBlock, SysJwtBlockMutation](ctx, sjbc.sqlSave, sjbc.mutation, sjbc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -263,6 +221,9 @@ func (sjbc *SysJwtBlockCreate) check() error {
 }
 
 func (sjbc *SysJwtBlockCreate) sqlSave(ctx context.Context) (*SysJwtBlock, error) {
+	if err := sjbc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := sjbc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, sjbc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -277,78 +238,46 @@ func (sjbc *SysJwtBlockCreate) sqlSave(ctx context.Context) (*SysJwtBlock, error
 			return nil, fmt.Errorf("unexpected SysJwtBlock.ID type: %T", _spec.ID.Value)
 		}
 	}
+	sjbc.mutation.id = &_node.ID
+	sjbc.mutation.done = true
 	return _node, nil
 }
 
 func (sjbc *SysJwtBlockCreate) createSpec() (*SysJwtBlock, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysJwtBlock{config: sjbc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysjwtblock.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysjwtblock.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysjwtblock.Table, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
 	)
 	if id, ok := sjbc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := sjbc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysjwtblock.FieldIsDel,
-		})
+		_spec.SetField(sysjwtblock.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := sjbc.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysjwtblock.FieldMemo,
-		})
+		_spec.SetField(sysjwtblock.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := sjbc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysjwtblock.FieldCreatedAt,
-		})
+		_spec.SetField(sysjwtblock.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := sjbc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysjwtblock.FieldUpdatedAt,
-		})
+		_spec.SetField(sysjwtblock.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := sjbc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysjwtblock.FieldDeletedAt,
-		})
+		_spec.SetField(sysjwtblock.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := sjbc.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysjwtblock.FieldIsActive,
-		})
+		_spec.SetField(sysjwtblock.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := sjbc.mutation.Jwt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysjwtblock.FieldJwt,
-		})
+		_spec.SetField(sysjwtblock.FieldJwt, field.TypeString, value)
 		_node.Jwt = value
 	}
 	return _node, _spec

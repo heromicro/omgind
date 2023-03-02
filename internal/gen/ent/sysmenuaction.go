@@ -39,8 +39,8 @@ type SysMenuAction struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysMenuAction) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysMenuAction) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysmenuaction.FieldIsDel, sysmenuaction.FieldIsActive:
@@ -60,7 +60,7 @@ func (*SysMenuAction) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysMenuAction fields.
-func (sma *SysMenuAction) assignValues(columns []string, values []interface{}) error {
+func (sma *SysMenuAction) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -143,7 +143,7 @@ func (sma *SysMenuAction) assignValues(columns []string, values []interface{}) e
 // Note that you need to call SysMenuAction.Unwrap() before calling this method if this SysMenuAction
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sma *SysMenuAction) Update() *SysMenuActionUpdateOne {
-	return (&SysMenuActionClient{config: sma.config}).UpdateOne(sma)
+	return NewSysMenuActionClient(sma.config).UpdateOne(sma)
 }
 
 // Unwrap unwraps the SysMenuAction entity that was returned from a transaction after it was closed,
@@ -201,9 +201,3 @@ func (sma *SysMenuAction) String() string {
 
 // SysMenuActions is a parsable slice of SysMenuAction.
 type SysMenuActions []*SysMenuAction
-
-func (sma SysMenuActions) config(cfg config) {
-	for _i := range sma {
-		sma[_i].config = cfg
-	}
-}

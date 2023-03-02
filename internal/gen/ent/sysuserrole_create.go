@@ -109,50 +109,8 @@ func (surc *SysUserRoleCreate) Mutation() *SysUserRoleMutation {
 
 // Save creates the SysUserRole in the database.
 func (surc *SysUserRoleCreate) Save(ctx context.Context) (*SysUserRole, error) {
-	var (
-		err  error
-		node *SysUserRole
-	)
 	surc.defaults()
-	if len(surc.hooks) == 0 {
-		if err = surc.check(); err != nil {
-			return nil, err
-		}
-		node, err = surc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysUserRoleMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = surc.check(); err != nil {
-				return nil, err
-			}
-			surc.mutation = mutation
-			if node, err = surc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(surc.hooks) - 1; i >= 0; i-- {
-			if surc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = surc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, surc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysUserRole)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysUserRoleMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysUserRole, SysUserRoleMutation](ctx, surc.sqlSave, surc.mutation, surc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -233,6 +191,9 @@ func (surc *SysUserRoleCreate) check() error {
 }
 
 func (surc *SysUserRoleCreate) sqlSave(ctx context.Context) (*SysUserRole, error) {
+	if err := surc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := surc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, surc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -247,70 +208,42 @@ func (surc *SysUserRoleCreate) sqlSave(ctx context.Context) (*SysUserRole, error
 			return nil, fmt.Errorf("unexpected SysUserRole.ID type: %T", _spec.ID.Value)
 		}
 	}
+	surc.mutation.id = &_node.ID
+	surc.mutation.done = true
 	return _node, nil
 }
 
 func (surc *SysUserRoleCreate) createSpec() (*SysUserRole, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysUserRole{config: surc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysuserrole.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysuserrole.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysuserrole.Table, sqlgraph.NewFieldSpec(sysuserrole.FieldID, field.TypeString))
 	)
 	if id, ok := surc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := surc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuserrole.FieldIsDel,
-		})
+		_spec.SetField(sysuserrole.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := surc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuserrole.FieldCreatedAt,
-		})
+		_spec.SetField(sysuserrole.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := surc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuserrole.FieldUpdatedAt,
-		})
+		_spec.SetField(sysuserrole.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := surc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuserrole.FieldDeletedAt,
-		})
+		_spec.SetField(sysuserrole.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := surc.mutation.UserID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuserrole.FieldUserID,
-		})
+		_spec.SetField(sysuserrole.FieldUserID, field.TypeString, value)
 		_node.UserID = value
 	}
 	if value, ok := surc.mutation.RoleID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuserrole.FieldRoleID,
-		})
+		_spec.SetField(sysuserrole.FieldRoleID, field.TypeString, value)
 		_node.RoleID = value
 	}
 	return _node, _spec

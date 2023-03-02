@@ -17,11 +17,9 @@ import (
 // XxxDemoQuery is the builder for querying XxxDemo entities.
 type XxxDemoQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
+	ctx        *QueryContext
 	order      []OrderFunc
-	fields     []string
+	inters     []Interceptor
 	predicates []predicate.XxxDemo
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -34,26 +32,26 @@ func (xdq *XxxDemoQuery) Where(ps ...predicate.XxxDemo) *XxxDemoQuery {
 	return xdq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (xdq *XxxDemoQuery) Limit(limit int) *XxxDemoQuery {
-	xdq.limit = &limit
+	xdq.ctx.Limit = &limit
 	return xdq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (xdq *XxxDemoQuery) Offset(offset int) *XxxDemoQuery {
-	xdq.offset = &offset
+	xdq.ctx.Offset = &offset
 	return xdq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (xdq *XxxDemoQuery) Unique(unique bool) *XxxDemoQuery {
-	xdq.unique = &unique
+	xdq.ctx.Unique = &unique
 	return xdq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (xdq *XxxDemoQuery) Order(o ...OrderFunc) *XxxDemoQuery {
 	xdq.order = append(xdq.order, o...)
 	return xdq
@@ -62,7 +60,7 @@ func (xdq *XxxDemoQuery) Order(o ...OrderFunc) *XxxDemoQuery {
 // First returns the first XxxDemo entity from the query.
 // Returns a *NotFoundError when no XxxDemo was found.
 func (xdq *XxxDemoQuery) First(ctx context.Context) (*XxxDemo, error) {
-	nodes, err := xdq.Limit(1).All(ctx)
+	nodes, err := xdq.Limit(1).All(setContextOp(ctx, xdq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +83,7 @@ func (xdq *XxxDemoQuery) FirstX(ctx context.Context) *XxxDemo {
 // Returns a *NotFoundError when no XxxDemo ID was found.
 func (xdq *XxxDemoQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = xdq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = xdq.Limit(1).IDs(setContextOp(ctx, xdq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +106,7 @@ func (xdq *XxxDemoQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one XxxDemo entity is found.
 // Returns a *NotFoundError when no XxxDemo entities are found.
 func (xdq *XxxDemoQuery) Only(ctx context.Context) (*XxxDemo, error) {
-	nodes, err := xdq.Limit(2).All(ctx)
+	nodes, err := xdq.Limit(2).All(setContextOp(ctx, xdq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +134,7 @@ func (xdq *XxxDemoQuery) OnlyX(ctx context.Context) *XxxDemo {
 // Returns a *NotFoundError when no entities are found.
 func (xdq *XxxDemoQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = xdq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = xdq.Limit(2).IDs(setContextOp(ctx, xdq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,10 +159,12 @@ func (xdq *XxxDemoQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of XxxDemos.
 func (xdq *XxxDemoQuery) All(ctx context.Context) ([]*XxxDemo, error) {
+	ctx = setContextOp(ctx, xdq.ctx, "All")
 	if err := xdq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return xdq.sqlAll(ctx)
+	qr := querierAll[[]*XxxDemo, *XxxDemoQuery]()
+	return withInterceptors[[]*XxxDemo](ctx, xdq, qr, xdq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -177,9 +177,12 @@ func (xdq *XxxDemoQuery) AllX(ctx context.Context) []*XxxDemo {
 }
 
 // IDs executes the query and returns a list of XxxDemo IDs.
-func (xdq *XxxDemoQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := xdq.Select(xxxdemo.FieldID).Scan(ctx, &ids); err != nil {
+func (xdq *XxxDemoQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if xdq.ctx.Unique == nil && xdq.path != nil {
+		xdq.Unique(true)
+	}
+	ctx = setContextOp(ctx, xdq.ctx, "IDs")
+	if err = xdq.Select(xxxdemo.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -196,10 +199,11 @@ func (xdq *XxxDemoQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (xdq *XxxDemoQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, xdq.ctx, "Count")
 	if err := xdq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return xdq.sqlCount(ctx)
+	return withInterceptors[int](ctx, xdq, querierCount[*XxxDemoQuery](), xdq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -213,10 +217,15 @@ func (xdq *XxxDemoQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (xdq *XxxDemoQuery) Exist(ctx context.Context) (bool, error) {
-	if err := xdq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, xdq.ctx, "Exist")
+	switch _, err := xdq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return xdq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -236,14 +245,13 @@ func (xdq *XxxDemoQuery) Clone() *XxxDemoQuery {
 	}
 	return &XxxDemoQuery{
 		config:     xdq.config,
-		limit:      xdq.limit,
-		offset:     xdq.offset,
+		ctx:        xdq.ctx.Clone(),
 		order:      append([]OrderFunc{}, xdq.order...),
+		inters:     append([]Interceptor{}, xdq.inters...),
 		predicates: append([]predicate.XxxDemo{}, xdq.predicates...),
 		// clone intermediate query.
-		sql:    xdq.sql.Clone(),
-		path:   xdq.path,
-		unique: xdq.unique,
+		sql:  xdq.sql.Clone(),
+		path: xdq.path,
 	}
 }
 
@@ -261,18 +269,12 @@ func (xdq *XxxDemoQuery) Clone() *XxxDemoQuery {
 //		GroupBy(xxxdemo.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (xdq *XxxDemoQuery) GroupBy(field string, fields ...string) *XxxDemoGroupBy {
-	grbuild := &XxxDemoGroupBy{config: xdq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := xdq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return xdq.sqlQuery(ctx), nil
-	}
+	xdq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &XxxDemoGroupBy{build: xdq}
+	grbuild.flds = &xdq.ctx.Fields
 	grbuild.label = xxxdemo.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -288,17 +290,31 @@ func (xdq *XxxDemoQuery) GroupBy(field string, fields ...string) *XxxDemoGroupBy
 //	client.XxxDemo.Query().
 //		Select(xxxdemo.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (xdq *XxxDemoQuery) Select(fields ...string) *XxxDemoSelect {
-	xdq.fields = append(xdq.fields, fields...)
-	selbuild := &XxxDemoSelect{XxxDemoQuery: xdq}
-	selbuild.label = xxxdemo.Label
-	selbuild.flds, selbuild.scan = &xdq.fields, selbuild.Scan
-	return selbuild
+	xdq.ctx.Fields = append(xdq.ctx.Fields, fields...)
+	sbuild := &XxxDemoSelect{XxxDemoQuery: xdq}
+	sbuild.label = xxxdemo.Label
+	sbuild.flds, sbuild.scan = &xdq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a XxxDemoSelect configured with the given aggregations.
+func (xdq *XxxDemoQuery) Aggregate(fns ...AggregateFunc) *XxxDemoSelect {
+	return xdq.Select().Aggregate(fns...)
 }
 
 func (xdq *XxxDemoQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range xdq.fields {
+	for _, inter := range xdq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, xdq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range xdq.ctx.Fields {
 		if !xxxdemo.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -318,10 +334,10 @@ func (xdq *XxxDemoQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Xxx
 		nodes = []*XxxDemo{}
 		_spec = xdq.querySpec()
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*XxxDemo).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &XxxDemo{config: xdq.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
@@ -340,38 +356,22 @@ func (xdq *XxxDemoQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Xxx
 
 func (xdq *XxxDemoQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := xdq.querySpec()
-	_spec.Node.Columns = xdq.fields
-	if len(xdq.fields) > 0 {
-		_spec.Unique = xdq.unique != nil && *xdq.unique
+	_spec.Node.Columns = xdq.ctx.Fields
+	if len(xdq.ctx.Fields) > 0 {
+		_spec.Unique = xdq.ctx.Unique != nil && *xdq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, xdq.driver, _spec)
 }
 
-func (xdq *XxxDemoQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := xdq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (xdq *XxxDemoQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   xxxdemo.Table,
-			Columns: xxxdemo.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: xxxdemo.FieldID,
-			},
-		},
-		From:   xdq.sql,
-		Unique: true,
-	}
-	if unique := xdq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(xxxdemo.Table, xxxdemo.Columns, sqlgraph.NewFieldSpec(xxxdemo.FieldID, field.TypeString))
+	_spec.From = xdq.sql
+	if unique := xdq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if xdq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := xdq.fields; len(fields) > 0 {
+	if fields := xdq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, xxxdemo.FieldID)
 		for i := range fields {
@@ -387,10 +387,10 @@ func (xdq *XxxDemoQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := xdq.limit; limit != nil {
+	if limit := xdq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := xdq.offset; offset != nil {
+	if offset := xdq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := xdq.order; len(ps) > 0 {
@@ -406,7 +406,7 @@ func (xdq *XxxDemoQuery) querySpec() *sqlgraph.QuerySpec {
 func (xdq *XxxDemoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(xdq.driver.Dialect())
 	t1 := builder.Table(xxxdemo.Table)
-	columns := xdq.fields
+	columns := xdq.ctx.Fields
 	if len(columns) == 0 {
 		columns = xxxdemo.Columns
 	}
@@ -415,7 +415,7 @@ func (xdq *XxxDemoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector = xdq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if xdq.unique != nil && *xdq.unique {
+	if xdq.ctx.Unique != nil && *xdq.ctx.Unique {
 		selector.Distinct()
 	}
 	for _, p := range xdq.predicates {
@@ -424,12 +424,12 @@ func (xdq *XxxDemoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	for _, p := range xdq.order {
 		p(selector)
 	}
-	if offset := xdq.offset; offset != nil {
+	if offset := xdq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := xdq.limit; limit != nil {
+	if limit := xdq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -437,13 +437,8 @@ func (xdq *XxxDemoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 
 // XxxDemoGroupBy is the group-by builder for XxxDemo entities.
 type XxxDemoGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *XxxDemoQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -452,74 +447,77 @@ func (xdgb *XxxDemoGroupBy) Aggregate(fns ...AggregateFunc) *XxxDemoGroupBy {
 	return xdgb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (xdgb *XxxDemoGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := xdgb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (xdgb *XxxDemoGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, xdgb.build.ctx, "GroupBy")
+	if err := xdgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	xdgb.sql = query
-	return xdgb.sqlScan(ctx, v)
+	return scanWithInterceptors[*XxxDemoQuery, *XxxDemoGroupBy](ctx, xdgb.build, xdgb, xdgb.build.inters, v)
 }
 
-func (xdgb *XxxDemoGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range xdgb.fields {
-		if !xxxdemo.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
+func (xdgb *XxxDemoGroupBy) sqlScan(ctx context.Context, root *XxxDemoQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
+	aggregation := make([]string, 0, len(xdgb.fns))
+	for _, fn := range xdgb.fns {
+		aggregation = append(aggregation, fn(selector))
 	}
-	selector := xdgb.sqlQuery()
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(*xdgb.flds)+len(xdgb.fns))
+		for _, f := range *xdgb.flds {
+			columns = append(columns, selector.C(f))
+		}
+		columns = append(columns, aggregation...)
+		selector.Select(columns...)
+	}
+	selector.GroupBy(selector.Columns(*xdgb.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := xdgb.driver.Query(ctx, query, args, rows); err != nil {
+	if err := xdgb.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (xdgb *XxxDemoGroupBy) sqlQuery() *sql.Selector {
-	selector := xdgb.sql.Select()
-	aggregation := make([]string, 0, len(xdgb.fns))
-	for _, fn := range xdgb.fns {
-		aggregation = append(aggregation, fn(selector))
-	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
-	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(xdgb.fields)+len(xdgb.fns))
-		for _, f := range xdgb.fields {
-			columns = append(columns, selector.C(f))
-		}
-		columns = append(columns, aggregation...)
-		selector.Select(columns...)
-	}
-	return selector.GroupBy(selector.Columns(xdgb.fields...)...)
-}
-
 // XxxDemoSelect is the builder for selecting fields of XxxDemo entities.
 type XxxDemoSelect struct {
 	*XxxDemoQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (xds *XxxDemoSelect) Aggregate(fns ...AggregateFunc) *XxxDemoSelect {
+	xds.fns = append(xds.fns, fns...)
+	return xds
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (xds *XxxDemoSelect) Scan(ctx context.Context, v interface{}) error {
+func (xds *XxxDemoSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, xds.ctx, "Select")
 	if err := xds.prepareQuery(ctx); err != nil {
 		return err
 	}
-	xds.sql = xds.XxxDemoQuery.sqlQuery(ctx)
-	return xds.sqlScan(ctx, v)
+	return scanWithInterceptors[*XxxDemoQuery, *XxxDemoSelect](ctx, xds.XxxDemoQuery, xds, xds.inters, v)
 }
 
-func (xds *XxxDemoSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (xds *XxxDemoSelect) sqlScan(ctx context.Context, root *XxxDemoQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(xds.fns))
+	for _, fn := range xds.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*xds.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := xds.sql.Query()
+	query, args := selector.Query()
 	if err := xds.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}

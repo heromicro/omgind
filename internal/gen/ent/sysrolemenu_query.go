@@ -17,11 +17,9 @@ import (
 // SysRoleMenuQuery is the builder for querying SysRoleMenu entities.
 type SysRoleMenuQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
+	ctx        *QueryContext
 	order      []OrderFunc
-	fields     []string
+	inters     []Interceptor
 	predicates []predicate.SysRoleMenu
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -34,26 +32,26 @@ func (srmq *SysRoleMenuQuery) Where(ps ...predicate.SysRoleMenu) *SysRoleMenuQue
 	return srmq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (srmq *SysRoleMenuQuery) Limit(limit int) *SysRoleMenuQuery {
-	srmq.limit = &limit
+	srmq.ctx.Limit = &limit
 	return srmq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (srmq *SysRoleMenuQuery) Offset(offset int) *SysRoleMenuQuery {
-	srmq.offset = &offset
+	srmq.ctx.Offset = &offset
 	return srmq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (srmq *SysRoleMenuQuery) Unique(unique bool) *SysRoleMenuQuery {
-	srmq.unique = &unique
+	srmq.ctx.Unique = &unique
 	return srmq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (srmq *SysRoleMenuQuery) Order(o ...OrderFunc) *SysRoleMenuQuery {
 	srmq.order = append(srmq.order, o...)
 	return srmq
@@ -62,7 +60,7 @@ func (srmq *SysRoleMenuQuery) Order(o ...OrderFunc) *SysRoleMenuQuery {
 // First returns the first SysRoleMenu entity from the query.
 // Returns a *NotFoundError when no SysRoleMenu was found.
 func (srmq *SysRoleMenuQuery) First(ctx context.Context) (*SysRoleMenu, error) {
-	nodes, err := srmq.Limit(1).All(ctx)
+	nodes, err := srmq.Limit(1).All(setContextOp(ctx, srmq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +83,7 @@ func (srmq *SysRoleMenuQuery) FirstX(ctx context.Context) *SysRoleMenu {
 // Returns a *NotFoundError when no SysRoleMenu ID was found.
 func (srmq *SysRoleMenuQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = srmq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = srmq.Limit(1).IDs(setContextOp(ctx, srmq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +106,7 @@ func (srmq *SysRoleMenuQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysRoleMenu entity is found.
 // Returns a *NotFoundError when no SysRoleMenu entities are found.
 func (srmq *SysRoleMenuQuery) Only(ctx context.Context) (*SysRoleMenu, error) {
-	nodes, err := srmq.Limit(2).All(ctx)
+	nodes, err := srmq.Limit(2).All(setContextOp(ctx, srmq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +134,7 @@ func (srmq *SysRoleMenuQuery) OnlyX(ctx context.Context) *SysRoleMenu {
 // Returns a *NotFoundError when no entities are found.
 func (srmq *SysRoleMenuQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = srmq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = srmq.Limit(2).IDs(setContextOp(ctx, srmq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,10 +159,12 @@ func (srmq *SysRoleMenuQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysRoleMenus.
 func (srmq *SysRoleMenuQuery) All(ctx context.Context) ([]*SysRoleMenu, error) {
+	ctx = setContextOp(ctx, srmq.ctx, "All")
 	if err := srmq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return srmq.sqlAll(ctx)
+	qr := querierAll[[]*SysRoleMenu, *SysRoleMenuQuery]()
+	return withInterceptors[[]*SysRoleMenu](ctx, srmq, qr, srmq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -177,9 +177,12 @@ func (srmq *SysRoleMenuQuery) AllX(ctx context.Context) []*SysRoleMenu {
 }
 
 // IDs executes the query and returns a list of SysRoleMenu IDs.
-func (srmq *SysRoleMenuQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := srmq.Select(sysrolemenu.FieldID).Scan(ctx, &ids); err != nil {
+func (srmq *SysRoleMenuQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if srmq.ctx.Unique == nil && srmq.path != nil {
+		srmq.Unique(true)
+	}
+	ctx = setContextOp(ctx, srmq.ctx, "IDs")
+	if err = srmq.Select(sysrolemenu.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -196,10 +199,11 @@ func (srmq *SysRoleMenuQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (srmq *SysRoleMenuQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, srmq.ctx, "Count")
 	if err := srmq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return srmq.sqlCount(ctx)
+	return withInterceptors[int](ctx, srmq, querierCount[*SysRoleMenuQuery](), srmq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -213,10 +217,15 @@ func (srmq *SysRoleMenuQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (srmq *SysRoleMenuQuery) Exist(ctx context.Context) (bool, error) {
-	if err := srmq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, srmq.ctx, "Exist")
+	switch _, err := srmq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return srmq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -236,14 +245,13 @@ func (srmq *SysRoleMenuQuery) Clone() *SysRoleMenuQuery {
 	}
 	return &SysRoleMenuQuery{
 		config:     srmq.config,
-		limit:      srmq.limit,
-		offset:     srmq.offset,
+		ctx:        srmq.ctx.Clone(),
 		order:      append([]OrderFunc{}, srmq.order...),
+		inters:     append([]Interceptor{}, srmq.inters...),
 		predicates: append([]predicate.SysRoleMenu{}, srmq.predicates...),
 		// clone intermediate query.
-		sql:    srmq.sql.Clone(),
-		path:   srmq.path,
-		unique: srmq.unique,
+		sql:  srmq.sql.Clone(),
+		path: srmq.path,
 	}
 }
 
@@ -261,18 +269,12 @@ func (srmq *SysRoleMenuQuery) Clone() *SysRoleMenuQuery {
 //		GroupBy(sysrolemenu.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (srmq *SysRoleMenuQuery) GroupBy(field string, fields ...string) *SysRoleMenuGroupBy {
-	grbuild := &SysRoleMenuGroupBy{config: srmq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := srmq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return srmq.sqlQuery(ctx), nil
-	}
+	srmq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysRoleMenuGroupBy{build: srmq}
+	grbuild.flds = &srmq.ctx.Fields
 	grbuild.label = sysrolemenu.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -288,17 +290,31 @@ func (srmq *SysRoleMenuQuery) GroupBy(field string, fields ...string) *SysRoleMe
 //	client.SysRoleMenu.Query().
 //		Select(sysrolemenu.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (srmq *SysRoleMenuQuery) Select(fields ...string) *SysRoleMenuSelect {
-	srmq.fields = append(srmq.fields, fields...)
-	selbuild := &SysRoleMenuSelect{SysRoleMenuQuery: srmq}
-	selbuild.label = sysrolemenu.Label
-	selbuild.flds, selbuild.scan = &srmq.fields, selbuild.Scan
-	return selbuild
+	srmq.ctx.Fields = append(srmq.ctx.Fields, fields...)
+	sbuild := &SysRoleMenuSelect{SysRoleMenuQuery: srmq}
+	sbuild.label = sysrolemenu.Label
+	sbuild.flds, sbuild.scan = &srmq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a SysRoleMenuSelect configured with the given aggregations.
+func (srmq *SysRoleMenuQuery) Aggregate(fns ...AggregateFunc) *SysRoleMenuSelect {
+	return srmq.Select().Aggregate(fns...)
 }
 
 func (srmq *SysRoleMenuQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range srmq.fields {
+	for _, inter := range srmq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, srmq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range srmq.ctx.Fields {
 		if !sysrolemenu.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -318,10 +334,10 @@ func (srmq *SysRoleMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 		nodes = []*SysRoleMenu{}
 		_spec = srmq.querySpec()
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysRoleMenu).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysRoleMenu{config: srmq.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
@@ -340,38 +356,22 @@ func (srmq *SysRoleMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 
 func (srmq *SysRoleMenuQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := srmq.querySpec()
-	_spec.Node.Columns = srmq.fields
-	if len(srmq.fields) > 0 {
-		_spec.Unique = srmq.unique != nil && *srmq.unique
+	_spec.Node.Columns = srmq.ctx.Fields
+	if len(srmq.ctx.Fields) > 0 {
+		_spec.Unique = srmq.ctx.Unique != nil && *srmq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, srmq.driver, _spec)
 }
 
-func (srmq *SysRoleMenuQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := srmq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (srmq *SysRoleMenuQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysrolemenu.Table,
-			Columns: sysrolemenu.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysrolemenu.FieldID,
-			},
-		},
-		From:   srmq.sql,
-		Unique: true,
-	}
-	if unique := srmq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(sysrolemenu.Table, sysrolemenu.Columns, sqlgraph.NewFieldSpec(sysrolemenu.FieldID, field.TypeString))
+	_spec.From = srmq.sql
+	if unique := srmq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if srmq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := srmq.fields; len(fields) > 0 {
+	if fields := srmq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysrolemenu.FieldID)
 		for i := range fields {
@@ -387,10 +387,10 @@ func (srmq *SysRoleMenuQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := srmq.limit; limit != nil {
+	if limit := srmq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := srmq.offset; offset != nil {
+	if offset := srmq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := srmq.order; len(ps) > 0 {
@@ -406,7 +406,7 @@ func (srmq *SysRoleMenuQuery) querySpec() *sqlgraph.QuerySpec {
 func (srmq *SysRoleMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(srmq.driver.Dialect())
 	t1 := builder.Table(sysrolemenu.Table)
-	columns := srmq.fields
+	columns := srmq.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysrolemenu.Columns
 	}
@@ -415,7 +415,7 @@ func (srmq *SysRoleMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector = srmq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if srmq.unique != nil && *srmq.unique {
+	if srmq.ctx.Unique != nil && *srmq.ctx.Unique {
 		selector.Distinct()
 	}
 	for _, p := range srmq.predicates {
@@ -424,12 +424,12 @@ func (srmq *SysRoleMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	for _, p := range srmq.order {
 		p(selector)
 	}
-	if offset := srmq.offset; offset != nil {
+	if offset := srmq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := srmq.limit; limit != nil {
+	if limit := srmq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -437,13 +437,8 @@ func (srmq *SysRoleMenuQuery) sqlQuery(ctx context.Context) *sql.Selector {
 
 // SysRoleMenuGroupBy is the group-by builder for SysRoleMenu entities.
 type SysRoleMenuGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *SysRoleMenuQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -452,74 +447,77 @@ func (srmgb *SysRoleMenuGroupBy) Aggregate(fns ...AggregateFunc) *SysRoleMenuGro
 	return srmgb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (srmgb *SysRoleMenuGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := srmgb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (srmgb *SysRoleMenuGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, srmgb.build.ctx, "GroupBy")
+	if err := srmgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	srmgb.sql = query
-	return srmgb.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysRoleMenuQuery, *SysRoleMenuGroupBy](ctx, srmgb.build, srmgb, srmgb.build.inters, v)
 }
 
-func (srmgb *SysRoleMenuGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range srmgb.fields {
-		if !sysrolemenu.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
+func (srmgb *SysRoleMenuGroupBy) sqlScan(ctx context.Context, root *SysRoleMenuQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
+	aggregation := make([]string, 0, len(srmgb.fns))
+	for _, fn := range srmgb.fns {
+		aggregation = append(aggregation, fn(selector))
 	}
-	selector := srmgb.sqlQuery()
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(*srmgb.flds)+len(srmgb.fns))
+		for _, f := range *srmgb.flds {
+			columns = append(columns, selector.C(f))
+		}
+		columns = append(columns, aggregation...)
+		selector.Select(columns...)
+	}
+	selector.GroupBy(selector.Columns(*srmgb.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := srmgb.driver.Query(ctx, query, args, rows); err != nil {
+	if err := srmgb.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (srmgb *SysRoleMenuGroupBy) sqlQuery() *sql.Selector {
-	selector := srmgb.sql.Select()
-	aggregation := make([]string, 0, len(srmgb.fns))
-	for _, fn := range srmgb.fns {
-		aggregation = append(aggregation, fn(selector))
-	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
-	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(srmgb.fields)+len(srmgb.fns))
-		for _, f := range srmgb.fields {
-			columns = append(columns, selector.C(f))
-		}
-		columns = append(columns, aggregation...)
-		selector.Select(columns...)
-	}
-	return selector.GroupBy(selector.Columns(srmgb.fields...)...)
-}
-
 // SysRoleMenuSelect is the builder for selecting fields of SysRoleMenu entities.
 type SysRoleMenuSelect struct {
 	*SysRoleMenuQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (srms *SysRoleMenuSelect) Aggregate(fns ...AggregateFunc) *SysRoleMenuSelect {
+	srms.fns = append(srms.fns, fns...)
+	return srms
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (srms *SysRoleMenuSelect) Scan(ctx context.Context, v interface{}) error {
+func (srms *SysRoleMenuSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, srms.ctx, "Select")
 	if err := srms.prepareQuery(ctx); err != nil {
 		return err
 	}
-	srms.sql = srms.SysRoleMenuQuery.sqlQuery(ctx)
-	return srms.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysRoleMenuQuery, *SysRoleMenuSelect](ctx, srms.SysRoleMenuQuery, srms, srms.inters, v)
 }
 
-func (srms *SysRoleMenuSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (srms *SysRoleMenuSelect) sqlScan(ctx context.Context, root *SysRoleMenuQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(srms.fns))
+	for _, fn := range srms.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*srms.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := srms.sql.Query()
+	query, args := selector.Query()
 	if err := srms.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}

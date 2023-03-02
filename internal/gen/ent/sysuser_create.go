@@ -205,50 +205,8 @@ func (suc *SysUserCreate) Mutation() *SysUserMutation {
 
 // Save creates the SysUser in the database.
 func (suc *SysUserCreate) Save(ctx context.Context) (*SysUser, error) {
-	var (
-		err  error
-		node *SysUser
-	)
 	suc.defaults()
-	if len(suc.hooks) == 0 {
-		if err = suc.check(); err != nil {
-			return nil, err
-		}
-		node, err = suc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysUserMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = suc.check(); err != nil {
-				return nil, err
-			}
-			suc.mutation = mutation
-			if node, err = suc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(suc.hooks) - 1; i >= 0; i-- {
-			if suc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = suc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, suc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysUser)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysUserMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysUser, SysUserMutation](ctx, suc.sqlSave, suc.mutation, suc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -381,6 +339,9 @@ func (suc *SysUserCreate) check() error {
 }
 
 func (suc *SysUserCreate) sqlSave(ctx context.Context) (*SysUser, error) {
+	if err := suc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := suc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, suc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -395,134 +356,74 @@ func (suc *SysUserCreate) sqlSave(ctx context.Context) (*SysUser, error) {
 			return nil, fmt.Errorf("unexpected SysUser.ID type: %T", _spec.ID.Value)
 		}
 	}
+	suc.mutation.id = &_node.ID
+	suc.mutation.done = true
 	return _node, nil
 }
 
 func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysUser{config: suc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysuser.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysuser.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysuser.Table, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
 	)
 	if id, ok := suc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := suc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuser.FieldIsDel,
-		})
+		_spec.SetField(sysuser.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := suc.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysuser.FieldSort,
-		})
+		_spec.SetField(sysuser.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := suc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuser.FieldCreatedAt,
-		})
+		_spec.SetField(sysuser.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := suc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuser.FieldUpdatedAt,
-		})
+		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := suc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysuser.FieldDeletedAt,
-		})
+		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := suc.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysuser.FieldIsActive,
-		})
+		_spec.SetField(sysuser.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := suc.mutation.UserName(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldUserName,
-		})
+		_spec.SetField(sysuser.FieldUserName, field.TypeString, value)
 		_node.UserName = value
 	}
 	if value, ok := suc.mutation.RealName(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldRealName,
-		})
+		_spec.SetField(sysuser.FieldRealName, field.TypeString, value)
 		_node.RealName = &value
 	}
 	if value, ok := suc.mutation.FirstName(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldFirstName,
-		})
+		_spec.SetField(sysuser.FieldFirstName, field.TypeString, value)
 		_node.FirstName = &value
 	}
 	if value, ok := suc.mutation.LastName(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldLastName,
-		})
+		_spec.SetField(sysuser.FieldLastName, field.TypeString, value)
 		_node.LastName = &value
 	}
 	if value, ok := suc.mutation.Password(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldPassword,
-		})
+		_spec.SetField(sysuser.FieldPassword, field.TypeString, value)
 		_node.Password = value
 	}
 	if value, ok := suc.mutation.Email(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldEmail,
-		})
+		_spec.SetField(sysuser.FieldEmail, field.TypeString, value)
 		_node.Email = value
 	}
 	if value, ok := suc.mutation.Mobile(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldMobile,
-		})
+		_spec.SetField(sysuser.FieldMobile, field.TypeString, value)
 		_node.Mobile = value
 	}
 	if value, ok := suc.mutation.Salt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysuser.FieldSalt,
-		})
+		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 		_node.Salt = value
 	}
 	return _node, _spec

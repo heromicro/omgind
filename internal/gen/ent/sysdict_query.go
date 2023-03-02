@@ -17,11 +17,9 @@ import (
 // SysDictQuery is the builder for querying SysDict entities.
 type SysDictQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
+	ctx        *QueryContext
 	order      []OrderFunc
-	fields     []string
+	inters     []Interceptor
 	predicates []predicate.SysDict
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -34,26 +32,26 @@ func (sdq *SysDictQuery) Where(ps ...predicate.SysDict) *SysDictQuery {
 	return sdq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (sdq *SysDictQuery) Limit(limit int) *SysDictQuery {
-	sdq.limit = &limit
+	sdq.ctx.Limit = &limit
 	return sdq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (sdq *SysDictQuery) Offset(offset int) *SysDictQuery {
-	sdq.offset = &offset
+	sdq.ctx.Offset = &offset
 	return sdq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (sdq *SysDictQuery) Unique(unique bool) *SysDictQuery {
-	sdq.unique = &unique
+	sdq.ctx.Unique = &unique
 	return sdq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (sdq *SysDictQuery) Order(o ...OrderFunc) *SysDictQuery {
 	sdq.order = append(sdq.order, o...)
 	return sdq
@@ -62,7 +60,7 @@ func (sdq *SysDictQuery) Order(o ...OrderFunc) *SysDictQuery {
 // First returns the first SysDict entity from the query.
 // Returns a *NotFoundError when no SysDict was found.
 func (sdq *SysDictQuery) First(ctx context.Context) (*SysDict, error) {
-	nodes, err := sdq.Limit(1).All(ctx)
+	nodes, err := sdq.Limit(1).All(setContextOp(ctx, sdq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +83,7 @@ func (sdq *SysDictQuery) FirstX(ctx context.Context) *SysDict {
 // Returns a *NotFoundError when no SysDict ID was found.
 func (sdq *SysDictQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = sdq.Limit(1).IDs(setContextOp(ctx, sdq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +106,7 @@ func (sdq *SysDictQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysDict entity is found.
 // Returns a *NotFoundError when no SysDict entities are found.
 func (sdq *SysDictQuery) Only(ctx context.Context) (*SysDict, error) {
-	nodes, err := sdq.Limit(2).All(ctx)
+	nodes, err := sdq.Limit(2).All(setContextOp(ctx, sdq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +134,7 @@ func (sdq *SysDictQuery) OnlyX(ctx context.Context) *SysDict {
 // Returns a *NotFoundError when no entities are found.
 func (sdq *SysDictQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = sdq.Limit(2).IDs(setContextOp(ctx, sdq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,10 +159,12 @@ func (sdq *SysDictQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysDicts.
 func (sdq *SysDictQuery) All(ctx context.Context) ([]*SysDict, error) {
+	ctx = setContextOp(ctx, sdq.ctx, "All")
 	if err := sdq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return sdq.sqlAll(ctx)
+	qr := querierAll[[]*SysDict, *SysDictQuery]()
+	return withInterceptors[[]*SysDict](ctx, sdq, qr, sdq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -177,9 +177,12 @@ func (sdq *SysDictQuery) AllX(ctx context.Context) []*SysDict {
 }
 
 // IDs executes the query and returns a list of SysDict IDs.
-func (sdq *SysDictQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := sdq.Select(sysdict.FieldID).Scan(ctx, &ids); err != nil {
+func (sdq *SysDictQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if sdq.ctx.Unique == nil && sdq.path != nil {
+		sdq.Unique(true)
+	}
+	ctx = setContextOp(ctx, sdq.ctx, "IDs")
+	if err = sdq.Select(sysdict.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -196,10 +199,11 @@ func (sdq *SysDictQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (sdq *SysDictQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, sdq.ctx, "Count")
 	if err := sdq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return sdq.sqlCount(ctx)
+	return withInterceptors[int](ctx, sdq, querierCount[*SysDictQuery](), sdq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -213,10 +217,15 @@ func (sdq *SysDictQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (sdq *SysDictQuery) Exist(ctx context.Context) (bool, error) {
-	if err := sdq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, sdq.ctx, "Exist")
+	switch _, err := sdq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return sdq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -236,14 +245,13 @@ func (sdq *SysDictQuery) Clone() *SysDictQuery {
 	}
 	return &SysDictQuery{
 		config:     sdq.config,
-		limit:      sdq.limit,
-		offset:     sdq.offset,
+		ctx:        sdq.ctx.Clone(),
 		order:      append([]OrderFunc{}, sdq.order...),
+		inters:     append([]Interceptor{}, sdq.inters...),
 		predicates: append([]predicate.SysDict{}, sdq.predicates...),
 		// clone intermediate query.
-		sql:    sdq.sql.Clone(),
-		path:   sdq.path,
-		unique: sdq.unique,
+		sql:  sdq.sql.Clone(),
+		path: sdq.path,
 	}
 }
 
@@ -261,18 +269,12 @@ func (sdq *SysDictQuery) Clone() *SysDictQuery {
 //		GroupBy(sysdict.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (sdq *SysDictQuery) GroupBy(field string, fields ...string) *SysDictGroupBy {
-	grbuild := &SysDictGroupBy{config: sdq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := sdq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return sdq.sqlQuery(ctx), nil
-	}
+	sdq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysDictGroupBy{build: sdq}
+	grbuild.flds = &sdq.ctx.Fields
 	grbuild.label = sysdict.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -288,17 +290,31 @@ func (sdq *SysDictQuery) GroupBy(field string, fields ...string) *SysDictGroupBy
 //	client.SysDict.Query().
 //		Select(sysdict.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (sdq *SysDictQuery) Select(fields ...string) *SysDictSelect {
-	sdq.fields = append(sdq.fields, fields...)
-	selbuild := &SysDictSelect{SysDictQuery: sdq}
-	selbuild.label = sysdict.Label
-	selbuild.flds, selbuild.scan = &sdq.fields, selbuild.Scan
-	return selbuild
+	sdq.ctx.Fields = append(sdq.ctx.Fields, fields...)
+	sbuild := &SysDictSelect{SysDictQuery: sdq}
+	sbuild.label = sysdict.Label
+	sbuild.flds, sbuild.scan = &sdq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a SysDictSelect configured with the given aggregations.
+func (sdq *SysDictQuery) Aggregate(fns ...AggregateFunc) *SysDictSelect {
+	return sdq.Select().Aggregate(fns...)
 }
 
 func (sdq *SysDictQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range sdq.fields {
+	for _, inter := range sdq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, sdq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range sdq.ctx.Fields {
 		if !sysdict.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -318,10 +334,10 @@ func (sdq *SysDictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		nodes = []*SysDict{}
 		_spec = sdq.querySpec()
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysDict).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysDict{config: sdq.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
@@ -340,38 +356,22 @@ func (sdq *SysDictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 
 func (sdq *SysDictQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdq.querySpec()
-	_spec.Node.Columns = sdq.fields
-	if len(sdq.fields) > 0 {
-		_spec.Unique = sdq.unique != nil && *sdq.unique
+	_spec.Node.Columns = sdq.ctx.Fields
+	if len(sdq.ctx.Fields) > 0 {
+		_spec.Unique = sdq.ctx.Unique != nil && *sdq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, sdq.driver, _spec)
 }
 
-func (sdq *SysDictQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := sdq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (sdq *SysDictQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysdict.Table,
-			Columns: sysdict.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdict.FieldID,
-			},
-		},
-		From:   sdq.sql,
-		Unique: true,
-	}
-	if unique := sdq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(sysdict.Table, sysdict.Columns, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
+	_spec.From = sdq.sql
+	if unique := sdq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if sdq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := sdq.fields; len(fields) > 0 {
+	if fields := sdq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysdict.FieldID)
 		for i := range fields {
@@ -387,10 +387,10 @@ func (sdq *SysDictQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := sdq.limit; limit != nil {
+	if limit := sdq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := sdq.offset; offset != nil {
+	if offset := sdq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := sdq.order; len(ps) > 0 {
@@ -406,7 +406,7 @@ func (sdq *SysDictQuery) querySpec() *sqlgraph.QuerySpec {
 func (sdq *SysDictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(sdq.driver.Dialect())
 	t1 := builder.Table(sysdict.Table)
-	columns := sdq.fields
+	columns := sdq.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysdict.Columns
 	}
@@ -415,7 +415,7 @@ func (sdq *SysDictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector = sdq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if sdq.unique != nil && *sdq.unique {
+	if sdq.ctx.Unique != nil && *sdq.ctx.Unique {
 		selector.Distinct()
 	}
 	for _, p := range sdq.predicates {
@@ -424,12 +424,12 @@ func (sdq *SysDictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	for _, p := range sdq.order {
 		p(selector)
 	}
-	if offset := sdq.offset; offset != nil {
+	if offset := sdq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := sdq.limit; limit != nil {
+	if limit := sdq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -437,13 +437,8 @@ func (sdq *SysDictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 
 // SysDictGroupBy is the group-by builder for SysDict entities.
 type SysDictGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *SysDictQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -452,74 +447,77 @@ func (sdgb *SysDictGroupBy) Aggregate(fns ...AggregateFunc) *SysDictGroupBy {
 	return sdgb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (sdgb *SysDictGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := sdgb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (sdgb *SysDictGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, sdgb.build.ctx, "GroupBy")
+	if err := sdgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	sdgb.sql = query
-	return sdgb.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysDictQuery, *SysDictGroupBy](ctx, sdgb.build, sdgb, sdgb.build.inters, v)
 }
 
-func (sdgb *SysDictGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range sdgb.fields {
-		if !sysdict.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
+func (sdgb *SysDictGroupBy) sqlScan(ctx context.Context, root *SysDictQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
+	aggregation := make([]string, 0, len(sdgb.fns))
+	for _, fn := range sdgb.fns {
+		aggregation = append(aggregation, fn(selector))
 	}
-	selector := sdgb.sqlQuery()
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(*sdgb.flds)+len(sdgb.fns))
+		for _, f := range *sdgb.flds {
+			columns = append(columns, selector.C(f))
+		}
+		columns = append(columns, aggregation...)
+		selector.Select(columns...)
+	}
+	selector.GroupBy(selector.Columns(*sdgb.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sdgb.driver.Query(ctx, query, args, rows); err != nil {
+	if err := sdgb.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (sdgb *SysDictGroupBy) sqlQuery() *sql.Selector {
-	selector := sdgb.sql.Select()
-	aggregation := make([]string, 0, len(sdgb.fns))
-	for _, fn := range sdgb.fns {
-		aggregation = append(aggregation, fn(selector))
-	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
-	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(sdgb.fields)+len(sdgb.fns))
-		for _, f := range sdgb.fields {
-			columns = append(columns, selector.C(f))
-		}
-		columns = append(columns, aggregation...)
-		selector.Select(columns...)
-	}
-	return selector.GroupBy(selector.Columns(sdgb.fields...)...)
-}
-
 // SysDictSelect is the builder for selecting fields of SysDict entities.
 type SysDictSelect struct {
 	*SysDictQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (sds *SysDictSelect) Aggregate(fns ...AggregateFunc) *SysDictSelect {
+	sds.fns = append(sds.fns, fns...)
+	return sds
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sds *SysDictSelect) Scan(ctx context.Context, v interface{}) error {
+func (sds *SysDictSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, sds.ctx, "Select")
 	if err := sds.prepareQuery(ctx); err != nil {
 		return err
 	}
-	sds.sql = sds.SysDictQuery.sqlQuery(ctx)
-	return sds.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysDictQuery, *SysDictSelect](ctx, sds.SysDictQuery, sds, sds.inters, v)
 }
 
-func (sds *SysDictSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (sds *SysDictSelect) sqlScan(ctx context.Context, root *SysDictQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(sds.fns))
+	for _, fn := range sds.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*sds.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := sds.sql.Query()
+	query, args := selector.Query()
 	if err := sds.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}

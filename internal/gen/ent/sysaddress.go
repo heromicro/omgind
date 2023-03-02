@@ -61,8 +61,8 @@ type SysAddress struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysAddress) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysAddress) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysaddress.FieldIsDel, sysaddress.FieldIsActive:
@@ -82,7 +82,7 @@ func (*SysAddress) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysAddress fields.
-func (sa *SysAddress) assignValues(columns []string, values []interface{}) error {
+func (sa *SysAddress) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -245,7 +245,7 @@ func (sa *SysAddress) assignValues(columns []string, values []interface{}) error
 // Note that you need to call SysAddress.Unwrap() before calling this method if this SysAddress
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sa *SysAddress) Update() *SysAddressUpdateOne {
-	return (&SysAddressClient{config: sa.config}).UpdateOne(sa)
+	return NewSysAddressClient(sa.config).UpdateOne(sa)
 }
 
 // Unwrap unwraps the SysAddress entity that was returned from a transaction after it was closed,
@@ -364,9 +364,3 @@ func (sa *SysAddress) String() string {
 
 // SysAddresses is a parsable slice of SysAddress.
 type SysAddresses []*SysAddress
-
-func (sa SysAddresses) config(cfg config) {
-	for _i := range sa {
-		sa[_i].config = cfg
-	}
-}

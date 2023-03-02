@@ -4,11 +4,16 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 
 	"github.com/heromicro/omgind/internal/gen/ent/migrate"
 
+	"entgo.io/ent"
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -23,10 +28,6 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
-
-	"entgo.io/ent/dialect"
-	"entgo.io/ent/dialect/sql"
-	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 // Client is the client that holds all ent builders.
@@ -66,7 +67,7 @@ type Client struct {
 
 // NewClient creates a new client configured with the given options.
 func NewClient(opts ...Option) *Client {
-	cfg := config{log: log.Println, hooks: &hooks{}}
+	cfg := config{log: log.Println, hooks: &hooks{}, inters: &inters{}}
 	cfg.options(opts...)
 	client := &Client{config: cfg}
 	client.init()
@@ -91,6 +92,55 @@ func (c *Client) init() {
 	c.XxxDemo = NewXxxDemoClient(c.config)
 }
 
+type (
+	// config is the configuration for the client and its builder.
+	config struct {
+		// driver used for executing database requests.
+		driver dialect.Driver
+		// debug enable a debug logging.
+		debug bool
+		// log used for logging on debug mode.
+		log func(...any)
+		// hooks to execute on mutations.
+		hooks *hooks
+		// interceptors to execute on queries.
+		inters *inters
+	}
+	// Option function to configure the client.
+	Option func(*config)
+)
+
+// options applies the options on the config object.
+func (c *config) options(opts ...Option) {
+	for _, opt := range opts {
+		opt(c)
+	}
+	if c.debug {
+		c.driver = dialect.Debug(c.driver, c.log)
+	}
+}
+
+// Debug enables debug logging on the ent.Driver.
+func Debug() Option {
+	return func(c *config) {
+		c.debug = true
+	}
+}
+
+// Log sets the logging function for debug mode.
+func Log(fn func(...any)) Option {
+	return func(c *config) {
+		c.log = fn
+	}
+}
+
+// Driver configures the client driver.
+func Driver(driver dialect.Driver) Option {
+	return func(c *config) {
+		c.driver = driver
+	}
+}
+
 // Open opens a database/sql.DB specified by the driver name and
 // the data source name, and returns a new client attached to it.
 // Optional parameters can be added for configuring the client.
@@ -111,7 +161,7 @@ func Open(driverName, dataSourceName string, options ...Option) (*Client, error)
 // is used until the transaction is committed or rolled back.
 func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	if _, ok := c.driver.(*txDriver); ok {
-		return nil, fmt.Errorf("ent: cannot start a transaction within a transaction")
+		return nil, errors.New("ent: cannot start a transaction within a transaction")
 	}
 	tx, err := newTx(ctx, c.driver)
 	if err != nil {
@@ -142,7 +192,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 // BeginTx returns a transactional client with specified options.
 func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) {
 	if _, ok := c.driver.(*txDriver); ok {
-		return nil, fmt.Errorf("ent: cannot start a transaction within a transaction")
+		return nil, errors.New("ent: cannot start a transaction within a transaction")
 	}
 	tx, err := c.driver.(interface {
 		BeginTx(context.Context, *sql.TxOptions) (dialect.Tx, error)
@@ -178,7 +228,6 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 //		SysAddress.
 //		Query().
 //		Count(ctx)
-//
 func (c *Client) Debug() *Client {
 	if c.debug {
 		return c
@@ -198,20 +247,61 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.SysAddress.Use(hooks...)
-	c.SysDict.Use(hooks...)
-	c.SysDictItem.Use(hooks...)
-	c.SysDistrict.Use(hooks...)
-	c.SysJwtBlock.Use(hooks...)
-	c.SysLogging.Use(hooks...)
-	c.SysMenu.Use(hooks...)
-	c.SysMenuAction.Use(hooks...)
-	c.SysMenuActionResource.Use(hooks...)
-	c.SysRole.Use(hooks...)
-	c.SysRoleMenu.Use(hooks...)
-	c.SysUser.Use(hooks...)
-	c.SysUserRole.Use(hooks...)
-	c.XxxDemo.Use(hooks...)
+	for _, n := range []interface{ Use(...Hook) }{
+		c.SysAddress, c.SysDict, c.SysDictItem, c.SysDistrict, c.SysJwtBlock,
+		c.SysLogging, c.SysMenu, c.SysMenuAction, c.SysMenuActionResource, c.SysRole,
+		c.SysRoleMenu, c.SysUser, c.SysUserRole, c.XxxDemo,
+	} {
+		n.Use(hooks...)
+	}
+}
+
+// Intercept adds the query interceptors to all the entity clients.
+// In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
+func (c *Client) Intercept(interceptors ...Interceptor) {
+	for _, n := range []interface{ Intercept(...Interceptor) }{
+		c.SysAddress, c.SysDict, c.SysDictItem, c.SysDistrict, c.SysJwtBlock,
+		c.SysLogging, c.SysMenu, c.SysMenuAction, c.SysMenuActionResource, c.SysRole,
+		c.SysRoleMenu, c.SysUser, c.SysUserRole, c.XxxDemo,
+	} {
+		n.Intercept(interceptors...)
+	}
+}
+
+// Mutate implements the ent.Mutator interface.
+func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
+	switch m := m.(type) {
+	case *SysAddressMutation:
+		return c.SysAddress.mutate(ctx, m)
+	case *SysDictMutation:
+		return c.SysDict.mutate(ctx, m)
+	case *SysDictItemMutation:
+		return c.SysDictItem.mutate(ctx, m)
+	case *SysDistrictMutation:
+		return c.SysDistrict.mutate(ctx, m)
+	case *SysJwtBlockMutation:
+		return c.SysJwtBlock.mutate(ctx, m)
+	case *SysLoggingMutation:
+		return c.SysLogging.mutate(ctx, m)
+	case *SysMenuMutation:
+		return c.SysMenu.mutate(ctx, m)
+	case *SysMenuActionMutation:
+		return c.SysMenuAction.mutate(ctx, m)
+	case *SysMenuActionResourceMutation:
+		return c.SysMenuActionResource.mutate(ctx, m)
+	case *SysRoleMutation:
+		return c.SysRole.mutate(ctx, m)
+	case *SysRoleMenuMutation:
+		return c.SysRoleMenu.mutate(ctx, m)
+	case *SysUserMutation:
+		return c.SysUser.mutate(ctx, m)
+	case *SysUserRoleMutation:
+		return c.SysUserRole.mutate(ctx, m)
+	case *XxxDemoMutation:
+		return c.XxxDemo.mutate(ctx, m)
+	default:
+		return nil, fmt.Errorf("ent: unknown mutation type %T", m)
+	}
 }
 
 // SysAddressClient is a client for the SysAddress schema.
@@ -228,6 +318,12 @@ func NewSysAddressClient(c config) *SysAddressClient {
 // A call to `Use(f, g, h)` equals to `sysaddress.Hooks(f(g(h())))`.
 func (c *SysAddressClient) Use(hooks ...Hook) {
 	c.hooks.SysAddress = append(c.hooks.SysAddress, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysaddress.Intercept(f(g(h())))`.
+func (c *SysAddressClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysAddress = append(c.inters.SysAddress, interceptors...)
 }
 
 // Create returns a builder for creating a SysAddress entity.
@@ -270,7 +366,7 @@ func (c *SysAddressClient) DeleteOne(sa *SysAddress) *SysAddressDeleteOne {
 	return c.DeleteOneID(sa.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysAddressClient) DeleteOneID(id string) *SysAddressDeleteOne {
 	builder := c.Delete().Where(sysaddress.ID(id))
 	builder.mutation.id = &id
@@ -282,6 +378,8 @@ func (c *SysAddressClient) DeleteOneID(id string) *SysAddressDeleteOne {
 func (c *SysAddressClient) Query() *SysAddressQuery {
 	return &SysAddressQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysAddress},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -304,6 +402,26 @@ func (c *SysAddressClient) Hooks() []Hook {
 	return c.hooks.SysAddress
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysAddressClient) Interceptors() []Interceptor {
+	return c.inters.SysAddress
+}
+
+func (c *SysAddressClient) mutate(ctx context.Context, m *SysAddressMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysAddressCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysAddressUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysAddressUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysAddressDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysAddress mutation op: %q", m.Op())
+	}
+}
+
 // SysDictClient is a client for the SysDict schema.
 type SysDictClient struct {
 	config
@@ -318,6 +436,12 @@ func NewSysDictClient(c config) *SysDictClient {
 // A call to `Use(f, g, h)` equals to `sysdict.Hooks(f(g(h())))`.
 func (c *SysDictClient) Use(hooks ...Hook) {
 	c.hooks.SysDict = append(c.hooks.SysDict, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysdict.Intercept(f(g(h())))`.
+func (c *SysDictClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysDict = append(c.inters.SysDict, interceptors...)
 }
 
 // Create returns a builder for creating a SysDict entity.
@@ -360,7 +484,7 @@ func (c *SysDictClient) DeleteOne(sd *SysDict) *SysDictDeleteOne {
 	return c.DeleteOneID(sd.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysDictClient) DeleteOneID(id string) *SysDictDeleteOne {
 	builder := c.Delete().Where(sysdict.ID(id))
 	builder.mutation.id = &id
@@ -372,6 +496,8 @@ func (c *SysDictClient) DeleteOneID(id string) *SysDictDeleteOne {
 func (c *SysDictClient) Query() *SysDictQuery {
 	return &SysDictQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysDict},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -394,6 +520,26 @@ func (c *SysDictClient) Hooks() []Hook {
 	return c.hooks.SysDict
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysDictClient) Interceptors() []Interceptor {
+	return c.inters.SysDict
+}
+
+func (c *SysDictClient) mutate(ctx context.Context, m *SysDictMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysDictCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysDictUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysDictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysDictDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysDict mutation op: %q", m.Op())
+	}
+}
+
 // SysDictItemClient is a client for the SysDictItem schema.
 type SysDictItemClient struct {
 	config
@@ -408,6 +554,12 @@ func NewSysDictItemClient(c config) *SysDictItemClient {
 // A call to `Use(f, g, h)` equals to `sysdictitem.Hooks(f(g(h())))`.
 func (c *SysDictItemClient) Use(hooks ...Hook) {
 	c.hooks.SysDictItem = append(c.hooks.SysDictItem, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysdictitem.Intercept(f(g(h())))`.
+func (c *SysDictItemClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysDictItem = append(c.inters.SysDictItem, interceptors...)
 }
 
 // Create returns a builder for creating a SysDictItem entity.
@@ -450,7 +602,7 @@ func (c *SysDictItemClient) DeleteOne(sdi *SysDictItem) *SysDictItemDeleteOne {
 	return c.DeleteOneID(sdi.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysDictItemClient) DeleteOneID(id string) *SysDictItemDeleteOne {
 	builder := c.Delete().Where(sysdictitem.ID(id))
 	builder.mutation.id = &id
@@ -462,6 +614,8 @@ func (c *SysDictItemClient) DeleteOneID(id string) *SysDictItemDeleteOne {
 func (c *SysDictItemClient) Query() *SysDictItemQuery {
 	return &SysDictItemQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysDictItem},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -484,6 +638,26 @@ func (c *SysDictItemClient) Hooks() []Hook {
 	return c.hooks.SysDictItem
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysDictItemClient) Interceptors() []Interceptor {
+	return c.inters.SysDictItem
+}
+
+func (c *SysDictItemClient) mutate(ctx context.Context, m *SysDictItemMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysDictItemCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysDictItemUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysDictItemUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysDictItemDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysDictItem mutation op: %q", m.Op())
+	}
+}
+
 // SysDistrictClient is a client for the SysDistrict schema.
 type SysDistrictClient struct {
 	config
@@ -498,6 +672,12 @@ func NewSysDistrictClient(c config) *SysDistrictClient {
 // A call to `Use(f, g, h)` equals to `sysdistrict.Hooks(f(g(h())))`.
 func (c *SysDistrictClient) Use(hooks ...Hook) {
 	c.hooks.SysDistrict = append(c.hooks.SysDistrict, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysdistrict.Intercept(f(g(h())))`.
+func (c *SysDistrictClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysDistrict = append(c.inters.SysDistrict, interceptors...)
 }
 
 // Create returns a builder for creating a SysDistrict entity.
@@ -540,7 +720,7 @@ func (c *SysDistrictClient) DeleteOne(sd *SysDistrict) *SysDistrictDeleteOne {
 	return c.DeleteOneID(sd.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysDistrictClient) DeleteOneID(id string) *SysDistrictDeleteOne {
 	builder := c.Delete().Where(sysdistrict.ID(id))
 	builder.mutation.id = &id
@@ -552,6 +732,8 @@ func (c *SysDistrictClient) DeleteOneID(id string) *SysDistrictDeleteOne {
 func (c *SysDistrictClient) Query() *SysDistrictQuery {
 	return &SysDistrictQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysDistrict},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -571,8 +753,8 @@ func (c *SysDistrictClient) GetX(ctx context.Context, id string) *SysDistrict {
 
 // QueryParent queries the parent edge of a SysDistrict.
 func (c *SysDistrictClient) QueryParent(sd *SysDistrict) *SysDistrictQuery {
-	query := &SysDistrictQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+	query := (&SysDistrictClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := sd.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysdistrict.Table, sysdistrict.FieldID, id),
@@ -587,8 +769,8 @@ func (c *SysDistrictClient) QueryParent(sd *SysDistrict) *SysDistrictQuery {
 
 // QueryChildren queries the children edge of a SysDistrict.
 func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
-	query := &SysDistrictQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+	query := (&SysDistrictClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := sd.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysdistrict.Table, sysdistrict.FieldID, id),
@@ -606,6 +788,26 @@ func (c *SysDistrictClient) Hooks() []Hook {
 	return c.hooks.SysDistrict
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysDistrictClient) Interceptors() []Interceptor {
+	return c.inters.SysDistrict
+}
+
+func (c *SysDistrictClient) mutate(ctx context.Context, m *SysDistrictMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysDistrictCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysDistrictUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysDistrictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysDistrictDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysDistrict mutation op: %q", m.Op())
+	}
+}
+
 // SysJwtBlockClient is a client for the SysJwtBlock schema.
 type SysJwtBlockClient struct {
 	config
@@ -620,6 +822,12 @@ func NewSysJwtBlockClient(c config) *SysJwtBlockClient {
 // A call to `Use(f, g, h)` equals to `sysjwtblock.Hooks(f(g(h())))`.
 func (c *SysJwtBlockClient) Use(hooks ...Hook) {
 	c.hooks.SysJwtBlock = append(c.hooks.SysJwtBlock, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysjwtblock.Intercept(f(g(h())))`.
+func (c *SysJwtBlockClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysJwtBlock = append(c.inters.SysJwtBlock, interceptors...)
 }
 
 // Create returns a builder for creating a SysJwtBlock entity.
@@ -662,7 +870,7 @@ func (c *SysJwtBlockClient) DeleteOne(sjb *SysJwtBlock) *SysJwtBlockDeleteOne {
 	return c.DeleteOneID(sjb.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysJwtBlockClient) DeleteOneID(id string) *SysJwtBlockDeleteOne {
 	builder := c.Delete().Where(sysjwtblock.ID(id))
 	builder.mutation.id = &id
@@ -674,6 +882,8 @@ func (c *SysJwtBlockClient) DeleteOneID(id string) *SysJwtBlockDeleteOne {
 func (c *SysJwtBlockClient) Query() *SysJwtBlockQuery {
 	return &SysJwtBlockQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysJwtBlock},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -696,6 +906,26 @@ func (c *SysJwtBlockClient) Hooks() []Hook {
 	return c.hooks.SysJwtBlock
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysJwtBlockClient) Interceptors() []Interceptor {
+	return c.inters.SysJwtBlock
+}
+
+func (c *SysJwtBlockClient) mutate(ctx context.Context, m *SysJwtBlockMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysJwtBlockCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysJwtBlockUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysJwtBlockUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysJwtBlockDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysJwtBlock mutation op: %q", m.Op())
+	}
+}
+
 // SysLoggingClient is a client for the SysLogging schema.
 type SysLoggingClient struct {
 	config
@@ -710,6 +940,12 @@ func NewSysLoggingClient(c config) *SysLoggingClient {
 // A call to `Use(f, g, h)` equals to `syslogging.Hooks(f(g(h())))`.
 func (c *SysLoggingClient) Use(hooks ...Hook) {
 	c.hooks.SysLogging = append(c.hooks.SysLogging, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `syslogging.Intercept(f(g(h())))`.
+func (c *SysLoggingClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysLogging = append(c.inters.SysLogging, interceptors...)
 }
 
 // Create returns a builder for creating a SysLogging entity.
@@ -752,7 +988,7 @@ func (c *SysLoggingClient) DeleteOne(sl *SysLogging) *SysLoggingDeleteOne {
 	return c.DeleteOneID(sl.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysLoggingClient) DeleteOneID(id string) *SysLoggingDeleteOne {
 	builder := c.Delete().Where(syslogging.ID(id))
 	builder.mutation.id = &id
@@ -764,6 +1000,8 @@ func (c *SysLoggingClient) DeleteOneID(id string) *SysLoggingDeleteOne {
 func (c *SysLoggingClient) Query() *SysLoggingQuery {
 	return &SysLoggingQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysLogging},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -786,6 +1024,26 @@ func (c *SysLoggingClient) Hooks() []Hook {
 	return c.hooks.SysLogging
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysLoggingClient) Interceptors() []Interceptor {
+	return c.inters.SysLogging
+}
+
+func (c *SysLoggingClient) mutate(ctx context.Context, m *SysLoggingMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysLoggingCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysLoggingUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysLoggingUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysLoggingDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysLogging mutation op: %q", m.Op())
+	}
+}
+
 // SysMenuClient is a client for the SysMenu schema.
 type SysMenuClient struct {
 	config
@@ -800,6 +1058,12 @@ func NewSysMenuClient(c config) *SysMenuClient {
 // A call to `Use(f, g, h)` equals to `sysmenu.Hooks(f(g(h())))`.
 func (c *SysMenuClient) Use(hooks ...Hook) {
 	c.hooks.SysMenu = append(c.hooks.SysMenu, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysmenu.Intercept(f(g(h())))`.
+func (c *SysMenuClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysMenu = append(c.inters.SysMenu, interceptors...)
 }
 
 // Create returns a builder for creating a SysMenu entity.
@@ -842,7 +1106,7 @@ func (c *SysMenuClient) DeleteOne(sm *SysMenu) *SysMenuDeleteOne {
 	return c.DeleteOneID(sm.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysMenuClient) DeleteOneID(id string) *SysMenuDeleteOne {
 	builder := c.Delete().Where(sysmenu.ID(id))
 	builder.mutation.id = &id
@@ -854,6 +1118,8 @@ func (c *SysMenuClient) DeleteOneID(id string) *SysMenuDeleteOne {
 func (c *SysMenuClient) Query() *SysMenuQuery {
 	return &SysMenuQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysMenu},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -876,6 +1142,26 @@ func (c *SysMenuClient) Hooks() []Hook {
 	return c.hooks.SysMenu
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysMenuClient) Interceptors() []Interceptor {
+	return c.inters.SysMenu
+}
+
+func (c *SysMenuClient) mutate(ctx context.Context, m *SysMenuMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysMenuCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysMenuUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysMenuUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysMenuDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysMenu mutation op: %q", m.Op())
+	}
+}
+
 // SysMenuActionClient is a client for the SysMenuAction schema.
 type SysMenuActionClient struct {
 	config
@@ -890,6 +1176,12 @@ func NewSysMenuActionClient(c config) *SysMenuActionClient {
 // A call to `Use(f, g, h)` equals to `sysmenuaction.Hooks(f(g(h())))`.
 func (c *SysMenuActionClient) Use(hooks ...Hook) {
 	c.hooks.SysMenuAction = append(c.hooks.SysMenuAction, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysmenuaction.Intercept(f(g(h())))`.
+func (c *SysMenuActionClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysMenuAction = append(c.inters.SysMenuAction, interceptors...)
 }
 
 // Create returns a builder for creating a SysMenuAction entity.
@@ -932,7 +1224,7 @@ func (c *SysMenuActionClient) DeleteOne(sma *SysMenuAction) *SysMenuActionDelete
 	return c.DeleteOneID(sma.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysMenuActionClient) DeleteOneID(id string) *SysMenuActionDeleteOne {
 	builder := c.Delete().Where(sysmenuaction.ID(id))
 	builder.mutation.id = &id
@@ -944,6 +1236,8 @@ func (c *SysMenuActionClient) DeleteOneID(id string) *SysMenuActionDeleteOne {
 func (c *SysMenuActionClient) Query() *SysMenuActionQuery {
 	return &SysMenuActionQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysMenuAction},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -966,6 +1260,26 @@ func (c *SysMenuActionClient) Hooks() []Hook {
 	return c.hooks.SysMenuAction
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysMenuActionClient) Interceptors() []Interceptor {
+	return c.inters.SysMenuAction
+}
+
+func (c *SysMenuActionClient) mutate(ctx context.Context, m *SysMenuActionMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysMenuActionCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysMenuActionUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysMenuActionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysMenuActionDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysMenuAction mutation op: %q", m.Op())
+	}
+}
+
 // SysMenuActionResourceClient is a client for the SysMenuActionResource schema.
 type SysMenuActionResourceClient struct {
 	config
@@ -980,6 +1294,12 @@ func NewSysMenuActionResourceClient(c config) *SysMenuActionResourceClient {
 // A call to `Use(f, g, h)` equals to `sysmenuactionresource.Hooks(f(g(h())))`.
 func (c *SysMenuActionResourceClient) Use(hooks ...Hook) {
 	c.hooks.SysMenuActionResource = append(c.hooks.SysMenuActionResource, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysmenuactionresource.Intercept(f(g(h())))`.
+func (c *SysMenuActionResourceClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysMenuActionResource = append(c.inters.SysMenuActionResource, interceptors...)
 }
 
 // Create returns a builder for creating a SysMenuActionResource entity.
@@ -1022,7 +1342,7 @@ func (c *SysMenuActionResourceClient) DeleteOne(smar *SysMenuActionResource) *Sy
 	return c.DeleteOneID(smar.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysMenuActionResourceClient) DeleteOneID(id string) *SysMenuActionResourceDeleteOne {
 	builder := c.Delete().Where(sysmenuactionresource.ID(id))
 	builder.mutation.id = &id
@@ -1034,6 +1354,8 @@ func (c *SysMenuActionResourceClient) DeleteOneID(id string) *SysMenuActionResou
 func (c *SysMenuActionResourceClient) Query() *SysMenuActionResourceQuery {
 	return &SysMenuActionResourceQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysMenuActionResource},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -1056,6 +1378,26 @@ func (c *SysMenuActionResourceClient) Hooks() []Hook {
 	return c.hooks.SysMenuActionResource
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysMenuActionResourceClient) Interceptors() []Interceptor {
+	return c.inters.SysMenuActionResource
+}
+
+func (c *SysMenuActionResourceClient) mutate(ctx context.Context, m *SysMenuActionResourceMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysMenuActionResourceCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysMenuActionResourceUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysMenuActionResourceUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysMenuActionResourceDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysMenuActionResource mutation op: %q", m.Op())
+	}
+}
+
 // SysRoleClient is a client for the SysRole schema.
 type SysRoleClient struct {
 	config
@@ -1070,6 +1412,12 @@ func NewSysRoleClient(c config) *SysRoleClient {
 // A call to `Use(f, g, h)` equals to `sysrole.Hooks(f(g(h())))`.
 func (c *SysRoleClient) Use(hooks ...Hook) {
 	c.hooks.SysRole = append(c.hooks.SysRole, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysrole.Intercept(f(g(h())))`.
+func (c *SysRoleClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysRole = append(c.inters.SysRole, interceptors...)
 }
 
 // Create returns a builder for creating a SysRole entity.
@@ -1112,7 +1460,7 @@ func (c *SysRoleClient) DeleteOne(sr *SysRole) *SysRoleDeleteOne {
 	return c.DeleteOneID(sr.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysRoleClient) DeleteOneID(id string) *SysRoleDeleteOne {
 	builder := c.Delete().Where(sysrole.ID(id))
 	builder.mutation.id = &id
@@ -1124,6 +1472,8 @@ func (c *SysRoleClient) DeleteOneID(id string) *SysRoleDeleteOne {
 func (c *SysRoleClient) Query() *SysRoleQuery {
 	return &SysRoleQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysRole},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -1146,6 +1496,26 @@ func (c *SysRoleClient) Hooks() []Hook {
 	return c.hooks.SysRole
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysRoleClient) Interceptors() []Interceptor {
+	return c.inters.SysRole
+}
+
+func (c *SysRoleClient) mutate(ctx context.Context, m *SysRoleMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysRoleCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysRoleUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysRoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysRoleDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysRole mutation op: %q", m.Op())
+	}
+}
+
 // SysRoleMenuClient is a client for the SysRoleMenu schema.
 type SysRoleMenuClient struct {
 	config
@@ -1160,6 +1530,12 @@ func NewSysRoleMenuClient(c config) *SysRoleMenuClient {
 // A call to `Use(f, g, h)` equals to `sysrolemenu.Hooks(f(g(h())))`.
 func (c *SysRoleMenuClient) Use(hooks ...Hook) {
 	c.hooks.SysRoleMenu = append(c.hooks.SysRoleMenu, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysrolemenu.Intercept(f(g(h())))`.
+func (c *SysRoleMenuClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysRoleMenu = append(c.inters.SysRoleMenu, interceptors...)
 }
 
 // Create returns a builder for creating a SysRoleMenu entity.
@@ -1202,7 +1578,7 @@ func (c *SysRoleMenuClient) DeleteOne(srm *SysRoleMenu) *SysRoleMenuDeleteOne {
 	return c.DeleteOneID(srm.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysRoleMenuClient) DeleteOneID(id string) *SysRoleMenuDeleteOne {
 	builder := c.Delete().Where(sysrolemenu.ID(id))
 	builder.mutation.id = &id
@@ -1214,6 +1590,8 @@ func (c *SysRoleMenuClient) DeleteOneID(id string) *SysRoleMenuDeleteOne {
 func (c *SysRoleMenuClient) Query() *SysRoleMenuQuery {
 	return &SysRoleMenuQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysRoleMenu},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -1236,6 +1614,26 @@ func (c *SysRoleMenuClient) Hooks() []Hook {
 	return c.hooks.SysRoleMenu
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysRoleMenuClient) Interceptors() []Interceptor {
+	return c.inters.SysRoleMenu
+}
+
+func (c *SysRoleMenuClient) mutate(ctx context.Context, m *SysRoleMenuMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysRoleMenuCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysRoleMenuUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysRoleMenuUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysRoleMenuDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysRoleMenu mutation op: %q", m.Op())
+	}
+}
+
 // SysUserClient is a client for the SysUser schema.
 type SysUserClient struct {
 	config
@@ -1250,6 +1648,12 @@ func NewSysUserClient(c config) *SysUserClient {
 // A call to `Use(f, g, h)` equals to `sysuser.Hooks(f(g(h())))`.
 func (c *SysUserClient) Use(hooks ...Hook) {
 	c.hooks.SysUser = append(c.hooks.SysUser, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysuser.Intercept(f(g(h())))`.
+func (c *SysUserClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysUser = append(c.inters.SysUser, interceptors...)
 }
 
 // Create returns a builder for creating a SysUser entity.
@@ -1292,7 +1696,7 @@ func (c *SysUserClient) DeleteOne(su *SysUser) *SysUserDeleteOne {
 	return c.DeleteOneID(su.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysUserClient) DeleteOneID(id string) *SysUserDeleteOne {
 	builder := c.Delete().Where(sysuser.ID(id))
 	builder.mutation.id = &id
@@ -1304,6 +1708,8 @@ func (c *SysUserClient) DeleteOneID(id string) *SysUserDeleteOne {
 func (c *SysUserClient) Query() *SysUserQuery {
 	return &SysUserQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysUser},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -1326,6 +1732,26 @@ func (c *SysUserClient) Hooks() []Hook {
 	return c.hooks.SysUser
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysUserClient) Interceptors() []Interceptor {
+	return c.inters.SysUser
+}
+
+func (c *SysUserClient) mutate(ctx context.Context, m *SysUserMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysUserCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysUserUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysUserDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysUser mutation op: %q", m.Op())
+	}
+}
+
 // SysUserRoleClient is a client for the SysUserRole schema.
 type SysUserRoleClient struct {
 	config
@@ -1340,6 +1766,12 @@ func NewSysUserRoleClient(c config) *SysUserRoleClient {
 // A call to `Use(f, g, h)` equals to `sysuserrole.Hooks(f(g(h())))`.
 func (c *SysUserRoleClient) Use(hooks ...Hook) {
 	c.hooks.SysUserRole = append(c.hooks.SysUserRole, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysuserrole.Intercept(f(g(h())))`.
+func (c *SysUserRoleClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysUserRole = append(c.inters.SysUserRole, interceptors...)
 }
 
 // Create returns a builder for creating a SysUserRole entity.
@@ -1382,7 +1814,7 @@ func (c *SysUserRoleClient) DeleteOne(sur *SysUserRole) *SysUserRoleDeleteOne {
 	return c.DeleteOneID(sur.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *SysUserRoleClient) DeleteOneID(id string) *SysUserRoleDeleteOne {
 	builder := c.Delete().Where(sysuserrole.ID(id))
 	builder.mutation.id = &id
@@ -1394,6 +1826,8 @@ func (c *SysUserRoleClient) DeleteOneID(id string) *SysUserRoleDeleteOne {
 func (c *SysUserRoleClient) Query() *SysUserRoleQuery {
 	return &SysUserRoleQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysUserRole},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -1416,6 +1850,26 @@ func (c *SysUserRoleClient) Hooks() []Hook {
 	return c.hooks.SysUserRole
 }
 
+// Interceptors returns the client interceptors.
+func (c *SysUserRoleClient) Interceptors() []Interceptor {
+	return c.inters.SysUserRole
+}
+
+func (c *SysUserRoleClient) mutate(ctx context.Context, m *SysUserRoleMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysUserRoleCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysUserRoleUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysUserRoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysUserRoleDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown SysUserRole mutation op: %q", m.Op())
+	}
+}
+
 // XxxDemoClient is a client for the XxxDemo schema.
 type XxxDemoClient struct {
 	config
@@ -1430,6 +1884,12 @@ func NewXxxDemoClient(c config) *XxxDemoClient {
 // A call to `Use(f, g, h)` equals to `xxxdemo.Hooks(f(g(h())))`.
 func (c *XxxDemoClient) Use(hooks ...Hook) {
 	c.hooks.XxxDemo = append(c.hooks.XxxDemo, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `xxxdemo.Intercept(f(g(h())))`.
+func (c *XxxDemoClient) Intercept(interceptors ...Interceptor) {
+	c.inters.XxxDemo = append(c.inters.XxxDemo, interceptors...)
 }
 
 // Create returns a builder for creating a XxxDemo entity.
@@ -1472,7 +1932,7 @@ func (c *XxxDemoClient) DeleteOne(xd *XxxDemo) *XxxDemoDeleteOne {
 	return c.DeleteOneID(xd.ID)
 }
 
-// DeleteOne returns a builder for deleting the given entity by its id.
+// DeleteOneID returns a builder for deleting the given entity by its id.
 func (c *XxxDemoClient) DeleteOneID(id string) *XxxDemoDeleteOne {
 	builder := c.Delete().Where(xxxdemo.ID(id))
 	builder.mutation.id = &id
@@ -1484,6 +1944,8 @@ func (c *XxxDemoClient) DeleteOneID(id string) *XxxDemoDeleteOne {
 func (c *XxxDemoClient) Query() *XxxDemoQuery {
 	return &XxxDemoQuery{
 		config: c.config,
+		ctx:    &QueryContext{Type: TypeXxxDemo},
+		inters: c.Interceptors(),
 	}
 }
 
@@ -1505,3 +1967,37 @@ func (c *XxxDemoClient) GetX(ctx context.Context, id string) *XxxDemo {
 func (c *XxxDemoClient) Hooks() []Hook {
 	return c.hooks.XxxDemo
 }
+
+// Interceptors returns the client interceptors.
+func (c *XxxDemoClient) Interceptors() []Interceptor {
+	return c.inters.XxxDemo
+}
+
+func (c *XxxDemoClient) mutate(ctx context.Context, m *XxxDemoMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&XxxDemoCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&XxxDemoUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&XxxDemoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&XxxDemoDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown XxxDemo mutation op: %q", m.Op())
+	}
+}
+
+// hooks and interceptors per client, for fast access.
+type (
+	hooks struct {
+		SysAddress, SysDict, SysDictItem, SysDistrict, SysJwtBlock, SysLogging, SysMenu,
+		SysMenuAction, SysMenuActionResource, SysRole, SysRoleMenu, SysUser,
+		SysUserRole, XxxDemo []ent.Hook
+	}
+	inters struct {
+		SysAddress, SysDict, SysDictItem, SysDistrict, SysJwtBlock, SysLogging, SysMenu,
+		SysMenuAction, SysMenuActionResource, SysRole, SysRoleMenu, SysUser,
+		SysUserRole, XxxDemo []ent.Interceptor
+	}
+)

@@ -37,8 +37,8 @@ type XxxDemo struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*XxxDemo) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*XxxDemo) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case xxxdemo.FieldIsDel, xxxdemo.FieldIsActive:
@@ -58,7 +58,7 @@ func (*XxxDemo) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the XxxDemo fields.
-func (xd *XxxDemo) assignValues(columns []string, values []interface{}) error {
+func (xd *XxxDemo) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -135,7 +135,7 @@ func (xd *XxxDemo) assignValues(columns []string, values []interface{}) error {
 // Note that you need to call XxxDemo.Unwrap() before calling this method if this XxxDemo
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (xd *XxxDemo) Update() *XxxDemoUpdateOne {
-	return (&XxxDemoClient{config: xd.config}).UpdateOne(xd)
+	return NewXxxDemoClient(xd.config).UpdateOne(xd)
 }
 
 // Unwrap unwraps the XxxDemo entity that was returned from a transaction after it was closed,
@@ -190,9 +190,3 @@ func (xd *XxxDemo) String() string {
 
 // XxxDemos is a parsable slice of XxxDemo.
 type XxxDemos []*XxxDemo
-
-func (xd XxxDemos) config(cfg config) {
-	for _i := range xd {
-		xd[_i].config = cfg
-	}
-}

@@ -142,41 +142,8 @@ func (sdu *SysDictUpdate) Mutation() *SysDictMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sdu *SysDictUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	sdu.defaults()
-	if len(sdu.hooks) == 0 {
-		if err = sdu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = sdu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDictMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sdu.check(); err != nil {
-				return 0, err
-			}
-			sdu.mutation = mutation
-			affected, err = sdu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sdu.hooks) - 1; i >= 0; i-- {
-			if sdu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sdu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sdu.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysDictMutation](ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -230,16 +197,10 @@ func (sdu *SysDictUpdate) check() error {
 }
 
 func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysdict.Table,
-			Columns: sysdict.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdict.FieldID,
-			},
-		},
+	if err := sdu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysdict.Table, sysdict.Columns, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
 	if ps := sdu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -248,79 +209,37 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := sdu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdict.FieldIsDel,
-		})
+		_spec.SetField(sysdict.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sdu.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldMemo,
-		})
+		_spec.SetField(sysdict.FieldMemo, field.TypeString, value)
 	}
 	if sdu.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdict.FieldMemo,
-		})
+		_spec.ClearField(sysdict.FieldMemo, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdict.FieldSort,
-		})
+		_spec.SetField(sysdict.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sdu.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdict.FieldSort,
-		})
+		_spec.AddField(sysdict.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sdu.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sdu.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldDeletedAt,
-		})
+		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sdu.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysdict.FieldDeletedAt,
-		})
+		_spec.ClearField(sysdict.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sdu.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdict.FieldIsActive,
-		})
+		_spec.SetField(sysdict.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sdu.mutation.NameCn(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldNameCn,
-		})
+		_spec.SetField(sysdict.FieldNameCn, field.TypeString, value)
 	}
 	if value, ok := sdu.mutation.NameEn(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldNameEn,
-		})
+		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -330,6 +249,7 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	sdu.mutation.done = true
 	return n, nil
 }
 
@@ -453,6 +373,12 @@ func (sduo *SysDictUpdateOne) Mutation() *SysDictMutation {
 	return sduo.mutation
 }
 
+// Where appends a list predicates to the SysDictUpdate builder.
+func (sduo *SysDictUpdateOne) Where(ps ...predicate.SysDict) *SysDictUpdateOne {
+	sduo.mutation.Where(ps...)
+	return sduo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (sduo *SysDictUpdateOne) Select(field string, fields ...string) *SysDictUpdateOne {
@@ -462,47 +388,8 @@ func (sduo *SysDictUpdateOne) Select(field string, fields ...string) *SysDictUpd
 
 // Save executes the query and returns the updated SysDict entity.
 func (sduo *SysDictUpdateOne) Save(ctx context.Context) (*SysDict, error) {
-	var (
-		err  error
-		node *SysDict
-	)
 	sduo.defaults()
-	if len(sduo.hooks) == 0 {
-		if err = sduo.check(); err != nil {
-			return nil, err
-		}
-		node, err = sduo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDictMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sduo.check(); err != nil {
-				return nil, err
-			}
-			sduo.mutation = mutation
-			node, err = sduo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sduo.hooks) - 1; i >= 0; i-- {
-			if sduo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sduo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sduo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysDict)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysDictMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysDict, SysDictMutation](ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -556,16 +443,10 @@ func (sduo *SysDictUpdateOne) check() error {
 }
 
 func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysdict.Table,
-			Columns: sysdict.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdict.FieldID,
-			},
-		},
+	if err := sduo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysdict.Table, sysdict.Columns, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
 	id, ok := sduo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysDict.id" for update`)}
@@ -591,79 +472,37 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 		}
 	}
 	if value, ok := sduo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdict.FieldIsDel,
-		})
+		_spec.SetField(sysdict.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sduo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldMemo,
-		})
+		_spec.SetField(sysdict.FieldMemo, field.TypeString, value)
 	}
 	if sduo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysdict.FieldMemo,
-		})
+		_spec.ClearField(sysdict.FieldMemo, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdict.FieldSort,
-		})
+		_spec.SetField(sysdict.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sduo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdict.FieldSort,
-		})
+		_spec.AddField(sysdict.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sduo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sduo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdict.FieldDeletedAt,
-		})
+		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sduo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysdict.FieldDeletedAt,
-		})
+		_spec.ClearField(sysdict.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sduo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdict.FieldIsActive,
-		})
+		_spec.SetField(sysdict.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sduo.mutation.NameCn(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldNameCn,
-		})
+		_spec.SetField(sysdict.FieldNameCn, field.TypeString, value)
 	}
 	if value, ok := sduo.mutation.NameEn(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdict.FieldNameEn,
-		})
+		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 	}
 	_node = &SysDict{config: sduo.config}
 	_spec.Assign = _node.assignValues
@@ -676,5 +515,6 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 		}
 		return nil, err
 	}
+	sduo.mutation.done = true
 	return _node, nil
 }

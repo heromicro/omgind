@@ -17,11 +17,9 @@ import (
 // SysMenuActionResourceQuery is the builder for querying SysMenuActionResource entities.
 type SysMenuActionResourceQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
+	ctx        *QueryContext
 	order      []OrderFunc
-	fields     []string
+	inters     []Interceptor
 	predicates []predicate.SysMenuActionResource
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -34,26 +32,26 @@ func (smarq *SysMenuActionResourceQuery) Where(ps ...predicate.SysMenuActionReso
 	return smarq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (smarq *SysMenuActionResourceQuery) Limit(limit int) *SysMenuActionResourceQuery {
-	smarq.limit = &limit
+	smarq.ctx.Limit = &limit
 	return smarq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (smarq *SysMenuActionResourceQuery) Offset(offset int) *SysMenuActionResourceQuery {
-	smarq.offset = &offset
+	smarq.ctx.Offset = &offset
 	return smarq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (smarq *SysMenuActionResourceQuery) Unique(unique bool) *SysMenuActionResourceQuery {
-	smarq.unique = &unique
+	smarq.ctx.Unique = &unique
 	return smarq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (smarq *SysMenuActionResourceQuery) Order(o ...OrderFunc) *SysMenuActionResourceQuery {
 	smarq.order = append(smarq.order, o...)
 	return smarq
@@ -62,7 +60,7 @@ func (smarq *SysMenuActionResourceQuery) Order(o ...OrderFunc) *SysMenuActionRes
 // First returns the first SysMenuActionResource entity from the query.
 // Returns a *NotFoundError when no SysMenuActionResource was found.
 func (smarq *SysMenuActionResourceQuery) First(ctx context.Context) (*SysMenuActionResource, error) {
-	nodes, err := smarq.Limit(1).All(ctx)
+	nodes, err := smarq.Limit(1).All(setContextOp(ctx, smarq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +83,7 @@ func (smarq *SysMenuActionResourceQuery) FirstX(ctx context.Context) *SysMenuAct
 // Returns a *NotFoundError when no SysMenuActionResource ID was found.
 func (smarq *SysMenuActionResourceQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smarq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = smarq.Limit(1).IDs(setContextOp(ctx, smarq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +106,7 @@ func (smarq *SysMenuActionResourceQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysMenuActionResource entity is found.
 // Returns a *NotFoundError when no SysMenuActionResource entities are found.
 func (smarq *SysMenuActionResourceQuery) Only(ctx context.Context) (*SysMenuActionResource, error) {
-	nodes, err := smarq.Limit(2).All(ctx)
+	nodes, err := smarq.Limit(2).All(setContextOp(ctx, smarq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +134,7 @@ func (smarq *SysMenuActionResourceQuery) OnlyX(ctx context.Context) *SysMenuActi
 // Returns a *NotFoundError when no entities are found.
 func (smarq *SysMenuActionResourceQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smarq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = smarq.Limit(2).IDs(setContextOp(ctx, smarq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,10 +159,12 @@ func (smarq *SysMenuActionResourceQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysMenuActionResources.
 func (smarq *SysMenuActionResourceQuery) All(ctx context.Context) ([]*SysMenuActionResource, error) {
+	ctx = setContextOp(ctx, smarq.ctx, "All")
 	if err := smarq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return smarq.sqlAll(ctx)
+	qr := querierAll[[]*SysMenuActionResource, *SysMenuActionResourceQuery]()
+	return withInterceptors[[]*SysMenuActionResource](ctx, smarq, qr, smarq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -177,9 +177,12 @@ func (smarq *SysMenuActionResourceQuery) AllX(ctx context.Context) []*SysMenuAct
 }
 
 // IDs executes the query and returns a list of SysMenuActionResource IDs.
-func (smarq *SysMenuActionResourceQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := smarq.Select(sysmenuactionresource.FieldID).Scan(ctx, &ids); err != nil {
+func (smarq *SysMenuActionResourceQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if smarq.ctx.Unique == nil && smarq.path != nil {
+		smarq.Unique(true)
+	}
+	ctx = setContextOp(ctx, smarq.ctx, "IDs")
+	if err = smarq.Select(sysmenuactionresource.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -196,10 +199,11 @@ func (smarq *SysMenuActionResourceQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (smarq *SysMenuActionResourceQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, smarq.ctx, "Count")
 	if err := smarq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return smarq.sqlCount(ctx)
+	return withInterceptors[int](ctx, smarq, querierCount[*SysMenuActionResourceQuery](), smarq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -213,10 +217,15 @@ func (smarq *SysMenuActionResourceQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (smarq *SysMenuActionResourceQuery) Exist(ctx context.Context) (bool, error) {
-	if err := smarq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, smarq.ctx, "Exist")
+	switch _, err := smarq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return smarq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -236,14 +245,13 @@ func (smarq *SysMenuActionResourceQuery) Clone() *SysMenuActionResourceQuery {
 	}
 	return &SysMenuActionResourceQuery{
 		config:     smarq.config,
-		limit:      smarq.limit,
-		offset:     smarq.offset,
+		ctx:        smarq.ctx.Clone(),
 		order:      append([]OrderFunc{}, smarq.order...),
+		inters:     append([]Interceptor{}, smarq.inters...),
 		predicates: append([]predicate.SysMenuActionResource{}, smarq.predicates...),
 		// clone intermediate query.
-		sql:    smarq.sql.Clone(),
-		path:   smarq.path,
-		unique: smarq.unique,
+		sql:  smarq.sql.Clone(),
+		path: smarq.path,
 	}
 }
 
@@ -261,18 +269,12 @@ func (smarq *SysMenuActionResourceQuery) Clone() *SysMenuActionResourceQuery {
 //		GroupBy(sysmenuactionresource.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (smarq *SysMenuActionResourceQuery) GroupBy(field string, fields ...string) *SysMenuActionResourceGroupBy {
-	grbuild := &SysMenuActionResourceGroupBy{config: smarq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := smarq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return smarq.sqlQuery(ctx), nil
-	}
+	smarq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysMenuActionResourceGroupBy{build: smarq}
+	grbuild.flds = &smarq.ctx.Fields
 	grbuild.label = sysmenuactionresource.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -288,17 +290,31 @@ func (smarq *SysMenuActionResourceQuery) GroupBy(field string, fields ...string)
 //	client.SysMenuActionResource.Query().
 //		Select(sysmenuactionresource.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (smarq *SysMenuActionResourceQuery) Select(fields ...string) *SysMenuActionResourceSelect {
-	smarq.fields = append(smarq.fields, fields...)
-	selbuild := &SysMenuActionResourceSelect{SysMenuActionResourceQuery: smarq}
-	selbuild.label = sysmenuactionresource.Label
-	selbuild.flds, selbuild.scan = &smarq.fields, selbuild.Scan
-	return selbuild
+	smarq.ctx.Fields = append(smarq.ctx.Fields, fields...)
+	sbuild := &SysMenuActionResourceSelect{SysMenuActionResourceQuery: smarq}
+	sbuild.label = sysmenuactionresource.Label
+	sbuild.flds, sbuild.scan = &smarq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a SysMenuActionResourceSelect configured with the given aggregations.
+func (smarq *SysMenuActionResourceQuery) Aggregate(fns ...AggregateFunc) *SysMenuActionResourceSelect {
+	return smarq.Select().Aggregate(fns...)
 }
 
 func (smarq *SysMenuActionResourceQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range smarq.fields {
+	for _, inter := range smarq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, smarq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range smarq.ctx.Fields {
 		if !sysmenuactionresource.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -318,10 +334,10 @@ func (smarq *SysMenuActionResourceQuery) sqlAll(ctx context.Context, hooks ...qu
 		nodes = []*SysMenuActionResource{}
 		_spec = smarq.querySpec()
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysMenuActionResource).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysMenuActionResource{config: smarq.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
@@ -340,38 +356,22 @@ func (smarq *SysMenuActionResourceQuery) sqlAll(ctx context.Context, hooks ...qu
 
 func (smarq *SysMenuActionResourceQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := smarq.querySpec()
-	_spec.Node.Columns = smarq.fields
-	if len(smarq.fields) > 0 {
-		_spec.Unique = smarq.unique != nil && *smarq.unique
+	_spec.Node.Columns = smarq.ctx.Fields
+	if len(smarq.ctx.Fields) > 0 {
+		_spec.Unique = smarq.ctx.Unique != nil && *smarq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, smarq.driver, _spec)
 }
 
-func (smarq *SysMenuActionResourceQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := smarq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (smarq *SysMenuActionResourceQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysmenuactionresource.Table,
-			Columns: sysmenuactionresource.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenuactionresource.FieldID,
-			},
-		},
-		From:   smarq.sql,
-		Unique: true,
-	}
-	if unique := smarq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(sysmenuactionresource.Table, sysmenuactionresource.Columns, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
+	_spec.From = smarq.sql
+	if unique := smarq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if smarq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := smarq.fields; len(fields) > 0 {
+	if fields := smarq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysmenuactionresource.FieldID)
 		for i := range fields {
@@ -387,10 +387,10 @@ func (smarq *SysMenuActionResourceQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := smarq.limit; limit != nil {
+	if limit := smarq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := smarq.offset; offset != nil {
+	if offset := smarq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := smarq.order; len(ps) > 0 {
@@ -406,7 +406,7 @@ func (smarq *SysMenuActionResourceQuery) querySpec() *sqlgraph.QuerySpec {
 func (smarq *SysMenuActionResourceQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(smarq.driver.Dialect())
 	t1 := builder.Table(sysmenuactionresource.Table)
-	columns := smarq.fields
+	columns := smarq.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysmenuactionresource.Columns
 	}
@@ -415,7 +415,7 @@ func (smarq *SysMenuActionResourceQuery) sqlQuery(ctx context.Context) *sql.Sele
 		selector = smarq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if smarq.unique != nil && *smarq.unique {
+	if smarq.ctx.Unique != nil && *smarq.ctx.Unique {
 		selector.Distinct()
 	}
 	for _, p := range smarq.predicates {
@@ -424,12 +424,12 @@ func (smarq *SysMenuActionResourceQuery) sqlQuery(ctx context.Context) *sql.Sele
 	for _, p := range smarq.order {
 		p(selector)
 	}
-	if offset := smarq.offset; offset != nil {
+	if offset := smarq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := smarq.limit; limit != nil {
+	if limit := smarq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -437,13 +437,8 @@ func (smarq *SysMenuActionResourceQuery) sqlQuery(ctx context.Context) *sql.Sele
 
 // SysMenuActionResourceGroupBy is the group-by builder for SysMenuActionResource entities.
 type SysMenuActionResourceGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *SysMenuActionResourceQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -452,74 +447,77 @@ func (smargb *SysMenuActionResourceGroupBy) Aggregate(fns ...AggregateFunc) *Sys
 	return smargb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (smargb *SysMenuActionResourceGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := smargb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (smargb *SysMenuActionResourceGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, smargb.build.ctx, "GroupBy")
+	if err := smargb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	smargb.sql = query
-	return smargb.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysMenuActionResourceQuery, *SysMenuActionResourceGroupBy](ctx, smargb.build, smargb, smargb.build.inters, v)
 }
 
-func (smargb *SysMenuActionResourceGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range smargb.fields {
-		if !sysmenuactionresource.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
+func (smargb *SysMenuActionResourceGroupBy) sqlScan(ctx context.Context, root *SysMenuActionResourceQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
+	aggregation := make([]string, 0, len(smargb.fns))
+	for _, fn := range smargb.fns {
+		aggregation = append(aggregation, fn(selector))
 	}
-	selector := smargb.sqlQuery()
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(*smargb.flds)+len(smargb.fns))
+		for _, f := range *smargb.flds {
+			columns = append(columns, selector.C(f))
+		}
+		columns = append(columns, aggregation...)
+		selector.Select(columns...)
+	}
+	selector.GroupBy(selector.Columns(*smargb.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := smargb.driver.Query(ctx, query, args, rows); err != nil {
+	if err := smargb.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (smargb *SysMenuActionResourceGroupBy) sqlQuery() *sql.Selector {
-	selector := smargb.sql.Select()
-	aggregation := make([]string, 0, len(smargb.fns))
-	for _, fn := range smargb.fns {
-		aggregation = append(aggregation, fn(selector))
-	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
-	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(smargb.fields)+len(smargb.fns))
-		for _, f := range smargb.fields {
-			columns = append(columns, selector.C(f))
-		}
-		columns = append(columns, aggregation...)
-		selector.Select(columns...)
-	}
-	return selector.GroupBy(selector.Columns(smargb.fields...)...)
-}
-
 // SysMenuActionResourceSelect is the builder for selecting fields of SysMenuActionResource entities.
 type SysMenuActionResourceSelect struct {
 	*SysMenuActionResourceQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (smars *SysMenuActionResourceSelect) Aggregate(fns ...AggregateFunc) *SysMenuActionResourceSelect {
+	smars.fns = append(smars.fns, fns...)
+	return smars
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (smars *SysMenuActionResourceSelect) Scan(ctx context.Context, v interface{}) error {
+func (smars *SysMenuActionResourceSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, smars.ctx, "Select")
 	if err := smars.prepareQuery(ctx); err != nil {
 		return err
 	}
-	smars.sql = smars.SysMenuActionResourceQuery.sqlQuery(ctx)
-	return smars.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysMenuActionResourceQuery, *SysMenuActionResourceSelect](ctx, smars.SysMenuActionResourceQuery, smars, smars.inters, v)
 }
 
-func (smars *SysMenuActionResourceSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (smars *SysMenuActionResourceSelect) sqlScan(ctx context.Context, root *SysMenuActionResourceQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(smars.fns))
+	for _, fn := range smars.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*smars.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := smars.sql.Query()
+	query, args := selector.Query()
 	if err := smars.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}

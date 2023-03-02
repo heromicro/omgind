@@ -136,41 +136,8 @@ func (sru *SysRoleUpdate) Mutation() *SysRoleMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sru *SysRoleUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	sru.defaults()
-	if len(sru.hooks) == 0 {
-		if err = sru.check(); err != nil {
-			return 0, err
-		}
-		affected, err = sru.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysRoleMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sru.check(); err != nil {
-				return 0, err
-			}
-			sru.mutation = mutation
-			affected, err = sru.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sru.hooks) - 1; i >= 0; i-- {
-			if sru.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sru.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sru.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysRoleMutation](ctx, sru.sqlSave, sru.mutation, sru.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -219,16 +186,10 @@ func (sru *SysRoleUpdate) check() error {
 }
 
 func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysrole.Table,
-			Columns: sysrole.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysrole.FieldID,
-			},
-		},
+	if err := sru.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysrole.Table, sysrole.Columns, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
 	if ps := sru.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -237,72 +198,34 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := sru.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrole.FieldIsDel,
-		})
+		_spec.SetField(sysrole.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sru.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrole.FieldIsActive,
-		})
+		_spec.SetField(sysrole.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sru.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysrole.FieldSort,
-		})
+		_spec.SetField(sysrole.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sru.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysrole.FieldSort,
-		})
+		_spec.AddField(sysrole.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sru.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldMemo,
-		})
+		_spec.SetField(sysrole.FieldMemo, field.TypeString, value)
 	}
 	if sru.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysrole.FieldMemo,
-		})
+		_spec.ClearField(sysrole.FieldMemo, field.TypeString)
 	}
 	if value, ok := sru.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrole.FieldUpdatedAt,
-		})
+		_spec.SetField(sysrole.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sru.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrole.FieldDeletedAt,
-		})
+		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sru.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysrole.FieldDeletedAt,
-		})
+		_spec.ClearField(sysrole.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sru.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldName,
-		})
+		_spec.SetField(sysrole.FieldName, field.TypeString, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, sru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -312,6 +235,7 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	sru.mutation.done = true
 	return n, nil
 }
 
@@ -429,6 +353,12 @@ func (sruo *SysRoleUpdateOne) Mutation() *SysRoleMutation {
 	return sruo.mutation
 }
 
+// Where appends a list predicates to the SysRoleUpdate builder.
+func (sruo *SysRoleUpdateOne) Where(ps ...predicate.SysRole) *SysRoleUpdateOne {
+	sruo.mutation.Where(ps...)
+	return sruo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (sruo *SysRoleUpdateOne) Select(field string, fields ...string) *SysRoleUpdateOne {
@@ -438,47 +368,8 @@ func (sruo *SysRoleUpdateOne) Select(field string, fields ...string) *SysRoleUpd
 
 // Save executes the query and returns the updated SysRole entity.
 func (sruo *SysRoleUpdateOne) Save(ctx context.Context) (*SysRole, error) {
-	var (
-		err  error
-		node *SysRole
-	)
 	sruo.defaults()
-	if len(sruo.hooks) == 0 {
-		if err = sruo.check(); err != nil {
-			return nil, err
-		}
-		node, err = sruo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysRoleMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sruo.check(); err != nil {
-				return nil, err
-			}
-			sruo.mutation = mutation
-			node, err = sruo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sruo.hooks) - 1; i >= 0; i-- {
-			if sruo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sruo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sruo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysRole)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysRoleMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysRole, SysRoleMutation](ctx, sruo.sqlSave, sruo.mutation, sruo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -527,16 +418,10 @@ func (sruo *SysRoleUpdateOne) check() error {
 }
 
 func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysrole.Table,
-			Columns: sysrole.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysrole.FieldID,
-			},
-		},
+	if err := sruo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysrole.Table, sysrole.Columns, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
 	id, ok := sruo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysRole.id" for update`)}
@@ -562,72 +447,34 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 		}
 	}
 	if value, ok := sruo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrole.FieldIsDel,
-		})
+		_spec.SetField(sysrole.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sruo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrole.FieldIsActive,
-		})
+		_spec.SetField(sysrole.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sruo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysrole.FieldSort,
-		})
+		_spec.SetField(sysrole.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sruo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysrole.FieldSort,
-		})
+		_spec.AddField(sysrole.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sruo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldMemo,
-		})
+		_spec.SetField(sysrole.FieldMemo, field.TypeString, value)
 	}
 	if sruo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysrole.FieldMemo,
-		})
+		_spec.ClearField(sysrole.FieldMemo, field.TypeString)
 	}
 	if value, ok := sruo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrole.FieldUpdatedAt,
-		})
+		_spec.SetField(sysrole.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sruo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrole.FieldDeletedAt,
-		})
+		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sruo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysrole.FieldDeletedAt,
-		})
+		_spec.ClearField(sysrole.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sruo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldName,
-		})
+		_spec.SetField(sysrole.FieldName, field.TypeString, value)
 	}
 	_node = &SysRole{config: sruo.config}
 	_spec.Assign = _node.assignValues
@@ -640,5 +487,6 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 		}
 		return nil, err
 	}
+	sruo.mutation.done = true
 	return _node, nil
 }

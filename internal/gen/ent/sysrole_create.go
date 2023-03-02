@@ -145,50 +145,8 @@ func (src *SysRoleCreate) Mutation() *SysRoleMutation {
 
 // Save creates the SysRole in the database.
 func (src *SysRoleCreate) Save(ctx context.Context) (*SysRole, error) {
-	var (
-		err  error
-		node *SysRole
-	)
 	src.defaults()
-	if len(src.hooks) == 0 {
-		if err = src.check(); err != nil {
-			return nil, err
-		}
-		node, err = src.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysRoleMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = src.check(); err != nil {
-				return nil, err
-			}
-			src.mutation = mutation
-			if node, err = src.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(src.hooks) - 1; i >= 0; i-- {
-			if src.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = src.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, src.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysRole)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysRoleMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysRole, SysRoleMutation](ctx, src.sqlSave, src.mutation, src.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -284,6 +242,9 @@ func (src *SysRoleCreate) check() error {
 }
 
 func (src *SysRoleCreate) sqlSave(ctx context.Context) (*SysRole, error) {
+	if err := src.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := src.createSpec()
 	if err := sqlgraph.CreateNode(ctx, src.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -298,86 +259,50 @@ func (src *SysRoleCreate) sqlSave(ctx context.Context) (*SysRole, error) {
 			return nil, fmt.Errorf("unexpected SysRole.ID type: %T", _spec.ID.Value)
 		}
 	}
+	src.mutation.id = &_node.ID
+	src.mutation.done = true
 	return _node, nil
 }
 
 func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysRole{config: src.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysrole.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysrole.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysrole.Table, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
 	)
 	if id, ok := src.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := src.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrole.FieldIsDel,
-		})
+		_spec.SetField(sysrole.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := src.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysrole.FieldIsActive,
-		})
+		_spec.SetField(sysrole.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := src.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysrole.FieldSort,
-		})
+		_spec.SetField(sysrole.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := src.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldMemo,
-		})
+		_spec.SetField(sysrole.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := src.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrole.FieldCreatedAt,
-		})
+		_spec.SetField(sysrole.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := src.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrole.FieldUpdatedAt,
-		})
+		_spec.SetField(sysrole.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := src.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysrole.FieldDeletedAt,
-		})
+		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := src.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysrole.FieldName,
-		})
+		_spec.SetField(sysrole.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
 	return _node, _spec

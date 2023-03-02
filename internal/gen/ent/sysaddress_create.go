@@ -335,50 +335,8 @@ func (sac *SysAddressCreate) Mutation() *SysAddressMutation {
 
 // Save creates the SysAddress in the database.
 func (sac *SysAddressCreate) Save(ctx context.Context) (*SysAddress, error) {
-	var (
-		err  error
-		node *SysAddress
-	)
 	sac.defaults()
-	if len(sac.hooks) == 0 {
-		if err = sac.check(); err != nil {
-			return nil, err
-		}
-		node, err = sac.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysAddressMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sac.check(); err != nil {
-				return nil, err
-			}
-			sac.mutation = mutation
-			if node, err = sac.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sac.hooks) - 1; i >= 0; i-- {
-			if sac.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sac.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sac.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysAddress)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysAddressMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysAddress, SysAddressMutation](ctx, sac.sqlSave, sac.mutation, sac.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -516,6 +474,9 @@ func (sac *SysAddressCreate) check() error {
 }
 
 func (sac *SysAddressCreate) sqlSave(ctx context.Context) (*SysAddress, error) {
+	if err := sac.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := sac.createSpec()
 	if err := sqlgraph.CreateNode(ctx, sac.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -530,190 +491,102 @@ func (sac *SysAddressCreate) sqlSave(ctx context.Context) (*SysAddress, error) {
 			return nil, fmt.Errorf("unexpected SysAddress.ID type: %T", _spec.ID.Value)
 		}
 	}
+	sac.mutation.id = &_node.ID
+	sac.mutation.done = true
 	return _node, nil
 }
 
 func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysAddress{config: sac.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysaddress.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysaddress.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysaddress.Table, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
 	)
 	if id, ok := sac.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := sac.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysaddress.FieldIsDel,
-		})
+		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := sac.mutation.OwnerID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldOwnerID,
-		})
+		_spec.SetField(sysaddress.FieldOwnerID, field.TypeString, value)
 		_node.OwnerID = &value
 	}
 	if value, ok := sac.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysaddress.FieldSort,
-		})
+		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := sac.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldCreatedAt,
-		})
+		_spec.SetField(sysaddress.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := sac.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldUpdatedAt,
-		})
+		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := sac.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldDeletedAt,
-		})
+		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := sac.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysaddress.FieldIsActive,
-		})
+		_spec.SetField(sysaddress.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := sac.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldMemo,
-		})
+		_spec.SetField(sysaddress.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := sac.mutation.Country(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountry,
-		})
+		_spec.SetField(sysaddress.FieldCountry, field.TypeString, value)
 		_node.Country = &value
 	}
 	if value, ok := sac.mutation.Provice(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldProvice,
-		})
+		_spec.SetField(sysaddress.FieldProvice, field.TypeString, value)
 		_node.Provice = &value
 	}
 	if value, ok := sac.mutation.City(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCity,
-		})
+		_spec.SetField(sysaddress.FieldCity, field.TypeString, value)
 		_node.City = &value
 	}
 	if value, ok := sac.mutation.County(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCounty,
-		})
+		_spec.SetField(sysaddress.FieldCounty, field.TypeString, value)
 		_node.County = &value
 	}
 	if value, ok := sac.mutation.CountryID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountryID,
-		})
+		_spec.SetField(sysaddress.FieldCountryID, field.TypeString, value)
 		_node.CountryID = &value
 	}
 	if value, ok := sac.mutation.ProviceID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldProviceID,
-		})
+		_spec.SetField(sysaddress.FieldProviceID, field.TypeString, value)
 		_node.ProviceID = &value
 	}
 	if value, ok := sac.mutation.CityID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCityID,
-		})
+		_spec.SetField(sysaddress.FieldCityID, field.TypeString, value)
 		_node.CityID = &value
 	}
 	if value, ok := sac.mutation.CountyID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountyID,
-		})
+		_spec.SetField(sysaddress.FieldCountyID, field.TypeString, value)
 		_node.CountyID = &value
 	}
 	if value, ok := sac.mutation.ZipCode(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldZipCode,
-		})
+		_spec.SetField(sysaddress.FieldZipCode, field.TypeString, value)
 		_node.ZipCode = &value
 	}
 	if value, ok := sac.mutation.Daddr(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldDaddr,
-		})
+		_spec.SetField(sysaddress.FieldDaddr, field.TypeString, value)
 		_node.Daddr = &value
 	}
 	if value, ok := sac.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldName,
-		})
+		_spec.SetField(sysaddress.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
 	if value, ok := sac.mutation.Mobile(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldMobile,
-		})
+		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
 		_node.Mobile = &value
 	}
 	if value, ok := sac.mutation.Creator(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCreator,
-		})
+		_spec.SetField(sysaddress.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
 	}
 	return _node, _spec

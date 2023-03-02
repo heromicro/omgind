@@ -47,8 +47,8 @@ type SysUser struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysUser) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysUser) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysuser.FieldIsDel, sysuser.FieldIsActive:
@@ -68,7 +68,7 @@ func (*SysUser) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysUser fields.
-func (su *SysUser) assignValues(columns []string, values []interface{}) error {
+func (su *SysUser) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -177,7 +177,7 @@ func (su *SysUser) assignValues(columns []string, values []interface{}) error {
 // Note that you need to call SysUser.Unwrap() before calling this method if this SysUser
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (su *SysUser) Update() *SysUserUpdateOne {
-	return (&SysUserClient{config: su.config}).UpdateOne(su)
+	return NewSysUserClient(su.config).UpdateOne(su)
 }
 
 // Unwrap unwraps the SysUser entity that was returned from a transaction after it was closed,
@@ -250,9 +250,3 @@ func (su *SysUser) String() string {
 
 // SysUsers is a parsable slice of SysUser.
 type SysUsers []*SysUser
-
-func (su SysUsers) config(cfg config) {
-	for _i := range su {
-		su[_i].config = cfg
-	}
-}

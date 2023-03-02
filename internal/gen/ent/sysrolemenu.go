@@ -33,8 +33,8 @@ type SysRoleMenu struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysRoleMenu) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysRoleMenu) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysrolemenu.FieldIsDel:
@@ -52,7 +52,7 @@ func (*SysRoleMenu) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysRoleMenu fields.
-func (srm *SysRoleMenu) assignValues(columns []string, values []interface{}) error {
+func (srm *SysRoleMenu) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -117,7 +117,7 @@ func (srm *SysRoleMenu) assignValues(columns []string, values []interface{}) err
 // Note that you need to call SysRoleMenu.Unwrap() before calling this method if this SysRoleMenu
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (srm *SysRoleMenu) Update() *SysRoleMenuUpdateOne {
-	return (&SysRoleMenuClient{config: srm.config}).UpdateOne(srm)
+	return NewSysRoleMenuClient(srm.config).UpdateOne(srm)
 }
 
 // Unwrap unwraps the SysRoleMenu entity that was returned from a transaction after it was closed,
@@ -166,9 +166,3 @@ func (srm *SysRoleMenu) String() string {
 
 // SysRoleMenus is a parsable slice of SysRoleMenu.
 type SysRoleMenus []*SysRoleMenu
-
-func (srm SysRoleMenus) config(cfg config) {
-	for _i := range srm {
-		srm[_i].config = cfg
-	}
-}

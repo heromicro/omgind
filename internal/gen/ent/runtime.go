@@ -39,36 +39,38 @@ func init() {
 	_ = sysaddressMixinFields4
 	sysaddressMixinFields5 := sysaddressMixin[5].Fields()
 	_ = sysaddressMixinFields5
+	sysaddressMixinFields6 := sysaddressMixin[6].Fields()
+	_ = sysaddressMixinFields6
 	sysaddressFields := entity.SysAddress{}.Fields()
 	_ = sysaddressFields
 	// sysaddressDescIsDel is the schema descriptor for is_del field.
-	sysaddressDescIsDel := sysaddressMixinFields0[1].Descriptor()
+	sysaddressDescIsDel := sysaddressMixinFields1[0].Descriptor()
 	// sysaddress.DefaultIsDel holds the default value on creation for the is_del field.
 	sysaddress.DefaultIsDel = sysaddressDescIsDel.Default.(bool)
 	// sysaddressDescOwnerID is the schema descriptor for owner_id field.
-	sysaddressDescOwnerID := sysaddressMixinFields1[0].Descriptor()
+	sysaddressDescOwnerID := sysaddressMixinFields2[0].Descriptor()
 	// sysaddress.OwnerIDValidator is a validator for the "owner_id" field. It is called by the builders before save.
 	sysaddress.OwnerIDValidator = sysaddressDescOwnerID.Validators[0].(func(string) error)
 	// sysaddressDescSort is the schema descriptor for sort field.
-	sysaddressDescSort := sysaddressMixinFields2[0].Descriptor()
+	sysaddressDescSort := sysaddressMixinFields3[0].Descriptor()
 	// sysaddress.DefaultSort holds the default value on creation for the sort field.
 	sysaddress.DefaultSort = sysaddressDescSort.Default.(int32)
 	// sysaddressDescCreatedAt is the schema descriptor for created_at field.
-	sysaddressDescCreatedAt := sysaddressMixinFields3[0].Descriptor()
+	sysaddressDescCreatedAt := sysaddressMixinFields4[0].Descriptor()
 	// sysaddress.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysaddress.DefaultCreatedAt = sysaddressDescCreatedAt.Default.(func() time.Time)
 	// sysaddressDescUpdatedAt is the schema descriptor for updated_at field.
-	sysaddressDescUpdatedAt := sysaddressMixinFields3[1].Descriptor()
+	sysaddressDescUpdatedAt := sysaddressMixinFields4[1].Descriptor()
 	// sysaddress.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysaddress.DefaultUpdatedAt = sysaddressDescUpdatedAt.Default.(func() time.Time)
 	// sysaddress.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysaddress.UpdateDefaultUpdatedAt = sysaddressDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysaddressDescIsActive is the schema descriptor for is_active field.
-	sysaddressDescIsActive := sysaddressMixinFields4[0].Descriptor()
+	sysaddressDescIsActive := sysaddressMixinFields5[0].Descriptor()
 	// sysaddress.DefaultIsActive holds the default value on creation for the is_active field.
 	sysaddress.DefaultIsActive = sysaddressDescIsActive.Default.(bool)
 	// sysaddressDescMemo is the schema descriptor for memo field.
-	sysaddressDescMemo := sysaddressMixinFields5[0].Descriptor()
+	sysaddressDescMemo := sysaddressMixinFields6[0].Descriptor()
 	// sysaddress.DefaultMemo holds the default value on creation for the memo field.
 	sysaddress.DefaultMemo = sysaddressDescMemo.Default.(string)
 	// sysaddress.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
@@ -140,34 +142,36 @@ func init() {
 	_ = sysdictMixinFields3
 	sysdictMixinFields4 := sysdictMixin[4].Fields()
 	_ = sysdictMixinFields4
+	sysdictMixinFields5 := sysdictMixin[5].Fields()
+	_ = sysdictMixinFields5
 	sysdictFields := entity.SysDict{}.Fields()
 	_ = sysdictFields
 	// sysdictDescIsDel is the schema descriptor for is_del field.
-	sysdictDescIsDel := sysdictMixinFields0[1].Descriptor()
+	sysdictDescIsDel := sysdictMixinFields1[0].Descriptor()
 	// sysdict.DefaultIsDel holds the default value on creation for the is_del field.
 	sysdict.DefaultIsDel = sysdictDescIsDel.Default.(bool)
 	// sysdictDescMemo is the schema descriptor for memo field.
-	sysdictDescMemo := sysdictMixinFields1[0].Descriptor()
+	sysdictDescMemo := sysdictMixinFields2[0].Descriptor()
 	// sysdict.DefaultMemo holds the default value on creation for the memo field.
 	sysdict.DefaultMemo = sysdictDescMemo.Default.(string)
 	// sysdict.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	sysdict.MemoValidator = sysdictDescMemo.Validators[0].(func(string) error)
 	// sysdictDescSort is the schema descriptor for sort field.
-	sysdictDescSort := sysdictMixinFields2[0].Descriptor()
+	sysdictDescSort := sysdictMixinFields3[0].Descriptor()
 	// sysdict.DefaultSort holds the default value on creation for the sort field.
 	sysdict.DefaultSort = sysdictDescSort.Default.(int32)
 	// sysdictDescCreatedAt is the schema descriptor for created_at field.
-	sysdictDescCreatedAt := sysdictMixinFields3[0].Descriptor()
+	sysdictDescCreatedAt := sysdictMixinFields4[0].Descriptor()
 	// sysdict.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysdict.DefaultCreatedAt = sysdictDescCreatedAt.Default.(func() time.Time)
 	// sysdictDescUpdatedAt is the schema descriptor for updated_at field.
-	sysdictDescUpdatedAt := sysdictMixinFields3[1].Descriptor()
+	sysdictDescUpdatedAt := sysdictMixinFields4[1].Descriptor()
 	// sysdict.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysdict.DefaultUpdatedAt = sysdictDescUpdatedAt.Default.(func() time.Time)
 	// sysdict.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysdict.UpdateDefaultUpdatedAt = sysdictDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysdictDescIsActive is the schema descriptor for is_active field.
-	sysdictDescIsActive := sysdictMixinFields4[0].Descriptor()
+	sysdictDescIsActive := sysdictMixinFields5[0].Descriptor()
 	// sysdict.DefaultIsActive holds the default value on creation for the is_active field.
 	sysdict.DefaultIsActive = sysdictDescIsActive.Default.(bool)
 	// sysdictDescNameCn is the schema descriptor for name_cn field.
@@ -209,34 +213,36 @@ func init() {
 	_ = sysdictitemMixinFields3
 	sysdictitemMixinFields4 := sysdictitemMixin[4].Fields()
 	_ = sysdictitemMixinFields4
+	sysdictitemMixinFields5 := sysdictitemMixin[5].Fields()
+	_ = sysdictitemMixinFields5
 	sysdictitemFields := entity.SysDictItem{}.Fields()
 	_ = sysdictitemFields
 	// sysdictitemDescIsDel is the schema descriptor for is_del field.
-	sysdictitemDescIsDel := sysdictitemMixinFields0[1].Descriptor()
+	sysdictitemDescIsDel := sysdictitemMixinFields1[0].Descriptor()
 	// sysdictitem.DefaultIsDel holds the default value on creation for the is_del field.
 	sysdictitem.DefaultIsDel = sysdictitemDescIsDel.Default.(bool)
 	// sysdictitemDescMemo is the schema descriptor for memo field.
-	sysdictitemDescMemo := sysdictitemMixinFields1[0].Descriptor()
+	sysdictitemDescMemo := sysdictitemMixinFields2[0].Descriptor()
 	// sysdictitem.DefaultMemo holds the default value on creation for the memo field.
 	sysdictitem.DefaultMemo = sysdictitemDescMemo.Default.(string)
 	// sysdictitem.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	sysdictitem.MemoValidator = sysdictitemDescMemo.Validators[0].(func(string) error)
 	// sysdictitemDescSort is the schema descriptor for sort field.
-	sysdictitemDescSort := sysdictitemMixinFields2[0].Descriptor()
+	sysdictitemDescSort := sysdictitemMixinFields3[0].Descriptor()
 	// sysdictitem.DefaultSort holds the default value on creation for the sort field.
 	sysdictitem.DefaultSort = sysdictitemDescSort.Default.(int32)
 	// sysdictitemDescCreatedAt is the schema descriptor for created_at field.
-	sysdictitemDescCreatedAt := sysdictitemMixinFields3[0].Descriptor()
+	sysdictitemDescCreatedAt := sysdictitemMixinFields4[0].Descriptor()
 	// sysdictitem.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysdictitem.DefaultCreatedAt = sysdictitemDescCreatedAt.Default.(func() time.Time)
 	// sysdictitemDescUpdatedAt is the schema descriptor for updated_at field.
-	sysdictitemDescUpdatedAt := sysdictitemMixinFields3[1].Descriptor()
+	sysdictitemDescUpdatedAt := sysdictitemMixinFields4[1].Descriptor()
 	// sysdictitem.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysdictitem.DefaultUpdatedAt = sysdictitemDescUpdatedAt.Default.(func() time.Time)
 	// sysdictitem.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysdictitem.UpdateDefaultUpdatedAt = sysdictitemDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysdictitemDescIsActive is the schema descriptor for is_active field.
-	sysdictitemDescIsActive := sysdictitemMixinFields4[0].Descriptor()
+	sysdictitemDescIsActive := sysdictitemMixinFields5[0].Descriptor()
 	// sysdictitem.DefaultIsActive holds the default value on creation for the is_active field.
 	sysdictitem.DefaultIsActive = sysdictitemDescIsActive.Default.(bool)
 	// sysdictitemDescLabel is the schema descriptor for label field.
@@ -292,32 +298,34 @@ func init() {
 	_ = sysdistrictMixinFields3
 	sysdistrictMixinFields4 := sysdistrictMixin[4].Fields()
 	_ = sysdistrictMixinFields4
+	sysdistrictMixinFields5 := sysdistrictMixin[5].Fields()
+	_ = sysdistrictMixinFields5
 	sysdistrictFields := entity.SysDistrict{}.Fields()
 	_ = sysdistrictFields
 	// sysdistrictDescIsDel is the schema descriptor for is_del field.
-	sysdistrictDescIsDel := sysdistrictMixinFields0[1].Descriptor()
+	sysdistrictDescIsDel := sysdistrictMixinFields1[0].Descriptor()
 	// sysdistrict.DefaultIsDel holds the default value on creation for the is_del field.
 	sysdistrict.DefaultIsDel = sysdistrictDescIsDel.Default.(bool)
 	// sysdistrictDescSort is the schema descriptor for sort field.
-	sysdistrictDescSort := sysdistrictMixinFields1[0].Descriptor()
+	sysdistrictDescSort := sysdistrictMixinFields2[0].Descriptor()
 	// sysdistrict.DefaultSort holds the default value on creation for the sort field.
 	sysdistrict.DefaultSort = sysdistrictDescSort.Default.(int32)
 	// sysdistrictDescCreatedAt is the schema descriptor for created_at field.
-	sysdistrictDescCreatedAt := sysdistrictMixinFields2[0].Descriptor()
+	sysdistrictDescCreatedAt := sysdistrictMixinFields3[0].Descriptor()
 	// sysdistrict.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysdistrict.DefaultCreatedAt = sysdistrictDescCreatedAt.Default.(func() time.Time)
 	// sysdistrictDescUpdatedAt is the schema descriptor for updated_at field.
-	sysdistrictDescUpdatedAt := sysdistrictMixinFields2[1].Descriptor()
+	sysdistrictDescUpdatedAt := sysdistrictMixinFields3[1].Descriptor()
 	// sysdistrict.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysdistrict.DefaultUpdatedAt = sysdistrictDescUpdatedAt.Default.(func() time.Time)
 	// sysdistrict.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysdistrict.UpdateDefaultUpdatedAt = sysdistrictDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysdistrictDescIsActive is the schema descriptor for is_active field.
-	sysdistrictDescIsActive := sysdistrictMixinFields3[0].Descriptor()
+	sysdistrictDescIsActive := sysdistrictMixinFields4[0].Descriptor()
 	// sysdistrict.DefaultIsActive holds the default value on creation for the is_active field.
 	sysdistrict.DefaultIsActive = sysdistrictDescIsActive.Default.(bool)
 	// sysdistrictDescIsLeaf is the schema descriptor for is_leaf field.
-	sysdistrictDescIsLeaf := sysdistrictMixinFields4[4].Descriptor()
+	sysdistrictDescIsLeaf := sysdistrictMixinFields5[4].Descriptor()
 	// sysdistrict.DefaultIsLeaf holds the default value on creation for the is_leaf field.
 	sysdistrict.DefaultIsLeaf = sysdistrictDescIsLeaf.Default.(bool)
 	// sysdistrictDescName is the schema descriptor for name field.
@@ -421,30 +429,32 @@ func init() {
 	_ = sysjwtblockMixinFields2
 	sysjwtblockMixinFields3 := sysjwtblockMixin[3].Fields()
 	_ = sysjwtblockMixinFields3
+	sysjwtblockMixinFields4 := sysjwtblockMixin[4].Fields()
+	_ = sysjwtblockMixinFields4
 	sysjwtblockFields := entity.SysJwtBlock{}.Fields()
 	_ = sysjwtblockFields
 	// sysjwtblockDescIsDel is the schema descriptor for is_del field.
-	sysjwtblockDescIsDel := sysjwtblockMixinFields0[1].Descriptor()
+	sysjwtblockDescIsDel := sysjwtblockMixinFields1[0].Descriptor()
 	// sysjwtblock.DefaultIsDel holds the default value on creation for the is_del field.
 	sysjwtblock.DefaultIsDel = sysjwtblockDescIsDel.Default.(bool)
 	// sysjwtblockDescMemo is the schema descriptor for memo field.
-	sysjwtblockDescMemo := sysjwtblockMixinFields1[0].Descriptor()
+	sysjwtblockDescMemo := sysjwtblockMixinFields2[0].Descriptor()
 	// sysjwtblock.DefaultMemo holds the default value on creation for the memo field.
 	sysjwtblock.DefaultMemo = sysjwtblockDescMemo.Default.(string)
 	// sysjwtblock.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	sysjwtblock.MemoValidator = sysjwtblockDescMemo.Validators[0].(func(string) error)
 	// sysjwtblockDescCreatedAt is the schema descriptor for created_at field.
-	sysjwtblockDescCreatedAt := sysjwtblockMixinFields2[0].Descriptor()
+	sysjwtblockDescCreatedAt := sysjwtblockMixinFields3[0].Descriptor()
 	// sysjwtblock.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysjwtblock.DefaultCreatedAt = sysjwtblockDescCreatedAt.Default.(func() time.Time)
 	// sysjwtblockDescUpdatedAt is the schema descriptor for updated_at field.
-	sysjwtblockDescUpdatedAt := sysjwtblockMixinFields2[1].Descriptor()
+	sysjwtblockDescUpdatedAt := sysjwtblockMixinFields3[1].Descriptor()
 	// sysjwtblock.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysjwtblock.DefaultUpdatedAt = sysjwtblockDescUpdatedAt.Default.(func() time.Time)
 	// sysjwtblock.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysjwtblock.UpdateDefaultUpdatedAt = sysjwtblockDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysjwtblockDescIsActive is the schema descriptor for is_active field.
-	sysjwtblockDescIsActive := sysjwtblockMixinFields3[0].Descriptor()
+	sysjwtblockDescIsActive := sysjwtblockMixinFields4[0].Descriptor()
 	// sysjwtblock.DefaultIsActive holds the default value on creation for the is_active field.
 	sysjwtblock.DefaultIsActive = sysjwtblockDescIsActive.Default.(bool)
 	// sysjwtblockDescJwt is the schema descriptor for jwt field.
@@ -476,14 +486,16 @@ func init() {
 	_ = sysloggingMixinFields0
 	sysloggingMixinFields1 := sysloggingMixin[1].Fields()
 	_ = sysloggingMixinFields1
+	sysloggingMixinFields2 := sysloggingMixin[2].Fields()
+	_ = sysloggingMixinFields2
 	sysloggingFields := entity.SysLogging{}.Fields()
 	_ = sysloggingFields
 	// sysloggingDescIsDel is the schema descriptor for is_del field.
-	sysloggingDescIsDel := sysloggingMixinFields0[1].Descriptor()
+	sysloggingDescIsDel := sysloggingMixinFields1[0].Descriptor()
 	// syslogging.DefaultIsDel holds the default value on creation for the is_del field.
 	syslogging.DefaultIsDel = sysloggingDescIsDel.Default.(bool)
 	// sysloggingDescMemo is the schema descriptor for memo field.
-	sysloggingDescMemo := sysloggingMixinFields1[0].Descriptor()
+	sysloggingDescMemo := sysloggingMixinFields2[0].Descriptor()
 	// syslogging.DefaultMemo holds the default value on creation for the memo field.
 	syslogging.DefaultMemo = sysloggingDescMemo.Default.(string)
 	// syslogging.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
@@ -547,34 +559,36 @@ func init() {
 	_ = sysmenuMixinFields3
 	sysmenuMixinFields4 := sysmenuMixin[4].Fields()
 	_ = sysmenuMixinFields4
+	sysmenuMixinFields5 := sysmenuMixin[5].Fields()
+	_ = sysmenuMixinFields5
 	sysmenuFields := entity.SysMenu{}.Fields()
 	_ = sysmenuFields
 	// sysmenuDescIsDel is the schema descriptor for is_del field.
-	sysmenuDescIsDel := sysmenuMixinFields0[1].Descriptor()
+	sysmenuDescIsDel := sysmenuMixinFields1[0].Descriptor()
 	// sysmenu.DefaultIsDel holds the default value on creation for the is_del field.
 	sysmenu.DefaultIsDel = sysmenuDescIsDel.Default.(bool)
 	// sysmenuDescMemo is the schema descriptor for memo field.
-	sysmenuDescMemo := sysmenuMixinFields1[0].Descriptor()
+	sysmenuDescMemo := sysmenuMixinFields2[0].Descriptor()
 	// sysmenu.DefaultMemo holds the default value on creation for the memo field.
 	sysmenu.DefaultMemo = sysmenuDescMemo.Default.(string)
 	// sysmenu.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	sysmenu.MemoValidator = sysmenuDescMemo.Validators[0].(func(string) error)
 	// sysmenuDescSort is the schema descriptor for sort field.
-	sysmenuDescSort := sysmenuMixinFields2[0].Descriptor()
+	sysmenuDescSort := sysmenuMixinFields3[0].Descriptor()
 	// sysmenu.DefaultSort holds the default value on creation for the sort field.
 	sysmenu.DefaultSort = sysmenuDescSort.Default.(int32)
 	// sysmenuDescCreatedAt is the schema descriptor for created_at field.
-	sysmenuDescCreatedAt := sysmenuMixinFields3[0].Descriptor()
+	sysmenuDescCreatedAt := sysmenuMixinFields4[0].Descriptor()
 	// sysmenu.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysmenu.DefaultCreatedAt = sysmenuDescCreatedAt.Default.(func() time.Time)
 	// sysmenuDescUpdatedAt is the schema descriptor for updated_at field.
-	sysmenuDescUpdatedAt := sysmenuMixinFields3[1].Descriptor()
+	sysmenuDescUpdatedAt := sysmenuMixinFields4[1].Descriptor()
 	// sysmenu.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysmenu.DefaultUpdatedAt = sysmenuDescUpdatedAt.Default.(func() time.Time)
 	// sysmenu.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysmenu.UpdateDefaultUpdatedAt = sysmenuDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysmenuDescIsActive is the schema descriptor for is_active field.
-	sysmenuDescIsActive := sysmenuMixinFields4[0].Descriptor()
+	sysmenuDescIsActive := sysmenuMixinFields5[0].Descriptor()
 	// sysmenu.DefaultIsActive holds the default value on creation for the is_active field.
 	sysmenu.DefaultIsActive = sysmenuDescIsActive.Default.(bool)
 	// sysmenuDescName is the schema descriptor for name field.
@@ -654,32 +668,34 @@ func init() {
 	_ = sysmenuactionMixinFields3
 	sysmenuactionMixinFields4 := sysmenuactionMixin[4].Fields()
 	_ = sysmenuactionMixinFields4
+	sysmenuactionMixinFields5 := sysmenuactionMixin[5].Fields()
+	_ = sysmenuactionMixinFields5
 	sysmenuactionFields := entity.SysMenuAction{}.Fields()
 	_ = sysmenuactionFields
 	// sysmenuactionDescIsDel is the schema descriptor for is_del field.
-	sysmenuactionDescIsDel := sysmenuactionMixinFields0[1].Descriptor()
+	sysmenuactionDescIsDel := sysmenuactionMixinFields1[0].Descriptor()
 	// sysmenuaction.DefaultIsDel holds the default value on creation for the is_del field.
 	sysmenuaction.DefaultIsDel = sysmenuactionDescIsDel.Default.(bool)
 	// sysmenuactionDescSort is the schema descriptor for sort field.
-	sysmenuactionDescSort := sysmenuactionMixinFields1[0].Descriptor()
+	sysmenuactionDescSort := sysmenuactionMixinFields2[0].Descriptor()
 	// sysmenuaction.DefaultSort holds the default value on creation for the sort field.
 	sysmenuaction.DefaultSort = sysmenuactionDescSort.Default.(int32)
 	// sysmenuactionDescIsActive is the schema descriptor for is_active field.
-	sysmenuactionDescIsActive := sysmenuactionMixinFields2[0].Descriptor()
+	sysmenuactionDescIsActive := sysmenuactionMixinFields3[0].Descriptor()
 	// sysmenuaction.DefaultIsActive holds the default value on creation for the is_active field.
 	sysmenuaction.DefaultIsActive = sysmenuactionDescIsActive.Default.(bool)
 	// sysmenuactionDescMemo is the schema descriptor for memo field.
-	sysmenuactionDescMemo := sysmenuactionMixinFields3[0].Descriptor()
+	sysmenuactionDescMemo := sysmenuactionMixinFields4[0].Descriptor()
 	// sysmenuaction.DefaultMemo holds the default value on creation for the memo field.
 	sysmenuaction.DefaultMemo = sysmenuactionDescMemo.Default.(string)
 	// sysmenuaction.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	sysmenuaction.MemoValidator = sysmenuactionDescMemo.Validators[0].(func(string) error)
 	// sysmenuactionDescCreatedAt is the schema descriptor for created_at field.
-	sysmenuactionDescCreatedAt := sysmenuactionMixinFields4[0].Descriptor()
+	sysmenuactionDescCreatedAt := sysmenuactionMixinFields5[0].Descriptor()
 	// sysmenuaction.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysmenuaction.DefaultCreatedAt = sysmenuactionDescCreatedAt.Default.(func() time.Time)
 	// sysmenuactionDescUpdatedAt is the schema descriptor for updated_at field.
-	sysmenuactionDescUpdatedAt := sysmenuactionMixinFields4[1].Descriptor()
+	sysmenuactionDescUpdatedAt := sysmenuactionMixinFields5[1].Descriptor()
 	// sysmenuaction.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysmenuaction.DefaultUpdatedAt = sysmenuactionDescUpdatedAt.Default.(func() time.Time)
 	// sysmenuaction.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
@@ -769,34 +785,36 @@ func init() {
 	_ = sysmenuactionresourceMixinFields3
 	sysmenuactionresourceMixinFields4 := sysmenuactionresourceMixin[4].Fields()
 	_ = sysmenuactionresourceMixinFields4
+	sysmenuactionresourceMixinFields5 := sysmenuactionresourceMixin[5].Fields()
+	_ = sysmenuactionresourceMixinFields5
 	sysmenuactionresourceFields := entity.SysMenuActionResource{}.Fields()
 	_ = sysmenuactionresourceFields
 	// sysmenuactionresourceDescIsDel is the schema descriptor for is_del field.
-	sysmenuactionresourceDescIsDel := sysmenuactionresourceMixinFields0[1].Descriptor()
+	sysmenuactionresourceDescIsDel := sysmenuactionresourceMixinFields1[0].Descriptor()
 	// sysmenuactionresource.DefaultIsDel holds the default value on creation for the is_del field.
 	sysmenuactionresource.DefaultIsDel = sysmenuactionresourceDescIsDel.Default.(bool)
 	// sysmenuactionresourceDescSort is the schema descriptor for sort field.
-	sysmenuactionresourceDescSort := sysmenuactionresourceMixinFields1[0].Descriptor()
+	sysmenuactionresourceDescSort := sysmenuactionresourceMixinFields2[0].Descriptor()
 	// sysmenuactionresource.DefaultSort holds the default value on creation for the sort field.
 	sysmenuactionresource.DefaultSort = sysmenuactionresourceDescSort.Default.(int32)
 	// sysmenuactionresourceDescMemo is the schema descriptor for memo field.
-	sysmenuactionresourceDescMemo := sysmenuactionresourceMixinFields2[0].Descriptor()
+	sysmenuactionresourceDescMemo := sysmenuactionresourceMixinFields3[0].Descriptor()
 	// sysmenuactionresource.DefaultMemo holds the default value on creation for the memo field.
 	sysmenuactionresource.DefaultMemo = sysmenuactionresourceDescMemo.Default.(string)
 	// sysmenuactionresource.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	sysmenuactionresource.MemoValidator = sysmenuactionresourceDescMemo.Validators[0].(func(string) error)
 	// sysmenuactionresourceDescCreatedAt is the schema descriptor for created_at field.
-	sysmenuactionresourceDescCreatedAt := sysmenuactionresourceMixinFields3[0].Descriptor()
+	sysmenuactionresourceDescCreatedAt := sysmenuactionresourceMixinFields4[0].Descriptor()
 	// sysmenuactionresource.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysmenuactionresource.DefaultCreatedAt = sysmenuactionresourceDescCreatedAt.Default.(func() time.Time)
 	// sysmenuactionresourceDescUpdatedAt is the schema descriptor for updated_at field.
-	sysmenuactionresourceDescUpdatedAt := sysmenuactionresourceMixinFields3[1].Descriptor()
+	sysmenuactionresourceDescUpdatedAt := sysmenuactionresourceMixinFields4[1].Descriptor()
 	// sysmenuactionresource.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysmenuactionresource.DefaultUpdatedAt = sysmenuactionresourceDescUpdatedAt.Default.(func() time.Time)
 	// sysmenuactionresource.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysmenuactionresource.UpdateDefaultUpdatedAt = sysmenuactionresourceDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysmenuactionresourceDescIsActive is the schema descriptor for is_active field.
-	sysmenuactionresourceDescIsActive := sysmenuactionresourceMixinFields4[0].Descriptor()
+	sysmenuactionresourceDescIsActive := sysmenuactionresourceMixinFields5[0].Descriptor()
 	// sysmenuactionresource.DefaultIsActive holds the default value on creation for the is_active field.
 	sysmenuactionresource.DefaultIsActive = sysmenuactionresourceDescIsActive.Default.(bool)
 	// sysmenuactionresourceDescMethod is the schema descriptor for method field.
@@ -884,32 +902,34 @@ func init() {
 	_ = sysroleMixinFields3
 	sysroleMixinFields4 := sysroleMixin[4].Fields()
 	_ = sysroleMixinFields4
+	sysroleMixinFields5 := sysroleMixin[5].Fields()
+	_ = sysroleMixinFields5
 	sysroleFields := entity.SysRole{}.Fields()
 	_ = sysroleFields
 	// sysroleDescIsDel is the schema descriptor for is_del field.
-	sysroleDescIsDel := sysroleMixinFields0[1].Descriptor()
+	sysroleDescIsDel := sysroleMixinFields1[0].Descriptor()
 	// sysrole.DefaultIsDel holds the default value on creation for the is_del field.
 	sysrole.DefaultIsDel = sysroleDescIsDel.Default.(bool)
 	// sysroleDescIsActive is the schema descriptor for is_active field.
-	sysroleDescIsActive := sysroleMixinFields1[0].Descriptor()
+	sysroleDescIsActive := sysroleMixinFields2[0].Descriptor()
 	// sysrole.DefaultIsActive holds the default value on creation for the is_active field.
 	sysrole.DefaultIsActive = sysroleDescIsActive.Default.(bool)
 	// sysroleDescSort is the schema descriptor for sort field.
-	sysroleDescSort := sysroleMixinFields2[0].Descriptor()
+	sysroleDescSort := sysroleMixinFields3[0].Descriptor()
 	// sysrole.DefaultSort holds the default value on creation for the sort field.
 	sysrole.DefaultSort = sysroleDescSort.Default.(int32)
 	// sysroleDescMemo is the schema descriptor for memo field.
-	sysroleDescMemo := sysroleMixinFields3[0].Descriptor()
+	sysroleDescMemo := sysroleMixinFields4[0].Descriptor()
 	// sysrole.DefaultMemo holds the default value on creation for the memo field.
 	sysrole.DefaultMemo = sysroleDescMemo.Default.(string)
 	// sysrole.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	sysrole.MemoValidator = sysroleDescMemo.Validators[0].(func(string) error)
 	// sysroleDescCreatedAt is the schema descriptor for created_at field.
-	sysroleDescCreatedAt := sysroleMixinFields4[0].Descriptor()
+	sysroleDescCreatedAt := sysroleMixinFields5[0].Descriptor()
 	// sysrole.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysrole.DefaultCreatedAt = sysroleDescCreatedAt.Default.(func() time.Time)
 	// sysroleDescUpdatedAt is the schema descriptor for updated_at field.
-	sysroleDescUpdatedAt := sysroleMixinFields4[1].Descriptor()
+	sysroleDescUpdatedAt := sysroleMixinFields5[1].Descriptor()
 	// sysrole.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysrole.DefaultUpdatedAt = sysroleDescUpdatedAt.Default.(func() time.Time)
 	// sysrole.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
@@ -958,18 +978,20 @@ func init() {
 	_ = sysrolemenuMixinFields0
 	sysrolemenuMixinFields1 := sysrolemenuMixin[1].Fields()
 	_ = sysrolemenuMixinFields1
+	sysrolemenuMixinFields2 := sysrolemenuMixin[2].Fields()
+	_ = sysrolemenuMixinFields2
 	sysrolemenuFields := entity.SysRoleMenu{}.Fields()
 	_ = sysrolemenuFields
 	// sysrolemenuDescIsDel is the schema descriptor for is_del field.
-	sysrolemenuDescIsDel := sysrolemenuMixinFields0[1].Descriptor()
+	sysrolemenuDescIsDel := sysrolemenuMixinFields1[0].Descriptor()
 	// sysrolemenu.DefaultIsDel holds the default value on creation for the is_del field.
 	sysrolemenu.DefaultIsDel = sysrolemenuDescIsDel.Default.(bool)
 	// sysrolemenuDescCreatedAt is the schema descriptor for created_at field.
-	sysrolemenuDescCreatedAt := sysrolemenuMixinFields1[0].Descriptor()
+	sysrolemenuDescCreatedAt := sysrolemenuMixinFields2[0].Descriptor()
 	// sysrolemenu.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysrolemenu.DefaultCreatedAt = sysrolemenuDescCreatedAt.Default.(func() time.Time)
 	// sysrolemenuDescUpdatedAt is the schema descriptor for updated_at field.
-	sysrolemenuDescUpdatedAt := sysrolemenuMixinFields1[1].Descriptor()
+	sysrolemenuDescUpdatedAt := sysrolemenuMixinFields2[1].Descriptor()
 	// sysrolemenu.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysrolemenu.DefaultUpdatedAt = sysrolemenuDescUpdatedAt.Default.(func() time.Time)
 	// sysrolemenu.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
@@ -1043,28 +1065,30 @@ func init() {
 	_ = sysuserMixinFields2
 	sysuserMixinFields3 := sysuserMixin[3].Fields()
 	_ = sysuserMixinFields3
+	sysuserMixinFields4 := sysuserMixin[4].Fields()
+	_ = sysuserMixinFields4
 	sysuserFields := entity.SysUser{}.Fields()
 	_ = sysuserFields
 	// sysuserDescIsDel is the schema descriptor for is_del field.
-	sysuserDescIsDel := sysuserMixinFields0[1].Descriptor()
+	sysuserDescIsDel := sysuserMixinFields1[0].Descriptor()
 	// sysuser.DefaultIsDel holds the default value on creation for the is_del field.
 	sysuser.DefaultIsDel = sysuserDescIsDel.Default.(bool)
 	// sysuserDescSort is the schema descriptor for sort field.
-	sysuserDescSort := sysuserMixinFields1[0].Descriptor()
+	sysuserDescSort := sysuserMixinFields2[0].Descriptor()
 	// sysuser.DefaultSort holds the default value on creation for the sort field.
 	sysuser.DefaultSort = sysuserDescSort.Default.(int32)
 	// sysuserDescCreatedAt is the schema descriptor for created_at field.
-	sysuserDescCreatedAt := sysuserMixinFields2[0].Descriptor()
+	sysuserDescCreatedAt := sysuserMixinFields3[0].Descriptor()
 	// sysuser.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysuser.DefaultCreatedAt = sysuserDescCreatedAt.Default.(func() time.Time)
 	// sysuserDescUpdatedAt is the schema descriptor for updated_at field.
-	sysuserDescUpdatedAt := sysuserMixinFields2[1].Descriptor()
+	sysuserDescUpdatedAt := sysuserMixinFields3[1].Descriptor()
 	// sysuser.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysuser.DefaultUpdatedAt = sysuserDescUpdatedAt.Default.(func() time.Time)
 	// sysuser.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysuser.UpdateDefaultUpdatedAt = sysuserDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysuserDescIsActive is the schema descriptor for is_active field.
-	sysuserDescIsActive := sysuserMixinFields3[0].Descriptor()
+	sysuserDescIsActive := sysuserMixinFields4[0].Descriptor()
 	// sysuser.DefaultIsActive holds the default value on creation for the is_active field.
 	sysuser.DefaultIsActive = sysuserDescIsActive.Default.(bool)
 	// sysuserDescUserName is the schema descriptor for user_name field.
@@ -1139,18 +1163,20 @@ func init() {
 	_ = sysuserroleMixinFields0
 	sysuserroleMixinFields1 := sysuserroleMixin[1].Fields()
 	_ = sysuserroleMixinFields1
+	sysuserroleMixinFields2 := sysuserroleMixin[2].Fields()
+	_ = sysuserroleMixinFields2
 	sysuserroleFields := entity.SysUserRole{}.Fields()
 	_ = sysuserroleFields
 	// sysuserroleDescIsDel is the schema descriptor for is_del field.
-	sysuserroleDescIsDel := sysuserroleMixinFields0[1].Descriptor()
+	sysuserroleDescIsDel := sysuserroleMixinFields1[0].Descriptor()
 	// sysuserrole.DefaultIsDel holds the default value on creation for the is_del field.
 	sysuserrole.DefaultIsDel = sysuserroleDescIsDel.Default.(bool)
 	// sysuserroleDescCreatedAt is the schema descriptor for created_at field.
-	sysuserroleDescCreatedAt := sysuserroleMixinFields1[0].Descriptor()
+	sysuserroleDescCreatedAt := sysuserroleMixinFields2[0].Descriptor()
 	// sysuserrole.DefaultCreatedAt holds the default value on creation for the created_at field.
 	sysuserrole.DefaultCreatedAt = sysuserroleDescCreatedAt.Default.(func() time.Time)
 	// sysuserroleDescUpdatedAt is the schema descriptor for updated_at field.
-	sysuserroleDescUpdatedAt := sysuserroleMixinFields1[1].Descriptor()
+	sysuserroleDescUpdatedAt := sysuserroleMixinFields2[1].Descriptor()
 	// sysuserrole.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	sysuserrole.DefaultUpdatedAt = sysuserroleDescUpdatedAt.Default.(func() time.Time)
 	// sysuserrole.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
@@ -1222,34 +1248,36 @@ func init() {
 	_ = xxxdemoMixinFields3
 	xxxdemoMixinFields4 := xxxdemoMixin[4].Fields()
 	_ = xxxdemoMixinFields4
+	xxxdemoMixinFields5 := xxxdemoMixin[5].Fields()
+	_ = xxxdemoMixinFields5
 	xxxdemoFields := entity.XxxDemo{}.Fields()
 	_ = xxxdemoFields
 	// xxxdemoDescIsDel is the schema descriptor for is_del field.
-	xxxdemoDescIsDel := xxxdemoMixinFields0[1].Descriptor()
+	xxxdemoDescIsDel := xxxdemoMixinFields1[0].Descriptor()
 	// xxxdemo.DefaultIsDel holds the default value on creation for the is_del field.
 	xxxdemo.DefaultIsDel = xxxdemoDescIsDel.Default.(bool)
 	// xxxdemoDescMemo is the schema descriptor for memo field.
-	xxxdemoDescMemo := xxxdemoMixinFields1[0].Descriptor()
+	xxxdemoDescMemo := xxxdemoMixinFields2[0].Descriptor()
 	// xxxdemo.DefaultMemo holds the default value on creation for the memo field.
 	xxxdemo.DefaultMemo = xxxdemoDescMemo.Default.(string)
 	// xxxdemo.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	xxxdemo.MemoValidator = xxxdemoDescMemo.Validators[0].(func(string) error)
 	// xxxdemoDescSort is the schema descriptor for sort field.
-	xxxdemoDescSort := xxxdemoMixinFields2[0].Descriptor()
+	xxxdemoDescSort := xxxdemoMixinFields3[0].Descriptor()
 	// xxxdemo.DefaultSort holds the default value on creation for the sort field.
 	xxxdemo.DefaultSort = xxxdemoDescSort.Default.(int32)
 	// xxxdemoDescCreatedAt is the schema descriptor for created_at field.
-	xxxdemoDescCreatedAt := xxxdemoMixinFields3[0].Descriptor()
+	xxxdemoDescCreatedAt := xxxdemoMixinFields4[0].Descriptor()
 	// xxxdemo.DefaultCreatedAt holds the default value on creation for the created_at field.
 	xxxdemo.DefaultCreatedAt = xxxdemoDescCreatedAt.Default.(func() time.Time)
 	// xxxdemoDescUpdatedAt is the schema descriptor for updated_at field.
-	xxxdemoDescUpdatedAt := xxxdemoMixinFields3[1].Descriptor()
+	xxxdemoDescUpdatedAt := xxxdemoMixinFields4[1].Descriptor()
 	// xxxdemo.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	xxxdemo.DefaultUpdatedAt = xxxdemoDescUpdatedAt.Default.(func() time.Time)
 	// xxxdemo.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	xxxdemo.UpdateDefaultUpdatedAt = xxxdemoDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// xxxdemoDescIsActive is the schema descriptor for is_active field.
-	xxxdemoDescIsActive := xxxdemoMixinFields4[0].Descriptor()
+	xxxdemoDescIsActive := xxxdemoMixinFields5[0].Descriptor()
 	// xxxdemo.DefaultIsActive holds the default value on creation for the is_active field.
 	xxxdemo.DefaultIsActive = xxxdemoDescIsActive.Default.(bool)
 	// xxxdemoDescCode is the schema descriptor for code field.

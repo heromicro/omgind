@@ -39,8 +39,8 @@ type SysMenuActionResource struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysMenuActionResource) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysMenuActionResource) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysmenuactionresource.FieldIsDel, sysmenuactionresource.FieldIsActive:
@@ -60,7 +60,7 @@ func (*SysMenuActionResource) scanValues(columns []string) ([]interface{}, error
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysMenuActionResource fields.
-func (smar *SysMenuActionResource) assignValues(columns []string, values []interface{}) error {
+func (smar *SysMenuActionResource) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -143,7 +143,7 @@ func (smar *SysMenuActionResource) assignValues(columns []string, values []inter
 // Note that you need to call SysMenuActionResource.Unwrap() before calling this method if this SysMenuActionResource
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (smar *SysMenuActionResource) Update() *SysMenuActionResourceUpdateOne {
-	return (&SysMenuActionResourceClient{config: smar.config}).UpdateOne(smar)
+	return NewSysMenuActionResourceClient(smar.config).UpdateOne(smar)
 }
 
 // Unwrap unwraps the SysMenuActionResource entity that was returned from a transaction after it was closed,
@@ -201,9 +201,3 @@ func (smar *SysMenuActionResource) String() string {
 
 // SysMenuActionResources is a parsable slice of SysMenuActionResource.
 type SysMenuActionResources []*SysMenuActionResource
-
-func (smar SysMenuActionResources) config(cfg config) {
-	for _i := range smar {
-		smar[_i].config = cfg
-	}
-}

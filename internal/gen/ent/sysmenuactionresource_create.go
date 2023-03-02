@@ -157,50 +157,8 @@ func (smarc *SysMenuActionResourceCreate) Mutation() *SysMenuActionResourceMutat
 
 // Save creates the SysMenuActionResource in the database.
 func (smarc *SysMenuActionResourceCreate) Save(ctx context.Context) (*SysMenuActionResource, error) {
-	var (
-		err  error
-		node *SysMenuActionResource
-	)
 	smarc.defaults()
-	if len(smarc.hooks) == 0 {
-		if err = smarc.check(); err != nil {
-			return nil, err
-		}
-		node, err = smarc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysMenuActionResourceMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = smarc.check(); err != nil {
-				return nil, err
-			}
-			smarc.mutation = mutation
-			if node, err = smarc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(smarc.hooks) - 1; i >= 0; i-- {
-			if smarc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = smarc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, smarc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysMenuActionResource)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysMenuActionResourceMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysMenuActionResource, SysMenuActionResourceMutation](ctx, smarc.sqlSave, smarc.mutation, smarc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -312,6 +270,9 @@ func (smarc *SysMenuActionResourceCreate) check() error {
 }
 
 func (smarc *SysMenuActionResourceCreate) sqlSave(ctx context.Context) (*SysMenuActionResource, error) {
+	if err := smarc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := smarc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, smarc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -326,102 +287,58 @@ func (smarc *SysMenuActionResourceCreate) sqlSave(ctx context.Context) (*SysMenu
 			return nil, fmt.Errorf("unexpected SysMenuActionResource.ID type: %T", _spec.ID.Value)
 		}
 	}
+	smarc.mutation.id = &_node.ID
+	smarc.mutation.done = true
 	return _node, nil
 }
 
 func (smarc *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysMenuActionResource{config: smarc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysmenuactionresource.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysmenuactionresource.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysmenuactionresource.Table, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
 	)
 	if id, ok := smarc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := smarc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenuactionresource.FieldIsDel,
-		})
+		_spec.SetField(sysmenuactionresource.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := smarc.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysmenuactionresource.FieldSort,
-		})
+		_spec.SetField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := smarc.mutation.Memo(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldMemo,
-		})
+		_spec.SetField(sysmenuactionresource.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
 	if value, ok := smarc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenuactionresource.FieldCreatedAt,
-		})
+		_spec.SetField(sysmenuactionresource.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := smarc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenuactionresource.FieldUpdatedAt,
-		})
+		_spec.SetField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := smarc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysmenuactionresource.FieldDeletedAt,
-		})
+		_spec.SetField(sysmenuactionresource.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := smarc.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysmenuactionresource.FieldIsActive,
-		})
+		_spec.SetField(sysmenuactionresource.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := smarc.mutation.Method(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldMethod,
-		})
+		_spec.SetField(sysmenuactionresource.FieldMethod, field.TypeString, value)
 		_node.Method = value
 	}
 	if value, ok := smarc.mutation.Path(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldPath,
-		})
+		_spec.SetField(sysmenuactionresource.FieldPath, field.TypeString, value)
 		_node.Path = value
 	}
 	if value, ok := smarc.mutation.ActionID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysmenuactionresource.FieldActionID,
-		})
+		_spec.SetField(sysmenuactionresource.FieldActionID, field.TypeString, value)
 		_node.ActionID = value
 	}
 	return _node, _spec

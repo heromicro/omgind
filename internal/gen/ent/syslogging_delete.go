@@ -4,7 +4,6 @@ package ent
 
 import (
 	"context"
-	"fmt"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -28,34 +27,7 @@ func (sld *SysLoggingDelete) Where(ps ...predicate.SysLogging) *SysLoggingDelete
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sld *SysLoggingDelete) Exec(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
-	if len(sld.hooks) == 0 {
-		affected, err = sld.sqlExec(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysLoggingMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			sld.mutation = mutation
-			affected, err = sld.sqlExec(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sld.hooks) - 1; i >= 0; i-- {
-			if sld.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sld.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sld.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysLoggingMutation](ctx, sld.sqlExec, sld.mutation, sld.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
@@ -68,15 +40,7 @@ func (sld *SysLoggingDelete) ExecX(ctx context.Context) int {
 }
 
 func (sld *SysLoggingDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: syslogging.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: syslogging.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(syslogging.Table, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
 	if ps := sld.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -88,12 +52,19 @@ func (sld *SysLoggingDelete) sqlExec(ctx context.Context) (int, error) {
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
+	sld.mutation.done = true
 	return affected, err
 }
 
 // SysLoggingDeleteOne is the builder for deleting a single SysLogging entity.
 type SysLoggingDeleteOne struct {
 	sld *SysLoggingDelete
+}
+
+// Where appends a list predicates to the SysLoggingDelete builder.
+func (sldo *SysLoggingDeleteOne) Where(ps ...predicate.SysLogging) *SysLoggingDeleteOne {
+	sldo.sld.mutation.Where(ps...)
+	return sldo
 }
 
 // Exec executes the deletion query.
@@ -111,5 +82,7 @@ func (sldo *SysLoggingDeleteOne) Exec(ctx context.Context) error {
 
 // ExecX is like Exec, but panics if an error occurs.
 func (sldo *SysLoggingDeleteOne) ExecX(ctx context.Context) {
-	sldo.sld.ExecX(ctx)
+	if err := sldo.Exec(ctx); err != nil {
+		panic(err)
+	}
 }

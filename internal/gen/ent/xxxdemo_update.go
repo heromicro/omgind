@@ -142,41 +142,8 @@ func (xdu *XxxDemoUpdate) Mutation() *XxxDemoMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (xdu *XxxDemoUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	xdu.defaults()
-	if len(xdu.hooks) == 0 {
-		if err = xdu.check(); err != nil {
-			return 0, err
-		}
-		affected, err = xdu.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*XxxDemoMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = xdu.check(); err != nil {
-				return 0, err
-			}
-			xdu.mutation = mutation
-			affected, err = xdu.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(xdu.hooks) - 1; i >= 0; i-- {
-			if xdu.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = xdu.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, xdu.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, XxxDemoMutation](ctx, xdu.sqlSave, xdu.mutation, xdu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -230,16 +197,10 @@ func (xdu *XxxDemoUpdate) check() error {
 }
 
 func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   xxxdemo.Table,
-			Columns: xxxdemo.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: xxxdemo.FieldID,
-			},
-		},
+	if err := xdu.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(xxxdemo.Table, xxxdemo.Columns, sqlgraph.NewFieldSpec(xxxdemo.FieldID, field.TypeString))
 	if ps := xdu.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -248,79 +209,37 @@ func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := xdu.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: xxxdemo.FieldIsDel,
-		})
+		_spec.SetField(xxxdemo.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := xdu.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldMemo,
-		})
+		_spec.SetField(xxxdemo.FieldMemo, field.TypeString, value)
 	}
 	if xdu.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: xxxdemo.FieldMemo,
-		})
+		_spec.ClearField(xxxdemo.FieldMemo, field.TypeString)
 	}
 	if value, ok := xdu.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: xxxdemo.FieldSort,
-		})
+		_spec.SetField(xxxdemo.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := xdu.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: xxxdemo.FieldSort,
-		})
+		_spec.AddField(xxxdemo.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := xdu.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: xxxdemo.FieldUpdatedAt,
-		})
+		_spec.SetField(xxxdemo.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := xdu.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: xxxdemo.FieldDeletedAt,
-		})
+		_spec.SetField(xxxdemo.FieldDeletedAt, field.TypeTime, value)
 	}
 	if xdu.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: xxxdemo.FieldDeletedAt,
-		})
+		_spec.ClearField(xxxdemo.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := xdu.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: xxxdemo.FieldIsActive,
-		})
+		_spec.SetField(xxxdemo.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := xdu.mutation.Code(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldCode,
-		})
+		_spec.SetField(xxxdemo.FieldCode, field.TypeString, value)
 	}
 	if value, ok := xdu.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldName,
-		})
+		_spec.SetField(xxxdemo.FieldName, field.TypeString, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, xdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -330,6 +249,7 @@ func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	xdu.mutation.done = true
 	return n, nil
 }
 
@@ -453,6 +373,12 @@ func (xduo *XxxDemoUpdateOne) Mutation() *XxxDemoMutation {
 	return xduo.mutation
 }
 
+// Where appends a list predicates to the XxxDemoUpdate builder.
+func (xduo *XxxDemoUpdateOne) Where(ps ...predicate.XxxDemo) *XxxDemoUpdateOne {
+	xduo.mutation.Where(ps...)
+	return xduo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (xduo *XxxDemoUpdateOne) Select(field string, fields ...string) *XxxDemoUpdateOne {
@@ -462,47 +388,8 @@ func (xduo *XxxDemoUpdateOne) Select(field string, fields ...string) *XxxDemoUpd
 
 // Save executes the query and returns the updated XxxDemo entity.
 func (xduo *XxxDemoUpdateOne) Save(ctx context.Context) (*XxxDemo, error) {
-	var (
-		err  error
-		node *XxxDemo
-	)
 	xduo.defaults()
-	if len(xduo.hooks) == 0 {
-		if err = xduo.check(); err != nil {
-			return nil, err
-		}
-		node, err = xduo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*XxxDemoMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = xduo.check(); err != nil {
-				return nil, err
-			}
-			xduo.mutation = mutation
-			node, err = xduo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(xduo.hooks) - 1; i >= 0; i-- {
-			if xduo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = xduo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, xduo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*XxxDemo)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from XxxDemoMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*XxxDemo, XxxDemoMutation](ctx, xduo.sqlSave, xduo.mutation, xduo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -556,16 +443,10 @@ func (xduo *XxxDemoUpdateOne) check() error {
 }
 
 func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   xxxdemo.Table,
-			Columns: xxxdemo.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: xxxdemo.FieldID,
-			},
-		},
+	if err := xduo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(xxxdemo.Table, xxxdemo.Columns, sqlgraph.NewFieldSpec(xxxdemo.FieldID, field.TypeString))
 	id, ok := xduo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "XxxDemo.id" for update`)}
@@ -591,79 +472,37 @@ func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err 
 		}
 	}
 	if value, ok := xduo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: xxxdemo.FieldIsDel,
-		})
+		_spec.SetField(xxxdemo.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := xduo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldMemo,
-		})
+		_spec.SetField(xxxdemo.FieldMemo, field.TypeString, value)
 	}
 	if xduo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: xxxdemo.FieldMemo,
-		})
+		_spec.ClearField(xxxdemo.FieldMemo, field.TypeString)
 	}
 	if value, ok := xduo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: xxxdemo.FieldSort,
-		})
+		_spec.SetField(xxxdemo.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := xduo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: xxxdemo.FieldSort,
-		})
+		_spec.AddField(xxxdemo.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := xduo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: xxxdemo.FieldUpdatedAt,
-		})
+		_spec.SetField(xxxdemo.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := xduo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: xxxdemo.FieldDeletedAt,
-		})
+		_spec.SetField(xxxdemo.FieldDeletedAt, field.TypeTime, value)
 	}
 	if xduo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: xxxdemo.FieldDeletedAt,
-		})
+		_spec.ClearField(xxxdemo.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := xduo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: xxxdemo.FieldIsActive,
-		})
+		_spec.SetField(xxxdemo.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := xduo.mutation.Code(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldCode,
-		})
+		_spec.SetField(xxxdemo.FieldCode, field.TypeString, value)
 	}
 	if value, ok := xduo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: xxxdemo.FieldName,
-		})
+		_spec.SetField(xxxdemo.FieldName, field.TypeString, value)
 	}
 	_node = &XxxDemo{config: xduo.config}
 	_spec.Assign = _node.assignValues
@@ -676,5 +515,6 @@ func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err 
 		}
 		return nil, err
 	}
+	xduo.mutation.done = true
 	return _node, nil
 }

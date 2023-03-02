@@ -410,41 +410,8 @@ func (sau *SysAddressUpdate) Mutation() *SysAddressMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sau *SysAddressUpdate) Save(ctx context.Context) (int, error) {
-	var (
-		err      error
-		affected int
-	)
 	sau.defaults()
-	if len(sau.hooks) == 0 {
-		if err = sau.check(); err != nil {
-			return 0, err
-		}
-		affected, err = sau.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysAddressMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sau.check(); err != nil {
-				return 0, err
-			}
-			sau.mutation = mutation
-			affected, err = sau.sqlSave(ctx)
-			mutation.done = true
-			return affected, err
-		})
-		for i := len(sau.hooks) - 1; i >= 0; i-- {
-			if sau.hooks[i] == nil {
-				return 0, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sau.hooks[i](mut)
-		}
-		if _, err := mut.Mutate(ctx, sau.mutation); err != nil {
-			return 0, err
-		}
-	}
-	return affected, err
+	return withHooks[int, SysAddressMutation](ctx, sau.sqlSave, sau.mutation, sau.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -538,16 +505,10 @@ func (sau *SysAddressUpdate) check() error {
 }
 
 func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysaddress.Table,
-			Columns: sysaddress.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysaddress.FieldID,
-			},
-		},
+	if err := sau.check(); err != nil {
+		return n, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysaddress.Table, sysaddress.Columns, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
 	if ps := sau.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -556,247 +517,115 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := sau.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysaddress.FieldIsDel,
-		})
+		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sau.mutation.OwnerID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldOwnerID,
-		})
+		_spec.SetField(sysaddress.FieldOwnerID, field.TypeString, value)
 	}
 	if sau.mutation.OwnerIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldOwnerID,
-		})
+		_spec.ClearField(sysaddress.FieldOwnerID, field.TypeString)
 	}
 	if value, ok := sau.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysaddress.FieldSort,
-		})
+		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sau.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysaddress.FieldSort,
-		})
+		_spec.AddField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sau.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldUpdatedAt,
-		})
+		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sau.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldDeletedAt,
-		})
+		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sau.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysaddress.FieldDeletedAt,
-		})
+		_spec.ClearField(sysaddress.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sau.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysaddress.FieldIsActive,
-		})
+		_spec.SetField(sysaddress.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sau.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldMemo,
-		})
+		_spec.SetField(sysaddress.FieldMemo, field.TypeString, value)
 	}
 	if sau.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldMemo,
-		})
+		_spec.ClearField(sysaddress.FieldMemo, field.TypeString)
 	}
 	if value, ok := sau.mutation.Country(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountry,
-		})
+		_spec.SetField(sysaddress.FieldCountry, field.TypeString, value)
 	}
 	if sau.mutation.CountryCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCountry,
-		})
+		_spec.ClearField(sysaddress.FieldCountry, field.TypeString)
 	}
 	if value, ok := sau.mutation.Provice(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldProvice,
-		})
+		_spec.SetField(sysaddress.FieldProvice, field.TypeString, value)
 	}
 	if sau.mutation.ProviceCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldProvice,
-		})
+		_spec.ClearField(sysaddress.FieldProvice, field.TypeString)
 	}
 	if value, ok := sau.mutation.City(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCity,
-		})
+		_spec.SetField(sysaddress.FieldCity, field.TypeString, value)
 	}
 	if sau.mutation.CityCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCity,
-		})
+		_spec.ClearField(sysaddress.FieldCity, field.TypeString)
 	}
 	if value, ok := sau.mutation.County(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCounty,
-		})
+		_spec.SetField(sysaddress.FieldCounty, field.TypeString, value)
 	}
 	if sau.mutation.CountyCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCounty,
-		})
+		_spec.ClearField(sysaddress.FieldCounty, field.TypeString)
 	}
 	if value, ok := sau.mutation.CountryID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountryID,
-		})
+		_spec.SetField(sysaddress.FieldCountryID, field.TypeString, value)
 	}
 	if sau.mutation.CountryIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCountryID,
-		})
+		_spec.ClearField(sysaddress.FieldCountryID, field.TypeString)
 	}
 	if value, ok := sau.mutation.ProviceID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldProviceID,
-		})
+		_spec.SetField(sysaddress.FieldProviceID, field.TypeString, value)
 	}
 	if sau.mutation.ProviceIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldProviceID,
-		})
+		_spec.ClearField(sysaddress.FieldProviceID, field.TypeString)
 	}
 	if value, ok := sau.mutation.CityID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCityID,
-		})
+		_spec.SetField(sysaddress.FieldCityID, field.TypeString, value)
 	}
 	if sau.mutation.CityIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCityID,
-		})
+		_spec.ClearField(sysaddress.FieldCityID, field.TypeString)
 	}
 	if value, ok := sau.mutation.CountyID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountyID,
-		})
+		_spec.SetField(sysaddress.FieldCountyID, field.TypeString, value)
 	}
 	if sau.mutation.CountyIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCountyID,
-		})
+		_spec.ClearField(sysaddress.FieldCountyID, field.TypeString)
 	}
 	if value, ok := sau.mutation.ZipCode(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldZipCode,
-		})
+		_spec.SetField(sysaddress.FieldZipCode, field.TypeString, value)
 	}
 	if sau.mutation.ZipCodeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldZipCode,
-		})
+		_spec.ClearField(sysaddress.FieldZipCode, field.TypeString)
 	}
 	if value, ok := sau.mutation.Daddr(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldDaddr,
-		})
+		_spec.SetField(sysaddress.FieldDaddr, field.TypeString, value)
 	}
 	if sau.mutation.DaddrCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldDaddr,
-		})
+		_spec.ClearField(sysaddress.FieldDaddr, field.TypeString)
 	}
 	if value, ok := sau.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldName,
-		})
+		_spec.SetField(sysaddress.FieldName, field.TypeString, value)
 	}
 	if sau.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldName,
-		})
+		_spec.ClearField(sysaddress.FieldName, field.TypeString)
 	}
 	if value, ok := sau.mutation.Mobile(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldMobile,
-		})
+		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
 	}
 	if sau.mutation.MobileCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldMobile,
-		})
+		_spec.ClearField(sysaddress.FieldMobile, field.TypeString)
 	}
 	if value, ok := sau.mutation.Creator(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCreator,
-		})
+		_spec.SetField(sysaddress.FieldCreator, field.TypeString, value)
 	}
 	if sau.mutation.CreatorCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCreator,
-		})
+		_spec.ClearField(sysaddress.FieldCreator, field.TypeString)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, sau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -806,6 +635,7 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
+	sau.mutation.done = true
 	return n, nil
 }
 
@@ -1197,6 +1027,12 @@ func (sauo *SysAddressUpdateOne) Mutation() *SysAddressMutation {
 	return sauo.mutation
 }
 
+// Where appends a list predicates to the SysAddressUpdate builder.
+func (sauo *SysAddressUpdateOne) Where(ps ...predicate.SysAddress) *SysAddressUpdateOne {
+	sauo.mutation.Where(ps...)
+	return sauo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (sauo *SysAddressUpdateOne) Select(field string, fields ...string) *SysAddressUpdateOne {
@@ -1206,47 +1042,8 @@ func (sauo *SysAddressUpdateOne) Select(field string, fields ...string) *SysAddr
 
 // Save executes the query and returns the updated SysAddress entity.
 func (sauo *SysAddressUpdateOne) Save(ctx context.Context) (*SysAddress, error) {
-	var (
-		err  error
-		node *SysAddress
-	)
 	sauo.defaults()
-	if len(sauo.hooks) == 0 {
-		if err = sauo.check(); err != nil {
-			return nil, err
-		}
-		node, err = sauo.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysAddressMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sauo.check(); err != nil {
-				return nil, err
-			}
-			sauo.mutation = mutation
-			node, err = sauo.sqlSave(ctx)
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sauo.hooks) - 1; i >= 0; i-- {
-			if sauo.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sauo.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sauo.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysAddress)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysAddressMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysAddress, SysAddressMutation](ctx, sauo.sqlSave, sauo.mutation, sauo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -1340,16 +1137,10 @@ func (sauo *SysAddressUpdateOne) check() error {
 }
 
 func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   sysaddress.Table,
-			Columns: sysaddress.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysaddress.FieldID,
-			},
-		},
+	if err := sauo.check(); err != nil {
+		return _node, err
 	}
+	_spec := sqlgraph.NewUpdateSpec(sysaddress.Table, sysaddress.Columns, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
 	id, ok := sauo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "SysAddress.id" for update`)}
@@ -1375,247 +1166,115 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 	}
 	if value, ok := sauo.mutation.IsDel(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysaddress.FieldIsDel,
-		})
+		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sauo.mutation.OwnerID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldOwnerID,
-		})
+		_spec.SetField(sysaddress.FieldOwnerID, field.TypeString, value)
 	}
 	if sauo.mutation.OwnerIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldOwnerID,
-		})
+		_spec.ClearField(sysaddress.FieldOwnerID, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Sort(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysaddress.FieldSort,
-		})
+		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sauo.mutation.AddedSort(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysaddress.FieldSort,
-		})
+		_spec.AddField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
 	if value, ok := sauo.mutation.UpdatedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldUpdatedAt,
-		})
+		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
 	}
 	if value, ok := sauo.mutation.DeletedAt(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysaddress.FieldDeletedAt,
-		})
+		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
 	}
 	if sauo.mutation.DeletedAtCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Column: sysaddress.FieldDeletedAt,
-		})
+		_spec.ClearField(sysaddress.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sauo.mutation.IsActive(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysaddress.FieldIsActive,
-		})
+		_spec.SetField(sysaddress.FieldIsActive, field.TypeBool, value)
 	}
 	if value, ok := sauo.mutation.Memo(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldMemo,
-		})
+		_spec.SetField(sysaddress.FieldMemo, field.TypeString, value)
 	}
 	if sauo.mutation.MemoCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldMemo,
-		})
+		_spec.ClearField(sysaddress.FieldMemo, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Country(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountry,
-		})
+		_spec.SetField(sysaddress.FieldCountry, field.TypeString, value)
 	}
 	if sauo.mutation.CountryCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCountry,
-		})
+		_spec.ClearField(sysaddress.FieldCountry, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Provice(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldProvice,
-		})
+		_spec.SetField(sysaddress.FieldProvice, field.TypeString, value)
 	}
 	if sauo.mutation.ProviceCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldProvice,
-		})
+		_spec.ClearField(sysaddress.FieldProvice, field.TypeString)
 	}
 	if value, ok := sauo.mutation.City(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCity,
-		})
+		_spec.SetField(sysaddress.FieldCity, field.TypeString, value)
 	}
 	if sauo.mutation.CityCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCity,
-		})
+		_spec.ClearField(sysaddress.FieldCity, field.TypeString)
 	}
 	if value, ok := sauo.mutation.County(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCounty,
-		})
+		_spec.SetField(sysaddress.FieldCounty, field.TypeString, value)
 	}
 	if sauo.mutation.CountyCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCounty,
-		})
+		_spec.ClearField(sysaddress.FieldCounty, field.TypeString)
 	}
 	if value, ok := sauo.mutation.CountryID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountryID,
-		})
+		_spec.SetField(sysaddress.FieldCountryID, field.TypeString, value)
 	}
 	if sauo.mutation.CountryIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCountryID,
-		})
+		_spec.ClearField(sysaddress.FieldCountryID, field.TypeString)
 	}
 	if value, ok := sauo.mutation.ProviceID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldProviceID,
-		})
+		_spec.SetField(sysaddress.FieldProviceID, field.TypeString, value)
 	}
 	if sauo.mutation.ProviceIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldProviceID,
-		})
+		_spec.ClearField(sysaddress.FieldProviceID, field.TypeString)
 	}
 	if value, ok := sauo.mutation.CityID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCityID,
-		})
+		_spec.SetField(sysaddress.FieldCityID, field.TypeString, value)
 	}
 	if sauo.mutation.CityIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCityID,
-		})
+		_spec.ClearField(sysaddress.FieldCityID, field.TypeString)
 	}
 	if value, ok := sauo.mutation.CountyID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCountyID,
-		})
+		_spec.SetField(sysaddress.FieldCountyID, field.TypeString, value)
 	}
 	if sauo.mutation.CountyIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCountyID,
-		})
+		_spec.ClearField(sysaddress.FieldCountyID, field.TypeString)
 	}
 	if value, ok := sauo.mutation.ZipCode(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldZipCode,
-		})
+		_spec.SetField(sysaddress.FieldZipCode, field.TypeString, value)
 	}
 	if sauo.mutation.ZipCodeCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldZipCode,
-		})
+		_spec.ClearField(sysaddress.FieldZipCode, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Daddr(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldDaddr,
-		})
+		_spec.SetField(sysaddress.FieldDaddr, field.TypeString, value)
 	}
 	if sauo.mutation.DaddrCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldDaddr,
-		})
+		_spec.ClearField(sysaddress.FieldDaddr, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Name(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldName,
-		})
+		_spec.SetField(sysaddress.FieldName, field.TypeString, value)
 	}
 	if sauo.mutation.NameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldName,
-		})
+		_spec.ClearField(sysaddress.FieldName, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Mobile(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldMobile,
-		})
+		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
 	}
 	if sauo.mutation.MobileCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldMobile,
-		})
+		_spec.ClearField(sysaddress.FieldMobile, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Creator(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysaddress.FieldCreator,
-		})
+		_spec.SetField(sysaddress.FieldCreator, field.TypeString, value)
 	}
 	if sauo.mutation.CreatorCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: sysaddress.FieldCreator,
-		})
+		_spec.ClearField(sysaddress.FieldCreator, field.TypeString)
 	}
 	_node = &SysAddress{config: sauo.config}
 	_spec.Assign = _node.assignValues
@@ -1628,5 +1287,6 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 		return nil, err
 	}
+	sauo.mutation.done = true
 	return _node, nil
 }

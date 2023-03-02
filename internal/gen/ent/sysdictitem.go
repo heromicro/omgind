@@ -39,8 +39,8 @@ type SysDictItem struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysDictItem) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysDictItem) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case sysdictitem.FieldIsDel, sysdictitem.FieldIsActive:
@@ -60,7 +60,7 @@ func (*SysDictItem) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysDictItem fields.
-func (sdi *SysDictItem) assignValues(columns []string, values []interface{}) error {
+func (sdi *SysDictItem) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -143,7 +143,7 @@ func (sdi *SysDictItem) assignValues(columns []string, values []interface{}) err
 // Note that you need to call SysDictItem.Unwrap() before calling this method if this SysDictItem
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sdi *SysDictItem) Update() *SysDictItemUpdateOne {
-	return (&SysDictItemClient{config: sdi.config}).UpdateOne(sdi)
+	return NewSysDictItemClient(sdi.config).UpdateOne(sdi)
 }
 
 // Unwrap unwraps the SysDictItem entity that was returned from a transaction after it was closed,
@@ -201,9 +201,3 @@ func (sdi *SysDictItem) String() string {
 
 // SysDictItems is a parsable slice of SysDictItem.
 type SysDictItems []*SysDictItem
-
-func (sdi SysDictItems) config(cfg config) {
-	for _i := range sdi {
-		sdi[_i].config = cfg
-	}
-}

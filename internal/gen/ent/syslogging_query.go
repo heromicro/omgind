@@ -17,11 +17,9 @@ import (
 // SysLoggingQuery is the builder for querying SysLogging entities.
 type SysLoggingQuery struct {
 	config
-	limit      *int
-	offset     *int
-	unique     *bool
+	ctx        *QueryContext
 	order      []OrderFunc
-	fields     []string
+	inters     []Interceptor
 	predicates []predicate.SysLogging
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -34,26 +32,26 @@ func (slq *SysLoggingQuery) Where(ps ...predicate.SysLogging) *SysLoggingQuery {
 	return slq
 }
 
-// Limit adds a limit step to the query.
+// Limit the number of records to be returned by this query.
 func (slq *SysLoggingQuery) Limit(limit int) *SysLoggingQuery {
-	slq.limit = &limit
+	slq.ctx.Limit = &limit
 	return slq
 }
 
-// Offset adds an offset step to the query.
+// Offset to start from.
 func (slq *SysLoggingQuery) Offset(offset int) *SysLoggingQuery {
-	slq.offset = &offset
+	slq.ctx.Offset = &offset
 	return slq
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
 func (slq *SysLoggingQuery) Unique(unique bool) *SysLoggingQuery {
-	slq.unique = &unique
+	slq.ctx.Unique = &unique
 	return slq
 }
 
-// Order adds an order step to the query.
+// Order specifies how the records should be ordered.
 func (slq *SysLoggingQuery) Order(o ...OrderFunc) *SysLoggingQuery {
 	slq.order = append(slq.order, o...)
 	return slq
@@ -62,7 +60,7 @@ func (slq *SysLoggingQuery) Order(o ...OrderFunc) *SysLoggingQuery {
 // First returns the first SysLogging entity from the query.
 // Returns a *NotFoundError when no SysLogging was found.
 func (slq *SysLoggingQuery) First(ctx context.Context) (*SysLogging, error) {
-	nodes, err := slq.Limit(1).All(ctx)
+	nodes, err := slq.Limit(1).All(setContextOp(ctx, slq.ctx, "First"))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +83,7 @@ func (slq *SysLoggingQuery) FirstX(ctx context.Context) *SysLogging {
 // Returns a *NotFoundError when no SysLogging ID was found.
 func (slq *SysLoggingQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = slq.Limit(1).IDs(ctx); err != nil {
+	if ids, err = slq.Limit(1).IDs(setContextOp(ctx, slq.ctx, "FirstID")); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +106,7 @@ func (slq *SysLoggingQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysLogging entity is found.
 // Returns a *NotFoundError when no SysLogging entities are found.
 func (slq *SysLoggingQuery) Only(ctx context.Context) (*SysLogging, error) {
-	nodes, err := slq.Limit(2).All(ctx)
+	nodes, err := slq.Limit(2).All(setContextOp(ctx, slq.ctx, "Only"))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +134,7 @@ func (slq *SysLoggingQuery) OnlyX(ctx context.Context) *SysLogging {
 // Returns a *NotFoundError when no entities are found.
 func (slq *SysLoggingQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = slq.Limit(2).IDs(ctx); err != nil {
+	if ids, err = slq.Limit(2).IDs(setContextOp(ctx, slq.ctx, "OnlyID")); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,10 +159,12 @@ func (slq *SysLoggingQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysLoggings.
 func (slq *SysLoggingQuery) All(ctx context.Context) ([]*SysLogging, error) {
+	ctx = setContextOp(ctx, slq.ctx, "All")
 	if err := slq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
-	return slq.sqlAll(ctx)
+	qr := querierAll[[]*SysLogging, *SysLoggingQuery]()
+	return withInterceptors[[]*SysLogging](ctx, slq, qr, slq.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
@@ -177,9 +177,12 @@ func (slq *SysLoggingQuery) AllX(ctx context.Context) []*SysLogging {
 }
 
 // IDs executes the query and returns a list of SysLogging IDs.
-func (slq *SysLoggingQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
-	if err := slq.Select(syslogging.FieldID).Scan(ctx, &ids); err != nil {
+func (slq *SysLoggingQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if slq.ctx.Unique == nil && slq.path != nil {
+		slq.Unique(true)
+	}
+	ctx = setContextOp(ctx, slq.ctx, "IDs")
+	if err = slq.Select(syslogging.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -196,10 +199,11 @@ func (slq *SysLoggingQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (slq *SysLoggingQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, slq.ctx, "Count")
 	if err := slq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return slq.sqlCount(ctx)
+	return withInterceptors[int](ctx, slq, querierCount[*SysLoggingQuery](), slq.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
@@ -213,10 +217,15 @@ func (slq *SysLoggingQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (slq *SysLoggingQuery) Exist(ctx context.Context) (bool, error) {
-	if err := slq.prepareQuery(ctx); err != nil {
-		return false, err
+	ctx = setContextOp(ctx, slq.ctx, "Exist")
+	switch _, err := slq.FirstID(ctx); {
+	case IsNotFound(err):
+		return false, nil
+	case err != nil:
+		return false, fmt.Errorf("ent: check existence: %w", err)
+	default:
+		return true, nil
 	}
-	return slq.sqlExist(ctx)
 }
 
 // ExistX is like Exist, but panics if an error occurs.
@@ -236,14 +245,13 @@ func (slq *SysLoggingQuery) Clone() *SysLoggingQuery {
 	}
 	return &SysLoggingQuery{
 		config:     slq.config,
-		limit:      slq.limit,
-		offset:     slq.offset,
+		ctx:        slq.ctx.Clone(),
 		order:      append([]OrderFunc{}, slq.order...),
+		inters:     append([]Interceptor{}, slq.inters...),
 		predicates: append([]predicate.SysLogging{}, slq.predicates...),
 		// clone intermediate query.
-		sql:    slq.sql.Clone(),
-		path:   slq.path,
-		unique: slq.unique,
+		sql:  slq.sql.Clone(),
+		path: slq.path,
 	}
 }
 
@@ -261,18 +269,12 @@ func (slq *SysLoggingQuery) Clone() *SysLoggingQuery {
 //		GroupBy(syslogging.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
-//
 func (slq *SysLoggingQuery) GroupBy(field string, fields ...string) *SysLoggingGroupBy {
-	grbuild := &SysLoggingGroupBy{config: slq.config}
-	grbuild.fields = append([]string{field}, fields...)
-	grbuild.path = func(ctx context.Context) (prev *sql.Selector, err error) {
-		if err := slq.prepareQuery(ctx); err != nil {
-			return nil, err
-		}
-		return slq.sqlQuery(ctx), nil
-	}
+	slq.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysLoggingGroupBy{build: slq}
+	grbuild.flds = &slq.ctx.Fields
 	grbuild.label = syslogging.Label
-	grbuild.flds, grbuild.scan = &grbuild.fields, grbuild.Scan
+	grbuild.scan = grbuild.Scan
 	return grbuild
 }
 
@@ -288,17 +290,31 @@ func (slq *SysLoggingQuery) GroupBy(field string, fields ...string) *SysLoggingG
 //	client.SysLogging.Query().
 //		Select(syslogging.FieldIsDel).
 //		Scan(ctx, &v)
-//
 func (slq *SysLoggingQuery) Select(fields ...string) *SysLoggingSelect {
-	slq.fields = append(slq.fields, fields...)
-	selbuild := &SysLoggingSelect{SysLoggingQuery: slq}
-	selbuild.label = syslogging.Label
-	selbuild.flds, selbuild.scan = &slq.fields, selbuild.Scan
-	return selbuild
+	slq.ctx.Fields = append(slq.ctx.Fields, fields...)
+	sbuild := &SysLoggingSelect{SysLoggingQuery: slq}
+	sbuild.label = syslogging.Label
+	sbuild.flds, sbuild.scan = &slq.ctx.Fields, sbuild.Scan
+	return sbuild
+}
+
+// Aggregate returns a SysLoggingSelect configured with the given aggregations.
+func (slq *SysLoggingQuery) Aggregate(fns ...AggregateFunc) *SysLoggingSelect {
+	return slq.Select().Aggregate(fns...)
 }
 
 func (slq *SysLoggingQuery) prepareQuery(ctx context.Context) error {
-	for _, f := range slq.fields {
+	for _, inter := range slq.inters {
+		if inter == nil {
+			return fmt.Errorf("ent: uninitialized interceptor (forgotten import ent/runtime?)")
+		}
+		if trv, ok := inter.(Traverser); ok {
+			if err := trv.Traverse(ctx, slq); err != nil {
+				return err
+			}
+		}
+	}
+	for _, f := range slq.ctx.Fields {
 		if !syslogging.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("ent: invalid field %q for query", f)}
 		}
@@ -318,10 +334,10 @@ func (slq *SysLoggingQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 		nodes = []*SysLogging{}
 		_spec = slq.querySpec()
 	)
-	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
+	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysLogging).scanValues(nil, columns)
 	}
-	_spec.Assign = func(columns []string, values []interface{}) error {
+	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysLogging{config: slq.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
@@ -340,38 +356,22 @@ func (slq *SysLoggingQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 
 func (slq *SysLoggingQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := slq.querySpec()
-	_spec.Node.Columns = slq.fields
-	if len(slq.fields) > 0 {
-		_spec.Unique = slq.unique != nil && *slq.unique
+	_spec.Node.Columns = slq.ctx.Fields
+	if len(slq.ctx.Fields) > 0 {
+		_spec.Unique = slq.ctx.Unique != nil && *slq.ctx.Unique
 	}
 	return sqlgraph.CountNodes(ctx, slq.driver, _spec)
 }
 
-func (slq *SysLoggingQuery) sqlExist(ctx context.Context) (bool, error) {
-	n, err := slq.sqlCount(ctx)
-	if err != nil {
-		return false, fmt.Errorf("ent: check existence: %w", err)
-	}
-	return n > 0, nil
-}
-
 func (slq *SysLoggingQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   syslogging.Table,
-			Columns: syslogging.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: syslogging.FieldID,
-			},
-		},
-		From:   slq.sql,
-		Unique: true,
-	}
-	if unique := slq.unique; unique != nil {
+	_spec := sqlgraph.NewQuerySpec(syslogging.Table, syslogging.Columns, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
+	_spec.From = slq.sql
+	if unique := slq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if slq.path != nil {
+		_spec.Unique = true
 	}
-	if fields := slq.fields; len(fields) > 0 {
+	if fields := slq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, syslogging.FieldID)
 		for i := range fields {
@@ -387,10 +387,10 @@ func (slq *SysLoggingQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if limit := slq.limit; limit != nil {
+	if limit := slq.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := slq.offset; offset != nil {
+	if offset := slq.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
 	if ps := slq.order; len(ps) > 0 {
@@ -406,7 +406,7 @@ func (slq *SysLoggingQuery) querySpec() *sqlgraph.QuerySpec {
 func (slq *SysLoggingQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(slq.driver.Dialect())
 	t1 := builder.Table(syslogging.Table)
-	columns := slq.fields
+	columns := slq.ctx.Fields
 	if len(columns) == 0 {
 		columns = syslogging.Columns
 	}
@@ -415,7 +415,7 @@ func (slq *SysLoggingQuery) sqlQuery(ctx context.Context) *sql.Selector {
 		selector = slq.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if slq.unique != nil && *slq.unique {
+	if slq.ctx.Unique != nil && *slq.ctx.Unique {
 		selector.Distinct()
 	}
 	for _, p := range slq.predicates {
@@ -424,12 +424,12 @@ func (slq *SysLoggingQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	for _, p := range slq.order {
 		p(selector)
 	}
-	if offset := slq.offset; offset != nil {
+	if offset := slq.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := slq.limit; limit != nil {
+	if limit := slq.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -437,13 +437,8 @@ func (slq *SysLoggingQuery) sqlQuery(ctx context.Context) *sql.Selector {
 
 // SysLoggingGroupBy is the group-by builder for SysLogging entities.
 type SysLoggingGroupBy struct {
-	config
 	selector
-	fields []string
-	fns    []AggregateFunc
-	// intermediate query (i.e. traversal path).
-	sql  *sql.Selector
-	path func(context.Context) (*sql.Selector, error)
+	build *SysLoggingQuery
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
@@ -452,74 +447,77 @@ func (slgb *SysLoggingGroupBy) Aggregate(fns ...AggregateFunc) *SysLoggingGroupB
 	return slgb
 }
 
-// Scan applies the group-by query and scans the result into the given value.
-func (slgb *SysLoggingGroupBy) Scan(ctx context.Context, v interface{}) error {
-	query, err := slgb.path(ctx)
-	if err != nil {
+// Scan applies the selector query and scans the result into the given value.
+func (slgb *SysLoggingGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, slgb.build.ctx, "GroupBy")
+	if err := slgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	slgb.sql = query
-	return slgb.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysLoggingQuery, *SysLoggingGroupBy](ctx, slgb.build, slgb, slgb.build.inters, v)
 }
 
-func (slgb *SysLoggingGroupBy) sqlScan(ctx context.Context, v interface{}) error {
-	for _, f := range slgb.fields {
-		if !syslogging.ValidColumn(f) {
-			return &ValidationError{Name: f, err: fmt.Errorf("invalid field %q for group-by", f)}
-		}
+func (slgb *SysLoggingGroupBy) sqlScan(ctx context.Context, root *SysLoggingQuery, v any) error {
+	selector := root.sqlQuery(ctx).Select()
+	aggregation := make([]string, 0, len(slgb.fns))
+	for _, fn := range slgb.fns {
+		aggregation = append(aggregation, fn(selector))
 	}
-	selector := slgb.sqlQuery()
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(*slgb.flds)+len(slgb.fns))
+		for _, f := range *slgb.flds {
+			columns = append(columns, selector.C(f))
+		}
+		columns = append(columns, aggregation...)
+		selector.Select(columns...)
+	}
+	selector.GroupBy(selector.Columns(*slgb.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := slgb.driver.Query(ctx, query, args, rows); err != nil {
+	if err := slgb.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
 }
 
-func (slgb *SysLoggingGroupBy) sqlQuery() *sql.Selector {
-	selector := slgb.sql.Select()
-	aggregation := make([]string, 0, len(slgb.fns))
-	for _, fn := range slgb.fns {
-		aggregation = append(aggregation, fn(selector))
-	}
-	// If no columns were selected in a custom aggregation function, the default
-	// selection is the fields used for "group-by", and the aggregation functions.
-	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(slgb.fields)+len(slgb.fns))
-		for _, f := range slgb.fields {
-			columns = append(columns, selector.C(f))
-		}
-		columns = append(columns, aggregation...)
-		selector.Select(columns...)
-	}
-	return selector.GroupBy(selector.Columns(slgb.fields...)...)
-}
-
 // SysLoggingSelect is the builder for selecting fields of SysLogging entities.
 type SysLoggingSelect struct {
 	*SysLoggingQuery
 	selector
-	// intermediate query (i.e. traversal path).
-	sql *sql.Selector
+}
+
+// Aggregate adds the given aggregation functions to the selector query.
+func (sls *SysLoggingSelect) Aggregate(fns ...AggregateFunc) *SysLoggingSelect {
+	sls.fns = append(sls.fns, fns...)
+	return sls
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sls *SysLoggingSelect) Scan(ctx context.Context, v interface{}) error {
+func (sls *SysLoggingSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, sls.ctx, "Select")
 	if err := sls.prepareQuery(ctx); err != nil {
 		return err
 	}
-	sls.sql = sls.SysLoggingQuery.sqlQuery(ctx)
-	return sls.sqlScan(ctx, v)
+	return scanWithInterceptors[*SysLoggingQuery, *SysLoggingSelect](ctx, sls.SysLoggingQuery, sls, sls.inters, v)
 }
 
-func (sls *SysLoggingSelect) sqlScan(ctx context.Context, v interface{}) error {
+func (sls *SysLoggingSelect) sqlScan(ctx context.Context, root *SysLoggingQuery, v any) error {
+	selector := root.sqlQuery(ctx)
+	aggregation := make([]string, 0, len(sls.fns))
+	for _, fn := range sls.fns {
+		aggregation = append(aggregation, fn(selector))
+	}
+	switch n := len(*sls.selector.flds); {
+	case n == 0 && len(aggregation) > 0:
+		selector.Select(aggregation...)
+	case n != 0 && len(aggregation) > 0:
+		selector.AppendSelect(aggregation...)
+	}
 	rows := &sql.Rows{}
-	query, args := sls.sql.Query()
+	query, args := selector.Query()
 	if err := sls.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}

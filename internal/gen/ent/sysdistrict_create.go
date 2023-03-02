@@ -501,50 +501,8 @@ func (sdc *SysDistrictCreate) Mutation() *SysDistrictMutation {
 
 // Save creates the SysDistrict in the database.
 func (sdc *SysDistrictCreate) Save(ctx context.Context) (*SysDistrict, error) {
-	var (
-		err  error
-		node *SysDistrict
-	)
 	sdc.defaults()
-	if len(sdc.hooks) == 0 {
-		if err = sdc.check(); err != nil {
-			return nil, err
-		}
-		node, err = sdc.sqlSave(ctx)
-	} else {
-		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
-			mutation, ok := m.(*SysDistrictMutation)
-			if !ok {
-				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sdc.check(); err != nil {
-				return nil, err
-			}
-			sdc.mutation = mutation
-			if node, err = sdc.sqlSave(ctx); err != nil {
-				return nil, err
-			}
-			mutation.id = &node.ID
-			mutation.done = true
-			return node, err
-		})
-		for i := len(sdc.hooks) - 1; i >= 0; i-- {
-			if sdc.hooks[i] == nil {
-				return nil, fmt.Errorf("ent: uninitialized hook (forgotten import ent/runtime?)")
-			}
-			mut = sdc.hooks[i](mut)
-		}
-		v, err := mut.Mutate(ctx, sdc.mutation)
-		if err != nil {
-			return nil, err
-		}
-		nv, ok := v.(*SysDistrict)
-		if !ok {
-			return nil, fmt.Errorf("unexpected node type %T returned from SysDistrictMutation", v)
-		}
-		node = nv
-	}
-	return node, err
+	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -716,6 +674,9 @@ func (sdc *SysDistrictCreate) check() error {
 }
 
 func (sdc *SysDistrictCreate) sqlSave(ctx context.Context) (*SysDistrict, error) {
+	if err := sdc.check(); err != nil {
+		return nil, err
+	}
 	_node, _spec := sdc.createSpec()
 	if err := sqlgraph.CreateNode(ctx, sdc.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
@@ -730,270 +691,142 @@ func (sdc *SysDistrictCreate) sqlSave(ctx context.Context) (*SysDistrict, error)
 			return nil, fmt.Errorf("unexpected SysDistrict.ID type: %T", _spec.ID.Value)
 		}
 	}
+	sdc.mutation.id = &_node.ID
+	sdc.mutation.done = true
 	return _node, nil
 }
 
 func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) {
 	var (
 		_node = &SysDistrict{config: sdc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: sysdistrict.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
-				Column: sysdistrict.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(sysdistrict.Table, sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString))
 	)
 	if id, ok := sdc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
 	if value, ok := sdc.mutation.IsDel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsDel,
-		})
+		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
 	if value, ok := sdc.mutation.Sort(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldSort,
-		})
+		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
 	if value, ok := sdc.mutation.CreatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdistrict.FieldCreatedAt,
-		})
+		_spec.SetField(sysdistrict.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
 	if value, ok := sdc.mutation.UpdatedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdistrict.FieldUpdatedAt,
-		})
+		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
 	if value, ok := sdc.mutation.DeletedAt(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeTime,
-			Value:  value,
-			Column: sysdistrict.FieldDeletedAt,
-		})
+		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
 	if value, ok := sdc.mutation.IsActive(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsActive,
-		})
+		_spec.SetField(sysdistrict.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
 	if value, ok := sdc.mutation.TreeID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeID,
-		})
+		_spec.SetField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 		_node.TreeID = &value
 	}
 	if value, ok := sdc.mutation.TreeLevel(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLevel,
-		})
+		_spec.SetField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 		_node.TreeLevel = &value
 	}
 	if value, ok := sdc.mutation.TreeLeft(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeLeft,
-		})
+		_spec.SetField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 		_node.TreeLeft = &value
 	}
 	if value, ok := sdc.mutation.TreeRight(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt64,
-			Value:  value,
-			Column: sysdistrict.FieldTreeRight,
-		})
+		_spec.SetField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 		_node.TreeRight = &value
 	}
 	if value, ok := sdc.mutation.IsLeaf(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsLeaf,
-		})
+		_spec.SetField(sysdistrict.FieldIsLeaf, field.TypeBool, value)
 		_node.IsLeaf = &value
 	}
 	if value, ok := sdc.mutation.TreePath(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldTreePath,
-		})
+		_spec.SetField(sysdistrict.FieldTreePath, field.TypeString, value)
 		_node.TreePath = &value
 	}
 	if value, ok := sdc.mutation.Name(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldName,
-		})
+		_spec.SetField(sysdistrict.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
 	if value, ok := sdc.mutation.Sname(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldSname,
-		})
+		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 		_node.Sname = &value
 	}
 	if value, ok := sdc.mutation.Abbr(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldAbbr,
-		})
+		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)
 		_node.Abbr = &value
 	}
 	if value, ok := sdc.mutation.StCode(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldStCode,
-		})
+		_spec.SetField(sysdistrict.FieldStCode, field.TypeString, value)
 		_node.StCode = &value
 	}
 	if value, ok := sdc.mutation.Initials(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldInitials,
-		})
+		_spec.SetField(sysdistrict.FieldInitials, field.TypeString, value)
 		_node.Initials = &value
 	}
 	if value, ok := sdc.mutation.Pinyin(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldPinyin,
-		})
+		_spec.SetField(sysdistrict.FieldPinyin, field.TypeString, value)
 		_node.Pinyin = &value
 	}
 	if value, ok := sdc.mutation.Longitude(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLongitude,
-		})
+		_spec.SetField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 		_node.Longitude = &value
 	}
 	if value, ok := sdc.mutation.Latitude(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeFloat64,
-			Value:  value,
-			Column: sysdistrict.FieldLatitude,
-		})
+		_spec.SetField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 		_node.Latitude = &value
 	}
 	if value, ok := sdc.mutation.AreaCode(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldAreaCode,
-		})
+		_spec.SetField(sysdistrict.FieldAreaCode, field.TypeString, value)
 		_node.AreaCode = &value
 	}
 	if value, ok := sdc.mutation.ZipCode(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldZipCode,
-		})
+		_spec.SetField(sysdistrict.FieldZipCode, field.TypeString, value)
 		_node.ZipCode = &value
 	}
 	if value, ok := sdc.mutation.MergeName(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldMergeName,
-		})
+		_spec.SetField(sysdistrict.FieldMergeName, field.TypeString, value)
 		_node.MergeName = &value
 	}
 	if value, ok := sdc.mutation.MergeSname(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldMergeSname,
-		})
+		_spec.SetField(sysdistrict.FieldMergeSname, field.TypeString, value)
 		_node.MergeSname = &value
 	}
 	if value, ok := sdc.mutation.Extra(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldExtra,
-		})
+		_spec.SetField(sysdistrict.FieldExtra, field.TypeString, value)
 		_node.Extra = &value
 	}
 	if value, ok := sdc.mutation.Suffix(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldSuffix,
-		})
+		_spec.SetField(sysdistrict.FieldSuffix, field.TypeString, value)
 		_node.Suffix = &value
 	}
 	if value, ok := sdc.mutation.IsHot(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsHot,
-		})
+		_spec.SetField(sysdistrict.FieldIsHot, field.TypeBool, value)
 		_node.IsHot = &value
 	}
 	if value, ok := sdc.mutation.IsReal(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsReal,
-		})
+		_spec.SetField(sysdistrict.FieldIsReal, field.TypeBool, value)
 		_node.IsReal = &value
 	}
 	if value, ok := sdc.mutation.IsMain(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsMain,
-		})
+		_spec.SetField(sysdistrict.FieldIsMain, field.TypeBool, value)
 		_node.IsMain = &value
 	}
 	if value, ok := sdc.mutation.IsDirect(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeBool,
-			Value:  value,
-			Column: sysdistrict.FieldIsDirect,
-		})
+		_spec.SetField(sysdistrict.FieldIsDirect, field.TypeBool, value)
 		_node.IsDirect = &value
 	}
 	if value, ok := sdc.mutation.Creator(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: sysdistrict.FieldCreator,
-		})
+		_spec.SetField(sysdistrict.FieldCreator, field.TypeString, value)
 		_node.Creator = value
 	}
 	if nodes := sdc.mutation.ParentIDs(); len(nodes) > 0 {

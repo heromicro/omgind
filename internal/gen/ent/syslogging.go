@@ -41,8 +41,8 @@ type SysLogging struct {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*SysLogging) scanValues(columns []string) ([]interface{}, error) {
-	values := make([]interface{}, len(columns))
+func (*SysLogging) scanValues(columns []string) ([]any, error) {
+	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
 		case syslogging.FieldIsDel:
@@ -60,7 +60,7 @@ func (*SysLogging) scanValues(columns []string) ([]interface{}, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysLogging fields.
-func (sl *SysLogging) assignValues(columns []string, values []interface{}) error {
+func (sl *SysLogging) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -155,7 +155,7 @@ func (sl *SysLogging) assignValues(columns []string, values []interface{}) error
 // Note that you need to call SysLogging.Unwrap() before calling this method if this SysLogging
 // was returned from a transaction, and the transaction was committed or rolled back.
 func (sl *SysLogging) Update() *SysLoggingUpdateOne {
-	return (&SysLoggingClient{config: sl.config}).UpdateOne(sl)
+	return NewSysLoggingClient(sl.config).UpdateOne(sl)
 }
 
 // Unwrap unwraps the SysLogging entity that was returned from a transaction after it was closed,
@@ -228,9 +228,3 @@ func (sl *SysLogging) String() string {
 
 // SysLoggings is a parsable slice of SysLogging.
 type SysLoggings []*SysLogging
-
-func (sl SysLoggings) config(cfg config) {
-	for _i := range sl {
-		sl[_i].config = cfg
-	}
-}
