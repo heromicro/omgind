@@ -3583,6 +3583,7 @@ type SysDistrictMutation struct {
 	op              Op
 	typ             string
 	id              *string
+	is_del          *bool
 	sort            *int32
 	addsort         *int32
 	created_at      *time.Time
@@ -3733,6 +3734,42 @@ func (m *SysDistrictMutation) IDs(ctx context.Context) ([]string, error) {
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *SysDistrictMutation) SetIsDel(b bool) {
+	m.is_del = &b
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *SysDistrictMutation) IsDel() (r bool, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldIsDel(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *SysDistrictMutation) ResetIsDel() {
+	m.is_del = nil
 }
 
 // SetSort sets the "sort" field.
@@ -5449,7 +5486,10 @@ func (m *SysDistrictMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysDistrictMutation) Fields() []string {
-	fields := make([]string, 0, 31)
+	fields := make([]string, 0, 32)
+	if m.is_del != nil {
+		fields = append(fields, sysdistrict.FieldIsDel)
+	}
 	if m.sort != nil {
 		fields = append(fields, sysdistrict.FieldSort)
 	}
@@ -5551,6 +5591,8 @@ func (m *SysDistrictMutation) Fields() []string {
 // schema.
 func (m *SysDistrictMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case sysdistrict.FieldIsDel:
+		return m.IsDel()
 	case sysdistrict.FieldSort:
 		return m.Sort()
 	case sysdistrict.FieldCreatedAt:
@@ -5622,6 +5664,8 @@ func (m *SysDistrictMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *SysDistrictMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case sysdistrict.FieldIsDel:
+		return m.OldIsDel(ctx)
 	case sysdistrict.FieldSort:
 		return m.OldSort(ctx)
 	case sysdistrict.FieldCreatedAt:
@@ -5693,6 +5737,13 @@ func (m *SysDistrictMutation) OldField(ctx context.Context, name string) (ent.Va
 // type.
 func (m *SysDistrictMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case sysdistrict.FieldIsDel:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
 	case sysdistrict.FieldSort:
 		v, ok := value.(int32)
 		if !ok {
@@ -6205,6 +6256,9 @@ func (m *SysDistrictMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *SysDistrictMutation) ResetField(name string) error {
 	switch name {
+	case sysdistrict.FieldIsDel:
+		m.ResetIsDel()
+		return nil
 	case sysdistrict.FieldSort:
 		m.ResetSort()
 		return nil

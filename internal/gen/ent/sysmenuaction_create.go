@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
@@ -18,6 +20,7 @@ type SysMenuActionCreate struct {
 	config
 	mutation *SysMenuActionMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetIsDel sets the "is_del" field.
@@ -297,6 +300,7 @@ func (smac *SysMenuActionCreate) createSpec() (*SysMenuAction, *sqlgraph.CreateS
 		_node = &SysMenuAction{config: smac.config}
 		_spec = sqlgraph.NewCreateSpec(sysmenuaction.Table, sqlgraph.NewFieldSpec(sysmenuaction.FieldID, field.TypeString))
 	)
+	_spec.OnConflict = smac.conflict
 	if id, ok := smac.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -344,10 +348,422 @@ func (smac *SysMenuActionCreate) createSpec() (*SysMenuAction, *sqlgraph.CreateS
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysMenuAction.Create().
+//		SetIsDel(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysMenuActionUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (smac *SysMenuActionCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuActionUpsertOne {
+	smac.conflict = opts
+	return &SysMenuActionUpsertOne{
+		create: smac,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysMenuAction.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (smac *SysMenuActionCreate) OnConflictColumns(columns ...string) *SysMenuActionUpsertOne {
+	smac.conflict = append(smac.conflict, sql.ConflictColumns(columns...))
+	return &SysMenuActionUpsertOne{
+		create: smac,
+	}
+}
+
+type (
+	// SysMenuActionUpsertOne is the builder for "upsert"-ing
+	//  one SysMenuAction node.
+	SysMenuActionUpsertOne struct {
+		create *SysMenuActionCreate
+	}
+
+	// SysMenuActionUpsert is the "OnConflict" setter.
+	SysMenuActionUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetIsDel sets the "is_del" field.
+func (u *SysMenuActionUpsert) SetIsDel(v bool) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateIsDel() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldIsDel)
+	return u
+}
+
+// SetSort sets the "sort" field.
+func (u *SysMenuActionUpsert) SetSort(v int32) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldSort, v)
+	return u
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateSort() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldSort)
+	return u
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysMenuActionUpsert) AddSort(v int32) *SysMenuActionUpsert {
+	u.Add(sysmenuaction.FieldSort, v)
+	return u
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysMenuActionUpsert) SetIsActive(v bool) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldIsActive, v)
+	return u
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateIsActive() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldIsActive)
+	return u
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysMenuActionUpsert) SetMemo(v string) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldMemo, v)
+	return u
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateMemo() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldMemo)
+	return u
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysMenuActionUpsert) ClearMemo() *SysMenuActionUpsert {
+	u.SetNull(sysmenuaction.FieldMemo)
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysMenuActionUpsert) SetUpdatedAt(v time.Time) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateUpdatedAt() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldUpdatedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysMenuActionUpsert) SetDeletedAt(v time.Time) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateDeletedAt() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysMenuActionUpsert) ClearDeletedAt() *SysMenuActionUpsert {
+	u.SetNull(sysmenuaction.FieldDeletedAt)
+	return u
+}
+
+// SetMenuID sets the "menu_id" field.
+func (u *SysMenuActionUpsert) SetMenuID(v string) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldMenuID, v)
+	return u
+}
+
+// UpdateMenuID sets the "menu_id" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateMenuID() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldMenuID)
+	return u
+}
+
+// SetCode sets the "code" field.
+func (u *SysMenuActionUpsert) SetCode(v string) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldCode, v)
+	return u
+}
+
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateCode() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldCode)
+	return u
+}
+
+// SetName sets the "name" field.
+func (u *SysMenuActionUpsert) SetName(v string) *SysMenuActionUpsert {
+	u.Set(sysmenuaction.FieldName, v)
+	return u
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysMenuActionUpsert) UpdateName() *SysMenuActionUpsert {
+	u.SetExcluded(sysmenuaction.FieldName)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.SysMenuAction.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysmenuaction.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysMenuActionUpsertOne) UpdateNewValues() *SysMenuActionUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(sysmenuaction.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(sysmenuaction.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysMenuAction.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *SysMenuActionUpsertOne) Ignore() *SysMenuActionUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysMenuActionUpsertOne) DoNothing() *SysMenuActionUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysMenuActionCreate.OnConflict
+// documentation for more info.
+func (u *SysMenuActionUpsertOne) Update(set func(*SysMenuActionUpsert)) *SysMenuActionUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysMenuActionUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysMenuActionUpsertOne) SetIsDel(v bool) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateIsDel() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysMenuActionUpsertOne) SetSort(v int32) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysMenuActionUpsertOne) AddSort(v int32) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateSort() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysMenuActionUpsertOne) SetIsActive(v bool) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateIsActive() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysMenuActionUpsertOne) SetMemo(v string) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateMemo() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysMenuActionUpsertOne) ClearMemo() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysMenuActionUpsertOne) SetUpdatedAt(v time.Time) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateUpdatedAt() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysMenuActionUpsertOne) SetDeletedAt(v time.Time) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateDeletedAt() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysMenuActionUpsertOne) ClearDeletedAt() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetMenuID sets the "menu_id" field.
+func (u *SysMenuActionUpsertOne) SetMenuID(v string) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetMenuID(v)
+	})
+}
+
+// UpdateMenuID sets the "menu_id" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateMenuID() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateMenuID()
+	})
+}
+
+// SetCode sets the "code" field.
+func (u *SysMenuActionUpsertOne) SetCode(v string) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetCode(v)
+	})
+}
+
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateCode() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateCode()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *SysMenuActionUpsertOne) SetName(v string) *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysMenuActionUpsertOne) UpdateName() *SysMenuActionUpsertOne {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateName()
+	})
+}
+
+// Exec executes the query.
+func (u *SysMenuActionUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysMenuActionCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysMenuActionUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *SysMenuActionUpsertOne) ID(ctx context.Context) (id string, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: SysMenuActionUpsertOne.ID is not supported by MySQL driver. Use SysMenuActionUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *SysMenuActionUpsertOne) IDX(ctx context.Context) string {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // SysMenuActionCreateBulk is the builder for creating many SysMenuAction entities in bulk.
 type SysMenuActionCreateBulk struct {
 	config
 	builders []*SysMenuActionCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the SysMenuAction entities in the database.
@@ -374,6 +790,7 @@ func (smacb *SysMenuActionCreateBulk) Save(ctx context.Context) ([]*SysMenuActio
 					_, err = mutators[i+1].Mutate(root, smacb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = smacb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, smacb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -420,6 +837,267 @@ func (smacb *SysMenuActionCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (smacb *SysMenuActionCreateBulk) ExecX(ctx context.Context) {
 	if err := smacb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysMenuAction.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysMenuActionUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (smacb *SysMenuActionCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuActionUpsertBulk {
+	smacb.conflict = opts
+	return &SysMenuActionUpsertBulk{
+		create: smacb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysMenuAction.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (smacb *SysMenuActionCreateBulk) OnConflictColumns(columns ...string) *SysMenuActionUpsertBulk {
+	smacb.conflict = append(smacb.conflict, sql.ConflictColumns(columns...))
+	return &SysMenuActionUpsertBulk{
+		create: smacb,
+	}
+}
+
+// SysMenuActionUpsertBulk is the builder for "upsert"-ing
+// a bulk of SysMenuAction nodes.
+type SysMenuActionUpsertBulk struct {
+	create *SysMenuActionCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.SysMenuAction.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysmenuaction.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysMenuActionUpsertBulk) UpdateNewValues() *SysMenuActionUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(sysmenuaction.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(sysmenuaction.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysMenuAction.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *SysMenuActionUpsertBulk) Ignore() *SysMenuActionUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysMenuActionUpsertBulk) DoNothing() *SysMenuActionUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysMenuActionCreateBulk.OnConflict
+// documentation for more info.
+func (u *SysMenuActionUpsertBulk) Update(set func(*SysMenuActionUpsert)) *SysMenuActionUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysMenuActionUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysMenuActionUpsertBulk) SetIsDel(v bool) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateIsDel() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysMenuActionUpsertBulk) SetSort(v int32) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysMenuActionUpsertBulk) AddSort(v int32) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateSort() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysMenuActionUpsertBulk) SetIsActive(v bool) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateIsActive() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysMenuActionUpsertBulk) SetMemo(v string) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateMemo() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysMenuActionUpsertBulk) ClearMemo() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysMenuActionUpsertBulk) SetUpdatedAt(v time.Time) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateUpdatedAt() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysMenuActionUpsertBulk) SetDeletedAt(v time.Time) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateDeletedAt() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysMenuActionUpsertBulk) ClearDeletedAt() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetMenuID sets the "menu_id" field.
+func (u *SysMenuActionUpsertBulk) SetMenuID(v string) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetMenuID(v)
+	})
+}
+
+// UpdateMenuID sets the "menu_id" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateMenuID() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateMenuID()
+	})
+}
+
+// SetCode sets the "code" field.
+func (u *SysMenuActionUpsertBulk) SetCode(v string) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetCode(v)
+	})
+}
+
+// UpdateCode sets the "code" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateCode() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateCode()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *SysMenuActionUpsertBulk) SetName(v string) *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysMenuActionUpsertBulk) UpdateName() *SysMenuActionUpsertBulk {
+	return u.Update(func(s *SysMenuActionUpsert) {
+		s.UpdateName()
+	})
+}
+
+// Exec executes the query.
+func (u *SysMenuActionUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the SysMenuActionCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysMenuActionCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysMenuActionUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

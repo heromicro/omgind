@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
@@ -18,6 +20,7 @@ type SysJwtBlockCreate struct {
 	config
 	mutation *SysJwtBlockMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetIsDel sets the "is_del" field.
@@ -248,6 +251,7 @@ func (sjbc *SysJwtBlockCreate) createSpec() (*SysJwtBlock, *sqlgraph.CreateSpec)
 		_node = &SysJwtBlock{config: sjbc.config}
 		_spec = sqlgraph.NewCreateSpec(sysjwtblock.Table, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
 	)
+	_spec.OnConflict = sjbc.conflict
 	if id, ok := sjbc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -283,10 +287,331 @@ func (sjbc *SysJwtBlockCreate) createSpec() (*SysJwtBlock, *sqlgraph.CreateSpec)
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysJwtBlock.Create().
+//		SetIsDel(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysJwtBlockUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (sjbc *SysJwtBlockCreate) OnConflict(opts ...sql.ConflictOption) *SysJwtBlockUpsertOne {
+	sjbc.conflict = opts
+	return &SysJwtBlockUpsertOne{
+		create: sjbc,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysJwtBlock.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (sjbc *SysJwtBlockCreate) OnConflictColumns(columns ...string) *SysJwtBlockUpsertOne {
+	sjbc.conflict = append(sjbc.conflict, sql.ConflictColumns(columns...))
+	return &SysJwtBlockUpsertOne{
+		create: sjbc,
+	}
+}
+
+type (
+	// SysJwtBlockUpsertOne is the builder for "upsert"-ing
+	//  one SysJwtBlock node.
+	SysJwtBlockUpsertOne struct {
+		create *SysJwtBlockCreate
+	}
+
+	// SysJwtBlockUpsert is the "OnConflict" setter.
+	SysJwtBlockUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetIsDel sets the "is_del" field.
+func (u *SysJwtBlockUpsert) SetIsDel(v bool) *SysJwtBlockUpsert {
+	u.Set(sysjwtblock.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysJwtBlockUpsert) UpdateIsDel() *SysJwtBlockUpsert {
+	u.SetExcluded(sysjwtblock.FieldIsDel)
+	return u
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysJwtBlockUpsert) SetMemo(v string) *SysJwtBlockUpsert {
+	u.Set(sysjwtblock.FieldMemo, v)
+	return u
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysJwtBlockUpsert) UpdateMemo() *SysJwtBlockUpsert {
+	u.SetExcluded(sysjwtblock.FieldMemo)
+	return u
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysJwtBlockUpsert) ClearMemo() *SysJwtBlockUpsert {
+	u.SetNull(sysjwtblock.FieldMemo)
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysJwtBlockUpsert) SetUpdatedAt(v time.Time) *SysJwtBlockUpsert {
+	u.Set(sysjwtblock.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysJwtBlockUpsert) UpdateUpdatedAt() *SysJwtBlockUpsert {
+	u.SetExcluded(sysjwtblock.FieldUpdatedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysJwtBlockUpsert) SetDeletedAt(v time.Time) *SysJwtBlockUpsert {
+	u.Set(sysjwtblock.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysJwtBlockUpsert) UpdateDeletedAt() *SysJwtBlockUpsert {
+	u.SetExcluded(sysjwtblock.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysJwtBlockUpsert) ClearDeletedAt() *SysJwtBlockUpsert {
+	u.SetNull(sysjwtblock.FieldDeletedAt)
+	return u
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysJwtBlockUpsert) SetIsActive(v bool) *SysJwtBlockUpsert {
+	u.Set(sysjwtblock.FieldIsActive, v)
+	return u
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysJwtBlockUpsert) UpdateIsActive() *SysJwtBlockUpsert {
+	u.SetExcluded(sysjwtblock.FieldIsActive)
+	return u
+}
+
+// SetJwt sets the "jwt" field.
+func (u *SysJwtBlockUpsert) SetJwt(v string) *SysJwtBlockUpsert {
+	u.Set(sysjwtblock.FieldJwt, v)
+	return u
+}
+
+// UpdateJwt sets the "jwt" field to the value that was provided on create.
+func (u *SysJwtBlockUpsert) UpdateJwt() *SysJwtBlockUpsert {
+	u.SetExcluded(sysjwtblock.FieldJwt)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.SysJwtBlock.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysjwtblock.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysJwtBlockUpsertOne) UpdateNewValues() *SysJwtBlockUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(sysjwtblock.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(sysjwtblock.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysJwtBlock.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *SysJwtBlockUpsertOne) Ignore() *SysJwtBlockUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysJwtBlockUpsertOne) DoNothing() *SysJwtBlockUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysJwtBlockCreate.OnConflict
+// documentation for more info.
+func (u *SysJwtBlockUpsertOne) Update(set func(*SysJwtBlockUpsert)) *SysJwtBlockUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysJwtBlockUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysJwtBlockUpsertOne) SetIsDel(v bool) *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertOne) UpdateIsDel() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysJwtBlockUpsertOne) SetMemo(v string) *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertOne) UpdateMemo() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysJwtBlockUpsertOne) ClearMemo() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysJwtBlockUpsertOne) SetUpdatedAt(v time.Time) *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertOne) UpdateUpdatedAt() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysJwtBlockUpsertOne) SetDeletedAt(v time.Time) *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertOne) UpdateDeletedAt() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysJwtBlockUpsertOne) ClearDeletedAt() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysJwtBlockUpsertOne) SetIsActive(v bool) *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertOne) UpdateIsActive() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetJwt sets the "jwt" field.
+func (u *SysJwtBlockUpsertOne) SetJwt(v string) *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetJwt(v)
+	})
+}
+
+// UpdateJwt sets the "jwt" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertOne) UpdateJwt() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateJwt()
+	})
+}
+
+// Exec executes the query.
+func (u *SysJwtBlockUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysJwtBlockCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysJwtBlockUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *SysJwtBlockUpsertOne) ID(ctx context.Context) (id string, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: SysJwtBlockUpsertOne.ID is not supported by MySQL driver. Use SysJwtBlockUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *SysJwtBlockUpsertOne) IDX(ctx context.Context) string {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // SysJwtBlockCreateBulk is the builder for creating many SysJwtBlock entities in bulk.
 type SysJwtBlockCreateBulk struct {
 	config
 	builders []*SysJwtBlockCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the SysJwtBlock entities in the database.
@@ -313,6 +638,7 @@ func (sjbcb *SysJwtBlockCreateBulk) Save(ctx context.Context) ([]*SysJwtBlock, e
 					_, err = mutators[i+1].Mutate(root, sjbcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = sjbcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, sjbcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -359,6 +685,218 @@ func (sjbcb *SysJwtBlockCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (sjbcb *SysJwtBlockCreateBulk) ExecX(ctx context.Context) {
 	if err := sjbcb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysJwtBlock.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysJwtBlockUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (sjbcb *SysJwtBlockCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysJwtBlockUpsertBulk {
+	sjbcb.conflict = opts
+	return &SysJwtBlockUpsertBulk{
+		create: sjbcb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysJwtBlock.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (sjbcb *SysJwtBlockCreateBulk) OnConflictColumns(columns ...string) *SysJwtBlockUpsertBulk {
+	sjbcb.conflict = append(sjbcb.conflict, sql.ConflictColumns(columns...))
+	return &SysJwtBlockUpsertBulk{
+		create: sjbcb,
+	}
+}
+
+// SysJwtBlockUpsertBulk is the builder for "upsert"-ing
+// a bulk of SysJwtBlock nodes.
+type SysJwtBlockUpsertBulk struct {
+	create *SysJwtBlockCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.SysJwtBlock.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysjwtblock.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysJwtBlockUpsertBulk) UpdateNewValues() *SysJwtBlockUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(sysjwtblock.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(sysjwtblock.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysJwtBlock.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *SysJwtBlockUpsertBulk) Ignore() *SysJwtBlockUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysJwtBlockUpsertBulk) DoNothing() *SysJwtBlockUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysJwtBlockCreateBulk.OnConflict
+// documentation for more info.
+func (u *SysJwtBlockUpsertBulk) Update(set func(*SysJwtBlockUpsert)) *SysJwtBlockUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysJwtBlockUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysJwtBlockUpsertBulk) SetIsDel(v bool) *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertBulk) UpdateIsDel() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysJwtBlockUpsertBulk) SetMemo(v string) *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertBulk) UpdateMemo() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysJwtBlockUpsertBulk) ClearMemo() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysJwtBlockUpsertBulk) SetUpdatedAt(v time.Time) *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertBulk) UpdateUpdatedAt() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysJwtBlockUpsertBulk) SetDeletedAt(v time.Time) *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertBulk) UpdateDeletedAt() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysJwtBlockUpsertBulk) ClearDeletedAt() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysJwtBlockUpsertBulk) SetIsActive(v bool) *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertBulk) UpdateIsActive() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetJwt sets the "jwt" field.
+func (u *SysJwtBlockUpsertBulk) SetJwt(v string) *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.SetJwt(v)
+	})
+}
+
+// UpdateJwt sets the "jwt" field to the value that was provided on create.
+func (u *SysJwtBlockUpsertBulk) UpdateJwt() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.UpdateJwt()
+	})
+}
+
+// Exec executes the query.
+func (u *SysJwtBlockUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the SysJwtBlockCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysJwtBlockCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysJwtBlockUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

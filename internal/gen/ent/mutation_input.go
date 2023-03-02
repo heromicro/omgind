@@ -488,6 +488,7 @@ func (u *SysDictItemUpdateOne) SetInput(i UpdateSysDictItemInput) *SysDictItemUp
 
 // CreateSysDistrictInput represents a mutation input for creating sysdistricts.
 type CreateSysDistrictInput struct {
+	IsDel      *bool
 	Sort       *int32
 	CreatedAt  *time.Time
 	UpdatedAt  *time.Time
@@ -525,6 +526,9 @@ type CreateSysDistrictInput struct {
 
 // Mutate applies the CreateSysDistrictInput on the SysDistrictCreate builder.
 func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
 	}
@@ -632,6 +636,7 @@ func (c *SysDistrictCreate) SetInput(i CreateSysDistrictInput) *SysDistrictCreat
 
 // UpdateSysDistrictInput represents a mutation input for updating sysdistricts.
 type UpdateSysDistrictInput struct {
+	IsDel           *bool
 	Sort            *int32
 	UpdatedAt       *time.Time
 	DeletedAt       *time.Time
@@ -696,6 +701,9 @@ type UpdateSysDistrictInput struct {
 
 // Mutate applies the UpdateSysDistrictInput on the SysDistrictMutation.
 func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
 	}

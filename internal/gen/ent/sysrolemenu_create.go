@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
@@ -18,6 +20,7 @@ type SysRoleMenuCreate struct {
 	config
 	mutation *SysRoleMenuMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetIsDel sets the "is_del" field.
@@ -237,6 +240,7 @@ func (srmc *SysRoleMenuCreate) createSpec() (*SysRoleMenu, *sqlgraph.CreateSpec)
 		_node = &SysRoleMenu{config: srmc.config}
 		_spec = sqlgraph.NewCreateSpec(sysrolemenu.Table, sqlgraph.NewFieldSpec(sysrolemenu.FieldID, field.TypeString))
 	)
+	_spec.OnConflict = srmc.conflict
 	if id, ok := srmc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -272,10 +276,331 @@ func (srmc *SysRoleMenuCreate) createSpec() (*SysRoleMenu, *sqlgraph.CreateSpec)
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysRoleMenu.Create().
+//		SetIsDel(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysRoleMenuUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (srmc *SysRoleMenuCreate) OnConflict(opts ...sql.ConflictOption) *SysRoleMenuUpsertOne {
+	srmc.conflict = opts
+	return &SysRoleMenuUpsertOne{
+		create: srmc,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysRoleMenu.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (srmc *SysRoleMenuCreate) OnConflictColumns(columns ...string) *SysRoleMenuUpsertOne {
+	srmc.conflict = append(srmc.conflict, sql.ConflictColumns(columns...))
+	return &SysRoleMenuUpsertOne{
+		create: srmc,
+	}
+}
+
+type (
+	// SysRoleMenuUpsertOne is the builder for "upsert"-ing
+	//  one SysRoleMenu node.
+	SysRoleMenuUpsertOne struct {
+		create *SysRoleMenuCreate
+	}
+
+	// SysRoleMenuUpsert is the "OnConflict" setter.
+	SysRoleMenuUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetIsDel sets the "is_del" field.
+func (u *SysRoleMenuUpsert) SetIsDel(v bool) *SysRoleMenuUpsert {
+	u.Set(sysrolemenu.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysRoleMenuUpsert) UpdateIsDel() *SysRoleMenuUpsert {
+	u.SetExcluded(sysrolemenu.FieldIsDel)
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysRoleMenuUpsert) SetUpdatedAt(v time.Time) *SysRoleMenuUpsert {
+	u.Set(sysrolemenu.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysRoleMenuUpsert) UpdateUpdatedAt() *SysRoleMenuUpsert {
+	u.SetExcluded(sysrolemenu.FieldUpdatedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysRoleMenuUpsert) SetDeletedAt(v time.Time) *SysRoleMenuUpsert {
+	u.Set(sysrolemenu.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysRoleMenuUpsert) UpdateDeletedAt() *SysRoleMenuUpsert {
+	u.SetExcluded(sysrolemenu.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysRoleMenuUpsert) ClearDeletedAt() *SysRoleMenuUpsert {
+	u.SetNull(sysrolemenu.FieldDeletedAt)
+	return u
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *SysRoleMenuUpsert) SetRoleID(v string) *SysRoleMenuUpsert {
+	u.Set(sysrolemenu.FieldRoleID, v)
+	return u
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsert) UpdateRoleID() *SysRoleMenuUpsert {
+	u.SetExcluded(sysrolemenu.FieldRoleID)
+	return u
+}
+
+// SetMenuID sets the "menu_id" field.
+func (u *SysRoleMenuUpsert) SetMenuID(v string) *SysRoleMenuUpsert {
+	u.Set(sysrolemenu.FieldMenuID, v)
+	return u
+}
+
+// UpdateMenuID sets the "menu_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsert) UpdateMenuID() *SysRoleMenuUpsert {
+	u.SetExcluded(sysrolemenu.FieldMenuID)
+	return u
+}
+
+// SetActionID sets the "action_id" field.
+func (u *SysRoleMenuUpsert) SetActionID(v string) *SysRoleMenuUpsert {
+	u.Set(sysrolemenu.FieldActionID, v)
+	return u
+}
+
+// UpdateActionID sets the "action_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsert) UpdateActionID() *SysRoleMenuUpsert {
+	u.SetExcluded(sysrolemenu.FieldActionID)
+	return u
+}
+
+// ClearActionID clears the value of the "action_id" field.
+func (u *SysRoleMenuUpsert) ClearActionID() *SysRoleMenuUpsert {
+	u.SetNull(sysrolemenu.FieldActionID)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.SysRoleMenu.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysrolemenu.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysRoleMenuUpsertOne) UpdateNewValues() *SysRoleMenuUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(sysrolemenu.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(sysrolemenu.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysRoleMenu.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *SysRoleMenuUpsertOne) Ignore() *SysRoleMenuUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysRoleMenuUpsertOne) DoNothing() *SysRoleMenuUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysRoleMenuCreate.OnConflict
+// documentation for more info.
+func (u *SysRoleMenuUpsertOne) Update(set func(*SysRoleMenuUpsert)) *SysRoleMenuUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysRoleMenuUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysRoleMenuUpsertOne) SetIsDel(v bool) *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertOne) UpdateIsDel() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysRoleMenuUpsertOne) SetUpdatedAt(v time.Time) *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertOne) UpdateUpdatedAt() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysRoleMenuUpsertOne) SetDeletedAt(v time.Time) *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertOne) UpdateDeletedAt() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysRoleMenuUpsertOne) ClearDeletedAt() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *SysRoleMenuUpsertOne) SetRoleID(v string) *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetRoleID(v)
+	})
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertOne) UpdateRoleID() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateRoleID()
+	})
+}
+
+// SetMenuID sets the "menu_id" field.
+func (u *SysRoleMenuUpsertOne) SetMenuID(v string) *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetMenuID(v)
+	})
+}
+
+// UpdateMenuID sets the "menu_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertOne) UpdateMenuID() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateMenuID()
+	})
+}
+
+// SetActionID sets the "action_id" field.
+func (u *SysRoleMenuUpsertOne) SetActionID(v string) *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetActionID(v)
+	})
+}
+
+// UpdateActionID sets the "action_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertOne) UpdateActionID() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateActionID()
+	})
+}
+
+// ClearActionID clears the value of the "action_id" field.
+func (u *SysRoleMenuUpsertOne) ClearActionID() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.ClearActionID()
+	})
+}
+
+// Exec executes the query.
+func (u *SysRoleMenuUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysRoleMenuCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysRoleMenuUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *SysRoleMenuUpsertOne) ID(ctx context.Context) (id string, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: SysRoleMenuUpsertOne.ID is not supported by MySQL driver. Use SysRoleMenuUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *SysRoleMenuUpsertOne) IDX(ctx context.Context) string {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // SysRoleMenuCreateBulk is the builder for creating many SysRoleMenu entities in bulk.
 type SysRoleMenuCreateBulk struct {
 	config
 	builders []*SysRoleMenuCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the SysRoleMenu entities in the database.
@@ -302,6 +627,7 @@ func (srmcb *SysRoleMenuCreateBulk) Save(ctx context.Context) ([]*SysRoleMenu, e
 					_, err = mutators[i+1].Mutate(root, srmcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = srmcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, srmcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -348,6 +674,218 @@ func (srmcb *SysRoleMenuCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (srmcb *SysRoleMenuCreateBulk) ExecX(ctx context.Context) {
 	if err := srmcb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysRoleMenu.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysRoleMenuUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (srmcb *SysRoleMenuCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysRoleMenuUpsertBulk {
+	srmcb.conflict = opts
+	return &SysRoleMenuUpsertBulk{
+		create: srmcb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysRoleMenu.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (srmcb *SysRoleMenuCreateBulk) OnConflictColumns(columns ...string) *SysRoleMenuUpsertBulk {
+	srmcb.conflict = append(srmcb.conflict, sql.ConflictColumns(columns...))
+	return &SysRoleMenuUpsertBulk{
+		create: srmcb,
+	}
+}
+
+// SysRoleMenuUpsertBulk is the builder for "upsert"-ing
+// a bulk of SysRoleMenu nodes.
+type SysRoleMenuUpsertBulk struct {
+	create *SysRoleMenuCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.SysRoleMenu.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysrolemenu.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysRoleMenuUpsertBulk) UpdateNewValues() *SysRoleMenuUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(sysrolemenu.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(sysrolemenu.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysRoleMenu.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *SysRoleMenuUpsertBulk) Ignore() *SysRoleMenuUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysRoleMenuUpsertBulk) DoNothing() *SysRoleMenuUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysRoleMenuCreateBulk.OnConflict
+// documentation for more info.
+func (u *SysRoleMenuUpsertBulk) Update(set func(*SysRoleMenuUpsert)) *SysRoleMenuUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysRoleMenuUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysRoleMenuUpsertBulk) SetIsDel(v bool) *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertBulk) UpdateIsDel() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysRoleMenuUpsertBulk) SetUpdatedAt(v time.Time) *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertBulk) UpdateUpdatedAt() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysRoleMenuUpsertBulk) SetDeletedAt(v time.Time) *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertBulk) UpdateDeletedAt() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysRoleMenuUpsertBulk) ClearDeletedAt() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetRoleID sets the "role_id" field.
+func (u *SysRoleMenuUpsertBulk) SetRoleID(v string) *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetRoleID(v)
+	})
+}
+
+// UpdateRoleID sets the "role_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertBulk) UpdateRoleID() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateRoleID()
+	})
+}
+
+// SetMenuID sets the "menu_id" field.
+func (u *SysRoleMenuUpsertBulk) SetMenuID(v string) *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetMenuID(v)
+	})
+}
+
+// UpdateMenuID sets the "menu_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertBulk) UpdateMenuID() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateMenuID()
+	})
+}
+
+// SetActionID sets the "action_id" field.
+func (u *SysRoleMenuUpsertBulk) SetActionID(v string) *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.SetActionID(v)
+	})
+}
+
+// UpdateActionID sets the "action_id" field to the value that was provided on create.
+func (u *SysRoleMenuUpsertBulk) UpdateActionID() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.UpdateActionID()
+	})
+}
+
+// ClearActionID clears the value of the "action_id" field.
+func (u *SysRoleMenuUpsertBulk) ClearActionID() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.ClearActionID()
+	})
+}
+
+// Exec executes the query.
+func (u *SysRoleMenuUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the SysRoleMenuCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysRoleMenuCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysRoleMenuUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

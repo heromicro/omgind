@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
@@ -18,6 +20,7 @@ type SysMenuActionResourceCreate struct {
 	config
 	mutation *SysMenuActionResourceMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetIsDel sets the "is_del" field.
@@ -297,6 +300,7 @@ func (smarc *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, 
 		_node = &SysMenuActionResource{config: smarc.config}
 		_spec = sqlgraph.NewCreateSpec(sysmenuactionresource.Table, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
 	)
+	_spec.OnConflict = smarc.conflict
 	if id, ok := smarc.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -344,10 +348,422 @@ func (smarc *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, 
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysMenuActionResource.Create().
+//		SetIsDel(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysMenuActionResourceUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (smarc *SysMenuActionResourceCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuActionResourceUpsertOne {
+	smarc.conflict = opts
+	return &SysMenuActionResourceUpsertOne{
+		create: smarc,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysMenuActionResource.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (smarc *SysMenuActionResourceCreate) OnConflictColumns(columns ...string) *SysMenuActionResourceUpsertOne {
+	smarc.conflict = append(smarc.conflict, sql.ConflictColumns(columns...))
+	return &SysMenuActionResourceUpsertOne{
+		create: smarc,
+	}
+}
+
+type (
+	// SysMenuActionResourceUpsertOne is the builder for "upsert"-ing
+	//  one SysMenuActionResource node.
+	SysMenuActionResourceUpsertOne struct {
+		create *SysMenuActionResourceCreate
+	}
+
+	// SysMenuActionResourceUpsert is the "OnConflict" setter.
+	SysMenuActionResourceUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetIsDel sets the "is_del" field.
+func (u *SysMenuActionResourceUpsert) SetIsDel(v bool) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdateIsDel() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldIsDel)
+	return u
+}
+
+// SetSort sets the "sort" field.
+func (u *SysMenuActionResourceUpsert) SetSort(v int32) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldSort, v)
+	return u
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdateSort() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldSort)
+	return u
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysMenuActionResourceUpsert) AddSort(v int32) *SysMenuActionResourceUpsert {
+	u.Add(sysmenuactionresource.FieldSort, v)
+	return u
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysMenuActionResourceUpsert) SetMemo(v string) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldMemo, v)
+	return u
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdateMemo() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldMemo)
+	return u
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysMenuActionResourceUpsert) ClearMemo() *SysMenuActionResourceUpsert {
+	u.SetNull(sysmenuactionresource.FieldMemo)
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysMenuActionResourceUpsert) SetUpdatedAt(v time.Time) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdateUpdatedAt() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldUpdatedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysMenuActionResourceUpsert) SetDeletedAt(v time.Time) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdateDeletedAt() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysMenuActionResourceUpsert) ClearDeletedAt() *SysMenuActionResourceUpsert {
+	u.SetNull(sysmenuactionresource.FieldDeletedAt)
+	return u
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysMenuActionResourceUpsert) SetIsActive(v bool) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldIsActive, v)
+	return u
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdateIsActive() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldIsActive)
+	return u
+}
+
+// SetMethod sets the "method" field.
+func (u *SysMenuActionResourceUpsert) SetMethod(v string) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldMethod, v)
+	return u
+}
+
+// UpdateMethod sets the "method" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdateMethod() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldMethod)
+	return u
+}
+
+// SetPath sets the "path" field.
+func (u *SysMenuActionResourceUpsert) SetPath(v string) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldPath, v)
+	return u
+}
+
+// UpdatePath sets the "path" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdatePath() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldPath)
+	return u
+}
+
+// SetActionID sets the "action_id" field.
+func (u *SysMenuActionResourceUpsert) SetActionID(v string) *SysMenuActionResourceUpsert {
+	u.Set(sysmenuactionresource.FieldActionID, v)
+	return u
+}
+
+// UpdateActionID sets the "action_id" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsert) UpdateActionID() *SysMenuActionResourceUpsert {
+	u.SetExcluded(sysmenuactionresource.FieldActionID)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.SysMenuActionResource.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysmenuactionresource.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysMenuActionResourceUpsertOne) UpdateNewValues() *SysMenuActionResourceUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(sysmenuactionresource.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(sysmenuactionresource.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysMenuActionResource.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *SysMenuActionResourceUpsertOne) Ignore() *SysMenuActionResourceUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysMenuActionResourceUpsertOne) DoNothing() *SysMenuActionResourceUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysMenuActionResourceCreate.OnConflict
+// documentation for more info.
+func (u *SysMenuActionResourceUpsertOne) Update(set func(*SysMenuActionResourceUpsert)) *SysMenuActionResourceUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysMenuActionResourceUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysMenuActionResourceUpsertOne) SetIsDel(v bool) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdateIsDel() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysMenuActionResourceUpsertOne) SetSort(v int32) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysMenuActionResourceUpsertOne) AddSort(v int32) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdateSort() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysMenuActionResourceUpsertOne) SetMemo(v string) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdateMemo() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysMenuActionResourceUpsertOne) ClearMemo() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysMenuActionResourceUpsertOne) SetUpdatedAt(v time.Time) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdateUpdatedAt() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysMenuActionResourceUpsertOne) SetDeletedAt(v time.Time) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdateDeletedAt() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysMenuActionResourceUpsertOne) ClearDeletedAt() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysMenuActionResourceUpsertOne) SetIsActive(v bool) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdateIsActive() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetMethod sets the "method" field.
+func (u *SysMenuActionResourceUpsertOne) SetMethod(v string) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetMethod(v)
+	})
+}
+
+// UpdateMethod sets the "method" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdateMethod() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateMethod()
+	})
+}
+
+// SetPath sets the "path" field.
+func (u *SysMenuActionResourceUpsertOne) SetPath(v string) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetPath(v)
+	})
+}
+
+// UpdatePath sets the "path" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdatePath() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdatePath()
+	})
+}
+
+// SetActionID sets the "action_id" field.
+func (u *SysMenuActionResourceUpsertOne) SetActionID(v string) *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetActionID(v)
+	})
+}
+
+// UpdateActionID sets the "action_id" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertOne) UpdateActionID() *SysMenuActionResourceUpsertOne {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateActionID()
+	})
+}
+
+// Exec executes the query.
+func (u *SysMenuActionResourceUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysMenuActionResourceCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysMenuActionResourceUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *SysMenuActionResourceUpsertOne) ID(ctx context.Context) (id string, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: SysMenuActionResourceUpsertOne.ID is not supported by MySQL driver. Use SysMenuActionResourceUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *SysMenuActionResourceUpsertOne) IDX(ctx context.Context) string {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // SysMenuActionResourceCreateBulk is the builder for creating many SysMenuActionResource entities in bulk.
 type SysMenuActionResourceCreateBulk struct {
 	config
 	builders []*SysMenuActionResourceCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the SysMenuActionResource entities in the database.
@@ -374,6 +790,7 @@ func (smarcb *SysMenuActionResourceCreateBulk) Save(ctx context.Context) ([]*Sys
 					_, err = mutators[i+1].Mutate(root, smarcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = smarcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, smarcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -420,6 +837,267 @@ func (smarcb *SysMenuActionResourceCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (smarcb *SysMenuActionResourceCreateBulk) ExecX(ctx context.Context) {
 	if err := smarcb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysMenuActionResource.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysMenuActionResourceUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (smarcb *SysMenuActionResourceCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuActionResourceUpsertBulk {
+	smarcb.conflict = opts
+	return &SysMenuActionResourceUpsertBulk{
+		create: smarcb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysMenuActionResource.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (smarcb *SysMenuActionResourceCreateBulk) OnConflictColumns(columns ...string) *SysMenuActionResourceUpsertBulk {
+	smarcb.conflict = append(smarcb.conflict, sql.ConflictColumns(columns...))
+	return &SysMenuActionResourceUpsertBulk{
+		create: smarcb,
+	}
+}
+
+// SysMenuActionResourceUpsertBulk is the builder for "upsert"-ing
+// a bulk of SysMenuActionResource nodes.
+type SysMenuActionResourceUpsertBulk struct {
+	create *SysMenuActionResourceCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.SysMenuActionResource.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysmenuactionresource.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysMenuActionResourceUpsertBulk) UpdateNewValues() *SysMenuActionResourceUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(sysmenuactionresource.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(sysmenuactionresource.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysMenuActionResource.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *SysMenuActionResourceUpsertBulk) Ignore() *SysMenuActionResourceUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysMenuActionResourceUpsertBulk) DoNothing() *SysMenuActionResourceUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysMenuActionResourceCreateBulk.OnConflict
+// documentation for more info.
+func (u *SysMenuActionResourceUpsertBulk) Update(set func(*SysMenuActionResourceUpsert)) *SysMenuActionResourceUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysMenuActionResourceUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysMenuActionResourceUpsertBulk) SetIsDel(v bool) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdateIsDel() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysMenuActionResourceUpsertBulk) SetSort(v int32) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysMenuActionResourceUpsertBulk) AddSort(v int32) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdateSort() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysMenuActionResourceUpsertBulk) SetMemo(v string) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdateMemo() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysMenuActionResourceUpsertBulk) ClearMemo() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysMenuActionResourceUpsertBulk) SetUpdatedAt(v time.Time) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdateUpdatedAt() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysMenuActionResourceUpsertBulk) SetDeletedAt(v time.Time) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdateDeletedAt() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysMenuActionResourceUpsertBulk) ClearDeletedAt() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysMenuActionResourceUpsertBulk) SetIsActive(v bool) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdateIsActive() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetMethod sets the "method" field.
+func (u *SysMenuActionResourceUpsertBulk) SetMethod(v string) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetMethod(v)
+	})
+}
+
+// UpdateMethod sets the "method" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdateMethod() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateMethod()
+	})
+}
+
+// SetPath sets the "path" field.
+func (u *SysMenuActionResourceUpsertBulk) SetPath(v string) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetPath(v)
+	})
+}
+
+// UpdatePath sets the "path" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdatePath() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdatePath()
+	})
+}
+
+// SetActionID sets the "action_id" field.
+func (u *SysMenuActionResourceUpsertBulk) SetActionID(v string) *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.SetActionID(v)
+	})
+}
+
+// UpdateActionID sets the "action_id" field to the value that was provided on create.
+func (u *SysMenuActionResourceUpsertBulk) UpdateActionID() *SysMenuActionResourceUpsertBulk {
+	return u.Update(func(s *SysMenuActionResourceUpsert) {
+		s.UpdateActionID()
+	})
+}
+
+// Exec executes the query.
+func (u *SysMenuActionResourceUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the SysMenuActionResourceCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysMenuActionResourceCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysMenuActionResourceUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

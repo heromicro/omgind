@@ -332,12 +332,12 @@ func (sdq *SysDistrictQuery) WithChildren(opts ...func(*SysDistrictQuery)) *SysD
 // Example:
 //
 //	var v []struct {
-//		Sort int32 `json:"sort,omitempty" sql:"sort"`
+//		IsDel bool `json:"is_del,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.SysDistrict.Query().
-//		GroupBy(sysdistrict.FieldSort).
+//		GroupBy(sysdistrict.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 func (sdq *SysDistrictQuery) GroupBy(field string, fields ...string) *SysDistrictGroupBy {
@@ -355,11 +355,11 @@ func (sdq *SysDistrictQuery) GroupBy(field string, fields ...string) *SysDistric
 // Example:
 //
 //	var v []struct {
-//		Sort int32 `json:"sort,omitempty" sql:"sort"`
+//		IsDel bool `json:"is_del,omitempty"`
 //	}
 //
 //	client.SysDistrict.Query().
-//		Select(sysdistrict.FieldSort).
+//		Select(sysdistrict.FieldIsDel).
 //		Scan(ctx, &v)
 func (sdq *SysDistrictQuery) Select(fields ...string) *SysDistrictSelect {
 	sdq.ctx.Fields = append(sdq.ctx.Fields, fields...)

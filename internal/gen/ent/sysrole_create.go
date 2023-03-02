@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"time"
 
+	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
@@ -18,6 +20,7 @@ type SysRoleCreate struct {
 	config
 	mutation *SysRoleMutation
 	hooks    []Hook
+	conflict []sql.ConflictOption
 }
 
 // SetIsDel sets the "is_del" field.
@@ -269,6 +272,7 @@ func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 		_node = &SysRole{config: src.config}
 		_spec = sqlgraph.NewCreateSpec(sysrole.Table, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
 	)
+	_spec.OnConflict = src.conflict
 	if id, ok := src.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
@@ -308,10 +312,370 @@ func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 	return _node, _spec
 }
 
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysRole.Create().
+//		SetIsDel(v).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysRoleUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (src *SysRoleCreate) OnConflict(opts ...sql.ConflictOption) *SysRoleUpsertOne {
+	src.conflict = opts
+	return &SysRoleUpsertOne{
+		create: src,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysRole.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (src *SysRoleCreate) OnConflictColumns(columns ...string) *SysRoleUpsertOne {
+	src.conflict = append(src.conflict, sql.ConflictColumns(columns...))
+	return &SysRoleUpsertOne{
+		create: src,
+	}
+}
+
+type (
+	// SysRoleUpsertOne is the builder for "upsert"-ing
+	//  one SysRole node.
+	SysRoleUpsertOne struct {
+		create *SysRoleCreate
+	}
+
+	// SysRoleUpsert is the "OnConflict" setter.
+	SysRoleUpsert struct {
+		*sql.UpdateSet
+	}
+)
+
+// SetIsDel sets the "is_del" field.
+func (u *SysRoleUpsert) SetIsDel(v bool) *SysRoleUpsert {
+	u.Set(sysrole.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysRoleUpsert) UpdateIsDel() *SysRoleUpsert {
+	u.SetExcluded(sysrole.FieldIsDel)
+	return u
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysRoleUpsert) SetIsActive(v bool) *SysRoleUpsert {
+	u.Set(sysrole.FieldIsActive, v)
+	return u
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysRoleUpsert) UpdateIsActive() *SysRoleUpsert {
+	u.SetExcluded(sysrole.FieldIsActive)
+	return u
+}
+
+// SetSort sets the "sort" field.
+func (u *SysRoleUpsert) SetSort(v int32) *SysRoleUpsert {
+	u.Set(sysrole.FieldSort, v)
+	return u
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysRoleUpsert) UpdateSort() *SysRoleUpsert {
+	u.SetExcluded(sysrole.FieldSort)
+	return u
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysRoleUpsert) AddSort(v int32) *SysRoleUpsert {
+	u.Add(sysrole.FieldSort, v)
+	return u
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysRoleUpsert) SetMemo(v string) *SysRoleUpsert {
+	u.Set(sysrole.FieldMemo, v)
+	return u
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysRoleUpsert) UpdateMemo() *SysRoleUpsert {
+	u.SetExcluded(sysrole.FieldMemo)
+	return u
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysRoleUpsert) ClearMemo() *SysRoleUpsert {
+	u.SetNull(sysrole.FieldMemo)
+	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysRoleUpsert) SetUpdatedAt(v time.Time) *SysRoleUpsert {
+	u.Set(sysrole.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysRoleUpsert) UpdateUpdatedAt() *SysRoleUpsert {
+	u.SetExcluded(sysrole.FieldUpdatedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysRoleUpsert) SetDeletedAt(v time.Time) *SysRoleUpsert {
+	u.Set(sysrole.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysRoleUpsert) UpdateDeletedAt() *SysRoleUpsert {
+	u.SetExcluded(sysrole.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysRoleUpsert) ClearDeletedAt() *SysRoleUpsert {
+	u.SetNull(sysrole.FieldDeletedAt)
+	return u
+}
+
+// SetName sets the "name" field.
+func (u *SysRoleUpsert) SetName(v string) *SysRoleUpsert {
+	u.Set(sysrole.FieldName, v)
+	return u
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysRoleUpsert) UpdateName() *SysRoleUpsert {
+	u.SetExcluded(sysrole.FieldName)
+	return u
+}
+
+// UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
+// Using this option is equivalent to using:
+//
+//	client.SysRole.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysrole.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysRoleUpsertOne) UpdateNewValues() *SysRoleUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		if _, exists := u.create.mutation.ID(); exists {
+			s.SetIgnore(sysrole.FieldID)
+		}
+		if _, exists := u.create.mutation.CreatedAt(); exists {
+			s.SetIgnore(sysrole.FieldCreatedAt)
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysRole.Create().
+//	    OnConflict(sql.ResolveWithIgnore()).
+//	    Exec(ctx)
+func (u *SysRoleUpsertOne) Ignore() *SysRoleUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysRoleUpsertOne) DoNothing() *SysRoleUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysRoleCreate.OnConflict
+// documentation for more info.
+func (u *SysRoleUpsertOne) Update(set func(*SysRoleUpsert)) *SysRoleUpsertOne {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysRoleUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysRoleUpsertOne) SetIsDel(v bool) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysRoleUpsertOne) UpdateIsDel() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysRoleUpsertOne) SetIsActive(v bool) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysRoleUpsertOne) UpdateIsActive() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysRoleUpsertOne) SetSort(v int32) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysRoleUpsertOne) AddSort(v int32) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysRoleUpsertOne) UpdateSort() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysRoleUpsertOne) SetMemo(v string) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysRoleUpsertOne) UpdateMemo() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysRoleUpsertOne) ClearMemo() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysRoleUpsertOne) SetUpdatedAt(v time.Time) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysRoleUpsertOne) UpdateUpdatedAt() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysRoleUpsertOne) SetDeletedAt(v time.Time) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysRoleUpsertOne) UpdateDeletedAt() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysRoleUpsertOne) ClearDeletedAt() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *SysRoleUpsertOne) SetName(v string) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysRoleUpsertOne) UpdateName() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateName()
+	})
+}
+
+// Exec executes the query.
+func (u *SysRoleUpsertOne) Exec(ctx context.Context) error {
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysRoleCreate.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysRoleUpsertOne) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// Exec executes the UPSERT query and returns the inserted/updated ID.
+func (u *SysRoleUpsertOne) ID(ctx context.Context) (id string, err error) {
+	if u.create.driver.Dialect() == dialect.MySQL {
+		// In case of "ON CONFLICT", there is no way to get back non-numeric ID
+		// fields from the database since MySQL does not support the RETURNING clause.
+		return id, errors.New("ent: SysRoleUpsertOne.ID is not supported by MySQL driver. Use SysRoleUpsertOne.Exec instead")
+	}
+	node, err := u.create.Save(ctx)
+	if err != nil {
+		return id, err
+	}
+	return node.ID, nil
+}
+
+// IDX is like ID, but panics if an error occurs.
+func (u *SysRoleUpsertOne) IDX(ctx context.Context) string {
+	id, err := u.ID(ctx)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
 // SysRoleCreateBulk is the builder for creating many SysRole entities in bulk.
 type SysRoleCreateBulk struct {
 	config
 	builders []*SysRoleCreate
+	conflict []sql.ConflictOption
 }
 
 // Save creates the SysRole entities in the database.
@@ -338,6 +702,7 @@ func (srcb *SysRoleCreateBulk) Save(ctx context.Context) ([]*SysRole, error) {
 					_, err = mutators[i+1].Mutate(root, srcb.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
+					spec.OnConflict = srcb.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
 					if err = sqlgraph.BatchCreate(ctx, srcb.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
@@ -384,6 +749,239 @@ func (srcb *SysRoleCreateBulk) Exec(ctx context.Context) error {
 // ExecX is like Exec, but panics if an error occurs.
 func (srcb *SysRoleCreateBulk) ExecX(ctx context.Context) {
 	if err := srcb.Exec(ctx); err != nil {
+		panic(err)
+	}
+}
+
+// OnConflict allows configuring the `ON CONFLICT` / `ON DUPLICATE KEY` clause
+// of the `INSERT` statement. For example:
+//
+//	client.SysRole.CreateBulk(builders...).
+//		OnConflict(
+//			// Update the row with the new values
+//			// the was proposed for insertion.
+//			sql.ResolveWithNewValues(),
+//		).
+//		// Override some of the fields with custom
+//		// update values.
+//		Update(func(u *ent.SysRoleUpsert) {
+//			SetIsDel(v+v).
+//		}).
+//		Exec(ctx)
+func (srcb *SysRoleCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysRoleUpsertBulk {
+	srcb.conflict = opts
+	return &SysRoleUpsertBulk{
+		create: srcb,
+	}
+}
+
+// OnConflictColumns calls `OnConflict` and configures the columns
+// as conflict target. Using this option is equivalent to using:
+//
+//	client.SysRole.Create().
+//		OnConflict(sql.ConflictColumns(columns...)).
+//		Exec(ctx)
+func (srcb *SysRoleCreateBulk) OnConflictColumns(columns ...string) *SysRoleUpsertBulk {
+	srcb.conflict = append(srcb.conflict, sql.ConflictColumns(columns...))
+	return &SysRoleUpsertBulk{
+		create: srcb,
+	}
+}
+
+// SysRoleUpsertBulk is the builder for "upsert"-ing
+// a bulk of SysRole nodes.
+type SysRoleUpsertBulk struct {
+	create *SysRoleCreateBulk
+}
+
+// UpdateNewValues updates the mutable fields using the new values that
+// were set on create. Using this option is equivalent to using:
+//
+//	client.SysRole.Create().
+//		OnConflict(
+//			sql.ResolveWithNewValues(),
+//			sql.ResolveWith(func(u *sql.UpdateSet) {
+//				u.SetIgnore(sysrole.FieldID)
+//			}),
+//		).
+//		Exec(ctx)
+func (u *SysRoleUpsertBulk) UpdateNewValues() *SysRoleUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithNewValues())
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
+		for _, b := range u.create.builders {
+			if _, exists := b.mutation.ID(); exists {
+				s.SetIgnore(sysrole.FieldID)
+			}
+			if _, exists := b.mutation.CreatedAt(); exists {
+				s.SetIgnore(sysrole.FieldCreatedAt)
+			}
+		}
+	}))
+	return u
+}
+
+// Ignore sets each column to itself in case of conflict.
+// Using this option is equivalent to using:
+//
+//	client.SysRole.Create().
+//		OnConflict(sql.ResolveWithIgnore()).
+//		Exec(ctx)
+func (u *SysRoleUpsertBulk) Ignore() *SysRoleUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWithIgnore())
+	return u
+}
+
+// DoNothing configures the conflict_action to `DO NOTHING`.
+// Supported only by SQLite and PostgreSQL.
+func (u *SysRoleUpsertBulk) DoNothing() *SysRoleUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.DoNothing())
+	return u
+}
+
+// Update allows overriding fields `UPDATE` values. See the SysRoleCreateBulk.OnConflict
+// documentation for more info.
+func (u *SysRoleUpsertBulk) Update(set func(*SysRoleUpsert)) *SysRoleUpsertBulk {
+	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(update *sql.UpdateSet) {
+		set(&SysRoleUpsert{UpdateSet: update})
+	}))
+	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *SysRoleUpsertBulk) SetIsDel(v bool) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *SysRoleUpsertBulk) UpdateIsDel() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateIsDel()
+	})
+}
+
+// SetIsActive sets the "is_active" field.
+func (u *SysRoleUpsertBulk) SetIsActive(v bool) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetIsActive(v)
+	})
+}
+
+// UpdateIsActive sets the "is_active" field to the value that was provided on create.
+func (u *SysRoleUpsertBulk) UpdateIsActive() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateIsActive()
+	})
+}
+
+// SetSort sets the "sort" field.
+func (u *SysRoleUpsertBulk) SetSort(v int32) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetSort(v)
+	})
+}
+
+// AddSort adds v to the "sort" field.
+func (u *SysRoleUpsertBulk) AddSort(v int32) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.AddSort(v)
+	})
+}
+
+// UpdateSort sets the "sort" field to the value that was provided on create.
+func (u *SysRoleUpsertBulk) UpdateSort() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateSort()
+	})
+}
+
+// SetMemo sets the "memo" field.
+func (u *SysRoleUpsertBulk) SetMemo(v string) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetMemo(v)
+	})
+}
+
+// UpdateMemo sets the "memo" field to the value that was provided on create.
+func (u *SysRoleUpsertBulk) UpdateMemo() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateMemo()
+	})
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (u *SysRoleUpsertBulk) ClearMemo() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.ClearMemo()
+	})
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysRoleUpsertBulk) SetUpdatedAt(v time.Time) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysRoleUpsertBulk) UpdateUpdatedAt() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysRoleUpsertBulk) SetDeletedAt(v time.Time) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysRoleUpsertBulk) UpdateDeletedAt() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysRoleUpsertBulk) ClearDeletedAt() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.ClearDeletedAt()
+	})
+}
+
+// SetName sets the "name" field.
+func (u *SysRoleUpsertBulk) SetName(v string) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetName(v)
+	})
+}
+
+// UpdateName sets the "name" field to the value that was provided on create.
+func (u *SysRoleUpsertBulk) UpdateName() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateName()
+	})
+}
+
+// Exec executes the query.
+func (u *SysRoleUpsertBulk) Exec(ctx context.Context) error {
+	for i, b := range u.create.builders {
+		if len(b.conflict) != 0 {
+			return fmt.Errorf("ent: OnConflict was set for builder %d. Set it on the SysRoleCreateBulk instead", i)
+		}
+	}
+	if len(u.create.conflict) == 0 {
+		return errors.New("ent: missing options for SysRoleCreateBulk.OnConflict")
+	}
+	return u.create.Exec(ctx)
+}
+
+// ExecX is like Exec, but panics if an error occurs.
+func (u *SysRoleUpsertBulk) ExecX(ctx context.Context) {
+	if err := u.create.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

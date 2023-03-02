@@ -13,9 +13,9 @@ func main() {
 		Features: []gen.Feature{
 			//gen.FeatureEntQL,
 			//gen.FeatureSnapshot,
-			gen.FeatureSchemaConfig,
-			gen.FeatureLock,
-			gen.FeatureModifier,
+			// gen.FeatureSchemaConfig,
+			// gen.FeatureLock,
+			// gen.FeatureModifier,
 			gen.FeatureUpsert,
 		},
 		Package: "github.com/heromicro/omgind/internal/gen/ent",

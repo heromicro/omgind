@@ -55,6 +55,11 @@ func IDLTE(id string) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldLTE(FieldID, id))
 }
 
+// IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
+func IsDel(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEQ(FieldIsDel, v))
+}
+
 // Sort applies equality check predicate on the "sort" field. It's identical to SortEQ.
 func Sort(v int32) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldEQ(FieldSort, v))
@@ -208,6 +213,16 @@ func IsDirect(v bool) predicate.SysDistrict {
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
 func Creator(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldEQ(FieldCreator, v))
+}
+
+// IsDelEQ applies the EQ predicate on the "is_del" field.
+func IsDelEQ(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEQ(FieldIsDel, v))
+}
+
+// IsDelNEQ applies the NEQ predicate on the "is_del" field.
+func IsDelNEQ(v bool) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldNEQ(FieldIsDel, v))
 }
 
 // SortEQ applies the EQ predicate on the "sort" field.

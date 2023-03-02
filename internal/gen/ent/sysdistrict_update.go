@@ -28,6 +28,20 @@ func (sdu *SysDistrictUpdate) Where(ps ...predicate.SysDistrict) *SysDistrictUpd
 	return sdu
 }
 
+// SetIsDel sets the "is_del" field.
+func (sdu *SysDistrictUpdate) SetIsDel(b bool) *SysDistrictUpdate {
+	sdu.mutation.SetIsDel(b)
+	return sdu
+}
+
+// SetNillableIsDel sets the "is_del" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableIsDel(b *bool) *SysDistrictUpdate {
+	if b != nil {
+		sdu.SetIsDel(*b)
+	}
+	return sdu
+}
+
 // SetSort sets the "sort" field.
 func (sdu *SysDistrictUpdate) SetSort(i int32) *SysDistrictUpdate {
 	sdu.mutation.ResetSort()
@@ -812,6 +826,9 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := sdu.mutation.IsDel(); ok {
+		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
+	}
 	if value, ok := sdu.mutation.Sort(); ok {
 		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
@@ -1102,6 +1119,20 @@ type SysDistrictUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *SysDistrictMutation
+}
+
+// SetIsDel sets the "is_del" field.
+func (sduo *SysDistrictUpdateOne) SetIsDel(b bool) *SysDistrictUpdateOne {
+	sduo.mutation.SetIsDel(b)
+	return sduo
+}
+
+// SetNillableIsDel sets the "is_del" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableIsDel(b *bool) *SysDistrictUpdateOne {
+	if b != nil {
+		sduo.SetIsDel(*b)
+	}
+	return sduo
 }
 
 // SetSort sets the "sort" field.
@@ -1917,6 +1948,9 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := sduo.mutation.IsDel(); ok {
+		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := sduo.mutation.Sort(); ok {
 		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
