@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 )
@@ -384,6 +385,8 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if smu.mutation.IsLeafCleared() {
 		_spec.ClearField(sysmenu.FieldIsLeaf, field.TypeBool)
 	}
+	_spec.Node.Schema = smu.schemaConfig.SysMenu
+	ctx = internal.NewSchemaConfigContext(ctx, smu.schemaConfig)
 	if n, err = sqlgraph.UpdateNodes(ctx, smu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenu.Label}
@@ -790,6 +793,8 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 	if smuo.mutation.IsLeafCleared() {
 		_spec.ClearField(sysmenu.FieldIsLeaf, field.TypeBool)
 	}
+	_spec.Node.Schema = smuo.schemaConfig.SysMenu
+	ctx = internal.NewSchemaConfigContext(ctx, smuo.schemaConfig)
 	_node = &SysMenu{config: smuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 )
@@ -255,6 +256,8 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 	if value, ok := smaru.mutation.ActionID(); ok {
 		_spec.SetField(sysmenuactionresource.FieldActionID, field.TypeString, value)
 	}
+	_spec.Node.Schema = smaru.schemaConfig.SysMenuActionResource
+	ctx = internal.NewSchemaConfigContext(ctx, smaru.schemaConfig)
 	if n, err = sqlgraph.UpdateNodes(ctx, smaru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenuactionresource.Label}
@@ -532,6 +535,8 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 	if value, ok := smaruo.mutation.ActionID(); ok {
 		_spec.SetField(sysmenuactionresource.FieldActionID, field.TypeString, value)
 	}
+	_spec.Node.Schema = smaruo.schemaConfig.SysMenuActionResource
+	ctx = internal.NewSchemaConfigContext(ctx, smaruo.schemaConfig)
 	_node = &SysMenuActionResource{config: smaruo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

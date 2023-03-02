@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 )
@@ -342,6 +343,8 @@ func (sdiq *SysDictItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
+	_spec.Node.Schema = sdiq.schemaConfig.SysDictItem
+	ctx = internal.NewSchemaConfigContext(ctx, sdiq.schemaConfig)
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -356,6 +359,8 @@ func (sdiq *SysDictItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 
 func (sdiq *SysDictItemQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdiq.querySpec()
+	_spec.Node.Schema = sdiq.schemaConfig.SysDictItem
+	ctx = internal.NewSchemaConfigContext(ctx, sdiq.schemaConfig)
 	_spec.Node.Columns = sdiq.ctx.Fields
 	if len(sdiq.ctx.Fields) > 0 {
 		_spec.Unique = sdiq.ctx.Unique != nil && *sdiq.ctx.Unique
@@ -418,6 +423,9 @@ func (sdiq *SysDictItemQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sdiq.ctx.Unique != nil && *sdiq.ctx.Unique {
 		selector.Distinct()
 	}
+	t1.Schema(sdiq.schemaConfig.SysDictItem)
+	ctx = internal.NewSchemaConfigContext(ctx, sdiq.schemaConfig)
+	selector.WithContext(ctx)
 	for _, p := range sdiq.predicates {
 		p(selector)
 	}

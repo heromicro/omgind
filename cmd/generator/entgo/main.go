@@ -14,7 +14,7 @@ func main() {
 		Features: []gen.Feature{
 			//gen.FeatureEntQL,
 			//gen.FeatureSnapshot,
-			// gen.FeatureSchemaConfig,
+			gen.FeatureSchemaConfig,
 			// gen.FeatureLock,
 			// gen.FeatureModifier,
 			gen.FeatureUpsert,

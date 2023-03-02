@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 )
@@ -200,6 +201,8 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sjbu.mutation.Jwt(); ok {
 		_spec.SetField(sysjwtblock.FieldJwt, field.TypeString, value)
 	}
+	_spec.Node.Schema = sjbu.schemaConfig.SysJwtBlock
+	ctx = internal.NewSchemaConfigContext(ctx, sjbu.schemaConfig)
 	if n, err = sqlgraph.UpdateNodes(ctx, sjbu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysjwtblock.Label}
@@ -422,6 +425,8 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 	if value, ok := sjbuo.mutation.Jwt(); ok {
 		_spec.SetField(sysjwtblock.FieldJwt, field.TypeString, value)
 	}
+	_spec.Node.Schema = sjbuo.schemaConfig.SysJwtBlock
+	ctx = internal.NewSchemaConfigContext(ctx, sjbuo.schemaConfig)
 	_node = &SysJwtBlock{config: sjbuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

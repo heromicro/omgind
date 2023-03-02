@@ -704,6 +704,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 		_node = &SysDistrict{config: sdc.config}
 		_spec = sqlgraph.NewCreateSpec(sysdistrict.Table, sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString))
 	)
+	_spec.Schema = sdc.schemaConfig.SysDistrict
 	_spec.OnConflict = sdc.conflict
 	if id, ok := sdc.mutation.ID(); ok {
 		_node.ID = id
@@ -847,6 +848,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 				},
 			},
 		}
+		edge.Schema = sdc.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -867,6 +869,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 				},
 			},
 		}
+		edge.Schema = sdc.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

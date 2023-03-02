@@ -221,6 +221,7 @@ func (surc *SysUserRoleCreate) createSpec() (*SysUserRole, *sqlgraph.CreateSpec)
 		_node = &SysUserRole{config: surc.config}
 		_spec = sqlgraph.NewCreateSpec(sysuserrole.Table, sqlgraph.NewFieldSpec(sysuserrole.FieldID, field.TypeString))
 	)
+	_spec.Schema = surc.schemaConfig.SysUserRole
 	_spec.OnConflict = surc.conflict
 	if id, ok := surc.mutation.ID(); ok {
 		_node.ID = id

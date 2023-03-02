@@ -300,6 +300,7 @@ func (smac *SysMenuActionCreate) createSpec() (*SysMenuAction, *sqlgraph.CreateS
 		_node = &SysMenuAction{config: smac.config}
 		_spec = sqlgraph.NewCreateSpec(sysmenuaction.Table, sqlgraph.NewFieldSpec(sysmenuaction.FieldID, field.TypeString))
 	)
+	_spec.Schema = smac.schemaConfig.SysMenuAction
 	_spec.OnConflict = smac.conflict
 	if id, ok := smac.mutation.ID(); ok {
 		_node.ID = id

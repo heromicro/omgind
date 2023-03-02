@@ -7,6 +7,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -1927,6 +1928,9 @@ func HasParent() predicate.SysDistrict {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, ParentTable, ParentColumn),
 		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysDistrict
+		step.Edge.Schema = schemaConfig.SysDistrict
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1939,6 +1943,9 @@ func HasParentWith(preds ...predicate.SysDistrict) predicate.SysDistrict {
 			sqlgraph.To(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, ParentTable, ParentColumn),
 		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysDistrict
+		step.Edge.Schema = schemaConfig.SysDistrict
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1954,6 +1961,9 @@ func HasChildren() predicate.SysDistrict {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
 		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysDistrict
+		step.Edge.Schema = schemaConfig.SysDistrict
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1966,6 +1976,9 @@ func HasChildrenWith(preds ...predicate.SysDistrict) predicate.SysDistrict {
 			sqlgraph.To(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
 		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysDistrict
+		step.Edge.Schema = schemaConfig.SysDistrict
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

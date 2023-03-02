@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 )
@@ -342,6 +343,8 @@ func (slq *SysLoggingQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
+	_spec.Node.Schema = slq.schemaConfig.SysLogging
+	ctx = internal.NewSchemaConfigContext(ctx, slq.schemaConfig)
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -356,6 +359,8 @@ func (slq *SysLoggingQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 
 func (slq *SysLoggingQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := slq.querySpec()
+	_spec.Node.Schema = slq.schemaConfig.SysLogging
+	ctx = internal.NewSchemaConfigContext(ctx, slq.schemaConfig)
 	_spec.Node.Columns = slq.ctx.Fields
 	if len(slq.ctx.Fields) > 0 {
 		_spec.Unique = slq.ctx.Unique != nil && *slq.ctx.Unique
@@ -418,6 +423,9 @@ func (slq *SysLoggingQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if slq.ctx.Unique != nil && *slq.ctx.Unique {
 		selector.Distinct()
 	}
+	t1.Schema(slq.schemaConfig.SysLogging)
+	ctx = internal.NewSchemaConfigContext(ctx, slq.schemaConfig)
+	selector.WithContext(ctx)
 	for _, p := range slq.predicates {
 		p(selector)
 	}

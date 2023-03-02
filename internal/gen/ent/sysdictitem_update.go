@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 )
@@ -260,6 +261,8 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sdiu.mutation.DictID(); ok {
 		_spec.SetField(sysdictitem.FieldDictID, field.TypeString, value)
 	}
+	_spec.Node.Schema = sdiu.schemaConfig.SysDictItem
+	ctx = internal.NewSchemaConfigContext(ctx, sdiu.schemaConfig)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdiu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdictitem.Label}
@@ -542,6 +545,8 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 	if value, ok := sdiuo.mutation.DictID(); ok {
 		_spec.SetField(sysdictitem.FieldDictID, field.TypeString, value)
 	}
+	_spec.Node.Schema = sdiuo.schemaConfig.SysDictItem
+	ctx = internal.NewSchemaConfigContext(ctx, sdiuo.schemaConfig)
 	_node = &SysDictItem{config: sdiuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

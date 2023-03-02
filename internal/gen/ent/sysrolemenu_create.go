@@ -240,6 +240,7 @@ func (srmc *SysRoleMenuCreate) createSpec() (*SysRoleMenu, *sqlgraph.CreateSpec)
 		_node = &SysRoleMenu{config: srmc.config}
 		_spec = sqlgraph.NewCreateSpec(sysrolemenu.Table, sqlgraph.NewFieldSpec(sysrolemenu.FieldID, field.TypeString))
 	)
+	_spec.Schema = srmc.schemaConfig.SysRoleMenu
 	_spec.OnConflict = srmc.conflict
 	if id, ok := srmc.mutation.ID(); ok {
 		_node.ID = id

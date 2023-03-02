@@ -300,6 +300,7 @@ func (smarc *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, 
 		_node = &SysMenuActionResource{config: smarc.config}
 		_spec = sqlgraph.NewCreateSpec(sysmenuactionresource.Table, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
 	)
+	_spec.Schema = smarc.schemaConfig.SysMenuActionResource
 	_spec.OnConflict = smarc.conflict
 	if id, ok := smarc.mutation.ID(); ok {
 		_node.ID = id

@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
@@ -627,6 +628,8 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if sau.mutation.CreatorCleared() {
 		_spec.ClearField(sysaddress.FieldCreator, field.TypeString)
 	}
+	_spec.Node.Schema = sau.schemaConfig.SysAddress
+	ctx = internal.NewSchemaConfigContext(ctx, sau.schemaConfig)
 	if n, err = sqlgraph.UpdateNodes(ctx, sau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysaddress.Label}
@@ -1276,6 +1279,8 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 	if sauo.mutation.CreatorCleared() {
 		_spec.ClearField(sysaddress.FieldCreator, field.TypeString)
 	}
+	_spec.Node.Schema = sauo.schemaConfig.SysAddress
+	ctx = internal.NewSchemaConfigContext(ctx, sauo.schemaConfig)
 	_node = &SysAddress{config: sauo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

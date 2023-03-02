@@ -272,6 +272,7 @@ func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 		_node = &SysRole{config: src.config}
 		_spec = sqlgraph.NewCreateSpec(sysrole.Table, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
 	)
+	_spec.Schema = src.schemaConfig.SysRole
 	_spec.OnConflict = src.conflict
 	if id, ok := src.mutation.ID(); ok {
 		_node.ID = id

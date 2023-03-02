@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
 )
@@ -197,6 +198,8 @@ func (srmu *SysRoleMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if srmu.mutation.ActionIDCleared() {
 		_spec.ClearField(sysrolemenu.FieldActionID, field.TypeString)
 	}
+	_spec.Node.Schema = srmu.schemaConfig.SysRoleMenu
+	ctx = internal.NewSchemaConfigContext(ctx, srmu.schemaConfig)
 	if n, err = sqlgraph.UpdateNodes(ctx, srmu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysrolemenu.Label}
@@ -416,6 +419,8 @@ func (srmuo *SysRoleMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysRoleM
 	if srmuo.mutation.ActionIDCleared() {
 		_spec.ClearField(sysrolemenu.FieldActionID, field.TypeString)
 	}
+	_spec.Node.Schema = srmuo.schemaConfig.SysRoleMenu
+	ctx = internal.NewSchemaConfigContext(ctx, srmuo.schemaConfig)
 	_node = &SysRoleMenu{config: srmuo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues

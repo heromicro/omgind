@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
 )
@@ -342,6 +343,8 @@ func (xdq *XxxDemoQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Xxx
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
+	_spec.Node.Schema = xdq.schemaConfig.XxxDemo
+	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -356,6 +359,8 @@ func (xdq *XxxDemoQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Xxx
 
 func (xdq *XxxDemoQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := xdq.querySpec()
+	_spec.Node.Schema = xdq.schemaConfig.XxxDemo
+	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
 	_spec.Node.Columns = xdq.ctx.Fields
 	if len(xdq.ctx.Fields) > 0 {
 		_spec.Unique = xdq.ctx.Unique != nil && *xdq.ctx.Unique
@@ -418,6 +423,9 @@ func (xdq *XxxDemoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if xdq.ctx.Unique != nil && *xdq.ctx.Unique {
 		selector.Distinct()
 	}
+	t1.Schema(xdq.schemaConfig.XxxDemo)
+	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
+	selector.WithContext(ctx)
 	for _, p := range xdq.predicates {
 		p(selector)
 	}

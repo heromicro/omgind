@@ -504,6 +504,7 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 		_node = &SysAddress{config: sac.config}
 		_spec = sqlgraph.NewCreateSpec(sysaddress.Table, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
 	)
+	_spec.Schema = sac.schemaConfig.SysAddress
 	_spec.OnConflict = sac.conflict
 	if id, ok := sac.mutation.ID(); ok {
 		_node.ID = id

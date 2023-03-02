@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 )
@@ -342,6 +343,8 @@ func (smaq *SysMenuActionQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
+	_spec.Node.Schema = smaq.schemaConfig.SysMenuAction
+	ctx = internal.NewSchemaConfigContext(ctx, smaq.schemaConfig)
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -356,6 +359,8 @@ func (smaq *SysMenuActionQuery) sqlAll(ctx context.Context, hooks ...queryHook) 
 
 func (smaq *SysMenuActionQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := smaq.querySpec()
+	_spec.Node.Schema = smaq.schemaConfig.SysMenuAction
+	ctx = internal.NewSchemaConfigContext(ctx, smaq.schemaConfig)
 	_spec.Node.Columns = smaq.ctx.Fields
 	if len(smaq.ctx.Fields) > 0 {
 		_spec.Unique = smaq.ctx.Unique != nil && *smaq.ctx.Unique
@@ -418,6 +423,9 @@ func (smaq *SysMenuActionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if smaq.ctx.Unique != nil && *smaq.ctx.Unique {
 		selector.Distinct()
 	}
+	t1.Schema(smaq.schemaConfig.SysMenuAction)
+	ctx = internal.NewSchemaConfigContext(ctx, smaq.schemaConfig)
+	selector.WithContext(ctx)
 	for _, p := range smaq.predicates {
 		p(selector)
 	}

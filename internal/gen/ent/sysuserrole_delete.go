@@ -8,6 +8,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 )
@@ -41,6 +42,8 @@ func (surd *SysUserRoleDelete) ExecX(ctx context.Context) int {
 
 func (surd *SysUserRoleDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysuserrole.Table, sqlgraph.NewFieldSpec(sysuserrole.FieldID, field.TypeString))
+	_spec.Node.Schema = surd.schemaConfig.SysUserRole
+	ctx = internal.NewSchemaConfigContext(ctx, surd.schemaConfig)
 	if ps := surd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

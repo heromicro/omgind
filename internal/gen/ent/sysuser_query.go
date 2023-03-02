@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 )
@@ -342,6 +343,8 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
+	_spec.Node.Schema = suq.schemaConfig.SysUser
+	ctx = internal.NewSchemaConfigContext(ctx, suq.schemaConfig)
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
@@ -356,6 +359,8 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 
 func (suq *SysUserQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := suq.querySpec()
+	_spec.Node.Schema = suq.schemaConfig.SysUser
+	ctx = internal.NewSchemaConfigContext(ctx, suq.schemaConfig)
 	_spec.Node.Columns = suq.ctx.Fields
 	if len(suq.ctx.Fields) > 0 {
 		_spec.Unique = suq.ctx.Unique != nil && *suq.ctx.Unique
@@ -418,6 +423,9 @@ func (suq *SysUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if suq.ctx.Unique != nil && *suq.ctx.Unique {
 		selector.Distinct()
 	}
+	t1.Schema(suq.schemaConfig.SysUser)
+	ctx = internal.NewSchemaConfigContext(ctx, suq.schemaConfig)
+	selector.WithContext(ctx)
 	for _, p := range suq.predicates {
 		p(selector)
 	}

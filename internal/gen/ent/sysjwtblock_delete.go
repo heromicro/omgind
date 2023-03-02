@@ -8,6 +8,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 )
@@ -41,6 +42,8 @@ func (sjbd *SysJwtBlockDelete) ExecX(ctx context.Context) int {
 
 func (sjbd *SysJwtBlockDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysjwtblock.Table, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
+	_spec.Node.Schema = sjbd.schemaConfig.SysJwtBlock
+	ctx = internal.NewSchemaConfigContext(ctx, sjbd.schemaConfig)
 	if ps := sjbd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

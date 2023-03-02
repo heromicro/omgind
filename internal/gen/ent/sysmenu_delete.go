@@ -8,6 +8,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 )
@@ -41,6 +42,8 @@ func (smd *SysMenuDelete) ExecX(ctx context.Context) int {
 
 func (smd *SysMenuDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysmenu.Table, sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString))
+	_spec.Node.Schema = smd.schemaConfig.SysMenu
+	ctx = internal.NewSchemaConfigContext(ctx, smd.schemaConfig)
 	if ps := smd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

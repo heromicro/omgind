@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 )
@@ -1026,6 +1027,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdu.mutation.ParentIDs(); len(nodes) > 0 {
@@ -1042,6 +1044,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1061,6 +1064,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sdu.mutation.ChildrenCleared() {
@@ -1077,6 +1081,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1096,11 +1101,14 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				},
 			},
 		}
+		edge.Schema = sdu.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	_spec.Node.Schema = sdu.schemaConfig.SysDistrict
+	ctx = internal.NewSchemaConfigContext(ctx, sdu.schemaConfig)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdistrict.Label}
@@ -2149,6 +2157,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sduo.mutation.ParentIDs(); len(nodes) > 0 {
@@ -2165,6 +2174,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -2184,6 +2194,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sduo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sduo.mutation.ChildrenCleared() {
@@ -2200,6 +2211,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -2219,11 +2231,14 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 				},
 			},
 		}
+		edge.Schema = sduo.schemaConfig.SysDistrict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	_spec.Node.Schema = sduo.schemaConfig.SysDistrict
+	ctx = internal.NewSchemaConfigContext(ctx, sduo.schemaConfig)
 	_node = &SysDistrict{config: sduo.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
