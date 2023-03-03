@@ -1,5 +1,5 @@
 id,is_del,sort,crtd_at,uptd_at,dltd_at,is_active,tree_id,tree_level,tree_left,tree_right,is_leaf,t_path,name,sname,abbr,stcode,initials,pinyin,pid,longitude,latitude,area_code,zip_code,mname,msname,extra,suffix,is_hot,is_r,is_m,is_d,creator
-01GSWGT66SN259NQ5DEVENTFDZ,f,1,2023-02-22 20:15:46.905256+08,2023-02-22 20:15:58.01406+08,,t,1,1,1,7156,f,,中国,"",,"",Z,Zhongguo,"",0,0,"","","","","","",f,t,f,f,""
+01GSWGT66SN259NQ5DEVENTFDZ,f,1,2023-02-22 20:15:46.905256+08,2023-02-22 20:15:58.01406+08,,t,1,1,1,7156,f,,中国,"",,"",zg,Zhongguo,"",0,0,"","","","","","",f,t,f,f,""
 01GSWGT66YKJTK652JWVJHYWSE,f,2,2023-02-22 20:15:46.910731+08,2023-02-22 20:15:47.08792+08,,t,1,2,328,365,f,01GSWGT66SN259NQ5DEVENTFDZ,北京,北京,,110000,bj,beijing,01GSWGT66SN259NQ5DEVENTFDZ,116.405281,39.904987,"","",北京市,北京,"",市,t,t,t,t,""
 01GSWGT671R36DJKZPSHQCMFPB,f,3,2023-02-22 20:15:46.913385+08,2023-02-22 20:15:47.13766+08,,t,1,2,1560,1593,f,01GSWGT66SN259NQ5DEVENTFDZ,天津,天津,,120000,tj,tianjin,01GSWGT66SN259NQ5DEVENTFDZ,117.190186,39.125595,"","",天津市,天津,"",市,t,t,t,t,""
 01GSWGT674E68279ME9C0K02MQ,f,4,2023-02-22 20:15:46.916192+08,2023-02-22 20:15:47.183676+08,,t,1,2,2,35,f,01GSWGT66SN259NQ5DEVENTFDZ,上海,上海,,310000,sh,shanghai,01GSWGT66SN259NQ5DEVENTFDZ,121.472641,31.231707,"","",上海市,上海,"",市,t,t,t,t,""
