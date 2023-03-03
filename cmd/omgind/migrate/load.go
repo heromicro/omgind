@@ -111,6 +111,7 @@ var CmdLoad = &cobra.Command{
 					Longitude:  &item.Longitude,
 					Latitude:   &item.Latitude,
 					ZipCode:    &item.ZipCode,
+					AreaCode:   &item.AreaCode,
 					StCode:     &item.StCode,
 					MergeName:  &item.MergeName,
 					MergeSname: &item.MergeSname,

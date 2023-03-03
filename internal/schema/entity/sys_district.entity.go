@@ -36,7 +36,7 @@ func (SysDistrict) Fields() []ent.Field {
 
 		field.String("st_code").MaxLen(16).Nillable().Optional().StorageKey("stcode").Comment("统计局区域编码"),
 		field.String("initials").MaxLen(32).Nillable().Optional().StorageKey("initials").Comment("简拼"),
-		field.String("pinyin").MaxLen(128).Nillable().Optional().StorageKey("pinyin").Comment("简拼"),
+		field.String("pinyin").MaxLen(128).Nillable().Optional().StorageKey("pinyin").Comment("拼音"),
 
 		field.String("parent_id").MaxLen(36).Nillable().Optional().StorageKey("pid").Comment("父级id"),
 

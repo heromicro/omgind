@@ -15,7 +15,7 @@ type SysDistrict struct {
 	Pinyin     *string  `json:"pinyin"`                       // 简拼
 	Longitude  *float64 `json:"longitude"`                    // 经度
 	Latitude   *float64 `json:"latitude"`                     // 经度
-	AreaCode   string   `json:"area_code"`                    // 电话区号码
+	AreaCode   *string  `json:"area_code"`                    // 电话区号码
 	ZipCode    *string  `json:"zip_code"`                     // 邮政编码
 	MergeName  *string  `json:"merge_name"`                   // 带前缀全名称
 	MergeSname *string  `json:"merge_sname"`                  // 带前缀简名称

@@ -343,6 +343,18 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 		}
 	}
 
+	if len(opt.OrderFields) == 0 {
+		of := MakeUpOrderField(sysdistrict.FieldTreeID, "asc")
+		if of != nil {
+			opt.OrderFields = append(opt.OrderFields, of)
+		}
+	}
+
+	of := MakeUpOrderField(sysdistrict.FieldCreatedAt, "asc")
+	if of != nil {
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()

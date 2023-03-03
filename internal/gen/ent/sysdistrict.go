@@ -50,7 +50,7 @@ type SysDistrict struct {
 	StCode *string `json:"st_code,omitempty"`
 	// 简拼
 	Initials *string `json:"initials,omitempty"`
-	// 简拼
+	// 拼音
 	Pinyin *string `json:"pinyin,omitempty"`
 	// 父级id
 	ParentID *string `json:"parent_id,omitempty"`
