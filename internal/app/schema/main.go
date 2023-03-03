@@ -50,7 +50,7 @@ type PaginationParam struct {
 	// 是否仅查询count
 	OnlyCount bool `form:"-"`
 	Current   uint `form:"current,default=1"`                     // 当前页
-	PageSize  uint `form:"pageSize,default=10" binding:"max=100"` // 页大小
+	PageSize  uint `form:"pageSize,default=20" binding:"max=100"` // 页大小
 }
 
 // GetCurrent 获取当前页
