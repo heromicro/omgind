@@ -357,9 +357,14 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 	}
 
 	if len(opt.OrderFields) == 0 {
-		of := MakeUpOrderField(sysdistrict.FieldSort, "asc")
+		of := MakeUpOrderField(sysdistrict.FieldTreeID, "asc")
 		if of != nil {
 			opt.OrderFields = append(opt.OrderFields, of)
+		}
+
+		of2 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
+		if of2 != nil {
+			opt.OrderFields = append(opt.OrderFields, of2)
 		}
 	}
 
