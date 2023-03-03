@@ -187,6 +187,13 @@ var CmdLoad = &cobra.Command{
 
 				log.Println(" --------- ==== create_district, ", create_district)
 				sch_district, err := create_district.Save(ctx)
+				if err != nil {
+					log.Println(redOnWhite, " ====== save failed ====== ", district.TreeLevel)
+					log.Println(redOnWhite, " ====== save failed ====== ", district.ParentID)
+					log.Println(cyanOnBlue, " ====== save failed ====== ", err)
+					break
+				}
+
 				if sch_district != nil && pdistrict != nil {
 					// // 修复被破坏平衡的其他节点的左值。大于 parent_id 右值的所有节点的左值加 2。
 
@@ -210,13 +217,6 @@ var CmdLoad = &cobra.Command{
 					count, err = update_district_r.AddTreeRight(2).Save(ctx)
 					log.Println(whiteOnGreen, " ====== count ====== ", count)
 					log.Println(whiteOnGreen, " uuuu ====== err ====== ", err)
-				}
-
-				if err != nil {
-					log.Println(redOnWhite, " ====== save failed ====== ", district)
-					log.Println(cyanOnBlue, " ====== save failed ====== ", err)
-
-					continue
 				}
 
 				log.Println(cyanOnBlue, " ====== -------- ====== ", sch_district.ID, " ", *sch_district.MergeName, " ", *sch_district.MergeSname)
