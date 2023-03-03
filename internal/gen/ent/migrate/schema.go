@@ -408,11 +408,6 @@ var (
 				Unique:  false,
 				Columns: []*schema.Column{SysLoggingsColumns[9]},
 			},
-			{
-				Name:    "syslogging_crtd_at",
-				Unique:  false,
-				Columns: []*schema.Column{SysLoggingsColumns[1]},
-			},
 		},
 	}
 	// SysMenusColumns holds the columns for the "sys_menus" table.

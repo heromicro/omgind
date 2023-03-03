@@ -52,6 +52,5 @@ func (SysLogging) Indexes() []ent.Index {
 		index.Fields("trace_id"),
 		index.Fields("user_id"),
 		index.Fields("tag"),
-		mixin.IndexCreateAt(),
 	}
 }

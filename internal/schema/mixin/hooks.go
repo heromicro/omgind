@@ -1,5 +1,7 @@
 package mixin
 
+///*
+
 import (
 	"context"
 	"fmt"
@@ -38,21 +40,23 @@ func (MpttTreeMixin) Hooks() []ent.Hook {
 			ent.OpCreate|ent.OpUpdate|ent.OpUpdateOne,
 		),
 
-		hook.On(
-			func(next ent.Mutator) ent.Mutator {
-				return hook.SysDistrictFunc(func(ctx context.Context, m *gen.SysDistrictMutation) (ent.Value, error) {
-					treeLevel, ok := m.TreeLevel()
-					if !ok {
-						return nil, fmt.Errorf("tree_level is not ok")
-					}
-					pid, okpid := m.ParentID()
-					if treeLevel == 1 && (pid == "" || !okpid) {
-						return nil, fmt.Errorf("tree will out of order ")
-					}
-					return next.Mutate(ctx, m)
-				})
-			},
-			ent.OpCreate|ent.OpUpdate|ent.OpUpdateOne,
-		),
+		// hook.On(
+		// 	func(next ent.Mutator) ent.Mutator {
+		// 		return hook.SysDistrictFunc(func(ctx context.Context, m *gen.SysDistrictMutation) (ent.Value, error) {
+		// 			treeLevel, ok := m.TreeLevel()
+		// 			if !ok {
+		// 				return nil, fmt.Errorf("tree_level is not ok")
+		// 			}
+		// 			pid, okpid := m.ParentID()
+		// 			if treeLevel == 1 && (pid == "" || !okpid) {
+		// 				return nil, fmt.Errorf("tree will out of order ")
+		// 			}
+		// 			return next.Mutate(ctx, m)
+		// 		})
+		// 	},
+		// 	ent.OpCreate|ent.OpUpdate|ent.OpUpdateOne,
+		// ),
 	}
 }
+
+//*/ ///

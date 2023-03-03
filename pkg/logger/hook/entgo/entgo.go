@@ -129,7 +129,7 @@ func (h *Hook) Exec(entry *logrus.Entry) error {
 		create_logger = create_logger.SetData(data)
 	}
 
-	create_logger.SetCreatedAt(time.Now().UnixMilli())
+	// create_logger.SetCreatedAt(time.Now())
 
 	_, err := create_logger.Save(context.Background())
 

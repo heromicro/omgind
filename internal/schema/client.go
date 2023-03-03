@@ -75,6 +75,8 @@ func NewEntClient(cfg *config.AppConfig) (*ent.Client, func(), error) {
 		return nil, nil, errors.New("unknown ent db")
 	}
 
+	log.Println("======== connecting ", cfg.Ent.DBType, " ", dsn)
+
 	db, err := sql.Open(cfg.Ent.DBType, dsn)
 	if err != nil {
 		return nil, func() {}, err

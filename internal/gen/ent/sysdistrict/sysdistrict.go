@@ -146,7 +146,7 @@ func ValidColumn(column string) bool {
 //
 //	import _ "github.com/heromicro/omgind/internal/gen/ent/runtime"
 var (
-	Hooks [2]ent.Hook
+	Hooks [1]ent.Hook
 	// DefaultIsDel holds the default value on creation for the "is_del" field.
 	DefaultIsDel bool
 	// DefaultSort holds the default value on creation for the "sort" field.
