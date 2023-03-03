@@ -348,6 +348,9 @@ var (
 	// SysLoggingsColumns holds the columns for the "sys_loggings" table.
 	SysLoggingsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
+		{Name: "crtd_at", Type: field.TypeTime},
+		{Name: "uptd_at", Type: field.TypeTime},
+		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "is_del", Type: field.TypeBool, Default: false},
 		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
 		{Name: "level", Type: field.TypeString, Nullable: true, Size: 32},
@@ -358,7 +361,6 @@ var (
 		{Name: "message", Type: field.TypeString, Nullable: true, Size: 1024},
 		{Name: "data", Type: field.TypeString, Nullable: true, Size: 2147483647},
 		{Name: "error_stack", Type: field.TypeString, Nullable: true, Size: 2147483647},
-		{Name: "crtd_at", Type: field.TypeInt64},
 	}
 	// SysLoggingsTable holds the schema information for the "sys_loggings" table.
 	SysLoggingsTable = &schema.Table{
@@ -372,34 +374,44 @@ var (
 				Columns: []*schema.Column{SysLoggingsColumns[0]},
 			},
 			{
-				Name:    "syslogging_is_del",
+				Name:    "syslogging_crtd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysLoggingsColumns[1]},
 			},
 			{
-				Name:    "syslogging_level",
+				Name:    "syslogging_dltd_at",
 				Unique:  false,
 				Columns: []*schema.Column{SysLoggingsColumns[3]},
 			},
 			{
-				Name:    "syslogging_trace_id",
+				Name:    "syslogging_is_del",
 				Unique:  false,
 				Columns: []*schema.Column{SysLoggingsColumns[4]},
 			},
 			{
-				Name:    "syslogging_user_id",
-				Unique:  false,
-				Columns: []*schema.Column{SysLoggingsColumns[5]},
-			},
-			{
-				Name:    "syslogging_tag",
+				Name:    "syslogging_level",
 				Unique:  false,
 				Columns: []*schema.Column{SysLoggingsColumns[6]},
 			},
 			{
+				Name:    "syslogging_trace_id",
+				Unique:  false,
+				Columns: []*schema.Column{SysLoggingsColumns[7]},
+			},
+			{
+				Name:    "syslogging_user_id",
+				Unique:  false,
+				Columns: []*schema.Column{SysLoggingsColumns[8]},
+			},
+			{
+				Name:    "syslogging_tag",
+				Unique:  false,
+				Columns: []*schema.Column{SysLoggingsColumns[9]},
+			},
+			{
 				Name:    "syslogging_crtd_at",
 				Unique:  false,
-				Columns: []*schema.Column{SysLoggingsColumns[11]},
+				Columns: []*schema.Column{SysLoggingsColumns[1]},
 			},
 		},
 	}

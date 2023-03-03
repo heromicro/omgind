@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/google/wire"
+
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
@@ -13,7 +14,6 @@ import (
 
 // UserRoleSet 注入UserRole
 var UserRoleSet = wire.NewSet(wire.Struct(new(UserRole), "*"))
-
 
 // UserRole 用户角色存储
 type UserRole struct {
@@ -144,4 +144,3 @@ func (a *UserRole) DeleteByUserID(ctx context.Context, userID string) error {
 	}
 	return nil
 }
-

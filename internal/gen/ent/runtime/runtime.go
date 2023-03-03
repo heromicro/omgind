@@ -493,14 +493,26 @@ func init() {
 	_ = sysloggingMixinFields1
 	sysloggingMixinFields2 := sysloggingMixin[2].Fields()
 	_ = sysloggingMixinFields2
+	sysloggingMixinFields3 := sysloggingMixin[3].Fields()
+	_ = sysloggingMixinFields3
 	sysloggingFields := entity.SysLogging{}.Fields()
 	_ = sysloggingFields
+	// sysloggingDescCreatedAt is the schema descriptor for created_at field.
+	sysloggingDescCreatedAt := sysloggingMixinFields1[0].Descriptor()
+	// syslogging.DefaultCreatedAt holds the default value on creation for the created_at field.
+	syslogging.DefaultCreatedAt = sysloggingDescCreatedAt.Default.(func() time.Time)
+	// sysloggingDescUpdatedAt is the schema descriptor for updated_at field.
+	sysloggingDescUpdatedAt := sysloggingMixinFields1[1].Descriptor()
+	// syslogging.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	syslogging.DefaultUpdatedAt = sysloggingDescUpdatedAt.Default.(func() time.Time)
+	// syslogging.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	syslogging.UpdateDefaultUpdatedAt = sysloggingDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// sysloggingDescIsDel is the schema descriptor for is_del field.
-	sysloggingDescIsDel := sysloggingMixinFields1[0].Descriptor()
+	sysloggingDescIsDel := sysloggingMixinFields2[0].Descriptor()
 	// syslogging.DefaultIsDel holds the default value on creation for the is_del field.
 	syslogging.DefaultIsDel = sysloggingDescIsDel.Default.(bool)
 	// sysloggingDescMemo is the schema descriptor for memo field.
-	sysloggingDescMemo := sysloggingMixinFields2[0].Descriptor()
+	sysloggingDescMemo := sysloggingMixinFields3[0].Descriptor()
 	// syslogging.DefaultMemo holds the default value on creation for the memo field.
 	syslogging.DefaultMemo = sysloggingDescMemo.Default.(string)
 	// syslogging.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
@@ -529,10 +541,6 @@ func init() {
 	sysloggingDescMessage := sysloggingFields[5].Descriptor()
 	// syslogging.MessageValidator is a validator for the "message" field. It is called by the builders before save.
 	syslogging.MessageValidator = sysloggingDescMessage.Validators[0].(func(string) error)
-	// sysloggingDescCreatedAt is the schema descriptor for created_at field.
-	sysloggingDescCreatedAt := sysloggingFields[8].Descriptor()
-	// syslogging.DefaultCreatedAt holds the default value on creation for the created_at field.
-	syslogging.DefaultCreatedAt = sysloggingDescCreatedAt.Default.(func() int64)
 	// sysloggingDescID is the schema descriptor for id field.
 	sysloggingDescID := sysloggingMixinFields0[0].Descriptor()
 	// syslogging.DefaultID holds the default value on creation for the id field.

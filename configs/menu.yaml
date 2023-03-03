@@ -212,6 +212,11 @@
           resources:
             - method: PATCH
               path: "/api/v2/sys-district/:id/enable"
+        - code: subdistrict
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/sys-district/:id/substricts"
 
     - name: 地址管理
       icon: key

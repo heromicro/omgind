@@ -992,6 +992,9 @@ func (u *SysJwtBlockUpdateOne) SetInput(i UpdateSysJwtBlockInput) *SysJwtBlockUp
 
 // CreateSysLoggingInput represents a mutation input for creating sysloggings.
 type CreateSysLoggingInput struct {
+	CreatedAt  *time.Time
+	UpdatedAt  *time.Time
+	DeletedAt  *time.Time
 	IsDel      *bool
 	Memo       *string
 	Level      *string
@@ -1002,11 +1005,19 @@ type CreateSysLoggingInput struct {
 	Message    *string
 	Data       *string
 	ErrorStack *string
-	CreatedAt  *int64
 }
 
 // Mutate applies the CreateSysLoggingInput on the SysLoggingCreate builder.
 func (i *CreateSysLoggingInput) Mutate(m *SysLoggingCreate) {
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
 	}
@@ -1037,9 +1048,6 @@ func (i *CreateSysLoggingInput) Mutate(m *SysLoggingCreate) {
 	if v := i.ErrorStack; v != nil {
 		m.SetErrorStack(*v)
 	}
-	if v := i.CreatedAt; v != nil {
-		m.SetCreatedAt(*v)
-	}
 }
 
 // SetInput applies the change-set in the CreateSysLoggingInput on the create builder.
@@ -1050,6 +1058,9 @@ func (c *SysLoggingCreate) SetInput(i CreateSysLoggingInput) *SysLoggingCreate {
 
 // UpdateSysLoggingInput represents a mutation input for updating sysloggings.
 type UpdateSysLoggingInput struct {
+	UpdatedAt       *time.Time
+	DeletedAt       *time.Time
+	ClearDeletedAt  bool
 	IsDel           *bool
 	Memo            *string
 	ClearMemo       bool
@@ -1071,6 +1082,15 @@ type UpdateSysLoggingInput struct {
 
 // Mutate applies the UpdateSysLoggingInput on the SysLoggingMutation.
 func (i *UpdateSysLoggingInput) Mutate(m *SysLoggingMutation) {
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
 	}

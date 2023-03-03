@@ -4,14 +4,14 @@ import (
 	"context"
 	"time"
 
+	"github.com/google/wire"
 	"github.com/gotidy/ptr"
+
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
-
-	"github.com/google/wire"
 )
 
 // SysDistrictSet 注入SysDistrict

@@ -7,13 +7,13 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/wire"
-	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
-	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
-	"github.com/heromicro/omgind/pkg/helper/structure"
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
+	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 	"github.com/heromicro/omgind/pkg/errors"
+	"github.com/heromicro/omgind/pkg/helper/structure"
 )
 
 // UserSet 注入User

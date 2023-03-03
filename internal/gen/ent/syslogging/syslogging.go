@@ -3,6 +3,8 @@
 package syslogging
 
 import (
+	"time"
+
 	"entgo.io/ent"
 )
 
@@ -11,6 +13,12 @@ const (
 	Label = "sys_logging"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreatedAt holds the string denoting the created_at field in the database.
+	FieldCreatedAt = "crtd_at"
+	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
+	FieldUpdatedAt = "uptd_at"
+	// FieldDeletedAt holds the string denoting the deleted_at field in the database.
+	FieldDeletedAt = "dltd_at"
 	// FieldIsDel holds the string denoting the is_del field in the database.
 	FieldIsDel = "is_del"
 	// FieldMemo holds the string denoting the memo field in the database.
@@ -31,8 +39,6 @@ const (
 	FieldData = "data"
 	// FieldErrorStack holds the string denoting the error_stack field in the database.
 	FieldErrorStack = "error_stack"
-	// FieldCreatedAt holds the string denoting the created_at field in the database.
-	FieldCreatedAt = "crtd_at"
 	// Table holds the table name of the syslogging in the database.
 	Table = "sys_loggings"
 )
@@ -40,6 +46,9 @@ const (
 // Columns holds all SQL columns for syslogging fields.
 var Columns = []string{
 	FieldID,
+	FieldCreatedAt,
+	FieldUpdatedAt,
+	FieldDeletedAt,
 	FieldIsDel,
 	FieldMemo,
 	FieldLevel,
@@ -50,7 +59,6 @@ var Columns = []string{
 	FieldMessage,
 	FieldData,
 	FieldErrorStack,
-	FieldCreatedAt,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -70,6 +78,12 @@ func ValidColumn(column string) bool {
 //	import _ "github.com/heromicro/omgind/internal/gen/ent/runtime"
 var (
 	Hooks [1]ent.Hook
+	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
+	DefaultCreatedAt func() time.Time
+	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
+	DefaultUpdatedAt func() time.Time
+	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
+	UpdateDefaultUpdatedAt func() time.Time
 	// DefaultIsDel holds the default value on creation for the "is_del" field.
 	DefaultIsDel bool
 	// DefaultMemo holds the default value on creation for the "memo" field.
@@ -88,8 +102,6 @@ var (
 	VersionValidator func(string) error
 	// MessageValidator is a validator for the "message" field. It is called by the builders before save.
 	MessageValidator func(string) error
-	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
-	DefaultCreatedAt func() int64
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

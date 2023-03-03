@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -26,6 +27,32 @@ type SysLoggingUpdate struct {
 // Where appends a list predicates to the SysLoggingUpdate builder.
 func (slu *SysLoggingUpdate) Where(ps ...predicate.SysLogging) *SysLoggingUpdate {
 	slu.mutation.Where(ps...)
+	return slu
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (slu *SysLoggingUpdate) SetUpdatedAt(t time.Time) *SysLoggingUpdate {
+	slu.mutation.SetUpdatedAt(t)
+	return slu
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (slu *SysLoggingUpdate) SetDeletedAt(t time.Time) *SysLoggingUpdate {
+	slu.mutation.SetDeletedAt(t)
+	return slu
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (slu *SysLoggingUpdate) SetNillableDeletedAt(t *time.Time) *SysLoggingUpdate {
+	if t != nil {
+		slu.SetDeletedAt(*t)
+	}
+	return slu
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (slu *SysLoggingUpdate) ClearDeletedAt() *SysLoggingUpdate {
+	slu.mutation.ClearDeletedAt()
 	return slu
 }
 
@@ -210,6 +237,9 @@ func (slu *SysLoggingUpdate) Mutation() *SysLoggingMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (slu *SysLoggingUpdate) Save(ctx context.Context) (int, error) {
+	if err := slu.defaults(); err != nil {
+		return 0, err
+	}
 	return withHooks[int, SysLoggingMutation](ctx, slu.sqlSave, slu.mutation, slu.hooks)
 }
 
@@ -233,6 +263,18 @@ func (slu *SysLoggingUpdate) ExecX(ctx context.Context) {
 	if err := slu.Exec(ctx); err != nil {
 		panic(err)
 	}
+}
+
+// defaults sets the default values of the builder before save.
+func (slu *SysLoggingUpdate) defaults() error {
+	if _, ok := slu.mutation.UpdatedAt(); !ok {
+		if syslogging.UpdateDefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized syslogging.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
+		v := syslogging.UpdateDefaultUpdatedAt()
+		slu.mutation.SetUpdatedAt(v)
+	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -292,6 +334,15 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := slu.mutation.UpdatedAt(); ok {
+		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if value, ok := slu.mutation.DeletedAt(); ok {
+		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)
+	}
+	if slu.mutation.DeletedAtCleared() {
+		_spec.ClearField(syslogging.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := slu.mutation.IsDel(); ok {
 		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
@@ -369,6 +420,32 @@ type SysLoggingUpdateOne struct {
 	hooks     []Hook
 	mutation  *SysLoggingMutation
 	modifiers []func(*sql.UpdateBuilder)
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (sluo *SysLoggingUpdateOne) SetUpdatedAt(t time.Time) *SysLoggingUpdateOne {
+	sluo.mutation.SetUpdatedAt(t)
+	return sluo
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (sluo *SysLoggingUpdateOne) SetDeletedAt(t time.Time) *SysLoggingUpdateOne {
+	sluo.mutation.SetDeletedAt(t)
+	return sluo
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (sluo *SysLoggingUpdateOne) SetNillableDeletedAt(t *time.Time) *SysLoggingUpdateOne {
+	if t != nil {
+		sluo.SetDeletedAt(*t)
+	}
+	return sluo
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (sluo *SysLoggingUpdateOne) ClearDeletedAt() *SysLoggingUpdateOne {
+	sluo.mutation.ClearDeletedAt()
+	return sluo
 }
 
 // SetIsDel sets the "is_del" field.
@@ -565,6 +642,9 @@ func (sluo *SysLoggingUpdateOne) Select(field string, fields ...string) *SysLogg
 
 // Save executes the query and returns the updated SysLogging entity.
 func (sluo *SysLoggingUpdateOne) Save(ctx context.Context) (*SysLogging, error) {
+	if err := sluo.defaults(); err != nil {
+		return nil, err
+	}
 	return withHooks[*SysLogging, SysLoggingMutation](ctx, sluo.sqlSave, sluo.mutation, sluo.hooks)
 }
 
@@ -588,6 +668,18 @@ func (sluo *SysLoggingUpdateOne) ExecX(ctx context.Context) {
 	if err := sluo.Exec(ctx); err != nil {
 		panic(err)
 	}
+}
+
+// defaults sets the default values of the builder before save.
+func (sluo *SysLoggingUpdateOne) defaults() error {
+	if _, ok := sluo.mutation.UpdatedAt(); !ok {
+		if syslogging.UpdateDefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized syslogging.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
+		v := syslogging.UpdateDefaultUpdatedAt()
+		sluo.mutation.SetUpdatedAt(v)
+	}
+	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -664,6 +756,15 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := sluo.mutation.UpdatedAt(); ok {
+		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if value, ok := sluo.mutation.DeletedAt(); ok {
+		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)
+	}
+	if sluo.mutation.DeletedAtCleared() {
+		_spec.ClearField(syslogging.FieldDeletedAt, field.TypeTime)
 	}
 	if value, ok := sluo.mutation.IsDel(); ok {
 		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)

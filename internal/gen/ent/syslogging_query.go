@@ -264,12 +264,12 @@ func (slq *SysLoggingQuery) Clone() *SysLoggingQuery {
 // Example:
 //
 //	var v []struct {
-//		IsDel bool `json:"is_del,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.SysLogging.Query().
-//		GroupBy(syslogging.FieldIsDel).
+//		GroupBy(syslogging.FieldCreatedAt).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 func (slq *SysLoggingQuery) GroupBy(field string, fields ...string) *SysLoggingGroupBy {
@@ -287,11 +287,11 @@ func (slq *SysLoggingQuery) GroupBy(field string, fields ...string) *SysLoggingG
 // Example:
 //
 //	var v []struct {
-//		IsDel bool `json:"is_del,omitempty"`
+//		CreatedAt time.Time `json:"created_at,omitempty"`
 //	}
 //
 //	client.SysLogging.Query().
-//		Select(syslogging.FieldIsDel).
+//		Select(syslogging.FieldCreatedAt).
 //		Scan(ctx, &v)
 func (slq *SysLoggingQuery) Select(fields ...string) *SysLoggingSelect {
 	slq.ctx.Fields = append(slq.ctx.Fields, fields...)

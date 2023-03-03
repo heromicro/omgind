@@ -21,6 +21,7 @@ type SysLogging struct {
 func (SysLogging) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.TimeMixin{},
 		mixin.SoftDelMixin{},
 		mixin.MemoMixin{},
 	}
@@ -41,8 +42,6 @@ func (SysLogging) Fields() []ent.Field {
 		field.String("message").MaxLen(1024).Nillable().Optional().Comment("消息"),
 		field.Text("data").Immutable().Optional().Nillable().Comment("日志数据(json string)"),
 		field.Text("error_stack").Nillable().Optional().Comment("日志数据(json string)"),
-
-		mixin.FieldCreateAt1(),
 	}
 }
 

@@ -37,7 +37,7 @@ func FieldCreateAt() ent.Field {
 		Default(time.Now).Comment("create time")
 }
 
-func FieldCreateAt1() ent.Field {
+func FieldCreateAt_milli() ent.Field {
 	return field.Int64("created_at").
 		StorageKey("crtd_at").
 		StructTag(`json:"created_at,omitempty"`).

@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -20,6 +21,48 @@ type SysLoggingCreate struct {
 	mutation *SysLoggingMutation
 	hooks    []Hook
 	conflict []sql.ConflictOption
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (slc *SysLoggingCreate) SetCreatedAt(t time.Time) *SysLoggingCreate {
+	slc.mutation.SetCreatedAt(t)
+	return slc
+}
+
+// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableCreatedAt(t *time.Time) *SysLoggingCreate {
+	if t != nil {
+		slc.SetCreatedAt(*t)
+	}
+	return slc
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (slc *SysLoggingCreate) SetUpdatedAt(t time.Time) *SysLoggingCreate {
+	slc.mutation.SetUpdatedAt(t)
+	return slc
+}
+
+// SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableUpdatedAt(t *time.Time) *SysLoggingCreate {
+	if t != nil {
+		slc.SetUpdatedAt(*t)
+	}
+	return slc
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (slc *SysLoggingCreate) SetDeletedAt(t time.Time) *SysLoggingCreate {
+	slc.mutation.SetDeletedAt(t)
+	return slc
+}
+
+// SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
+func (slc *SysLoggingCreate) SetNillableDeletedAt(t *time.Time) *SysLoggingCreate {
+	if t != nil {
+		slc.SetDeletedAt(*t)
+	}
+	return slc
 }
 
 // SetIsDel sets the "is_del" field.
@@ -162,20 +205,6 @@ func (slc *SysLoggingCreate) SetNillableErrorStack(s *string) *SysLoggingCreate 
 	return slc
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (slc *SysLoggingCreate) SetCreatedAt(i int64) *SysLoggingCreate {
-	slc.mutation.SetCreatedAt(i)
-	return slc
-}
-
-// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableCreatedAt(i *int64) *SysLoggingCreate {
-	if i != nil {
-		slc.SetCreatedAt(*i)
-	}
-	return slc
-}
-
 // SetID sets the "id" field.
 func (slc *SysLoggingCreate) SetID(s string) *SysLoggingCreate {
 	slc.mutation.SetID(s)
@@ -227,6 +256,20 @@ func (slc *SysLoggingCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (slc *SysLoggingCreate) defaults() error {
+	if _, ok := slc.mutation.CreatedAt(); !ok {
+		if syslogging.DefaultCreatedAt == nil {
+			return fmt.Errorf("ent: uninitialized syslogging.DefaultCreatedAt (forgotten import ent/runtime?)")
+		}
+		v := syslogging.DefaultCreatedAt()
+		slc.mutation.SetCreatedAt(v)
+	}
+	if _, ok := slc.mutation.UpdatedAt(); !ok {
+		if syslogging.DefaultUpdatedAt == nil {
+			return fmt.Errorf("ent: uninitialized syslogging.DefaultUpdatedAt (forgotten import ent/runtime?)")
+		}
+		v := syslogging.DefaultUpdatedAt()
+		slc.mutation.SetUpdatedAt(v)
+	}
 	if _, ok := slc.mutation.IsDel(); !ok {
 		v := syslogging.DefaultIsDel
 		slc.mutation.SetIsDel(v)
@@ -234,13 +277,6 @@ func (slc *SysLoggingCreate) defaults() error {
 	if _, ok := slc.mutation.Memo(); !ok {
 		v := syslogging.DefaultMemo
 		slc.mutation.SetMemo(v)
-	}
-	if _, ok := slc.mutation.CreatedAt(); !ok {
-		if syslogging.DefaultCreatedAt == nil {
-			return fmt.Errorf("ent: uninitialized syslogging.DefaultCreatedAt (forgotten import ent/runtime?)")
-		}
-		v := syslogging.DefaultCreatedAt()
-		slc.mutation.SetCreatedAt(v)
 	}
 	if _, ok := slc.mutation.ID(); !ok {
 		if syslogging.DefaultID == nil {
@@ -254,6 +290,12 @@ func (slc *SysLoggingCreate) defaults() error {
 
 // check runs all checks and user-defined validators on the builder.
 func (slc *SysLoggingCreate) check() error {
+	if _, ok := slc.mutation.CreatedAt(); !ok {
+		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysLogging.created_at"`)}
+	}
+	if _, ok := slc.mutation.UpdatedAt(); !ok {
+		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysLogging.updated_at"`)}
+	}
 	if _, ok := slc.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysLogging.is_del"`)}
 	}
@@ -291,9 +333,6 @@ func (slc *SysLoggingCreate) check() error {
 		if err := syslogging.MessageValidator(v); err != nil {
 			return &ValidationError{Name: "message", err: fmt.Errorf(`ent: validator failed for field "SysLogging.message": %w`, err)}
 		}
-	}
-	if _, ok := slc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysLogging.created_at"`)}
 	}
 	if v, ok := slc.mutation.ID(); ok {
 		if err := syslogging.IDValidator(v); err != nil {
@@ -337,6 +376,18 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
+	if value, ok := slc.mutation.CreatedAt(); ok {
+		_spec.SetField(syslogging.FieldCreatedAt, field.TypeTime, value)
+		_node.CreatedAt = value
+	}
+	if value, ok := slc.mutation.UpdatedAt(); ok {
+		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
+		_node.UpdatedAt = value
+	}
+	if value, ok := slc.mutation.DeletedAt(); ok {
+		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)
+		_node.DeletedAt = &value
+	}
 	if value, ok := slc.mutation.IsDel(); ok {
 		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
@@ -377,10 +428,6 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 		_spec.SetField(syslogging.FieldErrorStack, field.TypeString, value)
 		_node.ErrorStack = &value
 	}
-	if value, ok := slc.mutation.CreatedAt(); ok {
-		_spec.SetField(syslogging.FieldCreatedAt, field.TypeInt64, value)
-		_node.CreatedAt = value
-	}
 	return _node, _spec
 }
 
@@ -388,7 +435,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 // of the `INSERT` statement. For example:
 //
 //	client.SysLogging.Create().
-//		SetIsDel(v).
+//		SetCreatedAt(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -397,7 +444,7 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.SysLoggingUpsert) {
-//			SetIsDel(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (slc *SysLoggingCreate) OnConflict(opts ...sql.ConflictOption) *SysLoggingUpsertOne {
@@ -432,6 +479,36 @@ type (
 		*sql.UpdateSet
 	}
 )
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysLoggingUpsert) SetUpdatedAt(v time.Time) *SysLoggingUpsert {
+	u.Set(syslogging.FieldUpdatedAt, v)
+	return u
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateUpdatedAt() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldUpdatedAt)
+	return u
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysLoggingUpsert) SetDeletedAt(v time.Time) *SysLoggingUpsert {
+	u.Set(syslogging.FieldDeletedAt, v)
+	return u
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysLoggingUpsert) UpdateDeletedAt() *SysLoggingUpsert {
+	u.SetExcluded(syslogging.FieldDeletedAt)
+	return u
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysLoggingUpsert) ClearDeletedAt() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldDeletedAt)
+	return u
+}
 
 // SetIsDel sets the "is_del" field.
 func (u *SysLoggingUpsert) SetIsDel(v bool) *SysLoggingUpsert {
@@ -606,11 +683,11 @@ func (u *SysLoggingUpsertOne) UpdateNewValues() *SysLoggingUpsertOne {
 		if _, exists := u.create.mutation.ID(); exists {
 			s.SetIgnore(syslogging.FieldID)
 		}
-		if _, exists := u.create.mutation.Data(); exists {
-			s.SetIgnore(syslogging.FieldData)
-		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(syslogging.FieldCreatedAt)
+		}
+		if _, exists := u.create.mutation.Data(); exists {
+			s.SetIgnore(syslogging.FieldData)
 		}
 	}))
 	return u
@@ -641,6 +718,41 @@ func (u *SysLoggingUpsertOne) Update(set func(*SysLoggingUpsert)) *SysLoggingUps
 		set(&SysLoggingUpsert{UpdateSet: update})
 	}))
 	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysLoggingUpsertOne) SetUpdatedAt(v time.Time) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateUpdatedAt() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysLoggingUpsertOne) SetDeletedAt(v time.Time) *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysLoggingUpsertOne) UpdateDeletedAt() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysLoggingUpsertOne) ClearDeletedAt() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearDeletedAt()
+	})
 }
 
 // SetIsDel sets the "is_del" field.
@@ -957,7 +1069,7 @@ func (slcb *SysLoggingCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.SysLoggingUpsert) {
-//			SetIsDel(v+v).
+//			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
 func (slcb *SysLoggingCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysLoggingUpsertBulk {
@@ -1004,11 +1116,11 @@ func (u *SysLoggingUpsertBulk) UpdateNewValues() *SysLoggingUpsertBulk {
 			if _, exists := b.mutation.ID(); exists {
 				s.SetIgnore(syslogging.FieldID)
 			}
-			if _, exists := b.mutation.Data(); exists {
-				s.SetIgnore(syslogging.FieldData)
-			}
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(syslogging.FieldCreatedAt)
+			}
+			if _, exists := b.mutation.Data(); exists {
+				s.SetIgnore(syslogging.FieldData)
 			}
 		}
 	}))
@@ -1040,6 +1152,41 @@ func (u *SysLoggingUpsertBulk) Update(set func(*SysLoggingUpsert)) *SysLoggingUp
 		set(&SysLoggingUpsert{UpdateSet: update})
 	}))
 	return u
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (u *SysLoggingUpsertBulk) SetUpdatedAt(v time.Time) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetUpdatedAt(v)
+	})
+}
+
+// UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateUpdatedAt() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateUpdatedAt()
+	})
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (u *SysLoggingUpsertBulk) SetDeletedAt(v time.Time) *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.SetDeletedAt(v)
+	})
+}
+
+// UpdateDeletedAt sets the "deleted_at" field to the value that was provided on create.
+func (u *SysLoggingUpsertBulk) UpdateDeletedAt() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.UpdateDeletedAt()
+	})
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (u *SysLoggingUpsertBulk) ClearDeletedAt() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearDeletedAt()
+	})
 }
 
 // SetIsDel sets the "is_del" field.

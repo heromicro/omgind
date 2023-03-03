@@ -7161,6 +7161,9 @@ type SysLoggingMutation struct {
 	op            Op
 	typ           string
 	id            *string
+	created_at    *time.Time
+	updated_at    *time.Time
+	deleted_at    *time.Time
 	is_del        *bool
 	memo          *string
 	level         *string
@@ -7171,8 +7174,6 @@ type SysLoggingMutation struct {
 	message       *string
 	data          *string
 	error_stack   *string
-	created_at    *int64
-	addcreated_at *int64
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*SysLogging, error)
@@ -7281,6 +7282,127 @@ func (m *SysLoggingMutation) IDs(ctx context.Context) ([]string, error) {
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *SysLoggingMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *SysLoggingMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldCreatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *SysLoggingMutation) ResetCreatedAt() {
+	m.created_at = nil
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (m *SysLoggingMutation) SetUpdatedAt(t time.Time) {
+	m.updated_at = &t
+}
+
+// UpdatedAt returns the value of the "updated_at" field in the mutation.
+func (m *SysLoggingMutation) UpdatedAt() (r time.Time, exists bool) {
+	v := m.updated_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdatedAt returns the old "updated_at" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldUpdatedAt(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdatedAt: %w", err)
+	}
+	return oldValue.UpdatedAt, nil
+}
+
+// ResetUpdatedAt resets all changes to the "updated_at" field.
+func (m *SysLoggingMutation) ResetUpdatedAt() {
+	m.updated_at = nil
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (m *SysLoggingMutation) SetDeletedAt(t time.Time) {
+	m.deleted_at = &t
+}
+
+// DeletedAt returns the value of the "deleted_at" field in the mutation.
+func (m *SysLoggingMutation) DeletedAt() (r time.Time, exists bool) {
+	v := m.deleted_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeletedAt returns the old "deleted_at" field's value of the SysLogging entity.
+// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysLoggingMutation) OldDeletedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDeletedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeletedAt: %w", err)
+	}
+	return oldValue.DeletedAt, nil
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (m *SysLoggingMutation) ClearDeletedAt() {
+	m.deleted_at = nil
+	m.clearedFields[syslogging.FieldDeletedAt] = struct{}{}
+}
+
+// DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
+func (m *SysLoggingMutation) DeletedAtCleared() bool {
+	_, ok := m.clearedFields[syslogging.FieldDeletedAt]
+	return ok
+}
+
+// ResetDeletedAt resets all changes to the "deleted_at" field.
+func (m *SysLoggingMutation) ResetDeletedAt() {
+	m.deleted_at = nil
+	delete(m.clearedFields, syslogging.FieldDeletedAt)
 }
 
 // SetIsDel sets the "is_del" field.
@@ -7760,62 +7882,6 @@ func (m *SysLoggingMutation) ResetErrorStack() {
 	delete(m.clearedFields, syslogging.FieldErrorStack)
 }
 
-// SetCreatedAt sets the "created_at" field.
-func (m *SysLoggingMutation) SetCreatedAt(i int64) {
-	m.created_at = &i
-	m.addcreated_at = nil
-}
-
-// CreatedAt returns the value of the "created_at" field in the mutation.
-func (m *SysLoggingMutation) CreatedAt() (r int64, exists bool) {
-	v := m.created_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldCreatedAt returns the old "created_at" field's value of the SysLogging entity.
-// If the SysLogging object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysLoggingMutation) OldCreatedAt(ctx context.Context) (v int64, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
-	}
-	return oldValue.CreatedAt, nil
-}
-
-// AddCreatedAt adds i to the "created_at" field.
-func (m *SysLoggingMutation) AddCreatedAt(i int64) {
-	if m.addcreated_at != nil {
-		*m.addcreated_at += i
-	} else {
-		m.addcreated_at = &i
-	}
-}
-
-// AddedCreatedAt returns the value that was added to the "created_at" field in this mutation.
-func (m *SysLoggingMutation) AddedCreatedAt() (r int64, exists bool) {
-	v := m.addcreated_at
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetCreatedAt resets all changes to the "created_at" field.
-func (m *SysLoggingMutation) ResetCreatedAt() {
-	m.created_at = nil
-	m.addcreated_at = nil
-}
-
 // Where appends a list predicates to the SysLoggingMutation builder.
 func (m *SysLoggingMutation) Where(ps ...predicate.SysLogging) {
 	m.predicates = append(m.predicates, ps...)
@@ -7850,7 +7916,16 @@ func (m *SysLoggingMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysLoggingMutation) Fields() []string {
-	fields := make([]string, 0, 11)
+	fields := make([]string, 0, 13)
+	if m.created_at != nil {
+		fields = append(fields, syslogging.FieldCreatedAt)
+	}
+	if m.updated_at != nil {
+		fields = append(fields, syslogging.FieldUpdatedAt)
+	}
+	if m.deleted_at != nil {
+		fields = append(fields, syslogging.FieldDeletedAt)
+	}
 	if m.is_del != nil {
 		fields = append(fields, syslogging.FieldIsDel)
 	}
@@ -7881,9 +7956,6 @@ func (m *SysLoggingMutation) Fields() []string {
 	if m.error_stack != nil {
 		fields = append(fields, syslogging.FieldErrorStack)
 	}
-	if m.created_at != nil {
-		fields = append(fields, syslogging.FieldCreatedAt)
-	}
 	return fields
 }
 
@@ -7892,6 +7964,12 @@ func (m *SysLoggingMutation) Fields() []string {
 // schema.
 func (m *SysLoggingMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case syslogging.FieldCreatedAt:
+		return m.CreatedAt()
+	case syslogging.FieldUpdatedAt:
+		return m.UpdatedAt()
+	case syslogging.FieldDeletedAt:
+		return m.DeletedAt()
 	case syslogging.FieldIsDel:
 		return m.IsDel()
 	case syslogging.FieldMemo:
@@ -7912,8 +7990,6 @@ func (m *SysLoggingMutation) Field(name string) (ent.Value, bool) {
 		return m.Data()
 	case syslogging.FieldErrorStack:
 		return m.ErrorStack()
-	case syslogging.FieldCreatedAt:
-		return m.CreatedAt()
 	}
 	return nil, false
 }
@@ -7923,6 +7999,12 @@ func (m *SysLoggingMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *SysLoggingMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case syslogging.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	case syslogging.FieldUpdatedAt:
+		return m.OldUpdatedAt(ctx)
+	case syslogging.FieldDeletedAt:
+		return m.OldDeletedAt(ctx)
 	case syslogging.FieldIsDel:
 		return m.OldIsDel(ctx)
 	case syslogging.FieldMemo:
@@ -7943,8 +8025,6 @@ func (m *SysLoggingMutation) OldField(ctx context.Context, name string) (ent.Val
 		return m.OldData(ctx)
 	case syslogging.FieldErrorStack:
 		return m.OldErrorStack(ctx)
-	case syslogging.FieldCreatedAt:
-		return m.OldCreatedAt(ctx)
 	}
 	return nil, fmt.Errorf("unknown SysLogging field %s", name)
 }
@@ -7954,6 +8034,27 @@ func (m *SysLoggingMutation) OldField(ctx context.Context, name string) (ent.Val
 // type.
 func (m *SysLoggingMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case syslogging.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	case syslogging.FieldUpdatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdatedAt(v)
+		return nil
+	case syslogging.FieldDeletedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeletedAt(v)
+		return nil
 	case syslogging.FieldIsDel:
 		v, ok := value.(bool)
 		if !ok {
@@ -8024,13 +8125,6 @@ func (m *SysLoggingMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetErrorStack(v)
 		return nil
-	case syslogging.FieldCreatedAt:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetCreatedAt(v)
-		return nil
 	}
 	return fmt.Errorf("unknown SysLogging field %s", name)
 }
@@ -8038,21 +8132,13 @@ func (m *SysLoggingMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *SysLoggingMutation) AddedFields() []string {
-	var fields []string
-	if m.addcreated_at != nil {
-		fields = append(fields, syslogging.FieldCreatedAt)
-	}
-	return fields
+	return nil
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *SysLoggingMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	case syslogging.FieldCreatedAt:
-		return m.AddedCreatedAt()
-	}
 	return nil, false
 }
 
@@ -8061,13 +8147,6 @@ func (m *SysLoggingMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *SysLoggingMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case syslogging.FieldCreatedAt:
-		v, ok := value.(int64)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddCreatedAt(v)
-		return nil
 	}
 	return fmt.Errorf("unknown SysLogging numeric field %s", name)
 }
@@ -8076,6 +8155,9 @@ func (m *SysLoggingMutation) AddField(name string, value ent.Value) error {
 // mutation.
 func (m *SysLoggingMutation) ClearedFields() []string {
 	var fields []string
+	if m.FieldCleared(syslogging.FieldDeletedAt) {
+		fields = append(fields, syslogging.FieldDeletedAt)
+	}
 	if m.FieldCleared(syslogging.FieldMemo) {
 		fields = append(fields, syslogging.FieldMemo)
 	}
@@ -8117,6 +8199,9 @@ func (m *SysLoggingMutation) FieldCleared(name string) bool {
 // error if the field is not defined in the schema.
 func (m *SysLoggingMutation) ClearField(name string) error {
 	switch name {
+	case syslogging.FieldDeletedAt:
+		m.ClearDeletedAt()
+		return nil
 	case syslogging.FieldMemo:
 		m.ClearMemo()
 		return nil
@@ -8152,6 +8237,15 @@ func (m *SysLoggingMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *SysLoggingMutation) ResetField(name string) error {
 	switch name {
+	case syslogging.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	case syslogging.FieldUpdatedAt:
+		m.ResetUpdatedAt()
+		return nil
+	case syslogging.FieldDeletedAt:
+		m.ResetDeletedAt()
+		return nil
 	case syslogging.FieldIsDel:
 		m.ResetIsDel()
 		return nil
@@ -8181,9 +8275,6 @@ func (m *SysLoggingMutation) ResetField(name string) error {
 		return nil
 	case syslogging.FieldErrorStack:
 		m.ResetErrorStack()
-		return nil
-	case syslogging.FieldCreatedAt:
-		m.ResetCreatedAt()
 		return nil
 	}
 	return fmt.Errorf("unknown SysLogging field %s", name)

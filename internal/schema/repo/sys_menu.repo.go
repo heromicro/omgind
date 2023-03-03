@@ -5,12 +5,12 @@ import (
 	"time"
 
 	"github.com/google/wire"
+
+	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
-
-	"github.com/heromicro/omgind/internal/app/schema"
 )
 
 // MenuSet 注入Menu

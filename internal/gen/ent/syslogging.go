@@ -5,6 +5,7 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
@@ -15,6 +16,12 @@ type SysLogging struct {
 	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
+	// create time
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// update time
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// delete time,
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
 	// memo
@@ -35,8 +42,6 @@ type SysLogging struct {
 	Data *string `json:"data,omitempty"`
 	// 日志数据(json string)
 	ErrorStack *string `json:"error_stack,omitempty"`
-	// create time
-	CreatedAt int64 `json:"created_at,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -46,10 +51,10 @@ func (*SysLogging) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case syslogging.FieldIsDel:
 			values[i] = new(sql.NullBool)
-		case syslogging.FieldCreatedAt:
-			values[i] = new(sql.NullInt64)
 		case syslogging.FieldID, syslogging.FieldMemo, syslogging.FieldLevel, syslogging.FieldTraceID, syslogging.FieldUserID, syslogging.FieldTag, syslogging.FieldVersion, syslogging.FieldMessage, syslogging.FieldData, syslogging.FieldErrorStack:
 			values[i] = new(sql.NullString)
+		case syslogging.FieldCreatedAt, syslogging.FieldUpdatedAt, syslogging.FieldDeletedAt:
+			values[i] = new(sql.NullTime)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysLogging", columns[i])
 		}
@@ -70,6 +75,25 @@ func (sl *SysLogging) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
 				sl.ID = value.String
+			}
+		case syslogging.FieldCreatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field created_at", values[i])
+			} else if value.Valid {
+				sl.CreatedAt = value.Time
+			}
+		case syslogging.FieldUpdatedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
+			} else if value.Valid {
+				sl.UpdatedAt = value.Time
+			}
+		case syslogging.FieldDeletedAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
+			} else if value.Valid {
+				sl.DeletedAt = new(time.Time)
+				*sl.DeletedAt = value.Time
 			}
 		case syslogging.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
@@ -140,12 +164,6 @@ func (sl *SysLogging) assignValues(columns []string, values []any) error {
 				sl.ErrorStack = new(string)
 				*sl.ErrorStack = value.String
 			}
-		case syslogging.FieldCreatedAt:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field created_at", values[i])
-			} else if value.Valid {
-				sl.CreatedAt = value.Int64
-			}
 		}
 	}
 	return nil
@@ -174,6 +192,17 @@ func (sl *SysLogging) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysLogging(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", sl.ID))
+	builder.WriteString("created_at=")
+	builder.WriteString(sl.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("updated_at=")
+	builder.WriteString(sl.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(", ")
+	if v := sl.DeletedAt; v != nil {
+		builder.WriteString("deleted_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
+	builder.WriteString(", ")
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", sl.IsDel))
 	builder.WriteString(", ")
@@ -221,9 +250,6 @@ func (sl *SysLogging) String() string {
 		builder.WriteString("error_stack=")
 		builder.WriteString(*v)
 	}
-	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(fmt.Sprintf("%v", sl.CreatedAt))
 	builder.WriteByte(')')
 	return builder.String()
 }

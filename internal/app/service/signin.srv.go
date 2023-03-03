@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/wire"
 	"github.com/gotidy/ptr"
+
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/auth"
