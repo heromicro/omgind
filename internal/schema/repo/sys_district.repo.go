@@ -401,7 +401,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 
 	// check pid
 	if iteminput.ParentID == nil || *iteminput.ParentID == "" {
-		// 树顶级
+		// 无树顶级
 		var opt schema.SysDistrictQueryOptions
 		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
 
@@ -419,6 +419,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 		}
 		iteminput.TreeLeft = ptr.Int64(1)
 		iteminput.TreeRight = ptr.Int64(2)
+		iteminput.IsLeaf = ptr.Bool(true)
 
 		r_sysdistrict, err = a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
 

@@ -261,7 +261,7 @@ var (
 			},
 			{
 				Name:    "sysdistrict_tree_id",
-				Unique:  true,
+				Unique:  false,
 				Columns: []*schema.Column{SysDistrictsColumns[7]},
 			},
 			{
