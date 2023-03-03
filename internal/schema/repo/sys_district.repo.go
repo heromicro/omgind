@@ -2,7 +2,6 @@ package repo
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/gotidy/ptr"
@@ -140,8 +139,6 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	}
 
 	count, err := query.Count(ctx)
-	log.Println(" ------- ===== === ===== count 11111 ", count)
-	log.Println(" ------- ===== ==== ====  err ", err)
 
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -401,7 +398,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 
 	// check pid
 	if iteminput.ParentID == nil || *iteminput.ParentID == "" {
-		// 无树顶级
+		// no pid, top level
 		var opt schema.SysDistrictQueryOptions
 		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
 
@@ -420,6 +417,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 		iteminput.TreeLeft = ptr.Int64(1)
 		iteminput.TreeRight = ptr.Int64(2)
 		iteminput.IsLeaf = ptr.Bool(true)
+		iteminput.TreeLevel = ptr.Int32(1)
 
 		r_sysdistrict, err = a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
 
