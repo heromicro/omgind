@@ -158,6 +158,12 @@ var CmdLoad = &cobra.Command{
 				if item.ParentID == nil || *item.ParentID == "" {
 					create_district_input.ParentID = nil
 				}
+				if item.AreaCode == "" {
+					create_district_input.AreaCode = nil
+				}
+				if item.ZipCode == "" {
+					create_district_input.ZipCode = nil
+				}
 
 				create_district = create_district.SetInput(*create_district_input)
 
