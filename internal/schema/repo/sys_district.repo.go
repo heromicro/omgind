@@ -462,11 +462,31 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 		iteminput.TreeID = parent.TreeID
 		iteminput.TreeLeft = parent.TreeRight
 		iteminput.TreeRight = ptr.Int64(*parent.TreeRight + 1)
+		iteminput.IsLeaf = ptr.Bool(true)
+		iteminput.TreeLevel = ptr.Int32(*parent.TreeLevel + 1)
 
-		WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+		err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
 			r_sysdistrict, err = tx.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
 
+			if err != nil {
+				return err
+			}
+			update_district_l := tx.SysDistrict.Update()
+			update_district_l = update_district_l.Where(sysdistrict.IDNEQ(r_sysdistrict.ID))
+			update_district_l = update_district_l.Where(sysdistrict.TreeLeftGT(*parent.TreeRight))
+			_, err := update_district_l.AddTreeLeft(2).Save(ctx)
+			if err != nil {
+				return err
+			}
+			update_district_r := tx.SysDistrict.Update()
+			update_district_r = update_district_r.Where(sysdistrict.IDNEQ(r_sysdistrict.ID))
+			update_district_r = update_district_r.Where(sysdistrict.TreeRightGTE(*parent.TreeRight))
+			_, err = update_district_r.AddTreeRight(2).Save(ctx)
+			if err != nil {
+				return nil
+			}
+			parent, err = parent.Update().SetIsLeaf(false).Save(ctx)
 			if err != nil {
 				return err
 			}
