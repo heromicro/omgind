@@ -402,16 +402,24 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 
 // Get 查询指定数据
 func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrict, error) {
+	query_district := a.EntCli.SysDistrict.Query()
 
-	r_sysdistrict, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).Only(ctx)
+	query_district = query_district.WithParent()
+
+	r_sysdistrict, err := query_district.Where(sysdistrict.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if _, ok := err.(*ent.NotFoundError); ok {
+		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
 	}
 
-	return a.toSchemaSysDistrict(r_sysdistrict), nil
+	r_schema := a.toSchemaSysDistrict(r_sysdistrict)
+	if r_sysdistrict.Edges.Parent != nil {
+		r_schema.Parent = a.toSchemaSysDistrict(r_sysdistrict.Edges.Parent)
+	}
+
+	return r_schema, nil
 }
 
 // Create 创建数据

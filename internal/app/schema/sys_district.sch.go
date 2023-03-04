@@ -4,25 +4,26 @@ import "time"
 
 // SysDistrict 行政区域对象
 type SysDistrict struct {
-	ID         string   `json:"id"`                           // 唯一标识
-	ParentID   string   `json:"pid"`                          // pid
-	Name       string   `json:"name" binding:"required"`      // 名称
-	Sname      string   `json:"sname" binding:"required"`     // 短名称
-	Abbr       *string  `json:"abbr"`                         // 简称
-	Suffix     *string  `json:"suffix"`                       // 区域后缀,省/市/区/旗/盟/自治区/
-	StCode     *string  `json:"st_code"`                      // 统计局区域编码
-	Initials   *string  `json:"initials"`                     // 简拼
-	Pinyin     *string  `json:"pinyin"`                       // 简拼
-	Longitude  *float64 `json:"longitude"`                    // 经度
-	Latitude   *float64 `json:"latitude"`                     // 经度
-	AreaCode   *string  `json:"area_code"`                    // 电话区号码
-	ZipCode    *string  `json:"zip_code"`                     // 邮政编码
-	MergeName  *string  `json:"merge_name"`                   // 带前缀全名称
-	MergeSname *string  `json:"merge_sname"`                  // 带前缀简名称
-	Extra      *string  `json:"extra"`                        // 带前缀简名称
-	IsActive   *bool    `json:"is_active" binding:"required"` // 状态
-	Sort       int32    `json:"sort"`
-	IsDel      bool     `json:"is_del"`
+	ID         string       `json:"id"`                           // 唯一标识
+	ParentID   string       `json:"pid"`                          // pid
+	Parent     *SysDistrict `json:"parent"`                       // parent
+	Name       string       `json:"name" binding:"required"`      // 名称
+	Sname      string       `json:"sname" binding:"required"`     // 短名称
+	Abbr       *string      `json:"abbr"`                         // 简称
+	Suffix     *string      `json:"suffix"`                       // 区域后缀,省/市/区/旗/盟/自治区/
+	StCode     *string      `json:"st_code"`                      // 统计局区域编码
+	Initials   *string      `json:"initials"`                     // 简拼
+	Pinyin     *string      `json:"pinyin"`                       // 简拼
+	Longitude  *float64     `json:"longitude"`                    // 经度
+	Latitude   *float64     `json:"latitude"`                     // 经度
+	AreaCode   *string      `json:"area_code"`                    // 电话区号码
+	ZipCode    *string      `json:"zip_code"`                     // 邮政编码
+	MergeName  *string      `json:"merge_name"`                   // 带前缀全名称
+	MergeSname *string      `json:"merge_sname"`                  // 带前缀简名称
+	Extra      *string      `json:"extra"`                        // 带前缀简名称
+	IsActive   *bool        `json:"is_active" binding:"required"` // 状态
+	Sort       int32        `json:"sort"`
+	IsDel      bool         `json:"is_del"`
 
 	IsMain   *bool `json:"is_main"`   // 主要城市
 	IsHot    bool  `json:"is_hot"`    // 热门城市
