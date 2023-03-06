@@ -30,7 +30,10 @@ func (SysDistrict) Fields() []ent.Field {
 	return []ent.Field{
 
 		field.String("name").MaxLen(128).Nillable().Optional().StorageKey("name").Comment("名称"),
+		field.String("name_en").MaxLen(128).Nillable().Optional().StorageKey("name_en").Comment("English名称"),
+
 		field.String("sname").MaxLen(64).Nillable().Optional().StorageKey("sname").Comment("短名称"),
+		field.String("sname_en").MaxLen(64).Nillable().Optional().StorageKey("sname_en").Comment("English短名称"),
 
 		field.String("abbr").MaxLen(16).Nillable().Optional().StorageKey("abbr").Comment("简称Abbreviation"),
 
