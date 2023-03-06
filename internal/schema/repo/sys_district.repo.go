@@ -77,7 +77,7 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	}
 
 	if v := params.Name; v != "" {
-		query = query.Where(sysdistrict.NameEQ(v))
+		query = query.Where(sysdistrict.Or(sysdistrict.NameEQ(v), sysdistrict.NameEnEQ(v)))
 	}
 
 	if v := params.IsMain; v != nil {
@@ -508,15 +508,52 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	if err != nil {
 		return nil, err
 	}
-
-	// check pid change or not
-	if *oitem.ParentID == item.ParentID {
-
-	} else {
-
-	}
-
 	iteminput := a.ToEntUpdateSysDistrictInput(&item)
+
+	// check pid changed or not
+	if oitem.ParentID == nil {
+		// old data.pid is nil
+		if iteminput.ParentID == nil {
+			// pid no change
+
+		} else {
+			// pid changed
+			// bring new data to sub
+			query_nparent := a.EntCli.SysDistrict.Query()
+			query_nparent = query_nparent.Where(sysdistrict.DeletedAtIsNil()).Where(sysdistrict.IDEQ(*iteminput.ParentID))
+			// nparent, err := query_nparent.First(ctx)
+			_, err := query_nparent.First(ctx)
+			if err != nil {
+				return nil, err
+			}
+
+		}
+	} else {
+		// old data.pid is not nil
+		if iteminput.ParentID == nil {
+			// bring new data to top level,
+			//
+
+			var opt schema.SysDistrictQueryOptions
+			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
+			// most, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).First(ctx)
+			_, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).First(ctx)
+			if err != nil {
+				if !ent.IsNotFound(err) {
+					return nil, err
+				}
+			}
+
+		} else {
+			if *oitem.ParentID == *iteminput.ParentID {
+				// new data.pid no changed
+
+			} else {
+				// new data.pid changed
+
+			}
+		}
+	}
 
 	r_sysdistrict, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 	sch_sysdistrict := a.toSchemaSysDistrict(r_sysdistrict)

@@ -106,6 +106,7 @@ var CmdLoad = &cobra.Command{
 					TreeRight:  &item.TreeRight,
 					TreeLevel:  &item.TreeLevel,
 					Name:       item.Name,
+					NameEn:     item.NameEn,
 					Initials:   &item.Initials,
 					Pinyin:     &item.Pinyin,
 					Longitude:  &item.Longitude,
@@ -121,6 +122,7 @@ var CmdLoad = &cobra.Command{
 					IsDirect:   item.IsDirect,
 					Suffix:     &item.Suffix,
 					Sname:      item.Sname,
+					SnameEn:    item.SnameEn,
 					IsHot:      item.IsHot,
 					IsMain:     &item.Mpoint,
 					IsReal:     item.IsReal,
@@ -140,7 +142,7 @@ var CmdLoad = &cobra.Command{
 						query_district = query_district.Where(sysdistrict.IDEQ(*item.ParentID))
 						pdistrict, _ = query_district.First(ctx)
 						if pdistrict != nil {
-							district.ParentID = pdistrict.ID
+							district.ParentID = &pdistrict.ID
 							if pdistrict.TreePath == nil {
 								district.TreePath = &pdistrict.ID
 							} else {

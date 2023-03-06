@@ -86,7 +86,7 @@ func (a *SysDistrict) Create(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess(c, result.ID)
+	ginx.ResSuccess(c, result)
 }
 
 // Update 更新数据
