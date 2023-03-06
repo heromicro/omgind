@@ -5,10 +5,12 @@ import "time"
 // SysDistrict 行政区域对象
 type SysDistrict struct {
 	ID         string       `json:"id"`                           // 唯一标识
-	ParentID   string       `json:"pid"`                          // pid
+	ParentID   *string      `json:"pid"`                          // pid
 	Parent     *SysDistrict `json:"parent"`                       // parent
 	Name       string       `json:"name" binding:"required"`      // 名称
-	Sname      string       `json:"sname" binding:"required"`     // 短名称
+	NameEn     *string      `json:"name_en" `                     // 名称[英语]
+	Sname      *string      `json:"sname"`                        // 短名称[英语]
+	SnameEn    *string      `json:"sname_en"`                     // 短名称
 	Abbr       *string      `json:"abbr"`                         // 简称
 	Suffix     *string      `json:"suffix"`                       // 区域后缀,省/市/区/旗/盟/自治区/
 	StCode     *string      `json:"st_code"`                      // 统计局区域编码
@@ -51,6 +53,7 @@ type SysDistrictQueryParam struct {
 	ParentID   *string `form:"pid"`        // pid
 	QueryValue string  `form:"queryValue"` // 模糊查询
 	Name       string  `form:"name"`       // 名称
+	NameEN     string  `form:"name_en"`    // 名称
 	Initials   string  `form:"initials"`   // 简拼
 	Suffix     string  `form:"suffix"`     // 区域后缀,省/市/区/旗/盟/自治区/
 	IsMain     *bool   `form:"is_main"`    // 主要城市
