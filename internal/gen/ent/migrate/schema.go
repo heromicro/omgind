@@ -195,7 +195,9 @@ var (
 		{Name: "is_leaf", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "t_path", Type: field.TypeString, Nullable: true, Size: 2147483647},
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 128},
+		{Name: "name_en", Type: field.TypeString, Nullable: true, Size: 128},
 		{Name: "sname", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "sname_en", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "abbr", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "stcode", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "initials", Type: field.TypeString, Nullable: true, Size: 32},
@@ -223,7 +225,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_districts_sys_districts_children",
-				Columns:    []*schema.Column{SysDistrictsColumns[32]},
+				Columns:    []*schema.Column{SysDistrictsColumns[34]},
 				RefColumns: []*schema.Column{SysDistrictsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -282,22 +284,22 @@ var (
 			{
 				Name:    "sysdistrict_is_hot",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[27]},
+				Columns: []*schema.Column{SysDistrictsColumns[29]},
 			},
 			{
 				Name:    "sysdistrict_is_r",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[28]},
+				Columns: []*schema.Column{SysDistrictsColumns[30]},
 			},
 			{
 				Name:    "sysdistrict_is_m",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[29]},
+				Columns: []*schema.Column{SysDistrictsColumns[31]},
 			},
 			{
 				Name:    "sysdistrict_is_d",
 				Unique:  false,
-				Columns: []*schema.Column{SysDistrictsColumns[30]},
+				Columns: []*schema.Column{SysDistrictsColumns[32]},
 			},
 		},
 	}

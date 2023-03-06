@@ -121,9 +121,19 @@ func Name(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldEQ(FieldName, v))
 }
 
+// NameEn applies equality check predicate on the "name_en" field. It's identical to NameEnEQ.
+func NameEn(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEQ(FieldNameEn, v))
+}
+
 // Sname applies equality check predicate on the "sname" field. It's identical to SnameEQ.
 func Sname(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldEQ(FieldSname, v))
+}
+
+// SnameEn applies equality check predicate on the "sname_en" field. It's identical to SnameEnEQ.
+func SnameEn(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEQ(FieldSnameEn, v))
 }
 
 // Abbr applies equality check predicate on the "abbr" field. It's identical to AbbrEQ.
@@ -776,6 +786,81 @@ func NameContainsFold(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldContainsFold(FieldName, v))
 }
 
+// NameEnEQ applies the EQ predicate on the "name_en" field.
+func NameEnEQ(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEQ(FieldNameEn, v))
+}
+
+// NameEnNEQ applies the NEQ predicate on the "name_en" field.
+func NameEnNEQ(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldNEQ(FieldNameEn, v))
+}
+
+// NameEnIn applies the In predicate on the "name_en" field.
+func NameEnIn(vs ...string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldIn(FieldNameEn, vs...))
+}
+
+// NameEnNotIn applies the NotIn predicate on the "name_en" field.
+func NameEnNotIn(vs ...string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldNotIn(FieldNameEn, vs...))
+}
+
+// NameEnGT applies the GT predicate on the "name_en" field.
+func NameEnGT(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldGT(FieldNameEn, v))
+}
+
+// NameEnGTE applies the GTE predicate on the "name_en" field.
+func NameEnGTE(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldGTE(FieldNameEn, v))
+}
+
+// NameEnLT applies the LT predicate on the "name_en" field.
+func NameEnLT(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldLT(FieldNameEn, v))
+}
+
+// NameEnLTE applies the LTE predicate on the "name_en" field.
+func NameEnLTE(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldLTE(FieldNameEn, v))
+}
+
+// NameEnContains applies the Contains predicate on the "name_en" field.
+func NameEnContains(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldContains(FieldNameEn, v))
+}
+
+// NameEnHasPrefix applies the HasPrefix predicate on the "name_en" field.
+func NameEnHasPrefix(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldHasPrefix(FieldNameEn, v))
+}
+
+// NameEnHasSuffix applies the HasSuffix predicate on the "name_en" field.
+func NameEnHasSuffix(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldHasSuffix(FieldNameEn, v))
+}
+
+// NameEnIsNil applies the IsNil predicate on the "name_en" field.
+func NameEnIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldIsNull(FieldNameEn))
+}
+
+// NameEnNotNil applies the NotNil predicate on the "name_en" field.
+func NameEnNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldNotNull(FieldNameEn))
+}
+
+// NameEnEqualFold applies the EqualFold predicate on the "name_en" field.
+func NameEnEqualFold(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEqualFold(FieldNameEn, v))
+}
+
+// NameEnContainsFold applies the ContainsFold predicate on the "name_en" field.
+func NameEnContainsFold(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldContainsFold(FieldNameEn, v))
+}
+
 // SnameEQ applies the EQ predicate on the "sname" field.
 func SnameEQ(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldEQ(FieldSname, v))
@@ -849,6 +934,81 @@ func SnameEqualFold(v string) predicate.SysDistrict {
 // SnameContainsFold applies the ContainsFold predicate on the "sname" field.
 func SnameContainsFold(v string) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldContainsFold(FieldSname, v))
+}
+
+// SnameEnEQ applies the EQ predicate on the "sname_en" field.
+func SnameEnEQ(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEQ(FieldSnameEn, v))
+}
+
+// SnameEnNEQ applies the NEQ predicate on the "sname_en" field.
+func SnameEnNEQ(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldNEQ(FieldSnameEn, v))
+}
+
+// SnameEnIn applies the In predicate on the "sname_en" field.
+func SnameEnIn(vs ...string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldIn(FieldSnameEn, vs...))
+}
+
+// SnameEnNotIn applies the NotIn predicate on the "sname_en" field.
+func SnameEnNotIn(vs ...string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldNotIn(FieldSnameEn, vs...))
+}
+
+// SnameEnGT applies the GT predicate on the "sname_en" field.
+func SnameEnGT(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldGT(FieldSnameEn, v))
+}
+
+// SnameEnGTE applies the GTE predicate on the "sname_en" field.
+func SnameEnGTE(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldGTE(FieldSnameEn, v))
+}
+
+// SnameEnLT applies the LT predicate on the "sname_en" field.
+func SnameEnLT(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldLT(FieldSnameEn, v))
+}
+
+// SnameEnLTE applies the LTE predicate on the "sname_en" field.
+func SnameEnLTE(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldLTE(FieldSnameEn, v))
+}
+
+// SnameEnContains applies the Contains predicate on the "sname_en" field.
+func SnameEnContains(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldContains(FieldSnameEn, v))
+}
+
+// SnameEnHasPrefix applies the HasPrefix predicate on the "sname_en" field.
+func SnameEnHasPrefix(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldHasPrefix(FieldSnameEn, v))
+}
+
+// SnameEnHasSuffix applies the HasSuffix predicate on the "sname_en" field.
+func SnameEnHasSuffix(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldHasSuffix(FieldSnameEn, v))
+}
+
+// SnameEnIsNil applies the IsNil predicate on the "sname_en" field.
+func SnameEnIsNil() predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldIsNull(FieldSnameEn))
+}
+
+// SnameEnNotNil applies the NotNil predicate on the "sname_en" field.
+func SnameEnNotNil() predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldNotNull(FieldSnameEn))
+}
+
+// SnameEnEqualFold applies the EqualFold predicate on the "sname_en" field.
+func SnameEnEqualFold(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEqualFold(FieldSnameEn, v))
+}
+
+// SnameEnContainsFold applies the ContainsFold predicate on the "sname_en" field.
+func SnameEnContainsFold(v string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldContainsFold(FieldSnameEn, v))
 }
 
 // AbbrEQ applies the EQ predicate on the "abbr" field.

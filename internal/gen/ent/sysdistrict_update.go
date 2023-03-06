@@ -273,6 +273,26 @@ func (sdu *SysDistrictUpdate) ClearName() *SysDistrictUpdate {
 	return sdu
 }
 
+// SetNameEn sets the "name_en" field.
+func (sdu *SysDistrictUpdate) SetNameEn(s string) *SysDistrictUpdate {
+	sdu.mutation.SetNameEn(s)
+	return sdu
+}
+
+// SetNillableNameEn sets the "name_en" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableNameEn(s *string) *SysDistrictUpdate {
+	if s != nil {
+		sdu.SetNameEn(*s)
+	}
+	return sdu
+}
+
+// ClearNameEn clears the value of the "name_en" field.
+func (sdu *SysDistrictUpdate) ClearNameEn() *SysDistrictUpdate {
+	sdu.mutation.ClearNameEn()
+	return sdu
+}
+
 // SetSname sets the "sname" field.
 func (sdu *SysDistrictUpdate) SetSname(s string) *SysDistrictUpdate {
 	sdu.mutation.SetSname(s)
@@ -290,6 +310,26 @@ func (sdu *SysDistrictUpdate) SetNillableSname(s *string) *SysDistrictUpdate {
 // ClearSname clears the value of the "sname" field.
 func (sdu *SysDistrictUpdate) ClearSname() *SysDistrictUpdate {
 	sdu.mutation.ClearSname()
+	return sdu
+}
+
+// SetSnameEn sets the "sname_en" field.
+func (sdu *SysDistrictUpdate) SetSnameEn(s string) *SysDistrictUpdate {
+	sdu.mutation.SetSnameEn(s)
+	return sdu
+}
+
+// SetNillableSnameEn sets the "sname_en" field if the given value is not nil.
+func (sdu *SysDistrictUpdate) SetNillableSnameEn(s *string) *SysDistrictUpdate {
+	if s != nil {
+		sdu.SetSnameEn(*s)
+	}
+	return sdu
+}
+
+// ClearSnameEn clears the value of the "sname_en" field.
+func (sdu *SysDistrictUpdate) ClearSnameEn() *SysDistrictUpdate {
+	sdu.mutation.ClearSnameEn()
 	return sdu
 }
 
@@ -754,9 +794,19 @@ func (sdu *SysDistrictUpdate) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name": %w`, err)}
 		}
 	}
+	if v, ok := sdu.mutation.NameEn(); ok {
+		if err := sysdistrict.NameEnValidator(v); err != nil {
+			return &ValidationError{Name: "name_en", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name_en": %w`, err)}
+		}
+	}
 	if v, ok := sdu.mutation.Sname(); ok {
 		if err := sysdistrict.SnameValidator(v); err != nil {
 			return &ValidationError{Name: "sname", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname": %w`, err)}
+		}
+	}
+	if v, ok := sdu.mutation.SnameEn(); ok {
+		if err := sysdistrict.SnameEnValidator(v); err != nil {
+			return &ValidationError{Name: "sname_en", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname_en": %w`, err)}
 		}
 	}
 	if v, ok := sdu.mutation.Abbr(); ok {
@@ -915,11 +965,23 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if sdu.mutation.NameCleared() {
 		_spec.ClearField(sysdistrict.FieldName, field.TypeString)
 	}
+	if value, ok := sdu.mutation.NameEn(); ok {
+		_spec.SetField(sysdistrict.FieldNameEn, field.TypeString, value)
+	}
+	if sdu.mutation.NameEnCleared() {
+		_spec.ClearField(sysdistrict.FieldNameEn, field.TypeString)
+	}
 	if value, ok := sdu.mutation.Sname(); ok {
 		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 	}
 	if sdu.mutation.SnameCleared() {
 		_spec.ClearField(sysdistrict.FieldSname, field.TypeString)
+	}
+	if value, ok := sdu.mutation.SnameEn(); ok {
+		_spec.SetField(sysdistrict.FieldSnameEn, field.TypeString, value)
+	}
+	if sdu.mutation.SnameEnCleared() {
+		_spec.ClearField(sysdistrict.FieldSnameEn, field.TypeString)
 	}
 	if value, ok := sdu.mutation.Abbr(); ok {
 		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)
@@ -1387,6 +1449,26 @@ func (sduo *SysDistrictUpdateOne) ClearName() *SysDistrictUpdateOne {
 	return sduo
 }
 
+// SetNameEn sets the "name_en" field.
+func (sduo *SysDistrictUpdateOne) SetNameEn(s string) *SysDistrictUpdateOne {
+	sduo.mutation.SetNameEn(s)
+	return sduo
+}
+
+// SetNillableNameEn sets the "name_en" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableNameEn(s *string) *SysDistrictUpdateOne {
+	if s != nil {
+		sduo.SetNameEn(*s)
+	}
+	return sduo
+}
+
+// ClearNameEn clears the value of the "name_en" field.
+func (sduo *SysDistrictUpdateOne) ClearNameEn() *SysDistrictUpdateOne {
+	sduo.mutation.ClearNameEn()
+	return sduo
+}
+
 // SetSname sets the "sname" field.
 func (sduo *SysDistrictUpdateOne) SetSname(s string) *SysDistrictUpdateOne {
 	sduo.mutation.SetSname(s)
@@ -1404,6 +1486,26 @@ func (sduo *SysDistrictUpdateOne) SetNillableSname(s *string) *SysDistrictUpdate
 // ClearSname clears the value of the "sname" field.
 func (sduo *SysDistrictUpdateOne) ClearSname() *SysDistrictUpdateOne {
 	sduo.mutation.ClearSname()
+	return sduo
+}
+
+// SetSnameEn sets the "sname_en" field.
+func (sduo *SysDistrictUpdateOne) SetSnameEn(s string) *SysDistrictUpdateOne {
+	sduo.mutation.SetSnameEn(s)
+	return sduo
+}
+
+// SetNillableSnameEn sets the "sname_en" field if the given value is not nil.
+func (sduo *SysDistrictUpdateOne) SetNillableSnameEn(s *string) *SysDistrictUpdateOne {
+	if s != nil {
+		sduo.SetSnameEn(*s)
+	}
+	return sduo
+}
+
+// ClearSnameEn clears the value of the "sname_en" field.
+func (sduo *SysDistrictUpdateOne) ClearSnameEn() *SysDistrictUpdateOne {
+	sduo.mutation.ClearSnameEn()
 	return sduo
 }
 
@@ -1881,9 +1983,19 @@ func (sduo *SysDistrictUpdateOne) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name": %w`, err)}
 		}
 	}
+	if v, ok := sduo.mutation.NameEn(); ok {
+		if err := sysdistrict.NameEnValidator(v); err != nil {
+			return &ValidationError{Name: "name_en", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name_en": %w`, err)}
+		}
+	}
 	if v, ok := sduo.mutation.Sname(); ok {
 		if err := sysdistrict.SnameValidator(v); err != nil {
 			return &ValidationError{Name: "sname", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname": %w`, err)}
+		}
+	}
+	if v, ok := sduo.mutation.SnameEn(); ok {
+		if err := sysdistrict.SnameEnValidator(v); err != nil {
+			return &ValidationError{Name: "sname_en", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname_en": %w`, err)}
 		}
 	}
 	if v, ok := sduo.mutation.Abbr(); ok {
@@ -2059,11 +2171,23 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 	if sduo.mutation.NameCleared() {
 		_spec.ClearField(sysdistrict.FieldName, field.TypeString)
 	}
+	if value, ok := sduo.mutation.NameEn(); ok {
+		_spec.SetField(sysdistrict.FieldNameEn, field.TypeString, value)
+	}
+	if sduo.mutation.NameEnCleared() {
+		_spec.ClearField(sysdistrict.FieldNameEn, field.TypeString)
+	}
 	if value, ok := sduo.mutation.Sname(); ok {
 		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 	}
 	if sduo.mutation.SnameCleared() {
 		_spec.ClearField(sysdistrict.FieldSname, field.TypeString)
+	}
+	if value, ok := sduo.mutation.SnameEn(); ok {
+		_spec.SetField(sysdistrict.FieldSnameEn, field.TypeString, value)
+	}
+	if sduo.mutation.SnameEnCleared() {
+		_spec.ClearField(sysdistrict.FieldSnameEn, field.TypeString)
 	}
 	if value, ok := sduo.mutation.Abbr(); ok {
 		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)

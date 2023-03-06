@@ -501,7 +501,9 @@ type CreateSysDistrictInput struct {
 	IsLeaf     *bool
 	TreePath   *string
 	Name       *string
+	NameEn     *string
 	Sname      *string
+	SnameEn    *string
 	Abbr       *string
 	StCode     *string
 	Initials   *string
@@ -565,8 +567,14 @@ func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
 	if v := i.Name; v != nil {
 		m.SetName(*v)
 	}
+	if v := i.NameEn; v != nil {
+		m.SetNameEn(*v)
+	}
 	if v := i.Sname; v != nil {
 		m.SetSname(*v)
+	}
+	if v := i.SnameEn; v != nil {
+		m.SetSnameEn(*v)
 	}
 	if v := i.Abbr; v != nil {
 		m.SetAbbr(*v)
@@ -656,8 +664,12 @@ type UpdateSysDistrictInput struct {
 	ClearTreePath   bool
 	Name            *string
 	ClearName       bool
+	NameEn          *string
+	ClearNameEn     bool
 	Sname           *string
 	ClearSname      bool
+	SnameEn         *string
+	ClearSnameEn    bool
 	Abbr            *string
 	ClearAbbr       bool
 	StCode          *string
@@ -761,11 +773,23 @@ func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
 	if v := i.Name; v != nil {
 		m.SetName(*v)
 	}
+	if i.ClearNameEn {
+		m.ClearNameEn()
+	}
+	if v := i.NameEn; v != nil {
+		m.SetNameEn(*v)
+	}
 	if i.ClearSname {
 		m.ClearSname()
 	}
 	if v := i.Sname; v != nil {
 		m.SetSname(*v)
+	}
+	if i.ClearSnameEn {
+		m.ClearSnameEn()
+	}
+	if v := i.SnameEn; v != nil {
+		m.SetSnameEn(*v)
 	}
 	if i.ClearAbbr {
 		m.ClearAbbr()

@@ -205,6 +205,20 @@ func (sdc *SysDistrictCreate) SetNillableName(s *string) *SysDistrictCreate {
 	return sdc
 }
 
+// SetNameEn sets the "name_en" field.
+func (sdc *SysDistrictCreate) SetNameEn(s string) *SysDistrictCreate {
+	sdc.mutation.SetNameEn(s)
+	return sdc
+}
+
+// SetNillableNameEn sets the "name_en" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableNameEn(s *string) *SysDistrictCreate {
+	if s != nil {
+		sdc.SetNameEn(*s)
+	}
+	return sdc
+}
+
 // SetSname sets the "sname" field.
 func (sdc *SysDistrictCreate) SetSname(s string) *SysDistrictCreate {
 	sdc.mutation.SetSname(s)
@@ -215,6 +229,20 @@ func (sdc *SysDistrictCreate) SetSname(s string) *SysDistrictCreate {
 func (sdc *SysDistrictCreate) SetNillableSname(s *string) *SysDistrictCreate {
 	if s != nil {
 		sdc.SetSname(*s)
+	}
+	return sdc
+}
+
+// SetSnameEn sets the "sname_en" field.
+func (sdc *SysDistrictCreate) SetSnameEn(s string) *SysDistrictCreate {
+	sdc.mutation.SetSnameEn(s)
+	return sdc
+}
+
+// SetNillableSnameEn sets the "sname_en" field if the given value is not nil.
+func (sdc *SysDistrictCreate) SetNillableSnameEn(s *string) *SysDistrictCreate {
+	if s != nil {
+		sdc.SetSnameEn(*s)
 	}
 	return sdc
 }
@@ -612,9 +640,19 @@ func (sdc *SysDistrictCreate) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name": %w`, err)}
 		}
 	}
+	if v, ok := sdc.mutation.NameEn(); ok {
+		if err := sysdistrict.NameEnValidator(v); err != nil {
+			return &ValidationError{Name: "name_en", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.name_en": %w`, err)}
+		}
+	}
 	if v, ok := sdc.mutation.Sname(); ok {
 		if err := sysdistrict.SnameValidator(v); err != nil {
 			return &ValidationError{Name: "sname", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname": %w`, err)}
+		}
+	}
+	if v, ok := sdc.mutation.SnameEn(); ok {
+		if err := sysdistrict.SnameEnValidator(v); err != nil {
+			return &ValidationError{Name: "sname_en", err: fmt.Errorf(`ent: validator failed for field "SysDistrict.sname_en": %w`, err)}
 		}
 	}
 	if v, ok := sdc.mutation.Abbr(); ok {
@@ -774,9 +812,17 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 		_spec.SetField(sysdistrict.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
+	if value, ok := sdc.mutation.NameEn(); ok {
+		_spec.SetField(sysdistrict.FieldNameEn, field.TypeString, value)
+		_node.NameEn = &value
+	}
 	if value, ok := sdc.mutation.Sname(); ok {
 		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 		_node.Sname = &value
+	}
+	if value, ok := sdc.mutation.SnameEn(); ok {
+		_spec.SetField(sysdistrict.FieldSnameEn, field.TypeString, value)
+		_node.SnameEn = &value
 	}
 	if value, ok := sdc.mutation.Abbr(); ok {
 		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)
@@ -1161,6 +1207,24 @@ func (u *SysDistrictUpsert) ClearName() *SysDistrictUpsert {
 	return u
 }
 
+// SetNameEn sets the "name_en" field.
+func (u *SysDistrictUpsert) SetNameEn(v string) *SysDistrictUpsert {
+	u.Set(sysdistrict.FieldNameEn, v)
+	return u
+}
+
+// UpdateNameEn sets the "name_en" field to the value that was provided on create.
+func (u *SysDistrictUpsert) UpdateNameEn() *SysDistrictUpsert {
+	u.SetExcluded(sysdistrict.FieldNameEn)
+	return u
+}
+
+// ClearNameEn clears the value of the "name_en" field.
+func (u *SysDistrictUpsert) ClearNameEn() *SysDistrictUpsert {
+	u.SetNull(sysdistrict.FieldNameEn)
+	return u
+}
+
 // SetSname sets the "sname" field.
 func (u *SysDistrictUpsert) SetSname(v string) *SysDistrictUpsert {
 	u.Set(sysdistrict.FieldSname, v)
@@ -1176,6 +1240,24 @@ func (u *SysDistrictUpsert) UpdateSname() *SysDistrictUpsert {
 // ClearSname clears the value of the "sname" field.
 func (u *SysDistrictUpsert) ClearSname() *SysDistrictUpsert {
 	u.SetNull(sysdistrict.FieldSname)
+	return u
+}
+
+// SetSnameEn sets the "sname_en" field.
+func (u *SysDistrictUpsert) SetSnameEn(v string) *SysDistrictUpsert {
+	u.Set(sysdistrict.FieldSnameEn, v)
+	return u
+}
+
+// UpdateSnameEn sets the "sname_en" field to the value that was provided on create.
+func (u *SysDistrictUpsert) UpdateSnameEn() *SysDistrictUpsert {
+	u.SetExcluded(sysdistrict.FieldSnameEn)
+	return u
+}
+
+// ClearSnameEn clears the value of the "sname_en" field.
+func (u *SysDistrictUpsert) ClearSnameEn() *SysDistrictUpsert {
+	u.SetNull(sysdistrict.FieldSnameEn)
 	return u
 }
 
@@ -1819,6 +1901,27 @@ func (u *SysDistrictUpsertOne) ClearName() *SysDistrictUpsertOne {
 	})
 }
 
+// SetNameEn sets the "name_en" field.
+func (u *SysDistrictUpsertOne) SetNameEn(v string) *SysDistrictUpsertOne {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.SetNameEn(v)
+	})
+}
+
+// UpdateNameEn sets the "name_en" field to the value that was provided on create.
+func (u *SysDistrictUpsertOne) UpdateNameEn() *SysDistrictUpsertOne {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.UpdateNameEn()
+	})
+}
+
+// ClearNameEn clears the value of the "name_en" field.
+func (u *SysDistrictUpsertOne) ClearNameEn() *SysDistrictUpsertOne {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.ClearNameEn()
+	})
+}
+
 // SetSname sets the "sname" field.
 func (u *SysDistrictUpsertOne) SetSname(v string) *SysDistrictUpsertOne {
 	return u.Update(func(s *SysDistrictUpsert) {
@@ -1837,6 +1940,27 @@ func (u *SysDistrictUpsertOne) UpdateSname() *SysDistrictUpsertOne {
 func (u *SysDistrictUpsertOne) ClearSname() *SysDistrictUpsertOne {
 	return u.Update(func(s *SysDistrictUpsert) {
 		s.ClearSname()
+	})
+}
+
+// SetSnameEn sets the "sname_en" field.
+func (u *SysDistrictUpsertOne) SetSnameEn(v string) *SysDistrictUpsertOne {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.SetSnameEn(v)
+	})
+}
+
+// UpdateSnameEn sets the "sname_en" field to the value that was provided on create.
+func (u *SysDistrictUpsertOne) UpdateSnameEn() *SysDistrictUpsertOne {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.UpdateSnameEn()
+	})
+}
+
+// ClearSnameEn clears the value of the "sname_en" field.
+func (u *SysDistrictUpsertOne) ClearSnameEn() *SysDistrictUpsertOne {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.ClearSnameEn()
 	})
 }
 
@@ -2698,6 +2822,27 @@ func (u *SysDistrictUpsertBulk) ClearName() *SysDistrictUpsertBulk {
 	})
 }
 
+// SetNameEn sets the "name_en" field.
+func (u *SysDistrictUpsertBulk) SetNameEn(v string) *SysDistrictUpsertBulk {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.SetNameEn(v)
+	})
+}
+
+// UpdateNameEn sets the "name_en" field to the value that was provided on create.
+func (u *SysDistrictUpsertBulk) UpdateNameEn() *SysDistrictUpsertBulk {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.UpdateNameEn()
+	})
+}
+
+// ClearNameEn clears the value of the "name_en" field.
+func (u *SysDistrictUpsertBulk) ClearNameEn() *SysDistrictUpsertBulk {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.ClearNameEn()
+	})
+}
+
 // SetSname sets the "sname" field.
 func (u *SysDistrictUpsertBulk) SetSname(v string) *SysDistrictUpsertBulk {
 	return u.Update(func(s *SysDistrictUpsert) {
@@ -2716,6 +2861,27 @@ func (u *SysDistrictUpsertBulk) UpdateSname() *SysDistrictUpsertBulk {
 func (u *SysDistrictUpsertBulk) ClearSname() *SysDistrictUpsertBulk {
 	return u.Update(func(s *SysDistrictUpsert) {
 		s.ClearSname()
+	})
+}
+
+// SetSnameEn sets the "sname_en" field.
+func (u *SysDistrictUpsertBulk) SetSnameEn(v string) *SysDistrictUpsertBulk {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.SetSnameEn(v)
+	})
+}
+
+// UpdateSnameEn sets the "sname_en" field to the value that was provided on create.
+func (u *SysDistrictUpsertBulk) UpdateSnameEn() *SysDistrictUpsertBulk {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.UpdateSnameEn()
+	})
+}
+
+// ClearSnameEn clears the value of the "sname_en" field.
+func (u *SysDistrictUpsertBulk) ClearSnameEn() *SysDistrictUpsertBulk {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.ClearSnameEn()
 	})
 }
 

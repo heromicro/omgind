@@ -39,8 +39,12 @@ const (
 	FieldTreePath = "t_path"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
+	// FieldNameEn holds the string denoting the name_en field in the database.
+	FieldNameEn = "name_en"
 	// FieldSname holds the string denoting the sname field in the database.
 	FieldSname = "sname"
+	// FieldSnameEn holds the string denoting the sname_en field in the database.
+	FieldSnameEn = "sname_en"
 	// FieldAbbr holds the string denoting the abbr field in the database.
 	FieldAbbr = "abbr"
 	// FieldStCode holds the string denoting the st_code field in the database.
@@ -109,7 +113,9 @@ var Columns = []string{
 	FieldIsLeaf,
 	FieldTreePath,
 	FieldName,
+	FieldNameEn,
 	FieldSname,
+	FieldSnameEn,
 	FieldAbbr,
 	FieldStCode,
 	FieldInitials,
@@ -163,8 +169,12 @@ var (
 	DefaultIsLeaf bool
 	// NameValidator is a validator for the "name" field. It is called by the builders before save.
 	NameValidator func(string) error
+	// NameEnValidator is a validator for the "name_en" field. It is called by the builders before save.
+	NameEnValidator func(string) error
 	// SnameValidator is a validator for the "sname" field. It is called by the builders before save.
 	SnameValidator func(string) error
+	// SnameEnValidator is a validator for the "sname_en" field. It is called by the builders before save.
+	SnameEnValidator func(string) error
 	// AbbrValidator is a validator for the "abbr" field. It is called by the builders before save.
 	AbbrValidator func(string) error
 	// StCodeValidator is a validator for the "st_code" field. It is called by the builders before save.

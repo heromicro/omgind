@@ -42,8 +42,12 @@ type SysDistrict struct {
 	TreePath *string `json:"tree_path"`
 	// 名称
 	Name *string `json:"name,omitempty"`
+	// English名称
+	NameEn *string `json:"name_en,omitempty"`
 	// 短名称
 	Sname *string `json:"sname,omitempty"`
+	// English短名称
+	SnameEn *string `json:"sname_en,omitempty"`
 	// 简称Abbreviation
 	Abbr *string `json:"abbr,omitempty"`
 	// 统计局区域编码
@@ -129,7 +133,7 @@ func (*SysDistrict) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullFloat64)
 		case sysdistrict.FieldSort, sysdistrict.FieldTreeID, sysdistrict.FieldTreeLevel, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
-		case sysdistrict.FieldID, sysdistrict.FieldTreePath, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldAbbr, sysdistrict.FieldStCode, sysdistrict.FieldInitials, sysdistrict.FieldPinyin, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldZipCode, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldExtra, sysdistrict.FieldSuffix, sysdistrict.FieldCreator:
+		case sysdistrict.FieldID, sysdistrict.FieldTreePath, sysdistrict.FieldName, sysdistrict.FieldNameEn, sysdistrict.FieldSname, sysdistrict.FieldSnameEn, sysdistrict.FieldAbbr, sysdistrict.FieldStCode, sysdistrict.FieldInitials, sysdistrict.FieldPinyin, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldZipCode, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldExtra, sysdistrict.FieldSuffix, sysdistrict.FieldCreator:
 			values[i] = new(sql.NullString)
 		case sysdistrict.FieldCreatedAt, sysdistrict.FieldUpdatedAt, sysdistrict.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -240,12 +244,26 @@ func (sd *SysDistrict) assignValues(columns []string, values []any) error {
 				sd.Name = new(string)
 				*sd.Name = value.String
 			}
+		case sysdistrict.FieldNameEn:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field name_en", values[i])
+			} else if value.Valid {
+				sd.NameEn = new(string)
+				*sd.NameEn = value.String
+			}
 		case sysdistrict.FieldSname:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field sname", values[i])
 			} else if value.Valid {
 				sd.Sname = new(string)
 				*sd.Sname = value.String
+			}
+		case sysdistrict.FieldSnameEn:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field sname_en", values[i])
+			} else if value.Valid {
+				sd.SnameEn = new(string)
+				*sd.SnameEn = value.String
 			}
 		case sysdistrict.FieldAbbr:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -465,8 +483,18 @@ func (sd *SysDistrict) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
+	if v := sd.NameEn; v != nil {
+		builder.WriteString("name_en=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
 	if v := sd.Sname; v != nil {
 		builder.WriteString("sname=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := sd.SnameEn; v != nil {
+		builder.WriteString("sname_en=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

@@ -3601,7 +3601,9 @@ type SysDistrictMutation struct {
 	is_leaf         *bool
 	tree_path       *string
 	name            *string
+	name_en         *string
 	sname           *string
+	sname_en        *string
 	abbr            *string
 	st_code         *string
 	initials        *string
@@ -4412,6 +4414,55 @@ func (m *SysDistrictMutation) ResetName() {
 	delete(m.clearedFields, sysdistrict.FieldName)
 }
 
+// SetNameEn sets the "name_en" field.
+func (m *SysDistrictMutation) SetNameEn(s string) {
+	m.name_en = &s
+}
+
+// NameEn returns the value of the "name_en" field in the mutation.
+func (m *SysDistrictMutation) NameEn() (r string, exists bool) {
+	v := m.name_en
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldNameEn returns the old "name_en" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldNameEn(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldNameEn is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldNameEn requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldNameEn: %w", err)
+	}
+	return oldValue.NameEn, nil
+}
+
+// ClearNameEn clears the value of the "name_en" field.
+func (m *SysDistrictMutation) ClearNameEn() {
+	m.name_en = nil
+	m.clearedFields[sysdistrict.FieldNameEn] = struct{}{}
+}
+
+// NameEnCleared returns if the "name_en" field was cleared in this mutation.
+func (m *SysDistrictMutation) NameEnCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldNameEn]
+	return ok
+}
+
+// ResetNameEn resets all changes to the "name_en" field.
+func (m *SysDistrictMutation) ResetNameEn() {
+	m.name_en = nil
+	delete(m.clearedFields, sysdistrict.FieldNameEn)
+}
+
 // SetSname sets the "sname" field.
 func (m *SysDistrictMutation) SetSname(s string) {
 	m.sname = &s
@@ -4459,6 +4510,55 @@ func (m *SysDistrictMutation) SnameCleared() bool {
 func (m *SysDistrictMutation) ResetSname() {
 	m.sname = nil
 	delete(m.clearedFields, sysdistrict.FieldSname)
+}
+
+// SetSnameEn sets the "sname_en" field.
+func (m *SysDistrictMutation) SetSnameEn(s string) {
+	m.sname_en = &s
+}
+
+// SnameEn returns the value of the "sname_en" field in the mutation.
+func (m *SysDistrictMutation) SnameEn() (r string, exists bool) {
+	v := m.sname_en
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSnameEn returns the old "sname_en" field's value of the SysDistrict entity.
+// If the SysDistrict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDistrictMutation) OldSnameEn(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSnameEn is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSnameEn requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSnameEn: %w", err)
+	}
+	return oldValue.SnameEn, nil
+}
+
+// ClearSnameEn clears the value of the "sname_en" field.
+func (m *SysDistrictMutation) ClearSnameEn() {
+	m.sname_en = nil
+	m.clearedFields[sysdistrict.FieldSnameEn] = struct{}{}
+}
+
+// SnameEnCleared returns if the "sname_en" field was cleared in this mutation.
+func (m *SysDistrictMutation) SnameEnCleared() bool {
+	_, ok := m.clearedFields[sysdistrict.FieldSnameEn]
+	return ok
+}
+
+// ResetSnameEn resets all changes to the "sname_en" field.
+func (m *SysDistrictMutation) ResetSnameEn() {
+	m.sname_en = nil
+	delete(m.clearedFields, sysdistrict.FieldSnameEn)
 }
 
 // SetAbbr sets the "abbr" field.
@@ -5486,7 +5586,7 @@ func (m *SysDistrictMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysDistrictMutation) Fields() []string {
-	fields := make([]string, 0, 32)
+	fields := make([]string, 0, 34)
 	if m.is_del != nil {
 		fields = append(fields, sysdistrict.FieldIsDel)
 	}
@@ -5526,8 +5626,14 @@ func (m *SysDistrictMutation) Fields() []string {
 	if m.name != nil {
 		fields = append(fields, sysdistrict.FieldName)
 	}
+	if m.name_en != nil {
+		fields = append(fields, sysdistrict.FieldNameEn)
+	}
 	if m.sname != nil {
 		fields = append(fields, sysdistrict.FieldSname)
+	}
+	if m.sname_en != nil {
+		fields = append(fields, sysdistrict.FieldSnameEn)
 	}
 	if m.abbr != nil {
 		fields = append(fields, sysdistrict.FieldAbbr)
@@ -5617,8 +5723,12 @@ func (m *SysDistrictMutation) Field(name string) (ent.Value, bool) {
 		return m.TreePath()
 	case sysdistrict.FieldName:
 		return m.Name()
+	case sysdistrict.FieldNameEn:
+		return m.NameEn()
 	case sysdistrict.FieldSname:
 		return m.Sname()
+	case sysdistrict.FieldSnameEn:
+		return m.SnameEn()
 	case sysdistrict.FieldAbbr:
 		return m.Abbr()
 	case sysdistrict.FieldStCode:
@@ -5690,8 +5800,12 @@ func (m *SysDistrictMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldTreePath(ctx)
 	case sysdistrict.FieldName:
 		return m.OldName(ctx)
+	case sysdistrict.FieldNameEn:
+		return m.OldNameEn(ctx)
 	case sysdistrict.FieldSname:
 		return m.OldSname(ctx)
+	case sysdistrict.FieldSnameEn:
+		return m.OldSnameEn(ctx)
 	case sysdistrict.FieldAbbr:
 		return m.OldAbbr(ctx)
 	case sysdistrict.FieldStCode:
@@ -5828,12 +5942,26 @@ func (m *SysDistrictMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetName(v)
 		return nil
+	case sysdistrict.FieldNameEn:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetNameEn(v)
+		return nil
 	case sysdistrict.FieldSname:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetSname(v)
+		return nil
+	case sysdistrict.FieldSnameEn:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSnameEn(v)
 		return nil
 	case sysdistrict.FieldAbbr:
 		v, ok := value.(string)
@@ -6102,8 +6230,14 @@ func (m *SysDistrictMutation) ClearedFields() []string {
 	if m.FieldCleared(sysdistrict.FieldName) {
 		fields = append(fields, sysdistrict.FieldName)
 	}
+	if m.FieldCleared(sysdistrict.FieldNameEn) {
+		fields = append(fields, sysdistrict.FieldNameEn)
+	}
 	if m.FieldCleared(sysdistrict.FieldSname) {
 		fields = append(fields, sysdistrict.FieldSname)
+	}
+	if m.FieldCleared(sysdistrict.FieldSnameEn) {
+		fields = append(fields, sysdistrict.FieldSnameEn)
 	}
 	if m.FieldCleared(sysdistrict.FieldAbbr) {
 		fields = append(fields, sysdistrict.FieldAbbr)
@@ -6194,8 +6328,14 @@ func (m *SysDistrictMutation) ClearField(name string) error {
 	case sysdistrict.FieldName:
 		m.ClearName()
 		return nil
+	case sysdistrict.FieldNameEn:
+		m.ClearNameEn()
+		return nil
 	case sysdistrict.FieldSname:
 		m.ClearSname()
+		return nil
+	case sysdistrict.FieldSnameEn:
+		m.ClearSnameEn()
 		return nil
 	case sysdistrict.FieldAbbr:
 		m.ClearAbbr()
@@ -6295,8 +6435,14 @@ func (m *SysDistrictMutation) ResetField(name string) error {
 	case sysdistrict.FieldName:
 		m.ResetName()
 		return nil
+	case sysdistrict.FieldNameEn:
+		m.ResetNameEn()
+		return nil
 	case sysdistrict.FieldSname:
 		m.ResetSname()
+		return nil
+	case sysdistrict.FieldSnameEn:
+		m.ResetSnameEn()
 		return nil
 	case sysdistrict.FieldAbbr:
 		m.ResetAbbr()
