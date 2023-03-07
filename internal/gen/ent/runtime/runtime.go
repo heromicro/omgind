@@ -288,8 +288,6 @@ func init() {
 		}
 	}()
 	sysdistrictMixin := entity.SysDistrict{}.Mixin()
-	sysdistrictMixinHooks5 := sysdistrictMixin[5].Hooks()
-	sysdistrict.Hooks[0] = sysdistrictMixinHooks5[0]
 	sysdistrictMixinFields0 := sysdistrictMixin[0].Fields()
 	_ = sysdistrictMixinFields0
 	sysdistrictMixinFields1 := sysdistrictMixin[1].Fields()

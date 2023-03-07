@@ -43,11 +43,13 @@ var CmdLoad = &cobra.Command{
 
 		datafile, err := cmd.Flags().GetString("datafile")
 		if err != nil {
+			log.Println(redOnWhite, " ----- === === ", err, chalk.Reset)
 			return err
 		}
 
 		format, err := cmd.Flags().GetString("format")
 		if err != nil {
+			log.Println(redOnWhite, " ----- === === ", err, chalk.Reset)
 			return err
 		}
 
@@ -66,7 +68,7 @@ var CmdLoad = &cobra.Command{
 
 			bytes, err := ioutil.ReadFile(datafile)
 			if err != nil {
-
+				log.Println(redOnWhite, " ----- === === ", err)
 				return err
 			}
 
@@ -86,6 +88,9 @@ var CmdLoad = &cobra.Command{
 
 			// total := 0
 
+			// log.Println(" ----------- --- 222222 ")
+			// log.Println(" ----------- --- 222222 districtRaws ", districtRaws)
+
 			for _, item := range districtRaws {
 
 				if item.IsDel {
@@ -93,7 +98,9 @@ var CmdLoad = &cobra.Command{
 					continue
 				}
 
-				log.Println(greenOnWhite, " ==== ==== -------- item ", item, chalk.Reset)
+				log.Println(cyanOnBlue, " ==== ==== ======= =========  ", chalk.Reset)
+				log.Println(cyanOnBlue, " ==== ==== -------- item.name ", item.Name, chalk.Reset)
+				log.Println(cyanOnBlue, " ==== ==== ======= =========  ", chalk.Reset)
 
 				// if total > 2 {
 				// 	break
@@ -101,10 +108,10 @@ var CmdLoad = &cobra.Command{
 				// total += 1
 
 				district := schema.SysDistrict{
-					TreeID:     &item.TreeID,
-					TreeLeft:   &item.TreeLeft,
-					TreeRight:  &item.TreeRight,
-					TreeLevel:  &item.TreeLevel,
+					TreeID: &item.TreeID,
+					// TreeLeft:   &item.TreeLeft,
+					// TreeRight:  &item.TreeRight,
+					// TreeLevel:  &item.TreeLevel,
 					Name:       item.Name,
 					NameEn:     item.NameEn,
 					Initials:   &item.Initials,
@@ -126,6 +133,7 @@ var CmdLoad = &cobra.Command{
 					IsHot:      item.IsHot,
 					IsMain:     &item.Mpoint,
 					IsReal:     item.IsReal,
+					ParentID:   item.ParentID,
 				}
 
 				if item.Status == 1 {
@@ -137,7 +145,10 @@ var CmdLoad = &cobra.Command{
 				var pdistrict *ent.SysDistrict = nil
 
 				if item.TreeLevel > 1 {
+					log.Println(" ---------- ======== ", item.ParentID)
+
 					if item.ParentID != nil && *item.ParentID != "" {
+
 						query_district := serviceSysDistrict.EntCli.SysDistrict.Query()
 						query_district = query_district.Where(sysdistrict.IDEQ(*item.ParentID))
 						pdistrict, _ = query_district.First(ctx)
@@ -154,12 +165,21 @@ var CmdLoad = &cobra.Command{
 				}
 
 				create_district := serviceSysDistrict.EntCli.SysDistrict.Create()
+
 				create_district_input := serviceSysDistrict.ToEntCreateSysDistrictInput(&district)
-				log.Println(" ----- ===== --- create_district_input.ParentID : [", *create_district_input.ParentID, "] ")
+
+				// log.Println(" ----- ===== --- create_district_input : [", create_district_input, "] ")
+				// log.Println(" ----- ===== --- create_district_input.ParentID : [", create_district_input.ParentID, "] ")
+				log.Println(" ----- ===== --- item.ParentID : [", item.ParentID, "] ")
+				log.Println(" ----- ===== --- item.ParentID : [", item.ParentID, "] ")
 
 				if item.ParentID == nil || *item.ParentID == "" {
 					create_district_input.ParentID = nil
+				} else {
+					create_district_input.ParentID = item.ParentID
 				}
+				// log.Println(" ----- ===== --- create_district_input.ParentID : [", create_district_input.ParentID, "] ")
+
 				if item.AreaCode == "" {
 					create_district_input.AreaCode = nil
 				}
@@ -173,6 +193,7 @@ var CmdLoad = &cobra.Command{
 
 				// left value and right value `
 				// https://blog.csdn.net/yilovexing/article/details/107066591`
+
 				if pdistrict == nil {
 					log.Println(" --- ---- ===== create_district ")
 					// 无父级节点, 左值:1, 右值:2
@@ -185,10 +206,12 @@ var CmdLoad = &cobra.Command{
 					log.Println(" --- ---- ===== create_district ", create_district)
 				} else {
 					// 有父级节点, 左值:pid.right, 右值: pid.right + 1
+					log.Println(" ----- ===== --- 1111 pdistrict.ID : [", pdistrict.ID, "] ")
+
 					create_district = create_district.SetTreeLeft(*pdistrict.TreeRight).SetTreeRight(*pdistrict.TreeRight + 1)
 					create_district = create_district.SetTreeLevel(*pdistrict.TreeLevel + 1)
 
-					pdistrict.Update().SetIsLeaf(false).Save(ctx)
+					log.Println(" ----- ===== --- 2222 pdistrict.ID : [", pdistrict.TreeRight, "] ")
 
 				}
 
@@ -201,6 +224,17 @@ var CmdLoad = &cobra.Command{
 					log.Println(redOnWhite, " ====== save failed ====== ", district.ParentID)
 					log.Println(cyanOnBlue, " ====== save failed ====== ", err)
 					break
+				}
+
+				if pdistrict != nil {
+
+					log.Println(greenOnWhite, " ====------ - ---  pdistrict.TreeRight ", pdistrict.TreeRight, chalk.Reset)
+					pdistrict, err = pdistrict.Update().SetIsLeaf(false).Save(ctx)
+					// log.Println(greenOnWhite, " ====------ - --- update pdistrict ", err, chalk.Reset)
+
+					if err != nil {
+						log.Println(redOnWhite, " ====------ - --- ", err, chalk.Reset)
+					}
 				}
 
 				if sch_district != nil && pdistrict != nil {
@@ -258,4 +292,4 @@ func init() {
 
 }
 
-// go run cmd/omgind/main.go migrate load --conf configs/config.toml --format=csv --tablename=districts --datafile=./scripts/sql/district_full.cvs
+// go run cmd/omgind/main.go migrate load --conf configs/config.toml --format=csv --tablename=districts --datafile=./scripts/sql/district_full.csv

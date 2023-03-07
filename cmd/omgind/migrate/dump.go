@@ -10,7 +10,7 @@ import (
 
 // postgres
 //
-// \copy (select * from district_full order by tree_id asc, ids asc) to 'omgind/scripts/sql/district_full.cvs' delimiter ',' CSV HEADER;
+// \copy (select * from district_full order by tree_id asc, ids asc) to 'omgind/scripts/sql/district_full.csv' delimiter ',' CSV HEADER;
 // \copy district_full TO 'Path/file_name.csv' delimiter ',' CSV HEADER;
 
 var CmdDump = &cobra.Command{

@@ -4,35 +4,36 @@ import "time"
 
 // SysDistrict 行政区域对象
 type SysDistrict struct {
-	ID         string       `json:"id"`                           // 唯一标识
-	ParentID   *string      `json:"pid"`                          // pid
-	Parent     *SysDistrict `json:"parent"`                       // parent
-	Name       string       `json:"name" binding:"required"`      // 名称
-	NameEn     *string      `json:"name_en" `                     // 名称[英语]
-	Sname      *string      `json:"sname"`                        // 短名称[英语]
-	SnameEn    *string      `json:"sname_en"`                     // 短名称
-	Abbr       *string      `json:"abbr"`                         // 简称
-	Suffix     *string      `json:"suffix"`                       // 区域后缀,省/市/区/旗/盟/自治区/
-	StCode     *string      `json:"st_code"`                      // 统计局区域编码
-	Initials   *string      `json:"initials"`                     // 简拼
-	Pinyin     *string      `json:"pinyin"`                       // 简拼
-	Longitude  *float64     `json:"longitude"`                    // 经度
-	Latitude   *float64     `json:"latitude"`                     // 经度
-	AreaCode   *string      `json:"area_code"`                    // 电话区号码
-	ZipCode    *string      `json:"zip_code"`                     // 邮政编码
-	MergeName  *string      `json:"merge_name"`                   // 带前缀全名称
-	MergeSname *string      `json:"merge_sname"`                  // 带前缀简名称
-	Extra      *string      `json:"extra"`                        // 带前缀简名称
-	IsActive   *bool        `json:"is_active" binding:"required"` // 状态
-	Sort       int32        `json:"sort"`
-	IsDel      bool         `json:"is_del"`
+	ID         string         `json:"id"`                           // 唯一标识
+	ParentID   *string        `json:"pid"`                          // pid
+	Parent     *SysDistrict   `json:"parent"`                       // parent
+	Children   []*SysDistrict `json:"children"`                     // children
+	Name       string         `json:"name" binding:"required"`      // 名称
+	NameEn     *string        `json:"name_en" `                     // 名称[英语]
+	Sname      *string        `json:"sname"`                        // 短名称[英语]
+	SnameEn    *string        `json:"sname_en"`                     // 短名称
+	Abbr       *string        `json:"abbr"`                         // 简称
+	Suffix     *string        `json:"suffix"`                       // 区域后缀,省/市/区/旗/盟/自治区/
+	StCode     *string        `json:"st_code"`                      // 统计局区域编码
+	Initials   *string        `json:"initials"`                     // 简拼
+	Pinyin     *string        `json:"pinyin"`                       // 简拼
+	Longitude  *float64       `json:"longitude"`                    // 经度
+	Latitude   *float64       `json:"latitude"`                     // 经度
+	AreaCode   *string        `json:"area_code"`                    // 电话区号码
+	ZipCode    *string        `json:"zip_code"`                     // 邮政编码
+	MergeName  *string        `json:"merge_name"`                   // 带前缀全名称
+	MergeSname *string        `json:"merge_sname"`                  // 带前缀简名称
+	Extra      *string        `json:"extra"`                        // 带前缀简名称
+	IsActive   *bool          `json:"is_active" binding:"required"` // 状态
+	Sort       int32          `json:"sort"`
+	IsDel      bool           `json:"is_del"`
 
 	IsMain   *bool `json:"is_main"`   // 主要城市
 	IsHot    bool  `json:"is_hot"`    // 热门城市
 	IsReal   bool  `json:"is_real"`   // 是否虚拟区域
 	IsDirect bool  `json:"is_direct"` // 是否是直辖
 
-	IsLeaf    *bool   `json:"isLeaf"`     // 是否是子叶
+	IsLeaf    *bool   `json:"is_leaf"`    // 是否是子叶
 	TreeID    *int32  `json:"tree_id"`    // 树id
 	TreeLevel *int32  `json:"tree_level"` // 层级
 	TreeLeft  *int64  `json:"tree_left"`  // 层级
@@ -59,7 +60,7 @@ type SysDistrictQueryParam struct {
 	IsMain     *bool   `form:"is_main"`    // 主要城市
 	IsHot      *bool   `form:"is_hot"`     // 热门城市
 	IsDirect   *bool   `form:"is_direct"`  // 是否是直辖
-	IsLeaf     *bool   `form:"isLeaf"`     // 是否是子叶
+	IsLeaf     *bool   `form:"is_leaf"`    // 是否是子叶
 	IsActive   *bool   `form:"is_active"`  // 状态
 	IsReal     *bool   `form:"is_real"`    // 状态
 

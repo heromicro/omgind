@@ -58,7 +58,7 @@ func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
 	}
 	var pid string = c.Param("id")
 	params.Current = 1
-	params.PageSize = 10000
+	params.PageSize = 1000
 
 	log.Println(" ------- === ==== pid ", pid)
 	log.Println(" ------- ==== === URL ", c.Request.URL)

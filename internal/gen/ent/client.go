@@ -795,8 +795,7 @@ func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
 
 // Hooks returns the client hooks.
 func (c *SysDistrictClient) Hooks() []Hook {
-	hooks := c.hooks.SysDistrict
-	return append(hooks[:len(hooks):len(hooks)], sysdistrict.Hooks[:]...)
+	return c.hooks.SysDistrict
 }
 
 // Interceptors returns the client interceptors.
