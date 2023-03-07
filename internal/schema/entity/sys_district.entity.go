@@ -50,7 +50,7 @@ func (SysDistrict) Fields() []ent.Field {
 		field.String("merge_name").MaxLen(256).Nillable().Optional().StorageKey("mname").Comment("带前缀全名称"),
 		field.String("merge_sname").MaxLen(256).Nillable().Optional().StorageKey("msname").Comment("带前缀简名称"),
 		field.String("extra").MaxLen(64).Nillable().Optional().StorageKey("extra").Comment("附加信息"),
-		field.String("suffix").MaxLen(16).Nillable().Optional().StorageKey("suffix").Comment("后缀, 如 省, 自治区, 旗, 盟"),
+		field.String("suffix").MaxLen(32).Nillable().Optional().StorageKey("suffix").Comment("后缀, 如 省, 自治区, 旗, 盟"),
 
 		field.Bool("is_hot").Default(false).Nillable().Optional().Comment("热门城市"),
 		field.Bool("is_real").Default(true).Nillable().Optional().StorageKey("is_r").Comment("是否虚拟区域"),

@@ -37,7 +37,7 @@ type SysDistrict struct {
 	// mptt's right
 	TreeRight *int64 `json:"tree_right"`
 	// is leaf node
-	IsLeaf *bool `json:"isLeaf"`
+	IsLeaf *bool `json:"is_leaf"`
 	// tree path,topest is null or zero length string, subber has fathers ids join by slash(/), eg: pid1/pid2
 	TreePath *string `json:"tree_path"`
 	// 名称

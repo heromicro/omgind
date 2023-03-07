@@ -40,6 +40,22 @@ func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDist
 	return item, nil
 }
 
+// View 查询指定数据
+func (a *SysDistrict) View(ctx context.Context, id string, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrict, error) {
+
+	item, err := a.SysDistrictRepo.Get(ctx, id, opts...)
+	if err != nil {
+		return nil, err
+	} else if item == nil {
+		return nil, errors.ErrNotFound
+	}
+
+	// item.Parent = a.SysDistrictRepo.ToSc
+	// item.Children =
+
+	return item, nil
+}
+
 // Create 创建数据
 func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*schema.SysDistrict, error) {
 	// TODO: check?

@@ -48,6 +48,17 @@ func (a *SysDistrict) Get(c *gin.Context) {
 	ginx.ResSuccess(c, item)
 }
 
+// View 查询指定数据详情
+func (a *SysDistrict) View(c *gin.Context) {
+	ctx := c.Request.Context()
+	item, err := a.SysDistrictSrv.View(ctx, c.Param("id"))
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	ginx.ResSuccess(c, item)
+}
+
 // Get 所有的行政区
 func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
 	ctx := c.Request.Context()

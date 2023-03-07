@@ -209,7 +209,7 @@ var (
 		{Name: "mname", Type: field.TypeString, Nullable: true, Size: 256},
 		{Name: "msname", Type: field.TypeString, Nullable: true, Size: 256},
 		{Name: "extra", Type: field.TypeString, Nullable: true, Size: 64},
-		{Name: "suffix", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "suffix", Type: field.TypeString, Nullable: true, Size: 32},
 		{Name: "is_hot", Type: field.TypeBool, Nullable: true, Default: false},
 		{Name: "is_r", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "is_m", Type: field.TypeBool, Nullable: true, Default: true},

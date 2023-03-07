@@ -16,6 +16,7 @@ func (r *Router) initSysDistrictRouterV2(urg *gin.RouterGroup, api *api_v2.SysDi
 		gSysDistrict.PATCH(":id/enable", api.Enable)
 		gSysDistrict.PATCH(":id/disable", api.Disable)
 		gSysDistrict.GET(":id/substricts", api.GetAllSubDistricts)
+		gSysDistrict.GET(":id/view", api.View)
 
 	}
 }
