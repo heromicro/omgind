@@ -132,16 +132,16 @@ func (a *Dict) Create(ctx context.Context, item schema.Dict) (*schema.IDResult, 
 }
 
 // Update 更新数据
-func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) error {
+func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) (*schema.Dict, error) {
 
 	oldItem, err := a.Get(ctx, id)
 	if err != nil {
-		return err
+		return nil, err
 	} else if oldItem == nil {
-		return errors.ErrNotFound
+		return nil, errors.ErrNotFound
 	} else if oldItem.NameEn != item.NameEn || oldItem.NameCn != item.NameCn {
 		if err := a.checkName(ctx, item); err != nil {
-			return err
+			return nil, err
 		}
 	}
 
@@ -210,7 +210,13 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) error {
 		return nil
 	})
 
-	return err1
+	if err1 != nil {
+		return nil, err1
+	}
+
+	nitem, err := a.Get(ctx, id)
+
+	return nitem, err
 }
 
 func (a *Dict) compareDictItems(ctx context.Context, oldItems, newItems schema.DictItems) (addList, delList, updateList schema.DictItems) {
