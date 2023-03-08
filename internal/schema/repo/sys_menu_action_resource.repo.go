@@ -25,17 +25,17 @@ type MenuActionResource struct {
 	//TxCli *ent.Tx
 }
 
-func (a *MenuActionResource) toSchemaSysMenuActionResource(ma *ent.SysMenuActionResource) *schema.MenuActionResource {
+func (a *MenuActionResource) ToSchemaSysMenuActionResource(ma *ent.SysMenuActionResource) *schema.MenuActionResource {
 	item := new(schema.MenuActionResource)
 	structure.Copy(ma, item)
 	return item
 }
 
-func (a *MenuActionResource) toSchemaSysMenuActionResources(mas ent.SysMenuActionResources) []*schema.
+func (a *MenuActionResource) ToSchemaSysMenuActionResources(mas ent.SysMenuActionResources) []*schema.
 	MenuActionResource {
 	list := make([]*schema.MenuActionResource, len(mas))
 	for i, item := range mas {
-		list[i] = a.toSchemaSysMenuActionResource(item)
+		list[i] = a.ToSchemaSysMenuActionResource(item)
 	}
 	return list
 }
@@ -125,7 +125,7 @@ func (a *MenuActionResource) Query(ctx context.Context, params schema.MenuAction
 
 	qr := &schema.MenuActionResourceQueryResult{
 		PageResult: pr,
-		Data:       a.toSchemaSysMenuActionResources(rlist),
+		Data:       a.ToSchemaSysMenuActionResources(rlist),
 	}
 
 	return qr, nil
@@ -138,7 +138,7 @@ func (a *MenuActionResource) Get(ctx context.Context, id string, opts ...schema.
 	if err != nil {
 		return nil, err
 	}
-	return a.toSchemaSysMenuActionResource(sys_mar), nil
+	return a.ToSchemaSysMenuActionResource(sys_mar), nil
 }
 
 // Create 创建数据
@@ -149,7 +149,7 @@ func (a *MenuActionResource) Create(ctx context.Context, item schema.MenuActionR
 	if err != nil {
 		return nil, err
 	}
-	sch_mar := a.toSchemaSysMenuActionResource(sys_mar)
+	sch_mar := a.ToSchemaSysMenuActionResource(sys_mar)
 	return sch_mar, nil
 }
 
@@ -164,7 +164,7 @@ func (a *MenuActionResource) Update(ctx context.Context, id string, item schema.
 	if err != nil {
 		return nil, err
 	}
-	sch_mar := a.toSchemaSysMenuActionResource(sys_mar)
+	sch_mar := a.ToSchemaSysMenuActionResource(sys_mar)
 
 	return sch_mar, nil
 }

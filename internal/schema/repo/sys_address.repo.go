@@ -22,16 +22,16 @@ type SysAddress struct {
 }
 
 // ToSchemaSysAddress 转换为
-func (a *SysAddress) toSchemaSysAddress(et *ent.SysAddress) *schema.SysAddress {
+func (a *SysAddress) ToSchemaSysAddress(et *ent.SysAddress) *schema.SysAddress {
 	item := new(schema.SysAddress)
 	structure.Copy(et, item)
 	return item
 }
 
-func (a *SysAddress) toSchemaSysAddresses(ets ent.SysAddresses) []*schema.SysAddress {
+func (a *SysAddress) ToSchemaSysAddresses(ets ent.SysAddresses) []*schema.SysAddress {
 	list := make([]*schema.SysAddress, len(ets))
 	for i, item := range ets {
-		list[i] = a.toSchemaSysAddress(item)
+		list[i] = a.ToSchemaSysAddress(item)
 	}
 	return list
 }
@@ -94,7 +94,7 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 
 	qr := &schema.SysAddressQueryResult{
 		PageResult: pr,
-		Data:       a.toSchemaSysAddresses(list),
+		Data:       a.ToSchemaSysAddresses(list),
 	}
 
 	return qr, nil
@@ -111,7 +111,7 @@ func (a *SysAddress) Get(ctx context.Context, id string, opts ...schema.SysAddre
 		return nil, err
 	}
 
-	return a.toSchemaSysAddress(r_sysaddress), nil
+	return a.ToSchemaSysAddress(r_sysaddress), nil
 }
 
 // Create 创建数据
@@ -123,7 +123,7 @@ func (a *SysAddress) Create(ctx context.Context, item schema.SysAddress) (*schem
 	if err != nil {
 		return nil, err
 	}
-	sch_sysaddress := a.toSchemaSysAddress(r_sysaddress)
+	sch_sysaddress := a.ToSchemaSysAddress(r_sysaddress)
 	return sch_sysaddress, nil
 }
 
@@ -138,7 +138,7 @@ func (a *SysAddress) Update(ctx context.Context, id string, item schema.SysAddre
 	iteminput := a.ToEntUpdateSysAddressInput(&item)
 
 	r_sysaddress, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_sysaddress := a.toSchemaSysAddress(r_sysaddress)
+	sch_sysaddress := a.ToSchemaSysAddress(r_sysaddress)
 
 	return sch_sysaddress, nil
 }

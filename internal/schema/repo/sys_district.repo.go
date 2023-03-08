@@ -23,16 +23,16 @@ type SysDistrict struct {
 }
 
 // ToSchemaSysDistrict 转换为
-func (a *SysDistrict) toSchemaSysDistrict(et *ent.SysDistrict) *schema.SysDistrict {
+func (a *SysDistrict) ToSchemaSysDistrict(et *ent.SysDistrict) *schema.SysDistrict {
 	item := new(schema.SysDistrict)
 	structure.Copy(et, item)
 	return item
 }
 
-func (a *SysDistrict) toSchemaSysDistricts(ets ent.SysDistricts) []*schema.SysDistrict {
+func (a *SysDistrict) ToSchemaSysDistricts(ets ent.SysDistricts) []*schema.SysDistrict {
 	list := make([]*schema.SysDistrict, len(ets))
 	for i, item := range ets {
-		list[i] = a.toSchemaSysDistrict(item)
+		list[i] = a.ToSchemaSysDistrict(item)
 	}
 	return list
 }
@@ -223,7 +223,7 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 
 	qr := &schema.SysDistrictQueryResult{
 		PageResult: pr,
-		Data:       a.toSchemaSysDistricts(list),
+		Data:       a.ToSchemaSysDistricts(list),
 	}
 
 	return qr, nil
@@ -394,7 +394,7 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 
 	qr := &schema.SysDistrictQueryResult{
 		PageResult: pr,
-		Data:       a.toSchemaSysDistricts(list),
+		Data:       a.ToSchemaSysDistricts(list),
 	}
 
 	return qr, nil
@@ -414,9 +414,9 @@ func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDist
 		return nil, err
 	}
 
-	r_schema := a.toSchemaSysDistrict(r_sysdistrict)
+	r_schema := a.ToSchemaSysDistrict(r_sysdistrict)
 	if r_sysdistrict.Edges.Parent != nil {
-		r_schema.Parent = a.toSchemaSysDistrict(r_sysdistrict.Edges.Parent)
+		r_schema.Parent = a.ToSchemaSysDistrict(r_sysdistrict.Edges.Parent)
 	}
 
 	return r_schema, nil
@@ -497,7 +497,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 	if err != nil {
 		return nil, err
 	}
-	sch_sysdistrict := a.toSchemaSysDistrict(r_sysdistrict)
+	sch_sysdistrict := a.ToSchemaSysDistrict(r_sysdistrict)
 	return sch_sysdistrict, nil
 }
 
@@ -556,7 +556,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	}
 
 	r_sysdistrict, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_sysdistrict := a.toSchemaSysDistrict(r_sysdistrict)
+	sch_sysdistrict := a.ToSchemaSysDistrict(r_sysdistrict)
 
 	return sch_sysdistrict, nil
 }

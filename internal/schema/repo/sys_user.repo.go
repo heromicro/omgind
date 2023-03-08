@@ -24,16 +24,16 @@ type User struct {
 	EntCli *ent.Client
 }
 
-func (a *User) toSchemaSysUser(u *ent.SysUser) *schema.User {
+func (a *User) ToSchemaSysUser(u *ent.SysUser) *schema.User {
 	item := new(schema.User)
 	structure.Copy(u, item)
 	return item
 }
 
-func (a *User) toSchemaSysUsers(us ent.SysUsers) []*schema.User {
+func (a *User) ToSchemaSysUsers(us ent.SysUsers) []*schema.User {
 	list := make([]*schema.User, len(us))
 	for i, item := range us {
-		list[i] = a.toSchemaSysUser(item)
+		list[i] = a.ToSchemaSysUser(item)
 	}
 	return list
 }
@@ -124,7 +124,7 @@ func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...
 
 	qr := &schema.UserQueryResult{
 		PageResult: pr,
-		Data:       a.toSchemaSysUsers(rlist),
+		Data:       a.ToSchemaSysUsers(rlist),
 	}
 
 	return qr, nil
@@ -136,7 +136,7 @@ func (a *User) Get(ctx context.Context, id string, opts ...schema.UserQueryOptio
 	if err != nil {
 		return nil, err
 	}
-	return a.toSchemaSysUser(user), nil
+	return a.ToSchemaSysUser(user), nil
 }
 
 // Create 创建数据
@@ -154,7 +154,7 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, erro
 	if err != nil {
 		return nil, err
 	}
-	sch_user := a.toSchemaSysUser(sysuser)
+	sch_user := a.ToSchemaSysUser(sysuser)
 	return sch_user, nil
 }
 
@@ -169,7 +169,7 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 	item.UpdatedAt = time.Now()
 	iteminput := a.ToEntUpdateSysUserInput(&item)
 	user, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_user := a.toSchemaSysUser(user)
+	sch_user := a.ToSchemaSysUser(user)
 	return sch_user, nil
 }
 

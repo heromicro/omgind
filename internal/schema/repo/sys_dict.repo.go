@@ -21,16 +21,16 @@ type Dict struct {
 	EntCli *ent.Client
 }
 
-func (a *Dict) toSchemaSysDict(dit *ent.SysDict) *schema.Dict {
+func (a *Dict) ToSchemaSysDict(dit *ent.SysDict) *schema.Dict {
 	item := new(schema.Dict)
 	structure.Copy(dit, item)
 	return item
 }
 
-func (a *Dict) toSchemaSysDicts(dits ent.SysDicts) []*schema.Dict {
+func (a *Dict) ToSchemaSysDicts(dits ent.SysDicts) []*schema.Dict {
 	list := make([]*schema.Dict, len(dits))
 	for i, item := range dits {
-		list[i] = a.toSchemaSysDict(item)
+		list[i] = a.ToSchemaSysDict(item)
 	}
 	return list
 }
@@ -115,7 +115,7 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 
 	qr := &schema.DictQueryResult{
 		PageResult: pr,
-		Data:       a.toSchemaSysDicts(rlist),
+		Data:       a.ToSchemaSysDicts(rlist),
 	}
 
 	return qr, nil
@@ -128,7 +128,7 @@ func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptio
 	if err != nil {
 		return nil, err
 	}
-	return a.toSchemaSysDict(dict), nil
+	return a.ToSchemaSysDict(dict), nil
 }
 
 // Create 创建数据
@@ -142,7 +142,7 @@ func (a *Dict) Create(ctx context.Context, item schema.Dict) (*schema.Dict, erro
 	if err != nil {
 		return nil, err
 	}
-	sch_dict := a.toSchemaSysDict(sysdict)
+	sch_dict := a.ToSchemaSysDict(sysdict)
 	return sch_dict, nil
 }
 
@@ -163,7 +163,7 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) (*schema
 		return nil, err
 	}
 
-	sch_dict := a.toSchemaSysDict(dict)
+	sch_dict := a.ToSchemaSysDict(dict)
 
 	return sch_dict, nil
 }

@@ -20,16 +20,16 @@ type UserRole struct {
 	EntCli *ent.Client
 }
 
-func (a *UserRole) toSchemaSysUserRole(dit *ent.SysUserRole) *schema.UserRole {
+func (a *UserRole) ToSchemaSysUserRole(dit *ent.SysUserRole) *schema.UserRole {
 	item := new(schema.UserRole)
 	structure.Copy(dit, item)
 	return item
 }
 
-func (a *UserRole) toSchemaSysUserRoles(dits ent.SysUserRoles) []*schema.UserRole {
+func (a *UserRole) ToSchemaSysUserRoles(dits ent.SysUserRoles) []*schema.UserRole {
 	list := make([]*schema.UserRole, len(dits))
 	for i, item := range dits {
-		list[i] = a.toSchemaSysUserRole(item)
+		list[i] = a.ToSchemaSysUserRole(item)
 	}
 	return list
 }
@@ -85,7 +85,7 @@ func (a *UserRole) Query(ctx context.Context, params schema.UserRoleQueryParam, 
 
 	qr := &schema.UserRoleQueryResult{
 		PageResult: pr,
-		Data:       a.toSchemaSysUserRoles(rlist),
+		Data:       a.ToSchemaSysUserRoles(rlist),
 	}
 
 	return qr, nil
@@ -98,7 +98,7 @@ func (a *UserRole) Get(ctx context.Context, id string, opts ...schema.UserRoleQu
 	if err != nil {
 		return nil, err
 	}
-	return a.toSchemaSysUserRole(userrole), nil
+	return a.ToSchemaSysUserRole(userrole), nil
 }
 
 // Create 创建数据
@@ -109,7 +109,7 @@ func (a *UserRole) Create(ctx context.Context, item schema.UserRole) (*schema.Us
 	if err != nil {
 		return nil, err
 	}
-	sch_userrole := a.toSchemaSysUserRole(userrole)
+	sch_userrole := a.ToSchemaSysUserRole(userrole)
 	return sch_userrole, nil
 }
 
@@ -122,7 +122,7 @@ func (a *UserRole) Update(ctx context.Context, id string, item schema.UserRole) 
 		return nil, err
 	}
 	userrole, err := oitem.Update().SetUserID(item.UserID).SetRoleID(item.RoleID).Save(ctx)
-	sch_userrole := a.toSchemaSysUserRole(userrole)
+	sch_userrole := a.ToSchemaSysUserRole(userrole)
 	return sch_userrole, nil
 }
 
