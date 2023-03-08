@@ -37,7 +37,7 @@ func (a *User) Query(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResPage(c, result.Data, result.PageResult)
+	ginx.ResPage2(c, result.Data, result.PageResult)
 }
 
 // Get 查询指定数据
@@ -48,7 +48,7 @@ func (a *User) Get(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess(c, item.CleanSecure())
+	ginx.ResSuccess2(c, item.CleanSecure())
 }
 
 // Create 创建数据
@@ -69,7 +69,7 @@ func (a *User) Create(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess(c, result)
+	ginx.ResSuccess2(c, result)
 }
 
 // Update 更新数据
@@ -81,12 +81,12 @@ func (a *User) Update(c *gin.Context) {
 		return
 	}
 
-	err := a.UserSrv.Update(ctx, c.Param("id"), item)
+	result, err := a.UserSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResSuccess2(c, result)
 }
 
 // Delete 删除数据
@@ -97,7 +97,7 @@ func (a *User) Delete(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK2(c, "成功删除数据")
 }
 
 // Enable 启用数据
@@ -108,7 +108,7 @@ func (a *User) Enable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK2(c, "启用成功")
 }
 
 // Disable 禁用数据
@@ -119,5 +119,5 @@ func (a *User) Disable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK2(c, "禁用成功")
 }

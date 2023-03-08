@@ -63,7 +63,7 @@ func (a *Role) QueryRoleMenus(ctx context.Context, roleID string) (schema.RoleMe
 }
 
 // Create 创建数据
-func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.IDResult, error) {
+func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, error) {
 	err := a.checkName(ctx, item)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,8 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.IDResult, 
 	}
 	// FIXME::
 	// LoadCasbinPolicy(ctx, a.Enforcer)
-	return schema.NewIDResult(item.ID), nil
+	nitem, err := a.Get(ctx, item.ID)
+	return nitem, nil
 }
 
 func (a *Role) checkName(ctx context.Context, item schema.Role) error {
@@ -111,16 +112,16 @@ func (a *Role) checkName(ctx context.Context, item schema.Role) error {
 }
 
 // Update 更新数据
-func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
+func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema.Role, error) {
 	oldItem, err := a.Get(ctx, id)
 	if err != nil {
-		return err
+		return nil, err
 	} else if oldItem == nil {
-		return errors.ErrNotFound
+		return nil, errors.ErrNotFound
 	} else if oldItem.Name != item.Name {
 		err := a.checkName(ctx, item)
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 
@@ -186,12 +187,13 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) error {
 	log.Println(" ------- ====== ", err)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// FIXME::
 	// LoadCasbinPolicy(ctx, a.Enforcer)
-	return nil
+	nitem, err := a.Get(ctx, item.ID)
+	return nitem, nil
 }
 
 func (a *Role) compareRoleMenus(ctx context.Context, oldRoleMenus, newRoleMenus schema.RoleMenus) (addList, delList schema.RoleMenus) {

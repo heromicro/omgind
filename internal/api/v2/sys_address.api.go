@@ -89,7 +89,7 @@ func (a *SysAddress) Delete(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK2(c, "成功删除数据")
 }
 
 // Enable 启用数据

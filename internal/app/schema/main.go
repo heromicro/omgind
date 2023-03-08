@@ -35,7 +35,7 @@ const (
 type StatusResult2 struct {
 	Code    CodeEnum `json:"code"`
 	Message string   `json:"message"`
-	Payload any      `json:"payload"`
+	Burden  any      `json:"burden"`
 }
 
 // ErrorResult 响应错误

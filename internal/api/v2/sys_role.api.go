@@ -36,7 +36,7 @@ func (a *Role) Query(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResPage(c, result.Data, result.PageResult)
+	ginx.ResPage2(c, result.Data, result.PageResult)
 }
 
 // QuerySelect 查询选择数据
@@ -59,7 +59,7 @@ func (a *Role) QuerySelect(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResList(c, result.Data)
+	ginx.ResList2(c, result.Data)
 }
 
 // Get 查询指定数据
@@ -70,7 +70,7 @@ func (a *Role) Get(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess(c, item)
+	ginx.ResSuccess2(c, item)
 }
 
 // Create 创建数据
@@ -94,7 +94,7 @@ func (a *Role) Create(c *gin.Context) {
 
 	log.Println(" -------- vvvvvv == ===== ", result)
 
-	ginx.ResSuccess(c, result)
+	ginx.ResSuccess2(c, result)
 }
 
 // Update 更新数据
@@ -106,12 +106,12 @@ func (a *Role) Update(c *gin.Context) {
 		return
 	}
 
-	err := a.RoleSrv.Update(ctx, c.Param("id"), item)
+	result, err := a.RoleSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResSuccess2(c, result)
 }
 
 // Delete 删除数据

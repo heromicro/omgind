@@ -345,19 +345,19 @@ func (a *Menu) joinParentPath(parent, id string) string {
 }
 
 // Update 更新数据
-func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) error {
+func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema.Menu, error) {
 	if id == item.ParentID {
-		return errors.ErrInvalidParent
+		return nil, errors.ErrInvalidParent
 	}
 
 	oldItem, err := a.Get(ctx, id)
 	if err != nil {
-		return err
+		return nil, err
 	} else if oldItem == nil {
-		return errors.ErrNotFound
+		return nil, errors.ErrNotFound
 	} else if oldItem.Name != item.Name {
 		if err := a.checkName(ctx, item); err != nil {
-			return err
+			return nil, err
 		}
 	}
 
@@ -370,7 +370,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) error {
 	if oldItem.ParentID != item.ParentID {
 		// parentPath, err := a.getParentPath(ctx, item.ParentID)
 		if err != nil {
-			return err
+			return nil, err
 		}
 		item.ParentPath = a.getParentPathNet(pitem, item.ParentID)
 		item.Level = 1
@@ -406,7 +406,12 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) error {
 
 		return nil
 	})
-	return err
+	if err != nil {
+		return nil, err
+	}
+
+	nitem, err := a.Get(ctx, id)
+	return nitem, err
 }
 
 // 更新动作数据

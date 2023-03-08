@@ -79,7 +79,7 @@ func (a *User) Get(ctx context.Context, id string, opts ...schema.UserQueryOptio
 }
 
 // Create 创建数据
-func (a *User) Create(ctx context.Context, item schema.User) (*schema.IDResult, error) {
+func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, error) {
 
 	err := a.checkUserName(ctx, item)
 
@@ -118,7 +118,8 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.IDResult, 
 
 	// FIXME::
 	// LoadCasbinPolicy(ctx, a.Enforcer)
-	return schema.NewIDResult(item.ID), nil
+	nitem, err := a.UserRepo.Get(ctx, item.ID)
+	return nitem, err
 }
 
 func (a *User) checkUserName(ctx context.Context, item schema.User) error {
@@ -142,17 +143,17 @@ func (a *User) checkUserName(ctx context.Context, item schema.User) error {
 }
 
 // Update 更新数据
-func (a *User) Update(ctx context.Context, id string, item schema.User) error {
+func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema.User, error) {
 	oldItem, err := a.Get(ctx, id)
 
 	if err != nil {
-		return err
+		return nil, err
 	} else if oldItem == nil {
-		return errors.ErrNotFound
+		return nil, errors.ErrNotFound
 	} else if oldItem.UserName != item.UserName {
 		err := a.checkUserName(ctx, item)
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 
@@ -195,12 +196,14 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) error {
 	})
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// FIXME::
 	// LoadCasbinPolicy(ctx, a.Enforcer)
-	return nil
+	nitem, err := a.UserRepo.Get(ctx, item.ID)
+
+	return nitem, nil
 }
 
 func (a *User) compareUserRoles(ctx context.Context, oldUserRoles, newUserRoles schema.UserRoles) (addList, delList schema.UserRoles) {

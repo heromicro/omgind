@@ -96,7 +96,7 @@ func ResList(c *gin.Context, v any) {
 
 // ResList 响应列表数据
 func ResList2(c *gin.Context, v interface{}) {
-	ResSuccess(c, schema.StatusResult2{Code: schema.CodeOK, Payload: schema.ListResult{List: v}})
+	ResSuccess(c, schema.StatusResult2{Code: schema.CodeOK, Burden: schema.ListResult{List: v}})
 }
 
 // ResPage 响应分页数据
@@ -139,7 +139,7 @@ func ResSuccess2(c *gin.Context, v any, message ...string) {
 	if len(message) > 0 {
 		msg = message[0]
 	}
-	ResJSON(c, http.StatusOK, schema.StatusResult2{Code: schema.CodeOK, Message: msg, Payload: v})
+	ResJSON(c, http.StatusOK, schema.StatusResult2{Code: schema.CodeOK, Message: msg, Burden: v})
 }
 
 // ResError 响应错误
