@@ -19,6 +19,25 @@ type StatusResult struct {
 	Status StatusText `json:"status"` // 状态(OK)
 }
 
+type CodeEnum int
+
+func (c CodeEnum) Int() int {
+	return int(c)
+}
+
+const (
+	CodeOK   CodeEnum = 0
+	CodeFail CodeEnum = -1
+	CodeMore CodeEnum = 1
+)
+
+// StatusResult 响应状态
+type StatusResult2 struct {
+	Code    CodeEnum `json:"code"`
+	Message string   `json:"message"`
+	Payload any      `json:"payload"`
+}
+
 // ErrorResult 响应错误
 type ErrorResult struct {
 	Error ErrorItem `json:"error"` // 错误项
@@ -38,9 +57,11 @@ type ListResult struct {
 
 // PaginationResult 分页查询结果
 type PaginationResult struct {
-	Total    int  `json:"total"`
-	Current  uint `json:"current"`
-	PageSize uint `json:"pageSize"`
+	Total    int    `json:"total"`
+	Current  uint   `json:"current"`
+	PageSize uint   `json:"pageSize"`
+	After    string `json:"after"`
+	Before   string `json:"before"`
 }
 
 // PaginationParam 分页查询条件
@@ -48,9 +69,16 @@ type PaginationParam struct {
 	// 是否使用分页查询
 	Pagination bool `form:"-"`
 	// 是否仅查询count
-	OnlyCount bool `form:"-"`
-	Current   uint `form:"current,default=1"`                     // 当前页
-	PageSize  uint `form:"pageSize,default=20" binding:"max=100"` // 页大小
+	OnlyCount bool   `form:"-"`
+	Current   uint   `form:"current,default=1"`                     // 当前页
+	PageSize  uint   `form:"pageSize,default=20" binding:"max=100"` // 页大小
+	After     string `form:"after"`                                 // id之后的
+	Before    string `form:"before"`                                // id之前的
+}
+
+type QueryCludeParam struct {
+	IDsIn    []string `form:"idsin"`
+	IDsNotIn []string `form:"idsnotin"`
 }
 
 // GetCurrent 获取当前页

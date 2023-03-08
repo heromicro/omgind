@@ -84,9 +84,19 @@ func ResOK(c *gin.Context) {
 	ResSuccess(c, schema.StatusResult{Status: schema.OKStatus})
 }
 
+// ResOK 响应OK
+func ResOK2(c *gin.Context, message string) {
+	ResSuccess2(c, nil, message)
+}
+
 // ResList 响应列表数据
 func ResList(c *gin.Context, v any) {
 	ResSuccess(c, schema.ListResult{List: v})
+}
+
+// ResList 响应列表数据
+func ResList2(c *gin.Context, v interface{}) {
+	ResSuccess(c, schema.StatusResult2{Code: schema.CodeOK, Payload: schema.ListResult{List: v}})
 }
 
 // ResPage 响应分页数据
@@ -96,6 +106,15 @@ func ResPage(c *gin.Context, v any, pr *schema.PaginationResult) {
 		Pagination: pr,
 	}
 	ResSuccess(c, list)
+}
+
+// ResPage 响应分页数据
+func ResPage2(c *gin.Context, v any, pr *schema.PaginationResult) {
+	list := schema.ListResult{
+		List:       v,
+		Pagination: pr,
+	}
+	ResSuccess2(c, list)
 }
 
 // ResSuccess 响应成功
@@ -112,6 +131,15 @@ func ResJSON(c *gin.Context, status int, v any) {
 	c.Set(ResBodyKey, buf)
 	c.Data(status, "application/json; charset=utf-8", buf)
 	c.Abort()
+}
+
+// ResSuccess 响应成功
+func ResSuccess2(c *gin.Context, v any, message ...string) {
+	msg := ""
+	if len(message) > 0 {
+		msg = message[0]
+	}
+	ResJSON(c, http.StatusOK, schema.StatusResult2{Code: schema.CodeOK, Message: msg, Payload: v})
 }
 
 // ResError 响应错误
