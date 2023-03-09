@@ -34,7 +34,7 @@ type SysDistrict struct {
 	IsDirect bool  `json:"is_direct"` // 是否是直辖
 
 	IsLeaf    *bool   `json:"is_leaf"`    // 是否是子叶
-	TreeID    *int32  `json:"tree_id"`    // 树id
+	TreeID    *int64  `json:"tree_id"`    // 树id
 	TreeLevel *int32  `json:"tree_level"` // 层级
 	TreeLeft  *int64  `json:"tree_left"`  // 层级
 	TreeRight *int64  `json:"tree_right"` // 层级

@@ -427,70 +427,68 @@ func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDist
 // Create 创建数据
 func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*schema.SysDistrict, error) {
 
-	iteminput := a.ToEntCreateSysDistrictInput(&item)
 	var res_sysdistrict *ent.SysDistrict
 	var err error
 
 	// check pid
-	if iteminput.ParentID == nil || *iteminput.ParentID == "" {
+	if item.ParentID == nil || *item.ParentID == "" {
 		// no pid, top level
 		var opt schema.SysDistrictQueryOptions
 		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
 
-		most, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).First(ctx)
+		most, err := a.GetLatestTreeID(ctx)
 		if err != nil {
-			if !ent.IsNotFound(err) {
-				return nil, err
-			}
+			return nil, err
 		}
 
-		if most == nil {
-			iteminput.TreeID = ptr.Int64(1)
-		} else {
-			iteminput.TreeID = ptr.Int64(*most.TreeID + 1)
-		}
-		iteminput.TreeLeft = ptr.Int64(1)
-		iteminput.TreeRight = ptr.Int64(2)
-		iteminput.IsLeaf = ptr.Bool(true)
-		iteminput.TreeLevel = ptr.Int32(1)
+		item.TreeID = ptr.Int64(most)
+
+		item.TreeLeft = ptr.Int64(1)
+		item.TreeRight = ptr.Int64(2)
+		item.IsLeaf = ptr.Bool(true)
+		item.TreeLevel = ptr.Int32(1)
+
+		iteminput := a.ToEntCreateSysDistrictInput(&item)
 
 		res_sysdistrict, err = a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
 
 	} else {
 
-		parent, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(*iteminput.ParentID)).First(ctx)
+		parent, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(*item.ParentID)).First(ctx)
 
 		if err != nil {
 			return nil, err
 		}
-		iteminput.TreeID = parent.TreeID
-		iteminput.TreeLeft = parent.TreeRight
-		iteminput.TreeRight = ptr.Int64(*parent.TreeRight + 1)
-		iteminput.IsLeaf = ptr.Bool(true)
-		iteminput.TreeLevel = ptr.Int32(*parent.TreeLevel + 1)
+		item.TreeID = parent.TreeID
+		item.TreeLeft = parent.TreeRight
+		item.TreeRight = ptr.Int64(*parent.TreeRight + 1)
+		item.IsLeaf = ptr.Bool(true)
+		item.TreeLevel = ptr.Int32(*parent.TreeLevel + 1)
 
-		if parent.TreePath != nil {
-			iteminput.TreePath = ptr.String(strings.Join([]string{*parent.TreePath, *iteminput.ParentID}, "/"))
+		if parent.TreePath == nil || *parent.TreePath == "" {
+			item.TreePath = ptr.String(parent.ID)
 		} else {
-			iteminput.TreePath = iteminput.ParentID
+			item.TreePath = ptr.String(strings.Join([]string{*parent.TreePath, parent.ID}, "/"))
 		}
 
-		if iteminput.MergeName == nil || *iteminput.MergeName == "" {
+		if item.MergeName == nil || *item.MergeName == "" {
 			if parent.MergeName != nil && *parent.MergeName != "" {
-				iteminput.MergeName = ptr.String(strings.Join([]string{*parent.MergeName, *iteminput.Name}, ","))
+				item.MergeName = ptr.String(strings.Join([]string{*parent.MergeName, item.Name}, ","))
 			} else {
-				iteminput.MergeName = iteminput.Name
+				item.MergeName = ptr.String(item.Name)
 			}
 		}
 
-		if iteminput.MergeSname == nil || *iteminput.MergeSname == "" {
+		if item.MergeSname == nil || *item.MergeSname == "" {
 			if parent.MergeSname != nil && *parent.MergeSname != "" {
-				iteminput.MergeSname = ptr.String(strings.Join([]string{*parent.MergeSname, *iteminput.Sname}, ","))
+				item.MergeSname = ptr.String(strings.Join([]string{*parent.MergeSname, *item.Sname}, ","))
 			} else {
-				iteminput.MergeSname = iteminput.Sname
+				item.MergeSname = item.Sname
 
 			}
 		}
+
+		iteminput := a.ToEntCreateSysDistrictInput(&item)
 
 		err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
@@ -539,14 +537,24 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	if err != nil {
 		return nil, err
 	}
-	iteminput := a.ToEntUpdateSysDistrictInput(&item)
+	// iteminput := a.ToEntUpdateSysDistrictInput(&item)
+
+	log.Println(" ------- ===== ---- oitem.ParentID ", oitem.ParentID)
+	log.Println(" ------- ===== ---- nitem.ParentID  ", item.ParentID)
 
 	// check pid changed or not
 	if oitem.ParentID == nil {
 		// old data.pid is nil
-		if iteminput.ParentID == nil {
+		if item.ParentID == nil {
 			// pid no change
 
+			item.TreeID = nil
+			item.TreeLeft = nil
+			item.TreeRight = nil
+			item.TreeLevel = nil
+			item.TreePath = nil
+
+			iteminput := a.ToEntUpdateSysDistrictInput(&item)
 			if iteminput.MergeName == nil || *iteminput.MergeName == "" {
 				iteminput.MergeName = iteminput.Name
 			}
@@ -557,7 +565,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 			log.Println(" ------ ====== name ", iteminput.Name)
 
-			_, err := a.EntCli.SysDistrict.Update().SetInput(*iteminput).Where(sysdistrict.IDEQ(id)).Save(ctx)
+			_, err := a.EntCli.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
 			log.Println(" ------ ====== err ", err)
 			if err != nil {
 				return nil, err
@@ -565,34 +573,182 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 		} else {
 			// pid changed
-			// bring new data to sub
+			// bring top item to sub
 			query_nparent := a.EntCli.SysDistrict.Query()
-			query_nparent = query_nparent.Where(sysdistrict.DeletedAtIsNil()).Where(sysdistrict.IDEQ(*iteminput.ParentID))
-			// nparent, err := query_nparent.First(ctx)
-			_, err := query_nparent.First(ctx)
+			query_nparent = query_nparent.Where(sysdistrict.DeletedAtIsNil()).Where(sysdistrict.IDEQ(*item.ParentID))
+			nparent, err := query_nparent.First(ctx)
 			if err != nil {
 				return nil, err
 			}
 
-		}
-	} else {
-		// old data.pid is not nil
-		if iteminput.ParentID == nil {
-			// bring new data to top level,
-			//
+			item.TreeID = ptr.Int64(*nparent.TreeID)
+			item.TreeLeft = nil
+			item.TreeRight = nil
+			item.TreeLevel = ptr.Int32(*nparent.TreeLevel + 1)
 
-			var opt schema.SysDistrictQueryOptions
-			opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
-			// most, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).First(ctx)
-			_, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).First(ctx)
-			if err != nil {
-				if !ent.IsNotFound(err) {
-					return nil, err
+			if nparent.TreePath == nil || *nparent.TreePath == "" {
+				item.TreePath = ptr.String(nparent.ID)
+			} else {
+				item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
+			}
+
+			if item.MergeName == nil || *item.MergeName == "" {
+				if nparent.MergeName != nil && *nparent.MergeName != "" {
+					item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, ","))
+				} else {
+					item.MergeName = ptr.String(item.Name)
 				}
 			}
 
+			if item.MergeSname == nil || *item.MergeSname == "" {
+				if nparent.MergeSname != nil && *nparent.MergeSname != "" {
+					item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
+				} else {
+					item.MergeSname = item.Sname
+
+				}
+			}
+
+			iteminput := a.ToEntUpdateSysDistrictInput(&item)
+
+			err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+				// step 1: update old item's and it's sub's tree_left and tree_right
+				count, err := tx.SysDistrict.Update().Where(sysdistrict.TreeID(*oitem.TreeID)).AddTreeLeft(*nparent.TreeRight - 1).AddTreeRight(*nparent.TreeRight - 1).Save(ctx)
+				if err != nil {
+					return err
+				}
+				if count != int(*oitem.TreeRight)/2 {
+					return errors.New("the count of update old top item and it's subs tree_left/tree_right mismatch the real  ")
+				}
+				// step 3: update new parent's and it's upper's tree_left
+				_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeID(*nparent.TreeID)).Where(sysdistrict.TreeLeftGT(*nparent.TreeRight)).AddTreeLeft(*oitem.TreeRight).Save(ctx)
+				if err != nil {
+					return err
+				}
+				// step 4: update new parent's and it's upper's tree_right
+				_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*nparent.TreeID)).Where(sysdistrict.TreeRightGTE(*nparent.TreeRight)).AddTreeRight(*oitem.TreeRight).Save(ctx)
+				if err != nil {
+					return err
+				}
+
+				// step 6: update old item's and it's sub's tree_id
+				count, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oitem.TreeID)).SetTreeID(*nparent.TreeID).Save(ctx)
+				if err != nil {
+					return err
+				}
+
+				if count != int(*oitem.TreeRight)/2 {
+					return errors.New("the count of update old item's and it's subs mismatched.")
+				}
+
+				// step 7:
+				_, err = tx.SysDistrict.Update().SetInput(*iteminput).Where(sysdistrict.IDEQ(id)).Save(ctx)
+				if err != nil {
+					return err
+				}
+
+				// step 5: update item's and it's sub's tree_path, merge_name, merge_sname
+				// TODO: fix tree_path of id's and id's subs
+				// TODO: maybe can trigger celery to do this
+
+				return nil
+			})
+
+			if err != nil {
+				return nil, err
+			}
+		}
+	} else {
+		// old data.pid is not nil
+
+		query_oparent := a.EntCli.SysDistrict.Query()
+		query_oparent = query_oparent.Where(sysdistrict.IDEQ(*oitem.ParentID))
+		oparent, err := query_oparent.First(ctx)
+
+		if err != nil {
+			return nil, err
+		}
+		log.Println(" -------- ----- oparent.ID- ", oparent.ID)
+
+		if item.ParentID == nil {
+			// bring  to top level,
+			//
+
+			most, err := a.GetLatestTreeID(ctx)
+			if err != nil {
+				return nil, err
+			}
+
+			log.Println(" -------- ----- most.tree_id- ", most)
+			item.TreeID = ptr.Int64(most)
+			item.TreeLeft = nil
+			item.TreeRight = nil
+			item.TreeLevel = ptr.Int32(1)
+			item.IsLeaf = nil
+			item.TreePath = nil
+
+			iteminput := a.ToEntUpdateSysDistrictInput(&item)
+
+			err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+				// step:1 update tree_id with most newest,
+
+				count1, err := tx.SysDistrict.Update().SetTreeID(*item.TreeID).Where(sysdistrict.TreeIDEQ(*oitem.TreeID), sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight)).Save(ctx)
+				if err != nil {
+					return err
+				}
+				if count1 <= 0 {
+					return errors.New("failed to update tree_id")
+				}
+
+				// step 2:
+				count2, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*item.TreeID)).AddTreeLeft(-*oparent.TreeLeft).AddTreeRight(-*oparent.TreeLeft).Save(ctx)
+				if err != nil {
+					return err
+				}
+				if count1 != count2 {
+					return errors.New("the result of update tree_id and tree_left/tree_right mismatched.")
+				}
+
+				// step 3: minus tree_left
+				count3, err := tx.SysDistrict.Update().AddTreeLeft(-int64(count1)*2).Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).Save(ctx)
+				if err != nil {
+					return err
+				}
+				log.Println(" --- --- === === ", count3)
+
+				// step 4: minus tree_right
+				count4, err := tx.SysDistrict.Update().AddTreeRight(-int64(count1)*2).Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeRightGTE(*oparent.TreeRight)).Save(ctx)
+				if err != nil {
+					return err
+				}
+				log.Println(" --- --- === === ", count4)
+
+				// step 5: update other fileds
+				_, err = tx.SysDistrict.Update().SetInput(*iteminput).Where(sysdistrict.IDEQ(id)).Save(ctx)
+				if err != nil {
+					return err
+				}
+				// step 6: trigger udpate tree_path and merge_name, merge_sname,
+
+				return nil
+			})
+
+			if err != nil {
+				return nil, err
+			}
+
 		} else {
-			if *oitem.ParentID == *iteminput.ParentID {
+
+			query_nparent := a.EntCli.SysDistrict.Query()
+			query_nparent = query_nparent.Where(sysdistrict.DeletedAtIsNil()).Where(sysdistrict.IDEQ(*item.ParentID))
+			nparent, err := query_nparent.First(ctx)
+
+			if err != nil {
+				return nil, err
+			}
+			log.Println(" -------- - nparent.ID----- ", nparent.ID)
+
+			if *oitem.ParentID == *item.ParentID {
 				// new data.pid no changed
 
 			} else {
@@ -610,6 +766,22 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	sch_sysdistrict := a.ToSchemaSysDistrict(res_sysdistrict)
 
 	return sch_sysdistrict, nil
+}
+
+func (a *SysDistrict) GetLatestTreeID(ctx context.Context) (int64, error) {
+
+	var opt schema.SysDistrictQueryOptions
+	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
+	most, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).Select(sysdistrict.FieldID, sysdistrict.FieldTreeID).First(ctx)
+
+	if err != nil {
+		if !ent.IsNotFound(err) {
+			return 1, nil
+		}
+		return -1, err
+	}
+
+	return *most.TreeID + 1, nil
 }
 
 // Delete 删除数据
