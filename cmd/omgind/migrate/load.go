@@ -243,7 +243,7 @@ var CmdLoad = &cobra.Command{
 					log.Println(whiteOnGreen, " ======  sch_district.ID  ====== ", sch_district.ID)
 					update_district_l := serviceSysDistrict.EntCli.SysDistrict.Update()
 					update_district_l = update_district_l.Where(sysdistrict.IDNEQ(sch_district.ID))
-
+					update_district_l = update_district_l.Where(sysdistrict.TreeIDEQ(*pdistrict.TreeID))
 					update_district_l = update_district_l.Where(sysdistrict.TreeLeftGT(*pdistrict.TreeRight))
 
 					var count int = 0
@@ -254,7 +254,7 @@ var CmdLoad = &cobra.Command{
 					// // 修复被破坏平衡的其他节点的右值。大于等于 parent_id 右值的所有节点的右值加 2
 					update_district_r := serviceSysDistrict.EntCli.SysDistrict.Update()
 					update_district_r = update_district_r.Where(sysdistrict.IDNEQ(sch_district.ID))
-
+					update_district_r = update_district_r.Where(sysdistrict.TreeIDEQ(*pdistrict.TreeID))
 					update_district_r = update_district_r.Where(sysdistrict.TreeRightGTE(*pdistrict.TreeRight))
 
 					count, err = update_district_r.AddTreeRight(2).Save(ctx)

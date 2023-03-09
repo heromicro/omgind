@@ -2,6 +2,8 @@ package repo
 
 import (
 	"context"
+	"log"
+	"strings"
 	"time"
 
 	"github.com/google/wire"
@@ -426,7 +428,7 @@ func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDist
 func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*schema.SysDistrict, error) {
 
 	iteminput := a.ToEntCreateSysDistrictInput(&item)
-	var r_sysdistrict *ent.SysDistrict
+	var res_sysdistrict *ent.SysDistrict
 	var err error
 
 	// check pid
@@ -452,10 +454,12 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 		iteminput.IsLeaf = ptr.Bool(true)
 		iteminput.TreeLevel = ptr.Int32(1)
 
-		r_sysdistrict, err = a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
+		res_sysdistrict, err = a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
 
 	} else {
+
 		parent, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(*iteminput.ParentID)).First(ctx)
+
 		if err != nil {
 			return nil, err
 		}
@@ -465,28 +469,55 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 		iteminput.IsLeaf = ptr.Bool(true)
 		iteminput.TreeLevel = ptr.Int32(*parent.TreeLevel + 1)
 
+		if parent.TreePath != nil {
+			iteminput.TreePath = ptr.String(strings.Join([]string{*parent.TreePath, *iteminput.ParentID}, "/"))
+		} else {
+			iteminput.TreePath = iteminput.ParentID
+		}
+
+		if iteminput.MergeName == nil || *iteminput.MergeName == "" {
+			if parent.MergeName != nil && *parent.MergeName != "" {
+				iteminput.MergeName = ptr.String(strings.Join([]string{*parent.MergeName, *iteminput.Name}, ","))
+			} else {
+				iteminput.MergeName = iteminput.Name
+			}
+		}
+
+		if iteminput.MergeSname == nil || *iteminput.MergeSname == "" {
+			if parent.MergeSname != nil && *parent.MergeSname != "" {
+				iteminput.MergeSname = ptr.String(strings.Join([]string{*parent.MergeSname, *iteminput.Sname}, ","))
+			} else {
+				iteminput.MergeSname = iteminput.Sname
+
+			}
+		}
+
 		err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
-			r_sysdistrict, err = tx.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
+			res_sysdistrict, err = tx.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
 
 			if err != nil {
 				return err
 			}
 			update_district_l := tx.SysDistrict.Update()
-			update_district_l = update_district_l.Where(sysdistrict.IDNEQ(r_sysdistrict.ID))
+			update_district_l = update_district_l.Where(sysdistrict.IDNEQ(res_sysdistrict.ID))
+			update_district_l = update_district_l.Where(sysdistrict.TreeIDEQ(*parent.TreeID))
 			update_district_l = update_district_l.Where(sysdistrict.TreeLeftGT(*parent.TreeRight))
 			_, err := update_district_l.AddTreeLeft(2).Save(ctx)
 			if err != nil {
 				return err
 			}
 			update_district_r := tx.SysDistrict.Update()
-			update_district_r = update_district_r.Where(sysdistrict.IDNEQ(r_sysdistrict.ID))
+			update_district_r = update_district_r.Where(sysdistrict.IDNEQ(res_sysdistrict.ID))
+			update_district_r = update_district_r.Where(sysdistrict.TreeIDEQ(*parent.TreeID))
 			update_district_r = update_district_r.Where(sysdistrict.TreeRightGTE(*parent.TreeRight))
 			_, err = update_district_r.AddTreeRight(2).Save(ctx)
 			if err != nil {
 				return nil
 			}
-			parent, err = parent.Update().SetIsLeaf(false).Save(ctx)
+			// udpate parent's field is_leaf
+			_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(parent.ID)).SetIsLeaf(false).Save(ctx)
+
 			if err != nil {
 				return err
 			}
@@ -497,7 +528,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 	if err != nil {
 		return nil, err
 	}
-	sch_sysdistrict := a.ToSchemaSysDistrict(r_sysdistrict)
+	sch_sysdistrict := a.ToSchemaSysDistrict(res_sysdistrict)
 	return sch_sysdistrict, nil
 }
 
@@ -515,6 +546,22 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 		// old data.pid is nil
 		if iteminput.ParentID == nil {
 			// pid no change
+
+			if iteminput.MergeName == nil || *iteminput.MergeName == "" {
+				iteminput.MergeName = iteminput.Name
+			}
+
+			if iteminput.MergeSname == nil || *iteminput.MergeSname == "" {
+				iteminput.MergeSname = iteminput.Sname
+			}
+
+			log.Println(" ------ ====== name ", iteminput.Name)
+
+			_, err := a.EntCli.SysDistrict.Update().SetInput(*iteminput).Where(sysdistrict.IDEQ(id)).Save(ctx)
+			log.Println(" ------ ====== err ", err)
+			if err != nil {
+				return nil, err
+			}
 
 		} else {
 			// pid changed
@@ -555,8 +602,12 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 		}
 	}
 
-	r_sysdistrict, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_sysdistrict := a.ToSchemaSysDistrict(r_sysdistrict)
+	res_sysdistrict, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).First(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+	sch_sysdistrict := a.ToSchemaSysDistrict(res_sysdistrict)
 
 	return sch_sysdistrict, nil
 }

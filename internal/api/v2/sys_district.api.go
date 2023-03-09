@@ -1,6 +1,8 @@
 package api_v2
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -94,9 +96,11 @@ func (a *SysDistrict) Create(c *gin.Context) {
 	item.Creator = ginx.GetUserID(c)
 	result, err := a.SysDistrictSrv.Create(ctx, item)
 	if err != nil {
+		// log.Println(" -------- ==== district create error ", err)
 		ginx.ResError(c, err)
 		return
 	}
+
 	ginx.ResSuccess2(c, result)
 }
 
@@ -104,11 +108,15 @@ func (a *SysDistrict) Create(c *gin.Context) {
 func (a *SysDistrict) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.SysDistrict
-	if err := ginx.ParseJSON(c, &item); err != nil {
+	body, _ := ioutil.ReadAll(c.Request.Body)
+	log.Println(" ---- --- body ", string(body))
+	err := json.Unmarshal(body, &item)
+	// err := ginx.ParseJSON(c, &item)
+	log.Println(" ---- --- err ", err)
+	if err != nil {
 		ginx.ResError(c, err)
 		return
 	}
-
 	result, err := a.SysDistrictSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
 		ginx.ResError(c, err)
