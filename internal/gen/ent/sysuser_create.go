@@ -274,12 +274,6 @@ func (suc *SysUserCreate) check() error {
 	if _, ok := suc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysUser.sort"`)}
 	}
-	if _, ok := suc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysUser.created_at"`)}
-	}
-	if _, ok := suc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysUser.updated_at"`)}
-	}
 	if _, ok := suc.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysUser.is_active"`)}
 	}
@@ -385,11 +379,11 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := suc.mutation.CreatedAt(); ok {
 		_spec.SetField(sysuser.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := suc.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := suc.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)
@@ -522,6 +516,12 @@ func (u *SysUserUpsert) SetUpdatedAt(v time.Time) *SysUserUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysUserUpsert) UpdateUpdatedAt() *SysUserUpsert {
 	u.SetExcluded(sysuser.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysUserUpsert) ClearUpdatedAt() *SysUserUpsert {
+	u.SetNull(sysuser.FieldUpdatedAt)
 	return u
 }
 
@@ -757,6 +757,13 @@ func (u *SysUserUpsertOne) SetUpdatedAt(v time.Time) *SysUserUpsertOne {
 func (u *SysUserUpsertOne) UpdateUpdatedAt() *SysUserUpsertOne {
 	return u.Update(func(s *SysUserUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysUserUpsertOne) ClearUpdatedAt() *SysUserUpsertOne {
+	return u.Update(func(s *SysUserUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -1177,6 +1184,13 @@ func (u *SysUserUpsertBulk) SetUpdatedAt(v time.Time) *SysUserUpsertBulk {
 func (u *SysUserUpsertBulk) UpdateUpdatedAt() *SysUserUpsertBulk {
 	return u.Update(func(s *SysUserUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysUserUpsertBulk) ClearUpdatedAt() *SysUserUpsertBulk {
+	return u.Update(func(s *SysUserUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

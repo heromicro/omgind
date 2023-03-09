@@ -225,12 +225,6 @@ func (xdc *XxxDemoCreate) check() error {
 	if _, ok := xdc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "XxxDemo.sort"`)}
 	}
-	if _, ok := xdc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "XxxDemo.created_at"`)}
-	}
-	if _, ok := xdc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "XxxDemo.updated_at"`)}
-	}
 	if _, ok := xdc.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "XxxDemo.is_active"`)}
 	}
@@ -306,11 +300,11 @@ func (xdc *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := xdc.mutation.CreatedAt(); ok {
 		_spec.SetField(xxxdemo.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := xdc.mutation.UpdatedAt(); ok {
 		_spec.SetField(xxxdemo.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := xdc.mutation.DeletedAt(); ok {
 		_spec.SetField(xxxdemo.FieldDeletedAt, field.TypeTime, value)
@@ -437,6 +431,12 @@ func (u *XxxDemoUpsert) SetUpdatedAt(v time.Time) *XxxDemoUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *XxxDemoUpsert) UpdateUpdatedAt() *XxxDemoUpsert {
 	u.SetExcluded(xxxdemo.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *XxxDemoUpsert) ClearUpdatedAt() *XxxDemoUpsert {
+	u.SetNull(xxxdemo.FieldUpdatedAt)
 	return u
 }
 
@@ -612,6 +612,13 @@ func (u *XxxDemoUpsertOne) SetUpdatedAt(v time.Time) *XxxDemoUpsertOne {
 func (u *XxxDemoUpsertOne) UpdateUpdatedAt() *XxxDemoUpsertOne {
 	return u.Update(func(s *XxxDemoUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *XxxDemoUpsertOne) ClearUpdatedAt() *XxxDemoUpsertOne {
+	return u.Update(func(s *XxxDemoUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -959,6 +966,13 @@ func (u *XxxDemoUpsertBulk) SetUpdatedAt(v time.Time) *XxxDemoUpsertBulk {
 func (u *XxxDemoUpsertBulk) UpdateUpdatedAt() *XxxDemoUpsertBulk {
 	return u.Update(func(s *XxxDemoUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *XxxDemoUpsertBulk) ClearUpdatedAt() *XxxDemoUpsertBulk {
+	return u.Update(func(s *XxxDemoUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

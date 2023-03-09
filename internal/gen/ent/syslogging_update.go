@@ -36,6 +36,12 @@ func (slu *SysLoggingUpdate) SetUpdatedAt(t time.Time) *SysLoggingUpdate {
 	return slu
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (slu *SysLoggingUpdate) ClearUpdatedAt() *SysLoggingUpdate {
+	slu.mutation.ClearUpdatedAt()
+	return slu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (slu *SysLoggingUpdate) SetDeletedAt(t time.Time) *SysLoggingUpdate {
 	slu.mutation.SetDeletedAt(t)
@@ -267,7 +273,7 @@ func (slu *SysLoggingUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (slu *SysLoggingUpdate) defaults() error {
-	if _, ok := slu.mutation.UpdatedAt(); !ok {
+	if _, ok := slu.mutation.UpdatedAt(); !ok && !slu.mutation.UpdatedAtCleared() {
 		if syslogging.UpdateDefaultUpdatedAt == nil {
 			return fmt.Errorf("ent: uninitialized syslogging.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
 		}
@@ -335,8 +341,14 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if slu.mutation.CreatedAtCleared() {
+		_spec.ClearField(syslogging.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := slu.mutation.UpdatedAt(); ok {
 		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if slu.mutation.UpdatedAtCleared() {
+		_spec.ClearField(syslogging.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := slu.mutation.DeletedAt(); ok {
 		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)
@@ -425,6 +437,12 @@ type SysLoggingUpdateOne struct {
 // SetUpdatedAt sets the "updated_at" field.
 func (sluo *SysLoggingUpdateOne) SetUpdatedAt(t time.Time) *SysLoggingUpdateOne {
 	sluo.mutation.SetUpdatedAt(t)
+	return sluo
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sluo *SysLoggingUpdateOne) ClearUpdatedAt() *SysLoggingUpdateOne {
+	sluo.mutation.ClearUpdatedAt()
 	return sluo
 }
 
@@ -672,7 +690,7 @@ func (sluo *SysLoggingUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sluo *SysLoggingUpdateOne) defaults() error {
-	if _, ok := sluo.mutation.UpdatedAt(); !ok {
+	if _, ok := sluo.mutation.UpdatedAt(); !ok && !sluo.mutation.UpdatedAtCleared() {
 		if syslogging.UpdateDefaultUpdatedAt == nil {
 			return fmt.Errorf("ent: uninitialized syslogging.UpdateDefaultUpdatedAt (forgotten import ent/runtime?)")
 		}
@@ -757,8 +775,14 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 			}
 		}
 	}
+	if sluo.mutation.CreatedAtCleared() {
+		_spec.ClearField(syslogging.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sluo.mutation.UpdatedAt(); ok {
 		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sluo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(syslogging.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sluo.mutation.DeletedAt(); ok {
 		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)

@@ -50,6 +50,12 @@ func (suru *SysUserRoleUpdate) SetUpdatedAt(t time.Time) *SysUserRoleUpdate {
 	return suru
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (suru *SysUserRoleUpdate) ClearUpdatedAt() *SysUserRoleUpdate {
+	suru.mutation.ClearUpdatedAt()
+	return suru
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (suru *SysUserRoleUpdate) SetDeletedAt(t time.Time) *SysUserRoleUpdate {
 	suru.mutation.SetDeletedAt(t)
@@ -117,7 +123,7 @@ func (suru *SysUserRoleUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (suru *SysUserRoleUpdate) defaults() {
-	if _, ok := suru.mutation.UpdatedAt(); !ok {
+	if _, ok := suru.mutation.UpdatedAt(); !ok && !suru.mutation.UpdatedAtCleared() {
 		v := sysuserrole.UpdateDefaultUpdatedAt()
 		suru.mutation.SetUpdatedAt(v)
 	}
@@ -159,8 +165,14 @@ func (suru *SysUserRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := suru.mutation.IsDel(); ok {
 		_spec.SetField(sysuserrole.FieldIsDel, field.TypeBool, value)
 	}
+	if suru.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysuserrole.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := suru.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuserrole.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if suru.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysuserrole.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := suru.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuserrole.FieldDeletedAt, field.TypeTime, value)
@@ -215,6 +227,12 @@ func (suruo *SysUserRoleUpdateOne) SetNillableIsDel(b *bool) *SysUserRoleUpdateO
 // SetUpdatedAt sets the "updated_at" field.
 func (suruo *SysUserRoleUpdateOne) SetUpdatedAt(t time.Time) *SysUserRoleUpdateOne {
 	suruo.mutation.SetUpdatedAt(t)
+	return suruo
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (suruo *SysUserRoleUpdateOne) ClearUpdatedAt() *SysUserRoleUpdateOne {
+	suruo.mutation.ClearUpdatedAt()
 	return suruo
 }
 
@@ -298,7 +316,7 @@ func (suruo *SysUserRoleUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (suruo *SysUserRoleUpdateOne) defaults() {
-	if _, ok := suruo.mutation.UpdatedAt(); !ok {
+	if _, ok := suruo.mutation.UpdatedAt(); !ok && !suruo.mutation.UpdatedAtCleared() {
 		v := sysuserrole.UpdateDefaultUpdatedAt()
 		suruo.mutation.SetUpdatedAt(v)
 	}
@@ -357,8 +375,14 @@ func (suruo *SysUserRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysUserR
 	if value, ok := suruo.mutation.IsDel(); ok {
 		_spec.SetField(sysuserrole.FieldIsDel, field.TypeBool, value)
 	}
+	if suruo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysuserrole.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := suruo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuserrole.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if suruo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysuserrole.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := suruo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuserrole.FieldDeletedAt, field.TypeTime, value)

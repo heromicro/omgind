@@ -159,6 +159,16 @@ func CreatedAtLTE(v time.Time) predicate.SysLogging {
 	return predicate.SysLogging(sql.FieldLTE(FieldCreatedAt, v))
 }
 
+// CreatedAtIsNil applies the IsNil predicate on the "created_at" field.
+func CreatedAtIsNil() predicate.SysLogging {
+	return predicate.SysLogging(sql.FieldIsNull(FieldCreatedAt))
+}
+
+// CreatedAtNotNil applies the NotNil predicate on the "created_at" field.
+func CreatedAtNotNil() predicate.SysLogging {
+	return predicate.SysLogging(sql.FieldNotNull(FieldCreatedAt))
+}
+
 // UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
 func UpdatedAtEQ(v time.Time) predicate.SysLogging {
 	return predicate.SysLogging(sql.FieldEQ(FieldUpdatedAt, v))
@@ -197,6 +207,16 @@ func UpdatedAtLT(v time.Time) predicate.SysLogging {
 // UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
 func UpdatedAtLTE(v time.Time) predicate.SysLogging {
 	return predicate.SysLogging(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// UpdatedAtIsNil applies the IsNil predicate on the "updated_at" field.
+func UpdatedAtIsNil() predicate.SysLogging {
+	return predicate.SysLogging(sql.FieldIsNull(FieldUpdatedAt))
+}
+
+// UpdatedAtNotNil applies the NotNil predicate on the "updated_at" field.
+func UpdatedAtNotNil() predicate.SysLogging {
+	return predicate.SysLogging(sql.FieldNotNull(FieldUpdatedAt))
 }
 
 // DeletedAtEQ applies the EQ predicate on the "deleted_at" field.

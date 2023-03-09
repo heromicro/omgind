@@ -70,6 +70,12 @@ func (sjbu *SysJwtBlockUpdate) SetUpdatedAt(t time.Time) *SysJwtBlockUpdate {
 	return sjbu
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sjbu *SysJwtBlockUpdate) ClearUpdatedAt() *SysJwtBlockUpdate {
+	sjbu.mutation.ClearUpdatedAt()
+	return sjbu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (sjbu *SysJwtBlockUpdate) SetDeletedAt(t time.Time) *SysJwtBlockUpdate {
 	sjbu.mutation.SetDeletedAt(t)
@@ -145,7 +151,7 @@ func (sjbu *SysJwtBlockUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sjbu *SysJwtBlockUpdate) defaults() {
-	if _, ok := sjbu.mutation.UpdatedAt(); !ok {
+	if _, ok := sjbu.mutation.UpdatedAt(); !ok && !sjbu.mutation.UpdatedAtCleared() {
 		v := sysjwtblock.UpdateDefaultUpdatedAt()
 		sjbu.mutation.SetUpdatedAt(v)
 	}
@@ -193,8 +199,14 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if sjbu.mutation.MemoCleared() {
 		_spec.ClearField(sysjwtblock.FieldMemo, field.TypeString)
 	}
+	if sjbu.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysjwtblock.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sjbu.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sjbu.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysjwtblock.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sjbu.mutation.DeletedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldDeletedAt, field.TypeTime, value)
@@ -269,6 +281,12 @@ func (sjbuo *SysJwtBlockUpdateOne) ClearMemo() *SysJwtBlockUpdateOne {
 // SetUpdatedAt sets the "updated_at" field.
 func (sjbuo *SysJwtBlockUpdateOne) SetUpdatedAt(t time.Time) *SysJwtBlockUpdateOne {
 	sjbuo.mutation.SetUpdatedAt(t)
+	return sjbuo
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sjbuo *SysJwtBlockUpdateOne) ClearUpdatedAt() *SysJwtBlockUpdateOne {
+	sjbuo.mutation.ClearUpdatedAt()
 	return sjbuo
 }
 
@@ -360,7 +378,7 @@ func (sjbuo *SysJwtBlockUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sjbuo *SysJwtBlockUpdateOne) defaults() {
-	if _, ok := sjbuo.mutation.UpdatedAt(); !ok {
+	if _, ok := sjbuo.mutation.UpdatedAt(); !ok && !sjbuo.mutation.UpdatedAtCleared() {
 		v := sysjwtblock.UpdateDefaultUpdatedAt()
 		sjbuo.mutation.SetUpdatedAt(v)
 	}
@@ -425,8 +443,14 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 	if sjbuo.mutation.MemoCleared() {
 		_spec.ClearField(sysjwtblock.FieldMemo, field.TypeString)
 	}
+	if sjbuo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysjwtblock.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sjbuo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sjbuo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysjwtblock.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sjbuo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldDeletedAt, field.TypeTime, value)

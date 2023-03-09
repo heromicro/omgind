@@ -301,12 +301,6 @@ func (smc *SysMenuCreate) check() error {
 	if _, ok := smc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysMenu.sort"`)}
 	}
-	if _, ok := smc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysMenu.created_at"`)}
-	}
-	if _, ok := smc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysMenu.updated_at"`)}
-	}
 	if _, ok := smc.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysMenu.is_active"`)}
 	}
@@ -411,11 +405,11 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := smc.mutation.CreatedAt(); ok {
 		_spec.SetField(sysmenu.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := smc.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenu.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := smc.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenu.FieldDeletedAt, field.TypeTime, value)
@@ -566,6 +560,12 @@ func (u *SysMenuUpsert) SetUpdatedAt(v time.Time) *SysMenuUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysMenuUpsert) UpdateUpdatedAt() *SysMenuUpsert {
 	u.SetExcluded(sysmenu.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysMenuUpsert) ClearUpdatedAt() *SysMenuUpsert {
+	u.SetNull(sysmenu.FieldUpdatedAt)
 	return u
 }
 
@@ -837,6 +837,13 @@ func (u *SysMenuUpsertOne) SetUpdatedAt(v time.Time) *SysMenuUpsertOne {
 func (u *SysMenuUpsertOne) UpdateUpdatedAt() *SysMenuUpsertOne {
 	return u.Update(func(s *SysMenuUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysMenuUpsertOne) ClearUpdatedAt() *SysMenuUpsertOne {
+	return u.Update(func(s *SysMenuUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -1296,6 +1303,13 @@ func (u *SysMenuUpsertBulk) SetUpdatedAt(v time.Time) *SysMenuUpsertBulk {
 func (u *SysMenuUpsertBulk) UpdateUpdatedAt() *SysMenuUpsertBulk {
 	return u.Update(func(s *SysMenuUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysMenuUpsertBulk) ClearUpdatedAt() *SysMenuUpsertBulk {
+	return u.Update(func(s *SysMenuUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

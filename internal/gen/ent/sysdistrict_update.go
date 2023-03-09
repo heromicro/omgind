@@ -71,6 +71,12 @@ func (sdu *SysDistrictUpdate) SetUpdatedAt(t time.Time) *SysDistrictUpdate {
 	return sdu
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sdu *SysDistrictUpdate) ClearUpdatedAt() *SysDistrictUpdate {
+	sdu.mutation.ClearUpdatedAt()
+	return sdu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (sdu *SysDistrictUpdate) SetDeletedAt(t time.Time) *SysDistrictUpdate {
 	sdu.mutation.SetDeletedAt(t)
@@ -775,7 +781,7 @@ func (sdu *SysDistrictUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sdu *SysDistrictUpdate) defaults() {
-	if _, ok := sdu.mutation.UpdatedAt(); !ok {
+	if _, ok := sdu.mutation.UpdatedAt(); !ok && !sdu.mutation.UpdatedAtCleared() {
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sdu.mutation.SetUpdatedAt(v)
 	}
@@ -893,8 +899,14 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sdu.mutation.AddedSort(); ok {
 		_spec.AddField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
+	if sdu.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysdistrict.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sdu.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sdu.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysdistrict.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sdu.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)
@@ -1238,6 +1250,12 @@ func (sduo *SysDistrictUpdateOne) AddSort(i int32) *SysDistrictUpdateOne {
 // SetUpdatedAt sets the "updated_at" field.
 func (sduo *SysDistrictUpdateOne) SetUpdatedAt(t time.Time) *SysDistrictUpdateOne {
 	sduo.mutation.SetUpdatedAt(t)
+	return sduo
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sduo *SysDistrictUpdateOne) ClearUpdatedAt() *SysDistrictUpdateOne {
+	sduo.mutation.ClearUpdatedAt()
 	return sduo
 }
 
@@ -1958,7 +1976,7 @@ func (sduo *SysDistrictUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sduo *SysDistrictUpdateOne) defaults() {
-	if _, ok := sduo.mutation.UpdatedAt(); !ok {
+	if _, ok := sduo.mutation.UpdatedAt(); !ok && !sduo.mutation.UpdatedAtCleared() {
 		v := sysdistrict.UpdateDefaultUpdatedAt()
 		sduo.mutation.SetUpdatedAt(v)
 	}
@@ -2093,8 +2111,14 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 	if value, ok := sduo.mutation.AddedSort(); ok {
 		_spec.AddField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
+	if sduo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysdistrict.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sduo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sduo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysdistrict.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sduo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)

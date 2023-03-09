@@ -17,9 +17,9 @@ type SysLogging struct {
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否删除
@@ -80,13 +80,15 @@ func (sl *SysLogging) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sl.CreatedAt = value.Time
+				sl.CreatedAt = new(time.Time)
+				*sl.CreatedAt = value.Time
 			}
 		case syslogging.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sl.UpdatedAt = value.Time
+				sl.UpdatedAt = new(time.Time)
+				*sl.UpdatedAt = value.Time
 			}
 		case syslogging.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -192,11 +194,15 @@ func (sl *SysLogging) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysLogging(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", sl.ID))
-	builder.WriteString("created_at=")
-	builder.WriteString(sl.CreatedAt.Format(time.ANSIC))
+	if v := sl.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(sl.UpdatedAt.Format(time.ANSIC))
+	if v := sl.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := sl.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

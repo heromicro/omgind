@@ -91,6 +91,12 @@ func (smaru *SysMenuActionResourceUpdate) SetUpdatedAt(t time.Time) *SysMenuActi
 	return smaru
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (smaru *SysMenuActionResourceUpdate) ClearUpdatedAt() *SysMenuActionResourceUpdate {
+	smaru.mutation.ClearUpdatedAt()
+	return smaru
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (smaru *SysMenuActionResourceUpdate) SetDeletedAt(t time.Time) *SysMenuActionResourceUpdate {
 	smaru.mutation.SetDeletedAt(t)
@@ -178,7 +184,7 @@ func (smaru *SysMenuActionResourceUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (smaru *SysMenuActionResourceUpdate) defaults() {
-	if _, ok := smaru.mutation.UpdatedAt(); !ok {
+	if _, ok := smaru.mutation.UpdatedAt(); !ok && !smaru.mutation.UpdatedAtCleared() {
 		v := sysmenuactionresource.UpdateDefaultUpdatedAt()
 		smaru.mutation.SetUpdatedAt(v)
 	}
@@ -242,8 +248,14 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 	if smaru.mutation.MemoCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldMemo, field.TypeString)
 	}
+	if smaru.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysmenuactionresource.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := smaru.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if smaru.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := smaru.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldDeletedAt, field.TypeTime, value)
@@ -348,6 +360,12 @@ func (smaruo *SysMenuActionResourceUpdateOne) SetUpdatedAt(t time.Time) *SysMenu
 	return smaruo
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (smaruo *SysMenuActionResourceUpdateOne) ClearUpdatedAt() *SysMenuActionResourceUpdateOne {
+	smaruo.mutation.ClearUpdatedAt()
+	return smaruo
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (smaruo *SysMenuActionResourceUpdateOne) SetDeletedAt(t time.Time) *SysMenuActionResourceUpdateOne {
 	smaruo.mutation.SetDeletedAt(t)
@@ -448,7 +466,7 @@ func (smaruo *SysMenuActionResourceUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (smaruo *SysMenuActionResourceUpdateOne) defaults() {
-	if _, ok := smaruo.mutation.UpdatedAt(); !ok {
+	if _, ok := smaruo.mutation.UpdatedAt(); !ok && !smaruo.mutation.UpdatedAtCleared() {
 		v := sysmenuactionresource.UpdateDefaultUpdatedAt()
 		smaruo.mutation.SetUpdatedAt(v)
 	}
@@ -529,8 +547,14 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 	if smaruo.mutation.MemoCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldMemo, field.TypeString)
 	}
+	if smaruo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysmenuactionresource.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := smaruo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if smaruo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := smaruo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldDeletedAt, field.TypeTime, value)

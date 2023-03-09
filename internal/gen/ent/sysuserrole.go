@@ -19,9 +19,9 @@ type SysUserRole struct {
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 用户ID, sys_user.id
@@ -72,13 +72,15 @@ func (sur *SysUserRole) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sur.CreatedAt = value.Time
+				sur.CreatedAt = new(time.Time)
+				*sur.CreatedAt = value.Time
 			}
 		case sysuserrole.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sur.UpdatedAt = value.Time
+				sur.UpdatedAt = new(time.Time)
+				*sur.UpdatedAt = value.Time
 			}
 		case sysuserrole.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -130,11 +132,15 @@ func (sur *SysUserRole) String() string {
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", sur.IsDel))
 	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(sur.CreatedAt.Format(time.ANSIC))
+	if v := sur.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(sur.UpdatedAt.Format(time.ANSIC))
+	if v := sur.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := sur.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

@@ -31,7 +31,7 @@ func (TimeMixin) Indexes() []ent.Index {
 
 func FieldCreateAt() ent.Field {
 	return field.Time("created_at").
-		StorageKey("crtd_at").
+		StorageKey("crtd_at").Nillable().Optional().
 		StructTag(`json:"created_at,omitempty"`).
 		Immutable().
 		Default(time.Now).Comment("create time")
@@ -50,7 +50,7 @@ func FieldCreateAt_milli() ent.Field {
 func FielUpdatedAt() ent.Field {
 
 	return field.Time("updated_at").
-		StorageKey("uptd_at").
+		StorageKey("uptd_at").Nillable().Optional().
 		StructTag(`json:"updated_at,omitempty"`).
 		Default(time.Now).
 		UpdateDefault(time.Now).

@@ -111,6 +111,7 @@ type UpdateSysAddressInput struct {
 	ClearOwnerID   bool
 	Sort           *int32
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	IsActive       *bool
@@ -157,6 +158,9 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -321,6 +325,7 @@ type UpdateSysDictInput struct {
 	ClearMemo      bool
 	Sort           *int32
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	IsActive       *bool
@@ -341,6 +346,9 @@ func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -429,6 +437,7 @@ type UpdateSysDictItemInput struct {
 	ClearMemo      bool
 	Sort           *int32
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	IsActive       *bool
@@ -450,6 +459,9 @@ func (i *UpdateSysDictItemInput) Mutate(m *SysDictItemMutation) {
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -647,6 +659,7 @@ type UpdateSysDistrictInput struct {
 	IsDel           *bool
 	Sort            *int32
 	UpdatedAt       *time.Time
+	ClearUpdatedAt  bool
 	DeletedAt       *time.Time
 	ClearDeletedAt  bool
 	IsActive        *bool
@@ -718,6 +731,9 @@ func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -968,6 +984,7 @@ type UpdateSysJwtBlockInput struct {
 	Memo           *string
 	ClearMemo      bool
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	IsActive       *bool
@@ -984,6 +1001,9 @@ func (i *UpdateSysJwtBlockInput) Mutate(m *SysJwtBlockMutation) {
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -1083,6 +1103,7 @@ func (c *SysLoggingCreate) SetInput(i CreateSysLoggingInput) *SysLoggingCreate {
 // UpdateSysLoggingInput represents a mutation input for updating sysloggings.
 type UpdateSysLoggingInput struct {
 	UpdatedAt       *time.Time
+	ClearUpdatedAt  bool
 	DeletedAt       *time.Time
 	ClearDeletedAt  bool
 	IsDel           *bool
@@ -1106,6 +1127,9 @@ type UpdateSysLoggingInput struct {
 
 // Mutate applies the UpdateSysLoggingInput on the SysLoggingMutation.
 func (i *UpdateSysLoggingInput) Mutate(m *SysLoggingMutation) {
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
+	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
 	}
@@ -1253,6 +1277,7 @@ type UpdateSysMenuInput struct {
 	ClearMemo       bool
 	Sort            *int32
 	UpdatedAt       *time.Time
+	ClearUpdatedAt  bool
 	DeletedAt       *time.Time
 	ClearDeletedAt  bool
 	IsActive        *bool
@@ -1282,6 +1307,9 @@ func (i *UpdateSysMenuInput) Mutate(m *SysMenuMutation) {
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -1398,6 +1426,7 @@ type UpdateSysMenuActionInput struct {
 	Memo           *string
 	ClearMemo      bool
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	MenuID         *string
@@ -1421,6 +1450,9 @@ func (i *UpdateSysMenuActionInput) Mutate(m *SysMenuActionMutation) {
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -1509,6 +1541,7 @@ type UpdateSysMenuActionResourceInput struct {
 	Memo           *string
 	ClearMemo      bool
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	IsActive       *bool
@@ -1530,6 +1563,9 @@ func (i *UpdateSysMenuActionResourceInput) Mutate(m *SysMenuActionResourceMutati
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -1618,6 +1654,7 @@ type UpdateSysRoleInput struct {
 	Memo           *string
 	ClearMemo      bool
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	Name           *string
@@ -1639,6 +1676,9 @@ func (i *UpdateSysRoleInput) Mutate(m *SysRoleMutation) {
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -1708,6 +1748,7 @@ func (c *SysRoleMenuCreate) SetInput(i CreateSysRoleMenuInput) *SysRoleMenuCreat
 type UpdateSysRoleMenuInput struct {
 	IsDel          *bool
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	RoleID         *string
@@ -1720,6 +1761,9 @@ type UpdateSysRoleMenuInput struct {
 func (i *UpdateSysRoleMenuInput) Mutate(m *SysRoleMenuMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -1823,6 +1867,7 @@ type UpdateSysUserInput struct {
 	IsDel          *bool
 	Sort           *int32
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	IsActive       *bool
@@ -1845,6 +1890,9 @@ func (i *UpdateSysUserInput) Mutate(m *SysUserMutation) {
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -1940,6 +1988,7 @@ func (c *SysUserRoleCreate) SetInput(i CreateSysUserRoleInput) *SysUserRoleCreat
 type UpdateSysUserRoleInput struct {
 	IsDel          *bool
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	UserID         *string
@@ -1950,6 +1999,9 @@ type UpdateSysUserRoleInput struct {
 func (i *UpdateSysUserRoleInput) Mutate(m *SysUserRoleMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)
@@ -2033,6 +2085,7 @@ type UpdateXxxDemoInput struct {
 	ClearMemo      bool
 	Sort           *int32
 	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
 	IsActive       *bool
@@ -2053,6 +2106,9 @@ func (i *UpdateXxxDemoInput) Mutate(m *XxxDemoMutation) {
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
 	}
 	if v := i.UpdatedAt; v != nil {
 		m.SetUpdatedAt(*v)

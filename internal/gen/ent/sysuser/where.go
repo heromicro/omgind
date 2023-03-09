@@ -214,6 +214,16 @@ func CreatedAtLTE(v time.Time) predicate.SysUser {
 	return predicate.SysUser(sql.FieldLTE(FieldCreatedAt, v))
 }
 
+// CreatedAtIsNil applies the IsNil predicate on the "created_at" field.
+func CreatedAtIsNil() predicate.SysUser {
+	return predicate.SysUser(sql.FieldIsNull(FieldCreatedAt))
+}
+
+// CreatedAtNotNil applies the NotNil predicate on the "created_at" field.
+func CreatedAtNotNil() predicate.SysUser {
+	return predicate.SysUser(sql.FieldNotNull(FieldCreatedAt))
+}
+
 // UpdatedAtEQ applies the EQ predicate on the "updated_at" field.
 func UpdatedAtEQ(v time.Time) predicate.SysUser {
 	return predicate.SysUser(sql.FieldEQ(FieldUpdatedAt, v))
@@ -252,6 +262,16 @@ func UpdatedAtLT(v time.Time) predicate.SysUser {
 // UpdatedAtLTE applies the LTE predicate on the "updated_at" field.
 func UpdatedAtLTE(v time.Time) predicate.SysUser {
 	return predicate.SysUser(sql.FieldLTE(FieldUpdatedAt, v))
+}
+
+// UpdatedAtIsNil applies the IsNil predicate on the "updated_at" field.
+func UpdatedAtIsNil() predicate.SysUser {
+	return predicate.SysUser(sql.FieldIsNull(FieldUpdatedAt))
+}
+
+// UpdatedAtNotNil applies the NotNil predicate on the "updated_at" field.
+func UpdatedAtNotNil() predicate.SysUser {
+	return predicate.SysUser(sql.FieldNotNull(FieldUpdatedAt))
 }
 
 // DeletedAtEQ applies the EQ predicate on the "deleted_at" field.

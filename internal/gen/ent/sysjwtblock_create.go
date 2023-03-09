@@ -198,12 +198,6 @@ func (sjbc *SysJwtBlockCreate) check() error {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`ent: validator failed for field "SysJwtBlock.memo": %w`, err)}
 		}
 	}
-	if _, ok := sjbc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysJwtBlock.created_at"`)}
-	}
-	if _, ok := sjbc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysJwtBlock.updated_at"`)}
-	}
 	if _, ok := sjbc.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysJwtBlock.is_active"`)}
 	}
@@ -267,11 +261,11 @@ func (sjbc *SysJwtBlockCreate) createSpec() (*SysJwtBlock, *sqlgraph.CreateSpec)
 	}
 	if value, ok := sjbc.mutation.CreatedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := sjbc.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := sjbc.mutation.DeletedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldDeletedAt, field.TypeTime, value)
@@ -376,6 +370,12 @@ func (u *SysJwtBlockUpsert) SetUpdatedAt(v time.Time) *SysJwtBlockUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysJwtBlockUpsert) UpdateUpdatedAt() *SysJwtBlockUpsert {
 	u.SetExcluded(sysjwtblock.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysJwtBlockUpsert) ClearUpdatedAt() *SysJwtBlockUpsert {
+	u.SetNull(sysjwtblock.FieldUpdatedAt)
 	return u
 }
 
@@ -518,6 +518,13 @@ func (u *SysJwtBlockUpsertOne) SetUpdatedAt(v time.Time) *SysJwtBlockUpsertOne {
 func (u *SysJwtBlockUpsertOne) UpdateUpdatedAt() *SysJwtBlockUpsertOne {
 	return u.Update(func(s *SysJwtBlockUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysJwtBlockUpsertOne) ClearUpdatedAt() *SysJwtBlockUpsertOne {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -830,6 +837,13 @@ func (u *SysJwtBlockUpsertBulk) SetUpdatedAt(v time.Time) *SysJwtBlockUpsertBulk
 func (u *SysJwtBlockUpsertBulk) UpdateUpdatedAt() *SysJwtBlockUpsertBulk {
 	return u.Update(func(s *SysJwtBlockUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysJwtBlockUpsertBulk) ClearUpdatedAt() *SysJwtBlockUpsertBulk {
+	return u.Update(func(s *SysJwtBlockUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

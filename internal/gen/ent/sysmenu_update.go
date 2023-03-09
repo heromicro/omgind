@@ -91,6 +91,12 @@ func (smu *SysMenuUpdate) SetUpdatedAt(t time.Time) *SysMenuUpdate {
 	return smu
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (smu *SysMenuUpdate) ClearUpdatedAt() *SysMenuUpdate {
+	smu.mutation.ClearUpdatedAt()
+	return smu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (smu *SysMenuUpdate) SetDeletedAt(t time.Time) *SysMenuUpdate {
 	smu.mutation.SetDeletedAt(t)
@@ -265,7 +271,7 @@ func (smu *SysMenuUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (smu *SysMenuUpdate) defaults() {
-	if _, ok := smu.mutation.UpdatedAt(); !ok {
+	if _, ok := smu.mutation.UpdatedAt(); !ok && !smu.mutation.UpdatedAtCleared() {
 		v := sysmenu.UpdateDefaultUpdatedAt()
 		smu.mutation.SetUpdatedAt(v)
 	}
@@ -344,8 +350,14 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := smu.mutation.AddedSort(); ok {
 		_spec.AddField(sysmenu.FieldSort, field.TypeInt32, value)
 	}
+	if smu.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysmenu.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := smu.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenu.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if smu.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysmenu.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := smu.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenu.FieldDeletedAt, field.TypeTime, value)
@@ -474,6 +486,12 @@ func (smuo *SysMenuUpdateOne) AddSort(i int32) *SysMenuUpdateOne {
 // SetUpdatedAt sets the "updated_at" field.
 func (smuo *SysMenuUpdateOne) SetUpdatedAt(t time.Time) *SysMenuUpdateOne {
 	smuo.mutation.SetUpdatedAt(t)
+	return smuo
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (smuo *SysMenuUpdateOne) ClearUpdatedAt() *SysMenuUpdateOne {
+	smuo.mutation.ClearUpdatedAt()
 	return smuo
 }
 
@@ -664,7 +682,7 @@ func (smuo *SysMenuUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (smuo *SysMenuUpdateOne) defaults() {
-	if _, ok := smuo.mutation.UpdatedAt(); !ok {
+	if _, ok := smuo.mutation.UpdatedAt(); !ok && !smuo.mutation.UpdatedAtCleared() {
 		v := sysmenu.UpdateDefaultUpdatedAt()
 		smuo.mutation.SetUpdatedAt(v)
 	}
@@ -760,8 +778,14 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 	if value, ok := smuo.mutation.AddedSort(); ok {
 		_spec.AddField(sysmenu.FieldSort, field.TypeInt32, value)
 	}
+	if smuo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysmenu.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := smuo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenu.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if smuo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysmenu.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := smuo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenu.FieldDeletedAt, field.TypeTime, value)

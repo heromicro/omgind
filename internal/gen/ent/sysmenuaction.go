@@ -25,9 +25,9 @@ type SysMenuAction struct {
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 菜单ID
@@ -101,13 +101,15 @@ func (sma *SysMenuAction) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sma.CreatedAt = value.Time
+				sma.CreatedAt = new(time.Time)
+				*sma.CreatedAt = value.Time
 			}
 		case sysmenuaction.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sma.UpdatedAt = value.Time
+				sma.UpdatedAt = new(time.Time)
+				*sma.UpdatedAt = value.Time
 			}
 		case sysmenuaction.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -176,11 +178,15 @@ func (sma *SysMenuAction) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(sma.CreatedAt.Format(time.ANSIC))
+	if v := sma.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(sma.UpdatedAt.Format(time.ANSIC))
+	if v := sma.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := sma.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

@@ -23,9 +23,9 @@ type SysMenu struct {
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
@@ -105,13 +105,15 @@ func (sm *SysMenu) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sm.CreatedAt = value.Time
+				sm.CreatedAt = new(time.Time)
+				*sm.CreatedAt = value.Time
 			}
 		case sysmenu.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sm.UpdatedAt = value.Time
+				sm.UpdatedAt = new(time.Time)
+				*sm.UpdatedAt = value.Time
 			}
 		case sysmenu.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -216,11 +218,15 @@ func (sm *SysMenu) String() string {
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", sm.Sort))
 	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(sm.CreatedAt.Format(time.ANSIC))
+	if v := sm.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(sm.UpdatedAt.Format(time.ANSIC))
+	if v := sm.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := sm.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

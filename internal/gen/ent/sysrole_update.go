@@ -105,6 +105,12 @@ func (sru *SysRoleUpdate) SetUpdatedAt(t time.Time) *SysRoleUpdate {
 	return sru
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sru *SysRoleUpdate) ClearUpdatedAt() *SysRoleUpdate {
+	sru.mutation.ClearUpdatedAt()
+	return sru
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (sru *SysRoleUpdate) SetDeletedAt(t time.Time) *SysRoleUpdate {
 	sru.mutation.SetDeletedAt(t)
@@ -166,7 +172,7 @@ func (sru *SysRoleUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sru *SysRoleUpdate) defaults() {
-	if _, ok := sru.mutation.UpdatedAt(); !ok {
+	if _, ok := sru.mutation.UpdatedAt(); !ok && !sru.mutation.UpdatedAtCleared() {
 		v := sysrole.UpdateDefaultUpdatedAt()
 		sru.mutation.SetUpdatedAt(v)
 	}
@@ -223,8 +229,14 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if sru.mutation.MemoCleared() {
 		_spec.ClearField(sysrole.FieldMemo, field.TypeString)
 	}
+	if sru.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysrole.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sru.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrole.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sru.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysrole.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sru.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)
@@ -334,6 +346,12 @@ func (sruo *SysRoleUpdateOne) SetUpdatedAt(t time.Time) *SysRoleUpdateOne {
 	return sruo
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sruo *SysRoleUpdateOne) ClearUpdatedAt() *SysRoleUpdateOne {
+	sruo.mutation.ClearUpdatedAt()
+	return sruo
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (sruo *SysRoleUpdateOne) SetDeletedAt(t time.Time) *SysRoleUpdateOne {
 	sruo.mutation.SetDeletedAt(t)
@@ -408,7 +426,7 @@ func (sruo *SysRoleUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sruo *SysRoleUpdateOne) defaults() {
-	if _, ok := sruo.mutation.UpdatedAt(); !ok {
+	if _, ok := sruo.mutation.UpdatedAt(); !ok && !sruo.mutation.UpdatedAtCleared() {
 		v := sysrole.UpdateDefaultUpdatedAt()
 		sruo.mutation.SetUpdatedAt(v)
 	}
@@ -482,8 +500,14 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 	if sruo.mutation.MemoCleared() {
 		_spec.ClearField(sysrole.FieldMemo, field.TypeString)
 	}
+	if sruo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysrole.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sruo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrole.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sruo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysrole.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sruo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)

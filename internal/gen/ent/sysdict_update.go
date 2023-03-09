@@ -91,6 +91,12 @@ func (sdu *SysDictUpdate) SetUpdatedAt(t time.Time) *SysDictUpdate {
 	return sdu
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sdu *SysDictUpdate) ClearUpdatedAt() *SysDictUpdate {
+	sdu.mutation.ClearUpdatedAt()
+	return sdu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (sdu *SysDictUpdate) SetDeletedAt(t time.Time) *SysDictUpdate {
 	sdu.mutation.SetDeletedAt(t)
@@ -172,7 +178,7 @@ func (sdu *SysDictUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sdu *SysDictUpdate) defaults() {
-	if _, ok := sdu.mutation.UpdatedAt(); !ok {
+	if _, ok := sdu.mutation.UpdatedAt(); !ok && !sdu.mutation.UpdatedAtCleared() {
 		v := sysdict.UpdateDefaultUpdatedAt()
 		sdu.mutation.SetUpdatedAt(v)
 	}
@@ -231,8 +237,14 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sdu.mutation.AddedSort(); ok {
 		_spec.AddField(sysdict.FieldSort, field.TypeInt32, value)
 	}
+	if sdu.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysdict.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sdu.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sdu.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysdict.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sdu.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)
@@ -334,6 +346,12 @@ func (sduo *SysDictUpdateOne) SetUpdatedAt(t time.Time) *SysDictUpdateOne {
 	return sduo
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sduo *SysDictUpdateOne) ClearUpdatedAt() *SysDictUpdateOne {
+	sduo.mutation.ClearUpdatedAt()
+	return sduo
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (sduo *SysDictUpdateOne) SetDeletedAt(t time.Time) *SysDictUpdateOne {
 	sduo.mutation.SetDeletedAt(t)
@@ -428,7 +446,7 @@ func (sduo *SysDictUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sduo *SysDictUpdateOne) defaults() {
-	if _, ok := sduo.mutation.UpdatedAt(); !ok {
+	if _, ok := sduo.mutation.UpdatedAt(); !ok && !sduo.mutation.UpdatedAtCleared() {
 		v := sysdict.UpdateDefaultUpdatedAt()
 		sduo.mutation.SetUpdatedAt(v)
 	}
@@ -504,8 +522,14 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 	if value, ok := sduo.mutation.AddedSort(); ok {
 		_spec.AddField(sysdict.FieldSort, field.TypeInt32, value)
 	}
+	if sduo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysdict.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sduo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sduo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysdict.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sduo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)

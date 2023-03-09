@@ -19,9 +19,9 @@ type SysRoleMenu struct {
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 角色ID, sys_role.id
@@ -74,13 +74,15 @@ func (srm *SysRoleMenu) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				srm.CreatedAt = value.Time
+				srm.CreatedAt = new(time.Time)
+				*srm.CreatedAt = value.Time
 			}
 		case sysrolemenu.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				srm.UpdatedAt = value.Time
+				srm.UpdatedAt = new(time.Time)
+				*srm.UpdatedAt = value.Time
 			}
 		case sysrolemenu.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -139,11 +141,15 @@ func (srm *SysRoleMenu) String() string {
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", srm.IsDel))
 	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(srm.CreatedAt.Format(time.ANSIC))
+	if v := srm.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(srm.UpdatedAt.Format(time.ANSIC))
+	if v := srm.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := srm.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

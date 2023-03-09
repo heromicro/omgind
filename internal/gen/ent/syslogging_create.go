@@ -290,12 +290,6 @@ func (slc *SysLoggingCreate) defaults() error {
 
 // check runs all checks and user-defined validators on the builder.
 func (slc *SysLoggingCreate) check() error {
-	if _, ok := slc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysLogging.created_at"`)}
-	}
-	if _, ok := slc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysLogging.updated_at"`)}
-	}
 	if _, ok := slc.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysLogging.is_del"`)}
 	}
@@ -378,11 +372,11 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := slc.mutation.CreatedAt(); ok {
 		_spec.SetField(syslogging.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := slc.mutation.UpdatedAt(); ok {
 		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := slc.mutation.DeletedAt(); ok {
 		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)
@@ -489,6 +483,12 @@ func (u *SysLoggingUpsert) SetUpdatedAt(v time.Time) *SysLoggingUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysLoggingUpsert) UpdateUpdatedAt() *SysLoggingUpsert {
 	u.SetExcluded(syslogging.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysLoggingUpsert) ClearUpdatedAt() *SysLoggingUpsert {
+	u.SetNull(syslogging.FieldUpdatedAt)
 	return u
 }
 
@@ -731,6 +731,13 @@ func (u *SysLoggingUpsertOne) SetUpdatedAt(v time.Time) *SysLoggingUpsertOne {
 func (u *SysLoggingUpsertOne) UpdateUpdatedAt() *SysLoggingUpsertOne {
 	return u.Update(func(s *SysLoggingUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysLoggingUpsertOne) ClearUpdatedAt() *SysLoggingUpsertOne {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -1165,6 +1172,13 @@ func (u *SysLoggingUpsertBulk) SetUpdatedAt(v time.Time) *SysLoggingUpsertBulk {
 func (u *SysLoggingUpsertBulk) UpdateUpdatedAt() *SysLoggingUpsertBulk {
 	return u.Update(func(s *SysLoggingUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysLoggingUpsertBulk) ClearUpdatedAt() *SysLoggingUpsertBulk {
+	return u.Update(func(s *SysLoggingUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

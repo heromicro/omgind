@@ -91,6 +91,12 @@ func (xdu *XxxDemoUpdate) SetUpdatedAt(t time.Time) *XxxDemoUpdate {
 	return xdu
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (xdu *XxxDemoUpdate) ClearUpdatedAt() *XxxDemoUpdate {
+	xdu.mutation.ClearUpdatedAt()
+	return xdu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (xdu *XxxDemoUpdate) SetDeletedAt(t time.Time) *XxxDemoUpdate {
 	xdu.mutation.SetDeletedAt(t)
@@ -172,7 +178,7 @@ func (xdu *XxxDemoUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (xdu *XxxDemoUpdate) defaults() {
-	if _, ok := xdu.mutation.UpdatedAt(); !ok {
+	if _, ok := xdu.mutation.UpdatedAt(); !ok && !xdu.mutation.UpdatedAtCleared() {
 		v := xxxdemo.UpdateDefaultUpdatedAt()
 		xdu.mutation.SetUpdatedAt(v)
 	}
@@ -231,8 +237,14 @@ func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := xdu.mutation.AddedSort(); ok {
 		_spec.AddField(xxxdemo.FieldSort, field.TypeInt32, value)
 	}
+	if xdu.mutation.CreatedAtCleared() {
+		_spec.ClearField(xxxdemo.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := xdu.mutation.UpdatedAt(); ok {
 		_spec.SetField(xxxdemo.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if xdu.mutation.UpdatedAtCleared() {
+		_spec.ClearField(xxxdemo.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := xdu.mutation.DeletedAt(); ok {
 		_spec.SetField(xxxdemo.FieldDeletedAt, field.TypeTime, value)
@@ -334,6 +346,12 @@ func (xduo *XxxDemoUpdateOne) SetUpdatedAt(t time.Time) *XxxDemoUpdateOne {
 	return xduo
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (xduo *XxxDemoUpdateOne) ClearUpdatedAt() *XxxDemoUpdateOne {
+	xduo.mutation.ClearUpdatedAt()
+	return xduo
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (xduo *XxxDemoUpdateOne) SetDeletedAt(t time.Time) *XxxDemoUpdateOne {
 	xduo.mutation.SetDeletedAt(t)
@@ -428,7 +446,7 @@ func (xduo *XxxDemoUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (xduo *XxxDemoUpdateOne) defaults() {
-	if _, ok := xduo.mutation.UpdatedAt(); !ok {
+	if _, ok := xduo.mutation.UpdatedAt(); !ok && !xduo.mutation.UpdatedAtCleared() {
 		v := xxxdemo.UpdateDefaultUpdatedAt()
 		xduo.mutation.SetUpdatedAt(v)
 	}
@@ -504,8 +522,14 @@ func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err 
 	if value, ok := xduo.mutation.AddedSort(); ok {
 		_spec.AddField(xxxdemo.FieldSort, field.TypeInt32, value)
 	}
+	if xduo.mutation.CreatedAtCleared() {
+		_spec.ClearField(xxxdemo.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := xduo.mutation.UpdatedAt(); ok {
 		_spec.SetField(xxxdemo.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if xduo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(xxxdemo.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := xduo.mutation.DeletedAt(); ok {
 		_spec.SetField(xxxdemo.FieldDeletedAt, field.TypeTime, value)

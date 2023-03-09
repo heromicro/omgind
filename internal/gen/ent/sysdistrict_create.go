@@ -614,12 +614,6 @@ func (sdc *SysDistrictCreate) check() error {
 	if _, ok := sdc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysDistrict.sort"`)}
 	}
-	if _, ok := sdc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysDistrict.created_at"`)}
-	}
-	if _, ok := sdc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysDistrict.updated_at"`)}
-	}
 	if _, ok := sdc.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysDistrict.is_active"`)}
 	}
@@ -758,11 +752,11 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 	}
 	if value, ok := sdc.mutation.CreatedAt(); ok {
 		_spec.SetField(sysdistrict.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := sdc.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := sdc.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)
@@ -1012,6 +1006,12 @@ func (u *SysDistrictUpsert) SetUpdatedAt(v time.Time) *SysDistrictUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysDistrictUpsert) UpdateUpdatedAt() *SysDistrictUpsert {
 	u.SetExcluded(sysdistrict.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysDistrictUpsert) ClearUpdatedAt() *SysDistrictUpsert {
+	u.SetNull(sysdistrict.FieldUpdatedAt)
 	return u
 }
 
@@ -1676,6 +1676,13 @@ func (u *SysDistrictUpsertOne) SetUpdatedAt(v time.Time) *SysDistrictUpsertOne {
 func (u *SysDistrictUpsertOne) UpdateUpdatedAt() *SysDistrictUpsertOne {
 	return u.Update(func(s *SysDistrictUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysDistrictUpsertOne) ClearUpdatedAt() *SysDistrictUpsertOne {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -2597,6 +2604,13 @@ func (u *SysDistrictUpsertBulk) SetUpdatedAt(v time.Time) *SysDistrictUpsertBulk
 func (u *SysDistrictUpsertBulk) UpdateUpdatedAt() *SysDistrictUpsertBulk {
 	return u.Update(func(s *SysDistrictUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysDistrictUpsertBulk) ClearUpdatedAt() *SysDistrictUpsertBulk {
+	return u.Update(func(s *SysDistrictUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

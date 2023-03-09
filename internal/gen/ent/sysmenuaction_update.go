@@ -105,6 +105,12 @@ func (smau *SysMenuActionUpdate) SetUpdatedAt(t time.Time) *SysMenuActionUpdate 
 	return smau
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (smau *SysMenuActionUpdate) ClearUpdatedAt() *SysMenuActionUpdate {
+	smau.mutation.ClearUpdatedAt()
+	return smau
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (smau *SysMenuActionUpdate) SetDeletedAt(t time.Time) *SysMenuActionUpdate {
 	smau.mutation.SetDeletedAt(t)
@@ -178,7 +184,7 @@ func (smau *SysMenuActionUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (smau *SysMenuActionUpdate) defaults() {
-	if _, ok := smau.mutation.UpdatedAt(); !ok {
+	if _, ok := smau.mutation.UpdatedAt(); !ok && !smau.mutation.UpdatedAtCleared() {
 		v := sysmenuaction.UpdateDefaultUpdatedAt()
 		smau.mutation.SetUpdatedAt(v)
 	}
@@ -245,8 +251,14 @@ func (smau *SysMenuActionUpdate) sqlSave(ctx context.Context) (n int, err error)
 	if smau.mutation.MemoCleared() {
 		_spec.ClearField(sysmenuaction.FieldMemo, field.TypeString)
 	}
+	if smau.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysmenuaction.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := smau.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if smau.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysmenuaction.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := smau.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldDeletedAt, field.TypeTime, value)
@@ -362,6 +374,12 @@ func (smauo *SysMenuActionUpdateOne) SetUpdatedAt(t time.Time) *SysMenuActionUpd
 	return smauo
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (smauo *SysMenuActionUpdateOne) ClearUpdatedAt() *SysMenuActionUpdateOne {
+	smauo.mutation.ClearUpdatedAt()
+	return smauo
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (smauo *SysMenuActionUpdateOne) SetDeletedAt(t time.Time) *SysMenuActionUpdateOne {
 	smauo.mutation.SetDeletedAt(t)
@@ -448,7 +466,7 @@ func (smauo *SysMenuActionUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (smauo *SysMenuActionUpdateOne) defaults() {
-	if _, ok := smauo.mutation.UpdatedAt(); !ok {
+	if _, ok := smauo.mutation.UpdatedAt(); !ok && !smauo.mutation.UpdatedAtCleared() {
 		v := sysmenuaction.UpdateDefaultUpdatedAt()
 		smauo.mutation.SetUpdatedAt(v)
 	}
@@ -532,8 +550,14 @@ func (smauo *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMen
 	if smauo.mutation.MemoCleared() {
 		_spec.ClearField(sysmenuaction.FieldMemo, field.TypeString)
 	}
+	if smauo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysmenuaction.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := smauo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if smauo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysmenuaction.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := smauo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldDeletedAt, field.TypeTime, value)

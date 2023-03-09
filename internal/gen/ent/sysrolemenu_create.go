@@ -177,12 +177,6 @@ func (srmc *SysRoleMenuCreate) check() error {
 	if _, ok := srmc.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysRoleMenu.is_del"`)}
 	}
-	if _, ok := srmc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysRoleMenu.created_at"`)}
-	}
-	if _, ok := srmc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysRoleMenu.updated_at"`)}
-	}
 	if _, ok := srmc.mutation.RoleID(); !ok {
 		return &ValidationError{Name: "role_id", err: errors.New(`ent: missing required field "SysRoleMenu.role_id"`)}
 	}
@@ -252,11 +246,11 @@ func (srmc *SysRoleMenuCreate) createSpec() (*SysRoleMenu, *sqlgraph.CreateSpec)
 	}
 	if value, ok := srmc.mutation.CreatedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := srmc.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := srmc.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldDeletedAt, field.TypeTime, value)
@@ -347,6 +341,12 @@ func (u *SysRoleMenuUpsert) SetUpdatedAt(v time.Time) *SysRoleMenuUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysRoleMenuUpsert) UpdateUpdatedAt() *SysRoleMenuUpsert {
 	u.SetExcluded(sysrolemenu.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysRoleMenuUpsert) ClearUpdatedAt() *SysRoleMenuUpsert {
+	u.SetNull(sysrolemenu.FieldUpdatedAt)
 	return u
 }
 
@@ -486,6 +486,13 @@ func (u *SysRoleMenuUpsertOne) SetUpdatedAt(v time.Time) *SysRoleMenuUpsertOne {
 func (u *SysRoleMenuUpsertOne) UpdateUpdatedAt() *SysRoleMenuUpsertOne {
 	return u.Update(func(s *SysRoleMenuUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysRoleMenuUpsertOne) ClearUpdatedAt() *SysRoleMenuUpsertOne {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -798,6 +805,13 @@ func (u *SysRoleMenuUpsertBulk) SetUpdatedAt(v time.Time) *SysRoleMenuUpsertBulk
 func (u *SysRoleMenuUpsertBulk) UpdateUpdatedAt() *SysRoleMenuUpsertBulk {
 	return u.Update(func(s *SysRoleMenuUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysRoleMenuUpsertBulk) ClearUpdatedAt() *SysRoleMenuUpsertBulk {
+	return u.Update(func(s *SysRoleMenuUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

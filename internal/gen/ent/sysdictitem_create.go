@@ -231,12 +231,6 @@ func (sdic *SysDictItemCreate) check() error {
 	if _, ok := sdic.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysDictItem.sort"`)}
 	}
-	if _, ok := sdic.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysDictItem.created_at"`)}
-	}
-	if _, ok := sdic.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysDictItem.updated_at"`)}
-	}
 	if _, ok := sdic.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysDictItem.is_active"`)}
 	}
@@ -315,11 +309,11 @@ func (sdic *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec)
 	}
 	if value, ok := sdic.mutation.CreatedAt(); ok {
 		_spec.SetField(sysdictitem.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := sdic.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdictitem.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := sdic.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdictitem.FieldDeletedAt, field.TypeTime, value)
@@ -450,6 +444,12 @@ func (u *SysDictItemUpsert) SetUpdatedAt(v time.Time) *SysDictItemUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysDictItemUpsert) UpdateUpdatedAt() *SysDictItemUpsert {
 	u.SetExcluded(sysdictitem.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysDictItemUpsert) ClearUpdatedAt() *SysDictItemUpsert {
+	u.SetNull(sysdictitem.FieldUpdatedAt)
 	return u
 }
 
@@ -643,6 +643,13 @@ func (u *SysDictItemUpsertOne) SetUpdatedAt(v time.Time) *SysDictItemUpsertOne {
 func (u *SysDictItemUpsertOne) UpdateUpdatedAt() *SysDictItemUpsertOne {
 	return u.Update(func(s *SysDictItemUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysDictItemUpsertOne) ClearUpdatedAt() *SysDictItemUpsertOne {
+	return u.Update(func(s *SysDictItemUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -1011,6 +1018,13 @@ func (u *SysDictItemUpsertBulk) SetUpdatedAt(v time.Time) *SysDictItemUpsertBulk
 func (u *SysDictItemUpsertBulk) UpdateUpdatedAt() *SysDictItemUpsertBulk {
 	return u.Update(func(s *SysDictItemUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysDictItemUpsertBulk) ClearUpdatedAt() *SysDictItemUpsertBulk {
+	return u.Update(func(s *SysDictItemUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

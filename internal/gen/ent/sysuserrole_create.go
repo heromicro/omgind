@@ -163,12 +163,6 @@ func (surc *SysUserRoleCreate) check() error {
 	if _, ok := surc.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysUserRole.is_del"`)}
 	}
-	if _, ok := surc.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysUserRole.created_at"`)}
-	}
-	if _, ok := surc.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysUserRole.updated_at"`)}
-	}
 	if _, ok := surc.mutation.UserID(); !ok {
 		return &ValidationError{Name: "user_id", err: errors.New(`ent: missing required field "SysUserRole.user_id"`)}
 	}
@@ -233,11 +227,11 @@ func (surc *SysUserRoleCreate) createSpec() (*SysUserRole, *sqlgraph.CreateSpec)
 	}
 	if value, ok := surc.mutation.CreatedAt(); ok {
 		_spec.SetField(sysuserrole.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := surc.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuserrole.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := surc.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuserrole.FieldDeletedAt, field.TypeTime, value)
@@ -324,6 +318,12 @@ func (u *SysUserRoleUpsert) SetUpdatedAt(v time.Time) *SysUserRoleUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysUserRoleUpsert) UpdateUpdatedAt() *SysUserRoleUpsert {
 	u.SetExcluded(sysuserrole.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysUserRoleUpsert) ClearUpdatedAt() *SysUserRoleUpsert {
+	u.SetNull(sysuserrole.FieldUpdatedAt)
 	return u
 }
 
@@ -445,6 +445,13 @@ func (u *SysUserRoleUpsertOne) SetUpdatedAt(v time.Time) *SysUserRoleUpsertOne {
 func (u *SysUserRoleUpsertOne) UpdateUpdatedAt() *SysUserRoleUpsertOne {
 	return u.Update(func(s *SysUserRoleUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysUserRoleUpsertOne) ClearUpdatedAt() *SysUserRoleUpsertOne {
+	return u.Update(func(s *SysUserRoleUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -736,6 +743,13 @@ func (u *SysUserRoleUpsertBulk) SetUpdatedAt(v time.Time) *SysUserRoleUpsertBulk
 func (u *SysUserRoleUpsertBulk) UpdateUpdatedAt() *SysUserRoleUpsertBulk {
 	return u.Update(func(s *SysUserRoleUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysUserRoleUpsertBulk) ClearUpdatedAt() *SysUserRoleUpsertBulk {
+	return u.Update(func(s *SysUserRoleUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

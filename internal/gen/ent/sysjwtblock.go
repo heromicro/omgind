@@ -21,9 +21,9 @@ type SysJwtBlock struct {
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
@@ -81,13 +81,15 @@ func (sjb *SysJwtBlock) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sjb.CreatedAt = value.Time
+				sjb.CreatedAt = new(time.Time)
+				*sjb.CreatedAt = value.Time
 			}
 		case sysjwtblock.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sjb.UpdatedAt = value.Time
+				sjb.UpdatedAt = new(time.Time)
+				*sjb.UpdatedAt = value.Time
 			}
 		case sysjwtblock.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -144,11 +146,15 @@ func (sjb *SysJwtBlock) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(sjb.CreatedAt.Format(time.ANSIC))
+	if v := sjb.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(sjb.UpdatedAt.Format(time.ANSIC))
+	if v := sjb.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := sjb.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

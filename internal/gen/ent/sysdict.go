@@ -23,9 +23,9 @@ type SysDict struct {
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
@@ -93,13 +93,15 @@ func (sd *SysDict) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sd.CreatedAt = value.Time
+				sd.CreatedAt = new(time.Time)
+				*sd.CreatedAt = value.Time
 			}
 		case sysdict.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sd.UpdatedAt = value.Time
+				sd.UpdatedAt = new(time.Time)
+				*sd.UpdatedAt = value.Time
 			}
 		case sysdict.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -165,11 +167,15 @@ func (sd *SysDict) String() string {
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", sd.Sort))
 	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(sd.CreatedAt.Format(time.ANSIC))
+	if v := sd.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(sd.UpdatedAt.Format(time.ANSIC))
+	if v := sd.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := sd.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

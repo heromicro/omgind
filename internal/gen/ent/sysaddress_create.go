@@ -409,12 +409,6 @@ func (sac *SysAddressCreate) check() error {
 	if _, ok := sac.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "SysAddress.sort"`)}
 	}
-	if _, ok := sac.mutation.CreatedAt(); !ok {
-		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "SysAddress.created_at"`)}
-	}
-	if _, ok := sac.mutation.UpdatedAt(); !ok {
-		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "SysAddress.updated_at"`)}
-	}
 	if _, ok := sac.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "SysAddress.is_active"`)}
 	}
@@ -524,11 +518,11 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 	}
 	if value, ok := sac.mutation.CreatedAt(); ok {
 		_spec.SetField(sysaddress.FieldCreatedAt, field.TypeTime, value)
-		_node.CreatedAt = value
+		_node.CreatedAt = &value
 	}
 	if value, ok := sac.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
-		_node.UpdatedAt = value
+		_node.UpdatedAt = &value
 	}
 	if value, ok := sac.mutation.DeletedAt(); ok {
 		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
@@ -703,6 +697,12 @@ func (u *SysAddressUpsert) SetUpdatedAt(v time.Time) *SysAddressUpsert {
 // UpdateUpdatedAt sets the "updated_at" field to the value that was provided on create.
 func (u *SysAddressUpsert) UpdateUpdatedAt() *SysAddressUpsert {
 	u.SetExcluded(sysaddress.FieldUpdatedAt)
+	return u
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysAddressUpsert) ClearUpdatedAt() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldUpdatedAt)
 	return u
 }
 
@@ -1106,6 +1106,13 @@ func (u *SysAddressUpsertOne) SetUpdatedAt(v time.Time) *SysAddressUpsertOne {
 func (u *SysAddressUpsertOne) UpdateUpdatedAt() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysAddressUpsertOne) ClearUpdatedAt() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 
@@ -1719,6 +1726,13 @@ func (u *SysAddressUpsertBulk) SetUpdatedAt(v time.Time) *SysAddressUpsertBulk {
 func (u *SysAddressUpsertBulk) UpdateUpdatedAt() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
 		s.UpdateUpdatedAt()
+	})
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (u *SysAddressUpsertBulk) ClearUpdatedAt() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearUpdatedAt()
 	})
 }
 

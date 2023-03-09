@@ -23,9 +23,9 @@ type SysAddress struct {
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 是否活跃
@@ -117,13 +117,15 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sa.CreatedAt = value.Time
+				sa.CreatedAt = new(time.Time)
+				*sa.CreatedAt = value.Time
 			}
 		case sysaddress.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sa.UpdatedAt = value.Time
+				sa.UpdatedAt = new(time.Time)
+				*sa.UpdatedAt = value.Time
 			}
 		case sysaddress.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -275,11 +277,15 @@ func (sa *SysAddress) String() string {
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", sa.Sort))
 	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(sa.CreatedAt.Format(time.ANSIC))
+	if v := sa.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(sa.UpdatedAt.Format(time.ANSIC))
+	if v := sa.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := sa.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

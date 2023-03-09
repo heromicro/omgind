@@ -50,6 +50,12 @@ func (srmu *SysRoleMenuUpdate) SetUpdatedAt(t time.Time) *SysRoleMenuUpdate {
 	return srmu
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (srmu *SysRoleMenuUpdate) ClearUpdatedAt() *SysRoleMenuUpdate {
+	srmu.mutation.ClearUpdatedAt()
+	return srmu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (srmu *SysRoleMenuUpdate) SetDeletedAt(t time.Time) *SysRoleMenuUpdate {
 	srmu.mutation.SetDeletedAt(t)
@@ -137,7 +143,7 @@ func (srmu *SysRoleMenuUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (srmu *SysRoleMenuUpdate) defaults() {
-	if _, ok := srmu.mutation.UpdatedAt(); !ok {
+	if _, ok := srmu.mutation.UpdatedAt(); !ok && !srmu.mutation.UpdatedAtCleared() {
 		v := sysrolemenu.UpdateDefaultUpdatedAt()
 		srmu.mutation.SetUpdatedAt(v)
 	}
@@ -184,8 +190,14 @@ func (srmu *SysRoleMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := srmu.mutation.IsDel(); ok {
 		_spec.SetField(sysrolemenu.FieldIsDel, field.TypeBool, value)
 	}
+	if srmu.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysrolemenu.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := srmu.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if srmu.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysrolemenu.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := srmu.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldDeletedAt, field.TypeTime, value)
@@ -246,6 +258,12 @@ func (srmuo *SysRoleMenuUpdateOne) SetNillableIsDel(b *bool) *SysRoleMenuUpdateO
 // SetUpdatedAt sets the "updated_at" field.
 func (srmuo *SysRoleMenuUpdateOne) SetUpdatedAt(t time.Time) *SysRoleMenuUpdateOne {
 	srmuo.mutation.SetUpdatedAt(t)
+	return srmuo
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (srmuo *SysRoleMenuUpdateOne) ClearUpdatedAt() *SysRoleMenuUpdateOne {
+	srmuo.mutation.ClearUpdatedAt()
 	return srmuo
 }
 
@@ -349,7 +367,7 @@ func (srmuo *SysRoleMenuUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (srmuo *SysRoleMenuUpdateOne) defaults() {
-	if _, ok := srmuo.mutation.UpdatedAt(); !ok {
+	if _, ok := srmuo.mutation.UpdatedAt(); !ok && !srmuo.mutation.UpdatedAtCleared() {
 		v := sysrolemenu.UpdateDefaultUpdatedAt()
 		srmuo.mutation.SetUpdatedAt(v)
 	}
@@ -413,8 +431,14 @@ func (srmuo *SysRoleMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysRoleM
 	if value, ok := srmuo.mutation.IsDel(); ok {
 		_spec.SetField(sysrolemenu.FieldIsDel, field.TypeBool, value)
 	}
+	if srmuo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysrolemenu.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := srmuo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if srmuo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysrolemenu.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := srmuo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldDeletedAt, field.TypeTime, value)

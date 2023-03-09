@@ -91,6 +91,12 @@ func (sau *SysAddressUpdate) SetUpdatedAt(t time.Time) *SysAddressUpdate {
 	return sau
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sau *SysAddressUpdate) ClearUpdatedAt() *SysAddressUpdate {
+	sau.mutation.ClearUpdatedAt()
+	return sau
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (sau *SysAddressUpdate) SetDeletedAt(t time.Time) *SysAddressUpdate {
 	sau.mutation.SetDeletedAt(t)
@@ -440,7 +446,7 @@ func (sau *SysAddressUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sau *SysAddressUpdate) defaults() {
-	if _, ok := sau.mutation.UpdatedAt(); !ok {
+	if _, ok := sau.mutation.UpdatedAt(); !ok && !sau.mutation.UpdatedAtCleared() {
 		v := sysaddress.UpdateDefaultUpdatedAt()
 		sau.mutation.SetUpdatedAt(v)
 	}
@@ -539,8 +545,14 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sau.mutation.AddedSort(); ok {
 		_spec.AddField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
+	if sau.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysaddress.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sau.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sau.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysaddress.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sau.mutation.DeletedAt(); ok {
 		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
@@ -717,6 +729,12 @@ func (sauo *SysAddressUpdateOne) AddSort(i int32) *SysAddressUpdateOne {
 // SetUpdatedAt sets the "updated_at" field.
 func (sauo *SysAddressUpdateOne) SetUpdatedAt(t time.Time) *SysAddressUpdateOne {
 	sauo.mutation.SetUpdatedAt(t)
+	return sauo
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (sauo *SysAddressUpdateOne) ClearUpdatedAt() *SysAddressUpdateOne {
+	sauo.mutation.ClearUpdatedAt()
 	return sauo
 }
 
@@ -1082,7 +1100,7 @@ func (sauo *SysAddressUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (sauo *SysAddressUpdateOne) defaults() {
-	if _, ok := sauo.mutation.UpdatedAt(); !ok {
+	if _, ok := sauo.mutation.UpdatedAt(); !ok && !sauo.mutation.UpdatedAtCleared() {
 		v := sysaddress.UpdateDefaultUpdatedAt()
 		sauo.mutation.SetUpdatedAt(v)
 	}
@@ -1198,8 +1216,14 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 	if value, ok := sauo.mutation.AddedSort(); ok {
 		_spec.AddField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
+	if sauo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysaddress.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := sauo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if sauo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysaddress.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := sauo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)

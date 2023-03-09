@@ -25,9 +25,9 @@ type SysRole struct {
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
 	// create time
-	CreatedAt time.Time `json:"created_at,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	// 角色名称
@@ -97,13 +97,15 @@ func (sr *SysRole) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sr.CreatedAt = value.Time
+				sr.CreatedAt = new(time.Time)
+				*sr.CreatedAt = value.Time
 			}
 		case sysrole.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sr.UpdatedAt = value.Time
+				sr.UpdatedAt = new(time.Time)
+				*sr.UpdatedAt = value.Time
 			}
 		case sysrole.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -160,11 +162,15 @@ func (sr *SysRole) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	builder.WriteString("created_at=")
-	builder.WriteString(sr.CreatedAt.Format(time.ANSIC))
+	if v := sr.CreatedAt; v != nil {
+		builder.WriteString("created_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
-	builder.WriteString("updated_at=")
-	builder.WriteString(sr.UpdatedAt.Format(time.ANSIC))
+	if v := sr.UpdatedAt; v != nil {
+		builder.WriteString("updated_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	if v := sr.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")

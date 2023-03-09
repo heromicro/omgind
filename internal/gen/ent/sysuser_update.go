@@ -71,6 +71,12 @@ func (suu *SysUserUpdate) SetUpdatedAt(t time.Time) *SysUserUpdate {
 	return suu
 }
 
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (suu *SysUserUpdate) ClearUpdatedAt() *SysUserUpdate {
+	suu.mutation.ClearUpdatedAt()
+	return suu
+}
+
 // SetDeletedAt sets the "deleted_at" field.
 func (suu *SysUserUpdate) SetDeletedAt(t time.Time) *SysUserUpdate {
 	suu.mutation.SetDeletedAt(t)
@@ -232,7 +238,7 @@ func (suu *SysUserUpdate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (suu *SysUserUpdate) defaults() {
-	if _, ok := suu.mutation.UpdatedAt(); !ok {
+	if _, ok := suu.mutation.UpdatedAt(); !ok && !suu.mutation.UpdatedAtCleared() {
 		v := sysuser.UpdateDefaultUpdatedAt()
 		suu.mutation.SetUpdatedAt(v)
 	}
@@ -300,8 +306,14 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := suu.mutation.AddedSort(); ok {
 		_spec.AddField(sysuser.FieldSort, field.TypeInt32, value)
 	}
+	if suu.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysuser.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := suu.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if suu.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysuser.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := suu.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)
@@ -404,6 +416,12 @@ func (suuo *SysUserUpdateOne) AddSort(i int32) *SysUserUpdateOne {
 // SetUpdatedAt sets the "updated_at" field.
 func (suuo *SysUserUpdateOne) SetUpdatedAt(t time.Time) *SysUserUpdateOne {
 	suuo.mutation.SetUpdatedAt(t)
+	return suuo
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (suuo *SysUserUpdateOne) ClearUpdatedAt() *SysUserUpdateOne {
+	suuo.mutation.ClearUpdatedAt()
 	return suuo
 }
 
@@ -581,7 +599,7 @@ func (suuo *SysUserUpdateOne) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (suuo *SysUserUpdateOne) defaults() {
-	if _, ok := suuo.mutation.UpdatedAt(); !ok {
+	if _, ok := suuo.mutation.UpdatedAt(); !ok && !suuo.mutation.UpdatedAtCleared() {
 		v := sysuser.UpdateDefaultUpdatedAt()
 		suuo.mutation.SetUpdatedAt(v)
 	}
@@ -666,8 +684,14 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 	if value, ok := suuo.mutation.AddedSort(); ok {
 		_spec.AddField(sysuser.FieldSort, field.TypeInt32, value)
 	}
+	if suuo.mutation.CreatedAtCleared() {
+		_spec.ClearField(sysuser.FieldCreatedAt, field.TypeTime)
+	}
 	if value, ok := suuo.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
+	}
+	if suuo.mutation.UpdatedAtCleared() {
+		_spec.ClearField(sysuser.FieldUpdatedAt, field.TypeTime)
 	}
 	if value, ok := suuo.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)

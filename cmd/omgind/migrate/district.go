@@ -5,7 +5,7 @@ package migrate
 type DistrictRaw struct {
 	ID          string  `csv:"id"`
 	ParentID    *string `csv:"pid,omitempty"`
-	TreeID      int32   `csv:"tree_id"`
+	TreeID      int64   `csv:"tree_id"`
 	TreeLeft    int64   `csv:"tree_left"`
 	TreeRight   int64   `csv:"tree_right"`
 	TreeLevel   int32   `csv:"tree_level"`
