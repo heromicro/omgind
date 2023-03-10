@@ -542,6 +542,10 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	log.Println(" ------- ===== ---- oitem.ParentID ", oitem.ParentID)
 	log.Println(" ------- ===== ---- nitem.ParentID  ", item.ParentID)
 
+	if *item.ParentID == id {
+		return nil, errors.New("make self parent")
+	}
+
 	// check pid changed or not
 	if oitem.ParentID == nil {
 		// old data.pid is nil
@@ -574,6 +578,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 		} else {
 			// pid changed
 			// bring top item to sub
+
 			query_nparent := a.EntCli.SysDistrict.Query()
 			query_nparent = query_nparent.Where(sysdistrict.DeletedAtIsNil()).Where(sysdistrict.IDEQ(*item.ParentID))
 			nparent, err := query_nparent.First(ctx)
@@ -750,6 +755,45 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 			if *oitem.ParentID == *item.ParentID {
 				// new data.pid no changed
+
+				item.TreeID = nil
+				item.TreeLeft = nil
+				item.TreeRight = nil
+				item.TreeLevel = ptr.Int32(*nparent.TreeLevel + 1)
+				if (*oitem.TreeRight - *oitem.TreeLeft) > 1 {
+					item.IsLeaf = ptr.Bool(false)
+				} else {
+					item.IsLeaf = ptr.Bool(true)
+				}
+				if nparent.TreePath != nil && *nparent.TreePath != "" {
+					item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
+				} else {
+					item.TreePath = nil
+				}
+
+				if item.MergeName == nil || *item.MergeName == "" {
+					if nparent.MergeName != nil && *nparent.MergeName != "" {
+						item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, ","))
+					} else {
+						item.MergeName = ptr.String(item.Name)
+					}
+				}
+
+				if item.MergeSname == nil || *item.MergeSname == "" {
+					if nparent.MergeSname != nil && *nparent.MergeSname != "" {
+						item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
+					} else {
+						item.MergeSname = item.Sname
+
+					}
+				}
+
+				iteminput := a.ToEntUpdateSysDistrictInput(&item)
+
+				_, err := a.EntCli.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
+				if err != nil {
+					return nil, err
+				}
 
 			} else {
 				// new data.pid changed
