@@ -54,6 +54,7 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 		a.initDictRouterV2(v2, a.DictApiV2, "sys-dicts")
 
 		a.initSysDistrictRouterV2(v2, a.SysDistrictAPIV2, "sys-district")
+		// v2.GET("/sys-district.tree", a.SysDistrictAPIV2.QueryTree)
 
 		a.initSysAddressRouterV2(v2, a.SysAddressAPIV2, "sys-address")
 

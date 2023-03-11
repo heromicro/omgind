@@ -28,6 +28,11 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 	return a.SysDistrictRepo.GetAllSubDistricts(ctx, pid, params, opts...)
 }
 
+// Query 查询数据
+func (a *SysDistrict) GetTree(ctx context.Context, tpid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryTreeResult, error) {
+	return a.SysDistrictRepo.GetTree(ctx, tpid, params, opts...)
+}
+
 // Get 查询指定数据
 func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrict, error) {
 	item, err := a.SysDistrictRepo.Get(ctx, id, opts...)

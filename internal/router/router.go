@@ -41,6 +41,7 @@ type Router struct {
 // Register 注册路由
 func (a *Router) Register(app *gin.Engine) error {
 	a.RegisterAPI(app)
+
 	return nil
 }
 

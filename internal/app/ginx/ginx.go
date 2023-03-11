@@ -95,8 +95,13 @@ func ResList(c *gin.Context, v any) {
 }
 
 // ResList 响应列表数据
-func ResList2(c *gin.Context, v interface{}) {
+func ResList2(c *gin.Context, v any) {
 	ResSuccess(c, schema.StatusResult2{Code: schema.CodeOK, Burden: schema.ListResult{List: v}})
+}
+
+// ResList 响应列表数据
+func ResList3(c *gin.Context, v any) {
+	ResSuccess(c, schema.StatusResult2{Code: schema.CodeOK, Burden: v})
 }
 
 // ResPage 响应分页数据

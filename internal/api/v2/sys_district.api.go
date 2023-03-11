@@ -84,6 +84,33 @@ func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
 	ginx.ResPage2(c, result.Data, result.PageResult)
 }
 
+// QueryTree 查询菜单树
+func (a *SysDistrict) QueryTree(c *gin.Context) {
+
+	ctx := c.Request.Context()
+	var params schema.SysDistrictQueryParam
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	var pid string = c.Param("id")
+
+	if params.ParentID == nil {
+		// params.ParentID = ptr.String("")
+	}
+
+	params.PageSize = 100
+
+	result, err := a.SysDistrictSrv.GetTree(ctx, pid, params)
+
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+
+	ginx.ResList3(c, result)
+}
+
 // Create 创建数据
 func (a *SysDistrict) Create(c *gin.Context) {
 	ctx := c.Request.Context()

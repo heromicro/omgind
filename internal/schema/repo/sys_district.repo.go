@@ -232,6 +232,7 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 }
 
 func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
+
 	opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysDistrict.Query()
@@ -384,7 +385,7 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 	query = query.Limit(params.Limit()).Offset(params.Offset())
 
 	//
-	squery := query.Select(sysdistrict.FieldID, sysdistrict.FieldName, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldIsLeaf)
+	squery := query.Select(sysdistrict.FieldID, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldIsLeaf)
 
 	list, err1 := squery.All(ctx)
 
@@ -400,6 +401,50 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 	}
 
 	return qr, nil
+}
+
+func (a *SysDistrict) GetTree(ctx context.Context, tpid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryTreeResult, error) {
+	opt := a.getQueryOption(opts...)
+
+	parent_query := a.EntCli.SysDistrict.Query().Where(sysdistrict.DeletedAtIsNil())
+
+	parent_query = parent_query.Where(sysdistrict.IDEQ(tpid))
+
+	parent, err := parent_query.Select(sysdistrict.FieldID, sysdistrict.FieldTreeID).First(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	tree_query := a.EntCli.SysDistrict.Query().Where(sysdistrict.IsDelEQ(false), sysdistrict.TreeIDEQ(*parent.TreeID)).Where(sysdistrict.IDNEQ(parent.ID))
+
+	of1 := MakeUpOrderField(sysdistrict.FieldTreeLevel, "asc")
+	opt.OrderFields = append(opt.OrderFields, of1)
+	of2 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
+	opt.OrderFields = append(opt.OrderFields, of2)
+	tree_query = tree_query.Order(ParseOrder(opt.OrderFields)...)
+
+	select_tree := tree_query.Select(sysdistrict.FieldID, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldIsLeaf, sysdistrict.FieldTreeID, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight)
+
+	subs, err := select_tree.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	top_query := a.EntCli.SysDistrict.Query().Where(sysdistrict.IsDel(false), sysdistrict.TreeLevel(1), sysdistrict.ParentIDIsNil())
+
+	top, err := top_query.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	sch_sub := a.ToSchemaSysDistricts(subs)
+	sch_top := a.ToSchemaSysDistricts(top)
+	data := &schema.SysDistrictQueryTreeResult{
+		Top:  sch_top,
+		Subs: sch_sub,
+	}
+
+	return data, nil
 }
 
 // Get 查询指定数据
@@ -642,6 +687,11 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					return err
 				}
 
+				_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(nparent.ID)).SetIsLeaf(false).Save(ctx)
+				if err != nil {
+					return err
+				}
+
 				if count != int(*oitem.TreeRight)/2 {
 					return errors.New("the count of update old item's and it's subs mismatched.")
 				}
@@ -673,6 +723,11 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 		if err != nil {
 			return nil, err
 		}
+		oparent_has_children, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IsDelEQ(false), sysdistrict.ParentIDEQ(oparent.ID)).Count(ctx)
+		if err != nil {
+			return nil, err
+		}
+
 		log.Println(" -------- ----- oparent.ID- ", oparent.ID)
 
 		if item.ParentID == nil {
@@ -697,7 +752,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 			err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 				// step:1 update tree_id with most newest,
 
-				count1, err := tx.SysDistrict.Update().SetTreeID(*item.TreeID).Where(sysdistrict.TreeIDEQ(*oitem.TreeID), sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight)).Save(ctx)
+				count1, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oitem.TreeID), sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight)).SetTreeID(*item.TreeID).Save(ctx)
 				if err != nil {
 					return err
 				}
@@ -715,7 +770,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				}
 
 				// step 3: minus tree_left
-				count3, err := tx.SysDistrict.Update().AddTreeLeft(-int64(count1)*2).Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).Save(ctx)
+				count3, err := tx.SysDistrict.Update().Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).AddTreeLeft(-int64(count1) * 2).Save(ctx)
 				if err != nil {
 					return err
 				}
@@ -727,7 +782,12 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					return err
 				}
 				log.Println(" --- --- === === ", count4)
-
+				if oparent_has_children == 1 {
+					_, err := tx.SysDistrict.Update().Where(sysdistrict.IDEQ(oparent.ID)).SetIsLeaf(true).Save(ctx)
+					if err != nil {
+						return err
+					}
+				}
 				// step 5: update other fileds
 				_, err = tx.SysDistrict.Update().SetInput(*iteminput).Where(sysdistrict.IDEQ(id)).Save(ctx)
 				if err != nil {
