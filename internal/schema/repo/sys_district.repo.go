@@ -877,7 +877,6 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
 					// step 1: repair old parent's left/right
-
 					_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).AddTreeLeft(-d1).Save(ctx)
 					if err != nil {
 						return err
@@ -897,7 +896,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 						return err
 					}
 
-					// step 3:  switch tree_id
+					// step 3: repair the sub items left/right, switch tree_id
 					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight)).AddTreeLeft(d2).AddTreeRight(d2).SetTreeID(*nparent.TreeID).Save(ctx)
 					if err != nil {
 						return err
