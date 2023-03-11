@@ -891,15 +891,37 @@ func (a *SysDistrict) GetLatestTreeID(ctx context.Context) (int64, error) {
 // Delete 删除数据
 func (a *SysDistrict) Delete(ctx context.Context, id string) error {
 
-	r_sysdistrict, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).Only(ctx)
+	tobeDel, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).Only(ctx)
 
 	if err != nil {
 		return err
 	}
 
-	_, err1 := r_sysdistrict.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
+	err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
-	return errors.WithStack(err1)
+		_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeLeftGT(*tobeDel.TreeRight)).AddTreeLeft(-(*tobeDel.TreeRight - *tobeDel.TreeLeft + 1)).Save(ctx)
+
+		if err != nil {
+			return err
+		}
+		_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeRightGT(*tobeDel.TreeRight)).AddTreeRight(-(*tobeDel.TreeRight - *tobeDel.TreeLeft + 1)).Save(ctx)
+		if err != nil {
+			return err
+		}
+
+		_, err = tobeDel.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
+
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	return errors.WithStack(err)
 }
 
 // UpdateActive 更新状态
