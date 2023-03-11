@@ -697,7 +697,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				}
 
 				// step 7:
-				_, err = tx.SysDistrict.Update().SetInput(*iteminput).Where(sysdistrict.IDEQ(id)).Save(ctx)
+				_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
 				if err != nil {
 					return err
 				}
@@ -777,7 +777,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				log.Println(" --- --- === === ", count3)
 
 				// step 4: minus tree_right
-				count4, err := tx.SysDistrict.Update().AddTreeRight(-int64(count1)*2).Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeRightGTE(*oparent.TreeRight)).Save(ctx)
+				count4, err := tx.SysDistrict.Update().Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeRightGTE(*oparent.TreeRight)).AddTreeRight(-int64(count1) * 2).Save(ctx)
 				if err != nil {
 					return err
 				}
@@ -789,7 +789,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					}
 				}
 				// step 5: update other fileds
-				_, err = tx.SysDistrict.Update().SetInput(*iteminput).Where(sysdistrict.IDEQ(id)).Save(ctx)
+				_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
 				if err != nil {
 					return err
 				}
