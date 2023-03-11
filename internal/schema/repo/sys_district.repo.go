@@ -899,12 +899,12 @@ func (a *SysDistrict) Delete(ctx context.Context, id string) error {
 	distance := *tobeDel.TreeRight - *tobeDel.TreeLeft + 1
 
 	err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
-		_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeLeftGT(*tobeDel.TreeRight)).AddTreeLeft(-distance).Save(ctx)
+		_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*tobeDel.TreeID), sysdistrict.TreeLeftGT(*tobeDel.TreeRight)).AddTreeLeft(-distance).Save(ctx)
 
 		if err != nil {
 			return err
 		}
-		_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeRightGT(*tobeDel.TreeRight)).AddTreeRight(-distance).Save(ctx)
+		_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*tobeDel.TreeID), sysdistrict.TreeRightGT(*tobeDel.TreeRight)).AddTreeRight(-distance).Save(ctx)
 		if err != nil {
 			return err
 		}
