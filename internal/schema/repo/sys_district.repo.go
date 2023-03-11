@@ -896,23 +896,29 @@ func (a *SysDistrict) Delete(ctx context.Context, id string) error {
 	if err != nil {
 		return err
 	}
+	distance := *tobeDel.TreeRight - *tobeDel.TreeLeft + 1
 
 	err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
-
-		_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeLeftGT(*tobeDel.TreeRight)).AddTreeLeft(-(*tobeDel.TreeRight - *tobeDel.TreeLeft + 1)).Save(ctx)
+		_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeLeftGT(*tobeDel.TreeRight)).AddTreeLeft(-distance).Save(ctx)
 
 		if err != nil {
 			return err
 		}
-		_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeRightGT(*tobeDel.TreeRight)).AddTreeRight(-(*tobeDel.TreeRight - *tobeDel.TreeLeft + 1)).Save(ctx)
+		_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeRightGT(*tobeDel.TreeRight)).AddTreeRight(-distance).Save(ctx)
 		if err != nil {
 			return err
 		}
 
-		_, err = tobeDel.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
-
+		_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 		if err != nil {
 			return err
+		}
+
+		if tobeDel.ParentID != nil {
+			_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(*tobeDel.ParentID)).RemoveChildIDs(id).Save(ctx)
+			if err != nil {
+				return err
+			}
 		}
 		return nil
 	})
