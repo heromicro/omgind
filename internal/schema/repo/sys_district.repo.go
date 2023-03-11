@@ -749,6 +749,8 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 			iteminput := a.ToEntUpdateSysDistrictInput(&item)
 
+			distance := *oitem.TreeRight - *oitem.TreeLeft + 1
+
 			err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 				// step:1 update tree_id with most newest,
 
@@ -770,14 +772,14 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				}
 
 				// step 3: minus tree_left
-				count3, err := tx.SysDistrict.Update().Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).AddTreeLeft(-int64(count1) * 2).Save(ctx)
+				count3, err := tx.SysDistrict.Update().Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).AddTreeLeft(-distance).Save(ctx)
 				if err != nil {
 					return err
 				}
 				log.Println(" --- --- === === ", count3)
 
 				// step 4: minus tree_right
-				count4, err := tx.SysDistrict.Update().Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeRightGTE(*oparent.TreeRight)).AddTreeRight(-int64(count1) * 2).Save(ctx)
+				count4, err := tx.SysDistrict.Update().Where(sysdistrict.TreeID(*oparent.TreeID), sysdistrict.TreeRightGTE(*oparent.TreeRight)).AddTreeRight(-distance).Save(ctx)
 				if err != nil {
 					return err
 				}
@@ -857,6 +859,61 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 			} else {
 				// new data.pid changed
+
+				query_nparent := a.EntCli.SysDistrict.Query()
+				query_nparent = query_nparent.Where(sysdistrict.DeletedAtIsNil()).Where(sysdistrict.IDEQ(*item.ParentID))
+				nparent, err := query_nparent.First(ctx)
+
+				if err != nil {
+					return nil, err
+				}
+
+				// old parent need to minus d1, new parent need to add d1
+				d1 := *oitem.TreeRight - *oitem.TreeLeft + 1
+
+				// oitem and subs need to add d2
+				d2 := *nparent.TreeRight - *oitem.TreeLeft
+
+				err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+
+					// step 1: repair old parent's left/right
+
+					_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).AddTreeLeft(-d1).Save(ctx)
+					if err != nil {
+						return err
+					}
+					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeRightGTE(*oparent.TreeRight)).AddTreeRight(-d1).Save(ctx)
+					if err != nil {
+						return err
+					}
+
+					// step 2: repair new parent's left/right
+					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*nparent.TreeID), sysdistrict.TreeLeftGT(*nparent.TreeRight)).AddTreeLeft(d1).Save(ctx)
+					if err != nil {
+						return err
+					}
+					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeID(*nparent.TreeID), sysdistrict.TreeRightGTE(*nparent.TreeRight)).AddTreeRight(d1).Save(ctx)
+					if err != nil {
+						return err
+					}
+
+					// step 3:  switch tree_id
+					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight)).AddTreeLeft(d2).AddTreeRight(d2).SetTreeID(*nparent.TreeID).Save(ctx)
+					if err != nil {
+						return err
+					}
+
+					// step 3:  switch pid
+					_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetParentID(nparent.ID).Save(ctx)
+					if err != nil {
+						return err
+					}
+					return nil
+				})
+
+				if err != nil {
+					return nil, err
+				}
 
 			}
 		}
