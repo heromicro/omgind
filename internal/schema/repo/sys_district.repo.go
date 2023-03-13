@@ -702,7 +702,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					return err
 				}
 
-				// step 5: update item's and it's sub's tree_path, merge_name, merge_sname
+				// step 8: update item's and it's sub's tree_path, merge_name, merge_sname
 				// TODO: fix tree_path of id's and id's subs
 				// TODO: maybe can trigger celery to do this
 
@@ -956,6 +956,11 @@ func (a *SysDistrict) Delete(ctx context.Context, id string) error {
 
 	err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
+		_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*tobeDel.TreeID), sysdistrict.TreeLeftGTE(*tobeDel.TreeLeft), sysdistrict.TreeRightLTE(*tobeDel.TreeRight)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
+		if err != nil {
+			return err
+		}
+
 		_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*tobeDel.TreeID), sysdistrict.TreeLeftGT(*tobeDel.TreeRight)).AddTreeLeft(-distance).Save(ctx)
 		if err != nil {
 			return err
@@ -966,13 +971,9 @@ func (a *SysDistrict) Delete(ctx context.Context, id string) error {
 			return err
 		}
 
-		_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
-		if err != nil {
-			return err
-		}
-
 		if tobeDel.ParentID != nil {
-			_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(*tobeDel.ParentID)).RemoveChildIDs(id).Save(ctx)
+			// _, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(*tobeDel.ParentID)).RemoveChildIDs(id).Save(ctx)
+			_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).ClearParentID().Save(ctx)
 			if err != nil {
 				return err
 			}
