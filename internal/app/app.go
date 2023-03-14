@@ -96,10 +96,6 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	// 初始化服务运行监控
 	monitorCleanFunc := InitMonitor(ctx)
 
-	// 初始化图形验证码
-	// redisCli, redisCleanFunc, _ := InitRedisCli()
-	_, redisCleanFunc, _ := InitRedisCli()
-
 	// 初始化依赖注入器
 	injector, injectorCleanFunc, err := BuildInjector(global.CFG)
 	if err != nil {
@@ -122,7 +118,6 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	httpServerCleanFunc := InitHTTPServer(ctx, injector.Engine)
 
 	return func() {
-		redisCleanFunc()
 		httpServerCleanFunc()
 		injectorCleanFunc()
 		monitorCleanFunc()

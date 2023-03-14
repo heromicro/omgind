@@ -14,6 +14,7 @@ import (
 	"github.com/heromicro/omgind/internal/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/config"
+	"github.com/heromicro/omgind/pkg/mw/redis"
 )
 
 import (
@@ -116,7 +117,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2User := &api_v2.User{
 		UserSrv: serviceUser,
 	}
-	universalClient, cleanup4, err := InitRedisCli()
+	universalClient, cleanup4, err := redis.NewClient(cfg)
 	if err != nil {
 		cleanup3()
 		cleanup2()

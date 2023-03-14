@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/google/wire"
 	"github.com/heromicro/omgind/pkg/config"
 )
 
@@ -35,4 +36,4 @@ func NewClient(cfg *config.AppConfig) (redis.UniversalClient, func(), error) {
 	return cli, cleanFunc, nil
 }
 
-// var ClientSet = wire.NewSet(NewClient)
+var ClientSet = wire.NewSet(NewClient)
