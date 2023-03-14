@@ -19,7 +19,7 @@ type Injector struct {
 	Auth           auth.Auther
 	CasbinEnforcer *casbin.SyncedEnforcer
 	MenuSrv        *service.Menu
-	RedisCli       redis.Cmdable
+	RedisCli       redis.UniversalClient
 	//InfluxDb       influxdb2.Client
 	//RabbitMq       *amqp.Connection
 }

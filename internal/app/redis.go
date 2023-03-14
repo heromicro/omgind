@@ -8,7 +8,7 @@ import (
 	"github.com/heromicro/omgind/pkg/logger"
 )
 
-func InitRedisCli() (redis.Cmdable, func(), error) {
+func InitRedisCli() (redis.UniversalClient, func(), error) {
 
 	cli, cleanFunc, err := NewRedisCli()
 	if err != nil {
@@ -18,7 +18,7 @@ func InitRedisCli() (redis.Cmdable, func(), error) {
 	return cli, cleanFunc, nil
 }
 
-func NewRedisCli() (redis.Cmdable, func(), error) {
+func NewRedisCli() (redis.UniversalClient, func(), error) {
 	cfg := global.CFG
 	if !cfg.Redis.Enable {
 		return nil, func() {}, errors.New("redis数据库未启用")

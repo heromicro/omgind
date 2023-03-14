@@ -6,7 +6,7 @@ import (
 	"github.com/heromicro/omgind/pkg/vcode"
 )
 
-func InitVcode(cli redis.Cmdable) *vcode.Vcode {
+func InitVcode(cli redis.UniversalClient) *vcode.Vcode {
 
 	cfg := global.CFG.Captcha
 

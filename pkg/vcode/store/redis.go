@@ -9,7 +9,7 @@ import (
 )
 
 type RedisStore struct {
-	cli redis.Cmdable
+	cli redis.UniversalClient
 
 	prefix     string
 	expiration time.Duration
@@ -29,7 +29,7 @@ func NewStore(opts *redis.Options, expiration time.Duration,
 }
 
 // NewRedisStoreWithCli create an instance of a redis store
-func NewRedisStore(cli redis.Cmdable, expiration time.Duration,
+func NewRedisStore(cli redis.UniversalClient, expiration time.Duration,
 	prefix ...string) base64Captcha.Store {
 	store := &RedisStore{
 		cli:        cli,

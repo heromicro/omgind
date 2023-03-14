@@ -116,14 +116,14 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2User := &api_v2.User{
 		UserSrv: serviceUser,
 	}
-	cmdable, cleanup4, err := InitRedisCli()
+	universalClient, cleanup4, err := InitRedisCli()
 	if err != nil {
 		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
-	vcode := InitVcode(cmdable)
+	vcode := InitVcode(universalClient)
 	signIn := &service.SignIn{
 		Auth:           auther,
 		UserRepo:       user,
@@ -174,7 +174,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		Auth:           auther,
 		CasbinEnforcer: syncedEnforcer,
 		MenuSrv:        serviceMenu,
-		RedisCli:       cmdable,
+		RedisCli:       universalClient,
 	}
 	return injector, func() {
 		cleanup4()

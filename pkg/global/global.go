@@ -23,7 +23,7 @@ var (
 	CFG  = new(config.AppConfig)
 	once sync.Once
 
-	RdsCli redis.Cmdable
+	RdsCli redis.UniversalClient
 )
 
 // PrintWithJSON 基于JSON格式输出配置

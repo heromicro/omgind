@@ -19,14 +19,14 @@ var (
 )
 
 type Vcode struct {
-	cli    redis.Cmdable
+	cli    redis.UniversalClient
 	cpch   *base64Captcha.Captcha
 	store  base64Captcha.Store
 	driver base64Captcha.Driver
 	source string
 }
 
-func New(cli redis.Cmdable, cfg option.CaptchaConfig) *Vcode {
+func New(cli redis.UniversalClient, cfg option.CaptchaConfig) *Vcode {
 
 	fmt.Printf(" === captach config %+v \n", cfg)
 
