@@ -17,20 +17,13 @@ func NewClient(cfg *config.AppConfig) (redis.UniversalClient, func(), error) {
 		DB:       cfg.Redis.Database,
 	})
 
-	//cli := redis.NewClient(&redis.Options{
-	//	Addr:     cfg.Redis.Addr,
-	//	Password: cfg.Redis.Password,
-	//	DB:       cfg.Redis.Database,
-	//	//MinIdleConns: 20,
-	//})
-
 	cleanFunc := func() {
 		err := cli.Close()
 		if err != nil {
 			log.Fatalf("redis close error: %s", err.Error())
 		}
 	}
-	//result, err := cli.Ping(context.TODO()).Result()
+
 	ctx := context.Background()
 	result, err := cli.Ping(ctx).Result()
 	if err != nil {

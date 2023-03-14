@@ -97,8 +97,8 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	monitorCleanFunc := InitMonitor(ctx)
 
 	// 初始化图形验证码
-	redisCli, redisCleanFunc, _ := InitRedisCli()
-	global.RdsCli = redisCli
+	// redisCli, redisCleanFunc, _ := InitRedisCli()
+	_, redisCleanFunc, _ := InitRedisCli()
 
 	// 初始化依赖注入器
 	injector, injectorCleanFunc, err := BuildInjector(global.CFG)

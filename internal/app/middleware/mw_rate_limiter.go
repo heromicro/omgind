@@ -1,11 +1,12 @@
 package middleware
 
 import (
+	"context"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v7"
-	"github.com/go-redis/redis_rate/v8"
+	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis_rate/v9"
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/global"
@@ -39,7 +40,8 @@ func RateLimiterMiddleware(skippers ...SkipperFunc) gin.HandlerFunc {
 		userID := ginx.GetUserID(c)
 		if userID != "" {
 			limit := cfg.Count
-			result, err := limiter.Allow(userID, redis_rate.PerSecond(int(cfg.Count)))
+			ctx := context.Background()
+			result, err := limiter.Allow(ctx, userID, redis_rate.PerSecond(int(cfg.Count)))
 			if err != nil {
 				h := c.Writer.Header()
 				h.Set("X-RateLimit-Limit", strconv.FormatInt(limit, 10))

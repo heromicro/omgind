@@ -40,7 +40,7 @@ func InitAuth() (auth.Auther, func(), error) {
 	case "redis":
 		rcfg := global.CFG.Redis
 		store = redis.NewStore(&redis.Config{
-			Addr:      rcfg.Addr,
+			Addrs:     []string{rcfg.Addr},
 			Password:  rcfg.Password,
 			DB:        cfg.RedisDB,
 			KeyPrefix: cfg.RedisPrefix,

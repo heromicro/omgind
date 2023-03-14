@@ -5,32 +5,38 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-redis/redis/v7"
+	"github.com/go-redis/redis/v8"
 )
 
 // Config redis配置参数
 type Config struct {
-	Addr      string // 地址(IP:Port)
-	DB        int    // 数据库
-	Password  string // 密码
-	KeyPrefix string // 存储key的前缀
+	Addrs     []string // 地址(IP:Port)
+	DB        int      // 数据库
+	Password  string   // 密码
+	KeyPrefix string   // 存储key的前缀
 }
 
 // NewStore 创建基于redis存储实例
 func NewStore(cfg *Config) *Store {
-	cli := redis.NewClient(&redis.Options{
-		Addr:     cfg.Addr,
-		DB:       cfg.DB,
-		Password: cfg.Password,
+
+	redisClient := redis.NewUniversalClient(&redis.UniversalOptions{
+		Addrs: cfg.Addrs,
+		DB:    cfg.DB,
 	})
+
+	// cli := redis.NewClient(&redis.Options{
+	// 	Addr:     cfg.Addr,
+	// 	DB:       cfg.DB,
+	// 	Password: cfg.Password,
+	// })
 	return &Store{
-		cli:    cli,
+		cli:    redisClient,
 		prefix: cfg.KeyPrefix,
 	}
 }
 
 // NewStoreWithClient 使用redis客户端创建存储实例
-func NewStoreWithClient(cli *redis.Client, keyPrefix string) *Store {
+func NewStoreWithClient(cli redis.UniversalClient, keyPrefix string) *Store {
 	return &Store{
 		cli:    cli,
 		prefix: keyPrefix,
@@ -57,7 +63,7 @@ type redisClienter interface {
 
 // Store redis存储
 type Store struct {
-	cli    redisClienter
+	cli    redis.UniversalClient
 	prefix string
 }
 
@@ -67,13 +73,13 @@ func (s *Store) wrapperKey(key string) string {
 
 // Set ...
 func (s *Store) Set(ctx context.Context, tokenString string, expiration time.Duration) error {
-	cmd := s.cli.Set(s.wrapperKey(tokenString), "1", expiration)
+	cmd := s.cli.Set(ctx, s.wrapperKey(tokenString), "1", expiration)
 	return cmd.Err()
 }
 
 // Delete ...
 func (s *Store) Delete(ctx context.Context, tokenString string) (bool, error) {
-	cmd := s.cli.Del(s.wrapperKey(tokenString))
+	cmd := s.cli.Del(ctx, s.wrapperKey(tokenString))
 	if err := cmd.Err(); err != nil {
 		return false, err
 	}
@@ -82,7 +88,7 @@ func (s *Store) Delete(ctx context.Context, tokenString string) (bool, error) {
 
 // Check ...
 func (s *Store) Check(ctx context.Context, tokenString string) (bool, error) {
-	cmd := s.cli.Exists(s.wrapperKey(tokenString))
+	cmd := s.cli.Exists(ctx, s.wrapperKey(tokenString))
 	if err := cmd.Err(); err != nil {
 		return false, err
 	}

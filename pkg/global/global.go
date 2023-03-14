@@ -7,7 +7,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/go-redis/redis/v7"
 	"github.com/heromicro/omgind/pkg/config"
 	"github.com/koding/multiconfig"
 
@@ -23,7 +22,7 @@ var (
 	CFG  = new(config.AppConfig)
 	once sync.Once
 
-	RdsCli redis.UniversalClient
+	// RdsCli redis.UniversalClient
 )
 
 // PrintWithJSON 基于JSON格式输出配置

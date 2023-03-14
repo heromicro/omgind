@@ -1,9 +1,10 @@
 package app
 
 import (
+	"context"
 	"errors"
 
-	"github.com/go-redis/redis/v7"
+	"github.com/go-redis/redis/v8"
 	"github.com/heromicro/omgind/pkg/global"
 	"github.com/heromicro/omgind/pkg/logger"
 )
@@ -34,7 +35,8 @@ func NewRedisCli() (redis.UniversalClient, func(), error) {
 			logger.Errorf("redis close error: %s", err.Error())
 		}
 	}
-	_, err := cli.Ping().Result()
+	ctx := context.Background()
+	_, err := cli.Ping(ctx).Result()
 	if err != nil {
 		return nil, cleanFunc, err
 	}

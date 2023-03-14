@@ -1,10 +1,11 @@
 package store
 
 import (
+	"context"
 	"strings"
 	"time"
 
-	"github.com/go-redis/redis/v7"
+	"github.com/go-redis/redis/v8"
 	"github.com/mojocn/base64Captcha"
 )
 
@@ -42,14 +43,17 @@ func NewRedisStore(cli redis.UniversalClient, expiration time.Duration,
 }
 
 func (rs *RedisStore) Set(id string, value string) error {
-	_, err := rs.cli.Set(rs.prefix+":"+id, value, rs.expiration).Result()
+	ctx := context.Background()
+	_, err := rs.cli.Set(ctx, rs.prefix+":"+id, value, rs.expiration).Result()
 	return err
 }
 
 func (rs *RedisStore) Get(id string, clear bool) string {
-	val := rs.cli.Get(rs.prefix + ":" + id).Val()
+	ctx := context.Background()
+
+	val := rs.cli.Get(ctx, rs.prefix+":"+id).Val()
 	if clear && val != "" {
-		rs.cli.Del("captcha:" + id)
+		rs.cli.Del(ctx, "captcha:"+id)
 	}
 	return val
 }
