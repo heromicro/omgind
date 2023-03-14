@@ -492,10 +492,23 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 		item.TreeRight = ptr.Int64(2)
 		item.IsLeaf = ptr.Bool(true)
 		item.TreeLevel = ptr.Int32(1)
+		if item.ParentID != nil && *item.ParentID == "" {
+			item.ParentID = nil
+		}
+
+		if item.MergeName == nil || *item.MergeName == "" {
+			item.MergeName = &item.Name
+		}
+		if item.Sname != nil && *item.Sname != "" && (item.MergeSname == nil || *item.MergeSname == "") {
+			item.MergeSname = item.Sname
+		}
 
 		iteminput := a.ToEntCreateSysDistrictInput(&item)
 
 		res_sysdistrict, err = a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
+		if err != nil {
+			return nil, err
+		}
 
 	} else {
 
@@ -517,19 +530,28 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 		}
 
 		if item.MergeName == nil || *item.MergeName == "" {
-			if parent.MergeName != nil && *parent.MergeName != "" {
-				item.MergeName = ptr.String(strings.Join([]string{*parent.MergeName, item.Name}, ","))
+			if *parent.TreeLevel == 1 {
+				item.MergeName = ptr.String(strings.Join([]string{*parent.Name, item.Name}, ","))
 			} else {
-				item.MergeName = ptr.String(item.Name)
+				if parent.MergeName != nil && *parent.MergeName != "" {
+					item.MergeName = ptr.String(strings.Join([]string{*parent.MergeName, item.Name}, ","))
+				} else {
+					item.MergeName = ptr.String(item.Name)
+				}
 			}
 		}
 
 		if item.MergeSname == nil || *item.MergeSname == "" {
-			if parent.MergeSname != nil && *parent.MergeSname != "" {
-				item.MergeSname = ptr.String(strings.Join([]string{*parent.MergeSname, *item.Sname}, ","))
+			if *parent.TreeLevel == 1 {
+				if parent.Sname != nil && *parent.Sname != "" && item.Sname != nil && *item.Sname != "" {
+					item.MergeName = ptr.String(strings.Join([]string{*parent.Sname, *item.Sname}, ","))
+				}
 			} else {
-				item.MergeSname = item.Sname
-
+				if parent.MergeSname != nil && *parent.MergeSname != "" {
+					item.MergeSname = ptr.String(strings.Join([]string{*parent.MergeSname, *item.Sname}, ","))
+				} else {
+					item.MergeSname = item.Sname
+				}
 			}
 		}
 
@@ -586,6 +608,9 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 	log.Println(" ------- ===== ---- oitem.ParentID ", oitem.ParentID)
 	log.Println(" ------- ===== ---- nitem.ParentID  ", item.ParentID)
+	if *item.ParentID == "" {
+		log.Println(" ------- ===== ---- nitem.ParentID  [", *item.ParentID, "]")
+	}
 
 	if *item.ParentID == id {
 		return nil, errors.New("make self parent")
@@ -594,7 +619,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	// check pid changed or not
 	if oitem.ParentID == nil {
 		// old data.pid is nil
-		if item.ParentID == nil {
+		if item.ParentID == nil || *item.ParentID == "" {
 			// pid no change
 
 			item.TreeID = nil
@@ -602,6 +627,10 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 			item.TreeRight = nil
 			item.TreeLevel = nil
 			item.TreePath = nil
+
+			if item.ParentID != nil && *item.ParentID == "" {
+				item.ParentID = nil
+			}
 
 			iteminput := a.ToEntUpdateSysDistrictInput(&item)
 			if iteminput.MergeName == nil || *iteminput.MergeName == "" {
@@ -655,7 +684,6 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
 				} else {
 					item.MergeSname = item.Sname
-
 				}
 			}
 
@@ -729,8 +757,8 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 		}
 
 		log.Println(" -------- ----- oparent.ID- ", oparent.ID)
-
-		if item.ParentID == nil {
+		// new item.id is empty
+		if item.ParentID == nil || *item.ParentID == "" {
 			// bring  to top level,
 			//
 
@@ -746,6 +774,13 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 			item.TreeLevel = ptr.Int32(1)
 			item.IsLeaf = nil
 			item.TreePath = nil
+
+			if item.ParentID != nil && *item.ParentID == "" {
+				item.ParentID = nil
+			}
+
+			item.MergeName = &item.Name
+			item.MergeSname = item.Sname
 
 			iteminput := a.ToEntUpdateSysDistrictInput(&item)
 
@@ -795,6 +830,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				if err != nil {
 					return err
 				}
+
 				// step 6: trigger udpate tree_path and merge_name, merge_sname,
 
 				return nil
@@ -868,52 +904,147 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					return nil, err
 				}
 
+				item.TreeID = nparent.TreeID
+				item.TreeLeft = nil
+				item.TreeRight = nil
+				item.TreeLevel = ptr.Int32(*nparent.TreeLevel + 1)
+				if nparent.TreePath != nil && *nparent.TreePath != "" {
+					item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
+				} else {
+					item.TreePath = ptr.String(*&nparent.ID)
+				}
+
+				if item.MergeName == nil || *item.MergeName == "" {
+					if nparent.MergeName != nil && *nparent.MergeName != "" {
+						item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, ","))
+					} else {
+						item.MergeName = ptr.String(item.Name)
+					}
+				}
+
+				if item.MergeSname == nil || *item.MergeSname == "" {
+					if nparent.MergeSname != nil && *nparent.MergeSname != "" {
+						item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
+					} else {
+						item.MergeSname = item.Sname
+					}
+				}
+
+				iteminput := a.ToEntUpdateSysDistrictInput(&item)
 				// old parent need to minus d1, new parent need to add d1
 				d1 := *oitem.TreeRight - *oitem.TreeLeft + 1
-
 				// oitem and subs need to add d2
 				d2 := *nparent.TreeRight - *oitem.TreeLeft
 
-				err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+				log.Println(" ------ ==---- == *nparent.TreeID ", *nparent.TreeID)
+				log.Println(" ------ ==---- ==  *oparent.TreeID ", *oparent.TreeID)
+				log.Println(" ------ ==---- ==  *oparent.TreeID == *nparent.TreeID ", *oparent.TreeID == *nparent.TreeID)
 
-					// step 1: repair old parent's left/right
-					_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).AddTreeLeft(-d1).Save(ctx)
+				if *nparent.TreeID == *oparent.TreeID { // same tree move
+					//
+
+					ids, err := a.EntCli.SysDistrict.Query().Where(sysdistrict.TreeIDEQ(*oitem.TreeID), sysdistrict.And(sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight))).IDs(ctx)
 					if err != nil {
-						return err
+						return nil, err
 					}
-					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeRightGTE(*oparent.TreeRight)).AddTreeRight(-d1).Save(ctx)
+					d2 = *nparent.TreeRight - *oitem.TreeRight
+					if *nparent.TreeRight > *oparent.TreeRight {
+						d2 -= 1
+					} else {
+						d2 += 1
+					}
+					err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+
+						// step 2: repair old parent's left/right
+						_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.And(sysdistrict.TreeLeftGT(*oparent.TreeRight), sysdistrict.TreeLeftLTE(*nparent.TreeLeft))).AddTreeLeft(-d1).Save(ctx)
+						if err != nil {
+							return err
+						}
+
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.And(sysdistrict.TreeRightGTE(*oparent.TreeRight), sysdistrict.TreeRightLT(*nparent.TreeRight))).AddTreeRight(-d1).Save(ctx)
+						if err != nil {
+							return err
+						}
+
+						// step 3: repair new parent's left/right
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*nparent.TreeID), sysdistrict.And(sysdistrict.TreeLeftGT(*nparent.TreeRight), sysdistrict.TreeLeftLT(*oitem.TreeLeft))).AddTreeLeft(d1).Save(ctx)
+						if err != nil {
+							return err
+						}
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*nparent.TreeID), sysdistrict.And(sysdistrict.TreeRightGTE(*nparent.TreeRight), sysdistrict.TreeRightLT(*oitem.TreeLeft))).AddTreeRight(d1).Save(ctx)
+						if err != nil {
+							return err
+						}
+
+						//
+						// step 1: repair the sub items left/right
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.IDIn(ids...)).AddTreeLeft(d2).AddTreeRight(d2).Save(ctx)
+
+						if err != nil {
+							return err
+						}
+
+						// step 4:  udpate
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
+						if err != nil {
+							return err
+						}
+
+						// step 5: trigger update subs's tree_path, merge_name, merge_sname
+
+						return nil
+					})
+
 					if err != nil {
-						return err
+						return nil, err
 					}
 
-					// step 2: repair new parent's left/right
-					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*nparent.TreeID), sysdistrict.TreeLeftGT(*nparent.TreeRight)).AddTreeLeft(d1).Save(ctx)
-					if err != nil {
-						return err
-					}
-					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeID(*nparent.TreeID), sysdistrict.TreeRightGTE(*nparent.TreeRight)).AddTreeRight(d1).Save(ctx)
-					if err != nil {
-						return err
-					}
+				} else {
 
-					// step 3: repair the sub items left/right, switch tree_id
-					_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight)).AddTreeLeft(d2).AddTreeRight(d2).SetTreeID(*nparent.TreeID).Save(ctx)
-					if err != nil {
-						return err
-					}
+					err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
-					// step 3:  switch pid
-					_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetParentID(nparent.ID).Save(ctx)
-					if err != nil {
-						return err
-					}
-					return nil
-				})
+						// step 1: repair old parent's left/right
+						_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGT(*oparent.TreeRight)).AddTreeLeft(-d1).Save(ctx)
+						if err != nil {
+							return err
+						}
 
-				if err != nil {
-					return nil, err
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeRightGTE(*oparent.TreeRight)).AddTreeRight(-d1).Save(ctx)
+						if err != nil {
+							return err
+						}
+
+						// step 2: repair new parent's left/right
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*nparent.TreeID), sysdistrict.TreeLeftGT(*nparent.TreeRight)).AddTreeLeft(d1).Save(ctx)
+						if err != nil {
+							return err
+						}
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeID(*nparent.TreeID), sysdistrict.TreeRightGTE(*nparent.TreeRight)).AddTreeRight(d1).Save(ctx)
+						if err != nil {
+							return err
+						}
+
+						// step 3: repair the sub items left/right, switch tree_id
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight)).AddTreeLeft(d2).AddTreeRight(d2).SetTreeID(*nparent.TreeID).Save(ctx)
+						if err != nil {
+							return err
+						}
+
+						// step 3:  udpate
+						_, err = tx.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
+						if err != nil {
+							return err
+						}
+
+						// step 5: trigger update subs's tree_path, merge_name, merge_sname
+
+						return nil
+					})
+
+					if err != nil {
+						return nil, err
+					}
 				}
-
 			}
 		}
 	}
