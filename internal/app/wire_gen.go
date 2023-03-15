@@ -14,7 +14,8 @@ import (
 	"github.com/heromicro/omgind/internal/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/config"
-	"github.com/heromicro/omgind/pkg/mw/redis"
+	"github.com/heromicro/omgind/pkg/mw/asyncq"
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 )
 
 import (
@@ -117,7 +118,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2User := &api_v2.User{
 		UserSrv: serviceUser,
 	}
-	universalClient, cleanup4, err := redis.NewClient(cfg)
+	universalClient, cleanup4, err := rdb.NewClient(cfg)
 	if err != nil {
 		cleanup3()
 		cleanup2()
@@ -170,14 +171,25 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		SysAddressAPIV2:  api_v2SysAddress,
 	}
 	engine := InitGinEngine(routerRouter)
+	redisConnOpt := asyncq.NewAsynqClientOpt(universalClient)
+	asynqClient, cleanup5, err := asyncq.NewAsynqClient(redisConnOpt)
+	if err != nil {
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
 	injector := &Injector{
 		Engine:         engine,
 		Auth:           auther,
 		CasbinEnforcer: syncedEnforcer,
 		MenuSrv:        serviceMenu,
 		RedisCli:       universalClient,
+		AsynqCli:       asynqClient,
 	}
 	return injector, func() {
+		cleanup5()
 		cleanup4()
 		cleanup3()
 		cleanup2()

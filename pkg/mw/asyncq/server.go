@@ -14,6 +14,18 @@ type Server struct {
 
 type ServerOption func(opt *asynq.Config)
 
+func WithQueues(q map[string]int) ServerOption {
+	return func(opt *asynq.Config) {
+		opt.Queues = q
+	}
+}
+
+func WithConcurrency(c int) ServerOption {
+	return func(opt *asynq.Config) {
+		opt.Concurrency = c
+	}
+}
+
 func NewAsynqServer(opt asynq.RedisConnOpt, opts ...ServerOption) *Server {
 	ret := &Server{server: newAsynqServer(opt, opts...), ServeMux: asynq.NewServeMux()}
 	return ret

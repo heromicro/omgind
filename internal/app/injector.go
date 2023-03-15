@@ -4,6 +4,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/heromicro/omgind/internal/app/service"
 	"github.com/heromicro/omgind/pkg/auth"
+	"github.com/hibiken/asynq"
 
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
@@ -22,4 +23,6 @@ type Injector struct {
 	RedisCli       redis.UniversalClient
 	//InfluxDb       influxdb2.Client
 	//RabbitMq       *amqp.Connection
+	AsynqCli *asynq.Client
+	// AsyncqServer *asyncq.Server
 }

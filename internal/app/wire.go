@@ -11,7 +11,8 @@ import (
 	"github.com/heromicro/omgind/internal/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/config"
-	"github.com/heromicro/omgind/pkg/mw/redis"
+	"github.com/heromicro/omgind/pkg/mw/asyncq"
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 
 	// "github.com/heromicro/omgind/internal/app/api_v2/mock"
 	"github.com/google/wire"
@@ -27,7 +28,9 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		// mock.MockSet,
 		// config.ProviderSet,
 		schema.ProviderSet,
-		redis.ClientSet,
+		rdb.ProviderSet,
+
+		asyncq.ProviderSet,
 
 		InitVcode,
 		//InitInfluxDB,
