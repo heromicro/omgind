@@ -1,15 +1,15 @@
 package app
 
 import (
-	"github.com/go-redis/redis/v8"
 	"github.com/heromicro/omgind/pkg/global"
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 	"github.com/heromicro/omgind/pkg/vcode"
 )
 
-func InitVcode(cli redis.UniversalClient) *vcode.Vcode {
+func InitVcode(rdb *rdb.Redis) *vcode.Vcode {
 
 	cfg := global.CFG.Captcha
 
-	vc := vcode.New(cli, cfg)
+	vc := vcode.New(rdb, cfg)
 	return vc
 }

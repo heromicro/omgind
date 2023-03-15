@@ -1,25 +1,25 @@
 package asyncq
 
 import (
-	"github.com/go-redis/redis/v8"
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 	"github.com/hibiken/asynq"
 )
 
 type RedisConfigFunc func() any
 
-func (r RedisConfigFunc) MakeRedisClient() any {
-	return r()
-}
+// func (r RedisConfigFunc) MakeRedisClient() any {
+// 	return r()
+// }
 
-func NewAsynqClientOpt(r redis.UniversalClient) asynq.RedisConnOpt {
-	return RedisConfigFunc(func() any {
-		return r
-	})
-}
+// func NewAsynqClientOpt(r redis.UniversalClient) asynq.RedisConnOpt {
+// 	return RedisConfigFunc(func() any {
+// 		return r
+// 	})
+// }
 
-func NewAsynqClient(opt asynq.RedisConnOpt) (*asynq.Client, func(), error) {
+func NewAsynqClient(rdb *rdb.Redis) (*asynq.Client, func(), error) {
 
-	client := asynq.NewClient(opt) 
+	client := asynq.NewClient(rdb)
 
 	cleanFunc := func() {
 		client.Close()

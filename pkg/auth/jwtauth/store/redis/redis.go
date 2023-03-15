@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
+
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 )
 
 // Config redis配置参数
@@ -17,20 +19,9 @@ type Config struct {
 }
 
 // NewStore 创建基于redis存储实例
-func NewStore(cfg *Config) *Store {
-
-	redisClient := redis.NewUniversalClient(&redis.UniversalOptions{
-		Addrs: cfg.Addrs,
-		DB:    cfg.DB,
-	})
-
-	// cli := redis.NewClient(&redis.Options{
-	// 	Addr:     cfg.Addr,
-	// 	DB:       cfg.DB,
-	// 	Password: cfg.Password,
-	// })
+func NewStore(cfg *Config, rdb *rdb.Redis) *Store {
 	return &Store{
-		cli:    redisClient,
+		cli:    rdb.Client(),
 		prefix: cfg.KeyPrefix,
 	}
 }

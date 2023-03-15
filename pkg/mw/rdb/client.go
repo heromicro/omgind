@@ -87,6 +87,5 @@ func NewClient(cfg *config.AppConfig) (redis.UniversalClient, func(), error) {
 	return cli, cleanFunc, nil
 }
 
-var ProviderSet = wire.NewSet(NewClient)
-
-// var ProviderSet = wire.NewSet(New)
+// var ProviderSet = wire.NewSet(NewClient)
+var ProviderSet = wire.NewSet(New)

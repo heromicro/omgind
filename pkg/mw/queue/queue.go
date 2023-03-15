@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 	"github.com/heromicro/omgind/pkg/types"
 )
 
@@ -19,9 +20,9 @@ type Job struct {
 }
 
 type QueueOptions struct {
-	Names map[string]int
-	Type  string
-	RedisClient       *rdb.Redis
+	Names        map[string]int
+	Type         string
+	RedisClient  *rdb.Redis
 	RedisAddress string
 	// PrometheusAddress string
 }

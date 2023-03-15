@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 	"github.com/mojocn/base64Captcha"
 )
 
@@ -16,24 +17,11 @@ type RedisStore struct {
 	expiration time.Duration
 }
 
-// NewStore create an instance of a redis store
-func NewStore(opts *redis.Options, expiration time.Duration,
-	prefix ...string) base64Captcha.Store {
-	if opts == nil {
-		panic("options cannot be nil")
-	}
-	return NewRedisStore(
-		redis.NewClient(opts),
-		expiration,
-		prefix...,
-	)
-}
-
 // NewRedisStoreWithCli create an instance of a redis store
-func NewRedisStore(cli redis.UniversalClient, expiration time.Duration,
+func NewRedisStore(rdb *rdb.Redis, expiration time.Duration,
 	prefix ...string) base64Captcha.Store {
 	store := &RedisStore{
-		cli:        cli,
+		cli:        rdb.Client(),
 		expiration: expiration,
 	}
 	if len(prefix) > 0 {

@@ -1,14 +1,14 @@
 package app
 
 import (
-	"github.com/go-redis/redis/v8"
-	"github.com/heromicro/omgind/internal/app/service"
-	"github.com/heromicro/omgind/pkg/auth"
-	"github.com/hibiken/asynq"
-
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
+	"github.com/hibiken/asynq"
+
+	"github.com/heromicro/omgind/internal/app/service"
+	"github.com/heromicro/omgind/pkg/auth"
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 )
 
 // InjectorSet 注入Injector
@@ -20,7 +20,7 @@ type Injector struct {
 	Auth           auth.Auther
 	CasbinEnforcer *casbin.SyncedEnforcer
 	MenuSrv        *service.Menu
-	RedisCli       redis.UniversalClient
+	Rdb            *rdb.Redis
 	//InfluxDb       influxdb2.Client
 	//RabbitMq       *amqp.Connection
 	AsynqCli *asynq.Client

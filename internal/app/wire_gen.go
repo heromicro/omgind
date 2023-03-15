@@ -26,12 +26,18 @@ import (
 
 // BuildInjector 生成注入器
 func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
-	auther, cleanup, err := InitAuth()
+	redis, cleanup, err := rdb.New(cfg)
 	if err != nil {
 		return nil, nil, err
 	}
-	client, cleanup2, err := schema.New(cfg)
+	auther, cleanup2, err := InitAuth(cfg, redis)
 	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	client, cleanup3, err := schema.New(cfg)
+	if err != nil {
+		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
@@ -57,8 +63,9 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		UserRepo:         user,
 		UserRoleRepo:     userRole,
 	}
-	syncedEnforcer, cleanup3, err := InitCasbin(casbinAdapter)
+	syncedEnforcer, cleanup4, err := InitCasbin(casbinAdapter)
 	if err != nil {
+		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
@@ -118,14 +125,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2User := &api_v2.User{
 		UserSrv: serviceUser,
 	}
-	universalClient, cleanup4, err := rdb.NewClient(cfg)
-	if err != nil {
-		cleanup3()
-		cleanup2()
-		cleanup()
-		return nil, nil, err
-	}
-	vcode := InitVcode(universalClient)
+	vcode := InitVcode(redis)
 	signIn := &service.SignIn{
 		Auth:           auther,
 		UserRepo:       user,
@@ -171,8 +171,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		SysAddressAPIV2:  api_v2SysAddress,
 	}
 	engine := InitGinEngine(routerRouter)
-	redisConnOpt := asyncq.NewAsynqClientOpt(universalClient)
-	asynqClient, cleanup5, err := asyncq.NewAsynqClient(redisConnOpt)
+	asynqClient, cleanup5, err := asyncq.NewAsynqClient(redis)
 	if err != nil {
 		cleanup4()
 		cleanup3()
@@ -185,7 +184,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		Auth:           auther,
 		CasbinEnforcer: syncedEnforcer,
 		MenuSrv:        serviceMenu,
-		RedisCli:       universalClient,
+		Rdb:            redis,
 		AsynqCli:       asynqClient,
 	}
 	return injector, func() {

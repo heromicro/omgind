@@ -10,6 +10,7 @@ import (
 	"github.com/heromicro/omgind/pkg/config/option"
 	"github.com/heromicro/omgind/pkg/helper/str"
 	"github.com/heromicro/omgind/pkg/helper/uid/uuid"
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 	"github.com/heromicro/omgind/pkg/vcode/store"
 	"github.com/mojocn/base64Captcha"
 )
@@ -20,24 +21,25 @@ var (
 
 type Vcode struct {
 	redisCli redis.UniversalClient
-	cpch     *base64Captcha.Captcha
-	store    base64Captcha.Store
-	driver   base64Captcha.Driver
-	source   string
+	// rdb    *rdb.Redis
+	cpch   *base64Captcha.Captcha
+	store  base64Captcha.Store
+	driver base64Captcha.Driver
+	source string
 }
 
-func New(rcli redis.UniversalClient, cfg option.CaptchaConfig) *Vcode {
+func New(rdb *rdb.Redis, cfg option.CaptchaConfig) *Vcode {
 
 	fmt.Printf(" === captach config %+v \n", cfg)
 
 	driver := base64Captcha.NewDriverString(cfg.Height, cfg.Width, cfg.NoiseCount, cfg.ShowLineOptions, cfg.Length, cfg.Source, cfg.BgColor, nil, cfg.Fonts)
 
 	if cfg.Store == "redis" {
-		storer := store.NewRedisStore(rcli, time.Minute*time.Duration(cfg.Duration), cfg.RedisPrefix)
+		storer := store.NewRedisStore(rdb, time.Minute*time.Duration(cfg.Duration), cfg.RedisPrefix)
 
 		cpch := base64Captcha.NewCaptcha(driver.ConvertFonts(), storer)
 		return &Vcode{
-			redisCli: rcli,
+			redisCli: rdb.Client(),
 			cpch:     cpch,
 			driver:   driver,
 			store:    storer,

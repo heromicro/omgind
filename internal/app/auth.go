@@ -5,14 +5,16 @@ import (
 	"github.com/heromicro/omgind/pkg/auth/jwtauth"
 	"github.com/heromicro/omgind/pkg/auth/jwtauth/store/buntdb"
 	"github.com/heromicro/omgind/pkg/auth/jwtauth/store/redis"
+	"github.com/heromicro/omgind/pkg/config"
 	"github.com/heromicro/omgind/pkg/global"
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 
 	jwt "github.com/golang-jwt/jwt/v4"
 )
 
 // InitAuth 初始化用户认证
-func InitAuth() (auth.Auther, func(), error) {
-	cfg := global.CFG.JWTAuth
+func InitAuth(conf *config.AppConfig, rdb *rdb.Redis) (auth.Auther, func(), error) {
+	cfg := conf.JWTAuth
 
 	var opts []jwtauth.Option
 	opts = append(opts, jwtauth.SetExpired(cfg.Expired))
@@ -44,7 +46,7 @@ func InitAuth() (auth.Auther, func(), error) {
 			Password:  rcfg.Password,
 			DB:        cfg.RedisDB,
 			KeyPrefix: cfg.RedisPrefix,
-		})
+		}, rdb)
 	default:
 		s, err := buntdb.NewStore(cfg.FilePath)
 		if err != nil {
