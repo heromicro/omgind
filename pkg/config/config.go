@@ -56,6 +56,7 @@ type AppConfig struct {
 	Sqlite3      option.Sqlite3Config     `mapstructure:"Sqlite3" json:"sqlite3"`
 	RabbitMQ     option.RabbitMQConfig    `mapstructure:"RabbitMQ" json:"rabbitmq"`
 	InfluxDB     option.InfluxDBConfig    `mapstructure:"InfluxDB" json:"influxdb"`
+	Queue        option.Queue             `mapstructure:"Queue" json:"queue"`
 }
 
 // IsDebugMode 是否是debug模式
