@@ -10,10 +10,6 @@ func InitAsynq(conf *config.AppConfig, q queue.Queuer) (*worker.Consumer, func()
 
 	consumer := worker.NewConsumer(q)
 
-	// consumer.RegisterHandlers(types.TaskName_REPAIR_DISTRICT_TREE_PATH, )
-	// consumer.RegisterHandlers()
-	// consumer.RegisterHandlers()
-
 	go consumer.Start()
 
 	cleanFunc := func() {

@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/wire"
 	"github.com/gotidy/ptr"
+	"github.com/jossef/format"
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
@@ -612,8 +613,9 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	}
 	// iteminput := a.ToEntUpdateSysDistrictInput(&item)
 
+	jobid := format.String(`{id}-{ml}`, format.Items{"id": id, "ml": time.Now().UnixMilli()})
 	job := &queue.Job{
-		ID:      id,
+		ID:      jobid,
 		Payload: json.RawMessage(id),
 		Delay:   100 * time.Millisecond,
 	}

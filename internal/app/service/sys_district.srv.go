@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/wire"
 	"github.com/hibiken/asynq"
+	"github.com/jossef/format"
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
@@ -120,8 +121,9 @@ func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
 			// ids = append(ids, child.ID)
 
 			if d > 1 {
+				jobid := format.String(`{id}-{ml}`, format.Items{"id": child.ID, "ml": time.Now().UnixMilli()})
 				job := &queue.Job{
-					ID:      child.ID,
+					ID:      jobid,
 					Payload: json.RawMessage(child.ID),
 					Delay:   200 * time.Millisecond,
 				}
