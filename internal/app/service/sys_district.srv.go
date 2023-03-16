@@ -2,20 +2,136 @@ package service
 
 import (
 	"context"
+	"encoding/json"
+	"log"
+	"strings"
+	"time"
 
 	"github.com/google/wire"
+	"github.com/hibiken/asynq"
 
 	"github.com/heromicro/omgind/internal/app/schema"
+	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/errors"
+	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
+	"github.com/heromicro/omgind/pkg/mw/queue"
+	"github.com/heromicro/omgind/pkg/types"
 )
 
 // SysDistrictSet 注入SysDistrict
-var SysDistrictSet = wire.NewSet(wire.Struct(new(SysDistrict), "*"))
+// var SysDistrictSet = wire.NewSet(wire.Struct(new(SysDistrict), "*"))
+var SysDistrictSet = wire.NewSet(New)
 
 // SysDistrict 行政区域
 type SysDistrict struct {
+	EntCli *ent.Client
+
 	SysDistrictRepo *repo.SysDistrict
+	Queue           queue.Queuer
+	consumer        *worker.Consumer
+}
+
+func New(entCli *ent.Client, districtRepo *repo.SysDistrict, q queue.Queuer, c *worker.Consumer) *SysDistrict {
+
+	districtSrv := &SysDistrict{
+		EntCli:          entCli,
+		SysDistrictRepo: districtRepo,
+		Queue:           q,
+		consumer:        c,
+	}
+
+	// TODO: register tasks
+	districtSrv.consumer.RegisterHandlers(types.TaskName_REPAIR_DISTRICT_TREE_PATH, districtSrv)
+
+	return districtSrv
+}
+
+// repair tree_path, merge_name, merge_sname
+func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
+
+	log.Println(" --- ---- === = ", t.Type())
+
+	id := string(t.Payload())
+	log.Println(" -- ----- ==== ", id)
+
+	parent, err := s.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).WithChildren(func(sdq *ent.SysDistrictQuery) {
+
+		sdq.Where(sysdistrict.IsDel(false)).Select(sysdistrict.FieldID, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldName, sysdistrict.FieldName, sysdistrict.FieldIsLeaf, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight)
+
+	}).First(ctx)
+
+	if err != nil {
+		if !ent.IsNotFound(err) {
+			return err
+		}
+	}
+	// var ids []string = []string{}
+
+	for _, child := range parent.Edges.Children {
+
+		var tree_path string
+		var merge_name string
+		var merge_sname string
+		if parent.TreePath != nil && *parent.TreePath != "" {
+			tree_path = strings.Join([]string{*parent.TreePath, parent.ID}, "/")
+		} else {
+			tree_path = parent.ID
+		}
+
+		if parent.MergeName != nil && *parent.MergeName != "" {
+			merge_name = strings.Join([]string{*parent.MergeName, *child.Name}, ",")
+		} else {
+			merge_name = strings.Join([]string{*parent.Name, *child.Name}, ",")
+		}
+
+		if parent.MergeSname != nil && *parent.MergeSname != "" {
+			merge_sname = strings.Join([]string{*parent.MergeSname, *child.Sname}, ",")
+		} else {
+			merge_sname = strings.Join([]string{*parent.Sname, *child.Sname}, ",")
+		}
+
+		update_district := s.EntCli.SysDistrict.Update().Where(sysdistrict.IDEQ(child.ID))
+		if tree_path != "" {
+			update_district = update_district.SetTreePath(tree_path)
+		}
+		if merge_name != "" {
+			update_district = update_district.SetMergeName(merge_name)
+		}
+		if merge_sname != "" {
+			update_district = update_district.SetMergeSname(merge_sname)
+		}
+
+		d := *child.TreeRight - *child.TreeLeft
+		if d > 1 {
+			update_district = update_district.SetIsLeaf(false)
+		} else if d == 1 {
+			update_district = update_district.SetIsLeaf(true)
+		}
+
+		update_district = update_district.SetTreeLevel(*parent.TreeLevel + 1)
+
+		_, err := update_district.Save(ctx)
+
+		if err != nil {
+			log.Println(" --------- ===== ------ ", err)
+		} else {
+			// ids = append(ids, child.ID)
+
+			if d > 1 {
+				job := &queue.Job{
+					ID:      child.ID,
+					Payload: json.RawMessage(child.ID),
+					Delay:   200 * time.Millisecond,
+				}
+
+				s.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.DistrictQueue, job)
+			}
+		}
+	}
+
+	return nil
 }
 
 // Query 查询数据

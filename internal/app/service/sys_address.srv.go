@@ -6,6 +6,7 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
+	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -15,6 +16,8 @@ var SysAddressSet = wire.NewSet(wire.Struct(new(SysAddress), "*"))
 
 // SysAddress 地址管理
 type SysAddress struct {
+	EntCli *ent.Client
+
 	SysAddressRepo *repo.SysAddress
 }
 

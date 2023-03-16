@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"strings"
 	"time"
@@ -14,6 +15,8 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
+	"github.com/heromicro/omgind/pkg/mw/queue"
+	"github.com/heromicro/omgind/pkg/types"
 )
 
 // SysDistrictSet 注入SysDistrict
@@ -22,6 +25,7 @@ var SysDistrictSet = wire.NewSet(wire.Struct(new(SysDistrict), "*"))
 // SysDistrict 行政区域存储
 type SysDistrict struct {
 	EntCli *ent.Client
+	Queue  queue.Queuer
 }
 
 // ToSchemaSysDistrict 转换为
@@ -492,6 +496,8 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 		item.TreeRight = ptr.Int64(2)
 		item.IsLeaf = ptr.Bool(true)
 		item.TreeLevel = ptr.Int32(1)
+		item.TreePath = nil
+
 		if item.ParentID != nil && *item.ParentID == "" {
 			item.ParentID = nil
 		}
@@ -606,6 +612,12 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	}
 	// iteminput := a.ToEntUpdateSysDistrictInput(&item)
 
+	job := &queue.Job{
+		ID:      id,
+		Payload: json.RawMessage(id),
+		Delay:   100 * time.Millisecond,
+	}
+
 	log.Println(" ------- ===== ---- oitem.ParentID ", oitem.ParentID)
 	log.Println(" ------- ===== ---- nitem.ParentID  ", item.ParentID)
 	if *item.ParentID == "" {
@@ -632,15 +644,15 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				item.ParentID = nil
 			}
 
+			if item.MergeName == nil || *item.MergeName == "" {
+				item.MergeName = &item.Name
+			}
+
+			if item.MergeSname == nil || *item.MergeSname == "" {
+				item.MergeSname = item.Sname
+			}
+
 			iteminput := a.ToEntUpdateSysDistrictInput(&item)
-			if iteminput.MergeName == nil || *iteminput.MergeName == "" {
-				iteminput.MergeName = iteminput.Name
-			}
-
-			if iteminput.MergeSname == nil || *iteminput.MergeSname == "" {
-				iteminput.MergeSname = iteminput.Sname
-			}
-
 			log.Println(" ------ ====== name ", iteminput.Name)
 
 			_, err := a.EntCli.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
@@ -734,6 +746,10 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				// TODO: fix tree_path of id's and id's subs
 				// TODO: maybe can trigger celery to do this
 
+				err = a.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.DistrictQueue, job)
+
+				log.Println(" -- -- --- 0 -- --- -- 0000 enqueue err : ", err)
+
 				return nil
 			})
 
@@ -783,6 +799,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 			item.MergeSname = item.Sname
 
 			iteminput := a.ToEntUpdateSysDistrictInput(&item)
+			iteminput.ClearTreePath = true
 
 			distance := *oitem.TreeRight - *oitem.TreeLeft + 1
 
@@ -833,6 +850,10 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 				// step 6: trigger udpate tree_path and merge_name, merge_sname,
 
+				err = a.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.DistrictQueue, job)
+
+				log.Println(" -- -- --- 0 -- --- -- 1111 enqueue err : ", err)
+
 				return nil
 			})
 
@@ -863,6 +884,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				} else {
 					item.IsLeaf = ptr.Bool(true)
 				}
+
 				if nparent.TreePath != nil && *nparent.TreePath != "" {
 					item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
 				} else {
@@ -990,8 +1012,17 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 							return err
 						}
 
+						if oparent_has_children == 1 {
+							_, err := tx.SysDistrict.Update().Where(sysdistrict.IDEQ(oparent.ID)).SetIsLeaf(true).Save(ctx)
+							if err != nil {
+								return err
+							}
+						}
 						// step 5: trigger update subs's tree_path, merge_name, merge_sname
 
+						err = a.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.DistrictQueue, job)
+
+						log.Println(" -- -- --- 0 -- --- -- 2222 enqueue err : ", err)
 						return nil
 					})
 
@@ -1037,6 +1068,10 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 						}
 
 						// step 5: trigger update subs's tree_path, merge_name, merge_sname
+
+						err = a.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.DistrictQueue, job)
+
+						log.Println(" -- -- --- 0 -- --- -- 3333 enqueue err : ", err)
 
 						return nil
 					})

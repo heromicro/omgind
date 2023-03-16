@@ -9,6 +9,7 @@ import (
 	"github.com/gotidy/ptr"
 
 	"github.com/heromicro/omgind/internal/app/schema"
+	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/auth"
 	"github.com/heromicro/omgind/pkg/errors"
@@ -21,6 +22,8 @@ var SignInSet = wire.NewSet(wire.Struct(new(SignIn), "*"))
 
 // SignIn 登录管理
 type SignIn struct {
+	EntCli *ent.Client
+
 	Auth           auth.Auther
 	UserRepo       *repo.User
 	UserRoleRepo   *repo.UserRole

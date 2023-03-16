@@ -20,6 +20,8 @@ var SysRoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 
 // Role 角色管理
 type Role struct {
+	EntCli *ent.Client
+
 	Enforcer *casbin.SyncedEnforcer
 
 	RoleRepo               *repo.Role

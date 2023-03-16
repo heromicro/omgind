@@ -18,6 +18,8 @@ var DictSet = wire.NewSet(wire.Struct(new(Dict), "*"))
 
 // Demo 示例程序
 type Dict struct {
+	EntCli *ent.Client
+
 	DictRepo     *repo.Dict
 	DictItemRepo *repo.DictItem
 }

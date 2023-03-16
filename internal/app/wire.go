@@ -8,10 +8,11 @@ package app
 import (
 	"github.com/heromicro/omgind/internal/api/v2"
 	"github.com/heromicro/omgind/internal/app/service"
+
 	"github.com/heromicro/omgind/internal/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/config"
-	"github.com/heromicro/omgind/pkg/mw/asyncq"
+	// "github.com/heromicro/omgind/pkg/mw/asyncq"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
 
 	// "github.com/heromicro/omgind/internal/app/api_v2/mock"
@@ -30,7 +31,10 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		schema.ProviderSet,
 		rdb.ProviderSet,
 
-		asyncq.ProviderSet,
+		InitQueue,
+		InitAsynq,
+
+		// asyncq.ProviderSet,
 
 		InitVcode,
 		//InitInfluxDB,
@@ -40,6 +44,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		InitCasbin,
 		InitGinEngine,
 		service.ServiceSet,
+
 		api_v2.APIV2Set,
 		router.RouterSet,
 		adapter.CasbinAdapterSet,

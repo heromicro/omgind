@@ -22,6 +22,8 @@ var SysMenuSet = wire.NewSet(wire.Struct(new(Menu), "*"))
 
 // Menu 菜单管理
 type Menu struct {
+	EntCli *ent.Client
+
 	//TransModel              *repo.Trans
 
 	MenuRepo               *repo.Menu

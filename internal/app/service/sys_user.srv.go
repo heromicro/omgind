@@ -20,6 +20,8 @@ var SysUserSet = wire.NewSet(wire.Struct(new(User), "*"))
 
 // User 用户管理
 type User struct {
+	EntCli *ent.Client
+
 	Enforcer *casbin.SyncedEnforcer
 
 	UserRepo     *repo.User

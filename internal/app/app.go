@@ -102,6 +102,8 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 		return nil, err
 	}
 
+	// go injector.Consumer.Start()
+
 	// 初始化菜单数据
 
 	log.Println(" ---- init data from file global.CFG.Menu.Data == ", global.CFG.Menu.Data)

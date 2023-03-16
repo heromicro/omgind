@@ -22,12 +22,14 @@ require (
 	github.com/gotidy/ptr v1.4.0
 	github.com/hedwigz/entviz v0.0.0-20221011080911-9d47f6f1d818
 	github.com/hibiken/asynq v0.24.0
+	github.com/hibiken/asynqmon v0.7.1
 	github.com/influxdata/influxdb-client-go/v2 v2.12.2
 	github.com/jackc/pgx/v4 v4.18.0
 	github.com/jinzhu/copier v0.3.5
 	github.com/jinzhu/gorm v1.9.16
 	github.com/json-iterator/go v1.1.12
 	github.com/jszwec/csvutil v1.7.1
+	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/koding/multiconfig v0.0.0-20171124222453-69c27309b2d7
 	github.com/lib/pq v1.10.7
 	github.com/meehow/go-django-hashers v0.0.0-20171231135116-5e5d6afe52db
@@ -81,6 +83,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/gookit/goutil v0.5.15 // indirect
+	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/hcl/v2 v2.14.1 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect

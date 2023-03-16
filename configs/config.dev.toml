@@ -114,7 +114,7 @@
     Password = ""
 
     # 数据库编号0-15
-    Database = 0
+    Database = 15
 
 [JWTAuth]
     # 是否启用

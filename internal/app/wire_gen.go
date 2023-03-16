@@ -14,7 +14,6 @@ import (
 	"github.com/heromicro/omgind/internal/schema"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/config"
-	"github.com/heromicro/omgind/pkg/mw/asyncq"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
 )
 
@@ -77,6 +76,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceDict := &service.Dict{
+		EntCli:       client,
 		DictRepo:     dict,
 		DictItemRepo: dictItem,
 	}
@@ -87,6 +87,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceDemo := &service.Demo{
+		EntCli:   client,
 		DemoRepo: demo,
 	}
 	api_v2Demo := &api_v2.Demo{
@@ -99,6 +100,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceMenu := &service.Menu{
+		EntCli:                 client,
 		MenuRepo:               menu,
 		MenuActionRepo:         menuAction,
 		MenuActionResourceRepo: menuActionResource,
@@ -107,6 +109,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		MenuSrv: serviceMenu,
 	}
 	serviceRole := &service.Role{
+		EntCli:                 client,
 		Enforcer:               syncedEnforcer,
 		RoleRepo:               role,
 		RoleMenuRepo:           roleMenu,
@@ -117,6 +120,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		RoleSrv: serviceRole,
 	}
 	serviceUser := &service.User{
+		EntCli:       client,
 		Enforcer:     syncedEnforcer,
 		UserRepo:     user,
 		UserRoleRepo: userRole,
@@ -127,6 +131,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	}
 	vcode := InitVcode(redis)
 	signIn := &service.SignIn{
+		EntCli:         client,
 		Auth:           auther,
 		UserRepo:       user,
 		UserRoleRepo:   userRole,
@@ -140,12 +145,28 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		SigninSrv: signIn,
 		Vcode:     vcode,
 	}
+	queuer, cleanup5, err := InitQueue(cfg, redis)
+	if err != nil {
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
 	sysDistrict := &repo.SysDistrict{
 		EntCli: client,
+		Queue:  queuer,
 	}
-	serviceSysDistrict := &service.SysDistrict{
-		SysDistrictRepo: sysDistrict,
+	consumer, cleanup6, err := InitAsynq(cfg, queuer)
+	if err != nil {
+		cleanup5()
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
 	}
+	serviceSysDistrict := service.New(client, sysDistrict, queuer, consumer)
 	api_v2SysDistrict := &api_v2.SysDistrict{
 		SysDistrictSrv: serviceSysDistrict,
 	}
@@ -153,6 +174,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceSysAddress := &service.SysAddress{
+		EntCli:         client,
 		SysAddressRepo: sysAddress,
 	}
 	api_v2SysAddress := &api_v2.SysAddress{
@@ -171,23 +193,17 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		SysAddressAPIV2:  api_v2SysAddress,
 	}
 	engine := InitGinEngine(routerRouter)
-	asynqClient, cleanup5, err := asyncq.NewAsynqClient(redis)
-	if err != nil {
-		cleanup4()
-		cleanup3()
-		cleanup2()
-		cleanup()
-		return nil, nil, err
-	}
 	injector := &Injector{
 		Engine:         engine,
 		Auth:           auther,
 		CasbinEnforcer: syncedEnforcer,
 		MenuSrv:        serviceMenu,
 		Rdb:            redis,
-		AsynqCli:       asynqClient,
+		Queue:          queuer,
+		Consumer:       consumer,
 	}
 	return injector, func() {
+		cleanup6()
 		cleanup5()
 		cleanup4()
 		cleanup3()

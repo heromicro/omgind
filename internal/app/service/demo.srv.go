@@ -17,6 +17,8 @@ var DemoSet = wire.NewSet(wire.Struct(new(Demo), "*"))
 
 // Demo 示例程序
 type Demo struct {
+	EntCli *ent.Client
+
 	DemoRepo *repo.Demo
 }
 
