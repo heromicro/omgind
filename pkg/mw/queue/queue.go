@@ -10,7 +10,7 @@ import (
 
 type Queuer interface {
 	Write(types.TaskName, types.QueueName, *Job) error
-	Options() QueueOptions
+	Options() *QueueOptions
 }
 
 type Job struct {
