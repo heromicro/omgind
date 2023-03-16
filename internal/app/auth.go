@@ -6,7 +6,6 @@ import (
 	"github.com/heromicro/omgind/pkg/auth/jwtauth/store/buntdb"
 	"github.com/heromicro/omgind/pkg/auth/jwtauth/store/redis"
 	"github.com/heromicro/omgind/pkg/config"
-	"github.com/heromicro/omgind/pkg/global"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
 
 	jwt "github.com/golang-jwt/jwt/v4"
@@ -40,7 +39,7 @@ func InitAuth(conf *config.AppConfig, rdb *rdb.Redis) (auth.Auther, func(), erro
 	var store jwtauth.Storer
 	switch cfg.Store {
 	case "redis":
-		rcfg := global.CFG.Redis
+		rcfg := conf.Redis
 		store = redis.NewStore(&redis.Config{
 			Addrs:     []string{rcfg.Addr},
 			Password:  rcfg.Password,
