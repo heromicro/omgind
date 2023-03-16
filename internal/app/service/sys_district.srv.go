@@ -52,16 +52,17 @@ func New(entCli *ent.Client, districtRepo *repo.SysDistrict, q queue.Queuer, c *
 // repair tree_path, merge_name, merge_sname
 func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
 
-	log.Println(" --- ---- === = ", t.Type())
-
+	// log.Println(" --- ---- === = ", t.Type())
 	id := string(t.Payload())
-	log.Println(" -- ----- ==== ", id)
+	// log.Println(" -- ----- ==== ", id)
 
 	parent, err := s.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).WithChildren(func(sdq *ent.SysDistrictQuery) {
 
-		sdq.Where(sysdistrict.IsDel(false)).Select(sysdistrict.FieldID, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldName, sysdistrict.FieldName, sysdistrict.FieldIsLeaf, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight)
+		sdq.Where(sysdistrict.IsDel(false)).Select(sysdistrict.FieldID, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldIsLeaf, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight, sysdistrict.FieldParentID)
 
 	}).First(ctx)
+
+	// log.Println(" -- ----- ==== err ", err)
 
 	if err != nil {
 		if !ent.IsNotFound(err) {
