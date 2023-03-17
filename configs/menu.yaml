@@ -338,8 +338,51 @@
             - method: GET
               path: "/api/v2/org-organs/:id/view"
 
+    - name: 部门管理
+      router: "/organ/org-department"
+      sort: 49
+      level: 2
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: POST
+              path: "/api/v2/org-departments"
+        - code: edit
+          name: 编辑
+          resources: 
+            - method: GET
+              path: "/api/v2/org-departments/:id"
+            - method: PUT
+              path: "/api/v2/org-departments/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/org-departments/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/org-departments"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/org-departments/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/org-departments/:id/enable"
+        - code: view
+          name: 查看
+          resources:
+            - method: GET
+              path: "/api/v2/org-departments/:id/view"
+
     - name: 员工管理
-      router: "/organ/org-staffs"
+      router: "/organ/org-staff"
       sort: 49
       level: 2
       actions:
@@ -380,6 +423,49 @@
           resources:
             - method: GET
               path: "/api/v2/org-staffs/:id/view"
+
+    - name: 职位管理
+      router: "/organ/org-position"
+      sort: 59
+      level: 2
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: POST
+              path: "/api/v2/org-positions"
+        - code: edit
+          name: 编辑
+          resources: 
+            - method: GET
+              path: "/api/v2/org-positions/:id"
+            - method: PUT
+              path: "/api/v2/org-positions/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/org-positions/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/org-positions"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/org-positions/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/org-positions/:id/enable"
+        - code: view
+          name: 查看
+          resources:
+            - method: GET
+              path: "/api/v2/org-positions/:id/view"
 
 - name: 开发状态
   icon: setting

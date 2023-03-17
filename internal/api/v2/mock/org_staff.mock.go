@@ -23,7 +23,7 @@ type OrgStaff struct {
 // @Success 200 {array} schema.ListResult{list=schema.Orgstaffs,pagination=schema.PaginationResult}
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/orgstaffs [get]
+// @Router /api/v2/org-staffs [get]
 func (a *OrgStaff) Query(c *gin.Context) {
 }
 
@@ -37,7 +37,7 @@ func (a *OrgStaff) Query(c *gin.Context) {
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/orgstaffs/{id} [get]
+// @Router /api/v2/org-staffs/{id} [get]
 func (a *OrgStaff) Get(c *gin.Context) {
 }
 
@@ -51,7 +51,7 @@ func (a *OrgStaff) Get(c *gin.Context) {
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/orgstaffs/{id}/view [get]
+// @Router /api/v2/org-staffs/{id}/view [get]
 func (a *OrgStaff) View(c *gin.Context) {
 }
 
@@ -65,7 +65,7 @@ func (a *OrgStaff) View(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/orgstaffs [post]
+// @Router /api/v2/org-staffs [post]
 func (a *OrgStaff) Create(c *gin.Context) {
 }
 
@@ -80,7 +80,7 @@ func (a *OrgStaff) Create(c *gin.Context) {
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/orgstaffs/{id} [put]
+// @Router /api/v2/org-staffs/{id} [put]
 func (a *OrgStaff) Update(c *gin.Context) {
 }
 
@@ -93,7 +93,7 @@ func (a *OrgStaff) Update(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/orgstaffs/{id} [delete]
+// @Router /api/v2/org-staffs/{id} [delete]
 func (a *OrgStaff) Delete(c *gin.Context) {
 }
 
@@ -105,7 +105,7 @@ func (a *OrgStaff) Delete(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/orgstaffs/{id}/enable [patch]
+// @Router /api/v2/org-staffs/{id}/enable [patch]
 func (a *OrgStaff) Enable(c *gin.Context) {
 }
 
@@ -117,6 +117,6 @@ func (a *OrgStaff) Enable(c *gin.Context) {
 // @Success 200 {object} schema.StatusResult "{status:OK}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
-// @Router /api/v2/orgstaffs/{id}/disable [patch]
+// @Router /api/v2/org-staffs/{id}/disable [patch]
 func (a *OrgStaff) Disable(c *gin.Context) {
 }
