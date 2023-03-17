@@ -16,7 +16,7 @@ import (
 // OrgStaffSet 注入OrgStaff
 var OrgStaffSet = wire.NewSet(wire.Struct(new(OrgStaff), "*"))
 
-// OrgStaff 员工管理存储
+// OrgStaff 员工存储
 type OrgStaff struct {
 	EntCli *ent.Client
 }

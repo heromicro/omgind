@@ -8,6 +8,152 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 )
 
+// CreateOrgDepartmentInput represents a mutation input for creating orgdepartments.
+type CreateOrgDepartmentInput struct {
+	IsDel     *bool
+	Sort      *int32
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
+	IsActive  *bool
+	Memo      *string
+	Name      *string
+	Code      *string
+	OrgID     *string
+	Creator   *string
+}
+
+// Mutate applies the CreateOrgDepartmentInput on the OrgDepartmentCreate builder.
+func (i *CreateOrgDepartmentInput) Mutate(m *OrgDepartmentCreate) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if v := i.Code; v != nil {
+		m.SetCode(*v)
+	}
+	if v := i.OrgID; v != nil {
+		m.SetOrgID(*v)
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the CreateOrgDepartmentInput on the create builder.
+func (c *OrgDepartmentCreate) SetInput(i CreateOrgDepartmentInput) *OrgDepartmentCreate {
+	i.Mutate(c)
+	return c
+}
+
+// UpdateOrgDepartmentInput represents a mutation input for updating orgdepartments.
+type UpdateOrgDepartmentInput struct {
+	IsDel          *bool
+	Sort           *int32
+	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
+	DeletedAt      *time.Time
+	ClearDeletedAt bool
+	IsActive       *bool
+	Memo           *string
+	ClearMemo      bool
+	Name           *string
+	ClearName      bool
+	Code           *string
+	ClearCode      bool
+	OrgID          *string
+	ClearOrgID     bool
+	Creator        *string
+	ClearCreator   bool
+}
+
+// Mutate applies the UpdateOrgDepartmentInput on the OrgDepartmentMutation.
+func (i *UpdateOrgDepartmentInput) Mutate(m *OrgDepartmentMutation) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if i.ClearName {
+		m.ClearName()
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if i.ClearCode {
+		m.ClearCode()
+	}
+	if v := i.Code; v != nil {
+		m.SetCode(*v)
+	}
+	if i.ClearOrgID {
+		m.ClearOrgID()
+	}
+	if v := i.OrgID; v != nil {
+		m.SetOrgID(*v)
+	}
+	if i.ClearCreator {
+		m.ClearCreator()
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the UpdateOrgDepartmentInput on the update builder.
+func (u *OrgDepartmentUpdate) SetInput(i UpdateOrgDepartmentInput) *OrgDepartmentUpdate {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// SetInput applies the change-set in the UpdateOrgDepartmentInput on the update-one builder.
+func (u *OrgDepartmentUpdateOne) SetInput(i UpdateOrgDepartmentInput) *OrgDepartmentUpdateOne {
+	i.Mutate(u.Mutation())
+	return u
+}
+
 // CreateOrgOrganInput represents a mutation input for creating orgorgans.
 type CreateOrgOrganInput struct {
 	IsDel     *bool

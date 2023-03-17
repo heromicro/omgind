@@ -4,6 +4,14 @@ package ent
 
 import "entgo.io/ent/dialect"
 
+func (c *OrgDepartmentClient) Debug() *OrgDepartmentClient {
+	if c.debug {
+		return c
+	}
+	cfg := config{driver: dialect.Debug(c.driver, c.log), log: c.log, debug: true, hooks: c.hooks}
+	return &OrgDepartmentClient{config: cfg}
+}
+
 func (c *OrgOrganClient) Debug() *OrgOrganClient {
 	if c.debug {
 		return c

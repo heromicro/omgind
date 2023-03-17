@@ -9,6 +9,18 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent"
 )
 
+// The OrgDepartmentFunc type is an adapter to allow the use of ordinary
+// function as OrgDepartment mutator.
+type OrgDepartmentFunc func(context.Context, *ent.OrgDepartmentMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrgDepartmentFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrgDepartmentMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrgDepartmentMutation", m)
+}
+
 // The OrgOrganFunc type is an adapter to allow the use of ordinary
 // function as OrgOrgan mutator.
 type OrgOrganFunc func(context.Context, *ent.OrgOrganMutation) (ent.Value, error)

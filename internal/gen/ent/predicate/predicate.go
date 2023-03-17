@@ -6,6 +6,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
+// OrgDepartment is the predicate function for orgdepartment builders.
+type OrgDepartment func(*sql.Selector)
+
 // OrgOrgan is the predicate function for orgorgan builders.
 type OrgOrgan func(*sql.Selector)
 

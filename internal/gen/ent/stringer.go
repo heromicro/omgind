@@ -4,6 +4,13 @@ package ent
 
 import "fmt"
 
+func (od *OrgDepartment) GoString() string {
+	if od == nil {
+		return fmt.Sprintf("OrgDepartment(nil)")
+	}
+	return od.String()
+}
+
 func (oo *OrgOrgan) GoString() string {
 	if oo == nil {
 		return fmt.Sprintf("OrgOrgan(nil)")

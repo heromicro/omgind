@@ -17,4 +17,5 @@ var ServiceSet = wire.NewSet(
 	OrgOrganSet,
 	OrgStaffSet,
 	OrgPositionSet,
+	OrgDepartmentSet,
 )

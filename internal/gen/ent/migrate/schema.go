@@ -8,6 +8,59 @@ import (
 )
 
 var (
+	// OrgDepartmentsColumns holds the columns for the "org_departments" table.
+	OrgDepartmentsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString, Size: 36},
+		{Name: "is_del", Type: field.TypeBool, Default: false},
+		{Name: "sort", Type: field.TypeInt32, Default: 9999},
+		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
+		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
+		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "creator", Type: field.TypeString, Nullable: true},
+	}
+	// OrgDepartmentsTable holds the schema information for the "org_departments" table.
+	OrgDepartmentsTable = &schema.Table{
+		Name:       "org_departments",
+		Columns:    OrgDepartmentsColumns,
+		PrimaryKey: []*schema.Column{OrgDepartmentsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "orgdepartment_id",
+				Unique:  true,
+				Columns: []*schema.Column{OrgDepartmentsColumns[0]},
+			},
+			{
+				Name:    "orgdepartment_is_del",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[1]},
+			},
+			{
+				Name:    "orgdepartment_sort",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[2]},
+			},
+			{
+				Name:    "orgdepartment_crtd_at",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[3]},
+			},
+			{
+				Name:    "orgdepartment_dltd_at",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[5]},
+			},
+			{
+				Name:    "orgdepartment_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[6]},
+			},
+		},
+	}
 	// OrgOrgansColumns holds the columns for the "org_organs" table.
 	OrgOrgansColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
@@ -1009,6 +1062,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		OrgDepartmentsTable,
 		OrgOrgansTable,
 		OrgPositionsTable,
 		OrgStaffsTable,

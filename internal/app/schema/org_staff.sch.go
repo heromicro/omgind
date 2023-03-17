@@ -2,7 +2,7 @@ package schema
 
 import "time"
 
-// OrgStaff 员工管理对象
+// OrgStaff 员工对象
 type OrgStaff struct {
 	ID        string `json:"id"`                            // 唯一标识
 	FirstName string `json:"first_name" binding:"required"` // 名
