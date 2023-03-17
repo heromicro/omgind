@@ -8,6 +8,7 @@ import "context"
 // that can be passed at runtime.
 type SchemaConfig struct {
 	OrgOrgan              string // OrgOrgan table.
+	OrgPosition           string // OrgPosition table.
 	OrgStaff              string // OrgStaff table.
 	SysAddress            string // SysAddress table.
 	SysDict               string // SysDict table.

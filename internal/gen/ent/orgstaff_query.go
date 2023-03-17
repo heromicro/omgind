@@ -264,12 +264,12 @@ func (osq *OrgStaffQuery) Clone() *OrgStaffQuery {
 // Example:
 //
 //	var v []struct {
-//		Sort int32 `json:"sort,omitempty" sql:"sort"`
+//		IsDel bool `json:"is_del,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.OrgStaff.Query().
-//		GroupBy(orgstaff.FieldSort).
+//		GroupBy(orgstaff.FieldIsDel).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 func (osq *OrgStaffQuery) GroupBy(field string, fields ...string) *OrgStaffGroupBy {
@@ -287,11 +287,11 @@ func (osq *OrgStaffQuery) GroupBy(field string, fields ...string) *OrgStaffGroup
 // Example:
 //
 //	var v []struct {
-//		Sort int32 `json:"sort,omitempty" sql:"sort"`
+//		IsDel bool `json:"is_del,omitempty"`
 //	}
 //
 //	client.OrgStaff.Query().
-//		Select(orgstaff.FieldSort).
+//		Select(orgstaff.FieldIsDel).
 //		Scan(ctx, &v)
 func (osq *OrgStaffQuery) Select(fields ...string) *OrgStaffSelect {
 	osq.ctx.Fields = append(osq.ctx.Fields, fields...)

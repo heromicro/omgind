@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
@@ -111,6 +112,81 @@ func init() {
 			return nil
 		}
 	}()
+	orgpositionMixin := entity.OrgPosition{}.Mixin()
+	orgpositionMixinFields0 := orgpositionMixin[0].Fields()
+	_ = orgpositionMixinFields0
+	orgpositionMixinFields1 := orgpositionMixin[1].Fields()
+	_ = orgpositionMixinFields1
+	orgpositionMixinFields2 := orgpositionMixin[2].Fields()
+	_ = orgpositionMixinFields2
+	orgpositionMixinFields3 := orgpositionMixin[3].Fields()
+	_ = orgpositionMixinFields3
+	orgpositionMixinFields4 := orgpositionMixin[4].Fields()
+	_ = orgpositionMixinFields4
+	orgpositionMixinFields5 := orgpositionMixin[5].Fields()
+	_ = orgpositionMixinFields5
+	orgpositionFields := entity.OrgPosition{}.Fields()
+	_ = orgpositionFields
+	// orgpositionDescIsDel is the schema descriptor for is_del field.
+	orgpositionDescIsDel := orgpositionMixinFields1[0].Descriptor()
+	// orgposition.DefaultIsDel holds the default value on creation for the is_del field.
+	orgposition.DefaultIsDel = orgpositionDescIsDel.Default.(bool)
+	// orgpositionDescSort is the schema descriptor for sort field.
+	orgpositionDescSort := orgpositionMixinFields2[0].Descriptor()
+	// orgposition.DefaultSort holds the default value on creation for the sort field.
+	orgposition.DefaultSort = orgpositionDescSort.Default.(int32)
+	// orgpositionDescCreatedAt is the schema descriptor for created_at field.
+	orgpositionDescCreatedAt := orgpositionMixinFields3[0].Descriptor()
+	// orgposition.DefaultCreatedAt holds the default value on creation for the created_at field.
+	orgposition.DefaultCreatedAt = orgpositionDescCreatedAt.Default.(func() time.Time)
+	// orgpositionDescUpdatedAt is the schema descriptor for updated_at field.
+	orgpositionDescUpdatedAt := orgpositionMixinFields3[1].Descriptor()
+	// orgposition.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	orgposition.DefaultUpdatedAt = orgpositionDescUpdatedAt.Default.(func() time.Time)
+	// orgposition.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	orgposition.UpdateDefaultUpdatedAt = orgpositionDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// orgpositionDescIsActive is the schema descriptor for is_active field.
+	orgpositionDescIsActive := orgpositionMixinFields4[0].Descriptor()
+	// orgposition.DefaultIsActive holds the default value on creation for the is_active field.
+	orgposition.DefaultIsActive = orgpositionDescIsActive.Default.(bool)
+	// orgpositionDescMemo is the schema descriptor for memo field.
+	orgpositionDescMemo := orgpositionMixinFields5[0].Descriptor()
+	// orgposition.DefaultMemo holds the default value on creation for the memo field.
+	orgposition.DefaultMemo = orgpositionDescMemo.Default.(string)
+	// orgposition.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
+	orgposition.MemoValidator = orgpositionDescMemo.Validators[0].(func(string) error)
+	// orgpositionDescName is the schema descriptor for name field.
+	orgpositionDescName := orgpositionFields[0].Descriptor()
+	// orgposition.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	orgposition.NameValidator = orgpositionDescName.Validators[0].(func(string) error)
+	// orgpositionDescCode is the schema descriptor for code field.
+	orgpositionDescCode := orgpositionFields[1].Descriptor()
+	// orgposition.CodeValidator is a validator for the "code" field. It is called by the builders before save.
+	orgposition.CodeValidator = orgpositionDescCode.Validators[0].(func(string) error)
+	// orgpositionDescOrgID is the schema descriptor for org_id field.
+	orgpositionDescOrgID := orgpositionFields[2].Descriptor()
+	// orgposition.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
+	orgposition.OrgIDValidator = orgpositionDescOrgID.Validators[0].(func(string) error)
+	// orgpositionDescID is the schema descriptor for id field.
+	orgpositionDescID := orgpositionMixinFields0[0].Descriptor()
+	// orgposition.DefaultID holds the default value on creation for the id field.
+	orgposition.DefaultID = orgpositionDescID.Default.(func() string)
+	// orgposition.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	orgposition.IDValidator = func() func(string) error {
+		validators := orgpositionDescID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(id string) error {
+			for _, fn := range fns {
+				if err := fn(id); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
 	orgstaffMixin := entity.OrgStaff{}.Mixin()
 	orgstaffMixinFields0 := orgstaffMixin[0].Fields()
 	_ = orgstaffMixinFields0
@@ -124,32 +200,38 @@ func init() {
 	_ = orgstaffMixinFields4
 	orgstaffMixinFields5 := orgstaffMixin[5].Fields()
 	_ = orgstaffMixinFields5
+	orgstaffMixinFields6 := orgstaffMixin[6].Fields()
+	_ = orgstaffMixinFields6
 	orgstaffFields := entity.OrgStaff{}.Fields()
 	_ = orgstaffFields
+	// orgstaffDescIsDel is the schema descriptor for is_del field.
+	orgstaffDescIsDel := orgstaffMixinFields1[0].Descriptor()
+	// orgstaff.DefaultIsDel holds the default value on creation for the is_del field.
+	orgstaff.DefaultIsDel = orgstaffDescIsDel.Default.(bool)
 	// orgstaffDescSort is the schema descriptor for sort field.
-	orgstaffDescSort := orgstaffMixinFields1[0].Descriptor()
+	orgstaffDescSort := orgstaffMixinFields2[0].Descriptor()
 	// orgstaff.DefaultSort holds the default value on creation for the sort field.
 	orgstaff.DefaultSort = orgstaffDescSort.Default.(int32)
 	// orgstaffDescOrgID is the schema descriptor for org_id field.
-	orgstaffDescOrgID := orgstaffMixinFields2[0].Descriptor()
+	orgstaffDescOrgID := orgstaffMixinFields3[0].Descriptor()
 	// orgstaff.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	orgstaff.OrgIDValidator = orgstaffDescOrgID.Validators[0].(func(string) error)
 	// orgstaffDescCreatedAt is the schema descriptor for created_at field.
-	orgstaffDescCreatedAt := orgstaffMixinFields3[0].Descriptor()
+	orgstaffDescCreatedAt := orgstaffMixinFields4[0].Descriptor()
 	// orgstaff.DefaultCreatedAt holds the default value on creation for the created_at field.
 	orgstaff.DefaultCreatedAt = orgstaffDescCreatedAt.Default.(func() time.Time)
 	// orgstaffDescUpdatedAt is the schema descriptor for updated_at field.
-	orgstaffDescUpdatedAt := orgstaffMixinFields3[1].Descriptor()
+	orgstaffDescUpdatedAt := orgstaffMixinFields4[1].Descriptor()
 	// orgstaff.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	orgstaff.DefaultUpdatedAt = orgstaffDescUpdatedAt.Default.(func() time.Time)
 	// orgstaff.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	orgstaff.UpdateDefaultUpdatedAt = orgstaffDescUpdatedAt.UpdateDefault.(func() time.Time)
 	// orgstaffDescIsActive is the schema descriptor for is_active field.
-	orgstaffDescIsActive := orgstaffMixinFields4[0].Descriptor()
+	orgstaffDescIsActive := orgstaffMixinFields5[0].Descriptor()
 	// orgstaff.DefaultIsActive holds the default value on creation for the is_active field.
 	orgstaff.DefaultIsActive = orgstaffDescIsActive.Default.(bool)
 	// orgstaffDescMemo is the schema descriptor for memo field.
-	orgstaffDescMemo := orgstaffMixinFields5[0].Descriptor()
+	orgstaffDescMemo := orgstaffMixinFields6[0].Descriptor()
 	// orgstaff.DefaultMemo holds the default value on creation for the memo field.
 	orgstaff.DefaultMemo = orgstaffDescMemo.Default.(string)
 	// orgstaff.MemoValidator is a validator for the "memo" field. It is called by the builders before save.

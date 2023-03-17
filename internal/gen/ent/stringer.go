@@ -11,6 +11,13 @@ func (oo *OrgOrgan) GoString() string {
 	return oo.String()
 }
 
+func (op *OrgPosition) GoString() string {
+	if op == nil {
+		return fmt.Sprintf("OrgPosition(nil)")
+	}
+	return op.String()
+}
+
 func (os *OrgStaff) GoString() string {
 	if os == nil {
 		return fmt.Sprintf("OrgStaff(nil)")

@@ -30,6 +30,20 @@ func (osu *OrgStaffUpdate) Where(ps ...predicate.OrgStaff) *OrgStaffUpdate {
 	return osu
 }
 
+// SetIsDel sets the "is_del" field.
+func (osu *OrgStaffUpdate) SetIsDel(b bool) *OrgStaffUpdate {
+	osu.mutation.SetIsDel(b)
+	return osu
+}
+
+// SetNillableIsDel sets the "is_del" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableIsDel(b *bool) *OrgStaffUpdate {
+	if b != nil {
+		osu.SetIsDel(*b)
+	}
+	return osu
+}
+
 // SetSort sets the "sort" field.
 func (osu *OrgStaffUpdate) SetSort(i int32) *OrgStaffUpdate {
 	osu.mutation.ResetSort()
@@ -386,6 +400,9 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := osu.mutation.IsDel(); ok {
+		_spec.SetField(orgstaff.FieldIsDel, field.TypeBool, value)
+	}
 	if value, ok := osu.mutation.Sort(); ok {
 		_spec.SetField(orgstaff.FieldSort, field.TypeInt32, value)
 	}
@@ -495,6 +512,20 @@ type OrgStaffUpdateOne struct {
 	hooks     []Hook
 	mutation  *OrgStaffMutation
 	modifiers []func(*sql.UpdateBuilder)
+}
+
+// SetIsDel sets the "is_del" field.
+func (osuo *OrgStaffUpdateOne) SetIsDel(b bool) *OrgStaffUpdateOne {
+	osuo.mutation.SetIsDel(b)
+	return osuo
+}
+
+// SetNillableIsDel sets the "is_del" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableIsDel(b *bool) *OrgStaffUpdateOne {
+	if b != nil {
+		osuo.SetIsDel(*b)
+	}
+	return osuo
 }
 
 // SetSort sets the "sort" field.
@@ -882,6 +913,9 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := osuo.mutation.IsDel(); ok {
+		_spec.SetField(orgstaff.FieldIsDel, field.TypeBool, value)
 	}
 	if value, ok := osuo.mutation.Sort(); ok {
 		_spec.SetField(orgstaff.FieldSort, field.TypeInt32, value)

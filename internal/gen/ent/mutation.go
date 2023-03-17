@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
@@ -40,6 +41,7 @@ const (
 
 	// Node types.
 	TypeOrgOrgan              = "OrgOrgan"
+	TypeOrgPosition           = "OrgPosition"
 	TypeOrgStaff              = "OrgStaff"
 	TypeSysAddress            = "SysAddress"
 	TypeSysDict               = "SysDict"
@@ -1266,12 +1268,1076 @@ func (m *OrgOrganMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown OrgOrgan edge %s", name)
 }
 
+// OrgPositionMutation represents an operation that mutates the OrgPosition nodes in the graph.
+type OrgPositionMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *string
+	is_del        *bool
+	sort          *int32
+	addsort       *int32
+	created_at    *time.Time
+	updated_at    *time.Time
+	deleted_at    *time.Time
+	is_active     *bool
+	memo          *string
+	name          *string
+	code          *string
+	org_id        *string
+	creator       *string
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*OrgPosition, error)
+	predicates    []predicate.OrgPosition
+}
+
+var _ ent.Mutation = (*OrgPositionMutation)(nil)
+
+// orgpositionOption allows management of the mutation configuration using functional options.
+type orgpositionOption func(*OrgPositionMutation)
+
+// newOrgPositionMutation creates new mutation for the OrgPosition entity.
+func newOrgPositionMutation(c config, op Op, opts ...orgpositionOption) *OrgPositionMutation {
+	m := &OrgPositionMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeOrgPosition,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withOrgPositionID sets the ID field of the mutation.
+func withOrgPositionID(id string) orgpositionOption {
+	return func(m *OrgPositionMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *OrgPosition
+		)
+		m.oldValue = func(ctx context.Context) (*OrgPosition, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().OrgPosition.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withOrgPosition sets the old OrgPosition of the mutation.
+func withOrgPosition(node *OrgPosition) orgpositionOption {
+	return func(m *OrgPositionMutation) {
+		m.oldValue = func(context.Context) (*OrgPosition, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m OrgPositionMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m OrgPositionMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of OrgPosition entities.
+func (m *OrgPositionMutation) SetID(id string) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *OrgPositionMutation) ID() (id string, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *OrgPositionMutation) IDs(ctx context.Context) ([]string, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []string{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().OrgPosition.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *OrgPositionMutation) SetIsDel(b bool) {
+	m.is_del = &b
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *OrgPositionMutation) IsDel() (r bool, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldIsDel(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *OrgPositionMutation) ResetIsDel() {
+	m.is_del = nil
+}
+
+// SetSort sets the "sort" field.
+func (m *OrgPositionMutation) SetSort(i int32) {
+	m.sort = &i
+	m.addsort = nil
+}
+
+// Sort returns the value of the "sort" field in the mutation.
+func (m *OrgPositionMutation) Sort() (r int32, exists bool) {
+	v := m.sort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSort returns the old "sort" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldSort(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSort is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSort requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSort: %w", err)
+	}
+	return oldValue.Sort, nil
+}
+
+// AddSort adds i to the "sort" field.
+func (m *OrgPositionMutation) AddSort(i int32) {
+	if m.addsort != nil {
+		*m.addsort += i
+	} else {
+		m.addsort = &i
+	}
+}
+
+// AddedSort returns the value that was added to the "sort" field in this mutation.
+func (m *OrgPositionMutation) AddedSort() (r int32, exists bool) {
+	v := m.addsort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSort resets all changes to the "sort" field.
+func (m *OrgPositionMutation) ResetSort() {
+	m.sort = nil
+	m.addsort = nil
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *OrgPositionMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *OrgPositionMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldCreatedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ClearCreatedAt clears the value of the "created_at" field.
+func (m *OrgPositionMutation) ClearCreatedAt() {
+	m.created_at = nil
+	m.clearedFields[orgposition.FieldCreatedAt] = struct{}{}
+}
+
+// CreatedAtCleared returns if the "created_at" field was cleared in this mutation.
+func (m *OrgPositionMutation) CreatedAtCleared() bool {
+	_, ok := m.clearedFields[orgposition.FieldCreatedAt]
+	return ok
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *OrgPositionMutation) ResetCreatedAt() {
+	m.created_at = nil
+	delete(m.clearedFields, orgposition.FieldCreatedAt)
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (m *OrgPositionMutation) SetUpdatedAt(t time.Time) {
+	m.updated_at = &t
+}
+
+// UpdatedAt returns the value of the "updated_at" field in the mutation.
+func (m *OrgPositionMutation) UpdatedAt() (r time.Time, exists bool) {
+	v := m.updated_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdatedAt returns the old "updated_at" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldUpdatedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdatedAt: %w", err)
+	}
+	return oldValue.UpdatedAt, nil
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (m *OrgPositionMutation) ClearUpdatedAt() {
+	m.updated_at = nil
+	m.clearedFields[orgposition.FieldUpdatedAt] = struct{}{}
+}
+
+// UpdatedAtCleared returns if the "updated_at" field was cleared in this mutation.
+func (m *OrgPositionMutation) UpdatedAtCleared() bool {
+	_, ok := m.clearedFields[orgposition.FieldUpdatedAt]
+	return ok
+}
+
+// ResetUpdatedAt resets all changes to the "updated_at" field.
+func (m *OrgPositionMutation) ResetUpdatedAt() {
+	m.updated_at = nil
+	delete(m.clearedFields, orgposition.FieldUpdatedAt)
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (m *OrgPositionMutation) SetDeletedAt(t time.Time) {
+	m.deleted_at = &t
+}
+
+// DeletedAt returns the value of the "deleted_at" field in the mutation.
+func (m *OrgPositionMutation) DeletedAt() (r time.Time, exists bool) {
+	v := m.deleted_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeletedAt returns the old "deleted_at" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldDeletedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDeletedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeletedAt: %w", err)
+	}
+	return oldValue.DeletedAt, nil
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (m *OrgPositionMutation) ClearDeletedAt() {
+	m.deleted_at = nil
+	m.clearedFields[orgposition.FieldDeletedAt] = struct{}{}
+}
+
+// DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
+func (m *OrgPositionMutation) DeletedAtCleared() bool {
+	_, ok := m.clearedFields[orgposition.FieldDeletedAt]
+	return ok
+}
+
+// ResetDeletedAt resets all changes to the "deleted_at" field.
+func (m *OrgPositionMutation) ResetDeletedAt() {
+	m.deleted_at = nil
+	delete(m.clearedFields, orgposition.FieldDeletedAt)
+}
+
+// SetIsActive sets the "is_active" field.
+func (m *OrgPositionMutation) SetIsActive(b bool) {
+	m.is_active = &b
+}
+
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *OrgPositionMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsActive returns the old "is_active" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldIsActive(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
+	}
+	return oldValue.IsActive, nil
+}
+
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *OrgPositionMutation) ResetIsActive() {
+	m.is_active = nil
+}
+
+// SetMemo sets the "memo" field.
+func (m *OrgPositionMutation) SetMemo(s string) {
+	m.memo = &s
+}
+
+// Memo returns the value of the "memo" field in the mutation.
+func (m *OrgPositionMutation) Memo() (r string, exists bool) {
+	v := m.memo
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMemo returns the old "memo" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldMemo(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMemo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMemo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMemo: %w", err)
+	}
+	return oldValue.Memo, nil
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (m *OrgPositionMutation) ClearMemo() {
+	m.memo = nil
+	m.clearedFields[orgposition.FieldMemo] = struct{}{}
+}
+
+// MemoCleared returns if the "memo" field was cleared in this mutation.
+func (m *OrgPositionMutation) MemoCleared() bool {
+	_, ok := m.clearedFields[orgposition.FieldMemo]
+	return ok
+}
+
+// ResetMemo resets all changes to the "memo" field.
+func (m *OrgPositionMutation) ResetMemo() {
+	m.memo = nil
+	delete(m.clearedFields, orgposition.FieldMemo)
+}
+
+// SetName sets the "name" field.
+func (m *OrgPositionMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *OrgPositionMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ClearName clears the value of the "name" field.
+func (m *OrgPositionMutation) ClearName() {
+	m.name = nil
+	m.clearedFields[orgposition.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *OrgPositionMutation) NameCleared() bool {
+	_, ok := m.clearedFields[orgposition.FieldName]
+	return ok
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *OrgPositionMutation) ResetName() {
+	m.name = nil
+	delete(m.clearedFields, orgposition.FieldName)
+}
+
+// SetCode sets the "code" field.
+func (m *OrgPositionMutation) SetCode(s string) {
+	m.code = &s
+}
+
+// Code returns the value of the "code" field in the mutation.
+func (m *OrgPositionMutation) Code() (r string, exists bool) {
+	v := m.code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCode returns the old "code" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldCode(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCode: %w", err)
+	}
+	return oldValue.Code, nil
+}
+
+// ClearCode clears the value of the "code" field.
+func (m *OrgPositionMutation) ClearCode() {
+	m.code = nil
+	m.clearedFields[orgposition.FieldCode] = struct{}{}
+}
+
+// CodeCleared returns if the "code" field was cleared in this mutation.
+func (m *OrgPositionMutation) CodeCleared() bool {
+	_, ok := m.clearedFields[orgposition.FieldCode]
+	return ok
+}
+
+// ResetCode resets all changes to the "code" field.
+func (m *OrgPositionMutation) ResetCode() {
+	m.code = nil
+	delete(m.clearedFields, orgposition.FieldCode)
+}
+
+// SetOrgID sets the "org_id" field.
+func (m *OrgPositionMutation) SetOrgID(s string) {
+	m.org_id = &s
+}
+
+// OrgID returns the value of the "org_id" field in the mutation.
+func (m *OrgPositionMutation) OrgID() (r string, exists bool) {
+	v := m.org_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOrgID returns the old "org_id" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldOrgID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldOrgID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldOrgID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOrgID: %w", err)
+	}
+	return oldValue.OrgID, nil
+}
+
+// ClearOrgID clears the value of the "org_id" field.
+func (m *OrgPositionMutation) ClearOrgID() {
+	m.org_id = nil
+	m.clearedFields[orgposition.FieldOrgID] = struct{}{}
+}
+
+// OrgIDCleared returns if the "org_id" field was cleared in this mutation.
+func (m *OrgPositionMutation) OrgIDCleared() bool {
+	_, ok := m.clearedFields[orgposition.FieldOrgID]
+	return ok
+}
+
+// ResetOrgID resets all changes to the "org_id" field.
+func (m *OrgPositionMutation) ResetOrgID() {
+	m.org_id = nil
+	delete(m.clearedFields, orgposition.FieldOrgID)
+}
+
+// SetCreator sets the "creator" field.
+func (m *OrgPositionMutation) SetCreator(s string) {
+	m.creator = &s
+}
+
+// Creator returns the value of the "creator" field in the mutation.
+func (m *OrgPositionMutation) Creator() (r string, exists bool) {
+	v := m.creator
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreator returns the old "creator" field's value of the OrgPosition entity.
+// If the OrgPosition object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgPositionMutation) OldCreator(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreator is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreator requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreator: %w", err)
+	}
+	return oldValue.Creator, nil
+}
+
+// ClearCreator clears the value of the "creator" field.
+func (m *OrgPositionMutation) ClearCreator() {
+	m.creator = nil
+	m.clearedFields[orgposition.FieldCreator] = struct{}{}
+}
+
+// CreatorCleared returns if the "creator" field was cleared in this mutation.
+func (m *OrgPositionMutation) CreatorCleared() bool {
+	_, ok := m.clearedFields[orgposition.FieldCreator]
+	return ok
+}
+
+// ResetCreator resets all changes to the "creator" field.
+func (m *OrgPositionMutation) ResetCreator() {
+	m.creator = nil
+	delete(m.clearedFields, orgposition.FieldCreator)
+}
+
+// Where appends a list predicates to the OrgPositionMutation builder.
+func (m *OrgPositionMutation) Where(ps ...predicate.OrgPosition) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the OrgPositionMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *OrgPositionMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.OrgPosition, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *OrgPositionMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *OrgPositionMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (OrgPosition).
+func (m *OrgPositionMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *OrgPositionMutation) Fields() []string {
+	fields := make([]string, 0, 11)
+	if m.is_del != nil {
+		fields = append(fields, orgposition.FieldIsDel)
+	}
+	if m.sort != nil {
+		fields = append(fields, orgposition.FieldSort)
+	}
+	if m.created_at != nil {
+		fields = append(fields, orgposition.FieldCreatedAt)
+	}
+	if m.updated_at != nil {
+		fields = append(fields, orgposition.FieldUpdatedAt)
+	}
+	if m.deleted_at != nil {
+		fields = append(fields, orgposition.FieldDeletedAt)
+	}
+	if m.is_active != nil {
+		fields = append(fields, orgposition.FieldIsActive)
+	}
+	if m.memo != nil {
+		fields = append(fields, orgposition.FieldMemo)
+	}
+	if m.name != nil {
+		fields = append(fields, orgposition.FieldName)
+	}
+	if m.code != nil {
+		fields = append(fields, orgposition.FieldCode)
+	}
+	if m.org_id != nil {
+		fields = append(fields, orgposition.FieldOrgID)
+	}
+	if m.creator != nil {
+		fields = append(fields, orgposition.FieldCreator)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *OrgPositionMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case orgposition.FieldIsDel:
+		return m.IsDel()
+	case orgposition.FieldSort:
+		return m.Sort()
+	case orgposition.FieldCreatedAt:
+		return m.CreatedAt()
+	case orgposition.FieldUpdatedAt:
+		return m.UpdatedAt()
+	case orgposition.FieldDeletedAt:
+		return m.DeletedAt()
+	case orgposition.FieldIsActive:
+		return m.IsActive()
+	case orgposition.FieldMemo:
+		return m.Memo()
+	case orgposition.FieldName:
+		return m.Name()
+	case orgposition.FieldCode:
+		return m.Code()
+	case orgposition.FieldOrgID:
+		return m.OrgID()
+	case orgposition.FieldCreator:
+		return m.Creator()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *OrgPositionMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case orgposition.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case orgposition.FieldSort:
+		return m.OldSort(ctx)
+	case orgposition.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	case orgposition.FieldUpdatedAt:
+		return m.OldUpdatedAt(ctx)
+	case orgposition.FieldDeletedAt:
+		return m.OldDeletedAt(ctx)
+	case orgposition.FieldIsActive:
+		return m.OldIsActive(ctx)
+	case orgposition.FieldMemo:
+		return m.OldMemo(ctx)
+	case orgposition.FieldName:
+		return m.OldName(ctx)
+	case orgposition.FieldCode:
+		return m.OldCode(ctx)
+	case orgposition.FieldOrgID:
+		return m.OldOrgID(ctx)
+	case orgposition.FieldCreator:
+		return m.OldCreator(ctx)
+	}
+	return nil, fmt.Errorf("unknown OrgPosition field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *OrgPositionMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case orgposition.FieldIsDel:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case orgposition.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSort(v)
+		return nil
+	case orgposition.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	case orgposition.FieldUpdatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdatedAt(v)
+		return nil
+	case orgposition.FieldDeletedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeletedAt(v)
+		return nil
+	case orgposition.FieldIsActive:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsActive(v)
+		return nil
+	case orgposition.FieldMemo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMemo(v)
+		return nil
+	case orgposition.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case orgposition.FieldCode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCode(v)
+		return nil
+	case orgposition.FieldOrgID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOrgID(v)
+		return nil
+	case orgposition.FieldCreator:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreator(v)
+		return nil
+	}
+	return fmt.Errorf("unknown OrgPosition field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *OrgPositionMutation) AddedFields() []string {
+	var fields []string
+	if m.addsort != nil {
+		fields = append(fields, orgposition.FieldSort)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *OrgPositionMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case orgposition.FieldSort:
+		return m.AddedSort()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *OrgPositionMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case orgposition.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSort(v)
+		return nil
+	}
+	return fmt.Errorf("unknown OrgPosition numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *OrgPositionMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(orgposition.FieldCreatedAt) {
+		fields = append(fields, orgposition.FieldCreatedAt)
+	}
+	if m.FieldCleared(orgposition.FieldUpdatedAt) {
+		fields = append(fields, orgposition.FieldUpdatedAt)
+	}
+	if m.FieldCleared(orgposition.FieldDeletedAt) {
+		fields = append(fields, orgposition.FieldDeletedAt)
+	}
+	if m.FieldCleared(orgposition.FieldMemo) {
+		fields = append(fields, orgposition.FieldMemo)
+	}
+	if m.FieldCleared(orgposition.FieldName) {
+		fields = append(fields, orgposition.FieldName)
+	}
+	if m.FieldCleared(orgposition.FieldCode) {
+		fields = append(fields, orgposition.FieldCode)
+	}
+	if m.FieldCleared(orgposition.FieldOrgID) {
+		fields = append(fields, orgposition.FieldOrgID)
+	}
+	if m.FieldCleared(orgposition.FieldCreator) {
+		fields = append(fields, orgposition.FieldCreator)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *OrgPositionMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *OrgPositionMutation) ClearField(name string) error {
+	switch name {
+	case orgposition.FieldCreatedAt:
+		m.ClearCreatedAt()
+		return nil
+	case orgposition.FieldUpdatedAt:
+		m.ClearUpdatedAt()
+		return nil
+	case orgposition.FieldDeletedAt:
+		m.ClearDeletedAt()
+		return nil
+	case orgposition.FieldMemo:
+		m.ClearMemo()
+		return nil
+	case orgposition.FieldName:
+		m.ClearName()
+		return nil
+	case orgposition.FieldCode:
+		m.ClearCode()
+		return nil
+	case orgposition.FieldOrgID:
+		m.ClearOrgID()
+		return nil
+	case orgposition.FieldCreator:
+		m.ClearCreator()
+		return nil
+	}
+	return fmt.Errorf("unknown OrgPosition nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *OrgPositionMutation) ResetField(name string) error {
+	switch name {
+	case orgposition.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case orgposition.FieldSort:
+		m.ResetSort()
+		return nil
+	case orgposition.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	case orgposition.FieldUpdatedAt:
+		m.ResetUpdatedAt()
+		return nil
+	case orgposition.FieldDeletedAt:
+		m.ResetDeletedAt()
+		return nil
+	case orgposition.FieldIsActive:
+		m.ResetIsActive()
+		return nil
+	case orgposition.FieldMemo:
+		m.ResetMemo()
+		return nil
+	case orgposition.FieldName:
+		m.ResetName()
+		return nil
+	case orgposition.FieldCode:
+		m.ResetCode()
+		return nil
+	case orgposition.FieldOrgID:
+		m.ResetOrgID()
+		return nil
+	case orgposition.FieldCreator:
+		m.ResetCreator()
+		return nil
+	}
+	return fmt.Errorf("unknown OrgPosition field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *OrgPositionMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *OrgPositionMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *OrgPositionMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *OrgPositionMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *OrgPositionMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *OrgPositionMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *OrgPositionMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown OrgPosition unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *OrgPositionMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown OrgPosition edge %s", name)
+}
+
 // OrgStaffMutation represents an operation that mutates the OrgStaff nodes in the graph.
 type OrgStaffMutation struct {
 	config
 	op            Op
 	typ           string
 	id            *string
+	is_del        *bool
 	sort          *int32
 	addsort       *int32
 	org_id        *string
@@ -1397,6 +2463,42 @@ func (m *OrgStaffMutation) IDs(ctx context.Context) ([]string, error) {
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *OrgStaffMutation) SetIsDel(b bool) {
+	m.is_del = &b
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *OrgStaffMutation) IsDel() (r bool, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldIsDel(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *OrgStaffMutation) ResetIsDel() {
+	m.is_del = nil
 }
 
 // SetSort sets the "sort" field.
@@ -2211,7 +3313,10 @@ func (m *OrgStaffMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgStaffMutation) Fields() []string {
-	fields := make([]string, 0, 16)
+	fields := make([]string, 0, 17)
+	if m.is_del != nil {
+		fields = append(fields, orgstaff.FieldIsDel)
+	}
 	if m.sort != nil {
 		fields = append(fields, orgstaff.FieldSort)
 	}
@@ -2268,6 +3373,8 @@ func (m *OrgStaffMutation) Fields() []string {
 // schema.
 func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case orgstaff.FieldIsDel:
+		return m.IsDel()
 	case orgstaff.FieldSort:
 		return m.Sort()
 	case orgstaff.FieldOrgID:
@@ -2309,6 +3416,8 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case orgstaff.FieldIsDel:
+		return m.OldIsDel(ctx)
 	case orgstaff.FieldSort:
 		return m.OldSort(ctx)
 	case orgstaff.FieldOrgID:
@@ -2350,6 +3459,13 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 // type.
 func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case orgstaff.FieldIsDel:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
 	case orgstaff.FieldSort:
 		v, ok := value.(int32)
 		if !ok {
@@ -2613,6 +3729,9 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *OrgStaffMutation) ResetField(name string) error {
 	switch name {
+	case orgstaff.FieldIsDel:
+		m.ResetIsDel()
+		return nil
 	case orgstaff.FieldSort:
 		m.ResetSort()
 		return nil

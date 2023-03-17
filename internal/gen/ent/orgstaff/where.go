@@ -54,6 +54,11 @@ func IDLTE(id string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLTE(FieldID, id))
 }
 
+// IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
+func IsDel(v bool) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldIsDel, v))
+}
+
 // Sort applies equality check predicate on the "sort" field. It's identical to SortEQ.
 func Sort(v int32) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldSort, v))
@@ -127,6 +132,16 @@ func IdenNo(v string) predicate.OrgStaff {
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
 func Creator(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldCreator, v))
+}
+
+// IsDelEQ applies the EQ predicate on the "is_del" field.
+func IsDelEQ(v bool) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldIsDel, v))
+}
+
+// IsDelNEQ applies the NEQ predicate on the "is_del" field.
+func IsDelNEQ(v bool) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldIsDel, v))
 }
 
 // SortEQ applies the EQ predicate on the "sort" field.

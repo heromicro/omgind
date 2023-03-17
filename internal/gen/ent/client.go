@@ -15,6 +15,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
@@ -41,6 +42,8 @@ type Client struct {
 	Schema *migrate.Schema
 	// OrgOrgan is the client for interacting with the OrgOrgan builders.
 	OrgOrgan *OrgOrganClient
+	// OrgPosition is the client for interacting with the OrgPosition builders.
+	OrgPosition *OrgPositionClient
 	// OrgStaff is the client for interacting with the OrgStaff builders.
 	OrgStaff *OrgStaffClient
 	// SysAddress is the client for interacting with the SysAddress builders.
@@ -85,6 +88,7 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.OrgOrgan = NewOrgOrganClient(c.config)
+	c.OrgPosition = NewOrgPositionClient(c.config)
 	c.OrgStaff = NewOrgStaffClient(c.config)
 	c.SysAddress = NewSysAddressClient(c.config)
 	c.SysDict = NewSysDictClient(c.config)
@@ -185,6 +189,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		ctx:                   ctx,
 		config:                cfg,
 		OrgOrgan:              NewOrgOrganClient(cfg),
+		OrgPosition:           NewOrgPositionClient(cfg),
 		OrgStaff:              NewOrgStaffClient(cfg),
 		SysAddress:            NewSysAddressClient(cfg),
 		SysDict:               NewSysDictClient(cfg),
@@ -220,6 +225,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		ctx:                   ctx,
 		config:                cfg,
 		OrgOrgan:              NewOrgOrganClient(cfg),
+		OrgPosition:           NewOrgPositionClient(cfg),
 		OrgStaff:              NewOrgStaffClient(cfg),
 		SysAddress:            NewSysAddressClient(cfg),
 		SysDict:               NewSysDictClient(cfg),
@@ -264,8 +270,8 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
-		c.OrgOrgan, c.OrgStaff, c.SysAddress, c.SysDict, c.SysDictItem, c.SysDistrict,
-		c.SysJwtBlock, c.SysLogging, c.SysMenu, c.SysMenuAction,
+		c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict, c.SysDictItem,
+		c.SysDistrict, c.SysJwtBlock, c.SysLogging, c.SysMenu, c.SysMenuAction,
 		c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysUser, c.SysUserRole,
 		c.XxxDemo,
 	} {
@@ -277,8 +283,8 @@ func (c *Client) Use(hooks ...Hook) {
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.OrgOrgan, c.OrgStaff, c.SysAddress, c.SysDict, c.SysDictItem, c.SysDistrict,
-		c.SysJwtBlock, c.SysLogging, c.SysMenu, c.SysMenuAction,
+		c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict, c.SysDictItem,
+		c.SysDistrict, c.SysJwtBlock, c.SysLogging, c.SysMenu, c.SysMenuAction,
 		c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysUser, c.SysUserRole,
 		c.XxxDemo,
 	} {
@@ -291,6 +297,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
 	case *OrgOrganMutation:
 		return c.OrgOrgan.mutate(ctx, m)
+	case *OrgPositionMutation:
+		return c.OrgPosition.mutate(ctx, m)
 	case *OrgStaffMutation:
 		return c.OrgStaff.mutate(ctx, m)
 	case *SysAddressMutation:
@@ -441,6 +449,124 @@ func (c *OrgOrganClient) mutate(ctx context.Context, m *OrgOrganMutation) (Value
 		return (&OrgOrganDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
 		return nil, fmt.Errorf("ent: unknown OrgOrgan mutation op: %q", m.Op())
+	}
+}
+
+// OrgPositionClient is a client for the OrgPosition schema.
+type OrgPositionClient struct {
+	config
+}
+
+// NewOrgPositionClient returns a client for the OrgPosition from the given config.
+func NewOrgPositionClient(c config) *OrgPositionClient {
+	return &OrgPositionClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `orgposition.Hooks(f(g(h())))`.
+func (c *OrgPositionClient) Use(hooks ...Hook) {
+	c.hooks.OrgPosition = append(c.hooks.OrgPosition, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `orgposition.Intercept(f(g(h())))`.
+func (c *OrgPositionClient) Intercept(interceptors ...Interceptor) {
+	c.inters.OrgPosition = append(c.inters.OrgPosition, interceptors...)
+}
+
+// Create returns a builder for creating a OrgPosition entity.
+func (c *OrgPositionClient) Create() *OrgPositionCreate {
+	mutation := newOrgPositionMutation(c.config, OpCreate)
+	return &OrgPositionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of OrgPosition entities.
+func (c *OrgPositionClient) CreateBulk(builders ...*OrgPositionCreate) *OrgPositionCreateBulk {
+	return &OrgPositionCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for OrgPosition.
+func (c *OrgPositionClient) Update() *OrgPositionUpdate {
+	mutation := newOrgPositionMutation(c.config, OpUpdate)
+	return &OrgPositionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *OrgPositionClient) UpdateOne(op *OrgPosition) *OrgPositionUpdateOne {
+	mutation := newOrgPositionMutation(c.config, OpUpdateOne, withOrgPosition(op))
+	return &OrgPositionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *OrgPositionClient) UpdateOneID(id string) *OrgPositionUpdateOne {
+	mutation := newOrgPositionMutation(c.config, OpUpdateOne, withOrgPositionID(id))
+	return &OrgPositionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for OrgPosition.
+func (c *OrgPositionClient) Delete() *OrgPositionDelete {
+	mutation := newOrgPositionMutation(c.config, OpDelete)
+	return &OrgPositionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *OrgPositionClient) DeleteOne(op *OrgPosition) *OrgPositionDeleteOne {
+	return c.DeleteOneID(op.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *OrgPositionClient) DeleteOneID(id string) *OrgPositionDeleteOne {
+	builder := c.Delete().Where(orgposition.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &OrgPositionDeleteOne{builder}
+}
+
+// Query returns a query builder for OrgPosition.
+func (c *OrgPositionClient) Query() *OrgPositionQuery {
+	return &OrgPositionQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeOrgPosition},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a OrgPosition entity by its id.
+func (c *OrgPositionClient) Get(ctx context.Context, id string) (*OrgPosition, error) {
+	return c.Query().Where(orgposition.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *OrgPositionClient) GetX(ctx context.Context, id string) *OrgPosition {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *OrgPositionClient) Hooks() []Hook {
+	return c.hooks.OrgPosition
+}
+
+// Interceptors returns the client interceptors.
+func (c *OrgPositionClient) Interceptors() []Interceptor {
+	return c.inters.OrgPosition
+}
+
+func (c *OrgPositionClient) mutate(ctx context.Context, m *OrgPositionMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&OrgPositionCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&OrgPositionUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&OrgPositionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&OrgPositionDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("ent: unknown OrgPosition mutation op: %q", m.Op())
 	}
 }
 
@@ -2256,14 +2382,14 @@ func (c *XxxDemoClient) mutate(ctx context.Context, m *XxxDemoMutation) (Value, 
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		OrgOrgan, OrgStaff, SysAddress, SysDict, SysDictItem, SysDistrict, SysJwtBlock,
-		SysLogging, SysMenu, SysMenuAction, SysMenuActionResource, SysRole,
-		SysRoleMenu, SysUser, SysUserRole, XxxDemo []ent.Hook
+		OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict, SysDictItem, SysDistrict,
+		SysJwtBlock, SysLogging, SysMenu, SysMenuAction, SysMenuActionResource,
+		SysRole, SysRoleMenu, SysUser, SysUserRole, XxxDemo []ent.Hook
 	}
 	inters struct {
-		OrgOrgan, OrgStaff, SysAddress, SysDict, SysDictItem, SysDistrict, SysJwtBlock,
-		SysLogging, SysMenu, SysMenuAction, SysMenuActionResource, SysRole,
-		SysRoleMenu, SysUser, SysUserRole, XxxDemo []ent.Interceptor
+		OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict, SysDictItem, SysDistrict,
+		SysJwtBlock, SysLogging, SysMenu, SysMenuAction, SysMenuActionResource,
+		SysRole, SysRoleMenu, SysUser, SysUserRole, XxxDemo []ent.Interceptor
 	}
 )
 

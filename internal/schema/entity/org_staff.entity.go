@@ -14,6 +14,7 @@ type OrgStaff struct {
 func (OrgStaff) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
+		mixin.SoftDelMixin{},
 		mixin.SortMixin{},
 		mixin.OwnerOrgMixin{},
 		mixin.TimeMixin{},

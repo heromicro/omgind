@@ -20,4 +20,5 @@ var RepoSet = wire.NewSet(
 	SysAddressSet,
 	OrgOrganSet,
 	OrgStaffSet,
+	OrgPositionSet,
 )

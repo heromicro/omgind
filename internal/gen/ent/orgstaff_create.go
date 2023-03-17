@@ -23,6 +23,20 @@ type OrgStaffCreate struct {
 	conflict []sql.ConflictOption
 }
 
+// SetIsDel sets the "is_del" field.
+func (osc *OrgStaffCreate) SetIsDel(b bool) *OrgStaffCreate {
+	osc.mutation.SetIsDel(b)
+	return osc
+}
+
+// SetNillableIsDel sets the "is_del" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableIsDel(b *bool) *OrgStaffCreate {
+	if b != nil {
+		osc.SetIsDel(*b)
+	}
+	return osc
+}
+
 // SetSort sets the "sort" field.
 func (osc *OrgStaffCreate) SetSort(i int32) *OrgStaffCreate {
 	osc.mutation.SetSort(i)
@@ -296,6 +310,10 @@ func (osc *OrgStaffCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (osc *OrgStaffCreate) defaults() {
+	if _, ok := osc.mutation.IsDel(); !ok {
+		v := orgstaff.DefaultIsDel
+		osc.mutation.SetIsDel(v)
+	}
 	if _, ok := osc.mutation.Sort(); !ok {
 		v := orgstaff.DefaultSort
 		osc.mutation.SetSort(v)
@@ -324,6 +342,9 @@ func (osc *OrgStaffCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (osc *OrgStaffCreate) check() error {
+	if _, ok := osc.mutation.IsDel(); !ok {
+		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "OrgStaff.is_del"`)}
+	}
 	if _, ok := osc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "OrgStaff.sort"`)}
 	}
@@ -402,6 +423,10 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
+	if value, ok := osc.mutation.IsDel(); ok {
+		_spec.SetField(orgstaff.FieldIsDel, field.TypeBool, value)
+		_node.IsDel = value
+	}
 	if value, ok := osc.mutation.Sort(); ok {
 		_spec.SetField(orgstaff.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
@@ -473,7 +498,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 // of the `INSERT` statement. For example:
 //
 //	client.OrgStaff.Create().
-//		SetSort(v).
+//		SetIsDel(v).
 //		OnConflict(
 //			// Update the row with the new values
 //			// the was proposed for insertion.
@@ -482,7 +507,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.OrgStaffUpsert) {
-//			SetSort(v+v).
+//			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
 func (osc *OrgStaffCreate) OnConflict(opts ...sql.ConflictOption) *OrgStaffUpsertOne {
@@ -517,6 +542,18 @@ type (
 		*sql.UpdateSet
 	}
 )
+
+// SetIsDel sets the "is_del" field.
+func (u *OrgStaffUpsert) SetIsDel(v bool) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldIsDel, v)
+	return u
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateIsDel() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldIsDel)
+	return u
+}
 
 // SetSort sets the "sort" field.
 func (u *OrgStaffUpsert) SetSort(v int32) *OrgStaffUpsert {
@@ -816,6 +853,20 @@ func (u *OrgStaffUpsertOne) Update(set func(*OrgStaffUpsert)) *OrgStaffUpsertOne
 		set(&OrgStaffUpsert{UpdateSet: update})
 	}))
 	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *OrgStaffUpsertOne) SetIsDel(v bool) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateIsDel() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateIsDel()
+	})
 }
 
 // SetSort sets the "sort" field.
@@ -1237,7 +1288,7 @@ func (oscb *OrgStaffCreateBulk) ExecX(ctx context.Context) {
 //		// Override some of the fields with custom
 //		// update values.
 //		Update(func(u *ent.OrgStaffUpsert) {
-//			SetSort(v+v).
+//			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
 func (oscb *OrgStaffCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrgStaffUpsertBulk {
@@ -1320,6 +1371,20 @@ func (u *OrgStaffUpsertBulk) Update(set func(*OrgStaffUpsert)) *OrgStaffUpsertBu
 		set(&OrgStaffUpsert{UpdateSet: update})
 	}))
 	return u
+}
+
+// SetIsDel sets the "is_del" field.
+func (u *OrgStaffUpsertBulk) SetIsDel(v bool) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetIsDel(v)
+	})
+}
+
+// UpdateIsDel sets the "is_del" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateIsDel() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateIsDel()
+	})
 }
 
 // SetSort sets the "sort" field.

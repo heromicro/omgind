@@ -9,6 +9,9 @@ import (
 // OrgOrgan is the predicate function for orgorgan builders.
 type OrgOrgan func(*sql.Selector)
 
+// OrgPosition is the predicate function for orgposition builders.
+type OrgPosition func(*sql.Selector)
+
 // OrgStaff is the predicate function for orgstaff builders.
 type OrgStaff func(*sql.Selector)
 

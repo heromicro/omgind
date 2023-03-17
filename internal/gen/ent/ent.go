@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
@@ -81,6 +82,7 @@ type OrderFunc func(*sql.Selector)
 func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
 		orgorgan.Table:              orgorgan.ValidColumn,
+		orgposition.Table:           orgposition.ValidColumn,
 		orgstaff.Table:              orgstaff.ValidColumn,
 		sysaddress.Table:            sysaddress.ValidColumn,
 		sysdict.Table:               sysdict.ValidColumn,

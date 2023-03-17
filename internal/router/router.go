@@ -38,6 +38,7 @@ type Router struct {
 	SysAddressAPIV2  *api_v2.SysAddress
 	OrgOrganAPIV2    *api_v2.OrgOrgan
 	OrgStaffAPIV2    *api_v2.OrgStaff
+	OrgPositionAPIV2 *api_v2.OrgPosition
 }
 
 // Register 注册路由

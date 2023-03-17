@@ -16,6 +16,8 @@ type OrgStaff struct {
 	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
+	// 是否删除
+	IsDel bool `json:"is_del,omitempty"`
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// organization id
@@ -55,7 +57,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orgstaff.FieldIsActive:
+		case orgstaff.FieldIsDel, orgstaff.FieldIsActive:
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort:
 			values[i] = new(sql.NullInt64)
@@ -83,6 +85,12 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
 				os.ID = value.String
+			}
+		case orgstaff.FieldIsDel:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_del", values[i])
+			} else if value.Valid {
+				os.IsDel = value.Bool
 			}
 		case orgstaff.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -222,6 +230,9 @@ func (os *OrgStaff) String() string {
 	var builder strings.Builder
 	builder.WriteString("OrgStaff(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", os.ID))
+	builder.WriteString("is_del=")
+	builder.WriteString(fmt.Sprintf("%v", os.IsDel))
+	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", os.Sort))
 	builder.WriteString(", ")

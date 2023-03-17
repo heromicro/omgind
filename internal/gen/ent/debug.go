@@ -12,6 +12,14 @@ func (c *OrgOrganClient) Debug() *OrgOrganClient {
 	return &OrgOrganClient{config: cfg}
 }
 
+func (c *OrgPositionClient) Debug() *OrgPositionClient {
+	if c.debug {
+		return c
+	}
+	cfg := config{driver: dialect.Debug(c.driver, c.log), log: c.log, debug: true, hooks: c.hooks}
+	return &OrgPositionClient{config: cfg}
+}
+
 func (c *OrgStaffClient) Debug() *OrgStaffClient {
 	if c.debug {
 		return c

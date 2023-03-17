@@ -21,6 +21,18 @@ func (f OrgOrganFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, er
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrgOrganMutation", m)
 }
 
+// The OrgPositionFunc type is an adapter to allow the use of ordinary
+// function as OrgPosition mutator.
+type OrgPositionFunc func(context.Context, *ent.OrgPositionMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrgPositionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrgPositionMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrgPositionMutation", m)
+}
+
 // The OrgStaffFunc type is an adapter to allow the use of ordinary
 // function as OrgStaff mutator.
 type OrgStaffFunc func(context.Context, *ent.OrgStaffMutation) (ent.Value, error)

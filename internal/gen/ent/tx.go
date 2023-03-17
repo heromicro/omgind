@@ -14,6 +14,8 @@ type Tx struct {
 	config
 	// OrgOrgan is the client for interacting with the OrgOrgan builders.
 	OrgOrgan *OrgOrganClient
+	// OrgPosition is the client for interacting with the OrgPosition builders.
+	OrgPosition *OrgPositionClient
 	// OrgStaff is the client for interacting with the OrgStaff builders.
 	OrgStaff *OrgStaffClient
 	// SysAddress is the client for interacting with the SysAddress builders.
@@ -176,6 +178,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.OrgOrgan = NewOrgOrganClient(tx.config)
+	tx.OrgPosition = NewOrgPositionClient(tx.config)
 	tx.OrgStaff = NewOrgStaffClient(tx.config)
 	tx.SysAddress = NewSysAddressClient(tx.config)
 	tx.SysDict = NewSysDictClient(tx.config)
