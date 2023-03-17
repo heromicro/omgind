@@ -80,31 +80,26 @@ func ParseForm(c *gin.Context, obj any) error {
 }
 
 // ResOK 响应OK
-func ResOK2(c *gin.Context, message string) {
-	ResSuccess2(c, nil, message)
+func ResOK(c *gin.Context, message string) {
+	ResSuccess(c, nil, message)
 }
 
 // ResList 响应列表数据
-func ResList2(c *gin.Context, v any) {
-	ResSuccess2(c, schema.ListResult{List: v})
-}
-
-// ResList 响应列表数据
-func ResList3(c *gin.Context, v any) {
-	ResSuccess2(c, v)
+func ResList(c *gin.Context, v any) {
+	ResSuccess(c, schema.ListResult{List: v})
 }
 
 // ResPage 响应分页数据
-func ResPage2(c *gin.Context, v any, pr *schema.PaginationResult) {
+func ResPage(c *gin.Context, v any, pr *schema.PaginationResult) {
 	list := schema.ListResult{
 		List:       v,
 		Pagination: pr,
 	}
-	ResSuccess2(c, list)
+	ResSuccess(c, list)
 }
 
 // ResSuccess 响应成功
-func ResSuccess2(c *gin.Context, v any, message ...string) {
+func ResSuccess(c *gin.Context, v any, message ...string) {
 	msg := ""
 	if len(message) > 0 {
 		msg = message[0]

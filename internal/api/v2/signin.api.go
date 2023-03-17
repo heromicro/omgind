@@ -29,7 +29,7 @@ func (a *SignIn) GetCaptcha(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, item)
+	ginx.ResSuccess(c, item)
 }
 
 // ResCaptcha 响应图形验证码
@@ -91,7 +91,7 @@ func (a *SignIn) SignIn(c *gin.Context) {
 	ctx = logger.NewUserIDContext(ctx, userID)
 	ctx = logger.NewTagContext(ctx, "__signin__")
 	logger.WithContext(ctx).Infof("登入系统")
-	ginx.ResSuccess2(c, tokenInfo)
+	ginx.ResSuccess(c, tokenInfo)
 }
 
 // SignOut 用户登出
@@ -108,7 +108,7 @@ func (a *SignIn) SignOut(c *gin.Context) {
 		}
 		logger.WithContext(ctx).Infof("登出系统")
 	}
-	ginx.ResOK2(c, "登出系统")
+	ginx.ResOK(c, "登出系统")
 }
 
 // RefreshToken 刷新令牌
@@ -119,7 +119,7 @@ func (a *SignIn) RefreshToken(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, tokenInfo)
+	ginx.ResSuccess(c, tokenInfo)
 }
 
 // GetUserInfo 获取当前用户信息
@@ -130,7 +130,7 @@ func (a *SignIn) GetUserInfo(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, info)
+	ginx.ResSuccess(c, info)
 }
 
 // QueryUserMenuTree 查询当前用户菜单树
@@ -142,7 +142,7 @@ func (a *SignIn) QueryUserMenuTree(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResList2(c, menus)
+	ginx.ResList(c, menus)
 }
 
 // UpdatePassword 更新个人密码
@@ -159,5 +159,5 @@ func (a *SignIn) UpdatePassword(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "更新密码成功")
+	ginx.ResOK(c, "更新密码成功")
 }

@@ -36,7 +36,7 @@ func (a *Role) Query(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResPage2(c, result.Data, result.PageResult)
+	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
 // QuerySelect 查询选择数据
@@ -59,7 +59,7 @@ func (a *Role) QuerySelect(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResList2(c, result.Data)
+	ginx.ResList(c, result.Data)
 }
 
 // Get 查询指定数据
@@ -70,7 +70,7 @@ func (a *Role) Get(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, item)
+	ginx.ResSuccess(c, item)
 }
 
 // Create 创建数据
@@ -94,7 +94,7 @@ func (a *Role) Create(c *gin.Context) {
 
 	log.Println(" -------- vvvvvv == ===== ", result)
 
-	ginx.ResSuccess2(c, result)
+	ginx.ResSuccess(c, result)
 }
 
 // Update 更新数据
@@ -111,7 +111,7 @@ func (a *Role) Update(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, result)
+	ginx.ResSuccess(c, result)
 }
 
 // Delete 删除数据
@@ -122,7 +122,7 @@ func (a *Role) Delete(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "成功删除数据")
+	ginx.ResOK(c, "成功删除数据")
 }
 
 // Enable 启用数据
@@ -133,7 +133,7 @@ func (a *Role) Enable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "启用成功")
+	ginx.ResOK(c, "启用成功")
 }
 
 // Disable 禁用数据
@@ -144,5 +144,5 @@ func (a *Role) Disable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "禁用成功")
+	ginx.ResOK(c, "禁用成功")
 }

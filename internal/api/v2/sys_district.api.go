@@ -36,7 +36,7 @@ func (a *SysDistrict) Query(c *gin.Context) {
 		return
 	}
 
-	ginx.ResPage2(c, result.Data, result.PageResult)
+	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
 // Get 查询指定数据
@@ -47,7 +47,7 @@ func (a *SysDistrict) Get(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, item)
+	ginx.ResSuccess(c, item)
 }
 
 // View 查询指定数据详情
@@ -58,7 +58,7 @@ func (a *SysDistrict) View(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, item)
+	ginx.ResSuccess(c, item)
 }
 
 // Get 所有的行政区
@@ -81,7 +81,7 @@ func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResPage2(c, result.Data, result.PageResult)
+	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
 // QueryTree 查询菜单树
@@ -108,7 +108,7 @@ func (a *SysDistrict) QueryTree(c *gin.Context) {
 		return
 	}
 
-	ginx.ResList3(c, result)
+	ginx.ResSuccess(c, result)
 }
 
 // Create 创建数据
@@ -128,7 +128,7 @@ func (a *SysDistrict) Create(c *gin.Context) {
 		return
 	}
 
-	ginx.ResSuccess2(c, result)
+	ginx.ResSuccess(c, result)
 }
 
 // Update 更新数据
@@ -149,7 +149,7 @@ func (a *SysDistrict) Update(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, result)
+	ginx.ResSuccess(c, result)
 }
 
 // Delete 删除数据
@@ -160,7 +160,7 @@ func (a *SysDistrict) Delete(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "成功删除数据")
+	ginx.ResOK(c, "成功删除数据")
 }
 
 // Enable 启用数据
@@ -171,7 +171,7 @@ func (a *SysDistrict) Enable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "启用成功")
+	ginx.ResOK(c, "启用成功")
 }
 
 // Disable 禁用数据
@@ -182,5 +182,5 @@ func (a *SysDistrict) Disable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "禁用成功")
+	ginx.ResOK(c, "禁用成功")
 }

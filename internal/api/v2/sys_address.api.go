@@ -32,7 +32,7 @@ func (a *SysAddress) Query(c *gin.Context) {
 		return
 	}
 
-	ginx.ResPage2(c, result.Data, result.PageResult)
+	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
 // Get 查询指定数据
@@ -43,7 +43,7 @@ func (a *SysAddress) Get(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, item)
+	ginx.ResSuccess(c, item)
 }
 
 // View 查询指定数据
@@ -54,7 +54,7 @@ func (a *SysAddress) View(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, item)
+	ginx.ResSuccess(c, item)
 }
 
 // Create 创建数据
@@ -72,7 +72,7 @@ func (a *SysAddress) Create(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, result.ID)
+	ginx.ResSuccess(c, result.ID)
 }
 
 // Update 更新数据
@@ -89,7 +89,7 @@ func (a *SysAddress) Update(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResSuccess2(c, result)
+	ginx.ResSuccess(c, result)
 }
 
 // Delete 删除数据
@@ -100,7 +100,7 @@ func (a *SysAddress) Delete(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "成功删除数据")
+	ginx.ResOK(c, "成功删除数据")
 }
 
 // Enable 启用数据
@@ -111,7 +111,7 @@ func (a *SysAddress) Enable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "启用成功")
+	ginx.ResOK(c, "启用成功")
 }
 
 // Disable 禁用数据
@@ -122,5 +122,5 @@ func (a *SysAddress) Disable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK2(c, "禁用成功")
+	ginx.ResOK(c, "禁用成功")
 }
