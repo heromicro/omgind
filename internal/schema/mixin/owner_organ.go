@@ -7,18 +7,18 @@ import (
 	"entgo.io/ent/schema/mixin"
 )
 
-type OrganMixin struct {
+type OwnerOrganMixin struct {
 	mixin.Schema
 }
 
-func (OrganMixin) Fields() []ent.Field {
+func (OwnerOrganMixin) Fields() []ent.Field {
 
 	return []ent.Field{
 		FieldOrgID(true, true, false),
 	}
 }
 
-func (a OrganMixin) Indexes() []ent.Index {
+func (a OwnerOrganMixin) Indexes() []ent.Index {
 
 	return []ent.Index{
 		IndexOrgID(),

@@ -18,8 +18,10 @@ type SysAddress struct {
 	ID string `json:"id,omitempty"`
 	// 是否删除
 	IsDel bool `json:"is_del,omitempty"`
-	// owner id
-	OwnerID *string `json:"owner_id,omitempty" sql:"owner_id"`
+	// user id
+	UserID *string `json:"user_id,omitempty" sql:"user_id"`
+	// organization id
+	OrgID *string `json:"org_id,omitempty" sql:"org_id"`
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
 	// create time
@@ -73,7 +75,7 @@ func (*SysAddress) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case sysaddress.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case sysaddress.FieldID, sysaddress.FieldOwnerID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvince, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProvinceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldFirstName, sysaddress.FieldLastName, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldCreator:
+		case sysaddress.FieldID, sysaddress.FieldUserID, sysaddress.FieldOrgID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvince, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProvinceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldFirstName, sysaddress.FieldLastName, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldCreator:
 			values[i] = new(sql.NullString)
 		case sysaddress.FieldCreatedAt, sysaddress.FieldUpdatedAt, sysaddress.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -104,12 +106,19 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				sa.IsDel = value.Bool
 			}
-		case sysaddress.FieldOwnerID:
+		case sysaddress.FieldUserID:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field owner_id", values[i])
+				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				sa.OwnerID = new(string)
-				*sa.OwnerID = value.String
+				sa.UserID = new(string)
+				*sa.UserID = value.String
+			}
+		case sysaddress.FieldOrgID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field org_id", values[i])
+			} else if value.Valid {
+				sa.OrgID = new(string)
+				*sa.OrgID = value.String
 			}
 		case sysaddress.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -287,8 +296,13 @@ func (sa *SysAddress) String() string {
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", sa.IsDel))
 	builder.WriteString(", ")
-	if v := sa.OwnerID; v != nil {
-		builder.WriteString("owner_id=")
+	if v := sa.UserID; v != nil {
+		builder.WriteString("user_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := sa.OrgID; v != nil {
+		builder.WriteString("org_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

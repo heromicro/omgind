@@ -7,18 +7,18 @@ import (
 	"entgo.io/ent/schema/mixin"
 )
 
-type OwnerMixin struct {
+type OwnerUserMixin struct {
 	mixin.Schema
 }
 
-func (OwnerMixin) Fields() []ent.Field {
+func (OwnerUserMixin) Fields() []ent.Field {
 
 	return []ent.Field{
 		FieldOwnerID(true, false, false),
 	}
 }
 
-func (a OwnerMixin) Indexes() []ent.Index {
+func (a OwnerUserMixin) Indexes() []ent.Index {
 
 	return []ent.Index{
 		IndexOwnerID(),
@@ -27,7 +27,7 @@ func (a OwnerMixin) Indexes() []ent.Index {
 
 func FieldOwnerID(nillable bool, immutable bool, notEmpty bool) ent.Field {
 
-	f := field.String("owner_id").MaxLen(36)
+	f := field.String("user_id").MaxLen(36)
 	if nillable {
 		f = f.Nillable().Optional()
 	}
@@ -37,10 +37,10 @@ func FieldOwnerID(nillable bool, immutable bool, notEmpty bool) ent.Field {
 	if notEmpty {
 		f = f.NotEmpty()
 	}
-	return f.StorageKey("owner_id").
-		StructTag(`json:"owner_id,omitempty" sql:"owner_id"`).Comment("owner id")
+	return f.StorageKey("user_id").
+		StructTag(`json:"user_id,omitempty" sql:"user_id"`).Comment("user id")
 }
 
 func IndexOwnerID() ent.Index {
-	return index.Fields("owner_id")
+	return index.Fields("user_id")
 }

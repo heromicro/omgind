@@ -59,9 +59,14 @@ func IsDel(v bool) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldEQ(FieldIsDel, v))
 }
 
-// OwnerID applies equality check predicate on the "owner_id" field. It's identical to OwnerIDEQ.
-func OwnerID(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldOwnerID, v))
+// UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
+func UserID(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldUserID, v))
+}
+
+// OrgID applies equality check predicate on the "org_id" field. It's identical to OrgIDEQ.
+func OrgID(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldOrgID, v))
 }
 
 // Sort applies equality check predicate on the "sort" field. It's identical to SortEQ.
@@ -179,79 +184,154 @@ func IsDelNEQ(v bool) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldNEQ(FieldIsDel, v))
 }
 
-// OwnerIDEQ applies the EQ predicate on the "owner_id" field.
-func OwnerIDEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldOwnerID, v))
+// UserIDEQ applies the EQ predicate on the "user_id" field.
+func UserIDEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldUserID, v))
 }
 
-// OwnerIDNEQ applies the NEQ predicate on the "owner_id" field.
-func OwnerIDNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNEQ(FieldOwnerID, v))
+// UserIDNEQ applies the NEQ predicate on the "user_id" field.
+func UserIDNEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNEQ(FieldUserID, v))
 }
 
-// OwnerIDIn applies the In predicate on the "owner_id" field.
-func OwnerIDIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIn(FieldOwnerID, vs...))
+// UserIDIn applies the In predicate on the "user_id" field.
+func UserIDIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIn(FieldUserID, vs...))
 }
 
-// OwnerIDNotIn applies the NotIn predicate on the "owner_id" field.
-func OwnerIDNotIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotIn(FieldOwnerID, vs...))
+// UserIDNotIn applies the NotIn predicate on the "user_id" field.
+func UserIDNotIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotIn(FieldUserID, vs...))
 }
 
-// OwnerIDGT applies the GT predicate on the "owner_id" field.
-func OwnerIDGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGT(FieldOwnerID, v))
+// UserIDGT applies the GT predicate on the "user_id" field.
+func UserIDGT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGT(FieldUserID, v))
 }
 
-// OwnerIDGTE applies the GTE predicate on the "owner_id" field.
-func OwnerIDGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGTE(FieldOwnerID, v))
+// UserIDGTE applies the GTE predicate on the "user_id" field.
+func UserIDGTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGTE(FieldUserID, v))
 }
 
-// OwnerIDLT applies the LT predicate on the "owner_id" field.
-func OwnerIDLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLT(FieldOwnerID, v))
+// UserIDLT applies the LT predicate on the "user_id" field.
+func UserIDLT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLT(FieldUserID, v))
 }
 
-// OwnerIDLTE applies the LTE predicate on the "owner_id" field.
-func OwnerIDLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLTE(FieldOwnerID, v))
+// UserIDLTE applies the LTE predicate on the "user_id" field.
+func UserIDLTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLTE(FieldUserID, v))
 }
 
-// OwnerIDContains applies the Contains predicate on the "owner_id" field.
-func OwnerIDContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContains(FieldOwnerID, v))
+// UserIDContains applies the Contains predicate on the "user_id" field.
+func UserIDContains(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContains(FieldUserID, v))
 }
 
-// OwnerIDHasPrefix applies the HasPrefix predicate on the "owner_id" field.
-func OwnerIDHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasPrefix(FieldOwnerID, v))
+// UserIDHasPrefix applies the HasPrefix predicate on the "user_id" field.
+func UserIDHasPrefix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldUserID, v))
 }
 
-// OwnerIDHasSuffix applies the HasSuffix predicate on the "owner_id" field.
-func OwnerIDHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasSuffix(FieldOwnerID, v))
+// UserIDHasSuffix applies the HasSuffix predicate on the "user_id" field.
+func UserIDHasSuffix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldUserID, v))
 }
 
-// OwnerIDIsNil applies the IsNil predicate on the "owner_id" field.
-func OwnerIDIsNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIsNull(FieldOwnerID))
+// UserIDIsNil applies the IsNil predicate on the "user_id" field.
+func UserIDIsNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIsNull(FieldUserID))
 }
 
-// OwnerIDNotNil applies the NotNil predicate on the "owner_id" field.
-func OwnerIDNotNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotNull(FieldOwnerID))
+// UserIDNotNil applies the NotNil predicate on the "user_id" field.
+func UserIDNotNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotNull(FieldUserID))
 }
 
-// OwnerIDEqualFold applies the EqualFold predicate on the "owner_id" field.
-func OwnerIDEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEqualFold(FieldOwnerID, v))
+// UserIDEqualFold applies the EqualFold predicate on the "user_id" field.
+func UserIDEqualFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEqualFold(FieldUserID, v))
 }
 
-// OwnerIDContainsFold applies the ContainsFold predicate on the "owner_id" field.
-func OwnerIDContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContainsFold(FieldOwnerID, v))
+// UserIDContainsFold applies the ContainsFold predicate on the "user_id" field.
+func UserIDContainsFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContainsFold(FieldUserID, v))
+}
+
+// OrgIDEQ applies the EQ predicate on the "org_id" field.
+func OrgIDEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldOrgID, v))
+}
+
+// OrgIDNEQ applies the NEQ predicate on the "org_id" field.
+func OrgIDNEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNEQ(FieldOrgID, v))
+}
+
+// OrgIDIn applies the In predicate on the "org_id" field.
+func OrgIDIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIn(FieldOrgID, vs...))
+}
+
+// OrgIDNotIn applies the NotIn predicate on the "org_id" field.
+func OrgIDNotIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotIn(FieldOrgID, vs...))
+}
+
+// OrgIDGT applies the GT predicate on the "org_id" field.
+func OrgIDGT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGT(FieldOrgID, v))
+}
+
+// OrgIDGTE applies the GTE predicate on the "org_id" field.
+func OrgIDGTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGTE(FieldOrgID, v))
+}
+
+// OrgIDLT applies the LT predicate on the "org_id" field.
+func OrgIDLT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLT(FieldOrgID, v))
+}
+
+// OrgIDLTE applies the LTE predicate on the "org_id" field.
+func OrgIDLTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLTE(FieldOrgID, v))
+}
+
+// OrgIDContains applies the Contains predicate on the "org_id" field.
+func OrgIDContains(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContains(FieldOrgID, v))
+}
+
+// OrgIDHasPrefix applies the HasPrefix predicate on the "org_id" field.
+func OrgIDHasPrefix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldOrgID, v))
+}
+
+// OrgIDHasSuffix applies the HasSuffix predicate on the "org_id" field.
+func OrgIDHasSuffix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldOrgID, v))
+}
+
+// OrgIDIsNil applies the IsNil predicate on the "org_id" field.
+func OrgIDIsNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIsNull(FieldOrgID))
+}
+
+// OrgIDNotNil applies the NotNil predicate on the "org_id" field.
+func OrgIDNotNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotNull(FieldOrgID))
+}
+
+// OrgIDEqualFold applies the EqualFold predicate on the "org_id" field.
+func OrgIDEqualFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEqualFold(FieldOrgID, v))
+}
+
+// OrgIDContainsFold applies the ContainsFold predicate on the "org_id" field.
+func OrgIDContainsFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContainsFold(FieldOrgID, v))
 }
 
 // SortEQ applies the EQ predicate on the "sort" field.

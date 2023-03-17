@@ -13,8 +13,10 @@ const (
 	FieldID = "id"
 	// FieldIsDel holds the string denoting the is_del field in the database.
 	FieldIsDel = "is_del"
-	// FieldOwnerID holds the string denoting the owner_id field in the database.
-	FieldOwnerID = "owner_id"
+	// FieldUserID holds the string denoting the user_id field in the database.
+	FieldUserID = "user_id"
+	// FieldOrgID holds the string denoting the org_id field in the database.
+	FieldOrgID = "org_id"
 	// FieldSort holds the string denoting the sort field in the database.
 	FieldSort = "sort"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
@@ -65,7 +67,8 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldIsDel,
-	FieldOwnerID,
+	FieldUserID,
+	FieldOrgID,
 	FieldSort,
 	FieldCreatedAt,
 	FieldUpdatedAt,
@@ -102,8 +105,10 @@ func ValidColumn(column string) bool {
 var (
 	// DefaultIsDel holds the default value on creation for the "is_del" field.
 	DefaultIsDel bool
-	// OwnerIDValidator is a validator for the "owner_id" field. It is called by the builders before save.
-	OwnerIDValidator func(string) error
+	// UserIDValidator is a validator for the "user_id" field. It is called by the builders before save.
+	UserIDValidator func(string) error
+	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
+	OrgIDValidator func(string) error
 	// DefaultSort holds the default value on creation for the "sort" field.
 	DefaultSort int32
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.

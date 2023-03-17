@@ -12,7 +12,8 @@ var (
 	SysAddressesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
 		{Name: "is_del", Type: field.TypeBool, Default: false},
-		{Name: "owner_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "user_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "sort", Type: field.TypeInt32, Default: 9999},
 		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
@@ -52,29 +53,34 @@ var (
 				Columns: []*schema.Column{SysAddressesColumns[1]},
 			},
 			{
-				Name:    "sysaddress_owner_id",
+				Name:    "sysaddress_user_id",
 				Unique:  false,
 				Columns: []*schema.Column{SysAddressesColumns[2]},
 			},
 			{
-				Name:    "sysaddress_sort",
+				Name:    "sysaddress_org_id",
 				Unique:  false,
 				Columns: []*schema.Column{SysAddressesColumns[3]},
 			},
 			{
-				Name:    "sysaddress_crtd_at",
+				Name:    "sysaddress_sort",
 				Unique:  false,
 				Columns: []*schema.Column{SysAddressesColumns[4]},
 			},
 			{
+				Name:    "sysaddress_crtd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysAddressesColumns[5]},
+			},
+			{
 				Name:    "sysaddress_dltd_at",
 				Unique:  false,
-				Columns: []*schema.Column{SysAddressesColumns[6]},
+				Columns: []*schema.Column{SysAddressesColumns[7]},
 			},
 			{
 				Name:    "sysaddress_is_active",
 				Unique:  false,
-				Columns: []*schema.Column{SysAddressesColumns[7]},
+				Columns: []*schema.Column{SysAddressesColumns[8]},
 			},
 		},
 	}

@@ -37,16 +37,30 @@ func (sac *SysAddressCreate) SetNillableIsDel(b *bool) *SysAddressCreate {
 	return sac
 }
 
-// SetOwnerID sets the "owner_id" field.
-func (sac *SysAddressCreate) SetOwnerID(s string) *SysAddressCreate {
-	sac.mutation.SetOwnerID(s)
+// SetUserID sets the "user_id" field.
+func (sac *SysAddressCreate) SetUserID(s string) *SysAddressCreate {
+	sac.mutation.SetUserID(s)
 	return sac
 }
 
-// SetNillableOwnerID sets the "owner_id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableOwnerID(s *string) *SysAddressCreate {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableUserID(s *string) *SysAddressCreate {
 	if s != nil {
-		sac.SetOwnerID(*s)
+		sac.SetUserID(*s)
+	}
+	return sac
+}
+
+// SetOrgID sets the "org_id" field.
+func (sac *SysAddressCreate) SetOrgID(s string) *SysAddressCreate {
+	sac.mutation.SetOrgID(s)
+	return sac
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableOrgID(s *string) *SysAddressCreate {
+	if s != nil {
+		sac.SetOrgID(*s)
 	}
 	return sac
 }
@@ -429,9 +443,14 @@ func (sac *SysAddressCreate) check() error {
 	if _, ok := sac.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`ent: missing required field "SysAddress.is_del"`)}
 	}
-	if v, ok := sac.mutation.OwnerID(); ok {
-		if err := sysaddress.OwnerIDValidator(v); err != nil {
-			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.owner_id": %w`, err)}
+	if v, ok := sac.mutation.UserID(); ok {
+		if err := sysaddress.UserIDValidator(v); err != nil {
+			return &ValidationError{Name: "user_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.user_id": %w`, err)}
+		}
+	}
+	if v, ok := sac.mutation.OrgID(); ok {
+		if err := sysaddress.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.org_id": %w`, err)}
 		}
 	}
 	if _, ok := sac.mutation.Sort(); !ok {
@@ -546,9 +565,13 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := sac.mutation.OwnerID(); ok {
-		_spec.SetField(sysaddress.FieldOwnerID, field.TypeString, value)
-		_node.OwnerID = &value
+	if value, ok := sac.mutation.UserID(); ok {
+		_spec.SetField(sysaddress.FieldUserID, field.TypeString, value)
+		_node.UserID = &value
+	}
+	if value, ok := sac.mutation.OrgID(); ok {
+		_spec.SetField(sysaddress.FieldOrgID, field.TypeString, value)
+		_node.OrgID = &value
 	}
 	if value, ok := sac.mutation.Sort(); ok {
 		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
@@ -698,21 +721,21 @@ func (u *SysAddressUpsert) UpdateIsDel() *SysAddressUpsert {
 	return u
 }
 
-// SetOwnerID sets the "owner_id" field.
-func (u *SysAddressUpsert) SetOwnerID(v string) *SysAddressUpsert {
-	u.Set(sysaddress.FieldOwnerID, v)
+// SetUserID sets the "user_id" field.
+func (u *SysAddressUpsert) SetUserID(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldUserID, v)
 	return u
 }
 
-// UpdateOwnerID sets the "owner_id" field to the value that was provided on create.
-func (u *SysAddressUpsert) UpdateOwnerID() *SysAddressUpsert {
-	u.SetExcluded(sysaddress.FieldOwnerID)
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateUserID() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldUserID)
 	return u
 }
 
-// ClearOwnerID clears the value of the "owner_id" field.
-func (u *SysAddressUpsert) ClearOwnerID() *SysAddressUpsert {
-	u.SetNull(sysaddress.FieldOwnerID)
+// ClearUserID clears the value of the "user_id" field.
+func (u *SysAddressUpsert) ClearUserID() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldUserID)
 	return u
 }
 
@@ -1087,6 +1110,9 @@ func (u *SysAddressUpsertOne) UpdateNewValues() *SysAddressUpsertOne {
 		if _, exists := u.create.mutation.ID(); exists {
 			s.SetIgnore(sysaddress.FieldID)
 		}
+		if _, exists := u.create.mutation.OrgID(); exists {
+			s.SetIgnore(sysaddress.FieldOrgID)
+		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(sysaddress.FieldCreatedAt)
 		}
@@ -1135,24 +1161,24 @@ func (u *SysAddressUpsertOne) UpdateIsDel() *SysAddressUpsertOne {
 	})
 }
 
-// SetOwnerID sets the "owner_id" field.
-func (u *SysAddressUpsertOne) SetOwnerID(v string) *SysAddressUpsertOne {
+// SetUserID sets the "user_id" field.
+func (u *SysAddressUpsertOne) SetUserID(v string) *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.SetOwnerID(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateOwnerID sets the "owner_id" field to the value that was provided on create.
-func (u *SysAddressUpsertOne) UpdateOwnerID() *SysAddressUpsertOne {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateUserID() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateOwnerID()
+		s.UpdateUserID()
 	})
 }
 
-// ClearOwnerID clears the value of the "owner_id" field.
-func (u *SysAddressUpsertOne) ClearOwnerID() *SysAddressUpsertOne {
+// ClearUserID clears the value of the "user_id" field.
+func (u *SysAddressUpsertOne) ClearUserID() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearOwnerID()
+		s.ClearUserID()
 	})
 }
 
@@ -1748,6 +1774,9 @@ func (u *SysAddressUpsertBulk) UpdateNewValues() *SysAddressUpsertBulk {
 			if _, exists := b.mutation.ID(); exists {
 				s.SetIgnore(sysaddress.FieldID)
 			}
+			if _, exists := b.mutation.OrgID(); exists {
+				s.SetIgnore(sysaddress.FieldOrgID)
+			}
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(sysaddress.FieldCreatedAt)
 			}
@@ -1797,24 +1826,24 @@ func (u *SysAddressUpsertBulk) UpdateIsDel() *SysAddressUpsertBulk {
 	})
 }
 
-// SetOwnerID sets the "owner_id" field.
-func (u *SysAddressUpsertBulk) SetOwnerID(v string) *SysAddressUpsertBulk {
+// SetUserID sets the "user_id" field.
+func (u *SysAddressUpsertBulk) SetUserID(v string) *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.SetOwnerID(v)
+		s.SetUserID(v)
 	})
 }
 
-// UpdateOwnerID sets the "owner_id" field to the value that was provided on create.
-func (u *SysAddressUpsertBulk) UpdateOwnerID() *SysAddressUpsertBulk {
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateUserID() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateOwnerID()
+		s.UpdateUserID()
 	})
 }
 
-// ClearOwnerID clears the value of the "owner_id" field.
-func (u *SysAddressUpsertBulk) ClearOwnerID() *SysAddressUpsertBulk {
+// ClearUserID clears the value of the "user_id" field.
+func (u *SysAddressUpsertBulk) ClearUserID() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearOwnerID()
+		s.ClearUserID()
 	})
 }
 

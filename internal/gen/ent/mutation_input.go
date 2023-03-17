@@ -9,7 +9,8 @@ import (
 // CreateSysAddressInput represents a mutation input for creating sysaddresses.
 type CreateSysAddressInput struct {
 	IsDel      *bool
-	OwnerID    *string
+	UserID     *string
+	OrgID      *string
 	Sort       *int32
 	CreatedAt  *time.Time
 	UpdatedAt  *time.Time
@@ -38,8 +39,11 @@ func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
 	}
-	if v := i.OwnerID; v != nil {
-		m.SetOwnerID(*v)
+	if v := i.UserID; v != nil {
+		m.SetUserID(*v)
+	}
+	if v := i.OrgID; v != nil {
+		m.SetOrgID(*v)
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)
@@ -115,8 +119,8 @@ func (c *SysAddressCreate) SetInput(i CreateSysAddressInput) *SysAddressCreate {
 // UpdateSysAddressInput represents a mutation input for updating sysaddresses.
 type UpdateSysAddressInput struct {
 	IsDel           *bool
-	OwnerID         *string
-	ClearOwnerID    bool
+	UserID          *string
+	ClearUserID     bool
 	Sort            *int32
 	UpdatedAt       *time.Time
 	ClearUpdatedAt  bool
@@ -162,11 +166,11 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
 	}
-	if i.ClearOwnerID {
-		m.ClearOwnerID()
+	if i.ClearUserID {
+		m.ClearUserID()
 	}
-	if v := i.OwnerID; v != nil {
-		m.SetOwnerID(*v)
+	if v := i.UserID; v != nil {
+		m.SetUserID(*v)
 	}
 	if v := i.Sort; v != nil {
 		m.SetSort(*v)

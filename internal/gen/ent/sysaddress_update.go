@@ -44,23 +44,23 @@ func (sau *SysAddressUpdate) SetNillableIsDel(b *bool) *SysAddressUpdate {
 	return sau
 }
 
-// SetOwnerID sets the "owner_id" field.
-func (sau *SysAddressUpdate) SetOwnerID(s string) *SysAddressUpdate {
-	sau.mutation.SetOwnerID(s)
+// SetUserID sets the "user_id" field.
+func (sau *SysAddressUpdate) SetUserID(s string) *SysAddressUpdate {
+	sau.mutation.SetUserID(s)
 	return sau
 }
 
-// SetNillableOwnerID sets the "owner_id" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableOwnerID(s *string) *SysAddressUpdate {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (sau *SysAddressUpdate) SetNillableUserID(s *string) *SysAddressUpdate {
 	if s != nil {
-		sau.SetOwnerID(*s)
+		sau.SetUserID(*s)
 	}
 	return sau
 }
 
-// ClearOwnerID clears the value of the "owner_id" field.
-func (sau *SysAddressUpdate) ClearOwnerID() *SysAddressUpdate {
-	sau.mutation.ClearOwnerID()
+// ClearUserID clears the value of the "user_id" field.
+func (sau *SysAddressUpdate) ClearUserID() *SysAddressUpdate {
+	sau.mutation.ClearUserID()
 	return sau
 }
 
@@ -494,9 +494,9 @@ func (sau *SysAddressUpdate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sau *SysAddressUpdate) check() error {
-	if v, ok := sau.mutation.OwnerID(); ok {
-		if err := sysaddress.OwnerIDValidator(v); err != nil {
-			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.owner_id": %w`, err)}
+	if v, ok := sau.mutation.UserID(); ok {
+		if err := sysaddress.UserIDValidator(v); err != nil {
+			return &ValidationError{Name: "user_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.user_id": %w`, err)}
 		}
 	}
 	if v, ok := sau.mutation.Memo(); ok {
@@ -583,11 +583,14 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sau.mutation.IsDel(); ok {
 		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sau.mutation.OwnerID(); ok {
-		_spec.SetField(sysaddress.FieldOwnerID, field.TypeString, value)
+	if value, ok := sau.mutation.UserID(); ok {
+		_spec.SetField(sysaddress.FieldUserID, field.TypeString, value)
 	}
-	if sau.mutation.OwnerIDCleared() {
-		_spec.ClearField(sysaddress.FieldOwnerID, field.TypeString)
+	if sau.mutation.UserIDCleared() {
+		_spec.ClearField(sysaddress.FieldUserID, field.TypeString)
+	}
+	if sau.mutation.OrgIDCleared() {
+		_spec.ClearField(sysaddress.FieldOrgID, field.TypeString)
 	}
 	if value, ok := sau.mutation.Sort(); ok {
 		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
@@ -747,23 +750,23 @@ func (sauo *SysAddressUpdateOne) SetNillableIsDel(b *bool) *SysAddressUpdateOne 
 	return sauo
 }
 
-// SetOwnerID sets the "owner_id" field.
-func (sauo *SysAddressUpdateOne) SetOwnerID(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetOwnerID(s)
+// SetUserID sets the "user_id" field.
+func (sauo *SysAddressUpdateOne) SetUserID(s string) *SysAddressUpdateOne {
+	sauo.mutation.SetUserID(s)
 	return sauo
 }
 
-// SetNillableOwnerID sets the "owner_id" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableOwnerID(s *string) *SysAddressUpdateOne {
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (sauo *SysAddressUpdateOne) SetNillableUserID(s *string) *SysAddressUpdateOne {
 	if s != nil {
-		sauo.SetOwnerID(*s)
+		sauo.SetUserID(*s)
 	}
 	return sauo
 }
 
-// ClearOwnerID clears the value of the "owner_id" field.
-func (sauo *SysAddressUpdateOne) ClearOwnerID() *SysAddressUpdateOne {
-	sauo.mutation.ClearOwnerID()
+// ClearUserID clears the value of the "user_id" field.
+func (sauo *SysAddressUpdateOne) ClearUserID() *SysAddressUpdateOne {
+	sauo.mutation.ClearUserID()
 	return sauo
 }
 
@@ -1210,9 +1213,9 @@ func (sauo *SysAddressUpdateOne) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sauo *SysAddressUpdateOne) check() error {
-	if v, ok := sauo.mutation.OwnerID(); ok {
-		if err := sysaddress.OwnerIDValidator(v); err != nil {
-			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.owner_id": %w`, err)}
+	if v, ok := sauo.mutation.UserID(); ok {
+		if err := sysaddress.UserIDValidator(v); err != nil {
+			return &ValidationError{Name: "user_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.user_id": %w`, err)}
 		}
 	}
 	if v, ok := sauo.mutation.Memo(); ok {
@@ -1316,11 +1319,14 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 	if value, ok := sauo.mutation.IsDel(); ok {
 		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sauo.mutation.OwnerID(); ok {
-		_spec.SetField(sysaddress.FieldOwnerID, field.TypeString, value)
+	if value, ok := sauo.mutation.UserID(); ok {
+		_spec.SetField(sysaddress.FieldUserID, field.TypeString, value)
 	}
-	if sauo.mutation.OwnerIDCleared() {
-		_spec.ClearField(sysaddress.FieldOwnerID, field.TypeString)
+	if sauo.mutation.UserIDCleared() {
+		_spec.ClearField(sysaddress.FieldUserID, field.TypeString)
+	}
+	if sauo.mutation.OrgIDCleared() {
+		_spec.ClearField(sysaddress.FieldOrgID, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Sort(); ok {
 		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
