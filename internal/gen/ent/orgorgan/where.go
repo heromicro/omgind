@@ -104,6 +104,11 @@ func Code(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldEQ(FieldCode, v))
 }
 
+// IdenNo applies equality check predicate on the "iden_no" field. It's identical to IdenNoEQ.
+func IdenNo(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldEQ(FieldIdenNo, v))
+}
+
 // OwnerID applies equality check predicate on the "owner_id" field. It's identical to OwnerIDEQ.
 func OwnerID(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldEQ(FieldOwnerID, v))
@@ -622,6 +627,81 @@ func CodeEqualFold(v string) predicate.OrgOrgan {
 // CodeContainsFold applies the ContainsFold predicate on the "code" field.
 func CodeContainsFold(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldContainsFold(FieldCode, v))
+}
+
+// IdenNoEQ applies the EQ predicate on the "iden_no" field.
+func IdenNoEQ(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldEQ(FieldIdenNo, v))
+}
+
+// IdenNoNEQ applies the NEQ predicate on the "iden_no" field.
+func IdenNoNEQ(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldNEQ(FieldIdenNo, v))
+}
+
+// IdenNoIn applies the In predicate on the "iden_no" field.
+func IdenNoIn(vs ...string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldIn(FieldIdenNo, vs...))
+}
+
+// IdenNoNotIn applies the NotIn predicate on the "iden_no" field.
+func IdenNoNotIn(vs ...string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldNotIn(FieldIdenNo, vs...))
+}
+
+// IdenNoGT applies the GT predicate on the "iden_no" field.
+func IdenNoGT(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldGT(FieldIdenNo, v))
+}
+
+// IdenNoGTE applies the GTE predicate on the "iden_no" field.
+func IdenNoGTE(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldGTE(FieldIdenNo, v))
+}
+
+// IdenNoLT applies the LT predicate on the "iden_no" field.
+func IdenNoLT(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldLT(FieldIdenNo, v))
+}
+
+// IdenNoLTE applies the LTE predicate on the "iden_no" field.
+func IdenNoLTE(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldLTE(FieldIdenNo, v))
+}
+
+// IdenNoContains applies the Contains predicate on the "iden_no" field.
+func IdenNoContains(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldContains(FieldIdenNo, v))
+}
+
+// IdenNoHasPrefix applies the HasPrefix predicate on the "iden_no" field.
+func IdenNoHasPrefix(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldHasPrefix(FieldIdenNo, v))
+}
+
+// IdenNoHasSuffix applies the HasSuffix predicate on the "iden_no" field.
+func IdenNoHasSuffix(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldHasSuffix(FieldIdenNo, v))
+}
+
+// IdenNoIsNil applies the IsNil predicate on the "iden_no" field.
+func IdenNoIsNil() predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldIsNull(FieldIdenNo))
+}
+
+// IdenNoNotNil applies the NotNil predicate on the "iden_no" field.
+func IdenNoNotNil() predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldNotNull(FieldIdenNo))
+}
+
+// IdenNoEqualFold applies the EqualFold predicate on the "iden_no" field.
+func IdenNoEqualFold(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldEqualFold(FieldIdenNo, v))
+}
+
+// IdenNoContainsFold applies the ContainsFold predicate on the "iden_no" field.
+func IdenNoContainsFold(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldContainsFold(FieldIdenNo, v))
 }
 
 // OwnerIDEQ applies the EQ predicate on the "owner_id" field.

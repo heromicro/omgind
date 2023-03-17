@@ -15,7 +15,7 @@ func (SysAddress) Mixin() []ent.Mixin {
 		mixin.IDMixin{},
 		mixin.SoftDelMixin{},
 		mixin.OwnerUserMixin{},
-		mixin.OwnerOrganMixin{},
+		mixin.OwnerOrgMixin{},
 		mixin.SortMixin{},
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},

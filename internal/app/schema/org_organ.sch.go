@@ -4,13 +4,17 @@ import "time"
 
 // OrgOrgan 组织管理对象
 type OrgOrgan struct {
-	ID        string     `json:"id"`                          // 唯一标识
-	Name      string     `json:"name" binding:"required"`     // 名称
-	Sname     string     `json:"sname" binding:"required"`    // 短名称
-	OwnerID   string     `json:"owner_id" binding:"required"` // 所有者id
-	Creator   string     `json:"creator"`                     // 创建者
-	CreatedAt *time.Time `json:"created_at"`                  // 创建时间
-	UpdatedAt *time.Time `json:"updated_at"`                  // 更新时间
+	ID      string `json:"id"`                       // 唯一标识
+	Name    string `json:"name" binding:"required"`  // 名称
+	Sname   string `json:"sname" binding:"required"` // 短名称
+	OwnerId string `json:"owner_id"`                 // 所有者user.id
+	IdenNo  string `json:"iden_no"`                  // 执照号
+
+	Memo *string `json:"memo"` //
+
+	Creator   string     `json:"creator"`    // 创建者
+	CreatedAt *time.Time `json:"created_at"` // 创建时间
+	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
 
 }
 

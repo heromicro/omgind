@@ -21,6 +21,7 @@ var (
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 256},
 		{Name: "sname", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "iden_no", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "owner_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 	}
@@ -63,7 +64,65 @@ var (
 			{
 				Name:    "orgorgan_owner_id",
 				Unique:  false,
-				Columns: []*schema.Column{OrgOrgansColumns[11]},
+				Columns: []*schema.Column{OrgOrgansColumns[12]},
+			},
+		},
+	}
+	// OrgStaffsColumns holds the columns for the "org_staffs" table.
+	OrgStaffsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString, Size: 36},
+		{Name: "sort", Type: field.TypeInt32, Default: 9999},
+		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
+		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
+		{Name: "first_name", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "last_name", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "mobile", Type: field.TypeString, Nullable: true, Size: 32},
+		{Name: "gender", Type: field.TypeEnum, Nullable: true, Enums: []string{"M", "F"}},
+		{Name: "birth_date", Type: field.TypeString, Nullable: true},
+		{Name: "entry_date", Type: field.TypeString, Nullable: true},
+		{Name: "regu_date", Type: field.TypeString, Nullable: true},
+		{Name: "iden_no", Type: field.TypeString, Nullable: true},
+		{Name: "creator", Type: field.TypeString, Nullable: true},
+	}
+	// OrgStaffsTable holds the schema information for the "org_staffs" table.
+	OrgStaffsTable = &schema.Table{
+		Name:       "org_staffs",
+		Columns:    OrgStaffsColumns,
+		PrimaryKey: []*schema.Column{OrgStaffsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "orgstaff_id",
+				Unique:  true,
+				Columns: []*schema.Column{OrgStaffsColumns[0]},
+			},
+			{
+				Name:    "orgstaff_sort",
+				Unique:  false,
+				Columns: []*schema.Column{OrgStaffsColumns[1]},
+			},
+			{
+				Name:    "orgstaff_org_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrgStaffsColumns[2]},
+			},
+			{
+				Name:    "orgstaff_crtd_at",
+				Unique:  false,
+				Columns: []*schema.Column{OrgStaffsColumns[3]},
+			},
+			{
+				Name:    "orgstaff_dltd_at",
+				Unique:  false,
+				Columns: []*schema.Column{OrgStaffsColumns[5]},
+			},
+			{
+				Name:    "orgstaff_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{OrgStaffsColumns[6]},
 			},
 		},
 	}
@@ -892,6 +951,7 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		OrgOrgansTable,
+		OrgStaffsTable,
 		SysAddressesTable,
 		SysDictsTable,
 		SysDictItemsTable,

@@ -30,6 +30,8 @@ func (OrgOrgan) Fields() []ent.Field {
 		field.String("sname").MaxLen(64).Nillable().Optional().StorageKey("sname").Comment("简称"),
 		field.String("code").MaxLen(16).Nillable().Optional().StorageKey("code").Comment("助记码"),
 
+		field.String("iden_no").MaxLen(16).Nillable().Optional().StorageKey("iden_no").Comment("执照号"),
+
 		field.String("owner_id").MaxLen(36).Nillable().Optional().StorageKey("owner_id").Comment("所有者user id"),
 
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),

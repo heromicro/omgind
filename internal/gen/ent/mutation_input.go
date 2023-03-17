@@ -4,6 +4,8 @@ package ent
 
 import (
 	"time"
+
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 )
 
 // CreateOrgOrganInput represents a mutation input for creating orgorgans.
@@ -18,6 +20,7 @@ type CreateOrgOrganInput struct {
 	Name      *string
 	Sname     *string
 	Code      *string
+	IdenNo    *string
 	OwnerID   *string
 	Creator   *string
 }
@@ -54,6 +57,9 @@ func (i *CreateOrgOrganInput) Mutate(m *OrgOrganCreate) {
 	if v := i.Code; v != nil {
 		m.SetCode(*v)
 	}
+	if v := i.IdenNo; v != nil {
+		m.SetIdenNo(*v)
+	}
 	if v := i.OwnerID; v != nil {
 		m.SetOwnerID(*v)
 	}
@@ -85,6 +91,8 @@ type UpdateOrgOrganInput struct {
 	ClearSname     bool
 	Code           *string
 	ClearCode      bool
+	IdenNo         *string
+	ClearIdenNo    bool
 	OwnerID        *string
 	ClearOwnerID   bool
 	Creator        *string
@@ -138,6 +146,12 @@ func (i *UpdateOrgOrganInput) Mutate(m *OrgOrganMutation) {
 	if v := i.Code; v != nil {
 		m.SetCode(*v)
 	}
+	if i.ClearIdenNo {
+		m.ClearIdenNo()
+	}
+	if v := i.IdenNo; v != nil {
+		m.SetIdenNo(*v)
+	}
 	if i.ClearOwnerID {
 		m.ClearOwnerID()
 	}
@@ -160,6 +174,208 @@ func (u *OrgOrganUpdate) SetInput(i UpdateOrgOrganInput) *OrgOrganUpdate {
 
 // SetInput applies the change-set in the UpdateOrgOrganInput on the update-one builder.
 func (u *OrgOrganUpdateOne) SetInput(i UpdateOrgOrganInput) *OrgOrganUpdateOne {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// CreateOrgStaffInput represents a mutation input for creating orgstaffs.
+type CreateOrgStaffInput struct {
+	Sort        *int32
+	OrgID       *string
+	CreatedAt   *time.Time
+	UpdatedAt   *time.Time
+	DeletedAt   *time.Time
+	IsActive    *bool
+	Memo        *string
+	FirstName   *string
+	LastName    *string
+	Mobile      *string
+	Gender      *orgstaff.Gender
+	BirthDate   *string
+	EntryDate   *string
+	RegularDate *string
+	IdenNo      *string
+	Creator     *string
+}
+
+// Mutate applies the CreateOrgStaffInput on the OrgStaffCreate builder.
+func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.OrgID; v != nil {
+		m.SetOrgID(*v)
+	}
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.FirstName; v != nil {
+		m.SetFirstName(*v)
+	}
+	if v := i.LastName; v != nil {
+		m.SetLastName(*v)
+	}
+	if v := i.Mobile; v != nil {
+		m.SetMobile(*v)
+	}
+	if v := i.Gender; v != nil {
+		m.SetGender(*v)
+	}
+	if v := i.BirthDate; v != nil {
+		m.SetBirthDate(*v)
+	}
+	if v := i.EntryDate; v != nil {
+		m.SetEntryDate(*v)
+	}
+	if v := i.RegularDate; v != nil {
+		m.SetRegularDate(*v)
+	}
+	if v := i.IdenNo; v != nil {
+		m.SetIdenNo(*v)
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the CreateOrgStaffInput on the create builder.
+func (c *OrgStaffCreate) SetInput(i CreateOrgStaffInput) *OrgStaffCreate {
+	i.Mutate(c)
+	return c
+}
+
+// UpdateOrgStaffInput represents a mutation input for updating orgstaffs.
+type UpdateOrgStaffInput struct {
+	Sort             *int32
+	UpdatedAt        *time.Time
+	ClearUpdatedAt   bool
+	DeletedAt        *time.Time
+	ClearDeletedAt   bool
+	IsActive         *bool
+	Memo             *string
+	ClearMemo        bool
+	FirstName        *string
+	ClearFirstName   bool
+	LastName         *string
+	ClearLastName    bool
+	Mobile           *string
+	ClearMobile      bool
+	Gender           *orgstaff.Gender
+	ClearGender      bool
+	BirthDate        *string
+	ClearBirthDate   bool
+	EntryDate        *string
+	ClearEntryDate   bool
+	RegularDate      *string
+	ClearRegularDate bool
+	IdenNo           *string
+	ClearIdenNo      bool
+	Creator          *string
+	ClearCreator     bool
+}
+
+// Mutate applies the UpdateOrgStaffInput on the OrgStaffMutation.
+func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if i.ClearFirstName {
+		m.ClearFirstName()
+	}
+	if v := i.FirstName; v != nil {
+		m.SetFirstName(*v)
+	}
+	if i.ClearLastName {
+		m.ClearLastName()
+	}
+	if v := i.LastName; v != nil {
+		m.SetLastName(*v)
+	}
+	if i.ClearMobile {
+		m.ClearMobile()
+	}
+	if v := i.Mobile; v != nil {
+		m.SetMobile(*v)
+	}
+	if i.ClearGender {
+		m.ClearGender()
+	}
+	if v := i.Gender; v != nil {
+		m.SetGender(*v)
+	}
+	if i.ClearBirthDate {
+		m.ClearBirthDate()
+	}
+	if v := i.BirthDate; v != nil {
+		m.SetBirthDate(*v)
+	}
+	if i.ClearEntryDate {
+		m.ClearEntryDate()
+	}
+	if v := i.EntryDate; v != nil {
+		m.SetEntryDate(*v)
+	}
+	if i.ClearRegularDate {
+		m.ClearRegularDate()
+	}
+	if v := i.RegularDate; v != nil {
+		m.SetRegularDate(*v)
+	}
+	if i.ClearIdenNo {
+		m.ClearIdenNo()
+	}
+	if v := i.IdenNo; v != nil {
+		m.SetIdenNo(*v)
+	}
+	if i.ClearCreator {
+		m.ClearCreator()
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the UpdateOrgStaffInput on the update builder.
+func (u *OrgStaffUpdate) SetInput(i UpdateOrgStaffInput) *OrgStaffUpdate {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// SetInput applies the change-set in the UpdateOrgStaffInput on the update-one builder.
+func (u *OrgStaffUpdateOne) SetInput(i UpdateOrgStaffInput) *OrgStaffUpdateOne {
 	i.Mutate(u.Mutation())
 	return u
 }

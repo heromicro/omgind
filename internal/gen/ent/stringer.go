@@ -11,6 +11,13 @@ func (oo *OrgOrgan) GoString() string {
 	return oo.String()
 }
 
+func (os *OrgStaff) GoString() string {
+	if os == nil {
+		return fmt.Sprintf("OrgStaff(nil)")
+	}
+	return os.String()
+}
+
 func (sa *SysAddress) GoString() string {
 	if sa == nil {
 		return fmt.Sprintf("SysAddress(nil)")

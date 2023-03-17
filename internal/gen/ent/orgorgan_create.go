@@ -163,6 +163,20 @@ func (ooc *OrgOrganCreate) SetNillableCode(s *string) *OrgOrganCreate {
 	return ooc
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (ooc *OrgOrganCreate) SetIdenNo(s string) *OrgOrganCreate {
+	ooc.mutation.SetIdenNo(s)
+	return ooc
+}
+
+// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
+func (ooc *OrgOrganCreate) SetNillableIdenNo(s *string) *OrgOrganCreate {
+	if s != nil {
+		ooc.SetIdenNo(*s)
+	}
+	return ooc
+}
+
 // SetOwnerID sets the "owner_id" field.
 func (ooc *OrgOrganCreate) SetOwnerID(s string) *OrgOrganCreate {
 	ooc.mutation.SetOwnerID(s)
@@ -301,6 +315,11 @@ func (ooc *OrgOrganCreate) check() error {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.code": %w`, err)}
 		}
 	}
+	if v, ok := ooc.mutation.IdenNo(); ok {
+		if err := orgorgan.IdenNoValidator(v); err != nil {
+			return &ValidationError{Name: "iden_no", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.iden_no": %w`, err)}
+		}
+	}
 	if v, ok := ooc.mutation.OwnerID(); ok {
 		if err := orgorgan.OwnerIDValidator(v); err != nil {
 			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.owner_id": %w`, err)}
@@ -387,6 +406,10 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 	if value, ok := ooc.mutation.Code(); ok {
 		_spec.SetField(orgorgan.FieldCode, field.TypeString, value)
 		_node.Code = &value
+	}
+	if value, ok := ooc.mutation.IdenNo(); ok {
+		_spec.SetField(orgorgan.FieldIdenNo, field.TypeString, value)
+		_node.IdenNo = &value
 	}
 	if value, ok := ooc.mutation.OwnerID(); ok {
 		_spec.SetField(orgorgan.FieldOwnerID, field.TypeString, value)
@@ -595,6 +618,24 @@ func (u *OrgOrganUpsert) UpdateCode() *OrgOrganUpsert {
 // ClearCode clears the value of the "code" field.
 func (u *OrgOrganUpsert) ClearCode() *OrgOrganUpsert {
 	u.SetNull(orgorgan.FieldCode)
+	return u
+}
+
+// SetIdenNo sets the "iden_no" field.
+func (u *OrgOrganUpsert) SetIdenNo(v string) *OrgOrganUpsert {
+	u.Set(orgorgan.FieldIdenNo, v)
+	return u
+}
+
+// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
+func (u *OrgOrganUpsert) UpdateIdenNo() *OrgOrganUpsert {
+	u.SetExcluded(orgorgan.FieldIdenNo)
+	return u
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (u *OrgOrganUpsert) ClearIdenNo() *OrgOrganUpsert {
+	u.SetNull(orgorgan.FieldIdenNo)
 	return u
 }
 
@@ -857,6 +898,27 @@ func (u *OrgOrganUpsertOne) UpdateCode() *OrgOrganUpsertOne {
 func (u *OrgOrganUpsertOne) ClearCode() *OrgOrganUpsertOne {
 	return u.Update(func(s *OrgOrganUpsert) {
 		s.ClearCode()
+	})
+}
+
+// SetIdenNo sets the "iden_no" field.
+func (u *OrgOrganUpsertOne) SetIdenNo(v string) *OrgOrganUpsertOne {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.SetIdenNo(v)
+	})
+}
+
+// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
+func (u *OrgOrganUpsertOne) UpdateIdenNo() *OrgOrganUpsertOne {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.UpdateIdenNo()
+	})
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (u *OrgOrganUpsertOne) ClearIdenNo() *OrgOrganUpsertOne {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.ClearIdenNo()
 	})
 }
 
@@ -1288,6 +1350,27 @@ func (u *OrgOrganUpsertBulk) UpdateCode() *OrgOrganUpsertBulk {
 func (u *OrgOrganUpsertBulk) ClearCode() *OrgOrganUpsertBulk {
 	return u.Update(func(s *OrgOrganUpsert) {
 		s.ClearCode()
+	})
+}
+
+// SetIdenNo sets the "iden_no" field.
+func (u *OrgOrganUpsertBulk) SetIdenNo(v string) *OrgOrganUpsertBulk {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.SetIdenNo(v)
+	})
+}
+
+// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
+func (u *OrgOrganUpsertBulk) UpdateIdenNo() *OrgOrganUpsertBulk {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.UpdateIdenNo()
+	})
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (u *OrgOrganUpsertBulk) ClearIdenNo() *OrgOrganUpsertBulk {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.ClearIdenNo()
 	})
 }
 

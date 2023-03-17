@@ -21,6 +21,18 @@ func (f OrgOrganFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, er
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrgOrganMutation", m)
 }
 
+// The OrgStaffFunc type is an adapter to allow the use of ordinary
+// function as OrgStaff mutator.
+type OrgStaffFunc func(context.Context, *ent.OrgStaffMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrgStaffFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrgStaffMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrgStaffMutation", m)
+}
+
 // The SysAddressFunc type is an adapter to allow the use of ordinary
 // function as SysAddress mutator.
 type SysAddressFunc func(context.Context, *ent.SysAddressMutation) (ent.Value, error)

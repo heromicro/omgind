@@ -36,6 +36,8 @@ type OrgOrgan struct {
 	Sname *string `json:"sname,omitempty"`
 	// 助记码
 	Code *string `json:"code,omitempty"`
+	// 执照号
+	IdenNo *string `json:"iden_no,omitempty"`
 	// 所有者user id
 	OwnerID *string `json:"owner_id,omitempty"`
 	// 创建者
@@ -51,7 +53,7 @@ func (*OrgOrgan) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgorgan.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case orgorgan.FieldID, orgorgan.FieldMemo, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldCode, orgorgan.FieldOwnerID, orgorgan.FieldCreator:
+		case orgorgan.FieldID, orgorgan.FieldMemo, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldCode, orgorgan.FieldIdenNo, orgorgan.FieldOwnerID, orgorgan.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgorgan.FieldCreatedAt, orgorgan.FieldUpdatedAt, orgorgan.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -143,6 +145,13 @@ func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
 				oo.Code = new(string)
 				*oo.Code = value.String
 			}
+		case orgorgan.FieldIdenNo:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field iden_no", values[i])
+			} else if value.Valid {
+				oo.IdenNo = new(string)
+				*oo.IdenNo = value.String
+			}
 		case orgorgan.FieldOwnerID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field owner_id", values[i])
@@ -226,6 +235,11 @@ func (oo *OrgOrgan) String() string {
 	builder.WriteString(", ")
 	if v := oo.Code; v != nil {
 		builder.WriteString("code=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := oo.IdenNo; v != nil {
+		builder.WriteString("iden_no=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

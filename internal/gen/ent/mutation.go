@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
@@ -39,6 +40,7 @@ const (
 
 	// Node types.
 	TypeOrgOrgan              = "OrgOrgan"
+	TypeOrgStaff              = "OrgStaff"
 	TypeSysAddress            = "SysAddress"
 	TypeSysDict               = "SysDict"
 	TypeSysDictItem           = "SysDictItem"
@@ -72,6 +74,7 @@ type OrgOrganMutation struct {
 	name          *string
 	sname         *string
 	code          *string
+	iden_no       *string
 	owner_id      *string
 	creator       *string
 	clearedFields map[string]struct{}
@@ -655,6 +658,55 @@ func (m *OrgOrganMutation) ResetCode() {
 	delete(m.clearedFields, orgorgan.FieldCode)
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (m *OrgOrganMutation) SetIdenNo(s string) {
+	m.iden_no = &s
+}
+
+// IdenNo returns the value of the "iden_no" field in the mutation.
+func (m *OrgOrganMutation) IdenNo() (r string, exists bool) {
+	v := m.iden_no
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIdenNo returns the old "iden_no" field's value of the OrgOrgan entity.
+// If the OrgOrgan object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgOrganMutation) OldIdenNo(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIdenNo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIdenNo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIdenNo: %w", err)
+	}
+	return oldValue.IdenNo, nil
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (m *OrgOrganMutation) ClearIdenNo() {
+	m.iden_no = nil
+	m.clearedFields[orgorgan.FieldIdenNo] = struct{}{}
+}
+
+// IdenNoCleared returns if the "iden_no" field was cleared in this mutation.
+func (m *OrgOrganMutation) IdenNoCleared() bool {
+	_, ok := m.clearedFields[orgorgan.FieldIdenNo]
+	return ok
+}
+
+// ResetIdenNo resets all changes to the "iden_no" field.
+func (m *OrgOrganMutation) ResetIdenNo() {
+	m.iden_no = nil
+	delete(m.clearedFields, orgorgan.FieldIdenNo)
+}
+
 // SetOwnerID sets the "owner_id" field.
 func (m *OrgOrganMutation) SetOwnerID(s string) {
 	m.owner_id = &s
@@ -787,7 +839,7 @@ func (m *OrgOrganMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgOrganMutation) Fields() []string {
-	fields := make([]string, 0, 12)
+	fields := make([]string, 0, 13)
 	if m.is_del != nil {
 		fields = append(fields, orgorgan.FieldIsDel)
 	}
@@ -817,6 +869,9 @@ func (m *OrgOrganMutation) Fields() []string {
 	}
 	if m.code != nil {
 		fields = append(fields, orgorgan.FieldCode)
+	}
+	if m.iden_no != nil {
+		fields = append(fields, orgorgan.FieldIdenNo)
 	}
 	if m.owner_id != nil {
 		fields = append(fields, orgorgan.FieldOwnerID)
@@ -852,6 +907,8 @@ func (m *OrgOrganMutation) Field(name string) (ent.Value, bool) {
 		return m.Sname()
 	case orgorgan.FieldCode:
 		return m.Code()
+	case orgorgan.FieldIdenNo:
+		return m.IdenNo()
 	case orgorgan.FieldOwnerID:
 		return m.OwnerID()
 	case orgorgan.FieldCreator:
@@ -885,6 +942,8 @@ func (m *OrgOrganMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldSname(ctx)
 	case orgorgan.FieldCode:
 		return m.OldCode(ctx)
+	case orgorgan.FieldIdenNo:
+		return m.OldIdenNo(ctx)
 	case orgorgan.FieldOwnerID:
 		return m.OldOwnerID(ctx)
 	case orgorgan.FieldCreator:
@@ -968,6 +1027,13 @@ func (m *OrgOrganMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetCode(v)
 		return nil
+	case orgorgan.FieldIdenNo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIdenNo(v)
+		return nil
 	case orgorgan.FieldOwnerID:
 		v, ok := value.(string)
 		if !ok {
@@ -1048,6 +1114,9 @@ func (m *OrgOrganMutation) ClearedFields() []string {
 	if m.FieldCleared(orgorgan.FieldCode) {
 		fields = append(fields, orgorgan.FieldCode)
 	}
+	if m.FieldCleared(orgorgan.FieldIdenNo) {
+		fields = append(fields, orgorgan.FieldIdenNo)
+	}
 	if m.FieldCleared(orgorgan.FieldOwnerID) {
 		fields = append(fields, orgorgan.FieldOwnerID)
 	}
@@ -1088,6 +1157,9 @@ func (m *OrgOrganMutation) ClearField(name string) error {
 		return nil
 	case orgorgan.FieldCode:
 		m.ClearCode()
+		return nil
+	case orgorgan.FieldIdenNo:
+		m.ClearIdenNo()
 		return nil
 	case orgorgan.FieldOwnerID:
 		m.ClearOwnerID()
@@ -1132,6 +1204,9 @@ func (m *OrgOrganMutation) ResetField(name string) error {
 		return nil
 	case orgorgan.FieldCode:
 		m.ResetCode()
+		return nil
+	case orgorgan.FieldIdenNo:
+		m.ResetIdenNo()
 		return nil
 	case orgorgan.FieldOwnerID:
 		m.ResetOwnerID()
@@ -1189,6 +1264,1453 @@ func (m *OrgOrganMutation) ClearEdge(name string) error {
 // It returns an error if the edge is not defined in the schema.
 func (m *OrgOrganMutation) ResetEdge(name string) error {
 	return fmt.Errorf("unknown OrgOrgan edge %s", name)
+}
+
+// OrgStaffMutation represents an operation that mutates the OrgStaff nodes in the graph.
+type OrgStaffMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *string
+	sort          *int32
+	addsort       *int32
+	org_id        *string
+	created_at    *time.Time
+	updated_at    *time.Time
+	deleted_at    *time.Time
+	is_active     *bool
+	memo          *string
+	first_name    *string
+	last_name     *string
+	mobile        *string
+	gender        *orgstaff.Gender
+	birth_date    *string
+	entry_date    *string
+	regular_date  *string
+	iden_no       *string
+	creator       *string
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*OrgStaff, error)
+	predicates    []predicate.OrgStaff
+}
+
+var _ ent.Mutation = (*OrgStaffMutation)(nil)
+
+// orgstaffOption allows management of the mutation configuration using functional options.
+type orgstaffOption func(*OrgStaffMutation)
+
+// newOrgStaffMutation creates new mutation for the OrgStaff entity.
+func newOrgStaffMutation(c config, op Op, opts ...orgstaffOption) *OrgStaffMutation {
+	m := &OrgStaffMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeOrgStaff,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withOrgStaffID sets the ID field of the mutation.
+func withOrgStaffID(id string) orgstaffOption {
+	return func(m *OrgStaffMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *OrgStaff
+		)
+		m.oldValue = func(ctx context.Context) (*OrgStaff, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().OrgStaff.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withOrgStaff sets the old OrgStaff of the mutation.
+func withOrgStaff(node *OrgStaff) orgstaffOption {
+	return func(m *OrgStaffMutation) {
+		m.oldValue = func(context.Context) (*OrgStaff, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m OrgStaffMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m OrgStaffMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("ent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of OrgStaff entities.
+func (m *OrgStaffMutation) SetID(id string) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *OrgStaffMutation) ID() (id string, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *OrgStaffMutation) IDs(ctx context.Context) ([]string, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []string{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().OrgStaff.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetSort sets the "sort" field.
+func (m *OrgStaffMutation) SetSort(i int32) {
+	m.sort = &i
+	m.addsort = nil
+}
+
+// Sort returns the value of the "sort" field in the mutation.
+func (m *OrgStaffMutation) Sort() (r int32, exists bool) {
+	v := m.sort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSort returns the old "sort" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldSort(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSort is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSort requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSort: %w", err)
+	}
+	return oldValue.Sort, nil
+}
+
+// AddSort adds i to the "sort" field.
+func (m *OrgStaffMutation) AddSort(i int32) {
+	if m.addsort != nil {
+		*m.addsort += i
+	} else {
+		m.addsort = &i
+	}
+}
+
+// AddedSort returns the value that was added to the "sort" field in this mutation.
+func (m *OrgStaffMutation) AddedSort() (r int32, exists bool) {
+	v := m.addsort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSort resets all changes to the "sort" field.
+func (m *OrgStaffMutation) ResetSort() {
+	m.sort = nil
+	m.addsort = nil
+}
+
+// SetOrgID sets the "org_id" field.
+func (m *OrgStaffMutation) SetOrgID(s string) {
+	m.org_id = &s
+}
+
+// OrgID returns the value of the "org_id" field in the mutation.
+func (m *OrgStaffMutation) OrgID() (r string, exists bool) {
+	v := m.org_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOrgID returns the old "org_id" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldOrgID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldOrgID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldOrgID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOrgID: %w", err)
+	}
+	return oldValue.OrgID, nil
+}
+
+// ClearOrgID clears the value of the "org_id" field.
+func (m *OrgStaffMutation) ClearOrgID() {
+	m.org_id = nil
+	m.clearedFields[orgstaff.FieldOrgID] = struct{}{}
+}
+
+// OrgIDCleared returns if the "org_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) OrgIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldOrgID]
+	return ok
+}
+
+// ResetOrgID resets all changes to the "org_id" field.
+func (m *OrgStaffMutation) ResetOrgID() {
+	m.org_id = nil
+	delete(m.clearedFields, orgstaff.FieldOrgID)
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *OrgStaffMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *OrgStaffMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldCreatedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ClearCreatedAt clears the value of the "created_at" field.
+func (m *OrgStaffMutation) ClearCreatedAt() {
+	m.created_at = nil
+	m.clearedFields[orgstaff.FieldCreatedAt] = struct{}{}
+}
+
+// CreatedAtCleared returns if the "created_at" field was cleared in this mutation.
+func (m *OrgStaffMutation) CreatedAtCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldCreatedAt]
+	return ok
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *OrgStaffMutation) ResetCreatedAt() {
+	m.created_at = nil
+	delete(m.clearedFields, orgstaff.FieldCreatedAt)
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (m *OrgStaffMutation) SetUpdatedAt(t time.Time) {
+	m.updated_at = &t
+}
+
+// UpdatedAt returns the value of the "updated_at" field in the mutation.
+func (m *OrgStaffMutation) UpdatedAt() (r time.Time, exists bool) {
+	v := m.updated_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdatedAt returns the old "updated_at" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldUpdatedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdatedAt: %w", err)
+	}
+	return oldValue.UpdatedAt, nil
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (m *OrgStaffMutation) ClearUpdatedAt() {
+	m.updated_at = nil
+	m.clearedFields[orgstaff.FieldUpdatedAt] = struct{}{}
+}
+
+// UpdatedAtCleared returns if the "updated_at" field was cleared in this mutation.
+func (m *OrgStaffMutation) UpdatedAtCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldUpdatedAt]
+	return ok
+}
+
+// ResetUpdatedAt resets all changes to the "updated_at" field.
+func (m *OrgStaffMutation) ResetUpdatedAt() {
+	m.updated_at = nil
+	delete(m.clearedFields, orgstaff.FieldUpdatedAt)
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (m *OrgStaffMutation) SetDeletedAt(t time.Time) {
+	m.deleted_at = &t
+}
+
+// DeletedAt returns the value of the "deleted_at" field in the mutation.
+func (m *OrgStaffMutation) DeletedAt() (r time.Time, exists bool) {
+	v := m.deleted_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeletedAt returns the old "deleted_at" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldDeletedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDeletedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeletedAt: %w", err)
+	}
+	return oldValue.DeletedAt, nil
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (m *OrgStaffMutation) ClearDeletedAt() {
+	m.deleted_at = nil
+	m.clearedFields[orgstaff.FieldDeletedAt] = struct{}{}
+}
+
+// DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
+func (m *OrgStaffMutation) DeletedAtCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldDeletedAt]
+	return ok
+}
+
+// ResetDeletedAt resets all changes to the "deleted_at" field.
+func (m *OrgStaffMutation) ResetDeletedAt() {
+	m.deleted_at = nil
+	delete(m.clearedFields, orgstaff.FieldDeletedAt)
+}
+
+// SetIsActive sets the "is_active" field.
+func (m *OrgStaffMutation) SetIsActive(b bool) {
+	m.is_active = &b
+}
+
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *OrgStaffMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsActive returns the old "is_active" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldIsActive(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
+	}
+	return oldValue.IsActive, nil
+}
+
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *OrgStaffMutation) ResetIsActive() {
+	m.is_active = nil
+}
+
+// SetMemo sets the "memo" field.
+func (m *OrgStaffMutation) SetMemo(s string) {
+	m.memo = &s
+}
+
+// Memo returns the value of the "memo" field in the mutation.
+func (m *OrgStaffMutation) Memo() (r string, exists bool) {
+	v := m.memo
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMemo returns the old "memo" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldMemo(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMemo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMemo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMemo: %w", err)
+	}
+	return oldValue.Memo, nil
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (m *OrgStaffMutation) ClearMemo() {
+	m.memo = nil
+	m.clearedFields[orgstaff.FieldMemo] = struct{}{}
+}
+
+// MemoCleared returns if the "memo" field was cleared in this mutation.
+func (m *OrgStaffMutation) MemoCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldMemo]
+	return ok
+}
+
+// ResetMemo resets all changes to the "memo" field.
+func (m *OrgStaffMutation) ResetMemo() {
+	m.memo = nil
+	delete(m.clearedFields, orgstaff.FieldMemo)
+}
+
+// SetFirstName sets the "first_name" field.
+func (m *OrgStaffMutation) SetFirstName(s string) {
+	m.first_name = &s
+}
+
+// FirstName returns the value of the "first_name" field in the mutation.
+func (m *OrgStaffMutation) FirstName() (r string, exists bool) {
+	v := m.first_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFirstName returns the old "first_name" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldFirstName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldFirstName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldFirstName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFirstName: %w", err)
+	}
+	return oldValue.FirstName, nil
+}
+
+// ClearFirstName clears the value of the "first_name" field.
+func (m *OrgStaffMutation) ClearFirstName() {
+	m.first_name = nil
+	m.clearedFields[orgstaff.FieldFirstName] = struct{}{}
+}
+
+// FirstNameCleared returns if the "first_name" field was cleared in this mutation.
+func (m *OrgStaffMutation) FirstNameCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldFirstName]
+	return ok
+}
+
+// ResetFirstName resets all changes to the "first_name" field.
+func (m *OrgStaffMutation) ResetFirstName() {
+	m.first_name = nil
+	delete(m.clearedFields, orgstaff.FieldFirstName)
+}
+
+// SetLastName sets the "last_name" field.
+func (m *OrgStaffMutation) SetLastName(s string) {
+	m.last_name = &s
+}
+
+// LastName returns the value of the "last_name" field in the mutation.
+func (m *OrgStaffMutation) LastName() (r string, exists bool) {
+	v := m.last_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldLastName returns the old "last_name" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldLastName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldLastName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldLastName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldLastName: %w", err)
+	}
+	return oldValue.LastName, nil
+}
+
+// ClearLastName clears the value of the "last_name" field.
+func (m *OrgStaffMutation) ClearLastName() {
+	m.last_name = nil
+	m.clearedFields[orgstaff.FieldLastName] = struct{}{}
+}
+
+// LastNameCleared returns if the "last_name" field was cleared in this mutation.
+func (m *OrgStaffMutation) LastNameCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldLastName]
+	return ok
+}
+
+// ResetLastName resets all changes to the "last_name" field.
+func (m *OrgStaffMutation) ResetLastName() {
+	m.last_name = nil
+	delete(m.clearedFields, orgstaff.FieldLastName)
+}
+
+// SetMobile sets the "mobile" field.
+func (m *OrgStaffMutation) SetMobile(s string) {
+	m.mobile = &s
+}
+
+// Mobile returns the value of the "mobile" field in the mutation.
+func (m *OrgStaffMutation) Mobile() (r string, exists bool) {
+	v := m.mobile
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMobile returns the old "mobile" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldMobile(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMobile is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMobile requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMobile: %w", err)
+	}
+	return oldValue.Mobile, nil
+}
+
+// ClearMobile clears the value of the "mobile" field.
+func (m *OrgStaffMutation) ClearMobile() {
+	m.mobile = nil
+	m.clearedFields[orgstaff.FieldMobile] = struct{}{}
+}
+
+// MobileCleared returns if the "mobile" field was cleared in this mutation.
+func (m *OrgStaffMutation) MobileCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldMobile]
+	return ok
+}
+
+// ResetMobile resets all changes to the "mobile" field.
+func (m *OrgStaffMutation) ResetMobile() {
+	m.mobile = nil
+	delete(m.clearedFields, orgstaff.FieldMobile)
+}
+
+// SetGender sets the "gender" field.
+func (m *OrgStaffMutation) SetGender(o orgstaff.Gender) {
+	m.gender = &o
+}
+
+// Gender returns the value of the "gender" field in the mutation.
+func (m *OrgStaffMutation) Gender() (r orgstaff.Gender, exists bool) {
+	v := m.gender
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGender returns the old "gender" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldGender(ctx context.Context) (v *orgstaff.Gender, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldGender is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldGender requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGender: %w", err)
+	}
+	return oldValue.Gender, nil
+}
+
+// ClearGender clears the value of the "gender" field.
+func (m *OrgStaffMutation) ClearGender() {
+	m.gender = nil
+	m.clearedFields[orgstaff.FieldGender] = struct{}{}
+}
+
+// GenderCleared returns if the "gender" field was cleared in this mutation.
+func (m *OrgStaffMutation) GenderCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldGender]
+	return ok
+}
+
+// ResetGender resets all changes to the "gender" field.
+func (m *OrgStaffMutation) ResetGender() {
+	m.gender = nil
+	delete(m.clearedFields, orgstaff.FieldGender)
+}
+
+// SetBirthDate sets the "birth_date" field.
+func (m *OrgStaffMutation) SetBirthDate(s string) {
+	m.birth_date = &s
+}
+
+// BirthDate returns the value of the "birth_date" field in the mutation.
+func (m *OrgStaffMutation) BirthDate() (r string, exists bool) {
+	v := m.birth_date
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBirthDate returns the old "birth_date" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldBirthDate(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBirthDate is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBirthDate requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBirthDate: %w", err)
+	}
+	return oldValue.BirthDate, nil
+}
+
+// ClearBirthDate clears the value of the "birth_date" field.
+func (m *OrgStaffMutation) ClearBirthDate() {
+	m.birth_date = nil
+	m.clearedFields[orgstaff.FieldBirthDate] = struct{}{}
+}
+
+// BirthDateCleared returns if the "birth_date" field was cleared in this mutation.
+func (m *OrgStaffMutation) BirthDateCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldBirthDate]
+	return ok
+}
+
+// ResetBirthDate resets all changes to the "birth_date" field.
+func (m *OrgStaffMutation) ResetBirthDate() {
+	m.birth_date = nil
+	delete(m.clearedFields, orgstaff.FieldBirthDate)
+}
+
+// SetEntryDate sets the "entry_date" field.
+func (m *OrgStaffMutation) SetEntryDate(s string) {
+	m.entry_date = &s
+}
+
+// EntryDate returns the value of the "entry_date" field in the mutation.
+func (m *OrgStaffMutation) EntryDate() (r string, exists bool) {
+	v := m.entry_date
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEntryDate returns the old "entry_date" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldEntryDate(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEntryDate is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEntryDate requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEntryDate: %w", err)
+	}
+	return oldValue.EntryDate, nil
+}
+
+// ClearEntryDate clears the value of the "entry_date" field.
+func (m *OrgStaffMutation) ClearEntryDate() {
+	m.entry_date = nil
+	m.clearedFields[orgstaff.FieldEntryDate] = struct{}{}
+}
+
+// EntryDateCleared returns if the "entry_date" field was cleared in this mutation.
+func (m *OrgStaffMutation) EntryDateCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldEntryDate]
+	return ok
+}
+
+// ResetEntryDate resets all changes to the "entry_date" field.
+func (m *OrgStaffMutation) ResetEntryDate() {
+	m.entry_date = nil
+	delete(m.clearedFields, orgstaff.FieldEntryDate)
+}
+
+// SetRegularDate sets the "regular_date" field.
+func (m *OrgStaffMutation) SetRegularDate(s string) {
+	m.regular_date = &s
+}
+
+// RegularDate returns the value of the "regular_date" field in the mutation.
+func (m *OrgStaffMutation) RegularDate() (r string, exists bool) {
+	v := m.regular_date
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRegularDate returns the old "regular_date" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldRegularDate(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldRegularDate is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldRegularDate requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRegularDate: %w", err)
+	}
+	return oldValue.RegularDate, nil
+}
+
+// ClearRegularDate clears the value of the "regular_date" field.
+func (m *OrgStaffMutation) ClearRegularDate() {
+	m.regular_date = nil
+	m.clearedFields[orgstaff.FieldRegularDate] = struct{}{}
+}
+
+// RegularDateCleared returns if the "regular_date" field was cleared in this mutation.
+func (m *OrgStaffMutation) RegularDateCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldRegularDate]
+	return ok
+}
+
+// ResetRegularDate resets all changes to the "regular_date" field.
+func (m *OrgStaffMutation) ResetRegularDate() {
+	m.regular_date = nil
+	delete(m.clearedFields, orgstaff.FieldRegularDate)
+}
+
+// SetIdenNo sets the "iden_no" field.
+func (m *OrgStaffMutation) SetIdenNo(s string) {
+	m.iden_no = &s
+}
+
+// IdenNo returns the value of the "iden_no" field in the mutation.
+func (m *OrgStaffMutation) IdenNo() (r string, exists bool) {
+	v := m.iden_no
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIdenNo returns the old "iden_no" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldIdenNo(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIdenNo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIdenNo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIdenNo: %w", err)
+	}
+	return oldValue.IdenNo, nil
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (m *OrgStaffMutation) ClearIdenNo() {
+	m.iden_no = nil
+	m.clearedFields[orgstaff.FieldIdenNo] = struct{}{}
+}
+
+// IdenNoCleared returns if the "iden_no" field was cleared in this mutation.
+func (m *OrgStaffMutation) IdenNoCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldIdenNo]
+	return ok
+}
+
+// ResetIdenNo resets all changes to the "iden_no" field.
+func (m *OrgStaffMutation) ResetIdenNo() {
+	m.iden_no = nil
+	delete(m.clearedFields, orgstaff.FieldIdenNo)
+}
+
+// SetCreator sets the "creator" field.
+func (m *OrgStaffMutation) SetCreator(s string) {
+	m.creator = &s
+}
+
+// Creator returns the value of the "creator" field in the mutation.
+func (m *OrgStaffMutation) Creator() (r string, exists bool) {
+	v := m.creator
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreator returns the old "creator" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldCreator(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreator is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreator requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreator: %w", err)
+	}
+	return oldValue.Creator, nil
+}
+
+// ClearCreator clears the value of the "creator" field.
+func (m *OrgStaffMutation) ClearCreator() {
+	m.creator = nil
+	m.clearedFields[orgstaff.FieldCreator] = struct{}{}
+}
+
+// CreatorCleared returns if the "creator" field was cleared in this mutation.
+func (m *OrgStaffMutation) CreatorCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldCreator]
+	return ok
+}
+
+// ResetCreator resets all changes to the "creator" field.
+func (m *OrgStaffMutation) ResetCreator() {
+	m.creator = nil
+	delete(m.clearedFields, orgstaff.FieldCreator)
+}
+
+// Where appends a list predicates to the OrgStaffMutation builder.
+func (m *OrgStaffMutation) Where(ps ...predicate.OrgStaff) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the OrgStaffMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *OrgStaffMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.OrgStaff, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *OrgStaffMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *OrgStaffMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (OrgStaff).
+func (m *OrgStaffMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *OrgStaffMutation) Fields() []string {
+	fields := make([]string, 0, 16)
+	if m.sort != nil {
+		fields = append(fields, orgstaff.FieldSort)
+	}
+	if m.org_id != nil {
+		fields = append(fields, orgstaff.FieldOrgID)
+	}
+	if m.created_at != nil {
+		fields = append(fields, orgstaff.FieldCreatedAt)
+	}
+	if m.updated_at != nil {
+		fields = append(fields, orgstaff.FieldUpdatedAt)
+	}
+	if m.deleted_at != nil {
+		fields = append(fields, orgstaff.FieldDeletedAt)
+	}
+	if m.is_active != nil {
+		fields = append(fields, orgstaff.FieldIsActive)
+	}
+	if m.memo != nil {
+		fields = append(fields, orgstaff.FieldMemo)
+	}
+	if m.first_name != nil {
+		fields = append(fields, orgstaff.FieldFirstName)
+	}
+	if m.last_name != nil {
+		fields = append(fields, orgstaff.FieldLastName)
+	}
+	if m.mobile != nil {
+		fields = append(fields, orgstaff.FieldMobile)
+	}
+	if m.gender != nil {
+		fields = append(fields, orgstaff.FieldGender)
+	}
+	if m.birth_date != nil {
+		fields = append(fields, orgstaff.FieldBirthDate)
+	}
+	if m.entry_date != nil {
+		fields = append(fields, orgstaff.FieldEntryDate)
+	}
+	if m.regular_date != nil {
+		fields = append(fields, orgstaff.FieldRegularDate)
+	}
+	if m.iden_no != nil {
+		fields = append(fields, orgstaff.FieldIdenNo)
+	}
+	if m.creator != nil {
+		fields = append(fields, orgstaff.FieldCreator)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case orgstaff.FieldSort:
+		return m.Sort()
+	case orgstaff.FieldOrgID:
+		return m.OrgID()
+	case orgstaff.FieldCreatedAt:
+		return m.CreatedAt()
+	case orgstaff.FieldUpdatedAt:
+		return m.UpdatedAt()
+	case orgstaff.FieldDeletedAt:
+		return m.DeletedAt()
+	case orgstaff.FieldIsActive:
+		return m.IsActive()
+	case orgstaff.FieldMemo:
+		return m.Memo()
+	case orgstaff.FieldFirstName:
+		return m.FirstName()
+	case orgstaff.FieldLastName:
+		return m.LastName()
+	case orgstaff.FieldMobile:
+		return m.Mobile()
+	case orgstaff.FieldGender:
+		return m.Gender()
+	case orgstaff.FieldBirthDate:
+		return m.BirthDate()
+	case orgstaff.FieldEntryDate:
+		return m.EntryDate()
+	case orgstaff.FieldRegularDate:
+		return m.RegularDate()
+	case orgstaff.FieldIdenNo:
+		return m.IdenNo()
+	case orgstaff.FieldCreator:
+		return m.Creator()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case orgstaff.FieldSort:
+		return m.OldSort(ctx)
+	case orgstaff.FieldOrgID:
+		return m.OldOrgID(ctx)
+	case orgstaff.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	case orgstaff.FieldUpdatedAt:
+		return m.OldUpdatedAt(ctx)
+	case orgstaff.FieldDeletedAt:
+		return m.OldDeletedAt(ctx)
+	case orgstaff.FieldIsActive:
+		return m.OldIsActive(ctx)
+	case orgstaff.FieldMemo:
+		return m.OldMemo(ctx)
+	case orgstaff.FieldFirstName:
+		return m.OldFirstName(ctx)
+	case orgstaff.FieldLastName:
+		return m.OldLastName(ctx)
+	case orgstaff.FieldMobile:
+		return m.OldMobile(ctx)
+	case orgstaff.FieldGender:
+		return m.OldGender(ctx)
+	case orgstaff.FieldBirthDate:
+		return m.OldBirthDate(ctx)
+	case orgstaff.FieldEntryDate:
+		return m.OldEntryDate(ctx)
+	case orgstaff.FieldRegularDate:
+		return m.OldRegularDate(ctx)
+	case orgstaff.FieldIdenNo:
+		return m.OldIdenNo(ctx)
+	case orgstaff.FieldCreator:
+		return m.OldCreator(ctx)
+	}
+	return nil, fmt.Errorf("unknown OrgStaff field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case orgstaff.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSort(v)
+		return nil
+	case orgstaff.FieldOrgID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOrgID(v)
+		return nil
+	case orgstaff.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	case orgstaff.FieldUpdatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdatedAt(v)
+		return nil
+	case orgstaff.FieldDeletedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeletedAt(v)
+		return nil
+	case orgstaff.FieldIsActive:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsActive(v)
+		return nil
+	case orgstaff.FieldMemo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMemo(v)
+		return nil
+	case orgstaff.FieldFirstName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFirstName(v)
+		return nil
+	case orgstaff.FieldLastName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetLastName(v)
+		return nil
+	case orgstaff.FieldMobile:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMobile(v)
+		return nil
+	case orgstaff.FieldGender:
+		v, ok := value.(orgstaff.Gender)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGender(v)
+		return nil
+	case orgstaff.FieldBirthDate:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBirthDate(v)
+		return nil
+	case orgstaff.FieldEntryDate:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEntryDate(v)
+		return nil
+	case orgstaff.FieldRegularDate:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRegularDate(v)
+		return nil
+	case orgstaff.FieldIdenNo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIdenNo(v)
+		return nil
+	case orgstaff.FieldCreator:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreator(v)
+		return nil
+	}
+	return fmt.Errorf("unknown OrgStaff field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *OrgStaffMutation) AddedFields() []string {
+	var fields []string
+	if m.addsort != nil {
+		fields = append(fields, orgstaff.FieldSort)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *OrgStaffMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case orgstaff.FieldSort:
+		return m.AddedSort()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *OrgStaffMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case orgstaff.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSort(v)
+		return nil
+	}
+	return fmt.Errorf("unknown OrgStaff numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *OrgStaffMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(orgstaff.FieldOrgID) {
+		fields = append(fields, orgstaff.FieldOrgID)
+	}
+	if m.FieldCleared(orgstaff.FieldCreatedAt) {
+		fields = append(fields, orgstaff.FieldCreatedAt)
+	}
+	if m.FieldCleared(orgstaff.FieldUpdatedAt) {
+		fields = append(fields, orgstaff.FieldUpdatedAt)
+	}
+	if m.FieldCleared(orgstaff.FieldDeletedAt) {
+		fields = append(fields, orgstaff.FieldDeletedAt)
+	}
+	if m.FieldCleared(orgstaff.FieldMemo) {
+		fields = append(fields, orgstaff.FieldMemo)
+	}
+	if m.FieldCleared(orgstaff.FieldFirstName) {
+		fields = append(fields, orgstaff.FieldFirstName)
+	}
+	if m.FieldCleared(orgstaff.FieldLastName) {
+		fields = append(fields, orgstaff.FieldLastName)
+	}
+	if m.FieldCleared(orgstaff.FieldMobile) {
+		fields = append(fields, orgstaff.FieldMobile)
+	}
+	if m.FieldCleared(orgstaff.FieldGender) {
+		fields = append(fields, orgstaff.FieldGender)
+	}
+	if m.FieldCleared(orgstaff.FieldBirthDate) {
+		fields = append(fields, orgstaff.FieldBirthDate)
+	}
+	if m.FieldCleared(orgstaff.FieldEntryDate) {
+		fields = append(fields, orgstaff.FieldEntryDate)
+	}
+	if m.FieldCleared(orgstaff.FieldRegularDate) {
+		fields = append(fields, orgstaff.FieldRegularDate)
+	}
+	if m.FieldCleared(orgstaff.FieldIdenNo) {
+		fields = append(fields, orgstaff.FieldIdenNo)
+	}
+	if m.FieldCleared(orgstaff.FieldCreator) {
+		fields = append(fields, orgstaff.FieldCreator)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *OrgStaffMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *OrgStaffMutation) ClearField(name string) error {
+	switch name {
+	case orgstaff.FieldOrgID:
+		m.ClearOrgID()
+		return nil
+	case orgstaff.FieldCreatedAt:
+		m.ClearCreatedAt()
+		return nil
+	case orgstaff.FieldUpdatedAt:
+		m.ClearUpdatedAt()
+		return nil
+	case orgstaff.FieldDeletedAt:
+		m.ClearDeletedAt()
+		return nil
+	case orgstaff.FieldMemo:
+		m.ClearMemo()
+		return nil
+	case orgstaff.FieldFirstName:
+		m.ClearFirstName()
+		return nil
+	case orgstaff.FieldLastName:
+		m.ClearLastName()
+		return nil
+	case orgstaff.FieldMobile:
+		m.ClearMobile()
+		return nil
+	case orgstaff.FieldGender:
+		m.ClearGender()
+		return nil
+	case orgstaff.FieldBirthDate:
+		m.ClearBirthDate()
+		return nil
+	case orgstaff.FieldEntryDate:
+		m.ClearEntryDate()
+		return nil
+	case orgstaff.FieldRegularDate:
+		m.ClearRegularDate()
+		return nil
+	case orgstaff.FieldIdenNo:
+		m.ClearIdenNo()
+		return nil
+	case orgstaff.FieldCreator:
+		m.ClearCreator()
+		return nil
+	}
+	return fmt.Errorf("unknown OrgStaff nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *OrgStaffMutation) ResetField(name string) error {
+	switch name {
+	case orgstaff.FieldSort:
+		m.ResetSort()
+		return nil
+	case orgstaff.FieldOrgID:
+		m.ResetOrgID()
+		return nil
+	case orgstaff.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	case orgstaff.FieldUpdatedAt:
+		m.ResetUpdatedAt()
+		return nil
+	case orgstaff.FieldDeletedAt:
+		m.ResetDeletedAt()
+		return nil
+	case orgstaff.FieldIsActive:
+		m.ResetIsActive()
+		return nil
+	case orgstaff.FieldMemo:
+		m.ResetMemo()
+		return nil
+	case orgstaff.FieldFirstName:
+		m.ResetFirstName()
+		return nil
+	case orgstaff.FieldLastName:
+		m.ResetLastName()
+		return nil
+	case orgstaff.FieldMobile:
+		m.ResetMobile()
+		return nil
+	case orgstaff.FieldGender:
+		m.ResetGender()
+		return nil
+	case orgstaff.FieldBirthDate:
+		m.ResetBirthDate()
+		return nil
+	case orgstaff.FieldEntryDate:
+		m.ResetEntryDate()
+		return nil
+	case orgstaff.FieldRegularDate:
+		m.ResetRegularDate()
+		return nil
+	case orgstaff.FieldIdenNo:
+		m.ResetIdenNo()
+		return nil
+	case orgstaff.FieldCreator:
+		m.ResetCreator()
+		return nil
+	}
+	return fmt.Errorf("unknown OrgStaff field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *OrgStaffMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *OrgStaffMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *OrgStaffMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *OrgStaffMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *OrgStaffMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *OrgStaffMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *OrgStaffMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown OrgStaff unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *OrgStaffMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown OrgStaff edge %s", name)
 }
 
 // SysAddressMutation represents an operation that mutates the SysAddress nodes in the graph.

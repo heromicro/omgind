@@ -191,6 +191,26 @@ func (oou *OrgOrganUpdate) ClearCode() *OrgOrganUpdate {
 	return oou
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (oou *OrgOrganUpdate) SetIdenNo(s string) *OrgOrganUpdate {
+	oou.mutation.SetIdenNo(s)
+	return oou
+}
+
+// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
+func (oou *OrgOrganUpdate) SetNillableIdenNo(s *string) *OrgOrganUpdate {
+	if s != nil {
+		oou.SetIdenNo(*s)
+	}
+	return oou
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (oou *OrgOrganUpdate) ClearIdenNo() *OrgOrganUpdate {
+	oou.mutation.ClearIdenNo()
+	return oou
+}
+
 // SetOwnerID sets the "owner_id" field.
 func (oou *OrgOrganUpdate) SetOwnerID(s string) *OrgOrganUpdate {
 	oou.mutation.SetOwnerID(s)
@@ -294,6 +314,11 @@ func (oou *OrgOrganUpdate) check() error {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.code": %w`, err)}
 		}
 	}
+	if v, ok := oou.mutation.IdenNo(); ok {
+		if err := orgorgan.IdenNoValidator(v); err != nil {
+			return &ValidationError{Name: "iden_no", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.iden_no": %w`, err)}
+		}
+	}
 	if v, ok := oou.mutation.OwnerID(); ok {
 		if err := orgorgan.OwnerIDValidator(v); err != nil {
 			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.owner_id": %w`, err)}
@@ -370,6 +395,12 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if oou.mutation.CodeCleared() {
 		_spec.ClearField(orgorgan.FieldCode, field.TypeString)
+	}
+	if value, ok := oou.mutation.IdenNo(); ok {
+		_spec.SetField(orgorgan.FieldIdenNo, field.TypeString, value)
+	}
+	if oou.mutation.IdenNoCleared() {
+		_spec.ClearField(orgorgan.FieldIdenNo, field.TypeString)
 	}
 	if value, ok := oou.mutation.OwnerID(); ok {
 		_spec.SetField(orgorgan.FieldOwnerID, field.TypeString, value)
@@ -568,6 +599,26 @@ func (oouo *OrgOrganUpdateOne) ClearCode() *OrgOrganUpdateOne {
 	return oouo
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (oouo *OrgOrganUpdateOne) SetIdenNo(s string) *OrgOrganUpdateOne {
+	oouo.mutation.SetIdenNo(s)
+	return oouo
+}
+
+// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
+func (oouo *OrgOrganUpdateOne) SetNillableIdenNo(s *string) *OrgOrganUpdateOne {
+	if s != nil {
+		oouo.SetIdenNo(*s)
+	}
+	return oouo
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (oouo *OrgOrganUpdateOne) ClearIdenNo() *OrgOrganUpdateOne {
+	oouo.mutation.ClearIdenNo()
+	return oouo
+}
+
 // SetOwnerID sets the "owner_id" field.
 func (oouo *OrgOrganUpdateOne) SetOwnerID(s string) *OrgOrganUpdateOne {
 	oouo.mutation.SetOwnerID(s)
@@ -684,6 +735,11 @@ func (oouo *OrgOrganUpdateOne) check() error {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.code": %w`, err)}
 		}
 	}
+	if v, ok := oouo.mutation.IdenNo(); ok {
+		if err := orgorgan.IdenNoValidator(v); err != nil {
+			return &ValidationError{Name: "iden_no", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.iden_no": %w`, err)}
+		}
+	}
 	if v, ok := oouo.mutation.OwnerID(); ok {
 		if err := orgorgan.OwnerIDValidator(v); err != nil {
 			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.owner_id": %w`, err)}
@@ -777,6 +833,12 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 	}
 	if oouo.mutation.CodeCleared() {
 		_spec.ClearField(orgorgan.FieldCode, field.TypeString)
+	}
+	if value, ok := oouo.mutation.IdenNo(); ok {
+		_spec.SetField(orgorgan.FieldIdenNo, field.TypeString, value)
+	}
+	if oouo.mutation.IdenNoCleared() {
+		_spec.ClearField(orgorgan.FieldIdenNo, field.TypeString)
 	}
 	if value, ok := oouo.mutation.OwnerID(); ok {
 		_spec.SetField(orgorgan.FieldOwnerID, field.TypeString, value)
