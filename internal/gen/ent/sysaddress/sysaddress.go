@@ -29,16 +29,16 @@ const (
 	FieldMemo = "memo"
 	// FieldCountry holds the string denoting the country field in the database.
 	FieldCountry = "country"
-	// FieldProvice holds the string denoting the provice field in the database.
-	FieldProvice = "provice"
+	// FieldProvince holds the string denoting the province field in the database.
+	FieldProvince = "province"
 	// FieldCity holds the string denoting the city field in the database.
 	FieldCity = "city"
 	// FieldCounty holds the string denoting the county field in the database.
 	FieldCounty = "county"
 	// FieldCountryID holds the string denoting the country_id field in the database.
 	FieldCountryID = "country_id"
-	// FieldProviceID holds the string denoting the provice_id field in the database.
-	FieldProviceID = "provice_id"
+	// FieldProvinceID holds the string denoting the province_id field in the database.
+	FieldProvinceID = "province_id"
 	// FieldCityID holds the string denoting the city_id field in the database.
 	FieldCityID = "city_id"
 	// FieldCountyID holds the string denoting the county_id field in the database.
@@ -47,8 +47,10 @@ const (
 	FieldZipCode = "zip_code"
 	// FieldDaddr holds the string denoting the daddr field in the database.
 	FieldDaddr = "daddr"
-	// FieldName holds the string denoting the name field in the database.
-	FieldName = "name"
+	// FieldFirstName holds the string denoting the first_name field in the database.
+	FieldFirstName = "first_name"
+	// FieldLastName holds the string denoting the last_name field in the database.
+	FieldLastName = "last_name"
 	// FieldAreaCode holds the string denoting the area_code field in the database.
 	FieldAreaCode = "area_code"
 	// FieldMobile holds the string denoting the mobile field in the database.
@@ -71,16 +73,17 @@ var Columns = []string{
 	FieldIsActive,
 	FieldMemo,
 	FieldCountry,
-	FieldProvice,
+	FieldProvince,
 	FieldCity,
 	FieldCounty,
 	FieldCountryID,
-	FieldProviceID,
+	FieldProvinceID,
 	FieldCityID,
 	FieldCountyID,
 	FieldZipCode,
 	FieldDaddr,
-	FieldName,
+	FieldFirstName,
+	FieldLastName,
 	FieldAreaCode,
 	FieldMobile,
 	FieldCreator,
@@ -117,8 +120,8 @@ var (
 	MemoValidator func(string) error
 	// CountryIDValidator is a validator for the "country_id" field. It is called by the builders before save.
 	CountryIDValidator func(string) error
-	// ProviceIDValidator is a validator for the "provice_id" field. It is called by the builders before save.
-	ProviceIDValidator func(string) error
+	// ProvinceIDValidator is a validator for the "province_id" field. It is called by the builders before save.
+	ProvinceIDValidator func(string) error
 	// CityIDValidator is a validator for the "city_id" field. It is called by the builders before save.
 	CityIDValidator func(string) error
 	// CountyIDValidator is a validator for the "county_id" field. It is called by the builders before save.
@@ -127,8 +130,10 @@ var (
 	ZipCodeValidator func(string) error
 	// DaddrValidator is a validator for the "daddr" field. It is called by the builders before save.
 	DaddrValidator func(string) error
-	// NameValidator is a validator for the "name" field. It is called by the builders before save.
-	NameValidator func(string) error
+	// FirstNameValidator is a validator for the "first_name" field. It is called by the builders before save.
+	FirstNameValidator func(string) error
+	// LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
+	LastNameValidator func(string) error
 	// AreaCodeValidator is a validator for the "area_code" field. It is called by the builders before save.
 	AreaCodeValidator func(string) error
 	// MobileValidator is a validator for the "mobile" field. It is called by the builders before save.

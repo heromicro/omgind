@@ -1,4 +1,14 @@
 definitions:
+  schema.CodeEnum:
+    enum:
+    - 0
+    - -1
+    - 1
+    type: integer
+    x-enum-varnames:
+    - CodeOK
+    - CodeFail
+    - CodeMore
   schema.Demo:
     properties:
       code:
@@ -282,6 +292,10 @@ definitions:
     type: object
   schema.PaginationResult:
     properties:
+      after:
+        type: string
+      before:
+        type: string
       current:
         type: integer
       pageSize:
@@ -387,23 +401,17 @@ definitions:
     type: object
   schema.StatusResult:
     properties:
-      status:
-        allOf:
-        - $ref: '#/definitions/schema.StatusText'
-        description: 状态(OK)
+      burden: {}
+      code:
+        $ref: '#/definitions/schema.CodeEnum'
+      message:
+        type: string
     type: object
-  schema.StatusText:
-    enum:
-    - OK
-    - ERROR
-    - FAIL
-    type: string
-    x-enum-varnames:
-    - OKStatus
-    - ErrorStatus
-    - FailStatus
   schema.SysAddress:
     properties:
+      area_code:
+        description: 电话区号码
+        type: string
       city:
         description: 区/市
         type: string
@@ -431,19 +439,22 @@ definitions:
       daddr:
         description: 详细地址
         type: string
+      first_name:
+        description: 联系人名
+        type: string
       id:
         description: 唯一标识
+        type: string
+      last_name:
+        description: 联系人姓
         type: string
       mobile:
         description: 电话
         type: string
-      name:
-        description: 联系人
-        type: string
-      provice:
+      province:
         description: 省
         type: string
-      provice_id:
+      province_id:
         description: 省/市ID
         type: string
       sort:
@@ -463,6 +474,11 @@ definitions:
       area_code:
         description: 电话区号码
         type: string
+      children:
+        description: children
+        items:
+          $ref: '#/definitions/schema.SysDistrict'
+        type: array
       created_at:
         description: 创建时间
         type: string
@@ -489,14 +505,14 @@ definitions:
       is_hot:
         description: 热门城市
         type: boolean
+      is_leaf:
+        description: 是否是子叶
+        type: boolean
       is_main:
         description: 主要城市
         type: boolean
       is_real:
         description: 是否虚拟区域
-        type: boolean
-      isLeaf:
-        description: 是否是子叶
         type: boolean
       latitude:
         description: 经度
@@ -513,6 +529,13 @@ definitions:
       name:
         description: 名称
         type: string
+      name_en:
+        description: 名称[英语]
+        type: string
+      parent:
+        allOf:
+        - $ref: '#/definitions/schema.SysDistrict'
+        description: parent
       pid:
         description: pid
         type: string
@@ -520,6 +543,9 @@ definitions:
         description: 简拼
         type: string
       sname:
+        description: 短名称[英语]
+        type: string
+      sname_en:
         description: 短名称
         type: string
       sort:
@@ -554,7 +580,6 @@ definitions:
     required:
     - is_active
     - name
-    - sname
     type: object
   schema.UpdatePasswordParam:
     properties:
@@ -702,6 +727,14 @@ paths:
   /api/v2/demos:
     get:
       parameters:
+      - description: id之后的
+        in: query
+        name: after
+        type: string
+      - description: id之前的
+        in: query
+        name: before
+        type: string
       - description: 编号
         in: query
         name: code
@@ -1612,6 +1645,14 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: id之后的
+        in: query
+        name: after
+        type: string
+      - description: id之前的
+        in: query
+        name: before
+        type: string
       - description: asc, desc
         in: query
         name: createdAt_Order
@@ -1651,6 +1692,10 @@ paths:
       - description: 名称
         in: query
         name: name
+        type: string
+      - description: 名称
+        in: query
+        name: nameEN
         type: string
       - description: asc desc
         in: query
@@ -1957,6 +2002,14 @@ paths:
   /api/v2/sys-district/{id}/substricts:
     get:
       parameters:
+      - description: id之后的
+        in: query
+        name: after
+        type: string
+      - description: id之前的
+        in: query
+        name: before
+        type: string
       - description: asc, desc
         in: query
         name: createdAt_Order
@@ -1996,6 +2049,10 @@ paths:
       - description: 名称
         in: query
         name: name
+        type: string
+      - description: 名称
+        in: query
+        name: nameEN
         type: string
       - description: asc desc
         in: query

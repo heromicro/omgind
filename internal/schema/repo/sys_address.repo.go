@@ -68,7 +68,7 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 
 	// TODO: 查询条件
 	if v := params.QueryValue; v != "" {
-		query = query.Where(sysaddress.Or(sysaddress.NameContains(v), sysaddress.MobileContains(v)))
+		query = query.Where(sysaddress.Or(sysaddress.FirstNameContains(v), sysaddress.LastNameContains(v), sysaddress.MobileContains(v)))
 	}
 
 	if v := params.CountryID; v != "" {
@@ -76,7 +76,7 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 	}
 
 	if v := params.ProvinceID; v != "" {
-		query = query.Where(sysaddress.ProviceIDEQ(v))
+		query = query.Where(sysaddress.ProvinceIDEQ(v))
 	}
 
 	if v := params.CityID; v != "" {
@@ -106,7 +106,7 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 		opt.OrderFields = append(opt.OrderFields, of)
 	}
 	if v := params.ProvinceID_Order; v != "" {
-		of := MakeUpOrderField(sysaddress.FieldProviceID, v)
+		of := MakeUpOrderField(sysaddress.FieldProvinceID, v)
 		opt.OrderFields = append(opt.OrderFields, of)
 	}
 	if v := params.CityID_Order; v != "" {

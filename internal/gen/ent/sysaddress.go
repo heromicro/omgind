@@ -35,7 +35,7 @@ type SysAddress struct {
 	// 国
 	Country *string `json:"country,omitempty"`
 	// 省
-	Provice *string `json:"provice,omitempty"`
+	Province *string `json:"province,omitempty"`
 	// 区/市
 	City *string `json:"city,omitempty"`
 	// 区/县
@@ -43,7 +43,7 @@ type SysAddress struct {
 	// 国ID
 	CountryID *string `json:"country_id,omitempty"`
 	// 省/市ID
-	ProviceID *string `json:"provice_id,omitempty"`
+	ProvinceID *string `json:"province_id,omitempty"`
 	// 区/市ID
 	CityID *string `json:"city_id,omitempty"`
 	// 区/县ID
@@ -52,8 +52,10 @@ type SysAddress struct {
 	ZipCode *string `json:"zip_code,omitempty"`
 	// 详细地址
 	Daddr *string `json:"daddr,omitempty"`
-	// 联系人
-	Name *string `json:"name,omitempty"`
+	// 联系名
+	FirstName *string `json:"first_name,omitempty"`
+	// 联系姓
+	LastName *string `json:"last_name,omitempty"`
 	// 国际区号
 	AreaCode *string `json:"area_code,omitempty"`
 	// 电话
@@ -71,7 +73,7 @@ func (*SysAddress) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case sysaddress.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case sysaddress.FieldID, sysaddress.FieldOwnerID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvice, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProviceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldName, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldCreator:
+		case sysaddress.FieldID, sysaddress.FieldOwnerID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvince, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProvinceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldFirstName, sysaddress.FieldLastName, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldCreator:
 			values[i] = new(sql.NullString)
 		case sysaddress.FieldCreatedAt, sysaddress.FieldUpdatedAt, sysaddress.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -156,12 +158,12 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 				sa.Country = new(string)
 				*sa.Country = value.String
 			}
-		case sysaddress.FieldProvice:
+		case sysaddress.FieldProvince:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field provice", values[i])
+				return fmt.Errorf("unexpected type %T for field province", values[i])
 			} else if value.Valid {
-				sa.Provice = new(string)
-				*sa.Provice = value.String
+				sa.Province = new(string)
+				*sa.Province = value.String
 			}
 		case sysaddress.FieldCity:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -184,12 +186,12 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 				sa.CountryID = new(string)
 				*sa.CountryID = value.String
 			}
-		case sysaddress.FieldProviceID:
+		case sysaddress.FieldProvinceID:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field provice_id", values[i])
+				return fmt.Errorf("unexpected type %T for field province_id", values[i])
 			} else if value.Valid {
-				sa.ProviceID = new(string)
-				*sa.ProviceID = value.String
+				sa.ProvinceID = new(string)
+				*sa.ProvinceID = value.String
 			}
 		case sysaddress.FieldCityID:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -219,12 +221,19 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 				sa.Daddr = new(string)
 				*sa.Daddr = value.String
 			}
-		case sysaddress.FieldName:
+		case sysaddress.FieldFirstName:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+				return fmt.Errorf("unexpected type %T for field first_name", values[i])
 			} else if value.Valid {
-				sa.Name = new(string)
-				*sa.Name = value.String
+				sa.FirstName = new(string)
+				*sa.FirstName = value.String
+			}
+		case sysaddress.FieldLastName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field last_name", values[i])
+			} else if value.Valid {
+				sa.LastName = new(string)
+				*sa.LastName = value.String
 			}
 		case sysaddress.FieldAreaCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -314,8 +323,8 @@ func (sa *SysAddress) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.Provice; v != nil {
-		builder.WriteString("provice=")
+	if v := sa.Province; v != nil {
+		builder.WriteString("province=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -334,8 +343,8 @@ func (sa *SysAddress) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.ProviceID; v != nil {
-		builder.WriteString("provice_id=")
+	if v := sa.ProvinceID; v != nil {
+		builder.WriteString("province_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -359,8 +368,13 @@ func (sa *SysAddress) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.Name; v != nil {
-		builder.WriteString("name=")
+	if v := sa.FirstName; v != nil {
+		builder.WriteString("first_name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := sa.LastName; v != nil {
+		builder.WriteString("last_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

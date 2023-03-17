@@ -29,6 +29,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "id之后的",
+                        "name": "after",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id之前的",
+                        "name": "before",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "编号",
                         "name": "code",
                         "in": "query"
@@ -1476,6 +1488,18 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "id之后的",
+                        "name": "after",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id之前的",
+                        "name": "before",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "asc, desc",
                         "name": "createdAt_Order",
                         "in": "query"
@@ -1532,6 +1556,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "名称",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "nameEN",
                         "in": "query"
                     },
                     {
@@ -2018,6 +2048,18 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "id之后的",
+                        "name": "after",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id之前的",
+                        "name": "before",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "asc, desc",
                         "name": "createdAt_Order",
                         "in": "query"
@@ -2074,6 +2116,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "名称",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "nameEN",
                         "in": "query"
                     },
                     {
@@ -3465,6 +3513,19 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "schema.CodeEnum": {
+            "type": "integer",
+            "enum": [
+                0,
+                -1,
+                1
+            ],
+            "x-enum-varnames": [
+                "CodeOK",
+                "CodeFail",
+                "CodeMore"
+            ]
+        },
         "schema.Demo": {
             "type": "object",
             "required": [
@@ -3857,6 +3918,12 @@ const docTemplate = `{
         "schema.PaginationResult": {
             "type": "object",
             "properties": {
+                "after": {
+                    "type": "string"
+                },
+                "before": {
+                    "type": "string"
+                },
                 "current": {
                     "type": "integer"
                 },
@@ -4003,32 +4070,22 @@ const docTemplate = `{
         "schema.StatusResult": {
             "type": "object",
             "properties": {
-                "status": {
-                    "description": "状态(OK)",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/schema.StatusText"
-                        }
-                    ]
+                "burden": {},
+                "code": {
+                    "$ref": "#/definitions/schema.CodeEnum"
+                },
+                "message": {
+                    "type": "string"
                 }
             }
-        },
-        "schema.StatusText": {
-            "type": "string",
-            "enum": [
-                "OK",
-                "ERROR",
-                "FAIL"
-            ],
-            "x-enum-varnames": [
-                "OKStatus",
-                "ErrorStatus",
-                "FailStatus"
-            ]
         },
         "schema.SysAddress": {
             "type": "object",
             "properties": {
+                "area_code": {
+                    "description": "电话区号码",
+                    "type": "string"
+                },
                 "city": {
                     "description": "区/市",
                     "type": "string"
@@ -4065,23 +4122,27 @@ const docTemplate = `{
                     "description": "详细地址",
                     "type": "string"
                 },
+                "first_name": {
+                    "description": "联系人名",
+                    "type": "string"
+                },
                 "id": {
                     "description": "唯一标识",
+                    "type": "string"
+                },
+                "last_name": {
+                    "description": "联系人姓",
                     "type": "string"
                 },
                 "mobile": {
                     "description": "电话",
                     "type": "string"
                 },
-                "name": {
-                    "description": "联系人",
-                    "type": "string"
-                },
-                "provice": {
+                "province": {
                     "description": "省",
                     "type": "string"
                 },
-                "provice_id": {
+                "province_id": {
                     "description": "省/市ID",
                     "type": "string"
                 },
@@ -4102,8 +4163,7 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "is_active",
-                "name",
-                "sname"
+                "name"
             ],
             "properties": {
                 "abbr": {
@@ -4113,6 +4173,13 @@ const docTemplate = `{
                 "area_code": {
                     "description": "电话区号码",
                     "type": "string"
+                },
+                "children": {
+                    "description": "children",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/schema.SysDistrict"
+                    }
                 },
                 "created_at": {
                     "description": "创建时间",
@@ -4134,10 +4201,6 @@ const docTemplate = `{
                     "description": "简拼",
                     "type": "string"
                 },
-                "isLeaf": {
-                    "description": "是否是子叶",
-                    "type": "boolean"
-                },
                 "is_active": {
                     "description": "状态",
                     "type": "boolean"
@@ -4151,6 +4214,10 @@ const docTemplate = `{
                 },
                 "is_hot": {
                     "description": "热门城市",
+                    "type": "boolean"
+                },
+                "is_leaf": {
+                    "description": "是否是子叶",
                     "type": "boolean"
                 },
                 "is_main": {
@@ -4181,6 +4248,18 @@ const docTemplate = `{
                     "description": "名称",
                     "type": "string"
                 },
+                "name_en": {
+                    "description": "名称[英语]",
+                    "type": "string"
+                },
+                "parent": {
+                    "description": "parent",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.SysDistrict"
+                        }
+                    ]
+                },
                 "pid": {
                     "description": "pid",
                     "type": "string"
@@ -4190,6 +4269,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sname": {
+                    "description": "短名称[英语]",
+                    "type": "string"
+                },
+                "sname_en": {
                     "description": "短名称",
                     "type": "string"
                 },

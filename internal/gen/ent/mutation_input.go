@@ -8,28 +8,29 @@ import (
 
 // CreateSysAddressInput represents a mutation input for creating sysaddresses.
 type CreateSysAddressInput struct {
-	IsDel     *bool
-	OwnerID   *string
-	Sort      *int32
-	CreatedAt *time.Time
-	UpdatedAt *time.Time
-	DeletedAt *time.Time
-	IsActive  *bool
-	Memo      *string
-	Country   *string
-	Provice   *string
-	City      *string
-	County    *string
-	CountryID *string
-	ProviceID *string
-	CityID    *string
-	CountyID  *string
-	ZipCode   *string
-	Daddr     *string
-	Name      *string
-	AreaCode  *string
-	Mobile    *string
-	Creator   *string
+	IsDel      *bool
+	OwnerID    *string
+	Sort       *int32
+	CreatedAt  *time.Time
+	UpdatedAt  *time.Time
+	DeletedAt  *time.Time
+	IsActive   *bool
+	Memo       *string
+	Country    *string
+	Province   *string
+	City       *string
+	County     *string
+	CountryID  *string
+	ProvinceID *string
+	CityID     *string
+	CountyID   *string
+	ZipCode    *string
+	Daddr      *string
+	FirstName  *string
+	LastName   *string
+	AreaCode   *string
+	Mobile     *string
+	Creator    *string
 }
 
 // Mutate applies the CreateSysAddressInput on the SysAddressCreate builder.
@@ -61,8 +62,8 @@ func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.Country; v != nil {
 		m.SetCountry(*v)
 	}
-	if v := i.Provice; v != nil {
-		m.SetProvice(*v)
+	if v := i.Province; v != nil {
+		m.SetProvince(*v)
 	}
 	if v := i.City; v != nil {
 		m.SetCity(*v)
@@ -73,8 +74,8 @@ func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.CountryID; v != nil {
 		m.SetCountryID(*v)
 	}
-	if v := i.ProviceID; v != nil {
-		m.SetProviceID(*v)
+	if v := i.ProvinceID; v != nil {
+		m.SetProvinceID(*v)
 	}
 	if v := i.CityID; v != nil {
 		m.SetCityID(*v)
@@ -88,8 +89,11 @@ func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.Daddr; v != nil {
 		m.SetDaddr(*v)
 	}
-	if v := i.Name; v != nil {
-		m.SetName(*v)
+	if v := i.FirstName; v != nil {
+		m.SetFirstName(*v)
+	}
+	if v := i.LastName; v != nil {
+		m.SetLastName(*v)
 	}
 	if v := i.AreaCode; v != nil {
 		m.SetAreaCode(*v)
@@ -110,45 +114,47 @@ func (c *SysAddressCreate) SetInput(i CreateSysAddressInput) *SysAddressCreate {
 
 // UpdateSysAddressInput represents a mutation input for updating sysaddresses.
 type UpdateSysAddressInput struct {
-	IsDel          *bool
-	OwnerID        *string
-	ClearOwnerID   bool
-	Sort           *int32
-	UpdatedAt      *time.Time
-	ClearUpdatedAt bool
-	DeletedAt      *time.Time
-	ClearDeletedAt bool
-	IsActive       *bool
-	Memo           *string
-	ClearMemo      bool
-	Country        *string
-	ClearCountry   bool
-	Provice        *string
-	ClearProvice   bool
-	City           *string
-	ClearCity      bool
-	County         *string
-	ClearCounty    bool
-	CountryID      *string
-	ClearCountryID bool
-	ProviceID      *string
-	ClearProviceID bool
-	CityID         *string
-	ClearCityID    bool
-	CountyID       *string
-	ClearCountyID  bool
-	ZipCode        *string
-	ClearZipCode   bool
-	Daddr          *string
-	ClearDaddr     bool
-	Name           *string
-	ClearName      bool
-	AreaCode       *string
-	ClearAreaCode  bool
-	Mobile         *string
-	ClearMobile    bool
-	Creator        *string
-	ClearCreator   bool
+	IsDel           *bool
+	OwnerID         *string
+	ClearOwnerID    bool
+	Sort            *int32
+	UpdatedAt       *time.Time
+	ClearUpdatedAt  bool
+	DeletedAt       *time.Time
+	ClearDeletedAt  bool
+	IsActive        *bool
+	Memo            *string
+	ClearMemo       bool
+	Country         *string
+	ClearCountry    bool
+	Province        *string
+	ClearProvince   bool
+	City            *string
+	ClearCity       bool
+	County          *string
+	ClearCounty     bool
+	CountryID       *string
+	ClearCountryID  bool
+	ProvinceID      *string
+	ClearProvinceID bool
+	CityID          *string
+	ClearCityID     bool
+	CountyID        *string
+	ClearCountyID   bool
+	ZipCode         *string
+	ClearZipCode    bool
+	Daddr           *string
+	ClearDaddr      bool
+	FirstName       *string
+	ClearFirstName  bool
+	LastName        *string
+	ClearLastName   bool
+	AreaCode        *string
+	ClearAreaCode   bool
+	Mobile          *string
+	ClearMobile     bool
+	Creator         *string
+	ClearCreator    bool
 }
 
 // Mutate applies the UpdateSysAddressInput on the SysAddressMutation.
@@ -192,11 +198,11 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	if v := i.Country; v != nil {
 		m.SetCountry(*v)
 	}
-	if i.ClearProvice {
-		m.ClearProvice()
+	if i.ClearProvince {
+		m.ClearProvince()
 	}
-	if v := i.Provice; v != nil {
-		m.SetProvice(*v)
+	if v := i.Province; v != nil {
+		m.SetProvince(*v)
 	}
 	if i.ClearCity {
 		m.ClearCity()
@@ -216,11 +222,11 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	if v := i.CountryID; v != nil {
 		m.SetCountryID(*v)
 	}
-	if i.ClearProviceID {
-		m.ClearProviceID()
+	if i.ClearProvinceID {
+		m.ClearProvinceID()
 	}
-	if v := i.ProviceID; v != nil {
-		m.SetProviceID(*v)
+	if v := i.ProvinceID; v != nil {
+		m.SetProvinceID(*v)
 	}
 	if i.ClearCityID {
 		m.ClearCityID()
@@ -246,11 +252,17 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	if v := i.Daddr; v != nil {
 		m.SetDaddr(*v)
 	}
-	if i.ClearName {
-		m.ClearName()
+	if i.ClearFirstName {
+		m.ClearFirstName()
 	}
-	if v := i.Name; v != nil {
-		m.SetName(*v)
+	if v := i.FirstName; v != nil {
+		m.SetFirstName(*v)
+	}
+	if i.ClearLastName {
+		m.ClearLastName()
+	}
+	if v := i.LastName; v != nil {
+		m.SetLastName(*v)
 	}
 	if i.ClearAreaCode {
 		m.ClearAreaCode()

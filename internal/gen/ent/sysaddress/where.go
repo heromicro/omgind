@@ -99,9 +99,9 @@ func Country(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldEQ(FieldCountry, v))
 }
 
-// Provice applies equality check predicate on the "provice" field. It's identical to ProviceEQ.
-func Provice(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldProvice, v))
+// Province applies equality check predicate on the "province" field. It's identical to ProvinceEQ.
+func Province(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldProvince, v))
 }
 
 // City applies equality check predicate on the "city" field. It's identical to CityEQ.
@@ -119,9 +119,9 @@ func CountryID(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldEQ(FieldCountryID, v))
 }
 
-// ProviceID applies equality check predicate on the "provice_id" field. It's identical to ProviceIDEQ.
-func ProviceID(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldProviceID, v))
+// ProvinceID applies equality check predicate on the "province_id" field. It's identical to ProvinceIDEQ.
+func ProvinceID(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldProvinceID, v))
 }
 
 // CityID applies equality check predicate on the "city_id" field. It's identical to CityIDEQ.
@@ -144,9 +144,14 @@ func Daddr(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldEQ(FieldDaddr, v))
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
-func Name(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldName, v))
+// FirstName applies equality check predicate on the "first_name" field. It's identical to FirstNameEQ.
+func FirstName(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldFirstName, v))
+}
+
+// LastName applies equality check predicate on the "last_name" field. It's identical to LastNameEQ.
+func LastName(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldLastName, v))
 }
 
 // AreaCode applies equality check predicate on the "area_code" field. It's identical to AreaCodeEQ.
@@ -599,79 +604,79 @@ func CountryContainsFold(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldContainsFold(FieldCountry, v))
 }
 
-// ProviceEQ applies the EQ predicate on the "provice" field.
-func ProviceEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldProvice, v))
+// ProvinceEQ applies the EQ predicate on the "province" field.
+func ProvinceEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldProvince, v))
 }
 
-// ProviceNEQ applies the NEQ predicate on the "provice" field.
-func ProviceNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNEQ(FieldProvice, v))
+// ProvinceNEQ applies the NEQ predicate on the "province" field.
+func ProvinceNEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNEQ(FieldProvince, v))
 }
 
-// ProviceIn applies the In predicate on the "provice" field.
-func ProviceIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIn(FieldProvice, vs...))
+// ProvinceIn applies the In predicate on the "province" field.
+func ProvinceIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIn(FieldProvince, vs...))
 }
 
-// ProviceNotIn applies the NotIn predicate on the "provice" field.
-func ProviceNotIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotIn(FieldProvice, vs...))
+// ProvinceNotIn applies the NotIn predicate on the "province" field.
+func ProvinceNotIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotIn(FieldProvince, vs...))
 }
 
-// ProviceGT applies the GT predicate on the "provice" field.
-func ProviceGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGT(FieldProvice, v))
+// ProvinceGT applies the GT predicate on the "province" field.
+func ProvinceGT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGT(FieldProvince, v))
 }
 
-// ProviceGTE applies the GTE predicate on the "provice" field.
-func ProviceGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGTE(FieldProvice, v))
+// ProvinceGTE applies the GTE predicate on the "province" field.
+func ProvinceGTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGTE(FieldProvince, v))
 }
 
-// ProviceLT applies the LT predicate on the "provice" field.
-func ProviceLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLT(FieldProvice, v))
+// ProvinceLT applies the LT predicate on the "province" field.
+func ProvinceLT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLT(FieldProvince, v))
 }
 
-// ProviceLTE applies the LTE predicate on the "provice" field.
-func ProviceLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLTE(FieldProvice, v))
+// ProvinceLTE applies the LTE predicate on the "province" field.
+func ProvinceLTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLTE(FieldProvince, v))
 }
 
-// ProviceContains applies the Contains predicate on the "provice" field.
-func ProviceContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContains(FieldProvice, v))
+// ProvinceContains applies the Contains predicate on the "province" field.
+func ProvinceContains(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContains(FieldProvince, v))
 }
 
-// ProviceHasPrefix applies the HasPrefix predicate on the "provice" field.
-func ProviceHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasPrefix(FieldProvice, v))
+// ProvinceHasPrefix applies the HasPrefix predicate on the "province" field.
+func ProvinceHasPrefix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldProvince, v))
 }
 
-// ProviceHasSuffix applies the HasSuffix predicate on the "provice" field.
-func ProviceHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasSuffix(FieldProvice, v))
+// ProvinceHasSuffix applies the HasSuffix predicate on the "province" field.
+func ProvinceHasSuffix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldProvince, v))
 }
 
-// ProviceIsNil applies the IsNil predicate on the "provice" field.
-func ProviceIsNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIsNull(FieldProvice))
+// ProvinceIsNil applies the IsNil predicate on the "province" field.
+func ProvinceIsNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIsNull(FieldProvince))
 }
 
-// ProviceNotNil applies the NotNil predicate on the "provice" field.
-func ProviceNotNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotNull(FieldProvice))
+// ProvinceNotNil applies the NotNil predicate on the "province" field.
+func ProvinceNotNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotNull(FieldProvince))
 }
 
-// ProviceEqualFold applies the EqualFold predicate on the "provice" field.
-func ProviceEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEqualFold(FieldProvice, v))
+// ProvinceEqualFold applies the EqualFold predicate on the "province" field.
+func ProvinceEqualFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEqualFold(FieldProvince, v))
 }
 
-// ProviceContainsFold applies the ContainsFold predicate on the "provice" field.
-func ProviceContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContainsFold(FieldProvice, v))
+// ProvinceContainsFold applies the ContainsFold predicate on the "province" field.
+func ProvinceContainsFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContainsFold(FieldProvince, v))
 }
 
 // CityEQ applies the EQ predicate on the "city" field.
@@ -899,79 +904,79 @@ func CountryIDContainsFold(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldContainsFold(FieldCountryID, v))
 }
 
-// ProviceIDEQ applies the EQ predicate on the "provice_id" field.
-func ProviceIDEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldProviceID, v))
+// ProvinceIDEQ applies the EQ predicate on the "province_id" field.
+func ProvinceIDEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldProvinceID, v))
 }
 
-// ProviceIDNEQ applies the NEQ predicate on the "provice_id" field.
-func ProviceIDNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNEQ(FieldProviceID, v))
+// ProvinceIDNEQ applies the NEQ predicate on the "province_id" field.
+func ProvinceIDNEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNEQ(FieldProvinceID, v))
 }
 
-// ProviceIDIn applies the In predicate on the "provice_id" field.
-func ProviceIDIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIn(FieldProviceID, vs...))
+// ProvinceIDIn applies the In predicate on the "province_id" field.
+func ProvinceIDIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIn(FieldProvinceID, vs...))
 }
 
-// ProviceIDNotIn applies the NotIn predicate on the "provice_id" field.
-func ProviceIDNotIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotIn(FieldProviceID, vs...))
+// ProvinceIDNotIn applies the NotIn predicate on the "province_id" field.
+func ProvinceIDNotIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotIn(FieldProvinceID, vs...))
 }
 
-// ProviceIDGT applies the GT predicate on the "provice_id" field.
-func ProviceIDGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGT(FieldProviceID, v))
+// ProvinceIDGT applies the GT predicate on the "province_id" field.
+func ProvinceIDGT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGT(FieldProvinceID, v))
 }
 
-// ProviceIDGTE applies the GTE predicate on the "provice_id" field.
-func ProviceIDGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGTE(FieldProviceID, v))
+// ProvinceIDGTE applies the GTE predicate on the "province_id" field.
+func ProvinceIDGTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGTE(FieldProvinceID, v))
 }
 
-// ProviceIDLT applies the LT predicate on the "provice_id" field.
-func ProviceIDLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLT(FieldProviceID, v))
+// ProvinceIDLT applies the LT predicate on the "province_id" field.
+func ProvinceIDLT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLT(FieldProvinceID, v))
 }
 
-// ProviceIDLTE applies the LTE predicate on the "provice_id" field.
-func ProviceIDLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLTE(FieldProviceID, v))
+// ProvinceIDLTE applies the LTE predicate on the "province_id" field.
+func ProvinceIDLTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLTE(FieldProvinceID, v))
 }
 
-// ProviceIDContains applies the Contains predicate on the "provice_id" field.
-func ProviceIDContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContains(FieldProviceID, v))
+// ProvinceIDContains applies the Contains predicate on the "province_id" field.
+func ProvinceIDContains(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContains(FieldProvinceID, v))
 }
 
-// ProviceIDHasPrefix applies the HasPrefix predicate on the "provice_id" field.
-func ProviceIDHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasPrefix(FieldProviceID, v))
+// ProvinceIDHasPrefix applies the HasPrefix predicate on the "province_id" field.
+func ProvinceIDHasPrefix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldProvinceID, v))
 }
 
-// ProviceIDHasSuffix applies the HasSuffix predicate on the "provice_id" field.
-func ProviceIDHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasSuffix(FieldProviceID, v))
+// ProvinceIDHasSuffix applies the HasSuffix predicate on the "province_id" field.
+func ProvinceIDHasSuffix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldProvinceID, v))
 }
 
-// ProviceIDIsNil applies the IsNil predicate on the "provice_id" field.
-func ProviceIDIsNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIsNull(FieldProviceID))
+// ProvinceIDIsNil applies the IsNil predicate on the "province_id" field.
+func ProvinceIDIsNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIsNull(FieldProvinceID))
 }
 
-// ProviceIDNotNil applies the NotNil predicate on the "provice_id" field.
-func ProviceIDNotNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotNull(FieldProviceID))
+// ProvinceIDNotNil applies the NotNil predicate on the "province_id" field.
+func ProvinceIDNotNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotNull(FieldProvinceID))
 }
 
-// ProviceIDEqualFold applies the EqualFold predicate on the "provice_id" field.
-func ProviceIDEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEqualFold(FieldProviceID, v))
+// ProvinceIDEqualFold applies the EqualFold predicate on the "province_id" field.
+func ProvinceIDEqualFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEqualFold(FieldProvinceID, v))
 }
 
-// ProviceIDContainsFold applies the ContainsFold predicate on the "provice_id" field.
-func ProviceIDContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContainsFold(FieldProviceID, v))
+// ProvinceIDContainsFold applies the ContainsFold predicate on the "province_id" field.
+func ProvinceIDContainsFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContainsFold(FieldProvinceID, v))
 }
 
 // CityIDEQ applies the EQ predicate on the "city_id" field.
@@ -1274,79 +1279,154 @@ func DaddrContainsFold(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldContainsFold(FieldDaddr, v))
 }
 
-// NameEQ applies the EQ predicate on the "name" field.
-func NameEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldName, v))
+// FirstNameEQ applies the EQ predicate on the "first_name" field.
+func FirstNameEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldFirstName, v))
 }
 
-// NameNEQ applies the NEQ predicate on the "name" field.
-func NameNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNEQ(FieldName, v))
+// FirstNameNEQ applies the NEQ predicate on the "first_name" field.
+func FirstNameNEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNEQ(FieldFirstName, v))
 }
 
-// NameIn applies the In predicate on the "name" field.
-func NameIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIn(FieldName, vs...))
+// FirstNameIn applies the In predicate on the "first_name" field.
+func FirstNameIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIn(FieldFirstName, vs...))
 }
 
-// NameNotIn applies the NotIn predicate on the "name" field.
-func NameNotIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotIn(FieldName, vs...))
+// FirstNameNotIn applies the NotIn predicate on the "first_name" field.
+func FirstNameNotIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotIn(FieldFirstName, vs...))
 }
 
-// NameGT applies the GT predicate on the "name" field.
-func NameGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGT(FieldName, v))
+// FirstNameGT applies the GT predicate on the "first_name" field.
+func FirstNameGT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGT(FieldFirstName, v))
 }
 
-// NameGTE applies the GTE predicate on the "name" field.
-func NameGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGTE(FieldName, v))
+// FirstNameGTE applies the GTE predicate on the "first_name" field.
+func FirstNameGTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGTE(FieldFirstName, v))
 }
 
-// NameLT applies the LT predicate on the "name" field.
-func NameLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLT(FieldName, v))
+// FirstNameLT applies the LT predicate on the "first_name" field.
+func FirstNameLT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLT(FieldFirstName, v))
 }
 
-// NameLTE applies the LTE predicate on the "name" field.
-func NameLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLTE(FieldName, v))
+// FirstNameLTE applies the LTE predicate on the "first_name" field.
+func FirstNameLTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLTE(FieldFirstName, v))
 }
 
-// NameContains applies the Contains predicate on the "name" field.
-func NameContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContains(FieldName, v))
+// FirstNameContains applies the Contains predicate on the "first_name" field.
+func FirstNameContains(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContains(FieldFirstName, v))
 }
 
-// NameHasPrefix applies the HasPrefix predicate on the "name" field.
-func NameHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasPrefix(FieldName, v))
+// FirstNameHasPrefix applies the HasPrefix predicate on the "first_name" field.
+func FirstNameHasPrefix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldFirstName, v))
 }
 
-// NameHasSuffix applies the HasSuffix predicate on the "name" field.
-func NameHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasSuffix(FieldName, v))
+// FirstNameHasSuffix applies the HasSuffix predicate on the "first_name" field.
+func FirstNameHasSuffix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldFirstName, v))
 }
 
-// NameIsNil applies the IsNil predicate on the "name" field.
-func NameIsNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIsNull(FieldName))
+// FirstNameIsNil applies the IsNil predicate on the "first_name" field.
+func FirstNameIsNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIsNull(FieldFirstName))
 }
 
-// NameNotNil applies the NotNil predicate on the "name" field.
-func NameNotNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotNull(FieldName))
+// FirstNameNotNil applies the NotNil predicate on the "first_name" field.
+func FirstNameNotNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotNull(FieldFirstName))
 }
 
-// NameEqualFold applies the EqualFold predicate on the "name" field.
-func NameEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEqualFold(FieldName, v))
+// FirstNameEqualFold applies the EqualFold predicate on the "first_name" field.
+func FirstNameEqualFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEqualFold(FieldFirstName, v))
 }
 
-// NameContainsFold applies the ContainsFold predicate on the "name" field.
-func NameContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContainsFold(FieldName, v))
+// FirstNameContainsFold applies the ContainsFold predicate on the "first_name" field.
+func FirstNameContainsFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContainsFold(FieldFirstName, v))
+}
+
+// LastNameEQ applies the EQ predicate on the "last_name" field.
+func LastNameEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldLastName, v))
+}
+
+// LastNameNEQ applies the NEQ predicate on the "last_name" field.
+func LastNameNEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNEQ(FieldLastName, v))
+}
+
+// LastNameIn applies the In predicate on the "last_name" field.
+func LastNameIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIn(FieldLastName, vs...))
+}
+
+// LastNameNotIn applies the NotIn predicate on the "last_name" field.
+func LastNameNotIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotIn(FieldLastName, vs...))
+}
+
+// LastNameGT applies the GT predicate on the "last_name" field.
+func LastNameGT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGT(FieldLastName, v))
+}
+
+// LastNameGTE applies the GTE predicate on the "last_name" field.
+func LastNameGTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGTE(FieldLastName, v))
+}
+
+// LastNameLT applies the LT predicate on the "last_name" field.
+func LastNameLT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLT(FieldLastName, v))
+}
+
+// LastNameLTE applies the LTE predicate on the "last_name" field.
+func LastNameLTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLTE(FieldLastName, v))
+}
+
+// LastNameContains applies the Contains predicate on the "last_name" field.
+func LastNameContains(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContains(FieldLastName, v))
+}
+
+// LastNameHasPrefix applies the HasPrefix predicate on the "last_name" field.
+func LastNameHasPrefix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldLastName, v))
+}
+
+// LastNameHasSuffix applies the HasSuffix predicate on the "last_name" field.
+func LastNameHasSuffix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldLastName, v))
+}
+
+// LastNameIsNil applies the IsNil predicate on the "last_name" field.
+func LastNameIsNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIsNull(FieldLastName))
+}
+
+// LastNameNotNil applies the NotNil predicate on the "last_name" field.
+func LastNameNotNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotNull(FieldLastName))
+}
+
+// LastNameEqualFold applies the EqualFold predicate on the "last_name" field.
+func LastNameEqualFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEqualFold(FieldLastName, v))
+}
+
+// LastNameContainsFold applies the ContainsFold predicate on the "last_name" field.
+func LastNameContainsFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContainsFold(FieldLastName, v))
 }
 
 // AreaCodeEQ applies the EQ predicate on the "area_code" field.

@@ -149,16 +149,16 @@ func (sac *SysAddressCreate) SetNillableCountry(s *string) *SysAddressCreate {
 	return sac
 }
 
-// SetProvice sets the "provice" field.
-func (sac *SysAddressCreate) SetProvice(s string) *SysAddressCreate {
-	sac.mutation.SetProvice(s)
+// SetProvince sets the "province" field.
+func (sac *SysAddressCreate) SetProvince(s string) *SysAddressCreate {
+	sac.mutation.SetProvince(s)
 	return sac
 }
 
-// SetNillableProvice sets the "provice" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableProvice(s *string) *SysAddressCreate {
+// SetNillableProvince sets the "province" field if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableProvince(s *string) *SysAddressCreate {
 	if s != nil {
-		sac.SetProvice(*s)
+		sac.SetProvince(*s)
 	}
 	return sac
 }
@@ -205,16 +205,16 @@ func (sac *SysAddressCreate) SetNillableCountryID(s *string) *SysAddressCreate {
 	return sac
 }
 
-// SetProviceID sets the "provice_id" field.
-func (sac *SysAddressCreate) SetProviceID(s string) *SysAddressCreate {
-	sac.mutation.SetProviceID(s)
+// SetProvinceID sets the "province_id" field.
+func (sac *SysAddressCreate) SetProvinceID(s string) *SysAddressCreate {
+	sac.mutation.SetProvinceID(s)
 	return sac
 }
 
-// SetNillableProviceID sets the "provice_id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableProviceID(s *string) *SysAddressCreate {
+// SetNillableProvinceID sets the "province_id" field if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableProvinceID(s *string) *SysAddressCreate {
 	if s != nil {
-		sac.SetProviceID(*s)
+		sac.SetProvinceID(*s)
 	}
 	return sac
 }
@@ -275,16 +275,30 @@ func (sac *SysAddressCreate) SetNillableDaddr(s *string) *SysAddressCreate {
 	return sac
 }
 
-// SetName sets the "name" field.
-func (sac *SysAddressCreate) SetName(s string) *SysAddressCreate {
-	sac.mutation.SetName(s)
+// SetFirstName sets the "first_name" field.
+func (sac *SysAddressCreate) SetFirstName(s string) *SysAddressCreate {
+	sac.mutation.SetFirstName(s)
 	return sac
 }
 
-// SetNillableName sets the "name" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableName(s *string) *SysAddressCreate {
+// SetNillableFirstName sets the "first_name" field if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableFirstName(s *string) *SysAddressCreate {
 	if s != nil {
-		sac.SetName(*s)
+		sac.SetFirstName(*s)
+	}
+	return sac
+}
+
+// SetLastName sets the "last_name" field.
+func (sac *SysAddressCreate) SetLastName(s string) *SysAddressCreate {
+	sac.mutation.SetLastName(s)
+	return sac
+}
+
+// SetNillableLastName sets the "last_name" field if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableLastName(s *string) *SysAddressCreate {
+	if s != nil {
+		sac.SetLastName(*s)
 	}
 	return sac
 }
@@ -436,9 +450,9 @@ func (sac *SysAddressCreate) check() error {
 			return &ValidationError{Name: "country_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.country_id": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.ProviceID(); ok {
-		if err := sysaddress.ProviceIDValidator(v); err != nil {
-			return &ValidationError{Name: "provice_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.provice_id": %w`, err)}
+	if v, ok := sac.mutation.ProvinceID(); ok {
+		if err := sysaddress.ProvinceIDValidator(v); err != nil {
+			return &ValidationError{Name: "province_id", err: fmt.Errorf(`ent: validator failed for field "SysAddress.province_id": %w`, err)}
 		}
 	}
 	if v, ok := sac.mutation.CityID(); ok {
@@ -461,9 +475,14 @@ func (sac *SysAddressCreate) check() error {
 			return &ValidationError{Name: "daddr", err: fmt.Errorf(`ent: validator failed for field "SysAddress.daddr": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.Name(); ok {
-		if err := sysaddress.NameValidator(v); err != nil {
-			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysAddress.name": %w`, err)}
+	if v, ok := sac.mutation.FirstName(); ok {
+		if err := sysaddress.FirstNameValidator(v); err != nil {
+			return &ValidationError{Name: "first_name", err: fmt.Errorf(`ent: validator failed for field "SysAddress.first_name": %w`, err)}
+		}
+	}
+	if v, ok := sac.mutation.LastName(); ok {
+		if err := sysaddress.LastNameValidator(v); err != nil {
+			return &ValidationError{Name: "last_name", err: fmt.Errorf(`ent: validator failed for field "SysAddress.last_name": %w`, err)}
 		}
 	}
 	if v, ok := sac.mutation.AreaCode(); ok {
@@ -559,9 +578,9 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 		_spec.SetField(sysaddress.FieldCountry, field.TypeString, value)
 		_node.Country = &value
 	}
-	if value, ok := sac.mutation.Provice(); ok {
-		_spec.SetField(sysaddress.FieldProvice, field.TypeString, value)
-		_node.Provice = &value
+	if value, ok := sac.mutation.Province(); ok {
+		_spec.SetField(sysaddress.FieldProvince, field.TypeString, value)
+		_node.Province = &value
 	}
 	if value, ok := sac.mutation.City(); ok {
 		_spec.SetField(sysaddress.FieldCity, field.TypeString, value)
@@ -575,9 +594,9 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 		_spec.SetField(sysaddress.FieldCountryID, field.TypeString, value)
 		_node.CountryID = &value
 	}
-	if value, ok := sac.mutation.ProviceID(); ok {
-		_spec.SetField(sysaddress.FieldProviceID, field.TypeString, value)
-		_node.ProviceID = &value
+	if value, ok := sac.mutation.ProvinceID(); ok {
+		_spec.SetField(sysaddress.FieldProvinceID, field.TypeString, value)
+		_node.ProvinceID = &value
 	}
 	if value, ok := sac.mutation.CityID(); ok {
 		_spec.SetField(sysaddress.FieldCityID, field.TypeString, value)
@@ -595,9 +614,13 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 		_spec.SetField(sysaddress.FieldDaddr, field.TypeString, value)
 		_node.Daddr = &value
 	}
-	if value, ok := sac.mutation.Name(); ok {
-		_spec.SetField(sysaddress.FieldName, field.TypeString, value)
-		_node.Name = &value
+	if value, ok := sac.mutation.FirstName(); ok {
+		_spec.SetField(sysaddress.FieldFirstName, field.TypeString, value)
+		_node.FirstName = &value
+	}
+	if value, ok := sac.mutation.LastName(); ok {
+		_spec.SetField(sysaddress.FieldLastName, field.TypeString, value)
+		_node.LastName = &value
 	}
 	if value, ok := sac.mutation.AreaCode(); ok {
 		_spec.SetField(sysaddress.FieldAreaCode, field.TypeString, value)
@@ -795,21 +818,21 @@ func (u *SysAddressUpsert) ClearCountry() *SysAddressUpsert {
 	return u
 }
 
-// SetProvice sets the "provice" field.
-func (u *SysAddressUpsert) SetProvice(v string) *SysAddressUpsert {
-	u.Set(sysaddress.FieldProvice, v)
+// SetProvince sets the "province" field.
+func (u *SysAddressUpsert) SetProvince(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldProvince, v)
 	return u
 }
 
-// UpdateProvice sets the "provice" field to the value that was provided on create.
-func (u *SysAddressUpsert) UpdateProvice() *SysAddressUpsert {
-	u.SetExcluded(sysaddress.FieldProvice)
+// UpdateProvince sets the "province" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateProvince() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldProvince)
 	return u
 }
 
-// ClearProvice clears the value of the "provice" field.
-func (u *SysAddressUpsert) ClearProvice() *SysAddressUpsert {
-	u.SetNull(sysaddress.FieldProvice)
+// ClearProvince clears the value of the "province" field.
+func (u *SysAddressUpsert) ClearProvince() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldProvince)
 	return u
 }
 
@@ -867,21 +890,21 @@ func (u *SysAddressUpsert) ClearCountryID() *SysAddressUpsert {
 	return u
 }
 
-// SetProviceID sets the "provice_id" field.
-func (u *SysAddressUpsert) SetProviceID(v string) *SysAddressUpsert {
-	u.Set(sysaddress.FieldProviceID, v)
+// SetProvinceID sets the "province_id" field.
+func (u *SysAddressUpsert) SetProvinceID(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldProvinceID, v)
 	return u
 }
 
-// UpdateProviceID sets the "provice_id" field to the value that was provided on create.
-func (u *SysAddressUpsert) UpdateProviceID() *SysAddressUpsert {
-	u.SetExcluded(sysaddress.FieldProviceID)
+// UpdateProvinceID sets the "province_id" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateProvinceID() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldProvinceID)
 	return u
 }
 
-// ClearProviceID clears the value of the "provice_id" field.
-func (u *SysAddressUpsert) ClearProviceID() *SysAddressUpsert {
-	u.SetNull(sysaddress.FieldProviceID)
+// ClearProvinceID clears the value of the "province_id" field.
+func (u *SysAddressUpsert) ClearProvinceID() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldProvinceID)
 	return u
 }
 
@@ -957,21 +980,39 @@ func (u *SysAddressUpsert) ClearDaddr() *SysAddressUpsert {
 	return u
 }
 
-// SetName sets the "name" field.
-func (u *SysAddressUpsert) SetName(v string) *SysAddressUpsert {
-	u.Set(sysaddress.FieldName, v)
+// SetFirstName sets the "first_name" field.
+func (u *SysAddressUpsert) SetFirstName(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldFirstName, v)
 	return u
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *SysAddressUpsert) UpdateName() *SysAddressUpsert {
-	u.SetExcluded(sysaddress.FieldName)
+// UpdateFirstName sets the "first_name" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateFirstName() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldFirstName)
 	return u
 }
 
-// ClearName clears the value of the "name" field.
-func (u *SysAddressUpsert) ClearName() *SysAddressUpsert {
-	u.SetNull(sysaddress.FieldName)
+// ClearFirstName clears the value of the "first_name" field.
+func (u *SysAddressUpsert) ClearFirstName() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldFirstName)
+	return u
+}
+
+// SetLastName sets the "last_name" field.
+func (u *SysAddressUpsert) SetLastName(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldLastName, v)
+	return u
+}
+
+// UpdateLastName sets the "last_name" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateLastName() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldLastName)
+	return u
+}
+
+// ClearLastName clears the value of the "last_name" field.
+func (u *SysAddressUpsert) ClearLastName() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldLastName)
 	return u
 }
 
@@ -1234,24 +1275,24 @@ func (u *SysAddressUpsertOne) ClearCountry() *SysAddressUpsertOne {
 	})
 }
 
-// SetProvice sets the "provice" field.
-func (u *SysAddressUpsertOne) SetProvice(v string) *SysAddressUpsertOne {
+// SetProvince sets the "province" field.
+func (u *SysAddressUpsertOne) SetProvince(v string) *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.SetProvice(v)
+		s.SetProvince(v)
 	})
 }
 
-// UpdateProvice sets the "provice" field to the value that was provided on create.
-func (u *SysAddressUpsertOne) UpdateProvice() *SysAddressUpsertOne {
+// UpdateProvince sets the "province" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateProvince() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateProvice()
+		s.UpdateProvince()
 	})
 }
 
-// ClearProvice clears the value of the "provice" field.
-func (u *SysAddressUpsertOne) ClearProvice() *SysAddressUpsertOne {
+// ClearProvince clears the value of the "province" field.
+func (u *SysAddressUpsertOne) ClearProvince() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearProvice()
+		s.ClearProvince()
 	})
 }
 
@@ -1318,24 +1359,24 @@ func (u *SysAddressUpsertOne) ClearCountryID() *SysAddressUpsertOne {
 	})
 }
 
-// SetProviceID sets the "provice_id" field.
-func (u *SysAddressUpsertOne) SetProviceID(v string) *SysAddressUpsertOne {
+// SetProvinceID sets the "province_id" field.
+func (u *SysAddressUpsertOne) SetProvinceID(v string) *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.SetProviceID(v)
+		s.SetProvinceID(v)
 	})
 }
 
-// UpdateProviceID sets the "provice_id" field to the value that was provided on create.
-func (u *SysAddressUpsertOne) UpdateProviceID() *SysAddressUpsertOne {
+// UpdateProvinceID sets the "province_id" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateProvinceID() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateProviceID()
+		s.UpdateProvinceID()
 	})
 }
 
-// ClearProviceID clears the value of the "provice_id" field.
-func (u *SysAddressUpsertOne) ClearProviceID() *SysAddressUpsertOne {
+// ClearProvinceID clears the value of the "province_id" field.
+func (u *SysAddressUpsertOne) ClearProvinceID() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearProviceID()
+		s.ClearProvinceID()
 	})
 }
 
@@ -1423,24 +1464,45 @@ func (u *SysAddressUpsertOne) ClearDaddr() *SysAddressUpsertOne {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *SysAddressUpsertOne) SetName(v string) *SysAddressUpsertOne {
+// SetFirstName sets the "first_name" field.
+func (u *SysAddressUpsertOne) SetFirstName(v string) *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.SetName(v)
+		s.SetFirstName(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *SysAddressUpsertOne) UpdateName() *SysAddressUpsertOne {
+// UpdateFirstName sets the "first_name" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateFirstName() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateName()
+		s.UpdateFirstName()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *SysAddressUpsertOne) ClearName() *SysAddressUpsertOne {
+// ClearFirstName clears the value of the "first_name" field.
+func (u *SysAddressUpsertOne) ClearFirstName() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearName()
+		s.ClearFirstName()
+	})
+}
+
+// SetLastName sets the "last_name" field.
+func (u *SysAddressUpsertOne) SetLastName(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetLastName(v)
+	})
+}
+
+// UpdateLastName sets the "last_name" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateLastName() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateLastName()
+	})
+}
+
+// ClearLastName clears the value of the "last_name" field.
+func (u *SysAddressUpsertOne) ClearLastName() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearLastName()
 	})
 }
 
@@ -1875,24 +1937,24 @@ func (u *SysAddressUpsertBulk) ClearCountry() *SysAddressUpsertBulk {
 	})
 }
 
-// SetProvice sets the "provice" field.
-func (u *SysAddressUpsertBulk) SetProvice(v string) *SysAddressUpsertBulk {
+// SetProvince sets the "province" field.
+func (u *SysAddressUpsertBulk) SetProvince(v string) *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.SetProvice(v)
+		s.SetProvince(v)
 	})
 }
 
-// UpdateProvice sets the "provice" field to the value that was provided on create.
-func (u *SysAddressUpsertBulk) UpdateProvice() *SysAddressUpsertBulk {
+// UpdateProvince sets the "province" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateProvince() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateProvice()
+		s.UpdateProvince()
 	})
 }
 
-// ClearProvice clears the value of the "provice" field.
-func (u *SysAddressUpsertBulk) ClearProvice() *SysAddressUpsertBulk {
+// ClearProvince clears the value of the "province" field.
+func (u *SysAddressUpsertBulk) ClearProvince() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearProvice()
+		s.ClearProvince()
 	})
 }
 
@@ -1959,24 +2021,24 @@ func (u *SysAddressUpsertBulk) ClearCountryID() *SysAddressUpsertBulk {
 	})
 }
 
-// SetProviceID sets the "provice_id" field.
-func (u *SysAddressUpsertBulk) SetProviceID(v string) *SysAddressUpsertBulk {
+// SetProvinceID sets the "province_id" field.
+func (u *SysAddressUpsertBulk) SetProvinceID(v string) *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.SetProviceID(v)
+		s.SetProvinceID(v)
 	})
 }
 
-// UpdateProviceID sets the "provice_id" field to the value that was provided on create.
-func (u *SysAddressUpsertBulk) UpdateProviceID() *SysAddressUpsertBulk {
+// UpdateProvinceID sets the "province_id" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateProvinceID() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateProviceID()
+		s.UpdateProvinceID()
 	})
 }
 
-// ClearProviceID clears the value of the "provice_id" field.
-func (u *SysAddressUpsertBulk) ClearProviceID() *SysAddressUpsertBulk {
+// ClearProvinceID clears the value of the "province_id" field.
+func (u *SysAddressUpsertBulk) ClearProvinceID() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearProviceID()
+		s.ClearProvinceID()
 	})
 }
 
@@ -2064,24 +2126,45 @@ func (u *SysAddressUpsertBulk) ClearDaddr() *SysAddressUpsertBulk {
 	})
 }
 
-// SetName sets the "name" field.
-func (u *SysAddressUpsertBulk) SetName(v string) *SysAddressUpsertBulk {
+// SetFirstName sets the "first_name" field.
+func (u *SysAddressUpsertBulk) SetFirstName(v string) *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.SetName(v)
+		s.SetFirstName(v)
 	})
 }
 
-// UpdateName sets the "name" field to the value that was provided on create.
-func (u *SysAddressUpsertBulk) UpdateName() *SysAddressUpsertBulk {
+// UpdateFirstName sets the "first_name" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateFirstName() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateName()
+		s.UpdateFirstName()
 	})
 }
 
-// ClearName clears the value of the "name" field.
-func (u *SysAddressUpsertBulk) ClearName() *SysAddressUpsertBulk {
+// ClearFirstName clears the value of the "first_name" field.
+func (u *SysAddressUpsertBulk) ClearFirstName() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearName()
+		s.ClearFirstName()
+	})
+}
+
+// SetLastName sets the "last_name" field.
+func (u *SysAddressUpsertBulk) SetLastName(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetLastName(v)
+	})
+}
+
+// UpdateLastName sets the "last_name" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateLastName() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateLastName()
+	})
+}
+
+// ClearLastName clears the value of the "last_name" field.
+func (u *SysAddressUpsertBulk) ClearLastName() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearLastName()
 	})
 }
 
