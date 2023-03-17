@@ -36,6 +36,7 @@ type Router struct {
 	SignInAPIV2      *api_v2.SignIn
 	SysDistrictAPIV2 *api_v2.SysDistrict
 	SysAddressAPIV2  *api_v2.SysAddress
+	OrgOrganAPIV2    *api_v2.OrgOrgan
 }
 
 // Register 注册路由

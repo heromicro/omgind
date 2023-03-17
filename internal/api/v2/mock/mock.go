@@ -14,4 +14,5 @@ var MockSet = wire.NewSet(
 	DictSet,
 	SysDistrictSet,
 	SysAddressSet,
+	OrgOrganSet,
 )

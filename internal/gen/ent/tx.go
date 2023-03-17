@@ -12,6 +12,8 @@ import (
 // Tx is a transactional client that is created by calling Client.Tx().
 type Tx struct {
 	config
+	// OrgOrgan is the client for interacting with the OrgOrgan builders.
+	OrgOrgan *OrgOrganClient
 	// SysAddress is the client for interacting with the SysAddress builders.
 	SysAddress *SysAddressClient
 	// SysDict is the client for interacting with the SysDict builders.
@@ -171,6 +173,7 @@ func (tx *Tx) Client() *Client {
 }
 
 func (tx *Tx) init() {
+	tx.OrgOrgan = NewOrgOrganClient(tx.config)
 	tx.SysAddress = NewSysAddressClient(tx.config)
 	tx.SysDict = NewSysDictClient(tx.config)
 	tx.SysDictItem = NewSysDictItemClient(tx.config)
@@ -194,7 +197,7 @@ func (tx *Tx) init() {
 // of them in order to commit or rollback the transaction.
 //
 // If a closed transaction is embedded in one of the generated entities, and the entity
-// applies a query, for example: SysAddress.QueryXXX(), the query will be executed
+// applies a query, for example: OrgOrgan.QueryXXX(), the query will be executed
 // through the driver which created this transaction.
 //
 // Note that txDriver is not goroutine safe.

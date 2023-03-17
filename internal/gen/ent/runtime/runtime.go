@@ -5,6 +5,7 @@ package runtime
 import (
 	"time"
 
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -26,6 +27,85 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	orgorganMixin := entity.OrgOrgan{}.Mixin()
+	orgorganMixinFields0 := orgorganMixin[0].Fields()
+	_ = orgorganMixinFields0
+	orgorganMixinFields1 := orgorganMixin[1].Fields()
+	_ = orgorganMixinFields1
+	orgorganMixinFields2 := orgorganMixin[2].Fields()
+	_ = orgorganMixinFields2
+	orgorganMixinFields3 := orgorganMixin[3].Fields()
+	_ = orgorganMixinFields3
+	orgorganMixinFields4 := orgorganMixin[4].Fields()
+	_ = orgorganMixinFields4
+	orgorganMixinFields5 := orgorganMixin[5].Fields()
+	_ = orgorganMixinFields5
+	orgorganFields := entity.OrgOrgan{}.Fields()
+	_ = orgorganFields
+	// orgorganDescIsDel is the schema descriptor for is_del field.
+	orgorganDescIsDel := orgorganMixinFields1[0].Descriptor()
+	// orgorgan.DefaultIsDel holds the default value on creation for the is_del field.
+	orgorgan.DefaultIsDel = orgorganDescIsDel.Default.(bool)
+	// orgorganDescSort is the schema descriptor for sort field.
+	orgorganDescSort := orgorganMixinFields2[0].Descriptor()
+	// orgorgan.DefaultSort holds the default value on creation for the sort field.
+	orgorgan.DefaultSort = orgorganDescSort.Default.(int32)
+	// orgorganDescCreatedAt is the schema descriptor for created_at field.
+	orgorganDescCreatedAt := orgorganMixinFields3[0].Descriptor()
+	// orgorgan.DefaultCreatedAt holds the default value on creation for the created_at field.
+	orgorgan.DefaultCreatedAt = orgorganDescCreatedAt.Default.(func() time.Time)
+	// orgorganDescUpdatedAt is the schema descriptor for updated_at field.
+	orgorganDescUpdatedAt := orgorganMixinFields3[1].Descriptor()
+	// orgorgan.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	orgorgan.DefaultUpdatedAt = orgorganDescUpdatedAt.Default.(func() time.Time)
+	// orgorgan.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	orgorgan.UpdateDefaultUpdatedAt = orgorganDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// orgorganDescIsActive is the schema descriptor for is_active field.
+	orgorganDescIsActive := orgorganMixinFields4[0].Descriptor()
+	// orgorgan.DefaultIsActive holds the default value on creation for the is_active field.
+	orgorgan.DefaultIsActive = orgorganDescIsActive.Default.(bool)
+	// orgorganDescMemo is the schema descriptor for memo field.
+	orgorganDescMemo := orgorganMixinFields5[0].Descriptor()
+	// orgorgan.DefaultMemo holds the default value on creation for the memo field.
+	orgorgan.DefaultMemo = orgorganDescMemo.Default.(string)
+	// orgorgan.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
+	orgorgan.MemoValidator = orgorganDescMemo.Validators[0].(func(string) error)
+	// orgorganDescName is the schema descriptor for name field.
+	orgorganDescName := orgorganFields[0].Descriptor()
+	// orgorgan.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	orgorgan.NameValidator = orgorganDescName.Validators[0].(func(string) error)
+	// orgorganDescSname is the schema descriptor for sname field.
+	orgorganDescSname := orgorganFields[1].Descriptor()
+	// orgorgan.SnameValidator is a validator for the "sname" field. It is called by the builders before save.
+	orgorgan.SnameValidator = orgorganDescSname.Validators[0].(func(string) error)
+	// orgorganDescCode is the schema descriptor for code field.
+	orgorganDescCode := orgorganFields[2].Descriptor()
+	// orgorgan.CodeValidator is a validator for the "code" field. It is called by the builders before save.
+	orgorgan.CodeValidator = orgorganDescCode.Validators[0].(func(string) error)
+	// orgorganDescOwnerID is the schema descriptor for owner_id field.
+	orgorganDescOwnerID := orgorganFields[3].Descriptor()
+	// orgorgan.OwnerIDValidator is a validator for the "owner_id" field. It is called by the builders before save.
+	orgorgan.OwnerIDValidator = orgorganDescOwnerID.Validators[0].(func(string) error)
+	// orgorganDescID is the schema descriptor for id field.
+	orgorganDescID := orgorganMixinFields0[0].Descriptor()
+	// orgorgan.DefaultID holds the default value on creation for the id field.
+	orgorgan.DefaultID = orgorganDescID.Default.(func() string)
+	// orgorgan.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	orgorgan.IDValidator = func() func(string) error {
+		validators := orgorganDescID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(id string) error {
+			for _, fn := range fns {
+				if err := fn(id); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
 	sysaddressMixin := entity.SysAddress{}.Mixin()
 	sysaddressMixinFields0 := sysaddressMixin[0].Fields()
 	_ = sysaddressMixinFields0

@@ -289,6 +289,98 @@
               path: "/api/v2/sys-address/:id/view"
 
 
+- name: 企业管理
+  icon: setting
+  sort: 59
+  level: 1
+  children:
+    - name: 企业信息
+      icon: audit
+      router: "/organ/orginfo"
+      sort: 29
+      level: 2
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: POST
+              path: "/api/v2/org-organs"
+        - code: edit
+          name: 编辑
+          resources: 
+            - method: GET
+              path: "/api/v2/org-organs/:id"
+            - method: PUT
+              path: "/api/v2/org-organs/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/org-organs/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/org-organs"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/org-organs/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/org-organs/:id/enable"
+        - code: view
+          name: 查看
+          resources:
+            - method: GET
+              path: "/api/v2/org-organs/:id/view"
+
+    - name: 员工管理
+      router: "/organ/org-staffs"
+      sort: 49
+      level: 2
+      actions:
+        - code: add
+          name: 新增
+          resources:
+            - method: POST
+              path: "/api/v2/org-staffs"
+        - code: edit
+          name: 编辑
+          resources: 
+            - method: GET
+              path: "/api/v2/org-staffs/:id"
+            - method: PUT
+              path: "/api/v2/org-staffs/:id"
+        - code: del
+          name: 删除
+          resources:
+            - method: DELETE
+              path: "/api/v2/org-staffs/:id"
+        - code: query
+          name: 查询
+          resources:
+            - method: GET
+              path: "/api/v2/org-staffs"
+        - code: disable
+          name: 禁用
+          resources:
+            - method: PATCH
+              path: "/api/v2/org-staffs/:id/disable"
+        - code: enable
+          name: 启用
+          resources:
+            - method: PATCH
+              path: "/api/v2/org-staffs/:id/enable"
+        - code: view
+          name: 查看
+          resources:
+            - method: GET
+              path: "/api/v2/org-staffs/:id/view"
+
 - name: 开发状态
   icon: setting
   sort: 999

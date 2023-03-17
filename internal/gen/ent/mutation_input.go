@@ -6,6 +6,164 @@ import (
 	"time"
 )
 
+// CreateOrgOrganInput represents a mutation input for creating orgorgans.
+type CreateOrgOrganInput struct {
+	IsDel     *bool
+	Sort      *int32
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
+	IsActive  *bool
+	Memo      *string
+	Name      *string
+	Sname     *string
+	Code      *string
+	OwnerID   *string
+	Creator   *string
+}
+
+// Mutate applies the CreateOrgOrganInput on the OrgOrganCreate builder.
+func (i *CreateOrgOrganInput) Mutate(m *OrgOrganCreate) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if v := i.Sname; v != nil {
+		m.SetSname(*v)
+	}
+	if v := i.Code; v != nil {
+		m.SetCode(*v)
+	}
+	if v := i.OwnerID; v != nil {
+		m.SetOwnerID(*v)
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the CreateOrgOrganInput on the create builder.
+func (c *OrgOrganCreate) SetInput(i CreateOrgOrganInput) *OrgOrganCreate {
+	i.Mutate(c)
+	return c
+}
+
+// UpdateOrgOrganInput represents a mutation input for updating orgorgans.
+type UpdateOrgOrganInput struct {
+	IsDel          *bool
+	Sort           *int32
+	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
+	DeletedAt      *time.Time
+	ClearDeletedAt bool
+	IsActive       *bool
+	Memo           *string
+	ClearMemo      bool
+	Name           *string
+	ClearName      bool
+	Sname          *string
+	ClearSname     bool
+	Code           *string
+	ClearCode      bool
+	OwnerID        *string
+	ClearOwnerID   bool
+	Creator        *string
+	ClearCreator   bool
+}
+
+// Mutate applies the UpdateOrgOrganInput on the OrgOrganMutation.
+func (i *UpdateOrgOrganInput) Mutate(m *OrgOrganMutation) {
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if i.ClearName {
+		m.ClearName()
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if i.ClearSname {
+		m.ClearSname()
+	}
+	if v := i.Sname; v != nil {
+		m.SetSname(*v)
+	}
+	if i.ClearCode {
+		m.ClearCode()
+	}
+	if v := i.Code; v != nil {
+		m.SetCode(*v)
+	}
+	if i.ClearOwnerID {
+		m.ClearOwnerID()
+	}
+	if v := i.OwnerID; v != nil {
+		m.SetOwnerID(*v)
+	}
+	if i.ClearCreator {
+		m.ClearCreator()
+	}
+	if v := i.Creator; v != nil {
+		m.SetCreator(*v)
+	}
+}
+
+// SetInput applies the change-set in the UpdateOrgOrganInput on the update builder.
+func (u *OrgOrganUpdate) SetInput(i UpdateOrgOrganInput) *OrgOrganUpdate {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// SetInput applies the change-set in the UpdateOrgOrganInput on the update-one builder.
+func (u *OrgOrganUpdateOne) SetInput(i UpdateOrgOrganInput) *OrgOrganUpdateOne {
+	i.Mutate(u.Mutation())
+	return u
+}
+
 // CreateSysAddressInput represents a mutation input for creating sysaddresses.
 type CreateSysAddressInput struct {
 	IsDel      *bool

@@ -6,6 +6,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
+// OrgOrgan is the predicate function for orgorgan builders.
+type OrgOrgan func(*sql.Selector)
+
 // SysAddress is the predicate function for sysaddress builders.
 type SysAddress func(*sql.Selector)
 

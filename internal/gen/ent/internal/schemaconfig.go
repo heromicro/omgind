@@ -7,6 +7,7 @@ import "context"
 // SchemaConfig represents alternative schema names for all tables
 // that can be passed at runtime.
 type SchemaConfig struct {
+	OrgOrgan              string // OrgOrgan table.
 	SysAddress            string // SysAddress table.
 	SysDict               string // SysDict table.
 	SysDictItem           string // SysDictItem table.

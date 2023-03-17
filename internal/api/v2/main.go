@@ -12,4 +12,5 @@ var APIV2Set = wire.NewSet(
 	DictSet,
 	SysDistrictSet,
 	SysAddressSet,
+	OrgOrganSet,
 )

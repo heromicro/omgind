@@ -9,6 +9,18 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent"
 )
 
+// The OrgOrganFunc type is an adapter to allow the use of ordinary
+// function as OrgOrgan mutator.
+type OrgOrganFunc func(context.Context, *ent.OrgOrganMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f OrgOrganFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	if mv, ok := m.(*ent.OrgOrganMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.OrgOrganMutation", m)
+}
+
 // The SysAddressFunc type is an adapter to allow the use of ordinary
 // function as SysAddress mutator.
 type SysAddressFunc func(context.Context, *ent.SysAddressMutation) (ent.Value, error)

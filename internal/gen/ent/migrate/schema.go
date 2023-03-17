@@ -8,6 +8,65 @@ import (
 )
 
 var (
+	// OrgOrgansColumns holds the columns for the "org_organs" table.
+	OrgOrgansColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString, Size: 36},
+		{Name: "is_del", Type: field.TypeBool, Default: false},
+		{Name: "sort", Type: field.TypeInt32, Default: 9999},
+		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
+		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
+		{Name: "name", Type: field.TypeString, Nullable: true, Size: 256},
+		{Name: "sname", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "owner_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "creator", Type: field.TypeString, Nullable: true},
+	}
+	// OrgOrgansTable holds the schema information for the "org_organs" table.
+	OrgOrgansTable = &schema.Table{
+		Name:       "org_organs",
+		Columns:    OrgOrgansColumns,
+		PrimaryKey: []*schema.Column{OrgOrgansColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "orgorgan_id",
+				Unique:  true,
+				Columns: []*schema.Column{OrgOrgansColumns[0]},
+			},
+			{
+				Name:    "orgorgan_is_del",
+				Unique:  false,
+				Columns: []*schema.Column{OrgOrgansColumns[1]},
+			},
+			{
+				Name:    "orgorgan_sort",
+				Unique:  false,
+				Columns: []*schema.Column{OrgOrgansColumns[2]},
+			},
+			{
+				Name:    "orgorgan_crtd_at",
+				Unique:  false,
+				Columns: []*schema.Column{OrgOrgansColumns[3]},
+			},
+			{
+				Name:    "orgorgan_dltd_at",
+				Unique:  false,
+				Columns: []*schema.Column{OrgOrgansColumns[5]},
+			},
+			{
+				Name:    "orgorgan_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{OrgOrgansColumns[6]},
+			},
+			{
+				Name:    "orgorgan_owner_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrgOrgansColumns[11]},
+			},
+		},
+	}
 	// SysAddressesColumns holds the columns for the "sys_addresses" table.
 	SysAddressesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
@@ -832,6 +891,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
+		OrgOrgansTable,
 		SysAddressesTable,
 		SysDictsTable,
 		SysDictItemsTable,
