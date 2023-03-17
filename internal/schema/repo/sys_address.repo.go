@@ -158,6 +158,20 @@ func (a *SysAddress) Get(ctx context.Context, id string, opts ...schema.SysAddre
 	return a.ToSchemaSysAddress(r_sysaddress), nil
 }
 
+// Get 查询指定数据
+func (a *SysAddress) View(ctx context.Context, id string, opts ...schema.SysAddressQueryOptions) (*schema.SysAddress, error) {
+
+	r_sysaddress, err := a.EntCli.SysAddress.Query().Where(sysaddress.IDEQ(id)).Only(ctx)
+	if err != nil {
+		if _, ok := err.(*ent.NotFoundError); ok {
+			return nil, errors.ErrNotFound
+		}
+		return nil, err
+	}
+
+	return a.ToSchemaSysAddress(r_sysaddress), nil
+}
+
 // Create 创建数据
 func (a *SysAddress) Create(ctx context.Context, item schema.SysAddress) (*schema.SysAddress, error) {
 

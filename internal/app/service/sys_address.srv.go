@@ -38,6 +38,18 @@ func (a *SysAddress) Get(ctx context.Context, id string, opts ...schema.SysAddre
 	return item, nil
 }
 
+// View 查询指定数据
+func (a *SysAddress) View(ctx context.Context, id string, opts ...schema.SysAddressQueryOptions) (*schema.SysAddress, error) {
+	item, err := a.SysAddressRepo.View(ctx, id, opts...)
+	if err != nil {
+		return nil, err
+	} else if item == nil {
+		return nil, errors.ErrNotFound
+	}
+
+	return item, nil
+}
+
 // Create 创建数据
 func (a *SysAddress) Create(ctx context.Context, item schema.SysAddress) (*schema.SysAddress, error) {
 	// TODO: check?

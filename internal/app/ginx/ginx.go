@@ -80,37 +80,18 @@ func ParseForm(c *gin.Context, obj any) error {
 }
 
 // ResOK 响应OK
-func ResOK(c *gin.Context) {
-	ResSuccess(c, schema.StatusResult{Status: schema.OKStatus})
-}
-
-// ResOK 响应OK
 func ResOK2(c *gin.Context, message string) {
 	ResSuccess2(c, nil, message)
 }
 
 // ResList 响应列表数据
-func ResList(c *gin.Context, v any) {
-	ResSuccess(c, schema.ListResult{List: v})
-}
-
-// ResList 响应列表数据
 func ResList2(c *gin.Context, v any) {
-	ResSuccess(c, schema.StatusResult2{Code: schema.CodeOK, Burden: schema.ListResult{List: v}})
+	ResSuccess2(c, schema.ListResult{List: v})
 }
 
 // ResList 响应列表数据
 func ResList3(c *gin.Context, v any) {
-	ResSuccess(c, schema.StatusResult2{Code: schema.CodeOK, Burden: v})
-}
-
-// ResPage 响应分页数据
-func ResPage(c *gin.Context, v any, pr *schema.PaginationResult) {
-	list := schema.ListResult{
-		List:       v,
-		Pagination: pr,
-	}
-	ResSuccess(c, list)
+	ResSuccess2(c, v)
 }
 
 // ResPage 响应分页数据
@@ -123,8 +104,16 @@ func ResPage2(c *gin.Context, v any, pr *schema.PaginationResult) {
 }
 
 // ResSuccess 响应成功
-func ResSuccess(c *gin.Context, v any) {
-	ResJSON(c, http.StatusOK, v)
+func ResSuccess2(c *gin.Context, v any, message ...string) {
+	msg := ""
+	if len(message) > 0 {
+		msg = message[0]
+	}
+	if v != nil {
+		ResJSON(c, http.StatusOK, schema.StatusResult{Code: schema.CodeOK, Message: msg, Burden: v})
+	} else {
+		ResJSON(c, http.StatusOK, schema.StatusResult{Code: schema.CodeOK, Message: msg})
+	}
 }
 
 // ResJSON 响应JSON数据
@@ -136,15 +125,6 @@ func ResJSON(c *gin.Context, status int, v any) {
 	c.Set(ResBodyKey, buf)
 	c.Data(status, "application/json; charset=utf-8", buf)
 	c.Abort()
-}
-
-// ResSuccess 响应成功
-func ResSuccess2(c *gin.Context, v any, message ...string) {
-	msg := ""
-	if len(message) > 0 {
-		msg = message[0]
-	}
-	ResJSON(c, http.StatusOK, schema.StatusResult2{Code: schema.CodeOK, Message: msg, Burden: v})
 }
 
 // ResError 响应错误

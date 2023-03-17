@@ -15,6 +15,7 @@ func (r *Router) initMenuRouterV2(urg *gin.RouterGroup, api *api_v2.Menu, pathco
 		gMenu.DELETE(":id", api.Delete)
 		gMenu.PATCH(":id/enable", api.Enable)
 		gMenu.PATCH(":id/disable", api.Disable)
+		// gMenu.GET(":id/view", api.View)
 	}
 
 }

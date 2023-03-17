@@ -122,7 +122,7 @@ func (a *Role) Delete(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK2(c, "成功删除数据")
 }
 
 // Enable 启用数据
@@ -133,7 +133,7 @@ func (a *Role) Enable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK2(c, "启用成功")
 }
 
 // Disable 禁用数据
@@ -144,5 +144,5 @@ func (a *Role) Disable(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResOK(c)
+	ginx.ResOK2(c, "禁用成功")
 }

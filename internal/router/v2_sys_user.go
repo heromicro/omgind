@@ -16,6 +16,7 @@ func (r *Router) initUserRouterV2(urg *gin.RouterGroup, api *api_v2.User, pathco
 		gUser.DELETE(":id", api.Delete)
 		gUser.PATCH(":id/enable", api.Enable)
 		gUser.PATCH(":id/disable", api.Disable)
+		// gUser.GET(":id/view", api.View)
 	}
 
 }

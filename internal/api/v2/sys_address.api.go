@@ -46,6 +46,17 @@ func (a *SysAddress) Get(c *gin.Context) {
 	ginx.ResSuccess2(c, item)
 }
 
+// View 查询指定数据
+func (a *SysAddress) View(c *gin.Context) {
+	ctx := c.Request.Context()
+	item, err := a.SysAddressSrv.View(ctx, c.Param("id"))
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	ginx.ResSuccess2(c, item)
+}
+
 // Create 创建数据
 func (a *SysAddress) Create(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -54,7 +65,7 @@ func (a *SysAddress) Create(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	
+
 	item.Creator = ginx.GetUserID(c)
 	result, err := a.SysAddressSrv.Create(ctx, item)
 	if err != nil {

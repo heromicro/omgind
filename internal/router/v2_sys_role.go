@@ -15,6 +15,7 @@ func (r *Router) initRoleRouterV2(urg *gin.RouterGroup, api *api_v2.Role, pathco
 		gRole.DELETE(":id", api.Delete)
 		gRole.PATCH(":id/enable", api.Enable)
 		gRole.PATCH(":id/disable", api.Disable)
+		// gRole.GET(":id/view", api.View)
 	}
 
 }

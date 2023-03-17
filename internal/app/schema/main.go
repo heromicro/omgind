@@ -15,9 +15,9 @@ const (
 )
 
 // StatusResult 响应状态
-type StatusResult struct {
-	Status StatusText `json:"status"` // 状态(OK)
-}
+// type StatusResult struct {
+// 	Status StatusText `json:"status"` // 状态(OK)
+// }
 
 type CodeEnum int
 
@@ -32,7 +32,7 @@ const (
 )
 
 // StatusResult 响应状态
-type StatusResult2 struct {
+type StatusResult struct {
 	Code    CodeEnum `json:"code"`
 	Message string   `json:"message"`
 	Burden  any      `json:"burden"`
