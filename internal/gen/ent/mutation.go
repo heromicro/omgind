@@ -79,6 +79,7 @@ type SysAddressMutation struct {
 	zip_code      *string
 	daddr         *string
 	name          *string
+	area_code     *string
 	mobile        *string
 	creator       *string
 	clearedFields map[string]struct{}
@@ -1103,6 +1104,55 @@ func (m *SysAddressMutation) ResetName() {
 	delete(m.clearedFields, sysaddress.FieldName)
 }
 
+// SetAreaCode sets the "area_code" field.
+func (m *SysAddressMutation) SetAreaCode(s string) {
+	m.area_code = &s
+}
+
+// AreaCode returns the value of the "area_code" field in the mutation.
+func (m *SysAddressMutation) AreaCode() (r string, exists bool) {
+	v := m.area_code
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldAreaCode returns the old "area_code" field's value of the SysAddress entity.
+// If the SysAddress object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAddressMutation) OldAreaCode(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldAreaCode is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldAreaCode requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldAreaCode: %w", err)
+	}
+	return oldValue.AreaCode, nil
+}
+
+// ClearAreaCode clears the value of the "area_code" field.
+func (m *SysAddressMutation) ClearAreaCode() {
+	m.area_code = nil
+	m.clearedFields[sysaddress.FieldAreaCode] = struct{}{}
+}
+
+// AreaCodeCleared returns if the "area_code" field was cleared in this mutation.
+func (m *SysAddressMutation) AreaCodeCleared() bool {
+	_, ok := m.clearedFields[sysaddress.FieldAreaCode]
+	return ok
+}
+
+// ResetAreaCode resets all changes to the "area_code" field.
+func (m *SysAddressMutation) ResetAreaCode() {
+	m.area_code = nil
+	delete(m.clearedFields, sysaddress.FieldAreaCode)
+}
+
 // SetMobile sets the "mobile" field.
 func (m *SysAddressMutation) SetMobile(s string) {
 	m.mobile = &s
@@ -1235,7 +1285,7 @@ func (m *SysAddressMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysAddressMutation) Fields() []string {
-	fields := make([]string, 0, 21)
+	fields := make([]string, 0, 22)
 	if m.is_del != nil {
 		fields = append(fields, sysaddress.FieldIsDel)
 	}
@@ -1293,6 +1343,9 @@ func (m *SysAddressMutation) Fields() []string {
 	if m.name != nil {
 		fields = append(fields, sysaddress.FieldName)
 	}
+	if m.area_code != nil {
+		fields = append(fields, sysaddress.FieldAreaCode)
+	}
 	if m.mobile != nil {
 		fields = append(fields, sysaddress.FieldMobile)
 	}
@@ -1345,6 +1398,8 @@ func (m *SysAddressMutation) Field(name string) (ent.Value, bool) {
 		return m.Daddr()
 	case sysaddress.FieldName:
 		return m.Name()
+	case sysaddress.FieldAreaCode:
+		return m.AreaCode()
 	case sysaddress.FieldMobile:
 		return m.Mobile()
 	case sysaddress.FieldCreator:
@@ -1396,6 +1451,8 @@ func (m *SysAddressMutation) OldField(ctx context.Context, name string) (ent.Val
 		return m.OldDaddr(ctx)
 	case sysaddress.FieldName:
 		return m.OldName(ctx)
+	case sysaddress.FieldAreaCode:
+		return m.OldAreaCode(ctx)
 	case sysaddress.FieldMobile:
 		return m.OldMobile(ctx)
 	case sysaddress.FieldCreator:
@@ -1542,6 +1599,13 @@ func (m *SysAddressMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetName(v)
 		return nil
+	case sysaddress.FieldAreaCode:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetAreaCode(v)
+		return nil
 	case sysaddress.FieldMobile:
 		v, ok := value.(string)
 		if !ok {
@@ -1649,6 +1713,9 @@ func (m *SysAddressMutation) ClearedFields() []string {
 	if m.FieldCleared(sysaddress.FieldName) {
 		fields = append(fields, sysaddress.FieldName)
 	}
+	if m.FieldCleared(sysaddress.FieldAreaCode) {
+		fields = append(fields, sysaddress.FieldAreaCode)
+	}
 	if m.FieldCleared(sysaddress.FieldMobile) {
 		fields = append(fields, sysaddress.FieldMobile)
 	}
@@ -1716,6 +1783,9 @@ func (m *SysAddressMutation) ClearField(name string) error {
 		return nil
 	case sysaddress.FieldName:
 		m.ClearName()
+		return nil
+	case sysaddress.FieldAreaCode:
+		m.ClearAreaCode()
 		return nil
 	case sysaddress.FieldMobile:
 		m.ClearMobile()
@@ -1787,6 +1857,9 @@ func (m *SysAddressMutation) ResetField(name string) error {
 		return nil
 	case sysaddress.FieldName:
 		m.ResetName()
+		return nil
+	case sysaddress.FieldAreaCode:
+		m.ResetAreaCode()
 		return nil
 	case sysaddress.FieldMobile:
 		m.ResetMobile()

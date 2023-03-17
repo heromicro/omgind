@@ -1,7 +1,6 @@
 package api_v2
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -44,13 +43,13 @@ func (a *Role) QuerySelect(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.RoleQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		fmt.Printf(" ------- ------ %+v \n", err)
+		log.Printf(" ------- ------ %+v \n", err)
 
 		ginx.ResError(c, err)
 		return
 	}
 
-	fmt.Printf(" ------- ------ %+v \n", params)
+	log.Printf(" ------- ------ %+v \n", params)
 
 	result, err := a.RoleSrv.Query(ctx, params, schema.RoleQueryOptions{
 		OrderFields: schema.NewOrderFields(schema.NewOrderField("sort", schema.OrderByDESC)),

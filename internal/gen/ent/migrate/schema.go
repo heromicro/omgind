@@ -30,6 +30,7 @@ var (
 		{Name: "zip_code", Type: field.TypeString, Nullable: true, Size: 8},
 		{Name: "daddr", Type: field.TypeString, Nullable: true, Size: 256},
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "area_code", Type: field.TypeString, Nullable: true, Size: 8},
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "creator", Type: field.TypeString, Nullable: true, Size: 36},
 	}

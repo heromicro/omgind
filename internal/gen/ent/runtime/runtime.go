@@ -103,12 +103,16 @@ func init() {
 	sysaddressDescName := sysaddressFields[10].Descriptor()
 	// sysaddress.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	sysaddress.NameValidator = sysaddressDescName.Validators[0].(func(string) error)
+	// sysaddressDescAreaCode is the schema descriptor for area_code field.
+	sysaddressDescAreaCode := sysaddressFields[11].Descriptor()
+	// sysaddress.AreaCodeValidator is a validator for the "area_code" field. It is called by the builders before save.
+	sysaddress.AreaCodeValidator = sysaddressDescAreaCode.Validators[0].(func(string) error)
 	// sysaddressDescMobile is the schema descriptor for mobile field.
-	sysaddressDescMobile := sysaddressFields[11].Descriptor()
+	sysaddressDescMobile := sysaddressFields[12].Descriptor()
 	// sysaddress.MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	sysaddress.MobileValidator = sysaddressDescMobile.Validators[0].(func(string) error)
 	// sysaddressDescCreator is the schema descriptor for creator field.
-	sysaddressDescCreator := sysaddressFields[12].Descriptor()
+	sysaddressDescCreator := sysaddressFields[13].Descriptor()
 	// sysaddress.CreatorValidator is a validator for the "creator" field. It is called by the builders before save.
 	sysaddress.CreatorValidator = sysaddressDescCreator.Validators[0].(func(string) error)
 	// sysaddressDescID is the schema descriptor for id field.

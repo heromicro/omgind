@@ -149,6 +149,11 @@ func Name(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldEQ(FieldName, v))
 }
 
+// AreaCode applies equality check predicate on the "area_code" field. It's identical to AreaCodeEQ.
+func AreaCode(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldAreaCode, v))
+}
+
 // Mobile applies equality check predicate on the "mobile" field. It's identical to MobileEQ.
 func Mobile(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldEQ(FieldMobile, v))
@@ -1342,6 +1347,81 @@ func NameEqualFold(v string) predicate.SysAddress {
 // NameContainsFold applies the ContainsFold predicate on the "name" field.
 func NameContainsFold(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldContainsFold(FieldName, v))
+}
+
+// AreaCodeEQ applies the EQ predicate on the "area_code" field.
+func AreaCodeEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEQ(FieldAreaCode, v))
+}
+
+// AreaCodeNEQ applies the NEQ predicate on the "area_code" field.
+func AreaCodeNEQ(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNEQ(FieldAreaCode, v))
+}
+
+// AreaCodeIn applies the In predicate on the "area_code" field.
+func AreaCodeIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIn(FieldAreaCode, vs...))
+}
+
+// AreaCodeNotIn applies the NotIn predicate on the "area_code" field.
+func AreaCodeNotIn(vs ...string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotIn(FieldAreaCode, vs...))
+}
+
+// AreaCodeGT applies the GT predicate on the "area_code" field.
+func AreaCodeGT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGT(FieldAreaCode, v))
+}
+
+// AreaCodeGTE applies the GTE predicate on the "area_code" field.
+func AreaCodeGTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldGTE(FieldAreaCode, v))
+}
+
+// AreaCodeLT applies the LT predicate on the "area_code" field.
+func AreaCodeLT(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLT(FieldAreaCode, v))
+}
+
+// AreaCodeLTE applies the LTE predicate on the "area_code" field.
+func AreaCodeLTE(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldLTE(FieldAreaCode, v))
+}
+
+// AreaCodeContains applies the Contains predicate on the "area_code" field.
+func AreaCodeContains(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContains(FieldAreaCode, v))
+}
+
+// AreaCodeHasPrefix applies the HasPrefix predicate on the "area_code" field.
+func AreaCodeHasPrefix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasPrefix(FieldAreaCode, v))
+}
+
+// AreaCodeHasSuffix applies the HasSuffix predicate on the "area_code" field.
+func AreaCodeHasSuffix(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldHasSuffix(FieldAreaCode, v))
+}
+
+// AreaCodeIsNil applies the IsNil predicate on the "area_code" field.
+func AreaCodeIsNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldIsNull(FieldAreaCode))
+}
+
+// AreaCodeNotNil applies the NotNil predicate on the "area_code" field.
+func AreaCodeNotNil() predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldNotNull(FieldAreaCode))
+}
+
+// AreaCodeEqualFold applies the EqualFold predicate on the "area_code" field.
+func AreaCodeEqualFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldEqualFold(FieldAreaCode, v))
+}
+
+// AreaCodeContainsFold applies the ContainsFold predicate on the "area_code" field.
+func AreaCodeContainsFold(v string) predicate.SysAddress {
+	return predicate.SysAddress(sql.FieldContainsFold(FieldAreaCode, v))
 }
 
 // MobileEQ applies the EQ predicate on the "mobile" field.

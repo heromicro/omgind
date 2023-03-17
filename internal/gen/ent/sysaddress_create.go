@@ -289,6 +289,20 @@ func (sac *SysAddressCreate) SetNillableName(s *string) *SysAddressCreate {
 	return sac
 }
 
+// SetAreaCode sets the "area_code" field.
+func (sac *SysAddressCreate) SetAreaCode(s string) *SysAddressCreate {
+	sac.mutation.SetAreaCode(s)
+	return sac
+}
+
+// SetNillableAreaCode sets the "area_code" field if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableAreaCode(s *string) *SysAddressCreate {
+	if s != nil {
+		sac.SetAreaCode(*s)
+	}
+	return sac
+}
+
 // SetMobile sets the "mobile" field.
 func (sac *SysAddressCreate) SetMobile(s string) *SysAddressCreate {
 	sac.mutation.SetMobile(s)
@@ -452,6 +466,11 @@ func (sac *SysAddressCreate) check() error {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysAddress.name": %w`, err)}
 		}
 	}
+	if v, ok := sac.mutation.AreaCode(); ok {
+		if err := sysaddress.AreaCodeValidator(v); err != nil {
+			return &ValidationError{Name: "area_code", err: fmt.Errorf(`ent: validator failed for field "SysAddress.area_code": %w`, err)}
+		}
+	}
 	if v, ok := sac.mutation.Mobile(); ok {
 		if err := sysaddress.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`ent: validator failed for field "SysAddress.mobile": %w`, err)}
@@ -579,6 +598,10 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 	if value, ok := sac.mutation.Name(); ok {
 		_spec.SetField(sysaddress.FieldName, field.TypeString, value)
 		_node.Name = &value
+	}
+	if value, ok := sac.mutation.AreaCode(); ok {
+		_spec.SetField(sysaddress.FieldAreaCode, field.TypeString, value)
+		_node.AreaCode = &value
 	}
 	if value, ok := sac.mutation.Mobile(); ok {
 		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
@@ -949,6 +972,24 @@ func (u *SysAddressUpsert) UpdateName() *SysAddressUpsert {
 // ClearName clears the value of the "name" field.
 func (u *SysAddressUpsert) ClearName() *SysAddressUpsert {
 	u.SetNull(sysaddress.FieldName)
+	return u
+}
+
+// SetAreaCode sets the "area_code" field.
+func (u *SysAddressUpsert) SetAreaCode(v string) *SysAddressUpsert {
+	u.Set(sysaddress.FieldAreaCode, v)
+	return u
+}
+
+// UpdateAreaCode sets the "area_code" field to the value that was provided on create.
+func (u *SysAddressUpsert) UpdateAreaCode() *SysAddressUpsert {
+	u.SetExcluded(sysaddress.FieldAreaCode)
+	return u
+}
+
+// ClearAreaCode clears the value of the "area_code" field.
+func (u *SysAddressUpsert) ClearAreaCode() *SysAddressUpsert {
+	u.SetNull(sysaddress.FieldAreaCode)
 	return u
 }
 
@@ -1400,6 +1441,27 @@ func (u *SysAddressUpsertOne) UpdateName() *SysAddressUpsertOne {
 func (u *SysAddressUpsertOne) ClearName() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
 		s.ClearName()
+	})
+}
+
+// SetAreaCode sets the "area_code" field.
+func (u *SysAddressUpsertOne) SetAreaCode(v string) *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetAreaCode(v)
+	})
+}
+
+// UpdateAreaCode sets the "area_code" field to the value that was provided on create.
+func (u *SysAddressUpsertOne) UpdateAreaCode() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateAreaCode()
+	})
+}
+
+// ClearAreaCode clears the value of the "area_code" field.
+func (u *SysAddressUpsertOne) ClearAreaCode() *SysAddressUpsertOne {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearAreaCode()
 	})
 }
 
@@ -2020,6 +2082,27 @@ func (u *SysAddressUpsertBulk) UpdateName() *SysAddressUpsertBulk {
 func (u *SysAddressUpsertBulk) ClearName() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
 		s.ClearName()
+	})
+}
+
+// SetAreaCode sets the "area_code" field.
+func (u *SysAddressUpsertBulk) SetAreaCode(v string) *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.SetAreaCode(v)
+	})
+}
+
+// UpdateAreaCode sets the "area_code" field to the value that was provided on create.
+func (u *SysAddressUpsertBulk) UpdateAreaCode() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.UpdateAreaCode()
+	})
+}
+
+// ClearAreaCode clears the value of the "area_code" field.
+func (u *SysAddressUpsertBulk) ClearAreaCode() *SysAddressUpsertBulk {
+	return u.Update(func(s *SysAddressUpsert) {
+		s.ClearAreaCode()
 	})
 }
 

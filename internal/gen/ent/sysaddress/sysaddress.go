@@ -49,6 +49,8 @@ const (
 	FieldDaddr = "daddr"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
+	// FieldAreaCode holds the string denoting the area_code field in the database.
+	FieldAreaCode = "area_code"
 	// FieldMobile holds the string denoting the mobile field in the database.
 	FieldMobile = "mobile"
 	// FieldCreator holds the string denoting the creator field in the database.
@@ -79,6 +81,7 @@ var Columns = []string{
 	FieldZipCode,
 	FieldDaddr,
 	FieldName,
+	FieldAreaCode,
 	FieldMobile,
 	FieldCreator,
 }
@@ -126,6 +129,8 @@ var (
 	DaddrValidator func(string) error
 	// NameValidator is a validator for the "name" field. It is called by the builders before save.
 	NameValidator func(string) error
+	// AreaCodeValidator is a validator for the "area_code" field. It is called by the builders before save.
+	AreaCodeValidator func(string) error
 	// MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	MobileValidator func(string) error
 	// CreatorValidator is a validator for the "creator" field. It is called by the builders before save.

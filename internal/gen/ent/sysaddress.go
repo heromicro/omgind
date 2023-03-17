@@ -54,6 +54,8 @@ type SysAddress struct {
 	Daddr *string `json:"daddr,omitempty"`
 	// 联系人
 	Name *string `json:"name,omitempty"`
+	// 国际区号
+	AreaCode *string `json:"area_code,omitempty"`
 	// 电话
 	Mobile *string `json:"mobile,omitempty"`
 	// 创建者
@@ -69,7 +71,7 @@ func (*SysAddress) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case sysaddress.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case sysaddress.FieldID, sysaddress.FieldOwnerID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvice, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProviceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldName, sysaddress.FieldMobile, sysaddress.FieldCreator:
+		case sysaddress.FieldID, sysaddress.FieldOwnerID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvice, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProviceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldName, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldCreator:
 			values[i] = new(sql.NullString)
 		case sysaddress.FieldCreatedAt, sysaddress.FieldUpdatedAt, sysaddress.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -224,6 +226,13 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 				sa.Name = new(string)
 				*sa.Name = value.String
 			}
+		case sysaddress.FieldAreaCode:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field area_code", values[i])
+			} else if value.Valid {
+				sa.AreaCode = new(string)
+				*sa.AreaCode = value.String
+			}
 		case sysaddress.FieldMobile:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field mobile", values[i])
@@ -352,6 +361,11 @@ func (sa *SysAddress) String() string {
 	builder.WriteString(", ")
 	if v := sa.Name; v != nil {
 		builder.WriteString("name=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := sa.AreaCode; v != nil {
+		builder.WriteString("area_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

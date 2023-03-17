@@ -371,6 +371,26 @@ func (sau *SysAddressUpdate) ClearName() *SysAddressUpdate {
 	return sau
 }
 
+// SetAreaCode sets the "area_code" field.
+func (sau *SysAddressUpdate) SetAreaCode(s string) *SysAddressUpdate {
+	sau.mutation.SetAreaCode(s)
+	return sau
+}
+
+// SetNillableAreaCode sets the "area_code" field if the given value is not nil.
+func (sau *SysAddressUpdate) SetNillableAreaCode(s *string) *SysAddressUpdate {
+	if s != nil {
+		sau.SetAreaCode(*s)
+	}
+	return sau
+}
+
+// ClearAreaCode clears the value of the "area_code" field.
+func (sau *SysAddressUpdate) ClearAreaCode() *SysAddressUpdate {
+	sau.mutation.ClearAreaCode()
+	return sau
+}
+
 // SetMobile sets the "mobile" field.
 func (sau *SysAddressUpdate) SetMobile(s string) *SysAddressUpdate {
 	sau.mutation.SetMobile(s)
@@ -497,6 +517,11 @@ func (sau *SysAddressUpdate) check() error {
 	if v, ok := sau.mutation.Name(); ok {
 		if err := sysaddress.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysAddress.name": %w`, err)}
+		}
+	}
+	if v, ok := sau.mutation.AreaCode(); ok {
+		if err := sysaddress.AreaCodeValidator(v); err != nil {
+			return &ValidationError{Name: "area_code", err: fmt.Errorf(`ent: validator failed for field "SysAddress.area_code": %w`, err)}
 		}
 	}
 	if v, ok := sau.mutation.Mobile(); ok {
@@ -634,6 +659,12 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if sau.mutation.NameCleared() {
 		_spec.ClearField(sysaddress.FieldName, field.TypeString)
+	}
+	if value, ok := sau.mutation.AreaCode(); ok {
+		_spec.SetField(sysaddress.FieldAreaCode, field.TypeString, value)
+	}
+	if sau.mutation.AreaCodeCleared() {
+		_spec.ClearField(sysaddress.FieldAreaCode, field.TypeString)
 	}
 	if value, ok := sau.mutation.Mobile(); ok {
 		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
@@ -1012,6 +1043,26 @@ func (sauo *SysAddressUpdateOne) ClearName() *SysAddressUpdateOne {
 	return sauo
 }
 
+// SetAreaCode sets the "area_code" field.
+func (sauo *SysAddressUpdateOne) SetAreaCode(s string) *SysAddressUpdateOne {
+	sauo.mutation.SetAreaCode(s)
+	return sauo
+}
+
+// SetNillableAreaCode sets the "area_code" field if the given value is not nil.
+func (sauo *SysAddressUpdateOne) SetNillableAreaCode(s *string) *SysAddressUpdateOne {
+	if s != nil {
+		sauo.SetAreaCode(*s)
+	}
+	return sauo
+}
+
+// ClearAreaCode clears the value of the "area_code" field.
+func (sauo *SysAddressUpdateOne) ClearAreaCode() *SysAddressUpdateOne {
+	sauo.mutation.ClearAreaCode()
+	return sauo
+}
+
 // SetMobile sets the "mobile" field.
 func (sauo *SysAddressUpdateOne) SetMobile(s string) *SysAddressUpdateOne {
 	sauo.mutation.SetMobile(s)
@@ -1151,6 +1202,11 @@ func (sauo *SysAddressUpdateOne) check() error {
 	if v, ok := sauo.mutation.Name(); ok {
 		if err := sysaddress.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`ent: validator failed for field "SysAddress.name": %w`, err)}
+		}
+	}
+	if v, ok := sauo.mutation.AreaCode(); ok {
+		if err := sysaddress.AreaCodeValidator(v); err != nil {
+			return &ValidationError{Name: "area_code", err: fmt.Errorf(`ent: validator failed for field "SysAddress.area_code": %w`, err)}
 		}
 	}
 	if v, ok := sauo.mutation.Mobile(); ok {
@@ -1305,6 +1361,12 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 	}
 	if sauo.mutation.NameCleared() {
 		_spec.ClearField(sysaddress.FieldName, field.TypeString)
+	}
+	if value, ok := sauo.mutation.AreaCode(); ok {
+		_spec.SetField(sysaddress.FieldAreaCode, field.TypeString, value)
+	}
+	if sauo.mutation.AreaCodeCleared() {
+		_spec.ClearField(sysaddress.FieldAreaCode, field.TypeString)
 	}
 	if value, ok := sauo.mutation.Mobile(); ok {
 		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)

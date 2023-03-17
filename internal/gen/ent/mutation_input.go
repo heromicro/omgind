@@ -27,6 +27,7 @@ type CreateSysAddressInput struct {
 	ZipCode   *string
 	Daddr     *string
 	Name      *string
+	AreaCode  *string
 	Mobile    *string
 	Creator   *string
 }
@@ -90,6 +91,9 @@ func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.Name; v != nil {
 		m.SetName(*v)
 	}
+	if v := i.AreaCode; v != nil {
+		m.SetAreaCode(*v)
+	}
 	if v := i.Mobile; v != nil {
 		m.SetMobile(*v)
 	}
@@ -139,6 +143,8 @@ type UpdateSysAddressInput struct {
 	ClearDaddr     bool
 	Name           *string
 	ClearName      bool
+	AreaCode       *string
+	ClearAreaCode  bool
 	Mobile         *string
 	ClearMobile    bool
 	Creator        *string
@@ -245,6 +251,12 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	}
 	if v := i.Name; v != nil {
 		m.SetName(*v)
+	}
+	if i.ClearAreaCode {
+		m.ClearAreaCode()
+	}
+	if v := i.AreaCode; v != nil {
+		m.SetAreaCode(*v)
 	}
 	if i.ClearMobile {
 		m.ClearMobile()

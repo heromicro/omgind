@@ -16,10 +16,11 @@ type SysAddress struct {
 	CityID    string `json:"city_id"`    // 区/市ID
 	CountyID  string `json:"county_id"`  // 区/县ID
 
-	ZipCode string `json:"zip_code,omitempty"` // 邮政编码
-	Daddr   string `json:"daddr"`              // 详细地址
-	Name    string `json:"name,omitempty"`     // 联系人
-	Mobile  string `json:"mobile,omitempty"`   // 电话
+	ZipCode  string  `json:"zip_code,omitempty"`  // 邮政编码
+	Daddr    string  `json:"daddr"`               // 详细地址
+	Name     string  `json:"name,omitempty"`      // 联系人
+	AreaCode *string `json:"area_code,omitempty"` // 电话区号码
+	Mobile   string  `json:"mobile,omitempty"`    // 电话
 
 	Sort      int        `json:"sort,omitempty"`
 	Creator   string     `json:"creator,omitempty"`    // 创建者
@@ -37,6 +38,7 @@ type SysAddressQueryParam struct {
 	ProvinceID string  `form:"provice_id"` //
 	CityID     string  `form:"city_id"`    //
 	CountyID   string  `form:"county_id"`  //
+	AreaCode   *string `form:"area_code"` 
 	Mobile     *string `form:"mobile"`
 
 	CreatedAt_Order  string `form:"created_at__order"` // asc, desc
