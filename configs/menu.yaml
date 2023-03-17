@@ -238,6 +238,11 @@
           resources:
             - method: GET
               path: "/api/v2/sys-district/:id/view"
+        - code: tree
+          name: 查树
+          resources:
+            - method: GET
+              path: "/api/v2/sys-district/:id/tree"
 
     - name: 地址管理
       icon: key
