@@ -62,6 +62,8 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 
 		a.initOrgOrganRouterV2(v2, a.OrgOrganAPIV2, "orgorgan")
 
+		a.initOrgStaffRouterV2(v2, a.OrgStaffAPIV2, "orgstaff")
+
 	}
 
 	// app.GET("/ws/*any", gin.WrapH(a.SockIO))

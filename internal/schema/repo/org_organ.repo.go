@@ -22,16 +22,16 @@ type OrgOrgan struct {
 }
 
 // ToSchemaOrgOrgan 转换为
-func (a *OrgOrgan) toSchemaOrgOrgan(et *ent.OrgOrgan) *schema.OrgOrgan {
+func (a *OrgOrgan) ToSchemaOrgOrgan(et *ent.OrgOrgan) *schema.OrgOrgan {
 	item := new(schema.OrgOrgan)
 	structure.Copy(et, item)
 	return item
 }
 
-func (a *OrgOrgan) toSchemaOrgOrgans(ets ent.OrgOrgans) []*schema.OrgOrgan {
+func (a *OrgOrgan) ToSchemaOrgOrgans(ets ent.OrgOrgans) []*schema.OrgOrgan {
 	list := make([]*schema.OrgOrgan, len(ets))
 	for i, item := range ets {
-		list[i] = a.toSchemaOrgOrgan(item)
+		list[i] = a.ToSchemaOrgOrgan(item)
 	}
 	return list
 }
@@ -94,7 +94,7 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 
 	qr := &schema.OrgOrganQueryResult{
 		PageResult: pr,
-		Data:       a.toSchemaOrgOrgans(list),
+		Data:       a.ToSchemaOrgOrgans(list),
 	}
 
 	return qr, nil
@@ -111,7 +111,7 @@ func (a *OrgOrgan) Get(ctx context.Context, id string, opts ...schema.OrgOrganQu
 		return nil, err
 	}
 
-	return a.toSchemaOrgOrgan(r_orgorgan), nil
+	return a.ToSchemaOrgOrgan(r_orgorgan), nil
 }
 
 // View 查询指定数据
@@ -125,7 +125,7 @@ func (a *OrgOrgan) View(ctx context.Context, id string, opts ...schema.OrgOrganQ
 		return nil, err
 	}
 
-	return a.toSchemaOrgOrgan(r_orgorgan), nil
+	return a.ToSchemaOrgOrgan(r_orgorgan), nil
 }
 
 // Create 创建数据
@@ -137,7 +137,7 @@ func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.Or
 	if err != nil {
 		return nil, err
 	}
-	sch_orgorgan := a.toSchemaOrgOrgan(r_orgorgan)
+	sch_orgorgan := a.ToSchemaOrgOrgan(r_orgorgan)
 	return sch_orgorgan, nil
 }
 
@@ -152,7 +152,7 @@ func (a *OrgOrgan) Update(ctx context.Context, id string, item schema.OrgOrgan) 
 	iteminput := a.ToEntUpdateOrgOrganInput(&item)
 
 	r_orgorgan, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_orgorgan := a.toSchemaOrgOrgan(r_orgorgan)
+	sch_orgorgan := a.ToSchemaOrgOrgan(r_orgorgan)
 
 	return sch_orgorgan, nil
 }
