@@ -161,50 +161,35 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 
 	if v := params.CreatedAt_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldCreatedAt, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.Name_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldName, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.TreeID_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldTreeID, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.TreeLevel_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldTreeLevel, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.TreeLeft_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldTreeLeft, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if len(opt.OrderFields) == 0 {
-
 		of := MakeUpOrderField(sysdistrict.FieldTreeID, "asc")
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 
 		of2 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
-		if of2 != nil {
-			opt.OrderFields = append(opt.OrderFields, of2)
-		}
+		opt.OrderFields = append(opt.OrderFields, of2)
 	}
 
 	query = query.Order(ParseOrder(opt.OrderFields)...)
@@ -331,49 +316,35 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 
 	if v := params.CreatedAt_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldCreatedAt, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.Name_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldName, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.TreeID_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldTreeID, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.TreeLevel_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldTreeLevel, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.TreeLeft_Order; v != "" {
 		of := MakeUpOrderField(sysdistrict.FieldTreeLeft, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if len(opt.OrderFields) == 0 {
 		of := MakeUpOrderField(sysdistrict.FieldTreeID, "asc")
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 
 		of2 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
-		if of2 != nil {
-			opt.OrderFields = append(opt.OrderFields, of2)
-		}
+		opt.OrderFields = append(opt.OrderFields, of2)
 	}
 
 	query = query.Order(ParseOrder(opt.OrderFields)...)

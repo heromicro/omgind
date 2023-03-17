@@ -65,7 +65,27 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 	query := a.EntCli.SysAddress.Query()
 
 	query = query.Where(sysaddress.DeletedAtIsNil())
+
 	// TODO: 查询条件
+	if v := params.QueryValue; v != "" {
+		query = query.Where(sysaddress.Or(sysaddress.NameContains(v), sysaddress.MobileContains(v)))
+	}
+
+	if v := params.CountryID; v != "" {
+		query = query.Where(sysaddress.CountryIDEQ(v))
+	}
+
+	if v := params.ProvinceID; v != "" {
+		query = query.Where(sysaddress.ProviceIDEQ(v))
+	}
+
+	if v := params.CityID; v != "" {
+		query = query.Where(sysaddress.CityIDEQ(v))
+	}
+
+	if v := params.CountyID; v != "" {
+		query = query.Where(sysaddress.CountyIDEQ(v))
+	}
 
 	count, err := query.Count(ctx)
 	if err != nil {
@@ -77,7 +97,31 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 		return &schema.SysAddressQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	if v := params.CreatedAt_Order; v != "" {
+		of := MakeUpOrderField(sysaddress.FieldCreatedAt, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+	if v := params.CountryID_Order; v != "" {
+		of := MakeUpOrderField(sysaddress.FieldCountryID, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+	if v := params.ProvinceID_Order; v != "" {
+		of := MakeUpOrderField(sysaddress.FieldProviceID, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+	if v := params.CityID_Order; v != "" {
+		of := MakeUpOrderField(sysaddress.FieldCityID, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+	if v := params.CountyID_Order; v != "" {
+		of := MakeUpOrderField(sysaddress.FieldCountyID, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if len(opt.OrderFields) == 0 {
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysaddress.FieldID, schema.OrderByDESC))
+	}
+
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()

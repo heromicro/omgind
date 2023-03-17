@@ -31,6 +31,7 @@ func MakeUpOrderField(field string, order string) *schema.OrderField {
 		fallthrough
 	case "descend":
 		return schema.NewOrderField(field, schema.OrderByDESC)
+	default:
+		return schema.NewOrderField(field, schema.OrderByASC)
 	}
-	return nil
 }

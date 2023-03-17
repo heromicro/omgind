@@ -108,23 +108,17 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
 	if v := params.Sort_Order; v != "" {
 		of := MakeUpOrderField(xxxdemo.FieldSort, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.Code_Order; v != "" {
 		of := MakeUpOrderField(xxxdemo.FieldCode, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	if v := params.CreatedAt_Order; v != "" {
 		of := MakeUpOrderField(xxxdemo.FieldCreatedAt, v)
-		if of != nil {
-			opt.OrderFields = append(opt.OrderFields, of)
-		}
+		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
 	query = query.Order(ParseOrder(opt.OrderFields)...)

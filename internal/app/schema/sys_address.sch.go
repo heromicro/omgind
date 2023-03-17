@@ -16,15 +16,15 @@ type SysAddress struct {
 	CityID    string `json:"city_id"`    // 区/市ID
 	CountyID  string `json:"county_id"`  // 区/县ID
 
-	ZipCode string `json:"zip_code"` // 邮政编码
-	Daddr   string `json:"daddr"`    // 详细地址
-	Name    string `json:"name"`     // 联系人
-	Mobile  string `json:"mobile"`   // 电话
+	ZipCode string `json:"zip_code,omitempty"` // 邮政编码
+	Daddr   string `json:"daddr"`              // 详细地址
+	Name    string `json:"name,omitempty"`     // 联系人
+	Mobile  string `json:"mobile,omitempty"`   // 电话
 
 	Sort      int        `json:"sort,omitempty"`
-	Creator   string     `json:"creator"`    // 创建者
-	CreatedAt *time.Time `json:"created_at"` // 创建时间
-	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
+	Creator   string     `json:"creator,omitempty"`    // 创建者
+	CreatedAt *time.Time `json:"created_at,omitempty"` // 创建时间
+	UpdatedAt *time.Time `json:"updated_at,omitempty"` // 更新时间
 
 }
 
@@ -32,6 +32,19 @@ type SysAddress struct {
 type SysAddressQueryParam struct {
 	PaginationParam
 	QueryValue string `form:"queryValue"` // 模糊查询
+
+	CountryID  string  `form:"country_id"` //
+	ProvinceID string  `form:"provice_id"` //
+	CityID     string  `form:"city_id"`    //
+	CountyID   string  `form:"county_id"`  //
+	Mobile     *string `form:"mobile"`
+
+	CreatedAt_Order  string `form:"created_at__order"` // asc, desc
+	ID_Order         string `form:"id__order"`         // asc, desc
+	CountryID_Order  string `form:"country_id__order"` // asc, desc
+	ProvinceID_Order string `form:"provice_id__order"` // asc, desc
+	CityID_Order     string `form:"city_id__order"`    // asc, desc
+	CountyID_Order   string `form:"county_id__order"`  // asc, desc
 
 }
 
