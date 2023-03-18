@@ -21,16 +21,16 @@ type DictItem struct {
 	EntCli *ent.Client
 }
 
-func (a *DictItem) ToSchemaDictItem(dit *ent.SysDictItem) *schema.DictItem {
+func ToSchemaDictItem(dit *ent.SysDictItem) *schema.DictItem {
 	item := new(schema.DictItem)
 	structure.Copy(dit, item)
 	return item
 }
 
-func (a *DictItem) ToSchemaDictItems(dits ent.SysDictItems) []*schema.DictItem {
+func ToSchemaDictItems(dits ent.SysDictItems) []*schema.DictItem {
 	list := make([]*schema.DictItem, len(dits))
 	for i, item := range dits {
-		list[i] = a.ToSchemaDictItem(item)
+		list[i] = ToSchemaDictItem(item)
 	}
 	return list
 }
@@ -103,7 +103,7 @@ func (a *DictItem) Query(ctx context.Context, params schema.DictItemQueryParam, 
 
 	qr := &schema.DictItemQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaDictItems(rlist),
+		Data:       ToSchemaDictItems(rlist),
 	}
 
 	return qr, nil
@@ -115,7 +115,7 @@ func (a *DictItem) Get(ctx context.Context, id string, opts ...schema.DictItemQu
 	if err != nil {
 		return nil, err
 	}
-	return a.ToSchemaDictItem(dictItem), nil
+	return ToSchemaDictItem(dictItem), nil
 }
 
 // Create 创建数据
@@ -129,7 +129,7 @@ func (a *DictItem) Create(ctx context.Context, item schema.DictItem) (*schema.Di
 	if err != nil {
 		return nil, err
 	}
-	sch_dictitem := a.ToSchemaDictItem(dictitem)
+	sch_dictitem := ToSchemaDictItem(dictitem)
 	return sch_dictitem, nil
 }
 
@@ -144,7 +144,7 @@ func (a *DictItem) Update(ctx context.Context, id string, item schema.DictItem) 
 	itemInput := a.ToEntUpdateSysDictItemInput(&item)
 
 	dictitem, err := oitem.Update().SetInput(*itemInput).Save(ctx)
-	sch_dictitem := a.ToSchemaDictItem(dictitem)
+	sch_dictitem := ToSchemaDictItem(dictitem)
 
 	return sch_dictitem, nil
 }

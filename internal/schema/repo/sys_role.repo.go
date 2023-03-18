@@ -23,16 +23,16 @@ type Role struct {
 	EntCli *ent.Client
 }
 
-func (a *Role) ToSchemaRole(role *ent.SysRole) *schema.Role {
+func ToSchemaRole(role *ent.SysRole) *schema.Role {
 	item := new(schema.Role)
 	structure.Copy(role, item)
 	return item
 }
 
-func (a *Role) ToSchemaRoles(roles ent.SysRoles) []*schema.Role {
+func ToSchemaRoles(roles ent.SysRoles) []*schema.Role {
 	list := make([]*schema.Role, len(roles))
 	for i, item := range roles {
-		list[i] = a.ToSchemaRole(item)
+		list[i] = ToSchemaRole(item)
 	}
 	return list
 }
@@ -120,7 +120,7 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 
 	qr := &schema.RoleQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaRoles(rlist),
+		Data:       ToSchemaRoles(rlist),
 	}
 
 	return qr, nil
@@ -133,7 +133,7 @@ func (a *Role) Get(ctx context.Context, id string, opts ...schema.RoleQueryOptio
 	if err != nil {
 		return nil, err
 	}
-	return a.ToSchemaRole(role), nil
+	return ToSchemaRole(role), nil
 }
 
 // Create 创建数据
@@ -151,7 +151,7 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, erro
 		return nil, err
 	}
 
-	sch_role := a.ToSchemaRole(role)
+	sch_role := ToSchemaRole(role)
 	return sch_role, nil
 
 }
@@ -172,7 +172,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 		return nil, err
 	}
 
-	sch_role := a.ToSchemaRole(role)
+	sch_role := ToSchemaRole(role)
 	return sch_role, nil
 }
 

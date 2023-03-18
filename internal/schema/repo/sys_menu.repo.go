@@ -21,16 +21,16 @@ type Menu struct {
 	EntCli *ent.Client
 }
 
-func (a *Menu) ToSchemaSysMenu(dit *ent.SysMenu) *schema.Menu {
+func ToSchemaSysMenu(dit *ent.SysMenu) *schema.Menu {
 	item := new(schema.Menu)
 	structure.Copy(dit, item)
 	return item
 }
 
-func (a *Menu) ToSchemaSysMenus(dits ent.SysMenus) []*schema.Menu {
+func ToSchemaSysMenus(dits ent.SysMenus) []*schema.Menu {
 	list := make([]*schema.Menu, len(dits))
 	for i, item := range dits {
-		list[i] = a.ToSchemaSysMenu(item)
+		list[i] = ToSchemaSysMenu(item)
 	}
 	return list
 }
@@ -120,7 +120,7 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 
 	qr := &schema.MenuQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaSysMenus(rlist),
+		Data:       ToSchemaSysMenus(rlist),
 	}
 
 	return qr, nil
@@ -134,7 +134,7 @@ func (a *Menu) Get(ctx context.Context, id string, opts ...schema.MenuQueryOptio
 	if err != nil {
 		return nil, err
 	}
-	return a.ToSchemaSysMenu(menu), nil
+	return ToSchemaSysMenu(menu), nil
 }
 
 // Create 创建数据
@@ -147,7 +147,7 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.Menu, erro
 	if err != nil {
 		return nil, err
 	}
-	sch_menu := a.ToSchemaSysMenu(sys_menu)
+	sch_menu := ToSchemaSysMenu(sys_menu)
 	return sch_menu, nil
 }
 
@@ -165,7 +165,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 	if err != nil {
 		return nil, err
 	}
-	sch_menu := a.ToSchemaSysMenu(sys_menu)
+	sch_menu := ToSchemaSysMenu(sys_menu)
 	return sch_menu, nil
 }
 

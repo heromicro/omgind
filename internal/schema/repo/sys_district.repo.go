@@ -30,16 +30,16 @@ type SysDistrict struct {
 }
 
 // ToSchemaSysDistrict 转换为
-func (a *SysDistrict) ToSchemaSysDistrict(et *ent.SysDistrict) *schema.SysDistrict {
+func ToSchemaSysDistrict(et *ent.SysDistrict) *schema.SysDistrict {
 	item := new(schema.SysDistrict)
 	structure.Copy(et, item)
 	return item
 }
 
-func (a *SysDistrict) ToSchemaSysDistricts(ets ent.SysDistricts) []*schema.SysDistrict {
+func ToSchemaSysDistricts(ets ent.SysDistricts) []*schema.SysDistrict {
 	list := make([]*schema.SysDistrict, len(ets))
 	for i, item := range ets {
-		list[i] = a.ToSchemaSysDistrict(item)
+		list[i] = ToSchemaSysDistrict(item)
 	}
 	return list
 }
@@ -215,7 +215,7 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 
 	qr := &schema.SysDistrictQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaSysDistricts(list),
+		Data:       ToSchemaSysDistricts(list),
 	}
 
 	return qr, nil
@@ -373,7 +373,7 @@ func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params
 
 	qr := &schema.SysDistrictQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaSysDistricts(list),
+		Data:       ToSchemaSysDistricts(list),
 	}
 
 	return qr, nil
@@ -413,8 +413,8 @@ func (a *SysDistrict) GetTree(ctx context.Context, tpid string, params schema.Sy
 		return nil, err
 	}
 
-	sch_sub := a.ToSchemaSysDistricts(subs)
-	sch_top := a.ToSchemaSysDistricts(top)
+	sch_sub := ToSchemaSysDistricts(subs)
+	sch_top := ToSchemaSysDistricts(top)
 	data := &schema.SysDistrictQueryTreeResult{
 		Top:  sch_top,
 		Subs: sch_sub,
@@ -437,9 +437,9 @@ func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDist
 		return nil, err
 	}
 
-	r_schema := a.ToSchemaSysDistrict(r_sysdistrict)
+	r_schema := ToSchemaSysDistrict(r_sysdistrict)
 	if r_sysdistrict.Edges.Parent != nil {
-		r_schema.Parent = a.ToSchemaSysDistrict(r_sysdistrict.Edges.Parent)
+		r_schema.Parent = ToSchemaSysDistrict(r_sysdistrict.Edges.Parent)
 	}
 
 	return r_schema, nil
@@ -568,7 +568,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 	if err != nil {
 		return nil, err
 	}
-	sch_sysdistrict := a.ToSchemaSysDistrict(res_sysdistrict)
+	sch_sysdistrict := ToSchemaSysDistrict(res_sysdistrict)
 	return sch_sysdistrict, nil
 }
 
@@ -1065,7 +1065,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	if err != nil {
 		return nil, err
 	}
-	sch_sysdistrict := a.ToSchemaSysDistrict(res_sysdistrict)
+	sch_sysdistrict := ToSchemaSysDistrict(res_sysdistrict)
 
 	return sch_sysdistrict, nil
 }

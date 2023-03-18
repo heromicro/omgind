@@ -21,16 +21,16 @@ type RoleMenu struct {
 	EntCli *ent.Client
 }
 
-func (a *RoleMenu) ToSchemaSysRoleMenu(role *ent.SysRoleMenu) *schema.RoleMenu {
+func ToSchemaSysRoleMenu(role *ent.SysRoleMenu) *schema.RoleMenu {
 	item := new(schema.RoleMenu)
 	structure.Copy(role, item)
 	return item
 }
 
-func (a *RoleMenu) ToSchemaSysRoleMenus(roles ent.SysRoleMenus) []*schema.RoleMenu {
+func ToSchemaSysRoleMenus(roles ent.SysRoleMenus) []*schema.RoleMenu {
 	list := make([]*schema.RoleMenu, len(roles))
 	for i, item := range roles {
-		list[i] = a.ToSchemaSysRoleMenu(item)
+		list[i] = ToSchemaSysRoleMenu(item)
 	}
 	return list
 }
@@ -101,7 +101,7 @@ func (a *RoleMenu) Query(ctx context.Context, params schema.RoleMenuQueryParam, 
 
 	qr := &schema.RoleMenuQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaSysRoleMenus(rlist),
+		Data:       ToSchemaSysRoleMenus(rlist),
 	}
 
 	return qr, nil
@@ -114,7 +114,7 @@ func (a *RoleMenu) Get(ctx context.Context, id string, opts ...schema.RoleMenuQu
 	if err != nil {
 		return nil, err
 	}
-	return a.ToSchemaSysRoleMenu(rolemenu), nil
+	return ToSchemaSysRoleMenu(rolemenu), nil
 }
 
 // Create 创建数据
@@ -128,7 +128,7 @@ func (a *RoleMenu) Create(ctx context.Context, item schema.RoleMenu) (*schema.Ro
 	if err != nil {
 		return nil, err
 	}
-	sch_rm := a.ToSchemaSysRoleMenu(menu)
+	sch_rm := ToSchemaSysRoleMenu(menu)
 	return sch_rm, nil
 }
 
@@ -144,7 +144,7 @@ func (a *RoleMenu) Update(ctx context.Context, id string, item schema.RoleMenu) 
 	if err != nil {
 		return nil, err
 	}
-	sch_rm := a.ToSchemaSysRoleMenu(rolemenu)
+	sch_rm := ToSchemaSysRoleMenu(rolemenu)
 	return sch_rm, nil
 }
 
