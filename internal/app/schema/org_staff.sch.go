@@ -12,14 +12,18 @@ type OrgStaff struct {
 	BirthDate string `json:"birth_date" binding:"required"` // 出生日期
 	Gender    string `json:"gender" binding:"required"`     // 性别
 
-	EntryDate   string `json:"entry_date" binding:"required"`   // 入职日期
-	RegularDate string `json:"regular_date" binding:"required"` // 转正日期
-	IdenNo      string `json:"iden_no" binding:"required"`      // 转正日期
+	EntryDate   string `json:"entry_date" binding:"required"` // 入职日期
+	RegularDate string `json:"regular_date"`                  // 转正日期
+	IdenNo      string `json:"iden_no" `                      // 转正日期
+	OrgID       string `json:"org_id"`                        // 企业id
 
-	IsActive  *bool      `json:"is_active" binding:"required"` // 状态
-	Creator   string     `json:"creator"`                      // 创建者
-	CreatedAt *time.Time `json:"created_at"`                   // 创建时间
-	UpdatedAt *time.Time `json:"updated_at"`                   // 更新时间
+	IsActive *bool   `json:"is_active" binding:"required"` // 状态
+	Sort     int     `json:"sort,omitempty"`
+	Memo     *string `json:"memo"` //
+
+	Creator   string     `json:"creator"`    // 创建者
+	CreatedAt *time.Time `json:"created_at"` // 创建时间
+	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
 
 }
 
@@ -27,6 +31,13 @@ type OrgStaff struct {
 type OrgStaffQueryParam struct {
 	PaginationParam
 	QueryValue string `form:"queryValue"` // 模糊查询
+
+	Name     string `form:"name"`      //
+	IsActive *bool  `form:"is_active"` //
+	OrgId    string `form:"org_id"`    //
+
+	IsActive_Order *bool `form:"is_active__order"` //
+
 }
 
 // OrgStaffQueryOptions 查询可选参数项

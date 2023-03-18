@@ -4,13 +4,19 @@ import "time"
 
 // OrgOrgan 组织管理对象
 type OrgOrgan struct {
-	ID      string `json:"id"`                       // 唯一标识
-	Name    string `json:"name" binding:"required"`  // 名称
-	Sname   string `json:"sname" binding:"required"` // 短名称
-	OwnerId string `json:"owner_id"`                 // 所有者user.id
-	IdenNo  string `json:"iden_no"`                  // 执照号
+	ID    string `json:"id"`                       // 唯一标识
+	Name  string `json:"name" binding:"required"`  // 名称
+	Sname string `json:"sname" binding:"required"` // 短名称
+	Code  string `json:"code"`                     // 助记码
 
-	Memo *string `json:"memo"` //
+	OwnerId string      `json:"owner_id"` // 所有者user.id
+	IdenNo  *string     `json:"iden_no"`  // 执照号
+	Haddr   *SysAddress `json:"haddr"`    // 总部地址
+
+	Memo     *string `json:"memo"`                         //
+	IsActive *bool   `json:"is_active" binding:"required"` // 状态
+
+	Sort int `json:"sort,omitempty"`
 
 	Creator   string     `json:"creator"`    // 创建者
 	CreatedAt *time.Time `json:"created_at"` // 创建时间
@@ -21,7 +27,14 @@ type OrgOrgan struct {
 // OrgOrganQueryParam 查询条件
 type OrgOrganQueryParam struct {
 	PaginationParam
-	QueryValue string `form:"queryValue"` // 模糊查询
+	QueryValue string  `form:"queryValue"` // 模糊查询
+	Code       *string `form:"code"`       //
+	Name       string  `form:"name"`       //
+	IsActive   *bool   `form:"is_active"`  //
+	OwnerId    string  `form:"owner_id"`   //
+
+	IsActive_Order *bool `form:"is_active__order"` //
+
 }
 
 // OrgOrganQueryOptions 查询可选参数项
