@@ -9,6 +9,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
 // OrgOrgan is the model entity for the OrgOrgan schema.
@@ -38,10 +39,37 @@ type OrgOrgan struct {
 	Code *string `json:"code,omitempty"`
 	// 执照号
 	IdenNo *string `json:"iden_no,omitempty"`
-	// 所有者user id
+	// 所有者user.id
 	OwnerID *string `json:"owner_id,omitempty"`
+	// 总部id
+	HaddrID *string `json:"haddr_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the OrgOrganQuery when eager-loading is set.
+	Edges OrgOrganEdges `json:"edges"`
+}
+
+// OrgOrganEdges holds the relations/edges for other nodes in the graph.
+type OrgOrganEdges struct {
+	// Haddr holds the value of the haddr edge.
+	Haddr *SysAddress `json:"haddr,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// HaddrOrErr returns the Haddr value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e OrgOrganEdges) HaddrOrErr() (*SysAddress, error) {
+	if e.loadedTypes[0] {
+		if e.Haddr == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: sysaddress.Label}
+		}
+		return e.Haddr, nil
+	}
+	return nil, &NotLoadedError{edge: "haddr"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -53,7 +81,7 @@ func (*OrgOrgan) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgorgan.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case orgorgan.FieldID, orgorgan.FieldMemo, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldCode, orgorgan.FieldIdenNo, orgorgan.FieldOwnerID, orgorgan.FieldCreator:
+		case orgorgan.FieldID, orgorgan.FieldMemo, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldCode, orgorgan.FieldIdenNo, orgorgan.FieldOwnerID, orgorgan.FieldHaddrID, orgorgan.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgorgan.FieldCreatedAt, orgorgan.FieldUpdatedAt, orgorgan.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -159,6 +187,13 @@ func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
 				oo.OwnerID = new(string)
 				*oo.OwnerID = value.String
 			}
+		case orgorgan.FieldHaddrID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field haddr_id", values[i])
+			} else if value.Valid {
+				oo.HaddrID = new(string)
+				*oo.HaddrID = value.String
+			}
 		case orgorgan.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -169,6 +204,11 @@ func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
 		}
 	}
 	return nil
+}
+
+// QueryHaddr queries the "haddr" edge of the OrgOrgan entity.
+func (oo *OrgOrgan) QueryHaddr() *SysAddressQuery {
+	return NewOrgOrganClient(oo.config).QueryHaddr(oo)
 }
 
 // Update returns a builder for updating this OrgOrgan.
@@ -245,6 +285,11 @@ func (oo *OrgOrgan) String() string {
 	builder.WriteString(", ")
 	if v := oo.OwnerID; v != nil {
 		builder.WriteString("owner_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := oo.HaddrID; v != nil {
+		builder.WriteString("haddr_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

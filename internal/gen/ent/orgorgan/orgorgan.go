@@ -35,10 +35,21 @@ const (
 	FieldIdenNo = "iden_no"
 	// FieldOwnerID holds the string denoting the owner_id field in the database.
 	FieldOwnerID = "owner_id"
+	// FieldHaddrID holds the string denoting the haddr_id field in the database.
+	FieldHaddrID = "haddr_id"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
+	// EdgeHaddr holds the string denoting the haddr edge name in mutations.
+	EdgeHaddr = "haddr"
 	// Table holds the table name of the orgorgan in the database.
 	Table = "org_organs"
+	// HaddrTable is the table that holds the haddr relation/edge.
+	HaddrTable = "org_organs"
+	// HaddrInverseTable is the table name for the SysAddress entity.
+	// It exists in this package in order to avoid circular dependency with the "sysaddress" package.
+	HaddrInverseTable = "sys_addresses"
+	// HaddrColumn is the table column denoting the haddr relation/edge.
+	HaddrColumn = "haddr_id"
 )
 
 // Columns holds all SQL columns for orgorgan fields.
@@ -56,6 +67,7 @@ var Columns = []string{
 	FieldCode,
 	FieldIdenNo,
 	FieldOwnerID,
+	FieldHaddrID,
 	FieldCreator,
 }
 
@@ -96,6 +108,8 @@ var (
 	IdenNoValidator func(string) error
 	// OwnerIDValidator is a validator for the "owner_id" field. It is called by the builders before save.
 	OwnerIDValidator func(string) error
+	// HaddrIDValidator is a validator for the "haddr_id" field. It is called by the builders before save.
+	HaddrIDValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

@@ -59,8 +59,17 @@ const (
 	FieldMobile = "mobile"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
+	// EdgeOrgan holds the string denoting the organ edge name in mutations.
+	EdgeOrgan = "organ"
 	// Table holds the table name of the sysaddress in the database.
 	Table = "sys_addresses"
+	// OrganTable is the table that holds the organ relation/edge.
+	OrganTable = "org_organs"
+	// OrganInverseTable is the table name for the OrgOrgan entity.
+	// It exists in this package in order to avoid circular dependency with the "orgorgan" package.
+	OrganInverseTable = "org_organs"
+	// OrganColumn is the table column denoting the organ relation/edge.
+	OrganColumn = "haddr_id"
 )
 
 // Columns holds all SQL columns for sysaddress fields.

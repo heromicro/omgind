@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
@@ -451,9 +452,34 @@ func (sau *SysAddressUpdate) ClearCreator() *SysAddressUpdate {
 	return sau
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (sau *SysAddressUpdate) SetOrganID(id string) *SysAddressUpdate {
+	sau.mutation.SetOrganID(id)
+	return sau
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (sau *SysAddressUpdate) SetNillableOrganID(id *string) *SysAddressUpdate {
+	if id != nil {
+		sau = sau.SetOrganID(*id)
+	}
+	return sau
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (sau *SysAddressUpdate) SetOrgan(o *OrgOrgan) *SysAddressUpdate {
+	return sau.SetOrganID(o.ID)
+}
+
 // Mutation returns the SysAddressMutation object of the builder.
 func (sau *SysAddressUpdate) Mutation() *SysAddressMutation {
 	return sau.mutation
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (sau *SysAddressUpdate) ClearOrgan() *SysAddressUpdate {
+	sau.mutation.ClearOrgan()
+	return sau
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -711,6 +737,43 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if sau.mutation.CreatorCleared() {
 		_spec.ClearField(sysaddress.FieldCreator, field.TypeString)
+	}
+	if sau.mutation.OrganCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.OrganTable,
+			Columns: []string{sysaddress.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = sau.schemaConfig.OrgOrgan
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sau.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.OrganTable,
+			Columns: []string{sysaddress.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = sau.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = sau.schemaConfig.SysAddress
 	ctx = internal.NewSchemaConfigContext(ctx, sau.schemaConfig)
@@ -1157,9 +1220,34 @@ func (sauo *SysAddressUpdateOne) ClearCreator() *SysAddressUpdateOne {
 	return sauo
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (sauo *SysAddressUpdateOne) SetOrganID(id string) *SysAddressUpdateOne {
+	sauo.mutation.SetOrganID(id)
+	return sauo
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (sauo *SysAddressUpdateOne) SetNillableOrganID(id *string) *SysAddressUpdateOne {
+	if id != nil {
+		sauo = sauo.SetOrganID(*id)
+	}
+	return sauo
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (sauo *SysAddressUpdateOne) SetOrgan(o *OrgOrgan) *SysAddressUpdateOne {
+	return sauo.SetOrganID(o.ID)
+}
+
 // Mutation returns the SysAddressMutation object of the builder.
 func (sauo *SysAddressUpdateOne) Mutation() *SysAddressMutation {
 	return sauo.mutation
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (sauo *SysAddressUpdateOne) ClearOrgan() *SysAddressUpdateOne {
+	sauo.mutation.ClearOrgan()
+	return sauo
 }
 
 // Where appends a list predicates to the SysAddressUpdate builder.
@@ -1447,6 +1535,43 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 	}
 	if sauo.mutation.CreatorCleared() {
 		_spec.ClearField(sysaddress.FieldCreator, field.TypeString)
+	}
+	if sauo.mutation.OrganCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.OrganTable,
+			Columns: []string{sysaddress.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = sauo.schemaConfig.OrgOrgan
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sauo.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.OrganTable,
+			Columns: []string{sysaddress.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = sauo.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = sauo.schemaConfig.SysAddress
 	ctx = internal.NewSchemaConfigContext(ctx, sauo.schemaConfig)

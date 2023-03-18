@@ -168,7 +168,9 @@ type CreateOrgOrganInput struct {
 	Code      *string
 	IdenNo    *string
 	OwnerID   *string
+	HaddrID   *string
 	Creator   *string
+	Haddr     *string
 }
 
 // Mutate applies the CreateOrgOrganInput on the OrgOrganCreate builder.
@@ -209,8 +211,14 @@ func (i *CreateOrgOrganInput) Mutate(m *OrgOrganCreate) {
 	if v := i.OwnerID; v != nil {
 		m.SetOwnerID(*v)
 	}
+	if v := i.HaddrID; v != nil {
+		m.SetHaddrID(*v)
+	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
+	}
+	if v := i.Haddr; v != nil {
+		m.SetHaddrID(*v)
 	}
 }
 
@@ -241,8 +249,12 @@ type UpdateOrgOrganInput struct {
 	ClearIdenNo    bool
 	OwnerID        *string
 	ClearOwnerID   bool
+	HaddrID        *string
+	ClearHaddrID   bool
 	Creator        *string
 	ClearCreator   bool
+	Haddr          *string
+	ClearHaddr     bool
 }
 
 // Mutate applies the UpdateOrgOrganInput on the OrgOrganMutation.
@@ -304,11 +316,23 @@ func (i *UpdateOrgOrganInput) Mutate(m *OrgOrganMutation) {
 	if v := i.OwnerID; v != nil {
 		m.SetOwnerID(*v)
 	}
+	if i.ClearHaddrID {
+		m.ClearHaddrID()
+	}
+	if v := i.HaddrID; v != nil {
+		m.SetHaddrID(*v)
+	}
 	if i.ClearCreator {
 		m.ClearCreator()
 	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
+	}
+	if i.ClearHaddr {
+		m.ClearHaddr()
+	}
+	if v := i.Haddr; v != nil {
+		m.SetHaddrID(*v)
 	}
 }
 
@@ -706,6 +730,7 @@ type CreateSysAddressInput struct {
 	AreaCode   *string
 	Mobile     *string
 	Creator    *string
+	Organ      *string
 }
 
 // Mutate applies the CreateSysAddressInput on the SysAddressCreate builder.
@@ -782,6 +807,9 @@ func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
 	}
+	if v := i.Organ; v != nil {
+		m.SetOrganID(*v)
+	}
 }
 
 // SetInput applies the change-set in the CreateSysAddressInput on the create builder.
@@ -833,6 +861,8 @@ type UpdateSysAddressInput struct {
 	ClearMobile     bool
 	Creator         *string
 	ClearCreator    bool
+	Organ           *string
+	ClearOrgan      bool
 }
 
 // Mutate applies the UpdateSysAddressInput on the SysAddressMutation.
@@ -959,6 +989,12 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
+	}
+	if i.ClearOrgan {
+		m.ClearOrgan()
+	}
+	if v := i.Organ; v != nil {
+		m.SetOrganID(*v)
 	}
 }
 

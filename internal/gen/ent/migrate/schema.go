@@ -77,12 +77,21 @@ var (
 		{Name: "iden_no", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "owner_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
+		{Name: "haddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
 	}
 	// OrgOrgansTable holds the schema information for the "org_organs" table.
 	OrgOrgansTable = &schema.Table{
 		Name:       "org_organs",
 		Columns:    OrgOrgansColumns,
 		PrimaryKey: []*schema.Column{OrgOrgansColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "org_organs_sys_addresses_organ",
+				Columns:    []*schema.Column{OrgOrgansColumns[14]},
+				RefColumns: []*schema.Column{SysAddressesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "orgorgan_id",
@@ -1084,5 +1093,6 @@ var (
 )
 
 func init() {
+	OrgOrgansTable.ForeignKeys[0].RefTable = SysAddressesTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 }

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
@@ -64,6 +65,31 @@ type SysAddress struct {
 	Mobile *string `json:"mobile,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the SysAddressQuery when eager-loading is set.
+	Edges SysAddressEdges `json:"edges"`
+}
+
+// SysAddressEdges holds the relations/edges for other nodes in the graph.
+type SysAddressEdges struct {
+	// Organ holds the value of the organ edge.
+	Organ *OrgOrgan `json:"organ,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// OrganOrErr returns the Organ value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysAddressEdges) OrganOrErr() (*OrgOrgan, error) {
+	if e.loadedTypes[0] {
+		if e.Organ == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgorgan.Label}
+		}
+		return e.Organ, nil
+	}
+	return nil, &NotLoadedError{edge: "organ"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -268,6 +294,11 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 		}
 	}
 	return nil
+}
+
+// QueryOrgan queries the "organ" edge of the SysAddress entity.
+func (sa *SysAddress) QueryOrgan() *OrgOrganQuery {
+	return NewSysAddressClient(sa.config).QueryOrgan(sa)
 }
 
 // Update returns a builder for updating this SysAddress.

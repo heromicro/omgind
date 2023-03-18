@@ -553,6 +553,25 @@ func (c *OrgOrganClient) GetX(ctx context.Context, id string) *OrgOrgan {
 	return obj
 }
 
+// QueryHaddr queries the haddr edge of a OrgOrgan.
+func (c *OrgOrganClient) QueryHaddr(oo *OrgOrgan) *SysAddressQuery {
+	query := (&SysAddressClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := oo.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
+			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, orgorgan.HaddrTable, orgorgan.HaddrColumn),
+		)
+		schemaConfig := oo.schemaConfig
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgOrgan
+		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *OrgOrganClient) Hooks() []Hook {
 	return c.hooks.OrgOrgan
@@ -905,6 +924,25 @@ func (c *SysAddressClient) GetX(ctx context.Context, id string) *SysAddress {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryOrgan queries the organ edge of a SysAddress.
+func (c *SysAddressClient) QueryOrgan(sa *SysAddress) *OrgOrganQuery {
+	query := (&OrgOrganClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := sa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, id),
+			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.OrganTable, sysaddress.OrganColumn),
+		)
+		schemaConfig := sa.schemaConfig
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgOrgan
+		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.

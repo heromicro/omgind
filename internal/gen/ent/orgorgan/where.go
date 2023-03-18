@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -112,6 +114,11 @@ func IdenNo(v string) predicate.OrgOrgan {
 // OwnerID applies equality check predicate on the "owner_id" field. It's identical to OwnerIDEQ.
 func OwnerID(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldEQ(FieldOwnerID, v))
+}
+
+// HaddrID applies equality check predicate on the "haddr_id" field. It's identical to HaddrIDEQ.
+func HaddrID(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldEQ(FieldHaddrID, v))
 }
 
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
@@ -779,6 +786,81 @@ func OwnerIDContainsFold(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldContainsFold(FieldOwnerID, v))
 }
 
+// HaddrIDEQ applies the EQ predicate on the "haddr_id" field.
+func HaddrIDEQ(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldEQ(FieldHaddrID, v))
+}
+
+// HaddrIDNEQ applies the NEQ predicate on the "haddr_id" field.
+func HaddrIDNEQ(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldNEQ(FieldHaddrID, v))
+}
+
+// HaddrIDIn applies the In predicate on the "haddr_id" field.
+func HaddrIDIn(vs ...string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldIn(FieldHaddrID, vs...))
+}
+
+// HaddrIDNotIn applies the NotIn predicate on the "haddr_id" field.
+func HaddrIDNotIn(vs ...string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldNotIn(FieldHaddrID, vs...))
+}
+
+// HaddrIDGT applies the GT predicate on the "haddr_id" field.
+func HaddrIDGT(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldGT(FieldHaddrID, v))
+}
+
+// HaddrIDGTE applies the GTE predicate on the "haddr_id" field.
+func HaddrIDGTE(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldGTE(FieldHaddrID, v))
+}
+
+// HaddrIDLT applies the LT predicate on the "haddr_id" field.
+func HaddrIDLT(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldLT(FieldHaddrID, v))
+}
+
+// HaddrIDLTE applies the LTE predicate on the "haddr_id" field.
+func HaddrIDLTE(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldLTE(FieldHaddrID, v))
+}
+
+// HaddrIDContains applies the Contains predicate on the "haddr_id" field.
+func HaddrIDContains(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldContains(FieldHaddrID, v))
+}
+
+// HaddrIDHasPrefix applies the HasPrefix predicate on the "haddr_id" field.
+func HaddrIDHasPrefix(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldHasPrefix(FieldHaddrID, v))
+}
+
+// HaddrIDHasSuffix applies the HasSuffix predicate on the "haddr_id" field.
+func HaddrIDHasSuffix(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldHasSuffix(FieldHaddrID, v))
+}
+
+// HaddrIDIsNil applies the IsNil predicate on the "haddr_id" field.
+func HaddrIDIsNil() predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldIsNull(FieldHaddrID))
+}
+
+// HaddrIDNotNil applies the NotNil predicate on the "haddr_id" field.
+func HaddrIDNotNil() predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldNotNull(FieldHaddrID))
+}
+
+// HaddrIDEqualFold applies the EqualFold predicate on the "haddr_id" field.
+func HaddrIDEqualFold(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldEqualFold(FieldHaddrID, v))
+}
+
+// HaddrIDContainsFold applies the ContainsFold predicate on the "haddr_id" field.
+func HaddrIDContainsFold(v string) predicate.OrgOrgan {
+	return predicate.OrgOrgan(sql.FieldContainsFold(FieldHaddrID, v))
+}
+
 // CreatorEQ applies the EQ predicate on the "creator" field.
 func CreatorEQ(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldEQ(FieldCreator, v))
@@ -852,6 +934,39 @@ func CreatorEqualFold(v string) predicate.OrgOrgan {
 // CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
 func CreatorContainsFold(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldContainsFold(FieldCreator, v))
+}
+
+// HasHaddr applies the HasEdge predicate on the "haddr" edge.
+func HasHaddr() predicate.OrgOrgan {
+	return predicate.OrgOrgan(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, HaddrTable, HaddrColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgOrgan
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasHaddrWith applies the HasEdge predicate on the "haddr" edge with a given conditions (other predicates).
+func HasHaddrWith(preds ...predicate.SysAddress) predicate.OrgOrgan {
+	return predicate.OrgOrgan(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(HaddrInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, HaddrTable, HaddrColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgOrgan
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

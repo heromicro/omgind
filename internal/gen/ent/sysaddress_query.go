@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
@@ -12,6 +13,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
@@ -23,6 +25,7 @@ type SysAddressQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysAddress
+	withOrgan  *OrgOrganQuery
 	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -58,6 +61,31 @@ func (saq *SysAddressQuery) Unique(unique bool) *SysAddressQuery {
 func (saq *SysAddressQuery) Order(o ...OrderFunc) *SysAddressQuery {
 	saq.order = append(saq.order, o...)
 	return saq
+}
+
+// QueryOrgan chains the current query on the "organ" edge.
+func (saq *SysAddressQuery) QueryOrgan() *OrgOrganQuery {
+	query := (&OrgOrganClient{config: saq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := saq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := saq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, selector),
+			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.OrganTable, sysaddress.OrganColumn),
+		)
+		schemaConfig := saq.schemaConfig
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgOrgan
+		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first SysAddress entity from the query.
@@ -252,10 +280,22 @@ func (saq *SysAddressQuery) Clone() *SysAddressQuery {
 		order:      append([]OrderFunc{}, saq.order...),
 		inters:     append([]Interceptor{}, saq.inters...),
 		predicates: append([]predicate.SysAddress{}, saq.predicates...),
+		withOrgan:  saq.withOrgan.Clone(),
 		// clone intermediate query.
 		sql:  saq.sql.Clone(),
 		path: saq.path,
 	}
+}
+
+// WithOrgan tells the query-builder to eager-load the nodes that are connected to
+// the "organ" edge. The optional arguments are used to configure the query builder of the edge.
+func (saq *SysAddressQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *SysAddressQuery {
+	query := (&OrgOrganClient{config: saq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	saq.withOrgan = query
+	return saq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -334,8 +374,11 @@ func (saq *SysAddressQuery) prepareQuery(ctx context.Context) error {
 
 func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysAddress, error) {
 	var (
-		nodes = []*SysAddress{}
-		_spec = saq.querySpec()
+		nodes       = []*SysAddress{}
+		_spec       = saq.querySpec()
+		loadedTypes = [1]bool{
+			saq.withOrgan != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysAddress).scanValues(nil, columns)
@@ -343,6 +386,7 @@ func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysAddress{config: saq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	_spec.Node.Schema = saq.schemaConfig.SysAddress
@@ -359,7 +403,41 @@ func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := saq.withOrgan; query != nil {
+		if err := saq.loadOrgan(ctx, query, nodes, nil,
+			func(n *SysAddress, e *OrgOrgan) { n.Edges.Organ = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (saq *SysAddressQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgOrgan)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*SysAddress)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+	}
+	query.Where(predicate.OrgOrgan(func(s *sql.Selector) {
+		s.Where(sql.InValues(sysaddress.OrganColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.HaddrID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "haddr_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "haddr_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (saq *SysAddressQuery) sqlCount(ctx context.Context) (int, error) {

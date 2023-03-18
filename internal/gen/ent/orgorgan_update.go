@@ -14,6 +14,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
 // OrgOrganUpdate is the builder for updating OrgOrgan entities.
@@ -231,6 +232,26 @@ func (oou *OrgOrganUpdate) ClearOwnerID() *OrgOrganUpdate {
 	return oou
 }
 
+// SetHaddrID sets the "haddr_id" field.
+func (oou *OrgOrganUpdate) SetHaddrID(s string) *OrgOrganUpdate {
+	oou.mutation.SetHaddrID(s)
+	return oou
+}
+
+// SetNillableHaddrID sets the "haddr_id" field if the given value is not nil.
+func (oou *OrgOrganUpdate) SetNillableHaddrID(s *string) *OrgOrganUpdate {
+	if s != nil {
+		oou.SetHaddrID(*s)
+	}
+	return oou
+}
+
+// ClearHaddrID clears the value of the "haddr_id" field.
+func (oou *OrgOrganUpdate) ClearHaddrID() *OrgOrganUpdate {
+	oou.mutation.ClearHaddrID()
+	return oou
+}
+
 // SetCreator sets the "creator" field.
 func (oou *OrgOrganUpdate) SetCreator(s string) *OrgOrganUpdate {
 	oou.mutation.SetCreator(s)
@@ -251,9 +272,20 @@ func (oou *OrgOrganUpdate) ClearCreator() *OrgOrganUpdate {
 	return oou
 }
 
+// SetHaddr sets the "haddr" edge to the SysAddress entity.
+func (oou *OrgOrganUpdate) SetHaddr(s *SysAddress) *OrgOrganUpdate {
+	return oou.SetHaddrID(s.ID)
+}
+
 // Mutation returns the OrgOrganMutation object of the builder.
 func (oou *OrgOrganUpdate) Mutation() *OrgOrganMutation {
 	return oou.mutation
+}
+
+// ClearHaddr clears the "haddr" edge to the SysAddress entity.
+func (oou *OrgOrganUpdate) ClearHaddr() *OrgOrganUpdate {
+	oou.mutation.ClearHaddr()
+	return oou
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -322,6 +354,11 @@ func (oou *OrgOrganUpdate) check() error {
 	if v, ok := oou.mutation.OwnerID(); ok {
 		if err := orgorgan.OwnerIDValidator(v); err != nil {
 			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.owner_id": %w`, err)}
+		}
+	}
+	if v, ok := oou.mutation.HaddrID(); ok {
+		if err := orgorgan.HaddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "haddr_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.haddr_id": %w`, err)}
 		}
 	}
 	return nil
@@ -413,6 +450,43 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if oou.mutation.CreatorCleared() {
 		_spec.ClearField(orgorgan.FieldCreator, field.TypeString)
+	}
+	if oou.mutation.HaddrCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgorgan.HaddrTable,
+			Columns: []string{orgorgan.HaddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgOrgan
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oou.mutation.HaddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgorgan.HaddrTable,
+			Columns: []string{orgorgan.HaddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = oou.schemaConfig.OrgOrgan
 	ctx = internal.NewSchemaConfigContext(ctx, oou.schemaConfig)
@@ -639,6 +713,26 @@ func (oouo *OrgOrganUpdateOne) ClearOwnerID() *OrgOrganUpdateOne {
 	return oouo
 }
 
+// SetHaddrID sets the "haddr_id" field.
+func (oouo *OrgOrganUpdateOne) SetHaddrID(s string) *OrgOrganUpdateOne {
+	oouo.mutation.SetHaddrID(s)
+	return oouo
+}
+
+// SetNillableHaddrID sets the "haddr_id" field if the given value is not nil.
+func (oouo *OrgOrganUpdateOne) SetNillableHaddrID(s *string) *OrgOrganUpdateOne {
+	if s != nil {
+		oouo.SetHaddrID(*s)
+	}
+	return oouo
+}
+
+// ClearHaddrID clears the value of the "haddr_id" field.
+func (oouo *OrgOrganUpdateOne) ClearHaddrID() *OrgOrganUpdateOne {
+	oouo.mutation.ClearHaddrID()
+	return oouo
+}
+
 // SetCreator sets the "creator" field.
 func (oouo *OrgOrganUpdateOne) SetCreator(s string) *OrgOrganUpdateOne {
 	oouo.mutation.SetCreator(s)
@@ -659,9 +753,20 @@ func (oouo *OrgOrganUpdateOne) ClearCreator() *OrgOrganUpdateOne {
 	return oouo
 }
 
+// SetHaddr sets the "haddr" edge to the SysAddress entity.
+func (oouo *OrgOrganUpdateOne) SetHaddr(s *SysAddress) *OrgOrganUpdateOne {
+	return oouo.SetHaddrID(s.ID)
+}
+
 // Mutation returns the OrgOrganMutation object of the builder.
 func (oouo *OrgOrganUpdateOne) Mutation() *OrgOrganMutation {
 	return oouo.mutation
+}
+
+// ClearHaddr clears the "haddr" edge to the SysAddress entity.
+func (oouo *OrgOrganUpdateOne) ClearHaddr() *OrgOrganUpdateOne {
+	oouo.mutation.ClearHaddr()
+	return oouo
 }
 
 // Where appends a list predicates to the OrgOrganUpdate builder.
@@ -743,6 +848,11 @@ func (oouo *OrgOrganUpdateOne) check() error {
 	if v, ok := oouo.mutation.OwnerID(); ok {
 		if err := orgorgan.OwnerIDValidator(v); err != nil {
 			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.owner_id": %w`, err)}
+		}
+	}
+	if v, ok := oouo.mutation.HaddrID(); ok {
+		if err := orgorgan.HaddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "haddr_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.haddr_id": %w`, err)}
 		}
 	}
 	return nil
@@ -851,6 +961,43 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 	}
 	if oouo.mutation.CreatorCleared() {
 		_spec.ClearField(orgorgan.FieldCreator, field.TypeString)
+	}
+	if oouo.mutation.HaddrCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgorgan.HaddrTable,
+			Columns: []string{orgorgan.HaddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgOrgan
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oouo.mutation.HaddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgorgan.HaddrTable,
+			Columns: []string{orgorgan.HaddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = oouo.schemaConfig.OrgOrgan
 	ctx = internal.NewSchemaConfigContext(ctx, oouo.schemaConfig)

@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
@@ -373,6 +374,25 @@ func (sac *SysAddressCreate) SetNillableID(s *string) *SysAddressCreate {
 	return sac
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (sac *SysAddressCreate) SetOrganID(id string) *SysAddressCreate {
+	sac.mutation.SetOrganID(id)
+	return sac
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableOrganID(id *string) *SysAddressCreate {
+	if id != nil {
+		sac = sac.SetOrganID(*id)
+	}
+	return sac
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (sac *SysAddressCreate) SetOrgan(o *OrgOrgan) *SysAddressCreate {
+	return sac.SetOrganID(o.ID)
+}
+
 // Mutation returns the SysAddressMutation object of the builder.
 func (sac *SysAddressCreate) Mutation() *SysAddressMutation {
 	return sac.mutation
@@ -656,6 +676,26 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 	if value, ok := sac.mutation.Creator(); ok {
 		_spec.SetField(sysaddress.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
+	}
+	if nodes := sac.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.OrganTable,
+			Columns: []string{sysaddress.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = sac.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

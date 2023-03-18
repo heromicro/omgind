@@ -168,6 +168,10 @@ func init() {
 	orgorganDescOwnerID := orgorganFields[4].Descriptor()
 	// orgorgan.OwnerIDValidator is a validator for the "owner_id" field. It is called by the builders before save.
 	orgorgan.OwnerIDValidator = orgorganDescOwnerID.Validators[0].(func(string) error)
+	// orgorganDescHaddrID is the schema descriptor for haddr_id field.
+	orgorganDescHaddrID := orgorganFields[5].Descriptor()
+	// orgorgan.HaddrIDValidator is a validator for the "haddr_id" field. It is called by the builders before save.
+	orgorgan.HaddrIDValidator = orgorganDescHaddrID.Validators[0].(func(string) error)
 	// orgorganDescID is the schema descriptor for id field.
 	orgorganDescID := orgorganMixinFields0[0].Descriptor()
 	// orgorgan.DefaultID holds the default value on creation for the id field.

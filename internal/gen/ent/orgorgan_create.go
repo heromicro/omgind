@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
 // OrgOrganCreate is the builder for creating a OrgOrgan entity.
@@ -191,6 +192,20 @@ func (ooc *OrgOrganCreate) SetNillableOwnerID(s *string) *OrgOrganCreate {
 	return ooc
 }
 
+// SetHaddrID sets the "haddr_id" field.
+func (ooc *OrgOrganCreate) SetHaddrID(s string) *OrgOrganCreate {
+	ooc.mutation.SetHaddrID(s)
+	return ooc
+}
+
+// SetNillableHaddrID sets the "haddr_id" field if the given value is not nil.
+func (ooc *OrgOrganCreate) SetNillableHaddrID(s *string) *OrgOrganCreate {
+	if s != nil {
+		ooc.SetHaddrID(*s)
+	}
+	return ooc
+}
+
 // SetCreator sets the "creator" field.
 func (ooc *OrgOrganCreate) SetCreator(s string) *OrgOrganCreate {
 	ooc.mutation.SetCreator(s)
@@ -217,6 +232,11 @@ func (ooc *OrgOrganCreate) SetNillableID(s *string) *OrgOrganCreate {
 		ooc.SetID(*s)
 	}
 	return ooc
+}
+
+// SetHaddr sets the "haddr" edge to the SysAddress entity.
+func (ooc *OrgOrganCreate) SetHaddr(s *SysAddress) *OrgOrganCreate {
+	return ooc.SetHaddrID(s.ID)
 }
 
 // Mutation returns the OrgOrganMutation object of the builder.
@@ -325,6 +345,11 @@ func (ooc *OrgOrganCreate) check() error {
 			return &ValidationError{Name: "owner_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.owner_id": %w`, err)}
 		}
 	}
+	if v, ok := ooc.mutation.HaddrID(); ok {
+		if err := orgorgan.HaddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "haddr_id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.haddr_id": %w`, err)}
+		}
+	}
 	if v, ok := ooc.mutation.ID(); ok {
 		if err := orgorgan.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "OrgOrgan.id": %w`, err)}
@@ -418,6 +443,27 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 	if value, ok := ooc.mutation.Creator(); ok {
 		_spec.SetField(orgorgan.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
+	}
+	if nodes := ooc.mutation.HaddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgorgan.HaddrTable,
+			Columns: []string{orgorgan.HaddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = ooc.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.HaddrID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
@@ -654,6 +700,24 @@ func (u *OrgOrganUpsert) UpdateOwnerID() *OrgOrganUpsert {
 // ClearOwnerID clears the value of the "owner_id" field.
 func (u *OrgOrganUpsert) ClearOwnerID() *OrgOrganUpsert {
 	u.SetNull(orgorgan.FieldOwnerID)
+	return u
+}
+
+// SetHaddrID sets the "haddr_id" field.
+func (u *OrgOrganUpsert) SetHaddrID(v string) *OrgOrganUpsert {
+	u.Set(orgorgan.FieldHaddrID, v)
+	return u
+}
+
+// UpdateHaddrID sets the "haddr_id" field to the value that was provided on create.
+func (u *OrgOrganUpsert) UpdateHaddrID() *OrgOrganUpsert {
+	u.SetExcluded(orgorgan.FieldHaddrID)
+	return u
+}
+
+// ClearHaddrID clears the value of the "haddr_id" field.
+func (u *OrgOrganUpsert) ClearHaddrID() *OrgOrganUpsert {
+	u.SetNull(orgorgan.FieldHaddrID)
 	return u
 }
 
@@ -940,6 +1004,27 @@ func (u *OrgOrganUpsertOne) UpdateOwnerID() *OrgOrganUpsertOne {
 func (u *OrgOrganUpsertOne) ClearOwnerID() *OrgOrganUpsertOne {
 	return u.Update(func(s *OrgOrganUpsert) {
 		s.ClearOwnerID()
+	})
+}
+
+// SetHaddrID sets the "haddr_id" field.
+func (u *OrgOrganUpsertOne) SetHaddrID(v string) *OrgOrganUpsertOne {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.SetHaddrID(v)
+	})
+}
+
+// UpdateHaddrID sets the "haddr_id" field to the value that was provided on create.
+func (u *OrgOrganUpsertOne) UpdateHaddrID() *OrgOrganUpsertOne {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.UpdateHaddrID()
+	})
+}
+
+// ClearHaddrID clears the value of the "haddr_id" field.
+func (u *OrgOrganUpsertOne) ClearHaddrID() *OrgOrganUpsertOne {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.ClearHaddrID()
 	})
 }
 
@@ -1392,6 +1477,27 @@ func (u *OrgOrganUpsertBulk) UpdateOwnerID() *OrgOrganUpsertBulk {
 func (u *OrgOrganUpsertBulk) ClearOwnerID() *OrgOrganUpsertBulk {
 	return u.Update(func(s *OrgOrganUpsert) {
 		s.ClearOwnerID()
+	})
+}
+
+// SetHaddrID sets the "haddr_id" field.
+func (u *OrgOrganUpsertBulk) SetHaddrID(v string) *OrgOrganUpsertBulk {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.SetHaddrID(v)
+	})
+}
+
+// UpdateHaddrID sets the "haddr_id" field to the value that was provided on create.
+func (u *OrgOrganUpsertBulk) UpdateHaddrID() *OrgOrganUpsertBulk {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.UpdateHaddrID()
+	})
+}
+
+// ClearHaddrID clears the value of the "haddr_id" field.
+func (u *OrgOrganUpsertBulk) ClearHaddrID() *OrgOrganUpsertBulk {
+	return u.Update(func(s *OrgOrganUpsert) {
+		s.ClearHaddrID()
 	})
 }
 

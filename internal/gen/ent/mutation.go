@@ -1145,6 +1145,8 @@ type OrgOrganMutation struct {
 	owner_id      *string
 	creator       *string
 	clearedFields map[string]struct{}
+	haddr         *string
+	clearedhaddr  bool
 	done          bool
 	oldValue      func(context.Context) (*OrgOrgan, error)
 	predicates    []predicate.OrgOrgan
@@ -1823,6 +1825,55 @@ func (m *OrgOrganMutation) ResetOwnerID() {
 	delete(m.clearedFields, orgorgan.FieldOwnerID)
 }
 
+// SetHaddrID sets the "haddr_id" field.
+func (m *OrgOrganMutation) SetHaddrID(s string) {
+	m.haddr = &s
+}
+
+// HaddrID returns the value of the "haddr_id" field in the mutation.
+func (m *OrgOrganMutation) HaddrID() (r string, exists bool) {
+	v := m.haddr
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldHaddrID returns the old "haddr_id" field's value of the OrgOrgan entity.
+// If the OrgOrgan object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgOrganMutation) OldHaddrID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldHaddrID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldHaddrID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldHaddrID: %w", err)
+	}
+	return oldValue.HaddrID, nil
+}
+
+// ClearHaddrID clears the value of the "haddr_id" field.
+func (m *OrgOrganMutation) ClearHaddrID() {
+	m.haddr = nil
+	m.clearedFields[orgorgan.FieldHaddrID] = struct{}{}
+}
+
+// HaddrIDCleared returns if the "haddr_id" field was cleared in this mutation.
+func (m *OrgOrganMutation) HaddrIDCleared() bool {
+	_, ok := m.clearedFields[orgorgan.FieldHaddrID]
+	return ok
+}
+
+// ResetHaddrID resets all changes to the "haddr_id" field.
+func (m *OrgOrganMutation) ResetHaddrID() {
+	m.haddr = nil
+	delete(m.clearedFields, orgorgan.FieldHaddrID)
+}
+
 // SetCreator sets the "creator" field.
 func (m *OrgOrganMutation) SetCreator(s string) {
 	m.creator = &s
@@ -1872,6 +1923,32 @@ func (m *OrgOrganMutation) ResetCreator() {
 	delete(m.clearedFields, orgorgan.FieldCreator)
 }
 
+// ClearHaddr clears the "haddr" edge to the SysAddress entity.
+func (m *OrgOrganMutation) ClearHaddr() {
+	m.clearedhaddr = true
+}
+
+// HaddrCleared reports if the "haddr" edge to the SysAddress entity was cleared.
+func (m *OrgOrganMutation) HaddrCleared() bool {
+	return m.HaddrIDCleared() || m.clearedhaddr
+}
+
+// HaddrIDs returns the "haddr" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// HaddrID instead. It exists only for internal usage by the builders.
+func (m *OrgOrganMutation) HaddrIDs() (ids []string) {
+	if id := m.haddr; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetHaddr resets all changes to the "haddr" edge.
+func (m *OrgOrganMutation) ResetHaddr() {
+	m.haddr = nil
+	m.clearedhaddr = false
+}
+
 // Where appends a list predicates to the OrgOrganMutation builder.
 func (m *OrgOrganMutation) Where(ps ...predicate.OrgOrgan) {
 	m.predicates = append(m.predicates, ps...)
@@ -1906,7 +1983,7 @@ func (m *OrgOrganMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgOrganMutation) Fields() []string {
-	fields := make([]string, 0, 13)
+	fields := make([]string, 0, 14)
 	if m.is_del != nil {
 		fields = append(fields, orgorgan.FieldIsDel)
 	}
@@ -1943,6 +2020,9 @@ func (m *OrgOrganMutation) Fields() []string {
 	if m.owner_id != nil {
 		fields = append(fields, orgorgan.FieldOwnerID)
 	}
+	if m.haddr != nil {
+		fields = append(fields, orgorgan.FieldHaddrID)
+	}
 	if m.creator != nil {
 		fields = append(fields, orgorgan.FieldCreator)
 	}
@@ -1978,6 +2058,8 @@ func (m *OrgOrganMutation) Field(name string) (ent.Value, bool) {
 		return m.IdenNo()
 	case orgorgan.FieldOwnerID:
 		return m.OwnerID()
+	case orgorgan.FieldHaddrID:
+		return m.HaddrID()
 	case orgorgan.FieldCreator:
 		return m.Creator()
 	}
@@ -2013,6 +2095,8 @@ func (m *OrgOrganMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldIdenNo(ctx)
 	case orgorgan.FieldOwnerID:
 		return m.OldOwnerID(ctx)
+	case orgorgan.FieldHaddrID:
+		return m.OldHaddrID(ctx)
 	case orgorgan.FieldCreator:
 		return m.OldCreator(ctx)
 	}
@@ -2108,6 +2192,13 @@ func (m *OrgOrganMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetOwnerID(v)
 		return nil
+	case orgorgan.FieldHaddrID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetHaddrID(v)
+		return nil
 	case orgorgan.FieldCreator:
 		v, ok := value.(string)
 		if !ok {
@@ -2187,6 +2278,9 @@ func (m *OrgOrganMutation) ClearedFields() []string {
 	if m.FieldCleared(orgorgan.FieldOwnerID) {
 		fields = append(fields, orgorgan.FieldOwnerID)
 	}
+	if m.FieldCleared(orgorgan.FieldHaddrID) {
+		fields = append(fields, orgorgan.FieldHaddrID)
+	}
 	if m.FieldCleared(orgorgan.FieldCreator) {
 		fields = append(fields, orgorgan.FieldCreator)
 	}
@@ -2230,6 +2324,9 @@ func (m *OrgOrganMutation) ClearField(name string) error {
 		return nil
 	case orgorgan.FieldOwnerID:
 		m.ClearOwnerID()
+		return nil
+	case orgorgan.FieldHaddrID:
+		m.ClearHaddrID()
 		return nil
 	case orgorgan.FieldCreator:
 		m.ClearCreator()
@@ -2278,6 +2375,9 @@ func (m *OrgOrganMutation) ResetField(name string) error {
 	case orgorgan.FieldOwnerID:
 		m.ResetOwnerID()
 		return nil
+	case orgorgan.FieldHaddrID:
+		m.ResetHaddrID()
+		return nil
 	case orgorgan.FieldCreator:
 		m.ResetCreator()
 		return nil
@@ -2287,19 +2387,28 @@ func (m *OrgOrganMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *OrgOrganMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.haddr != nil {
+		edges = append(edges, orgorgan.EdgeHaddr)
+	}
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
 func (m *OrgOrganMutation) AddedIDs(name string) []ent.Value {
+	switch name {
+	case orgorgan.EdgeHaddr:
+		if id := m.haddr; id != nil {
+			return []ent.Value{*id}
+		}
+	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *OrgOrganMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
 	return edges
 }
 
@@ -2311,25 +2420,42 @@ func (m *OrgOrganMutation) RemovedIDs(name string) []ent.Value {
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *OrgOrganMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.clearedhaddr {
+		edges = append(edges, orgorgan.EdgeHaddr)
+	}
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
 func (m *OrgOrganMutation) EdgeCleared(name string) bool {
+	switch name {
+	case orgorgan.EdgeHaddr:
+		return m.clearedhaddr
+	}
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
 func (m *OrgOrganMutation) ClearEdge(name string) error {
+	switch name {
+	case orgorgan.EdgeHaddr:
+		m.ClearHaddr()
+		return nil
+	}
 	return fmt.Errorf("unknown OrgOrgan unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
 func (m *OrgOrganMutation) ResetEdge(name string) error {
+	switch name {
+	case orgorgan.EdgeHaddr:
+		m.ResetHaddr()
+		return nil
+	}
 	return fmt.Errorf("unknown OrgOrgan edge %s", name)
 }
 
@@ -4929,6 +5055,8 @@ type SysAddressMutation struct {
 	mobile        *string
 	creator       *string
 	clearedFields map[string]struct{}
+	organ         *string
+	clearedorgan  bool
 	done          bool
 	oldValue      func(context.Context) (*SysAddress, error)
 	predicates    []predicate.SysAddress
@@ -6195,6 +6323,45 @@ func (m *SysAddressMutation) ResetCreator() {
 	delete(m.clearedFields, sysaddress.FieldCreator)
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by id.
+func (m *SysAddressMutation) SetOrganID(id string) {
+	m.organ = &id
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (m *SysAddressMutation) ClearOrgan() {
+	m.clearedorgan = true
+}
+
+// OrganCleared reports if the "organ" edge to the OrgOrgan entity was cleared.
+func (m *SysAddressMutation) OrganCleared() bool {
+	return m.clearedorgan
+}
+
+// OrganID returns the "organ" edge ID in the mutation.
+func (m *SysAddressMutation) OrganID() (id string, exists bool) {
+	if m.organ != nil {
+		return *m.organ, true
+	}
+	return
+}
+
+// OrganIDs returns the "organ" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// OrganID instead. It exists only for internal usage by the builders.
+func (m *SysAddressMutation) OrganIDs() (ids []string) {
+	if id := m.organ; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetOrgan resets all changes to the "organ" edge.
+func (m *SysAddressMutation) ResetOrgan() {
+	m.organ = nil
+	m.clearedorgan = false
+}
+
 // Where appends a list predicates to the SysAddressMutation builder.
 func (m *SysAddressMutation) Where(ps ...predicate.SysAddress) {
 	m.predicates = append(m.predicates, ps...)
@@ -6863,19 +7030,28 @@ func (m *SysAddressMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *SysAddressMutation) AddedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.organ != nil {
+		edges = append(edges, sysaddress.EdgeOrgan)
+	}
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
 func (m *SysAddressMutation) AddedIDs(name string) []ent.Value {
+	switch name {
+	case sysaddress.EdgeOrgan:
+		if id := m.organ; id != nil {
+			return []ent.Value{*id}
+		}
+	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *SysAddressMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
 	return edges
 }
 
@@ -6887,25 +7063,42 @@ func (m *SysAddressMutation) RemovedIDs(name string) []ent.Value {
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *SysAddressMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 0)
+	edges := make([]string, 0, 1)
+	if m.clearedorgan {
+		edges = append(edges, sysaddress.EdgeOrgan)
+	}
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
 func (m *SysAddressMutation) EdgeCleared(name string) bool {
+	switch name {
+	case sysaddress.EdgeOrgan:
+		return m.clearedorgan
+	}
 	return false
 }
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
 func (m *SysAddressMutation) ClearEdge(name string) error {
+	switch name {
+	case sysaddress.EdgeOrgan:
+		m.ClearOrgan()
+		return nil
+	}
 	return fmt.Errorf("unknown SysAddress unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
 func (m *SysAddressMutation) ResetEdge(name string) error {
+	switch name {
+	case sysaddress.EdgeOrgan:
+		m.ResetOrgan()
+		return nil
+	}
 	return fmt.Errorf("unknown SysAddress edge %s", name)
 }
 

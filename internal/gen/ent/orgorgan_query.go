@@ -14,6 +14,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
 // OrgOrganQuery is the builder for querying OrgOrgan entities.
@@ -23,6 +24,7 @@ type OrgOrganQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.OrgOrgan
+	withHaddr  *SysAddressQuery
 	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -58,6 +60,31 @@ func (ooq *OrgOrganQuery) Unique(unique bool) *OrgOrganQuery {
 func (ooq *OrgOrganQuery) Order(o ...OrderFunc) *OrgOrganQuery {
 	ooq.order = append(ooq.order, o...)
 	return ooq
+}
+
+// QueryHaddr chains the current query on the "haddr" edge.
+func (ooq *OrgOrganQuery) QueryHaddr() *SysAddressQuery {
+	query := (&SysAddressClient{config: ooq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := ooq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := ooq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, selector),
+			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, orgorgan.HaddrTable, orgorgan.HaddrColumn),
+		)
+		schemaConfig := ooq.schemaConfig
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgOrgan
+		fromU = sqlgraph.SetNeighbors(ooq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first OrgOrgan entity from the query.
@@ -252,10 +279,22 @@ func (ooq *OrgOrganQuery) Clone() *OrgOrganQuery {
 		order:      append([]OrderFunc{}, ooq.order...),
 		inters:     append([]Interceptor{}, ooq.inters...),
 		predicates: append([]predicate.OrgOrgan{}, ooq.predicates...),
+		withHaddr:  ooq.withHaddr.Clone(),
 		// clone intermediate query.
 		sql:  ooq.sql.Clone(),
 		path: ooq.path,
 	}
+}
+
+// WithHaddr tells the query-builder to eager-load the nodes that are connected to
+// the "haddr" edge. The optional arguments are used to configure the query builder of the edge.
+func (ooq *OrgOrganQuery) WithHaddr(opts ...func(*SysAddressQuery)) *OrgOrganQuery {
+	query := (&SysAddressClient{config: ooq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	ooq.withHaddr = query
+	return ooq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -334,8 +373,11 @@ func (ooq *OrgOrganQuery) prepareQuery(ctx context.Context) error {
 
 func (ooq *OrgOrganQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrgOrgan, error) {
 	var (
-		nodes = []*OrgOrgan{}
-		_spec = ooq.querySpec()
+		nodes       = []*OrgOrgan{}
+		_spec       = ooq.querySpec()
+		loadedTypes = [1]bool{
+			ooq.withHaddr != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*OrgOrgan).scanValues(nil, columns)
@@ -343,6 +385,7 @@ func (ooq *OrgOrganQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &OrgOrgan{config: ooq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	_spec.Node.Schema = ooq.schemaConfig.OrgOrgan
@@ -359,7 +402,46 @@ func (ooq *OrgOrganQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := ooq.withHaddr; query != nil {
+		if err := ooq.loadHaddr(ctx, query, nodes, nil,
+			func(n *OrgOrgan, e *SysAddress) { n.Edges.Haddr = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (ooq *OrgOrganQuery) loadHaddr(ctx context.Context, query *SysAddressQuery, nodes []*OrgOrgan, init func(*OrgOrgan), assign func(*OrgOrgan, *SysAddress)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*OrgOrgan)
+	for i := range nodes {
+		if nodes[i].HaddrID == nil {
+			continue
+		}
+		fk := *nodes[i].HaddrID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(sysaddress.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "haddr_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
 }
 
 func (ooq *OrgOrganQuery) sqlCount(ctx context.Context) (int, error) {
