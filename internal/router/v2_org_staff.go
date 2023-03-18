@@ -15,6 +15,6 @@ func (r *Router) initOrgStaffRouterV2(urg *gin.RouterGroup, api *api_v2.OrgStaff
 		gOrgStaff.DELETE(":id", api.Delete)
 		gOrgStaff.PATCH(":id/enable", api.Enable)
 		gOrgStaff.PATCH(":id/disable", api.Disable)
-		gOrgStaff.PATCH(":id/view", api.View)
+		gOrgStaff.GET(":id/view", api.View)
 	}
 }

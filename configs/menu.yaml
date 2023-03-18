@@ -339,6 +339,7 @@
               path: "/api/v2/org-organs/:id/view"
 
     - name: 部门管理
+      icon: audit
       router: "/organ/org-department"
       sort: 49
       level: 2
@@ -382,6 +383,7 @@
               path: "/api/v2/org-departments/:id/view"
 
     - name: 员工管理
+      icon: audit
       router: "/organ/org-staff"
       sort: 49
       level: 2
@@ -425,6 +427,7 @@
               path: "/api/v2/org-staffs/:id/view"
 
     - name: 职位管理
+      icon: audit
       router: "/organ/org-position"
       sort: 59
       level: 2

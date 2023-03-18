@@ -15,6 +15,6 @@ func (r *Router) initOrgOrganRouterV2(urg *gin.RouterGroup, api *api_v2.OrgOrgan
 		gOrgOrgan.DELETE(":id", api.Delete)
 		gOrgOrgan.PATCH(":id/enable", api.Enable)
 		gOrgOrgan.PATCH(":id/disable", api.Disable)
-		gOrgOrgan.PATCH(":id/view", api.View)
+		gOrgOrgan.GET(":id/view", api.View)
 	}
 }

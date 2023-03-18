@@ -15,6 +15,6 @@ func (r *Router) initOrgPositionRouterV2(urg *gin.RouterGroup, api *api_v2.OrgPo
 		gOrgPosition.DELETE(":id", api.Delete)
 		gOrgPosition.PATCH(":id/enable", api.Enable)
 		gOrgPosition.PATCH(":id/disable", api.Disable)
-		gOrgPosition.PATCH(":id/view", api.View)
+		gOrgPosition.GET(":id/view", api.View)
 	}
 }
