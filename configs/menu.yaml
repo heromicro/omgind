@@ -296,7 +296,7 @@
   children:
     - name: 企业信息
       icon: audit
-      router: "/organ/orginfo"
+      router: "/organ/organ"
       sort: 29
       level: 2
       actions:
@@ -340,7 +340,7 @@
 
     - name: 部门管理
       icon: audit
-      router: "/organ/org-department"
+      router: "/organ/department"
       sort: 49
       level: 2
       actions:
@@ -384,7 +384,7 @@
 
     - name: 员工管理
       icon: audit
-      router: "/organ/org-staff"
+      router: "/organ/staff"
       sort: 49
       level: 2
       actions:
@@ -428,7 +428,7 @@
 
     - name: 职位管理
       icon: audit
-      router: "/organ/org-position"
+      router: "/organ/position"
       sort: 59
       level: 2
       actions:
