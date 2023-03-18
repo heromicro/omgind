@@ -55,9 +55,11 @@ func (su SysUser) Indexes() []ent.Index {
 	}
 }
 
-//// Edges of the SysUser.
-//func (SysUser) Edges() []ent.Edge {
-//	return []ent.Edge{
-//		//edge.To("userRoles", SysUserRole.Type).Comment("userroles: "),
-//	}
-//}
+// Edges of the SysUser.
+func (SysUser) Edges() []ent.Edge {
+	return []ent.Edge{
+		// edge.To("organ", OrgOrgan.Type),
+
+		//edge.To("userRoles", SysUserRole.Type).Comment("userroles: "),
+	}
+}

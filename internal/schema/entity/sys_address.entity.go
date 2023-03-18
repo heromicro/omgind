@@ -2,6 +2,7 @@ package entity
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/schema/mixin"
 )
@@ -51,7 +52,9 @@ func (SysAddress) Fields() []ent.Field {
 }
 
 func (SysAddress) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+		edge.To("organ", OrgOrgan.Type).Unique(),
+	}
 }
 
 func (SysAddress) Indexes() []ent.Index {
