@@ -22,16 +22,16 @@ type OrgDepartment struct {
 }
 
 // ToSchemaOrgDepartment 转换为
-func (a *OrgDepartment) ToSchemaOrgDepartment(et *ent.OrgDepartment) *schema.OrgDepartment {
+func ToSchemaOrgDepartment(et *ent.OrgDepartment) *schema.OrgDepartment {
 	item := new(schema.OrgDepartment)
 	structure.Copy(et, item)
 	return item
 }
 
-func (a *OrgDepartment) ToSchemaOrgDepartments(ets ent.OrgDepartments) []*schema.OrgDepartment {
+func ToSchemaOrgDepartments(ets ent.OrgDepartments) []*schema.OrgDepartment {
 	list := make([]*schema.OrgDepartment, len(ets))
 	for i, item := range ets {
-		list[i] = a.ToSchemaOrgDepartment(item)
+		list[i] = ToSchemaOrgDepartment(item)
 	}
 	return list
 }
@@ -67,6 +67,10 @@ func (a *OrgDepartment) Query(ctx context.Context, params schema.OrgDepartmentQu
 	query = query.Where(orgdepartment.DeletedAtIsNil())
 	// TODO: 查询条件
 
+	if v := params.IsActive; v != nil {
+		query = query.Where(orgdepartment.IsActiveEQ(*v))
+	}
+
 	count, err := query.Count(ctx)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -77,7 +81,20 @@ func (a *OrgDepartment) Query(ctx context.Context, params schema.OrgDepartmentQu
 		return &schema.OrgDepartmentQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	if v := params.IsActive_Order; v != "" {
+		of := MakeUpOrderField(orgdepartment.FieldIsActive, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.Sort_Order; v != "" {
+		of := MakeUpOrderField(orgdepartment.FieldSort, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if len(opt.OrderFields) == 0 {
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgdepartment.FieldID, schema.OrderByDESC))
+	}
+
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
@@ -94,7 +111,7 @@ func (a *OrgDepartment) Query(ctx context.Context, params schema.OrgDepartmentQu
 
 	qr := &schema.OrgDepartmentQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaOrgDepartments(list),
+		Data:       ToSchemaOrgDepartments(list),
 	}
 
 	return qr, nil
@@ -111,7 +128,7 @@ func (a *OrgDepartment) Get(ctx context.Context, id string, opts ...schema.OrgDe
 		return nil, err
 	}
 
-	return a.ToSchemaOrgDepartment(r_orgdepartment), nil
+	return ToSchemaOrgDepartment(r_orgdepartment), nil
 }
 
 // View 查询指定数据
@@ -125,19 +142,20 @@ func (a *OrgDepartment) View(ctx context.Context, id string, opts ...schema.OrgD
 		return nil, err
 	}
 
-	return a.ToSchemaOrgDepartment(r_orgdepartment), nil
+	return ToSchemaOrgDepartment(r_orgdepartment), nil
 }
 
 // Create 创建数据
 func (a *OrgDepartment) Create(ctx context.Context, item schema.OrgDepartment) (*schema.OrgDepartment, error) {
 
 	iteminput := a.ToEntCreateOrgDepartmentInput(&item)
+
 	r_orgdepartment, err := a.EntCli.OrgDepartment.Create().SetInput(*iteminput).Save(ctx)
 
 	if err != nil {
 		return nil, err
 	}
-	sch_orgdepartment := a.ToSchemaOrgDepartment(r_orgdepartment)
+	sch_orgdepartment := ToSchemaOrgDepartment(r_orgdepartment)
 	return sch_orgdepartment, nil
 }
 
@@ -152,7 +170,7 @@ func (a *OrgDepartment) Update(ctx context.Context, id string, item schema.OrgDe
 	iteminput := a.ToEntUpdateOrgDepartmentInput(&item)
 
 	r_orgdepartment, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_orgdepartment := a.ToSchemaOrgDepartment(r_orgdepartment)
+	sch_orgdepartment := ToSchemaOrgDepartment(r_orgdepartment)
 
 	return sch_orgdepartment, nil
 }

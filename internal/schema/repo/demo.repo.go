@@ -20,16 +20,16 @@ type Demo struct {
 }
 
 // ToSchemaDemo 转换为
-func (a *Demo) ToSchemaDemo(xd *ent.XxxDemo) *schema.Demo {
+func ToSchemaDemo(xd *ent.XxxDemo) *schema.Demo {
 	item := new(schema.Demo)
 	structure.Copy(xd, item)
 	return item
 }
 
-func (a *Demo) ToSchemaDemos(xds ent.XxxDemos) []*schema.Demo {
+func ToSchemaDemos(xds ent.XxxDemos) []*schema.Demo {
 	list := make([]*schema.Demo, len(xds))
 	for i, item := range xds {
-		list[i] = a.ToSchemaDemo(item)
+		list[i] = ToSchemaDemo(item)
 	}
 	return list
 }
@@ -139,7 +139,7 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 
 	qr := &schema.DemoQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaDemos(rlist),
+		Data:       ToSchemaDemos(rlist),
 	}
 	return qr, nil
 }
@@ -152,7 +152,7 @@ func (a *Demo) Get(ctx context.Context, id string, opts ...schema.DemoQueryOptio
 		return nil, err
 	}
 
-	return a.ToSchemaDemo(xxxdemo), nil
+	return ToSchemaDemo(xxxdemo), nil
 }
 
 // Create 创建数据
@@ -166,7 +166,7 @@ func (a *Demo) Create(ctx context.Context, item schema.Demo) (*schema.Demo, erro
 	if err != nil {
 		return nil, err
 	}
-	sch_demo := a.ToSchemaDemo(xxxdemo)
+	sch_demo := ToSchemaDemo(xxxdemo)
 	return sch_demo, nil
 }
 
@@ -182,7 +182,7 @@ func (a *Demo) Update(ctx context.Context, id string, item schema.Demo) (*schema
 	iteminput.UpdatedAt = nil
 
 	xxxdemo, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_demo := a.ToSchemaDemo(xxxdemo)
+	sch_demo := ToSchemaDemo(xxxdemo)
 
 	return sch_demo, nil
 }

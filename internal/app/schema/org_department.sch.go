@@ -28,7 +28,9 @@ type OrgDepartmentQueryParam struct {
 	IsActive   *bool   `form:"is_active"`  //
 	OrgId      string  `form:"org_id"`     //
 
-	IsActive_Order *bool `form:"is_active__order"` //
+	CreatedAt_Order string `form:"created_at__order"` // asc, desc
+	IsActive_Order  string `form:"is_active__order"`  //  asc desc
+	Sort_Order      string `form:"sort__order"`       // asc desc
 
 }
 

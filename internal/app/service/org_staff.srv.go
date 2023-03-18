@@ -6,6 +6,7 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
+	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -15,6 +16,8 @@ var OrgStaffSet = wire.NewSet(wire.Struct(new(OrgStaff), "*"))
 
 // OrgStaff 员工管理
 type OrgStaff struct {
+	EntCli *ent.Client
+
 	OrgStaffRepo *repo.OrgStaff
 }
 

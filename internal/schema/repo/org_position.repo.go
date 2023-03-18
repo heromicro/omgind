@@ -22,16 +22,16 @@ type OrgPosition struct {
 }
 
 // ToSchemaOrgPosition 转换为
-func (a *OrgPosition) ToSchemaOrgPosition(et *ent.OrgPosition) *schema.OrgPosition {
+func ToSchemaOrgPosition(et *ent.OrgPosition) *schema.OrgPosition {
 	item := new(schema.OrgPosition)
 	structure.Copy(et, item)
 	return item
 }
 
-func (a *OrgPosition) ToSchemaOrgPositions(ets ent.OrgPositions) []*schema.OrgPosition {
+func  ToSchemaOrgPositions(ets ent.OrgPositions) []*schema.OrgPosition {
 	list := make([]*schema.OrgPosition, len(ets))
 	for i, item := range ets {
-		list[i] = a.ToSchemaOrgPosition(item)
+		list[i] = ToSchemaOrgPosition(item)
 	}
 	return list
 }
@@ -67,6 +67,10 @@ func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryP
 	query = query.Where(orgposition.DeletedAtIsNil())
 	// TODO: 查询条件
 
+	if v := params.IsActive; v != nil {
+		query = query.Where(orgposition.IsActiveEQ(*v))
+	}
+
 	count, err := query.Count(ctx)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -77,7 +81,20 @@ func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryP
 		return &schema.OrgPositionQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	if v := params.IsActive_Order; v != "" {
+		of := MakeUpOrderField(orgposition.FieldIsActive, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.Sort_Order; v != "" {
+		of := MakeUpOrderField(orgposition.FieldSort, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if len(opt.OrderFields) == 0 {
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgposition.FieldID, schema.OrderByDESC))
+	}
+
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
@@ -94,7 +111,7 @@ func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryP
 
 	qr := &schema.OrgPositionQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaOrgPositions(list),
+		Data:       ToSchemaOrgPositions(list),
 	}
 
 	return qr, nil
@@ -111,7 +128,7 @@ func (a *OrgPosition) Get(ctx context.Context, id string, opts ...schema.OrgPosi
 		return nil, err
 	}
 
-	return a.ToSchemaOrgPosition(r_orgposition), nil
+	return ToSchemaOrgPosition(r_orgposition), nil
 }
 
 // View 查询指定数据
@@ -125,7 +142,7 @@ func (a *OrgPosition) View(ctx context.Context, id string, opts ...schema.OrgPos
 		return nil, err
 	}
 
-	return a.ToSchemaOrgPosition(r_orgposition), nil
+	return ToSchemaOrgPosition(r_orgposition), nil
 }
 
 // Create 创建数据
@@ -137,7 +154,7 @@ func (a *OrgPosition) Create(ctx context.Context, item schema.OrgPosition) (*sch
 	if err != nil {
 		return nil, err
 	}
-	sch_orgposition := a.ToSchemaOrgPosition(r_orgposition)
+	sch_orgposition := ToSchemaOrgPosition(r_orgposition)
 	return sch_orgposition, nil
 }
 
@@ -152,7 +169,7 @@ func (a *OrgPosition) Update(ctx context.Context, id string, item schema.OrgPosi
 	iteminput := a.ToEntUpdateOrgPositionInput(&item)
 
 	r_orgposition, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_orgposition := a.ToSchemaOrgPosition(r_orgposition)
+	sch_orgposition := ToSchemaOrgPosition(r_orgposition)
 
 	return sch_orgposition, nil
 }

@@ -33,8 +33,14 @@ type OrgOrganQueryParam struct {
 	IsActive   *bool   `form:"is_active"`  //
 	OwnerId    string  `form:"owner_id"`   //
 
-	IsActive_Order *bool `form:"is_active__order"` //
+	CreatedAt_Order string `form:"created_at__order"` // asc, desc
+	IsActive_Order  string `form:"is_active__order"`  // asc desc
+	Sort_Order      string `form:"sort__order"`       // asc desc
 
+	CountryID_Order  string `form:"country_id__order"`  // asc, desc
+	ProvinceID_Order string `form:"province_id__order"` // asc, desc
+	CityID_Order     string `form:"city_id__order"`     // asc, desc
+	CountyID_Order   string `form:"county_id__order"`   // asc, desc
 }
 
 // OrgOrganQueryOptions 查询可选参数项

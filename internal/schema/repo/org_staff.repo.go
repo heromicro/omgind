@@ -22,16 +22,16 @@ type OrgStaff struct {
 }
 
 // ToSchemaOrgStaff 转换为
-func (a *OrgStaff) ToSchemaOrgStaff(et *ent.OrgStaff) *schema.OrgStaff {
+func ToSchemaOrgStaff(et *ent.OrgStaff) *schema.OrgStaff {
 	item := new(schema.OrgStaff)
 	structure.Copy(et, item)
 	return item
 }
 
-func (a *OrgStaff) ToSchemaOrgStaffs(ets ent.OrgStaffs) []*schema.OrgStaff {
+func ToSchemaOrgStaffs(ets ent.OrgStaffs) []*schema.OrgStaff {
 	list := make([]*schema.OrgStaff, len(ets))
 	for i, item := range ets {
-		list[i] = a.ToSchemaOrgStaff(item)
+		list[i] = ToSchemaOrgStaff(item)
 	}
 	return list
 }
@@ -66,6 +66,13 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 
 	query = query.Where(orgstaff.DeletedAtIsNil())
 	// TODO: 查询条件
+	if v := params.Name; v != "" {
+		query = query.Where(orgstaff.Or(orgstaff.FirstNameContains(v), orgstaff.LastNameContains(v)))
+	}
+
+	if v := params.IsActive; v != nil {
+		query = query.Where(orgstaff.IsActiveEQ(*v))
+	}
 
 	count, err := query.Count(ctx)
 	if err != nil {
@@ -77,7 +84,20 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 		return &schema.OrgStaffQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	if v := params.IsActive_Order; v != "" {
+		of := MakeUpOrderField(orgstaff.FieldIsActive, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.Sort_Order; v != "" {
+		of := MakeUpOrderField(orgstaff.FieldSort, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if len(opt.OrderFields) == 0 {
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgstaff.FieldID, schema.OrderByDESC))
+	}
+
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
@@ -94,7 +114,7 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 
 	qr := &schema.OrgStaffQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaOrgStaffs(list),
+		Data:       ToSchemaOrgStaffs(list),
 	}
 
 	return qr, nil
@@ -111,7 +131,7 @@ func (a *OrgStaff) Get(ctx context.Context, id string, opts ...schema.OrgStaffQu
 		return nil, err
 	}
 
-	return a.ToSchemaOrgStaff(r_orgstaff), nil
+	return ToSchemaOrgStaff(r_orgstaff), nil
 }
 
 // View 查询指定数据
@@ -125,7 +145,7 @@ func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQ
 		return nil, err
 	}
 
-	return a.ToSchemaOrgStaff(r_orgstaff), nil
+	return ToSchemaOrgStaff(r_orgstaff), nil
 }
 
 // Create 创建数据
@@ -137,7 +157,7 @@ func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.Or
 	if err != nil {
 		return nil, err
 	}
-	sch_orgstaff := a.ToSchemaOrgStaff(r_orgstaff)
+	sch_orgstaff := ToSchemaOrgStaff(r_orgstaff)
 	return sch_orgstaff, nil
 }
 
@@ -152,7 +172,7 @@ func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) 
 	iteminput := a.ToEntUpdateOrgStaffInput(&item)
 
 	r_orgstaff, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_orgstaff := a.ToSchemaOrgStaff(r_orgstaff)
+	sch_orgstaff := ToSchemaOrgStaff(r_orgstaff)
 
 	return sch_orgstaff, nil
 }

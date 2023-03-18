@@ -7,6 +7,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 
@@ -22,16 +23,20 @@ type OrgOrgan struct {
 }
 
 // ToSchemaOrgOrgan 转换为
-func (a *OrgOrgan) ToSchemaOrgOrgan(et *ent.OrgOrgan) *schema.OrgOrgan {
+func ToSchemaOrgOrgan(et *ent.OrgOrgan) *schema.OrgOrgan {
 	item := new(schema.OrgOrgan)
+
 	structure.Copy(et, item)
+	if et.Edges.Haddr != nil {
+		item.Haddr = ToSchemaSysAddress(et.Edges.Haddr)
+	}
 	return item
 }
 
-func (a *OrgOrgan) ToSchemaOrgOrgans(ets ent.OrgOrgans) []*schema.OrgOrgan {
+func ToSchemaOrgOrgans(ets ent.OrgOrgans) []*schema.OrgOrgan {
 	list := make([]*schema.OrgOrgan, len(ets))
 	for i, item := range ets {
-		list[i] = a.ToSchemaOrgOrgan(item)
+		list[i] = ToSchemaOrgOrgan(item)
 	}
 	return list
 }
@@ -62,10 +67,23 @@ func (a *OrgOrgan) getQueryOption(opts ...schema.OrgOrganQueryOptions) schema.Or
 func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrganQueryResult, error) {
 	opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.OrgOrgan.Query()
+	query := a.EntCli.OrgOrgan.Query().WithHaddr(func(saq *ent.SysAddressQuery) {
+		saq.Select(sysaddress.FieldID, sysaddress.FieldCountry, sysaddress.FieldCountryID, sysaddress.FieldProvince, sysaddress.FieldProvinceID, sysaddress.FieldCity, sysaddress.FieldCityID, sysaddress.FieldCounty, sysaddress.FieldCountyID, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldFirstName, sysaddress.FieldLastName, sysaddress.FieldDaddr, sysaddress.FieldZipCode)
+	})
 
 	query = query.Where(orgorgan.DeletedAtIsNil())
 	// TODO: 查询条件
+	if v := params.Name; v != "" {
+		query = query.Where(orgorgan.NameContains(v))
+	}
+
+	if v := params.Code; v != nil && *v != "" {
+		query = query.Where(orgorgan.CodeContains(*v))
+	}
+
+	if v := params.IsActive; v != nil {
+		query = query.Where(orgorgan.IsActiveEQ(*v))
+	}
 
 	count, err := query.Count(ctx)
 	if err != nil {
@@ -77,7 +95,20 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 		return &schema.OrgOrganQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	if v := params.IsActive_Order; v != "" {
+		of := MakeUpOrderField(orgorgan.FieldIsActive, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.Sort_Order; v != "" {
+		of := MakeUpOrderField(orgorgan.FieldSort, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if len(opt.OrderFields) == 0 {
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgorgan.FieldID, schema.OrderByDESC))
+	}
+
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
@@ -94,7 +125,7 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 
 	qr := &schema.OrgOrganQueryResult{
 		PageResult: pr,
-		Data:       a.ToSchemaOrgOrgans(list),
+		Data:       ToSchemaOrgOrgans(list),
 	}
 
 	return qr, nil
@@ -103,7 +134,7 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 // Get 查询指定数据
 func (a *OrgOrgan) Get(ctx context.Context, id string, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrgan, error) {
 
-	r_orgorgan, err := a.EntCli.OrgOrgan.Query().Where(orgorgan.IDEQ(id)).Only(ctx)
+	r_orgorgan, err := a.EntCli.OrgOrgan.Query().Where(orgorgan.IDEQ(id)).WithHaddr().Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
@@ -111,13 +142,13 @@ func (a *OrgOrgan) Get(ctx context.Context, id string, opts ...schema.OrgOrganQu
 		return nil, err
 	}
 
-	return a.ToSchemaOrgOrgan(r_orgorgan), nil
+	return ToSchemaOrgOrgan(r_orgorgan), nil
 }
 
 // View 查询指定数据
 func (a *OrgOrgan) View(ctx context.Context, id string, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrgan, error) {
 
-	r_orgorgan, err := a.EntCli.OrgOrgan.Query().Where(orgorgan.IDEQ(id)).Only(ctx)
+	r_orgorgan, err := a.EntCli.OrgOrgan.Query().Where(orgorgan.IDEQ(id)).WithHaddr().Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
@@ -125,36 +156,7 @@ func (a *OrgOrgan) View(ctx context.Context, id string, opts ...schema.OrgOrganQ
 		return nil, err
 	}
 
-	return a.ToSchemaOrgOrgan(r_orgorgan), nil
-}
-
-// Create 创建数据
-func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.OrgOrgan, error) {
-
-	iteminput := a.ToEntCreateOrgOrganInput(&item)
-	r_orgorgan, err := a.EntCli.OrgOrgan.Create().SetInput(*iteminput).Save(ctx)
-
-	if err != nil {
-		return nil, err
-	}
-	sch_orgorgan := a.ToSchemaOrgOrgan(r_orgorgan)
-	return sch_orgorgan, nil
-}
-
-// Update 更新数据
-func (a *OrgOrgan) Update(ctx context.Context, id string, item schema.OrgOrgan) (*schema.OrgOrgan, error) {
-
-	oitem, err := a.EntCli.OrgOrgan.Query().Where(orgorgan.IDEQ(id)).Only(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	iteminput := a.ToEntUpdateOrgOrganInput(&item)
-
-	r_orgorgan, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_orgorgan := a.ToSchemaOrgOrgan(r_orgorgan)
-
-	return sch_orgorgan, nil
+	return ToSchemaOrgOrgan(r_orgorgan), nil
 }
 
 // Delete 删除数据

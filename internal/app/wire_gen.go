@@ -184,7 +184,9 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceOrgOrgan := &service.OrgOrgan{
-		OrgOrganRepo: orgOrgan,
+		EntCli:         client,
+		OrgOrganRepo:   orgOrgan,
+		SysAddressRepo: sysAddress,
 	}
 	api_v2OrgOrgan := &api_v2.OrgOrgan{
 		OrgOrganSrv: serviceOrgOrgan,
@@ -193,24 +195,47 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceOrgStaff := &service.OrgStaff{
+		EntCli:       client,
 		OrgStaffRepo: orgStaff,
 	}
 	api_v2OrgStaff := &api_v2.OrgStaff{
 		OrgStaffSrv: serviceOrgStaff,
 	}
+	orgPosition := &repo.OrgPosition{
+		EntCli: client,
+	}
+	serviceOrgPosition := &service.OrgPosition{
+		EntCli:          client,
+		OrgPositionRepo: orgPosition,
+	}
+	api_v2OrgPosition := &api_v2.OrgPosition{
+		OrgPositionSrv: serviceOrgPosition,
+	}
+	orgDepartment := &repo.OrgDepartment{
+		EntCli: client,
+	}
+	serviceOrgDepartment := &service.OrgDepartment{
+		EntCli:            client,
+		OrgDepartmentRepo: orgDepartment,
+	}
+	api_v2OrgDepartment := &api_v2.OrgDepartment{
+		OrgDepartmentSrv: serviceOrgDepartment,
+	}
 	routerRouter := &router.Router{
-		Auth:             auther,
-		CasbinEnforcer:   syncedEnforcer,
-		DictApiV2:        api_v2Dict,
-		DemoAPIV2:        api_v2Demo,
-		MenuAPIV2:        api_v2Menu,
-		RoleAPIV2:        api_v2Role,
-		UserAPIV2:        api_v2User,
-		SignInAPIV2:      api_v2SignIn,
-		SysDistrictAPIV2: api_v2SysDistrict,
-		SysAddressAPIV2:  api_v2SysAddress,
-		OrgOrganAPIV2:    api_v2OrgOrgan,
-		OrgStaffAPIV2:    api_v2OrgStaff,
+		Auth:               auther,
+		CasbinEnforcer:     syncedEnforcer,
+		DictApiV2:          api_v2Dict,
+		DemoAPIV2:          api_v2Demo,
+		MenuAPIV2:          api_v2Menu,
+		RoleAPIV2:          api_v2Role,
+		UserAPIV2:          api_v2User,
+		SignInAPIV2:        api_v2SignIn,
+		SysDistrictAPIV2:   api_v2SysDistrict,
+		SysAddressAPIV2:    api_v2SysAddress,
+		OrgOrganAPIV2:      api_v2OrgOrgan,
+		OrgStaffAPIV2:      api_v2OrgStaff,
+		OrgPositionAPIV2:   api_v2OrgPosition,
+		OrgDepartmentAPIV2: api_v2OrgDepartment,
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{

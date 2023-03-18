@@ -6,6 +6,7 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
+	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -15,6 +16,8 @@ var OrgDepartmentSet = wire.NewSet(wire.Struct(new(OrgDepartment), "*"))
 
 // OrgDepartment 部门管理
 type OrgDepartment struct {
+	EntCli *ent.Client
+
 	OrgDepartmentRepo *repo.OrgDepartment
 }
 
