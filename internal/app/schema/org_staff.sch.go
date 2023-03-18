@@ -14,7 +14,7 @@ type OrgStaff struct {
 
 	EntryDate   string `json:"entry_date" binding:"required"` // 入职日期
 	RegularDate string `json:"regular_date"`                  // 转正日期
-	IdenNo      string `json:"iden_no" `                      // 转正日期
+	IdenNo      string `json:"iden_no" `                      // 身份证号
 	OrgID       string `json:"org_id"`                        // 企业id
 
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
