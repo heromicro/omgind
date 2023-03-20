@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 )
 
@@ -47,20 +48,6 @@ func (osc *OrgStaffCreate) SetSort(i int32) *OrgStaffCreate {
 func (osc *OrgStaffCreate) SetNillableSort(i *int32) *OrgStaffCreate {
 	if i != nil {
 		osc.SetSort(*i)
-	}
-	return osc
-}
-
-// SetOrgID sets the "org_id" field.
-func (osc *OrgStaffCreate) SetOrgID(s string) *OrgStaffCreate {
-	osc.mutation.SetOrgID(s)
-	return osc
-}
-
-// SetNillableOrgID sets the "org_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableOrgID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetOrgID(*s)
 	}
 	return osc
 }
@@ -289,6 +276,20 @@ func (osc *OrgStaffCreate) SetNillableResignDate(s *string) *OrgStaffCreate {
 	return osc
 }
 
+// SetOrgID sets the "org_id" field.
+func (osc *OrgStaffCreate) SetOrgID(s string) *OrgStaffCreate {
+	osc.mutation.SetOrgID(s)
+	return osc
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableOrgID(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetOrgID(*s)
+	}
+	return osc
+}
+
 // SetCreator sets the "creator" field.
 func (osc *OrgStaffCreate) SetCreator(s string) *OrgStaffCreate {
 	osc.mutation.SetCreator(s)
@@ -315,6 +316,25 @@ func (osc *OrgStaffCreate) SetNillableID(s *string) *OrgStaffCreate {
 		osc.SetID(*s)
 	}
 	return osc
+}
+
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (osc *OrgStaffCreate) SetOrganID(id string) *OrgStaffCreate {
+	osc.mutation.SetOrganID(id)
+	return osc
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableOrganID(id *string) *OrgStaffCreate {
+	if id != nil {
+		osc = osc.SetOrganID(*id)
+	}
+	return osc
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (osc *OrgStaffCreate) SetOrgan(o *OrgOrgan) *OrgStaffCreate {
+	return osc.SetOrganID(o.ID)
 }
 
 // Mutation returns the OrgStaffMutation object of the builder.
@@ -390,11 +410,6 @@ func (osc *OrgStaffCreate) check() error {
 	if _, ok := osc.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`ent: missing required field "OrgStaff.sort"`)}
 	}
-	if v, ok := osc.mutation.OrgID(); ok {
-		if err := orgstaff.OrgIDValidator(v); err != nil {
-			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
-		}
-	}
 	if _, ok := osc.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`ent: missing required field "OrgStaff.is_active"`)}
 	}
@@ -421,6 +436,11 @@ func (osc *OrgStaffCreate) check() error {
 	if v, ok := osc.mutation.Gender(); ok {
 		if err := orgstaff.GenderValidator(v); err != nil {
 			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
+		}
+	}
+	if v, ok := osc.mutation.OrgID(); ok {
+		if err := orgstaff.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
 	if v, ok := osc.mutation.ID(); ok {
@@ -472,10 +492,6 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 	if value, ok := osc.mutation.Sort(); ok {
 		_spec.SetField(orgstaff.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
-	}
-	if value, ok := osc.mutation.OrgID(); ok {
-		_spec.SetField(orgstaff.FieldOrgID, field.TypeString, value)
-		_node.OrgID = &value
 	}
 	if value, ok := osc.mutation.CreatedAt(); ok {
 		_spec.SetField(orgstaff.FieldCreatedAt, field.TypeTime, value)
@@ -544,6 +560,27 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 	if value, ok := osc.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
+	}
+	if nodes := osc.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.OrganTable,
+			Columns: []string{orgstaff.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = osc.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.OrgID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }
@@ -891,6 +928,24 @@ func (u *OrgStaffUpsert) ClearResignDate() *OrgStaffUpsert {
 	return u
 }
 
+// SetOrgID sets the "org_id" field.
+func (u *OrgStaffUpsert) SetOrgID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldOrgID, v)
+	return u
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateOrgID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldOrgID)
+	return u
+}
+
+// ClearOrgID clears the value of the "org_id" field.
+func (u *OrgStaffUpsert) ClearOrgID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldOrgID)
+	return u
+}
+
 // SetCreator sets the "creator" field.
 func (u *OrgStaffUpsert) SetCreator(v string) *OrgStaffUpsert {
 	u.Set(orgstaff.FieldCreator, v)
@@ -925,9 +980,6 @@ func (u *OrgStaffUpsertOne) UpdateNewValues() *OrgStaffUpsertOne {
 	u.create.conflict = append(u.create.conflict, sql.ResolveWith(func(s *sql.UpdateSet) {
 		if _, exists := u.create.mutation.ID(); exists {
 			s.SetIgnore(orgstaff.FieldID)
-		}
-		if _, exists := u.create.mutation.OrgID(); exists {
-			s.SetIgnore(orgstaff.FieldOrgID)
 		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(orgstaff.FieldCreatedAt)
@@ -1306,6 +1358,27 @@ func (u *OrgStaffUpsertOne) ClearResignDate() *OrgStaffUpsertOne {
 	})
 }
 
+// SetOrgID sets the "org_id" field.
+func (u *OrgStaffUpsertOne) SetOrgID(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetOrgID(v)
+	})
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateOrgID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateOrgID()
+	})
+}
+
+// ClearOrgID clears the value of the "org_id" field.
+func (u *OrgStaffUpsertOne) ClearOrgID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearOrgID()
+	})
+}
+
 // SetCreator sets the "creator" field.
 func (u *OrgStaffUpsertOne) SetCreator(v string) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
@@ -1505,9 +1578,6 @@ func (u *OrgStaffUpsertBulk) UpdateNewValues() *OrgStaffUpsertBulk {
 		for _, b := range u.create.builders {
 			if _, exists := b.mutation.ID(); exists {
 				s.SetIgnore(orgstaff.FieldID)
-			}
-			if _, exists := b.mutation.OrgID(); exists {
-				s.SetIgnore(orgstaff.FieldOrgID)
 			}
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(orgstaff.FieldCreatedAt)
@@ -1884,6 +1954,27 @@ func (u *OrgStaffUpsertBulk) UpdateResignDate() *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) ClearResignDate() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearResignDate()
+	})
+}
+
+// SetOrgID sets the "org_id" field.
+func (u *OrgStaffUpsertBulk) SetOrgID(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetOrgID(v)
+	})
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateOrgID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateOrgID()
+	})
+}
+
+// ClearOrgID clears the value of the "org_id" field.
+func (u *OrgStaffUpsertBulk) ClearOrgID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearOrgID()
 	})
 }
 

@@ -969,6 +969,105 @@ func HasHaddrWith(preds ...predicate.SysAddress) predicate.OrgOrgan {
 	})
 }
 
+// HasDepartments applies the HasEdge predicate on the "departments" edge.
+func HasDepartments() predicate.OrgOrgan {
+	return predicate.OrgOrgan(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, DepartmentsTable, DepartmentsColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasDepartmentsWith applies the HasEdge predicate on the "departments" edge with a given conditions (other predicates).
+func HasDepartmentsWith(preds ...predicate.OrgDepartment) predicate.OrgOrgan {
+	return predicate.OrgOrgan(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(DepartmentsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, DepartmentsTable, DepartmentsColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasStaffs applies the HasEdge predicate on the "staffs" edge.
+func HasStaffs() predicate.OrgOrgan {
+	return predicate.OrgOrgan(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStaffsWith applies the HasEdge predicate on the "staffs" edge with a given conditions (other predicates).
+func HasStaffsWith(preds ...predicate.OrgStaff) predicate.OrgOrgan {
+	return predicate.OrgOrgan(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StaffsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasPositions applies the HasEdge predicate on the "positions" edge.
+func HasPositions() predicate.OrgOrgan {
+	return predicate.OrgOrgan(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, PositionsTable, PositionsColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgPosition
+		step.Edge.Schema = schemaConfig.OrgPosition
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasPositionsWith applies the HasEdge predicate on the "positions" edge with a given conditions (other predicates).
+func HasPositionsWith(preds ...predicate.OrgPosition) predicate.OrgOrgan {
+	return predicate.OrgOrgan(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(PositionsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, PositionsTable, PositionsColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgPosition
+		step.Edge.Schema = schemaConfig.OrgPosition
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // And groups predicates with the AND operator between them.
 func And(predicates ...predicate.OrgOrgan) predicate.OrgOrgan {
 	return predicate.OrgOrgan(func(s *sql.Selector) {

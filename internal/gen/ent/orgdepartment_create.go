@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 )
 
 // OrgDepartmentCreate is the builder for creating a OrgDepartment entity.
@@ -191,6 +192,25 @@ func (odc *OrgDepartmentCreate) SetNillableID(s *string) *OrgDepartmentCreate {
 	return odc
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (odc *OrgDepartmentCreate) SetOrganID(id string) *OrgDepartmentCreate {
+	odc.mutation.SetOrganID(id)
+	return odc
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableOrganID(id *string) *OrgDepartmentCreate {
+	if id != nil {
+		odc = odc.SetOrganID(*id)
+	}
+	return odc
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (odc *OrgDepartmentCreate) SetOrgan(o *OrgOrgan) *OrgDepartmentCreate {
+	return odc.SetOrganID(o.ID)
+}
+
 // Mutation returns the OrgDepartmentMutation object of the builder.
 func (odc *OrgDepartmentCreate) Mutation() *OrgDepartmentMutation {
 	return odc.mutation
@@ -365,13 +385,30 @@ func (odc *OrgDepartmentCreate) createSpec() (*OrgDepartment, *sqlgraph.CreateSp
 		_spec.SetField(orgdepartment.FieldCode, field.TypeString, value)
 		_node.Code = &value
 	}
-	if value, ok := odc.mutation.OrgID(); ok {
-		_spec.SetField(orgdepartment.FieldOrgID, field.TypeString, value)
-		_node.OrgID = &value
-	}
 	if value, ok := odc.mutation.Creator(); ok {
 		_spec.SetField(orgdepartment.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
+	}
+	if nodes := odc.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.OrganTable,
+			Columns: []string{orgdepartment.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = odc.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.OrgID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

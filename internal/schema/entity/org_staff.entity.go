@@ -4,6 +4,7 @@ import (
 	"github.com/heromicro/omgind/internal/schema/mixin"
 
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 )
 
@@ -16,7 +17,6 @@ func (OrgStaff) Mixin() []ent.Mixin {
 		mixin.IDMixin{},
 		mixin.SoftDelMixin{},
 		mixin.SortMixin{},
-		mixin.OwnerOrgMixin{},
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},
 		mixin.MemoMixin{},
@@ -40,12 +40,17 @@ func (OrgStaff) Fields() []ent.Field {
 		field.String("regular_date").Nillable().Optional().StorageKey("regu_date").Comment("转正日期"),
 		field.String("resign_date").Nillable().Optional().StorageKey("resign_date").Comment("离职日期"),
 
+		field.String("org_id").MaxLen(36).Nillable().Optional().StorageKey("org_id").Comment("企业id"),
+
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
 }
 
 func (OrgStaff) Edges() []ent.Edge {
-	return []ent.Edge{}
+	return []ent.Edge{
+
+		edge.From("organ", OrgOrgan.Type).Ref("staffs").Field("org_id").Unique(),
+	}
 }
 
 func (OrgStaff) Indexes() []ent.Index {

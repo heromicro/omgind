@@ -44,6 +44,10 @@ func (OrgOrgan) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("haddr", SysAddress.Type).Ref("organ").Unique().Field("haddr_id"),
 		// edge.From("owner", SysUser.Type).Ref("organ").Unique().Field("owner_id"),
+
+		edge.To("departments", OrgDepartment.Type),
+		edge.To("staffs", OrgStaff.Type),
+		edge.To("positions", OrgPosition.Type),
 	}
 }
 

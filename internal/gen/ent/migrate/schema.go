@@ -20,14 +20,22 @@ var (
 		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
-		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
+		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// OrgDepartmentsTable holds the schema information for the "org_departments" table.
 	OrgDepartmentsTable = &schema.Table{
 		Name:       "org_departments",
 		Columns:    OrgDepartmentsColumns,
 		PrimaryKey: []*schema.Column{OrgDepartmentsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "org_departments_org_organs_departments",
+				Columns:    []*schema.Column{OrgDepartmentsColumns[11]},
+				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "orgdepartment_id",
@@ -142,14 +150,22 @@ var (
 		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
-		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
+		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// OrgPositionsTable holds the schema information for the "org_positions" table.
 	OrgPositionsTable = &schema.Table{
 		Name:       "org_positions",
 		Columns:    OrgPositionsColumns,
 		PrimaryKey: []*schema.Column{OrgPositionsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "org_positions_org_organs_positions",
+				Columns:    []*schema.Column{OrgPositionsColumns[11]},
+				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "orgposition_id",
@@ -188,7 +204,6 @@ var (
 		{Name: "id", Type: field.TypeString, Size: 36},
 		{Name: "is_del", Type: field.TypeBool, Default: false},
 		{Name: "sort", Type: field.TypeInt32, Default: 9999},
-		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
@@ -206,12 +221,21 @@ var (
 		{Name: "regu_date", Type: field.TypeString, Nullable: true},
 		{Name: "resign_date", Type: field.TypeString, Nullable: true},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
+		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// OrgStaffsTable holds the schema information for the "org_staffs" table.
 	OrgStaffsTable = &schema.Table{
 		Name:       "org_staffs",
 		Columns:    OrgStaffsColumns,
 		PrimaryKey: []*schema.Column{OrgStaffsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "org_staffs_org_organs_staffs",
+				Columns:    []*schema.Column{OrgStaffsColumns[20]},
+				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "orgstaff_id",
@@ -229,24 +253,19 @@ var (
 				Columns: []*schema.Column{OrgStaffsColumns[2]},
 			},
 			{
-				Name:    "orgstaff_org_id",
+				Name:    "orgstaff_crtd_at",
 				Unique:  false,
 				Columns: []*schema.Column{OrgStaffsColumns[3]},
 			},
 			{
-				Name:    "orgstaff_crtd_at",
-				Unique:  false,
-				Columns: []*schema.Column{OrgStaffsColumns[4]},
-			},
-			{
 				Name:    "orgstaff_dltd_at",
 				Unique:  false,
-				Columns: []*schema.Column{OrgStaffsColumns[6]},
+				Columns: []*schema.Column{OrgStaffsColumns[5]},
 			},
 			{
 				Name:    "orgstaff_is_active",
 				Unique:  false,
-				Columns: []*schema.Column{OrgStaffsColumns[7]},
+				Columns: []*schema.Column{OrgStaffsColumns[6]},
 			},
 		},
 	}
@@ -1096,6 +1115,9 @@ var (
 )
 
 func init() {
+	OrgDepartmentsTable.ForeignKeys[0].RefTable = OrgOrgansTable
 	OrgOrgansTable.ForeignKeys[0].RefTable = SysAddressesTable
+	OrgPositionsTable.ForeignKeys[0].RefTable = OrgOrgansTable
+	OrgStaffsTable.ForeignKeys[0].RefTable = OrgOrgansTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 }

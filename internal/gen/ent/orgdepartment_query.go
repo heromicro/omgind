@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -23,6 +24,7 @@ type OrgDepartmentQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.OrgDepartment
+	withOrgan  *OrgOrganQuery
 	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -58,6 +60,31 @@ func (odq *OrgDepartmentQuery) Unique(unique bool) *OrgDepartmentQuery {
 func (odq *OrgDepartmentQuery) Order(o ...OrderFunc) *OrgDepartmentQuery {
 	odq.order = append(odq.order, o...)
 	return odq
+}
+
+// QueryOrgan chains the current query on the "organ" edge.
+func (odq *OrgDepartmentQuery) QueryOrgan() *OrgOrganQuery {
+	query := (&OrgOrganClient{config: odq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := odq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := odq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, selector),
+			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgdepartment.OrganTable, orgdepartment.OrganColumn),
+		)
+		schemaConfig := odq.schemaConfig
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first OrgDepartment entity from the query.
@@ -252,10 +279,22 @@ func (odq *OrgDepartmentQuery) Clone() *OrgDepartmentQuery {
 		order:      append([]OrderFunc{}, odq.order...),
 		inters:     append([]Interceptor{}, odq.inters...),
 		predicates: append([]predicate.OrgDepartment{}, odq.predicates...),
+		withOrgan:  odq.withOrgan.Clone(),
 		// clone intermediate query.
 		sql:  odq.sql.Clone(),
 		path: odq.path,
 	}
+}
+
+// WithOrgan tells the query-builder to eager-load the nodes that are connected to
+// the "organ" edge. The optional arguments are used to configure the query builder of the edge.
+func (odq *OrgDepartmentQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *OrgDepartmentQuery {
+	query := (&OrgOrganClient{config: odq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	odq.withOrgan = query
+	return odq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -334,8 +373,11 @@ func (odq *OrgDepartmentQuery) prepareQuery(ctx context.Context) error {
 
 func (odq *OrgDepartmentQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrgDepartment, error) {
 	var (
-		nodes = []*OrgDepartment{}
-		_spec = odq.querySpec()
+		nodes       = []*OrgDepartment{}
+		_spec       = odq.querySpec()
+		loadedTypes = [1]bool{
+			odq.withOrgan != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*OrgDepartment).scanValues(nil, columns)
@@ -343,6 +385,7 @@ func (odq *OrgDepartmentQuery) sqlAll(ctx context.Context, hooks ...queryHook) (
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &OrgDepartment{config: odq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	_spec.Node.Schema = odq.schemaConfig.OrgDepartment
@@ -359,7 +402,46 @@ func (odq *OrgDepartmentQuery) sqlAll(ctx context.Context, hooks ...queryHook) (
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := odq.withOrgan; query != nil {
+		if err := odq.loadOrgan(ctx, query, nodes, nil,
+			func(n *OrgDepartment, e *OrgOrgan) { n.Edges.Organ = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (odq *OrgDepartmentQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*OrgDepartment, init func(*OrgDepartment), assign func(*OrgDepartment, *OrgOrgan)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*OrgDepartment)
+	for i := range nodes {
+		if nodes[i].OrgID == nil {
+			continue
+		}
+		fk := *nodes[i].OrgID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(orgorgan.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "org_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
 }
 
 func (odq *OrgDepartmentQuery) sqlCount(ctx context.Context) (int, error) {

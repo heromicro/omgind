@@ -41,6 +41,12 @@ const (
 	FieldCreator = "creator"
 	// EdgeHaddr holds the string denoting the haddr edge name in mutations.
 	EdgeHaddr = "haddr"
+	// EdgeDepartments holds the string denoting the departments edge name in mutations.
+	EdgeDepartments = "departments"
+	// EdgeStaffs holds the string denoting the staffs edge name in mutations.
+	EdgeStaffs = "staffs"
+	// EdgePositions holds the string denoting the positions edge name in mutations.
+	EdgePositions = "positions"
 	// Table holds the table name of the orgorgan in the database.
 	Table = "org_organs"
 	// HaddrTable is the table that holds the haddr relation/edge.
@@ -50,6 +56,27 @@ const (
 	HaddrInverseTable = "sys_addresses"
 	// HaddrColumn is the table column denoting the haddr relation/edge.
 	HaddrColumn = "haddr_id"
+	// DepartmentsTable is the table that holds the departments relation/edge.
+	DepartmentsTable = "org_departments"
+	// DepartmentsInverseTable is the table name for the OrgDepartment entity.
+	// It exists in this package in order to avoid circular dependency with the "orgdepartment" package.
+	DepartmentsInverseTable = "org_departments"
+	// DepartmentsColumn is the table column denoting the departments relation/edge.
+	DepartmentsColumn = "org_id"
+	// StaffsTable is the table that holds the staffs relation/edge.
+	StaffsTable = "org_staffs"
+	// StaffsInverseTable is the table name for the OrgStaff entity.
+	// It exists in this package in order to avoid circular dependency with the "orgstaff" package.
+	StaffsInverseTable = "org_staffs"
+	// StaffsColumn is the table column denoting the staffs relation/edge.
+	StaffsColumn = "org_id"
+	// PositionsTable is the table that holds the positions relation/edge.
+	PositionsTable = "org_positions"
+	// PositionsInverseTable is the table name for the OrgPosition entity.
+	// It exists in this package in order to avoid circular dependency with the "orgposition" package.
+	PositionsInverseTable = "org_positions"
+	// PositionsColumn is the table column denoting the positions relation/edge.
+	PositionsColumn = "org_id"
 )
 
 // Columns holds all SQL columns for orgorgan fields.

@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -62,11 +64,6 @@ func IsDel(v bool) predicate.OrgStaff {
 // Sort applies equality check predicate on the "sort" field. It's identical to SortEQ.
 func Sort(v int32) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldSort, v))
-}
-
-// OrgID applies equality check predicate on the "org_id" field. It's identical to OrgIDEQ.
-func OrgID(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldOrgID, v))
 }
 
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
@@ -144,6 +141,11 @@ func ResignDate(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldResignDate, v))
 }
 
+// OrgID applies equality check predicate on the "org_id" field. It's identical to OrgIDEQ.
+func OrgID(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldOrgID, v))
+}
+
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
 func Creator(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldCreator, v))
@@ -197,81 +199,6 @@ func SortLT(v int32) predicate.OrgStaff {
 // SortLTE applies the LTE predicate on the "sort" field.
 func SortLTE(v int32) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLTE(FieldSort, v))
-}
-
-// OrgIDEQ applies the EQ predicate on the "org_id" field.
-func OrgIDEQ(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldOrgID, v))
-}
-
-// OrgIDNEQ applies the NEQ predicate on the "org_id" field.
-func OrgIDNEQ(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNEQ(FieldOrgID, v))
-}
-
-// OrgIDIn applies the In predicate on the "org_id" field.
-func OrgIDIn(vs ...string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIn(FieldOrgID, vs...))
-}
-
-// OrgIDNotIn applies the NotIn predicate on the "org_id" field.
-func OrgIDNotIn(vs ...string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotIn(FieldOrgID, vs...))
-}
-
-// OrgIDGT applies the GT predicate on the "org_id" field.
-func OrgIDGT(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGT(FieldOrgID, v))
-}
-
-// OrgIDGTE applies the GTE predicate on the "org_id" field.
-func OrgIDGTE(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGTE(FieldOrgID, v))
-}
-
-// OrgIDLT applies the LT predicate on the "org_id" field.
-func OrgIDLT(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLT(FieldOrgID, v))
-}
-
-// OrgIDLTE applies the LTE predicate on the "org_id" field.
-func OrgIDLTE(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLTE(FieldOrgID, v))
-}
-
-// OrgIDContains applies the Contains predicate on the "org_id" field.
-func OrgIDContains(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContains(FieldOrgID, v))
-}
-
-// OrgIDHasPrefix applies the HasPrefix predicate on the "org_id" field.
-func OrgIDHasPrefix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasPrefix(FieldOrgID, v))
-}
-
-// OrgIDHasSuffix applies the HasSuffix predicate on the "org_id" field.
-func OrgIDHasSuffix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasSuffix(FieldOrgID, v))
-}
-
-// OrgIDIsNil applies the IsNil predicate on the "org_id" field.
-func OrgIDIsNil() predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIsNull(FieldOrgID))
-}
-
-// OrgIDNotNil applies the NotNil predicate on the "org_id" field.
-func OrgIDNotNil() predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotNull(FieldOrgID))
-}
-
-// OrgIDEqualFold applies the EqualFold predicate on the "org_id" field.
-func OrgIDEqualFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEqualFold(FieldOrgID, v))
-}
-
-// OrgIDContainsFold applies the ContainsFold predicate on the "org_id" field.
-func OrgIDContainsFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContainsFold(FieldOrgID, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.
@@ -1289,6 +1216,81 @@ func ResignDateContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldResignDate, v))
 }
 
+// OrgIDEQ applies the EQ predicate on the "org_id" field.
+func OrgIDEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldOrgID, v))
+}
+
+// OrgIDNEQ applies the NEQ predicate on the "org_id" field.
+func OrgIDNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldOrgID, v))
+}
+
+// OrgIDIn applies the In predicate on the "org_id" field.
+func OrgIDIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldOrgID, vs...))
+}
+
+// OrgIDNotIn applies the NotIn predicate on the "org_id" field.
+func OrgIDNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldOrgID, vs...))
+}
+
+// OrgIDGT applies the GT predicate on the "org_id" field.
+func OrgIDGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldOrgID, v))
+}
+
+// OrgIDGTE applies the GTE predicate on the "org_id" field.
+func OrgIDGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldOrgID, v))
+}
+
+// OrgIDLT applies the LT predicate on the "org_id" field.
+func OrgIDLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldOrgID, v))
+}
+
+// OrgIDLTE applies the LTE predicate on the "org_id" field.
+func OrgIDLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldOrgID, v))
+}
+
+// OrgIDContains applies the Contains predicate on the "org_id" field.
+func OrgIDContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldOrgID, v))
+}
+
+// OrgIDHasPrefix applies the HasPrefix predicate on the "org_id" field.
+func OrgIDHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldOrgID, v))
+}
+
+// OrgIDHasSuffix applies the HasSuffix predicate on the "org_id" field.
+func OrgIDHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldOrgID, v))
+}
+
+// OrgIDIsNil applies the IsNil predicate on the "org_id" field.
+func OrgIDIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldOrgID))
+}
+
+// OrgIDNotNil applies the NotNil predicate on the "org_id" field.
+func OrgIDNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldOrgID))
+}
+
+// OrgIDEqualFold applies the EqualFold predicate on the "org_id" field.
+func OrgIDEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldOrgID, v))
+}
+
+// OrgIDContainsFold applies the ContainsFold predicate on the "org_id" field.
+func OrgIDContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldOrgID, v))
+}
+
 // CreatorEQ applies the EQ predicate on the "creator" field.
 func CreatorEQ(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldCreator, v))
@@ -1362,6 +1364,39 @@ func CreatorEqualFold(v string) predicate.OrgStaff {
 // CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
 func CreatorContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldCreator, v))
+}
+
+// HasOrgan applies the HasEdge predicate on the "organ" edge.
+func HasOrgan() predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasOrganWith applies the HasEdge predicate on the "organ" edge with a given conditions (other predicates).
+func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(OrganInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

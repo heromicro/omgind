@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 )
 
@@ -191,6 +192,25 @@ func (opc *OrgPositionCreate) SetNillableID(s *string) *OrgPositionCreate {
 	return opc
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (opc *OrgPositionCreate) SetOrganID(id string) *OrgPositionCreate {
+	opc.mutation.SetOrganID(id)
+	return opc
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (opc *OrgPositionCreate) SetNillableOrganID(id *string) *OrgPositionCreate {
+	if id != nil {
+		opc = opc.SetOrganID(*id)
+	}
+	return opc
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (opc *OrgPositionCreate) SetOrgan(o *OrgOrgan) *OrgPositionCreate {
+	return opc.SetOrganID(o.ID)
+}
+
 // Mutation returns the OrgPositionMutation object of the builder.
 func (opc *OrgPositionCreate) Mutation() *OrgPositionMutation {
 	return opc.mutation
@@ -365,13 +385,30 @@ func (opc *OrgPositionCreate) createSpec() (*OrgPosition, *sqlgraph.CreateSpec) 
 		_spec.SetField(orgposition.FieldCode, field.TypeString, value)
 		_node.Code = &value
 	}
-	if value, ok := opc.mutation.OrgID(); ok {
-		_spec.SetField(orgposition.FieldOrgID, field.TypeString, value)
-		_node.OrgID = &value
-	}
 	if value, ok := opc.mutation.Creator(); ok {
 		_spec.SetField(orgposition.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
+	}
+	if nodes := opc.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgposition.OrganTable,
+			Columns: []string{orgposition.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = opc.schemaConfig.OrgPosition
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.OrgID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

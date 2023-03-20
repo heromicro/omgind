@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
@@ -351,6 +352,26 @@ func (osu *OrgStaffUpdate) ClearResignDate() *OrgStaffUpdate {
 	return osu
 }
 
+// SetOrgID sets the "org_id" field.
+func (osu *OrgStaffUpdate) SetOrgID(s string) *OrgStaffUpdate {
+	osu.mutation.SetOrgID(s)
+	return osu
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableOrgID(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetOrgID(*s)
+	}
+	return osu
+}
+
+// ClearOrgID clears the value of the "org_id" field.
+func (osu *OrgStaffUpdate) ClearOrgID() *OrgStaffUpdate {
+	osu.mutation.ClearOrgID()
+	return osu
+}
+
 // SetCreator sets the "creator" field.
 func (osu *OrgStaffUpdate) SetCreator(s string) *OrgStaffUpdate {
 	osu.mutation.SetCreator(s)
@@ -371,9 +392,34 @@ func (osu *OrgStaffUpdate) ClearCreator() *OrgStaffUpdate {
 	return osu
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (osu *OrgStaffUpdate) SetOrganID(id string) *OrgStaffUpdate {
+	osu.mutation.SetOrganID(id)
+	return osu
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableOrganID(id *string) *OrgStaffUpdate {
+	if id != nil {
+		osu = osu.SetOrganID(*id)
+	}
+	return osu
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (osu *OrgStaffUpdate) SetOrgan(o *OrgOrgan) *OrgStaffUpdate {
+	return osu.SetOrganID(o.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osu *OrgStaffUpdate) Mutation() *OrgStaffMutation {
 	return osu.mutation
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (osu *OrgStaffUpdate) ClearOrgan() *OrgStaffUpdate {
+	osu.mutation.ClearOrgan()
+	return osu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -439,6 +485,11 @@ func (osu *OrgStaffUpdate) check() error {
 			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
 		}
 	}
+	if v, ok := osu.mutation.OrgID(); ok {
+		if err := orgstaff.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -468,9 +519,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := osu.mutation.AddedSort(); ok {
 		_spec.AddField(orgstaff.FieldSort, field.TypeInt32, value)
-	}
-	if osu.mutation.OrgIDCleared() {
-		_spec.ClearField(orgstaff.FieldOrgID, field.TypeString)
 	}
 	if osu.mutation.CreatedAtCleared() {
 		_spec.ClearField(orgstaff.FieldCreatedAt, field.TypeTime)
@@ -567,6 +615,43 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if osu.mutation.CreatorCleared() {
 		_spec.ClearField(orgstaff.FieldCreator, field.TypeString)
+	}
+	if osu.mutation.OrganCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.OrganTable,
+			Columns: []string{orgstaff.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = osu.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osu.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.OrganTable,
+			Columns: []string{orgstaff.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = osu.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = osu.schemaConfig.OrgStaff
 	ctx = internal.NewSchemaConfigContext(ctx, osu.schemaConfig)
@@ -913,6 +998,26 @@ func (osuo *OrgStaffUpdateOne) ClearResignDate() *OrgStaffUpdateOne {
 	return osuo
 }
 
+// SetOrgID sets the "org_id" field.
+func (osuo *OrgStaffUpdateOne) SetOrgID(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetOrgID(s)
+	return osuo
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableOrgID(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetOrgID(*s)
+	}
+	return osuo
+}
+
+// ClearOrgID clears the value of the "org_id" field.
+func (osuo *OrgStaffUpdateOne) ClearOrgID() *OrgStaffUpdateOne {
+	osuo.mutation.ClearOrgID()
+	return osuo
+}
+
 // SetCreator sets the "creator" field.
 func (osuo *OrgStaffUpdateOne) SetCreator(s string) *OrgStaffUpdateOne {
 	osuo.mutation.SetCreator(s)
@@ -933,9 +1038,34 @@ func (osuo *OrgStaffUpdateOne) ClearCreator() *OrgStaffUpdateOne {
 	return osuo
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (osuo *OrgStaffUpdateOne) SetOrganID(id string) *OrgStaffUpdateOne {
+	osuo.mutation.SetOrganID(id)
+	return osuo
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableOrganID(id *string) *OrgStaffUpdateOne {
+	if id != nil {
+		osuo = osuo.SetOrganID(*id)
+	}
+	return osuo
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (osuo *OrgStaffUpdateOne) SetOrgan(o *OrgOrgan) *OrgStaffUpdateOne {
+	return osuo.SetOrganID(o.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osuo *OrgStaffUpdateOne) Mutation() *OrgStaffMutation {
 	return osuo.mutation
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (osuo *OrgStaffUpdateOne) ClearOrgan() *OrgStaffUpdateOne {
+	osuo.mutation.ClearOrgan()
+	return osuo
 }
 
 // Where appends a list predicates to the OrgStaffUpdate builder.
@@ -1014,6 +1144,11 @@ func (osuo *OrgStaffUpdateOne) check() error {
 			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
 		}
 	}
+	if v, ok := osuo.mutation.OrgID(); ok {
+		if err := orgstaff.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -1060,9 +1195,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	}
 	if value, ok := osuo.mutation.AddedSort(); ok {
 		_spec.AddField(orgstaff.FieldSort, field.TypeInt32, value)
-	}
-	if osuo.mutation.OrgIDCleared() {
-		_spec.ClearField(orgstaff.FieldOrgID, field.TypeString)
 	}
 	if osuo.mutation.CreatedAtCleared() {
 		_spec.ClearField(orgstaff.FieldCreatedAt, field.TypeTime)
@@ -1159,6 +1291,43 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	}
 	if osuo.mutation.CreatorCleared() {
 		_spec.ClearField(orgstaff.FieldCreator, field.TypeString)
+	}
+	if osuo.mutation.OrganCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.OrganTable,
+			Columns: []string{orgstaff.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = osuo.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osuo.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.OrganTable,
+			Columns: []string{orgstaff.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = osuo.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = osuo.schemaConfig.OrgStaff
 	ctx = internal.NewSchemaConfigContext(ctx, osuo.schemaConfig)

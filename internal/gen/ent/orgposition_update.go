@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
@@ -211,9 +212,34 @@ func (opu *OrgPositionUpdate) ClearCreator() *OrgPositionUpdate {
 	return opu
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (opu *OrgPositionUpdate) SetOrganID(id string) *OrgPositionUpdate {
+	opu.mutation.SetOrganID(id)
+	return opu
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (opu *OrgPositionUpdate) SetNillableOrganID(id *string) *OrgPositionUpdate {
+	if id != nil {
+		opu = opu.SetOrganID(*id)
+	}
+	return opu
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (opu *OrgPositionUpdate) SetOrgan(o *OrgOrgan) *OrgPositionUpdate {
+	return opu.SetOrganID(o.ID)
+}
+
 // Mutation returns the OrgPositionMutation object of the builder.
 func (opu *OrgPositionUpdate) Mutation() *OrgPositionMutation {
 	return opu.mutation
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (opu *OrgPositionUpdate) ClearOrgan() *OrgPositionUpdate {
+	opu.mutation.ClearOrgan()
+	return opu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -340,17 +366,48 @@ func (opu *OrgPositionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if opu.mutation.CodeCleared() {
 		_spec.ClearField(orgposition.FieldCode, field.TypeString)
 	}
-	if value, ok := opu.mutation.OrgID(); ok {
-		_spec.SetField(orgposition.FieldOrgID, field.TypeString, value)
-	}
-	if opu.mutation.OrgIDCleared() {
-		_spec.ClearField(orgposition.FieldOrgID, field.TypeString)
-	}
 	if value, ok := opu.mutation.Creator(); ok {
 		_spec.SetField(orgposition.FieldCreator, field.TypeString, value)
 	}
 	if opu.mutation.CreatorCleared() {
 		_spec.ClearField(orgposition.FieldCreator, field.TypeString)
+	}
+	if opu.mutation.OrganCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgposition.OrganTable,
+			Columns: []string{orgposition.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = opu.schemaConfig.OrgPosition
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := opu.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgposition.OrganTable,
+			Columns: []string{orgposition.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = opu.schemaConfig.OrgPosition
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = opu.schemaConfig.OrgPosition
 	ctx = internal.NewSchemaConfigContext(ctx, opu.schemaConfig)
@@ -557,9 +614,34 @@ func (opuo *OrgPositionUpdateOne) ClearCreator() *OrgPositionUpdateOne {
 	return opuo
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (opuo *OrgPositionUpdateOne) SetOrganID(id string) *OrgPositionUpdateOne {
+	opuo.mutation.SetOrganID(id)
+	return opuo
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (opuo *OrgPositionUpdateOne) SetNillableOrganID(id *string) *OrgPositionUpdateOne {
+	if id != nil {
+		opuo = opuo.SetOrganID(*id)
+	}
+	return opuo
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (opuo *OrgPositionUpdateOne) SetOrgan(o *OrgOrgan) *OrgPositionUpdateOne {
+	return opuo.SetOrganID(o.ID)
+}
+
 // Mutation returns the OrgPositionMutation object of the builder.
 func (opuo *OrgPositionUpdateOne) Mutation() *OrgPositionMutation {
 	return opuo.mutation
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (opuo *OrgPositionUpdateOne) ClearOrgan() *OrgPositionUpdateOne {
+	opuo.mutation.ClearOrgan()
+	return opuo
 }
 
 // Where appends a list predicates to the OrgPositionUpdate builder.
@@ -716,17 +798,48 @@ func (opuo *OrgPositionUpdateOne) sqlSave(ctx context.Context) (_node *OrgPositi
 	if opuo.mutation.CodeCleared() {
 		_spec.ClearField(orgposition.FieldCode, field.TypeString)
 	}
-	if value, ok := opuo.mutation.OrgID(); ok {
-		_spec.SetField(orgposition.FieldOrgID, field.TypeString, value)
-	}
-	if opuo.mutation.OrgIDCleared() {
-		_spec.ClearField(orgposition.FieldOrgID, field.TypeString)
-	}
 	if value, ok := opuo.mutation.Creator(); ok {
 		_spec.SetField(orgposition.FieldCreator, field.TypeString, value)
 	}
 	if opuo.mutation.CreatorCleared() {
 		_spec.ClearField(orgposition.FieldCreator, field.TypeString)
+	}
+	if opuo.mutation.OrganCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgposition.OrganTable,
+			Columns: []string{orgposition.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = opuo.schemaConfig.OrgPosition
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := opuo.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgposition.OrganTable,
+			Columns: []string{orgposition.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = opuo.schemaConfig.OrgPosition
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = opuo.schemaConfig.OrgPosition
 	ctx = internal.NewSchemaConfigContext(ctx, opuo.schemaConfig)

@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -211,9 +212,34 @@ func (odu *OrgDepartmentUpdate) ClearCreator() *OrgDepartmentUpdate {
 	return odu
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (odu *OrgDepartmentUpdate) SetOrganID(id string) *OrgDepartmentUpdate {
+	odu.mutation.SetOrganID(id)
+	return odu
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableOrganID(id *string) *OrgDepartmentUpdate {
+	if id != nil {
+		odu = odu.SetOrganID(*id)
+	}
+	return odu
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (odu *OrgDepartmentUpdate) SetOrgan(o *OrgOrgan) *OrgDepartmentUpdate {
+	return odu.SetOrganID(o.ID)
+}
+
 // Mutation returns the OrgDepartmentMutation object of the builder.
 func (odu *OrgDepartmentUpdate) Mutation() *OrgDepartmentMutation {
 	return odu.mutation
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (odu *OrgDepartmentUpdate) ClearOrgan() *OrgDepartmentUpdate {
+	odu.mutation.ClearOrgan()
+	return odu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -340,17 +366,48 @@ func (odu *OrgDepartmentUpdate) sqlSave(ctx context.Context) (n int, err error) 
 	if odu.mutation.CodeCleared() {
 		_spec.ClearField(orgdepartment.FieldCode, field.TypeString)
 	}
-	if value, ok := odu.mutation.OrgID(); ok {
-		_spec.SetField(orgdepartment.FieldOrgID, field.TypeString, value)
-	}
-	if odu.mutation.OrgIDCleared() {
-		_spec.ClearField(orgdepartment.FieldOrgID, field.TypeString)
-	}
 	if value, ok := odu.mutation.Creator(); ok {
 		_spec.SetField(orgdepartment.FieldCreator, field.TypeString, value)
 	}
 	if odu.mutation.CreatorCleared() {
 		_spec.ClearField(orgdepartment.FieldCreator, field.TypeString)
+	}
+	if odu.mutation.OrganCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.OrganTable,
+			Columns: []string{orgdepartment.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgDepartment
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := odu.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.OrganTable,
+			Columns: []string{orgdepartment.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = odu.schemaConfig.OrgDepartment
 	ctx = internal.NewSchemaConfigContext(ctx, odu.schemaConfig)
@@ -557,9 +614,34 @@ func (oduo *OrgDepartmentUpdateOne) ClearCreator() *OrgDepartmentUpdateOne {
 	return oduo
 }
 
+// SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
+func (oduo *OrgDepartmentUpdateOne) SetOrganID(id string) *OrgDepartmentUpdateOne {
+	oduo.mutation.SetOrganID(id)
+	return oduo
+}
+
+// SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableOrganID(id *string) *OrgDepartmentUpdateOne {
+	if id != nil {
+		oduo = oduo.SetOrganID(*id)
+	}
+	return oduo
+}
+
+// SetOrgan sets the "organ" edge to the OrgOrgan entity.
+func (oduo *OrgDepartmentUpdateOne) SetOrgan(o *OrgOrgan) *OrgDepartmentUpdateOne {
+	return oduo.SetOrganID(o.ID)
+}
+
 // Mutation returns the OrgDepartmentMutation object of the builder.
 func (oduo *OrgDepartmentUpdateOne) Mutation() *OrgDepartmentMutation {
 	return oduo.mutation
+}
+
+// ClearOrgan clears the "organ" edge to the OrgOrgan entity.
+func (oduo *OrgDepartmentUpdateOne) ClearOrgan() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearOrgan()
+	return oduo
 }
 
 // Where appends a list predicates to the OrgDepartmentUpdate builder.
@@ -716,17 +798,48 @@ func (oduo *OrgDepartmentUpdateOne) sqlSave(ctx context.Context) (_node *OrgDepa
 	if oduo.mutation.CodeCleared() {
 		_spec.ClearField(orgdepartment.FieldCode, field.TypeString)
 	}
-	if value, ok := oduo.mutation.OrgID(); ok {
-		_spec.SetField(orgdepartment.FieldOrgID, field.TypeString, value)
-	}
-	if oduo.mutation.OrgIDCleared() {
-		_spec.ClearField(orgdepartment.FieldOrgID, field.TypeString)
-	}
 	if value, ok := oduo.mutation.Creator(); ok {
 		_spec.SetField(orgdepartment.FieldCreator, field.TypeString, value)
 	}
 	if oduo.mutation.CreatorCleared() {
 		_spec.ClearField(orgdepartment.FieldCreator, field.TypeString)
+	}
+	if oduo.mutation.OrganCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.OrganTable,
+			Columns: []string{orgdepartment.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgDepartment
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oduo.mutation.OrganIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.OrganTable,
+			Columns: []string{orgdepartment.OrganColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = oduo.schemaConfig.OrgDepartment
 	ctx = internal.NewSchemaConfigContext(ctx, oduo.schemaConfig)

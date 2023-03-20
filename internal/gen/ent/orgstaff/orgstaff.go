@@ -16,8 +16,6 @@ const (
 	FieldIsDel = "is_del"
 	// FieldSort holds the string denoting the sort field in the database.
 	FieldSort = "sort"
-	// FieldOrgID holds the string denoting the org_id field in the database.
-	FieldOrgID = "org_id"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "crtd_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -50,10 +48,21 @@ const (
 	FieldRegularDate = "regu_date"
 	// FieldResignDate holds the string denoting the resign_date field in the database.
 	FieldResignDate = "resign_date"
+	// FieldOrgID holds the string denoting the org_id field in the database.
+	FieldOrgID = "org_id"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
+	// EdgeOrgan holds the string denoting the organ edge name in mutations.
+	EdgeOrgan = "organ"
 	// Table holds the table name of the orgstaff in the database.
 	Table = "org_staffs"
+	// OrganTable is the table that holds the organ relation/edge.
+	OrganTable = "org_staffs"
+	// OrganInverseTable is the table name for the OrgOrgan entity.
+	// It exists in this package in order to avoid circular dependency with the "orgorgan" package.
+	OrganInverseTable = "org_organs"
+	// OrganColumn is the table column denoting the organ relation/edge.
+	OrganColumn = "org_id"
 )
 
 // Columns holds all SQL columns for orgstaff fields.
@@ -61,7 +70,6 @@ var Columns = []string{
 	FieldID,
 	FieldIsDel,
 	FieldSort,
-	FieldOrgID,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldDeletedAt,
@@ -78,6 +86,7 @@ var Columns = []string{
 	FieldEntryDate,
 	FieldRegularDate,
 	FieldResignDate,
+	FieldOrgID,
 	FieldCreator,
 }
 
@@ -96,8 +105,6 @@ var (
 	DefaultIsDel bool
 	// DefaultSort holds the default value on creation for the "sort" field.
 	DefaultSort int32
-	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
-	OrgIDValidator func(string) error
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -116,6 +123,8 @@ var (
 	LastNameValidator func(string) error
 	// MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	MobileValidator func(string) error
+	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
+	OrgIDValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

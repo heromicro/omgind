@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 )
 
@@ -20,8 +21,6 @@ type OrgStaff struct {
 	IsDel bool `json:"is_del,omitempty"`
 	// sort
 	Sort int32 `json:"sort,omitempty" sql:"sort"`
-	// organization id
-	OrgID *string `json:"org_id,omitempty" sql:"org_id"`
 	// create time
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	// update time
@@ -54,8 +53,35 @@ type OrgStaff struct {
 	RegularDate *string `json:"regular_date,omitempty"`
 	// 离职日期
 	ResignDate *string `json:"resign_date,omitempty"`
+	// 企业id
+	OrgID *string `json:"org_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the OrgStaffQuery when eager-loading is set.
+	Edges OrgStaffEdges `json:"edges"`
+}
+
+// OrgStaffEdges holds the relations/edges for other nodes in the graph.
+type OrgStaffEdges struct {
+	// Organ holds the value of the organ edge.
+	Organ *OrgOrgan `json:"organ,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// OrganOrErr returns the Organ value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e OrgStaffEdges) OrganOrErr() (*OrgOrgan, error) {
+	if e.loadedTypes[0] {
+		if e.Organ == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgorgan.Label}
+		}
+		return e.Organ, nil
+	}
+	return nil, &NotLoadedError{edge: "organ"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -67,7 +93,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldOrgID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldBirthDate, orgstaff.FieldIdenNo, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldBirthDate, orgstaff.FieldIdenNo, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate, orgstaff.FieldOrgID, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -103,13 +129,6 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
 				os.Sort = int32(value.Int64)
-			}
-		case orgstaff.FieldOrgID:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field org_id", values[i])
-			} else if value.Valid {
-				os.OrgID = new(string)
-				*os.OrgID = value.String
 			}
 		case orgstaff.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -222,6 +241,13 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				os.ResignDate = new(string)
 				*os.ResignDate = value.String
 			}
+		case orgstaff.FieldOrgID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field org_id", values[i])
+			} else if value.Valid {
+				os.OrgID = new(string)
+				*os.OrgID = value.String
+			}
 		case orgstaff.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -232,6 +258,11 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 		}
 	}
 	return nil
+}
+
+// QueryOrgan queries the "organ" edge of the OrgStaff entity.
+func (os *OrgStaff) QueryOrgan() *OrgOrganQuery {
+	return NewOrgStaffClient(os.config).QueryOrgan(os)
 }
 
 // Update returns a builder for updating this OrgStaff.
@@ -262,11 +293,6 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
 	builder.WriteString(fmt.Sprintf("%v", os.Sort))
-	builder.WriteString(", ")
-	if v := os.OrgID; v != nil {
-		builder.WriteString("org_id=")
-		builder.WriteString(*v)
-	}
 	builder.WriteString(", ")
 	if v := os.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
@@ -343,6 +369,11 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	if v := os.ResignDate; v != nil {
 		builder.WriteString("resign_date=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := os.OrgID; v != nil {
+		builder.WriteString("org_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

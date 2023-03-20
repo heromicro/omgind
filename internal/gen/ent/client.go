@@ -435,6 +435,25 @@ func (c *OrgDepartmentClient) GetX(ctx context.Context, id string) *OrgDepartmen
 	return obj
 }
 
+// QueryOrgan queries the organ edge of a OrgDepartment.
+func (c *OrgDepartmentClient) QueryOrgan(od *OrgDepartment) *OrgOrganQuery {
+	query := (&OrgOrganClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := od.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, id),
+			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgdepartment.OrganTable, orgdepartment.OrganColumn),
+		)
+		schemaConfig := od.schemaConfig
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *OrgDepartmentClient) Hooks() []Hook {
 	return c.hooks.OrgDepartment
@@ -572,6 +591,63 @@ func (c *OrgOrganClient) QueryHaddr(oo *OrgOrgan) *SysAddressQuery {
 	return query
 }
 
+// QueryDepartments queries the departments edge of a OrgOrgan.
+func (c *OrgOrganClient) QueryDepartments(oo *OrgOrgan) *OrgDepartmentQuery {
+	query := (&OrgDepartmentClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := oo.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
+			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.DepartmentsTable, orgorgan.DepartmentsColumn),
+		)
+		schemaConfig := oo.schemaConfig
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryStaffs queries the staffs edge of a OrgOrgan.
+func (c *OrgOrganClient) QueryStaffs(oo *OrgOrgan) *OrgStaffQuery {
+	query := (&OrgStaffClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := oo.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.StaffsTable, orgorgan.StaffsColumn),
+		)
+		schemaConfig := oo.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPositions queries the positions edge of a OrgOrgan.
+func (c *OrgOrganClient) QueryPositions(oo *OrgOrgan) *OrgPositionQuery {
+	query := (&OrgPositionClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := oo.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
+			sqlgraph.To(orgposition.Table, orgposition.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.PositionsTable, orgorgan.PositionsColumn),
+		)
+		schemaConfig := oo.schemaConfig
+		step.To.Schema = schemaConfig.OrgPosition
+		step.Edge.Schema = schemaConfig.OrgPosition
+		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *OrgOrganClient) Hooks() []Hook {
 	return c.hooks.OrgOrgan
@@ -690,6 +766,25 @@ func (c *OrgPositionClient) GetX(ctx context.Context, id string) *OrgPosition {
 	return obj
 }
 
+// QueryOrgan queries the organ edge of a OrgPosition.
+func (c *OrgPositionClient) QueryOrgan(op *OrgPosition) *OrgOrganQuery {
+	query := (&OrgOrganClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := op.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgposition.Table, orgposition.FieldID, id),
+			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgposition.OrganTable, orgposition.OrganColumn),
+		)
+		schemaConfig := op.schemaConfig
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgPosition
+		fromV = sqlgraph.Neighbors(op.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *OrgPositionClient) Hooks() []Hook {
 	return c.hooks.OrgPosition
@@ -806,6 +901,25 @@ func (c *OrgStaffClient) GetX(ctx context.Context, id string) *OrgStaff {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryOrgan queries the organ edge of a OrgStaff.
+func (c *OrgStaffClient) QueryOrgan(os *OrgStaff) *OrgOrganQuery {
+	query := (&OrgOrganClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := os.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
+			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.OrganTable, orgstaff.OrganColumn),
+		)
+		schemaConfig := os.schemaConfig
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.

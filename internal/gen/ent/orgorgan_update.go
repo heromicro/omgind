@@ -12,7 +12,10 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
@@ -277,6 +280,51 @@ func (oou *OrgOrganUpdate) SetHaddr(s *SysAddress) *OrgOrganUpdate {
 	return oou.SetHaddrID(s.ID)
 }
 
+// AddDepartmentIDs adds the "departments" edge to the OrgDepartment entity by IDs.
+func (oou *OrgOrganUpdate) AddDepartmentIDs(ids ...string) *OrgOrganUpdate {
+	oou.mutation.AddDepartmentIDs(ids...)
+	return oou
+}
+
+// AddDepartments adds the "departments" edges to the OrgDepartment entity.
+func (oou *OrgOrganUpdate) AddDepartments(o ...*OrgDepartment) *OrgOrganUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oou.AddDepartmentIDs(ids...)
+}
+
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (oou *OrgOrganUpdate) AddStaffIDs(ids ...string) *OrgOrganUpdate {
+	oou.mutation.AddStaffIDs(ids...)
+	return oou
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (oou *OrgOrganUpdate) AddStaffs(o ...*OrgStaff) *OrgOrganUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oou.AddStaffIDs(ids...)
+}
+
+// AddPositionIDs adds the "positions" edge to the OrgPosition entity by IDs.
+func (oou *OrgOrganUpdate) AddPositionIDs(ids ...string) *OrgOrganUpdate {
+	oou.mutation.AddPositionIDs(ids...)
+	return oou
+}
+
+// AddPositions adds the "positions" edges to the OrgPosition entity.
+func (oou *OrgOrganUpdate) AddPositions(o ...*OrgPosition) *OrgOrganUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oou.AddPositionIDs(ids...)
+}
+
 // Mutation returns the OrgOrganMutation object of the builder.
 func (oou *OrgOrganUpdate) Mutation() *OrgOrganMutation {
 	return oou.mutation
@@ -286,6 +334,69 @@ func (oou *OrgOrganUpdate) Mutation() *OrgOrganMutation {
 func (oou *OrgOrganUpdate) ClearHaddr() *OrgOrganUpdate {
 	oou.mutation.ClearHaddr()
 	return oou
+}
+
+// ClearDepartments clears all "departments" edges to the OrgDepartment entity.
+func (oou *OrgOrganUpdate) ClearDepartments() *OrgOrganUpdate {
+	oou.mutation.ClearDepartments()
+	return oou
+}
+
+// RemoveDepartmentIDs removes the "departments" edge to OrgDepartment entities by IDs.
+func (oou *OrgOrganUpdate) RemoveDepartmentIDs(ids ...string) *OrgOrganUpdate {
+	oou.mutation.RemoveDepartmentIDs(ids...)
+	return oou
+}
+
+// RemoveDepartments removes "departments" edges to OrgDepartment entities.
+func (oou *OrgOrganUpdate) RemoveDepartments(o ...*OrgDepartment) *OrgOrganUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oou.RemoveDepartmentIDs(ids...)
+}
+
+// ClearStaffs clears all "staffs" edges to the OrgStaff entity.
+func (oou *OrgOrganUpdate) ClearStaffs() *OrgOrganUpdate {
+	oou.mutation.ClearStaffs()
+	return oou
+}
+
+// RemoveStaffIDs removes the "staffs" edge to OrgStaff entities by IDs.
+func (oou *OrgOrganUpdate) RemoveStaffIDs(ids ...string) *OrgOrganUpdate {
+	oou.mutation.RemoveStaffIDs(ids...)
+	return oou
+}
+
+// RemoveStaffs removes "staffs" edges to OrgStaff entities.
+func (oou *OrgOrganUpdate) RemoveStaffs(o ...*OrgStaff) *OrgOrganUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oou.RemoveStaffIDs(ids...)
+}
+
+// ClearPositions clears all "positions" edges to the OrgPosition entity.
+func (oou *OrgOrganUpdate) ClearPositions() *OrgOrganUpdate {
+	oou.mutation.ClearPositions()
+	return oou
+}
+
+// RemovePositionIDs removes the "positions" edge to OrgPosition entities by IDs.
+func (oou *OrgOrganUpdate) RemovePositionIDs(ids ...string) *OrgOrganUpdate {
+	oou.mutation.RemovePositionIDs(ids...)
+	return oou
+}
+
+// RemovePositions removes "positions" edges to OrgPosition entities.
+func (oou *OrgOrganUpdate) RemovePositions(o ...*OrgPosition) *OrgOrganUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oou.RemovePositionIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -483,6 +594,177 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if oou.mutation.DepartmentsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.DepartmentsTable,
+			Columns: []string{orgorgan.DepartmentsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgdepartment.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgDepartment
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oou.mutation.RemovedDepartmentsIDs(); len(nodes) > 0 && !oou.mutation.DepartmentsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.DepartmentsTable,
+			Columns: []string{orgorgan.DepartmentsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgdepartment.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oou.mutation.DepartmentsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.DepartmentsTable,
+			Columns: []string{orgorgan.DepartmentsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgdepartment.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if oou.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.StaffsTable,
+			Columns: []string{orgorgan.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oou.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !oou.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.StaffsTable,
+			Columns: []string{orgorgan.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oou.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.StaffsTable,
+			Columns: []string{orgorgan.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if oou.mutation.PositionsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.PositionsTable,
+			Columns: []string{orgorgan.PositionsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgposition.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgPosition
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oou.mutation.RemovedPositionsIDs(); len(nodes) > 0 && !oou.mutation.PositionsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.PositionsTable,
+			Columns: []string{orgorgan.PositionsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgposition.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgPosition
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oou.mutation.PositionsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.PositionsTable,
+			Columns: []string{orgorgan.PositionsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgposition.FieldID,
+				},
+			},
+		}
+		edge.Schema = oou.schemaConfig.OrgPosition
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -758,6 +1040,51 @@ func (oouo *OrgOrganUpdateOne) SetHaddr(s *SysAddress) *OrgOrganUpdateOne {
 	return oouo.SetHaddrID(s.ID)
 }
 
+// AddDepartmentIDs adds the "departments" edge to the OrgDepartment entity by IDs.
+func (oouo *OrgOrganUpdateOne) AddDepartmentIDs(ids ...string) *OrgOrganUpdateOne {
+	oouo.mutation.AddDepartmentIDs(ids...)
+	return oouo
+}
+
+// AddDepartments adds the "departments" edges to the OrgDepartment entity.
+func (oouo *OrgOrganUpdateOne) AddDepartments(o ...*OrgDepartment) *OrgOrganUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oouo.AddDepartmentIDs(ids...)
+}
+
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (oouo *OrgOrganUpdateOne) AddStaffIDs(ids ...string) *OrgOrganUpdateOne {
+	oouo.mutation.AddStaffIDs(ids...)
+	return oouo
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (oouo *OrgOrganUpdateOne) AddStaffs(o ...*OrgStaff) *OrgOrganUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oouo.AddStaffIDs(ids...)
+}
+
+// AddPositionIDs adds the "positions" edge to the OrgPosition entity by IDs.
+func (oouo *OrgOrganUpdateOne) AddPositionIDs(ids ...string) *OrgOrganUpdateOne {
+	oouo.mutation.AddPositionIDs(ids...)
+	return oouo
+}
+
+// AddPositions adds the "positions" edges to the OrgPosition entity.
+func (oouo *OrgOrganUpdateOne) AddPositions(o ...*OrgPosition) *OrgOrganUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oouo.AddPositionIDs(ids...)
+}
+
 // Mutation returns the OrgOrganMutation object of the builder.
 func (oouo *OrgOrganUpdateOne) Mutation() *OrgOrganMutation {
 	return oouo.mutation
@@ -767,6 +1094,69 @@ func (oouo *OrgOrganUpdateOne) Mutation() *OrgOrganMutation {
 func (oouo *OrgOrganUpdateOne) ClearHaddr() *OrgOrganUpdateOne {
 	oouo.mutation.ClearHaddr()
 	return oouo
+}
+
+// ClearDepartments clears all "departments" edges to the OrgDepartment entity.
+func (oouo *OrgOrganUpdateOne) ClearDepartments() *OrgOrganUpdateOne {
+	oouo.mutation.ClearDepartments()
+	return oouo
+}
+
+// RemoveDepartmentIDs removes the "departments" edge to OrgDepartment entities by IDs.
+func (oouo *OrgOrganUpdateOne) RemoveDepartmentIDs(ids ...string) *OrgOrganUpdateOne {
+	oouo.mutation.RemoveDepartmentIDs(ids...)
+	return oouo
+}
+
+// RemoveDepartments removes "departments" edges to OrgDepartment entities.
+func (oouo *OrgOrganUpdateOne) RemoveDepartments(o ...*OrgDepartment) *OrgOrganUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oouo.RemoveDepartmentIDs(ids...)
+}
+
+// ClearStaffs clears all "staffs" edges to the OrgStaff entity.
+func (oouo *OrgOrganUpdateOne) ClearStaffs() *OrgOrganUpdateOne {
+	oouo.mutation.ClearStaffs()
+	return oouo
+}
+
+// RemoveStaffIDs removes the "staffs" edge to OrgStaff entities by IDs.
+func (oouo *OrgOrganUpdateOne) RemoveStaffIDs(ids ...string) *OrgOrganUpdateOne {
+	oouo.mutation.RemoveStaffIDs(ids...)
+	return oouo
+}
+
+// RemoveStaffs removes "staffs" edges to OrgStaff entities.
+func (oouo *OrgOrganUpdateOne) RemoveStaffs(o ...*OrgStaff) *OrgOrganUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oouo.RemoveStaffIDs(ids...)
+}
+
+// ClearPositions clears all "positions" edges to the OrgPosition entity.
+func (oouo *OrgOrganUpdateOne) ClearPositions() *OrgOrganUpdateOne {
+	oouo.mutation.ClearPositions()
+	return oouo
+}
+
+// RemovePositionIDs removes the "positions" edge to OrgPosition entities by IDs.
+func (oouo *OrgOrganUpdateOne) RemovePositionIDs(ids ...string) *OrgOrganUpdateOne {
+	oouo.mutation.RemovePositionIDs(ids...)
+	return oouo
+}
+
+// RemovePositions removes "positions" edges to OrgPosition entities.
+func (oouo *OrgOrganUpdateOne) RemovePositions(o ...*OrgPosition) *OrgOrganUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oouo.RemovePositionIDs(ids...)
 }
 
 // Where appends a list predicates to the OrgOrganUpdate builder.
@@ -994,6 +1384,177 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if oouo.mutation.DepartmentsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.DepartmentsTable,
+			Columns: []string{orgorgan.DepartmentsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgdepartment.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgDepartment
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oouo.mutation.RemovedDepartmentsIDs(); len(nodes) > 0 && !oouo.mutation.DepartmentsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.DepartmentsTable,
+			Columns: []string{orgorgan.DepartmentsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgdepartment.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oouo.mutation.DepartmentsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.DepartmentsTable,
+			Columns: []string{orgorgan.DepartmentsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgdepartment.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if oouo.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.StaffsTable,
+			Columns: []string{orgorgan.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oouo.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !oouo.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.StaffsTable,
+			Columns: []string{orgorgan.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oouo.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.StaffsTable,
+			Columns: []string{orgorgan.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if oouo.mutation.PositionsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.PositionsTable,
+			Columns: []string{orgorgan.PositionsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgposition.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgPosition
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oouo.mutation.RemovedPositionsIDs(); len(nodes) > 0 && !oouo.mutation.PositionsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.PositionsTable,
+			Columns: []string{orgorgan.PositionsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgposition.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgPosition
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oouo.mutation.PositionsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.PositionsTable,
+			Columns: []string{orgorgan.PositionsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgposition.FieldID,
+				},
+			},
+		}
+		edge.Schema = oouo.schemaConfig.OrgPosition
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

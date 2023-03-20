@@ -12,7 +12,10 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
@@ -239,6 +242,51 @@ func (ooc *OrgOrganCreate) SetHaddr(s *SysAddress) *OrgOrganCreate {
 	return ooc.SetHaddrID(s.ID)
 }
 
+// AddDepartmentIDs adds the "departments" edge to the OrgDepartment entity by IDs.
+func (ooc *OrgOrganCreate) AddDepartmentIDs(ids ...string) *OrgOrganCreate {
+	ooc.mutation.AddDepartmentIDs(ids...)
+	return ooc
+}
+
+// AddDepartments adds the "departments" edges to the OrgDepartment entity.
+func (ooc *OrgOrganCreate) AddDepartments(o ...*OrgDepartment) *OrgOrganCreate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return ooc.AddDepartmentIDs(ids...)
+}
+
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (ooc *OrgOrganCreate) AddStaffIDs(ids ...string) *OrgOrganCreate {
+	ooc.mutation.AddStaffIDs(ids...)
+	return ooc
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (ooc *OrgOrganCreate) AddStaffs(o ...*OrgStaff) *OrgOrganCreate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return ooc.AddStaffIDs(ids...)
+}
+
+// AddPositionIDs adds the "positions" edge to the OrgPosition entity by IDs.
+func (ooc *OrgOrganCreate) AddPositionIDs(ids ...string) *OrgOrganCreate {
+	ooc.mutation.AddPositionIDs(ids...)
+	return ooc
+}
+
+// AddPositions adds the "positions" edges to the OrgPosition entity.
+func (ooc *OrgOrganCreate) AddPositions(o ...*OrgPosition) *OrgOrganCreate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return ooc.AddPositionIDs(ids...)
+}
+
 // Mutation returns the OrgOrganMutation object of the builder.
 func (ooc *OrgOrganCreate) Mutation() *OrgOrganMutation {
 	return ooc.mutation
@@ -463,6 +511,66 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.HaddrID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := ooc.mutation.DepartmentsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.DepartmentsTable,
+			Columns: []string{orgorgan.DepartmentsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgdepartment.FieldID,
+				},
+			},
+		}
+		edge.Schema = ooc.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := ooc.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.StaffsTable,
+			Columns: []string{orgorgan.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = ooc.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := ooc.mutation.PositionsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgorgan.PositionsTable,
+			Columns: []string{orgorgan.PositionsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgposition.FieldID,
+				},
+			},
+		}
+		edge.Schema = ooc.schemaConfig.OrgPosition
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

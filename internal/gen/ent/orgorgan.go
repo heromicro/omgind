@@ -54,9 +54,15 @@ type OrgOrgan struct {
 type OrgOrganEdges struct {
 	// Haddr holds the value of the haddr edge.
 	Haddr *SysAddress `json:"haddr,omitempty"`
+	// Departments holds the value of the departments edge.
+	Departments []*OrgDepartment `json:"departments,omitempty"`
+	// Staffs holds the value of the staffs edge.
+	Staffs []*OrgStaff `json:"staffs,omitempty"`
+	// Positions holds the value of the positions edge.
+	Positions []*OrgPosition `json:"positions,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [4]bool
 }
 
 // HaddrOrErr returns the Haddr value or an error if the edge
@@ -70,6 +76,33 @@ func (e OrgOrganEdges) HaddrOrErr() (*SysAddress, error) {
 		return e.Haddr, nil
 	}
 	return nil, &NotLoadedError{edge: "haddr"}
+}
+
+// DepartmentsOrErr returns the Departments value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrgOrganEdges) DepartmentsOrErr() ([]*OrgDepartment, error) {
+	if e.loadedTypes[1] {
+		return e.Departments, nil
+	}
+	return nil, &NotLoadedError{edge: "departments"}
+}
+
+// StaffsOrErr returns the Staffs value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrgOrganEdges) StaffsOrErr() ([]*OrgStaff, error) {
+	if e.loadedTypes[2] {
+		return e.Staffs, nil
+	}
+	return nil, &NotLoadedError{edge: "staffs"}
+}
+
+// PositionsOrErr returns the Positions value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrgOrganEdges) PositionsOrErr() ([]*OrgPosition, error) {
+	if e.loadedTypes[3] {
+		return e.Positions, nil
+	}
+	return nil, &NotLoadedError{edge: "positions"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -209,6 +242,21 @@ func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
 // QueryHaddr queries the "haddr" edge of the OrgOrgan entity.
 func (oo *OrgOrgan) QueryHaddr() *SysAddressQuery {
 	return NewOrgOrganClient(oo.config).QueryHaddr(oo)
+}
+
+// QueryDepartments queries the "departments" edge of the OrgOrgan entity.
+func (oo *OrgOrgan) QueryDepartments() *OrgDepartmentQuery {
+	return NewOrgOrganClient(oo.config).QueryDepartments(oo)
+}
+
+// QueryStaffs queries the "staffs" edge of the OrgOrgan entity.
+func (oo *OrgOrgan) QueryStaffs() *OrgStaffQuery {
+	return NewOrgOrganClient(oo.config).QueryStaffs(oo)
+}
+
+// QueryPositions queries the "positions" edge of the OrgOrgan entity.
+func (oo *OrgOrgan) QueryPositions() *OrgPositionQuery {
+	return NewOrgOrganClient(oo.config).QueryPositions(oo)
 }
 
 // Update returns a builder for updating this OrgOrgan.

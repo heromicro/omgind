@@ -9,6 +9,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 )
 
 // OrgDepartment is the model entity for the OrgDepartment schema.
@@ -38,6 +39,31 @@ type OrgDepartment struct {
 	OrgID *string `json:"org_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the OrgDepartmentQuery when eager-loading is set.
+	Edges OrgDepartmentEdges `json:"edges"`
+}
+
+// OrgDepartmentEdges holds the relations/edges for other nodes in the graph.
+type OrgDepartmentEdges struct {
+	// Organ holds the value of the organ edge.
+	Organ *OrgOrgan `json:"organ,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// OrganOrErr returns the Organ value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e OrgDepartmentEdges) OrganOrErr() (*OrgOrgan, error) {
+	if e.loadedTypes[0] {
+		if e.Organ == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgorgan.Label}
+		}
+		return e.Organ, nil
+	}
+	return nil, &NotLoadedError{edge: "organ"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -151,6 +177,11 @@ func (od *OrgDepartment) assignValues(columns []string, values []any) error {
 		}
 	}
 	return nil
+}
+
+// QueryOrgan queries the "organ" edge of the OrgDepartment entity.
+func (od *OrgDepartment) QueryOrgan() *OrgOrganQuery {
+	return NewOrgDepartmentClient(od.config).QueryOrgan(od)
 }
 
 // Update returns a builder for updating this OrgDepartment.

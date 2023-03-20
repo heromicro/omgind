@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -692,6 +694,39 @@ func CreatorEqualFold(v string) predicate.OrgPosition {
 // CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
 func CreatorContainsFold(v string) predicate.OrgPosition {
 	return predicate.OrgPosition(sql.FieldContainsFold(FieldCreator, v))
+}
+
+// HasOrgan applies the HasEdge predicate on the "organ" edge.
+func HasOrgan() predicate.OrgPosition {
+	return predicate.OrgPosition(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgPosition
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasOrganWith applies the HasEdge predicate on the "organ" edge with a given conditions (other predicates).
+func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgPosition {
+	return predicate.OrgPosition(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(OrganInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgPosition
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.
