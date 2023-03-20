@@ -12,7 +12,7 @@ const defaultKey = "omgind"
 
 var defaultOptions = options{
 	tokenType:     "Bearer",
-	expired:       7200,
+	expired:       7200 * 2,
 	signingMethod: jwt.SigningMethodHS512,
 	signingKey:    []byte(defaultKey),
 	keyfunc: func(t *jwt.Token) (any, error) {

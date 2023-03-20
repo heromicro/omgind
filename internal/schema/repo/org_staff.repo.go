@@ -66,8 +66,8 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 
 	query = query.Where(orgstaff.DeletedAtIsNil())
 	// TODO: 查询条件
-	if v := params.Name; v != "" {
-		query = query.Where(orgstaff.Or(orgstaff.FirstNameContains(v), orgstaff.LastNameContains(v)))
+	if v := params.FirstName; v != "" {
+		query = query.Where(orgstaff.FirstNameContains(v))
 	}
 
 	if v := params.IsActive; v != nil {
