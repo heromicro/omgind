@@ -172,6 +172,8 @@ func (a *OrgDepartment) View(ctx context.Context, id string, opts ...schema.OrgD
 // Create 创建数据
 func (a *OrgDepartment) Create(ctx context.Context, item schema.OrgDepartment) (*schema.OrgDepartment, error) {
 
+	// TODO: check org_id
+
 	iteminput := a.ToEntCreateOrgDepartmentInput(&item)
 
 	r_orgdepartment, err := a.EntCli.OrgDepartment.Create().SetInput(*iteminput).Save(ctx)
@@ -185,6 +187,8 @@ func (a *OrgDepartment) Create(ctx context.Context, item schema.OrgDepartment) (
 
 // Update 更新数据
 func (a *OrgDepartment) Update(ctx context.Context, id string, item schema.OrgDepartment) (*schema.OrgDepartment, error) {
+
+	// TODO: check org_id
 
 	oitem, err := a.EntCli.OrgDepartment.Query().Where(orgdepartment.IDEQ(id)).Only(ctx)
 	if err != nil {

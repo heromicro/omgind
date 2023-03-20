@@ -176,6 +176,8 @@ func (a *OrgPosition) View(ctx context.Context, id string, opts ...schema.OrgPos
 // Create 创建数据
 func (a *OrgPosition) Create(ctx context.Context, item schema.OrgPosition) (*schema.OrgPosition, error) {
 
+	// TODO: check org_id
+
 	iteminput := a.ToEntCreateOrgPositionInput(&item)
 	r_orgposition, err := a.EntCli.OrgPosition.Create().SetInput(*iteminput).Save(ctx)
 
@@ -189,13 +191,15 @@ func (a *OrgPosition) Create(ctx context.Context, item schema.OrgPosition) (*sch
 // Update 更新数据
 func (a *OrgPosition) Update(ctx context.Context, id string, item schema.OrgPosition) (*schema.OrgPosition, error) {
 
+	// TODO: check org_id
+
 	oitem, err := a.EntCli.OrgPosition.Query().Where(orgposition.IDEQ(id)).Only(ctx)
 	if err != nil {
 		return nil, err
 	}
 
 	iteminput := a.ToEntUpdateOrgPositionInput(&item)
-	
+
 	r_orgposition, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 
 	sch_orgposition := ToSchemaOrgPosition(r_orgposition)

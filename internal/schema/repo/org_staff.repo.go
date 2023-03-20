@@ -192,6 +192,8 @@ func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQ
 // Create 创建数据
 func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.OrgStaff, error) {
 
+	// TODO: check org_id
+
 	iteminput := a.ToEntCreateOrgStaffInput(&item)
 	r_orgstaff, err := a.EntCli.OrgStaff.Create().SetInput(*iteminput).Save(ctx)
 
@@ -204,6 +206,8 @@ func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.Or
 
 // Update 更新数据
 func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) (*schema.OrgStaff, error) {
+
+	// TODO: check org_id
 
 	oitem, err := a.EntCli.OrgStaff.Query().Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {
