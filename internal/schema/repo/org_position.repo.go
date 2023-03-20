@@ -2,10 +2,12 @@ package repo
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
@@ -25,6 +27,12 @@ type OrgPosition struct {
 func ToSchemaOrgPosition(et *ent.OrgPosition) *schema.OrgPosition {
 	item := new(schema.OrgPosition)
 	structure.Copy(et, item)
+
+	log.Println(" ------ ===== ", et.Edges.Organ)
+	log.Println(" ------ ===== ", et.Edges.Organ.Edges.Haddr)
+	if et.Edges.Organ != nil {
+		item.Org = ToSchemaOrgOrganShow(et.Edges.Organ)
+	}
 	return item
 }
 
@@ -62,10 +70,24 @@ func (a *OrgPosition) getQueryOption(opts ...schema.OrgPositionQueryOptions) sch
 func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryParam, opts ...schema.OrgPositionQueryOptions) (*schema.OrgPositionQueryResult, error) {
 	opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.OrgPosition.Query()
+	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
+	})
 
 	query = query.Where(orgposition.DeletedAtIsNil())
 	// TODO: 查询条件
+
+	if v := params.Name; v != "" {
+		query = query.Where(orgposition.NameContains(v))
+	}
+
+	if v := params.Code; v != "" {
+		query = query.Where(orgposition.CodeContains(v))
+	}
+
+	if v := params.OrgID; v != "" {
+		query = query.Where(orgposition.OrgIDEQ(v))
+	}
 
 	if v := params.IsActive; v != nil {
 		query = query.Where(orgposition.IsActiveEQ(*v))
@@ -120,7 +142,10 @@ func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryP
 // Get 查询指定数据
 func (a *OrgPosition) Get(ctx context.Context, id string, opts ...schema.OrgPositionQueryOptions) (*schema.OrgPosition, error) {
 
-	r_orgposition, err := a.EntCli.OrgPosition.Query().Where(orgposition.IDEQ(id)).Only(ctx)
+	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo)
+	})
+	r_orgposition, err := query.Where(orgposition.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
@@ -134,7 +159,10 @@ func (a *OrgPosition) Get(ctx context.Context, id string, opts ...schema.OrgPosi
 // View 查询指定数据
 func (a *OrgPosition) View(ctx context.Context, id string, opts ...schema.OrgPositionQueryOptions) (*schema.OrgPosition, error) {
 
-	r_orgposition, err := a.EntCli.OrgPosition.Query().Where(orgposition.IDEQ(id)).Only(ctx)
+	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo)
+	})
+	r_orgposition, err := query.Where(orgposition.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
@@ -167,8 +195,9 @@ func (a *OrgPosition) Update(ctx context.Context, id string, item schema.OrgPosi
 	}
 
 	iteminput := a.ToEntUpdateOrgPositionInput(&item)
-
+	
 	r_orgposition, err := oitem.Update().SetInput(*iteminput).Save(ctx)
+
 	sch_orgposition := ToSchemaOrgPosition(r_orgposition)
 
 	return sch_orgposition, nil

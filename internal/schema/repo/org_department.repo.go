@@ -7,6 +7,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 
@@ -25,6 +26,9 @@ type OrgDepartment struct {
 func ToSchemaOrgDepartment(et *ent.OrgDepartment) *schema.OrgDepartment {
 	item := new(schema.OrgDepartment)
 	structure.Copy(et, item)
+	if et.Edges.Organ != nil {
+		item.Org = ToSchemaOrgOrganShow(et.Edges.Organ)
+	}
 	return item
 }
 
@@ -62,10 +66,24 @@ func (a *OrgDepartment) getQueryOption(opts ...schema.OrgDepartmentQueryOptions)
 func (a *OrgDepartment) Query(ctx context.Context, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryResult, error) {
 	opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.OrgDepartment.Query()
+	query := a.EntCli.OrgDepartment.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
+	})
 
 	query = query.Where(orgdepartment.DeletedAtIsNil())
 	// TODO: 查询条件
+
+	if v := params.Name; v != "" {
+		query = query.Where(orgdepartment.NameContains(v))
+	}
+
+	if v := params.Code; v != "" {
+		query = query.Where(orgdepartment.CodeContains(v))
+	}
+
+	if v := params.OrgID; v != "" {
+		query = query.Where(orgdepartment.OrgIDEQ(v))
+	}
 
 	if v := params.IsActive; v != nil {
 		query = query.Where(orgdepartment.IsActiveEQ(*v))
@@ -120,7 +138,10 @@ func (a *OrgDepartment) Query(ctx context.Context, params schema.OrgDepartmentQu
 // Get 查询指定数据
 func (a *OrgDepartment) Get(ctx context.Context, id string, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartment, error) {
 
-	r_orgdepartment, err := a.EntCli.OrgDepartment.Query().Where(orgdepartment.IDEQ(id)).Only(ctx)
+	query := a.EntCli.OrgDepartment.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo)
+	})
+	r_orgdepartment, err := query.Where(orgdepartment.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
@@ -134,7 +155,10 @@ func (a *OrgDepartment) Get(ctx context.Context, id string, opts ...schema.OrgDe
 // View 查询指定数据
 func (a *OrgDepartment) View(ctx context.Context, id string, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartment, error) {
 
-	r_orgdepartment, err := a.EntCli.OrgDepartment.Query().Where(orgdepartment.IDEQ(id)).Only(ctx)
+	query := a.EntCli.OrgDepartment.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo).WithHaddr()
+	})
+	r_orgdepartment, err := query.Where(orgdepartment.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound

@@ -3,15 +3,21 @@ package schema
 import "time"
 
 // OrgOrgan 组织管理对象
-type OrgOrgan struct {
-	ID    string `json:"id"`                       // 唯一标识
-	Name  string `json:"name" binding:"required"`  // 名称
-	Sname string `json:"sname" binding:"required"` // 短名称
-	Code  string `json:"code"`                     // 助记码
 
-	OwnerId string      `json:"owner_id"` // 所有者user.id
-	IdenNo  *string     `json:"iden_no"`  // 执照号
-	Haddr   *SysAddress `json:"haddr"`    // 总部地址
+type OrgOrganShow struct {
+	ID     string  `json:"id"`                       // 唯一标识
+	Name   string  `json:"name" binding:"required"`  // 名称
+	Sname  string  `json:"sname" binding:"required"` // 短名称
+	IdenNo *string `json:"iden_no"`                  // 执照号
+
+	Haddr *SysAddress `json:"haddr"` // 总部地址
+}
+
+type OrgOrgan struct {
+	OrgOrganShow
+	Code string `json:"code"` // 助记码
+
+	OwnerId string `json:"owner_id"` // 所有者user.id
 
 	Memo     *string `json:"memo"`                         //
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态

@@ -6,6 +6,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
@@ -25,6 +26,9 @@ type OrgStaff struct {
 func ToSchemaOrgStaff(et *ent.OrgStaff) *schema.OrgStaff {
 	item := new(schema.OrgStaff)
 	structure.Copy(et, item)
+	if et.Edges.Organ != nil {
+		item.Org = ToSchemaOrgOrganShow(et.Edges.Organ)
+	}
 	return item
 }
 
@@ -62,16 +66,27 @@ func (a *OrgStaff) getQueryOption(opts ...schema.OrgStaffQueryOptions) schema.Or
 func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, opts ...schema.OrgStaffQueryOptions) (*schema.OrgStaffQueryResult, error) {
 	opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.OrgStaff.Query()
+	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
+	})
 
 	query = query.Where(orgstaff.DeletedAtIsNil())
 	// TODO: 查询条件
+
 	if v := params.FirstName; v != "" {
 		query = query.Where(orgstaff.FirstNameContains(v))
 	}
 
 	if v := params.IsActive; v != nil {
 		query = query.Where(orgstaff.IsActiveEQ(*v))
+	}
+
+	if v := params.Gender; v != "" {
+		query = query.Where(orgstaff.GenderEQ(orgstaff.Gender(v)))
+	}
+
+	if v := params.OrgID; v != "" {
+		query = query.Where(orgstaff.OrgIDEQ(v))
 	}
 
 	count, err := query.Count(ctx)
@@ -91,6 +106,26 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 
 	if v := params.Sort_Order; v != "" {
 		of := MakeUpOrderField(orgstaff.FieldSort, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.CreatedAt_Order; v != "" {
+		of := MakeUpOrderField(orgstaff.FieldBirthDate, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.EntryDate_Order; v != "" {
+		of := MakeUpOrderField(orgstaff.FieldEntryDate, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.RegularDate_Order; v != "" {
+		of := MakeUpOrderField(orgstaff.FieldRegularDate, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.ResignDate_Order; v != "" {
+		of := MakeUpOrderField(orgstaff.FieldRegularDate, v)
 		opt.OrderFields = append(opt.OrderFields, of)
 	}
 
@@ -123,7 +158,10 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 // Get 查询指定数据
 func (a *OrgStaff) Get(ctx context.Context, id string, opts ...schema.OrgStaffQueryOptions) (*schema.OrgStaff, error) {
 
-	r_orgstaff, err := a.EntCli.OrgStaff.Query().Where(orgstaff.IDEQ(id)).Only(ctx)
+	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
+	})
+	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
@@ -137,7 +175,10 @@ func (a *OrgStaff) Get(ctx context.Context, id string, opts ...schema.OrgStaffQu
 // View 查询指定数据
 func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQueryOptions) (*schema.OrgStaff, error) {
 
-	r_orgstaff, err := a.EntCli.OrgStaff.Query().Where(orgstaff.IDEQ(id)).Only(ctx)
+	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo).WithHaddr()
+	})
+	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
 			return nil, errors.ErrNotFound

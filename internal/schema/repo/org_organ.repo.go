@@ -23,6 +23,16 @@ type OrgOrgan struct {
 }
 
 // ToSchemaOrgOrgan 转换为
+func ToSchemaOrgOrganShow(et *ent.OrgOrgan) *schema.OrgOrganShow {
+	item := new(schema.OrgOrganShow)
+
+	structure.Copy(et, item)
+	if et.Edges.Haddr != nil {
+		item.Haddr = ToSchemaSysAddress(et.Edges.Haddr)
+	}
+	return item
+}
+
 func ToSchemaOrgOrgan(et *ent.OrgOrgan) *schema.OrgOrgan {
 	item := new(schema.OrgOrgan)
 

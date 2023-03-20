@@ -19,7 +19,8 @@ type OrgStaff struct {
 	RegularDate string `json:"regular_date"`                  // 转正日期
 	ResignDate  string `json:"resign_date"`                   // 离职日期
 
-	OrgID string `json:"org_id"` // 企业id
+	OrgID string        `json:"org_id"` // 企业id
+	Org   *OrgOrganShow `json:"org"`    //
 
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`
@@ -40,7 +41,7 @@ type OrgStaffQueryParam struct {
 	LastName  string `form:"last_name"`  //
 	Gender    string `form:"gender"`     //
 	IsActive  *bool  `form:"is_active"`  //
-	OrgId     string `form:"org_id"`     //
+	OrgID     string `form:"org_id"`     //
 
 	CreatedAt_Order string `form:"created_at__order"` // asc, desc
 	IsActive_Order  string `form:"is_active__order"`  //
@@ -50,8 +51,8 @@ type OrgStaffQueryParam struct {
 
 	WorkerNo_Order    string `form:"worker_no__order"`    // asc/desc
 	EntryDate_Order   string `form:"entry_date__order"`   // asc/desc
-	ResignDate_Order  string `form:"resign_date__order"`  // asc/desc
 	RegularDate_Order string `form:"regular_date__order"` // asc/desc
+	ResignDate_Order  string `form:"resign_date__order"`  // asc/desc
 
 }
 
