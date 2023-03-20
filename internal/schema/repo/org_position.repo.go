@@ -28,7 +28,7 @@ func ToSchemaOrgPosition(et *ent.OrgPosition) *schema.OrgPosition {
 	return item
 }
 
-func  ToSchemaOrgPositions(ets ent.OrgPositions) []*schema.OrgPosition {
+func ToSchemaOrgPositions(ets ent.OrgPositions) []*schema.OrgPosition {
 	list := make([]*schema.OrgPosition, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaOrgPosition(item)
