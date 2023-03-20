@@ -74,7 +74,7 @@ var (
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 256},
 		{Name: "sname", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
-		{Name: "iden_no", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "iden_no", Type: field.TypeString, Nullable: true, Size: 20},
 		{Name: "owner_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "haddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
