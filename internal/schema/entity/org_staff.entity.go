@@ -32,9 +32,13 @@ func (OrgStaff) Fields() []ent.Field {
 
 		field.Enum("gender").NamedValues("Male", "M", "Female", "F").StorageKey("gender").Nillable().Optional().Comment("性别"),
 		field.String("birth_date").Nillable().Optional().StorageKey("birth_date").Comment("出生日期"),
+		field.String("iden_no").Nillable().Optional().StorageKey("iden_no").Comment("身份证号码"),
+
+		field.String("worker_no").Nillable().Optional().StorageKey("worker_no").Comment("工号"),
+		field.String("cubicle").Nillable().Optional().StorageKey("cubicle").Comment("工位"),
 		field.String("entry_date").Nillable().Optional().StorageKey("entry_date").Comment("入职日期"),
 		field.String("regular_date").Nillable().Optional().StorageKey("regu_date").Comment("转正日期"),
-		field.String("iden_no").Nillable().Optional().StorageKey("iden_no").Comment("身份证号码"),
+		field.String("resign_date").Nillable().Optional().StorageKey("resign_date").Comment("离职日期"),
 
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}

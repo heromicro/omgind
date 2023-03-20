@@ -205,6 +205,48 @@ func (osc *OrgStaffCreate) SetNillableBirthDate(s *string) *OrgStaffCreate {
 	return osc
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (osc *OrgStaffCreate) SetIdenNo(s string) *OrgStaffCreate {
+	osc.mutation.SetIdenNo(s)
+	return osc
+}
+
+// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableIdenNo(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetIdenNo(*s)
+	}
+	return osc
+}
+
+// SetWorkerNo sets the "worker_no" field.
+func (osc *OrgStaffCreate) SetWorkerNo(s string) *OrgStaffCreate {
+	osc.mutation.SetWorkerNo(s)
+	return osc
+}
+
+// SetNillableWorkerNo sets the "worker_no" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableWorkerNo(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetWorkerNo(*s)
+	}
+	return osc
+}
+
+// SetCubicle sets the "cubicle" field.
+func (osc *OrgStaffCreate) SetCubicle(s string) *OrgStaffCreate {
+	osc.mutation.SetCubicle(s)
+	return osc
+}
+
+// SetNillableCubicle sets the "cubicle" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableCubicle(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetCubicle(*s)
+	}
+	return osc
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (osc *OrgStaffCreate) SetEntryDate(s string) *OrgStaffCreate {
 	osc.mutation.SetEntryDate(s)
@@ -233,16 +275,16 @@ func (osc *OrgStaffCreate) SetNillableRegularDate(s *string) *OrgStaffCreate {
 	return osc
 }
 
-// SetIdenNo sets the "iden_no" field.
-func (osc *OrgStaffCreate) SetIdenNo(s string) *OrgStaffCreate {
-	osc.mutation.SetIdenNo(s)
+// SetResignDate sets the "resign_date" field.
+func (osc *OrgStaffCreate) SetResignDate(s string) *OrgStaffCreate {
+	osc.mutation.SetResignDate(s)
 	return osc
 }
 
-// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableIdenNo(s *string) *OrgStaffCreate {
+// SetNillableResignDate sets the "resign_date" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableResignDate(s *string) *OrgStaffCreate {
 	if s != nil {
-		osc.SetIdenNo(*s)
+		osc.SetResignDate(*s)
 	}
 	return osc
 }
@@ -475,6 +517,18 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgstaff.FieldBirthDate, field.TypeString, value)
 		_node.BirthDate = &value
 	}
+	if value, ok := osc.mutation.IdenNo(); ok {
+		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
+		_node.IdenNo = &value
+	}
+	if value, ok := osc.mutation.WorkerNo(); ok {
+		_spec.SetField(orgstaff.FieldWorkerNo, field.TypeString, value)
+		_node.WorkerNo = &value
+	}
+	if value, ok := osc.mutation.Cubicle(); ok {
+		_spec.SetField(orgstaff.FieldCubicle, field.TypeString, value)
+		_node.Cubicle = &value
+	}
 	if value, ok := osc.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeString, value)
 		_node.EntryDate = &value
@@ -483,9 +537,9 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgstaff.FieldRegularDate, field.TypeString, value)
 		_node.RegularDate = &value
 	}
-	if value, ok := osc.mutation.IdenNo(); ok {
-		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
-		_node.IdenNo = &value
+	if value, ok := osc.mutation.ResignDate(); ok {
+		_spec.SetField(orgstaff.FieldResignDate, field.TypeString, value)
+		_node.ResignDate = &value
 	}
 	if value, ok := osc.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -729,6 +783,60 @@ func (u *OrgStaffUpsert) ClearBirthDate() *OrgStaffUpsert {
 	return u
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (u *OrgStaffUpsert) SetIdenNo(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldIdenNo, v)
+	return u
+}
+
+// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateIdenNo() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldIdenNo)
+	return u
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (u *OrgStaffUpsert) ClearIdenNo() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldIdenNo)
+	return u
+}
+
+// SetWorkerNo sets the "worker_no" field.
+func (u *OrgStaffUpsert) SetWorkerNo(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldWorkerNo, v)
+	return u
+}
+
+// UpdateWorkerNo sets the "worker_no" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateWorkerNo() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldWorkerNo)
+	return u
+}
+
+// ClearWorkerNo clears the value of the "worker_no" field.
+func (u *OrgStaffUpsert) ClearWorkerNo() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldWorkerNo)
+	return u
+}
+
+// SetCubicle sets the "cubicle" field.
+func (u *OrgStaffUpsert) SetCubicle(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldCubicle, v)
+	return u
+}
+
+// UpdateCubicle sets the "cubicle" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateCubicle() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldCubicle)
+	return u
+}
+
+// ClearCubicle clears the value of the "cubicle" field.
+func (u *OrgStaffUpsert) ClearCubicle() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldCubicle)
+	return u
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (u *OrgStaffUpsert) SetEntryDate(v string) *OrgStaffUpsert {
 	u.Set(orgstaff.FieldEntryDate, v)
@@ -765,21 +873,21 @@ func (u *OrgStaffUpsert) ClearRegularDate() *OrgStaffUpsert {
 	return u
 }
 
-// SetIdenNo sets the "iden_no" field.
-func (u *OrgStaffUpsert) SetIdenNo(v string) *OrgStaffUpsert {
-	u.Set(orgstaff.FieldIdenNo, v)
+// SetResignDate sets the "resign_date" field.
+func (u *OrgStaffUpsert) SetResignDate(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldResignDate, v)
 	return u
 }
 
-// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
-func (u *OrgStaffUpsert) UpdateIdenNo() *OrgStaffUpsert {
-	u.SetExcluded(orgstaff.FieldIdenNo)
+// UpdateResignDate sets the "resign_date" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateResignDate() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldResignDate)
 	return u
 }
 
-// ClearIdenNo clears the value of the "iden_no" field.
-func (u *OrgStaffUpsert) ClearIdenNo() *OrgStaffUpsert {
-	u.SetNull(orgstaff.FieldIdenNo)
+// ClearResignDate clears the value of the "resign_date" field.
+func (u *OrgStaffUpsert) ClearResignDate() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldResignDate)
 	return u
 }
 
@@ -1072,6 +1180,69 @@ func (u *OrgStaffUpsertOne) ClearBirthDate() *OrgStaffUpsertOne {
 	})
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (u *OrgStaffUpsertOne) SetIdenNo(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetIdenNo(v)
+	})
+}
+
+// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateIdenNo() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateIdenNo()
+	})
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (u *OrgStaffUpsertOne) ClearIdenNo() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearIdenNo()
+	})
+}
+
+// SetWorkerNo sets the "worker_no" field.
+func (u *OrgStaffUpsertOne) SetWorkerNo(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetWorkerNo(v)
+	})
+}
+
+// UpdateWorkerNo sets the "worker_no" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateWorkerNo() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateWorkerNo()
+	})
+}
+
+// ClearWorkerNo clears the value of the "worker_no" field.
+func (u *OrgStaffUpsertOne) ClearWorkerNo() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearWorkerNo()
+	})
+}
+
+// SetCubicle sets the "cubicle" field.
+func (u *OrgStaffUpsertOne) SetCubicle(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetCubicle(v)
+	})
+}
+
+// UpdateCubicle sets the "cubicle" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateCubicle() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateCubicle()
+	})
+}
+
+// ClearCubicle clears the value of the "cubicle" field.
+func (u *OrgStaffUpsertOne) ClearCubicle() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearCubicle()
+	})
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (u *OrgStaffUpsertOne) SetEntryDate(v string) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
@@ -1114,24 +1285,24 @@ func (u *OrgStaffUpsertOne) ClearRegularDate() *OrgStaffUpsertOne {
 	})
 }
 
-// SetIdenNo sets the "iden_no" field.
-func (u *OrgStaffUpsertOne) SetIdenNo(v string) *OrgStaffUpsertOne {
+// SetResignDate sets the "resign_date" field.
+func (u *OrgStaffUpsertOne) SetResignDate(v string) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetIdenNo(v)
+		s.SetResignDate(v)
 	})
 }
 
-// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
-func (u *OrgStaffUpsertOne) UpdateIdenNo() *OrgStaffUpsertOne {
+// UpdateResignDate sets the "resign_date" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateResignDate() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateIdenNo()
+		s.UpdateResignDate()
 	})
 }
 
-// ClearIdenNo clears the value of the "iden_no" field.
-func (u *OrgStaffUpsertOne) ClearIdenNo() *OrgStaffUpsertOne {
+// ClearResignDate clears the value of the "resign_date" field.
+func (u *OrgStaffUpsertOne) ClearResignDate() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.ClearIdenNo()
+		s.ClearResignDate()
 	})
 }
 
@@ -1590,6 +1761,69 @@ func (u *OrgStaffUpsertBulk) ClearBirthDate() *OrgStaffUpsertBulk {
 	})
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (u *OrgStaffUpsertBulk) SetIdenNo(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetIdenNo(v)
+	})
+}
+
+// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateIdenNo() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateIdenNo()
+	})
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (u *OrgStaffUpsertBulk) ClearIdenNo() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearIdenNo()
+	})
+}
+
+// SetWorkerNo sets the "worker_no" field.
+func (u *OrgStaffUpsertBulk) SetWorkerNo(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetWorkerNo(v)
+	})
+}
+
+// UpdateWorkerNo sets the "worker_no" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateWorkerNo() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateWorkerNo()
+	})
+}
+
+// ClearWorkerNo clears the value of the "worker_no" field.
+func (u *OrgStaffUpsertBulk) ClearWorkerNo() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearWorkerNo()
+	})
+}
+
+// SetCubicle sets the "cubicle" field.
+func (u *OrgStaffUpsertBulk) SetCubicle(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetCubicle(v)
+	})
+}
+
+// UpdateCubicle sets the "cubicle" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateCubicle() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateCubicle()
+	})
+}
+
+// ClearCubicle clears the value of the "cubicle" field.
+func (u *OrgStaffUpsertBulk) ClearCubicle() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearCubicle()
+	})
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (u *OrgStaffUpsertBulk) SetEntryDate(v string) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
@@ -1632,24 +1866,24 @@ func (u *OrgStaffUpsertBulk) ClearRegularDate() *OrgStaffUpsertBulk {
 	})
 }
 
-// SetIdenNo sets the "iden_no" field.
-func (u *OrgStaffUpsertBulk) SetIdenNo(v string) *OrgStaffUpsertBulk {
+// SetResignDate sets the "resign_date" field.
+func (u *OrgStaffUpsertBulk) SetResignDate(v string) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetIdenNo(v)
+		s.SetResignDate(v)
 	})
 }
 
-// UpdateIdenNo sets the "iden_no" field to the value that was provided on create.
-func (u *OrgStaffUpsertBulk) UpdateIdenNo() *OrgStaffUpsertBulk {
+// UpdateResignDate sets the "resign_date" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateResignDate() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateIdenNo()
+		s.UpdateResignDate()
 	})
 }
 
-// ClearIdenNo clears the value of the "iden_no" field.
-func (u *OrgStaffUpsertBulk) ClearIdenNo() *OrgStaffUpsertBulk {
+// ClearResignDate clears the value of the "resign_date" field.
+func (u *OrgStaffUpsertBulk) ClearResignDate() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.ClearIdenNo()
+		s.ClearResignDate()
 	})
 }
 

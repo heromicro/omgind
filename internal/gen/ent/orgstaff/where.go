@@ -114,6 +114,21 @@ func BirthDate(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldBirthDate, v))
 }
 
+// IdenNo applies equality check predicate on the "iden_no" field. It's identical to IdenNoEQ.
+func IdenNo(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldIdenNo, v))
+}
+
+// WorkerNo applies equality check predicate on the "worker_no" field. It's identical to WorkerNoEQ.
+func WorkerNo(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldWorkerNo, v))
+}
+
+// Cubicle applies equality check predicate on the "cubicle" field. It's identical to CubicleEQ.
+func Cubicle(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldCubicle, v))
+}
+
 // EntryDate applies equality check predicate on the "entry_date" field. It's identical to EntryDateEQ.
 func EntryDate(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldEntryDate, v))
@@ -124,9 +139,9 @@ func RegularDate(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldRegularDate, v))
 }
 
-// IdenNo applies equality check predicate on the "iden_no" field. It's identical to IdenNoEQ.
-func IdenNo(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldIdenNo, v))
+// ResignDate applies equality check predicate on the "resign_date" field. It's identical to ResignDateEQ.
+func ResignDate(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldResignDate, v))
 }
 
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
@@ -824,6 +839,231 @@ func BirthDateContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldBirthDate, v))
 }
 
+// IdenNoEQ applies the EQ predicate on the "iden_no" field.
+func IdenNoEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldIdenNo, v))
+}
+
+// IdenNoNEQ applies the NEQ predicate on the "iden_no" field.
+func IdenNoNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldIdenNo, v))
+}
+
+// IdenNoIn applies the In predicate on the "iden_no" field.
+func IdenNoIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldIdenNo, vs...))
+}
+
+// IdenNoNotIn applies the NotIn predicate on the "iden_no" field.
+func IdenNoNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldIdenNo, vs...))
+}
+
+// IdenNoGT applies the GT predicate on the "iden_no" field.
+func IdenNoGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldIdenNo, v))
+}
+
+// IdenNoGTE applies the GTE predicate on the "iden_no" field.
+func IdenNoGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldIdenNo, v))
+}
+
+// IdenNoLT applies the LT predicate on the "iden_no" field.
+func IdenNoLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldIdenNo, v))
+}
+
+// IdenNoLTE applies the LTE predicate on the "iden_no" field.
+func IdenNoLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldIdenNo, v))
+}
+
+// IdenNoContains applies the Contains predicate on the "iden_no" field.
+func IdenNoContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldIdenNo, v))
+}
+
+// IdenNoHasPrefix applies the HasPrefix predicate on the "iden_no" field.
+func IdenNoHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldIdenNo, v))
+}
+
+// IdenNoHasSuffix applies the HasSuffix predicate on the "iden_no" field.
+func IdenNoHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldIdenNo, v))
+}
+
+// IdenNoIsNil applies the IsNil predicate on the "iden_no" field.
+func IdenNoIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldIdenNo))
+}
+
+// IdenNoNotNil applies the NotNil predicate on the "iden_no" field.
+func IdenNoNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldIdenNo))
+}
+
+// IdenNoEqualFold applies the EqualFold predicate on the "iden_no" field.
+func IdenNoEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldIdenNo, v))
+}
+
+// IdenNoContainsFold applies the ContainsFold predicate on the "iden_no" field.
+func IdenNoContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldIdenNo, v))
+}
+
+// WorkerNoEQ applies the EQ predicate on the "worker_no" field.
+func WorkerNoEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldWorkerNo, v))
+}
+
+// WorkerNoNEQ applies the NEQ predicate on the "worker_no" field.
+func WorkerNoNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldWorkerNo, v))
+}
+
+// WorkerNoIn applies the In predicate on the "worker_no" field.
+func WorkerNoIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldWorkerNo, vs...))
+}
+
+// WorkerNoNotIn applies the NotIn predicate on the "worker_no" field.
+func WorkerNoNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldWorkerNo, vs...))
+}
+
+// WorkerNoGT applies the GT predicate on the "worker_no" field.
+func WorkerNoGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldWorkerNo, v))
+}
+
+// WorkerNoGTE applies the GTE predicate on the "worker_no" field.
+func WorkerNoGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldWorkerNo, v))
+}
+
+// WorkerNoLT applies the LT predicate on the "worker_no" field.
+func WorkerNoLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldWorkerNo, v))
+}
+
+// WorkerNoLTE applies the LTE predicate on the "worker_no" field.
+func WorkerNoLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldWorkerNo, v))
+}
+
+// WorkerNoContains applies the Contains predicate on the "worker_no" field.
+func WorkerNoContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldWorkerNo, v))
+}
+
+// WorkerNoHasPrefix applies the HasPrefix predicate on the "worker_no" field.
+func WorkerNoHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldWorkerNo, v))
+}
+
+// WorkerNoHasSuffix applies the HasSuffix predicate on the "worker_no" field.
+func WorkerNoHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldWorkerNo, v))
+}
+
+// WorkerNoIsNil applies the IsNil predicate on the "worker_no" field.
+func WorkerNoIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldWorkerNo))
+}
+
+// WorkerNoNotNil applies the NotNil predicate on the "worker_no" field.
+func WorkerNoNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldWorkerNo))
+}
+
+// WorkerNoEqualFold applies the EqualFold predicate on the "worker_no" field.
+func WorkerNoEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldWorkerNo, v))
+}
+
+// WorkerNoContainsFold applies the ContainsFold predicate on the "worker_no" field.
+func WorkerNoContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldWorkerNo, v))
+}
+
+// CubicleEQ applies the EQ predicate on the "cubicle" field.
+func CubicleEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldCubicle, v))
+}
+
+// CubicleNEQ applies the NEQ predicate on the "cubicle" field.
+func CubicleNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldCubicle, v))
+}
+
+// CubicleIn applies the In predicate on the "cubicle" field.
+func CubicleIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldCubicle, vs...))
+}
+
+// CubicleNotIn applies the NotIn predicate on the "cubicle" field.
+func CubicleNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldCubicle, vs...))
+}
+
+// CubicleGT applies the GT predicate on the "cubicle" field.
+func CubicleGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldCubicle, v))
+}
+
+// CubicleGTE applies the GTE predicate on the "cubicle" field.
+func CubicleGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldCubicle, v))
+}
+
+// CubicleLT applies the LT predicate on the "cubicle" field.
+func CubicleLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldCubicle, v))
+}
+
+// CubicleLTE applies the LTE predicate on the "cubicle" field.
+func CubicleLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldCubicle, v))
+}
+
+// CubicleContains applies the Contains predicate on the "cubicle" field.
+func CubicleContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldCubicle, v))
+}
+
+// CubicleHasPrefix applies the HasPrefix predicate on the "cubicle" field.
+func CubicleHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldCubicle, v))
+}
+
+// CubicleHasSuffix applies the HasSuffix predicate on the "cubicle" field.
+func CubicleHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldCubicle, v))
+}
+
+// CubicleIsNil applies the IsNil predicate on the "cubicle" field.
+func CubicleIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldCubicle))
+}
+
+// CubicleNotNil applies the NotNil predicate on the "cubicle" field.
+func CubicleNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldCubicle))
+}
+
+// CubicleEqualFold applies the EqualFold predicate on the "cubicle" field.
+func CubicleEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldCubicle, v))
+}
+
+// CubicleContainsFold applies the ContainsFold predicate on the "cubicle" field.
+func CubicleContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldCubicle, v))
+}
+
 // EntryDateEQ applies the EQ predicate on the "entry_date" field.
 func EntryDateEQ(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldEntryDate, v))
@@ -974,79 +1214,79 @@ func RegularDateContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldRegularDate, v))
 }
 
-// IdenNoEQ applies the EQ predicate on the "iden_no" field.
-func IdenNoEQ(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldIdenNo, v))
+// ResignDateEQ applies the EQ predicate on the "resign_date" field.
+func ResignDateEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldResignDate, v))
 }
 
-// IdenNoNEQ applies the NEQ predicate on the "iden_no" field.
-func IdenNoNEQ(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNEQ(FieldIdenNo, v))
+// ResignDateNEQ applies the NEQ predicate on the "resign_date" field.
+func ResignDateNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldResignDate, v))
 }
 
-// IdenNoIn applies the In predicate on the "iden_no" field.
-func IdenNoIn(vs ...string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIn(FieldIdenNo, vs...))
+// ResignDateIn applies the In predicate on the "resign_date" field.
+func ResignDateIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldResignDate, vs...))
 }
 
-// IdenNoNotIn applies the NotIn predicate on the "iden_no" field.
-func IdenNoNotIn(vs ...string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotIn(FieldIdenNo, vs...))
+// ResignDateNotIn applies the NotIn predicate on the "resign_date" field.
+func ResignDateNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldResignDate, vs...))
 }
 
-// IdenNoGT applies the GT predicate on the "iden_no" field.
-func IdenNoGT(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGT(FieldIdenNo, v))
+// ResignDateGT applies the GT predicate on the "resign_date" field.
+func ResignDateGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldResignDate, v))
 }
 
-// IdenNoGTE applies the GTE predicate on the "iden_no" field.
-func IdenNoGTE(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGTE(FieldIdenNo, v))
+// ResignDateGTE applies the GTE predicate on the "resign_date" field.
+func ResignDateGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldResignDate, v))
 }
 
-// IdenNoLT applies the LT predicate on the "iden_no" field.
-func IdenNoLT(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLT(FieldIdenNo, v))
+// ResignDateLT applies the LT predicate on the "resign_date" field.
+func ResignDateLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldResignDate, v))
 }
 
-// IdenNoLTE applies the LTE predicate on the "iden_no" field.
-func IdenNoLTE(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLTE(FieldIdenNo, v))
+// ResignDateLTE applies the LTE predicate on the "resign_date" field.
+func ResignDateLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldResignDate, v))
 }
 
-// IdenNoContains applies the Contains predicate on the "iden_no" field.
-func IdenNoContains(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContains(FieldIdenNo, v))
+// ResignDateContains applies the Contains predicate on the "resign_date" field.
+func ResignDateContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldResignDate, v))
 }
 
-// IdenNoHasPrefix applies the HasPrefix predicate on the "iden_no" field.
-func IdenNoHasPrefix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasPrefix(FieldIdenNo, v))
+// ResignDateHasPrefix applies the HasPrefix predicate on the "resign_date" field.
+func ResignDateHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldResignDate, v))
 }
 
-// IdenNoHasSuffix applies the HasSuffix predicate on the "iden_no" field.
-func IdenNoHasSuffix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasSuffix(FieldIdenNo, v))
+// ResignDateHasSuffix applies the HasSuffix predicate on the "resign_date" field.
+func ResignDateHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldResignDate, v))
 }
 
-// IdenNoIsNil applies the IsNil predicate on the "iden_no" field.
-func IdenNoIsNil() predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIsNull(FieldIdenNo))
+// ResignDateIsNil applies the IsNil predicate on the "resign_date" field.
+func ResignDateIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldResignDate))
 }
 
-// IdenNoNotNil applies the NotNil predicate on the "iden_no" field.
-func IdenNoNotNil() predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotNull(FieldIdenNo))
+// ResignDateNotNil applies the NotNil predicate on the "resign_date" field.
+func ResignDateNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldResignDate))
 }
 
-// IdenNoEqualFold applies the EqualFold predicate on the "iden_no" field.
-func IdenNoEqualFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEqualFold(FieldIdenNo, v))
+// ResignDateEqualFold applies the EqualFold predicate on the "resign_date" field.
+func ResignDateEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldResignDate, v))
 }
 
-// IdenNoContainsFold applies the ContainsFold predicate on the "iden_no" field.
-func IdenNoContainsFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContainsFold(FieldIdenNo, v))
+// ResignDateContainsFold applies the ContainsFold predicate on the "resign_date" field.
+func ResignDateContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldResignDate, v))
 }
 
 // CreatorEQ applies the EQ predicate on the "creator" field.

@@ -509,9 +509,12 @@ type CreateOrgStaffInput struct {
 	Mobile      *string
 	Gender      *orgstaff.Gender
 	BirthDate   *string
+	IdenNo      *string
+	WorkerNo    *string
+	Cubicle     *string
 	EntryDate   *string
 	RegularDate *string
-	IdenNo      *string
+	ResignDate  *string
 	Creator     *string
 }
 
@@ -556,14 +559,23 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.BirthDate; v != nil {
 		m.SetBirthDate(*v)
 	}
+	if v := i.IdenNo; v != nil {
+		m.SetIdenNo(*v)
+	}
+	if v := i.WorkerNo; v != nil {
+		m.SetWorkerNo(*v)
+	}
+	if v := i.Cubicle; v != nil {
+		m.SetCubicle(*v)
+	}
 	if v := i.EntryDate; v != nil {
 		m.SetEntryDate(*v)
 	}
 	if v := i.RegularDate; v != nil {
 		m.SetRegularDate(*v)
 	}
-	if v := i.IdenNo; v != nil {
-		m.SetIdenNo(*v)
+	if v := i.ResignDate; v != nil {
+		m.SetResignDate(*v)
 	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
@@ -597,12 +609,18 @@ type UpdateOrgStaffInput struct {
 	ClearGender      bool
 	BirthDate        *string
 	ClearBirthDate   bool
+	IdenNo           *string
+	ClearIdenNo      bool
+	WorkerNo         *string
+	ClearWorkerNo    bool
+	Cubicle          *string
+	ClearCubicle     bool
 	EntryDate        *string
 	ClearEntryDate   bool
 	RegularDate      *string
 	ClearRegularDate bool
-	IdenNo           *string
-	ClearIdenNo      bool
+	ResignDate       *string
+	ClearResignDate  bool
 	Creator          *string
 	ClearCreator     bool
 }
@@ -666,6 +684,24 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.BirthDate; v != nil {
 		m.SetBirthDate(*v)
 	}
+	if i.ClearIdenNo {
+		m.ClearIdenNo()
+	}
+	if v := i.IdenNo; v != nil {
+		m.SetIdenNo(*v)
+	}
+	if i.ClearWorkerNo {
+		m.ClearWorkerNo()
+	}
+	if v := i.WorkerNo; v != nil {
+		m.SetWorkerNo(*v)
+	}
+	if i.ClearCubicle {
+		m.ClearCubicle()
+	}
+	if v := i.Cubicle; v != nil {
+		m.SetCubicle(*v)
+	}
 	if i.ClearEntryDate {
 		m.ClearEntryDate()
 	}
@@ -678,11 +714,11 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.RegularDate; v != nil {
 		m.SetRegularDate(*v)
 	}
-	if i.ClearIdenNo {
-		m.ClearIdenNo()
+	if i.ClearResignDate {
+		m.ClearResignDate()
 	}
-	if v := i.IdenNo; v != nil {
-		m.SetIdenNo(*v)
+	if v := i.ResignDate; v != nil {
+		m.SetResignDate(*v)
 	}
 	if i.ClearCreator {
 		m.ClearCreator()

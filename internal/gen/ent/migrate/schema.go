@@ -199,9 +199,12 @@ var (
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Size: 32},
 		{Name: "gender", Type: field.TypeEnum, Nullable: true, Enums: []string{"M", "F"}},
 		{Name: "birth_date", Type: field.TypeString, Nullable: true},
+		{Name: "iden_no", Type: field.TypeString, Nullable: true},
+		{Name: "worker_no", Type: field.TypeString, Nullable: true},
+		{Name: "cubicle", Type: field.TypeString, Nullable: true},
 		{Name: "entry_date", Type: field.TypeString, Nullable: true},
 		{Name: "regu_date", Type: field.TypeString, Nullable: true},
-		{Name: "iden_no", Type: field.TypeString, Nullable: true},
+		{Name: "resign_date", Type: field.TypeString, Nullable: true},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 	}
 	// OrgStaffsTable holds the schema information for the "org_staffs" table.

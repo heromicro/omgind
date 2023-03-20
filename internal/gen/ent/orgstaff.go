@@ -42,12 +42,18 @@ type OrgStaff struct {
 	Gender *orgstaff.Gender `json:"gender,omitempty"`
 	// 出生日期
 	BirthDate *string `json:"birth_date,omitempty"`
+	// 身份证号码
+	IdenNo *string `json:"iden_no,omitempty"`
+	// 工号
+	WorkerNo *string `json:"worker_no,omitempty"`
+	// 工位
+	Cubicle *string `json:"cubicle,omitempty"`
 	// 入职日期
 	EntryDate *string `json:"entry_date,omitempty"`
 	// 转正日期
 	RegularDate *string `json:"regular_date,omitempty"`
-	// 身份证号码
-	IdenNo *string `json:"iden_no,omitempty"`
+	// 离职日期
+	ResignDate *string `json:"resign_date,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 }
@@ -61,7 +67,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldOrgID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldIdenNo, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldOrgID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldBirthDate, orgstaff.FieldIdenNo, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -174,6 +180,27 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				os.BirthDate = new(string)
 				*os.BirthDate = value.String
 			}
+		case orgstaff.FieldIdenNo:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field iden_no", values[i])
+			} else if value.Valid {
+				os.IdenNo = new(string)
+				*os.IdenNo = value.String
+			}
+		case orgstaff.FieldWorkerNo:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field worker_no", values[i])
+			} else if value.Valid {
+				os.WorkerNo = new(string)
+				*os.WorkerNo = value.String
+			}
+		case orgstaff.FieldCubicle:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field cubicle", values[i])
+			} else if value.Valid {
+				os.Cubicle = new(string)
+				*os.Cubicle = value.String
+			}
 		case orgstaff.FieldEntryDate:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field entry_date", values[i])
@@ -188,12 +215,12 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				os.RegularDate = new(string)
 				*os.RegularDate = value.String
 			}
-		case orgstaff.FieldIdenNo:
+		case orgstaff.FieldResignDate:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field iden_no", values[i])
+				return fmt.Errorf("unexpected type %T for field resign_date", values[i])
 			} else if value.Valid {
-				os.IdenNo = new(string)
-				*os.IdenNo = value.String
+				os.ResignDate = new(string)
+				*os.ResignDate = value.String
 			}
 		case orgstaff.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -289,6 +316,21 @@ func (os *OrgStaff) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
+	if v := os.IdenNo; v != nil {
+		builder.WriteString("iden_no=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := os.WorkerNo; v != nil {
+		builder.WriteString("worker_no=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := os.Cubicle; v != nil {
+		builder.WriteString("cubicle=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
 	if v := os.EntryDate; v != nil {
 		builder.WriteString("entry_date=")
 		builder.WriteString(*v)
@@ -299,8 +341,8 @@ func (os *OrgStaff) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.IdenNo; v != nil {
-		builder.WriteString("iden_no=")
+	if v := os.ResignDate; v != nil {
+		builder.WriteString("resign_date=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

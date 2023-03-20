@@ -3542,9 +3542,12 @@ type OrgStaffMutation struct {
 	mobile        *string
 	gender        *orgstaff.Gender
 	birth_date    *string
+	iden_no       *string
+	worker_no     *string
+	cubicle       *string
 	entry_date    *string
 	regular_date  *string
-	iden_no       *string
+	resign_date   *string
 	creator       *string
 	clearedFields map[string]struct{}
 	done          bool
@@ -4274,6 +4277,153 @@ func (m *OrgStaffMutation) ResetBirthDate() {
 	delete(m.clearedFields, orgstaff.FieldBirthDate)
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (m *OrgStaffMutation) SetIdenNo(s string) {
+	m.iden_no = &s
+}
+
+// IdenNo returns the value of the "iden_no" field in the mutation.
+func (m *OrgStaffMutation) IdenNo() (r string, exists bool) {
+	v := m.iden_no
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIdenNo returns the old "iden_no" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldIdenNo(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIdenNo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIdenNo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIdenNo: %w", err)
+	}
+	return oldValue.IdenNo, nil
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (m *OrgStaffMutation) ClearIdenNo() {
+	m.iden_no = nil
+	m.clearedFields[orgstaff.FieldIdenNo] = struct{}{}
+}
+
+// IdenNoCleared returns if the "iden_no" field was cleared in this mutation.
+func (m *OrgStaffMutation) IdenNoCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldIdenNo]
+	return ok
+}
+
+// ResetIdenNo resets all changes to the "iden_no" field.
+func (m *OrgStaffMutation) ResetIdenNo() {
+	m.iden_no = nil
+	delete(m.clearedFields, orgstaff.FieldIdenNo)
+}
+
+// SetWorkerNo sets the "worker_no" field.
+func (m *OrgStaffMutation) SetWorkerNo(s string) {
+	m.worker_no = &s
+}
+
+// WorkerNo returns the value of the "worker_no" field in the mutation.
+func (m *OrgStaffMutation) WorkerNo() (r string, exists bool) {
+	v := m.worker_no
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldWorkerNo returns the old "worker_no" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldWorkerNo(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldWorkerNo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldWorkerNo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldWorkerNo: %w", err)
+	}
+	return oldValue.WorkerNo, nil
+}
+
+// ClearWorkerNo clears the value of the "worker_no" field.
+func (m *OrgStaffMutation) ClearWorkerNo() {
+	m.worker_no = nil
+	m.clearedFields[orgstaff.FieldWorkerNo] = struct{}{}
+}
+
+// WorkerNoCleared returns if the "worker_no" field was cleared in this mutation.
+func (m *OrgStaffMutation) WorkerNoCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldWorkerNo]
+	return ok
+}
+
+// ResetWorkerNo resets all changes to the "worker_no" field.
+func (m *OrgStaffMutation) ResetWorkerNo() {
+	m.worker_no = nil
+	delete(m.clearedFields, orgstaff.FieldWorkerNo)
+}
+
+// SetCubicle sets the "cubicle" field.
+func (m *OrgStaffMutation) SetCubicle(s string) {
+	m.cubicle = &s
+}
+
+// Cubicle returns the value of the "cubicle" field in the mutation.
+func (m *OrgStaffMutation) Cubicle() (r string, exists bool) {
+	v := m.cubicle
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCubicle returns the old "cubicle" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldCubicle(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCubicle is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCubicle requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCubicle: %w", err)
+	}
+	return oldValue.Cubicle, nil
+}
+
+// ClearCubicle clears the value of the "cubicle" field.
+func (m *OrgStaffMutation) ClearCubicle() {
+	m.cubicle = nil
+	m.clearedFields[orgstaff.FieldCubicle] = struct{}{}
+}
+
+// CubicleCleared returns if the "cubicle" field was cleared in this mutation.
+func (m *OrgStaffMutation) CubicleCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldCubicle]
+	return ok
+}
+
+// ResetCubicle resets all changes to the "cubicle" field.
+func (m *OrgStaffMutation) ResetCubicle() {
+	m.cubicle = nil
+	delete(m.clearedFields, orgstaff.FieldCubicle)
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (m *OrgStaffMutation) SetEntryDate(s string) {
 	m.entry_date = &s
@@ -4372,53 +4522,53 @@ func (m *OrgStaffMutation) ResetRegularDate() {
 	delete(m.clearedFields, orgstaff.FieldRegularDate)
 }
 
-// SetIdenNo sets the "iden_no" field.
-func (m *OrgStaffMutation) SetIdenNo(s string) {
-	m.iden_no = &s
+// SetResignDate sets the "resign_date" field.
+func (m *OrgStaffMutation) SetResignDate(s string) {
+	m.resign_date = &s
 }
 
-// IdenNo returns the value of the "iden_no" field in the mutation.
-func (m *OrgStaffMutation) IdenNo() (r string, exists bool) {
-	v := m.iden_no
+// ResignDate returns the value of the "resign_date" field in the mutation.
+func (m *OrgStaffMutation) ResignDate() (r string, exists bool) {
+	v := m.resign_date
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldIdenNo returns the old "iden_no" field's value of the OrgStaff entity.
+// OldResignDate returns the old "resign_date" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldIdenNo(ctx context.Context) (v *string, err error) {
+func (m *OrgStaffMutation) OldResignDate(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldIdenNo is only allowed on UpdateOne operations")
+		return v, errors.New("OldResignDate is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldIdenNo requires an ID field in the mutation")
+		return v, errors.New("OldResignDate requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldIdenNo: %w", err)
+		return v, fmt.Errorf("querying old value for OldResignDate: %w", err)
 	}
-	return oldValue.IdenNo, nil
+	return oldValue.ResignDate, nil
 }
 
-// ClearIdenNo clears the value of the "iden_no" field.
-func (m *OrgStaffMutation) ClearIdenNo() {
-	m.iden_no = nil
-	m.clearedFields[orgstaff.FieldIdenNo] = struct{}{}
+// ClearResignDate clears the value of the "resign_date" field.
+func (m *OrgStaffMutation) ClearResignDate() {
+	m.resign_date = nil
+	m.clearedFields[orgstaff.FieldResignDate] = struct{}{}
 }
 
-// IdenNoCleared returns if the "iden_no" field was cleared in this mutation.
-func (m *OrgStaffMutation) IdenNoCleared() bool {
-	_, ok := m.clearedFields[orgstaff.FieldIdenNo]
+// ResignDateCleared returns if the "resign_date" field was cleared in this mutation.
+func (m *OrgStaffMutation) ResignDateCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldResignDate]
 	return ok
 }
 
-// ResetIdenNo resets all changes to the "iden_no" field.
-func (m *OrgStaffMutation) ResetIdenNo() {
-	m.iden_no = nil
-	delete(m.clearedFields, orgstaff.FieldIdenNo)
+// ResetResignDate resets all changes to the "resign_date" field.
+func (m *OrgStaffMutation) ResetResignDate() {
+	m.resign_date = nil
+	delete(m.clearedFields, orgstaff.FieldResignDate)
 }
 
 // SetCreator sets the "creator" field.
@@ -4504,7 +4654,7 @@ func (m *OrgStaffMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgStaffMutation) Fields() []string {
-	fields := make([]string, 0, 17)
+	fields := make([]string, 0, 20)
 	if m.is_del != nil {
 		fields = append(fields, orgstaff.FieldIsDel)
 	}
@@ -4544,14 +4694,23 @@ func (m *OrgStaffMutation) Fields() []string {
 	if m.birth_date != nil {
 		fields = append(fields, orgstaff.FieldBirthDate)
 	}
+	if m.iden_no != nil {
+		fields = append(fields, orgstaff.FieldIdenNo)
+	}
+	if m.worker_no != nil {
+		fields = append(fields, orgstaff.FieldWorkerNo)
+	}
+	if m.cubicle != nil {
+		fields = append(fields, orgstaff.FieldCubicle)
+	}
 	if m.entry_date != nil {
 		fields = append(fields, orgstaff.FieldEntryDate)
 	}
 	if m.regular_date != nil {
 		fields = append(fields, orgstaff.FieldRegularDate)
 	}
-	if m.iden_no != nil {
-		fields = append(fields, orgstaff.FieldIdenNo)
+	if m.resign_date != nil {
+		fields = append(fields, orgstaff.FieldResignDate)
 	}
 	if m.creator != nil {
 		fields = append(fields, orgstaff.FieldCreator)
@@ -4590,12 +4749,18 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.Gender()
 	case orgstaff.FieldBirthDate:
 		return m.BirthDate()
+	case orgstaff.FieldIdenNo:
+		return m.IdenNo()
+	case orgstaff.FieldWorkerNo:
+		return m.WorkerNo()
+	case orgstaff.FieldCubicle:
+		return m.Cubicle()
 	case orgstaff.FieldEntryDate:
 		return m.EntryDate()
 	case orgstaff.FieldRegularDate:
 		return m.RegularDate()
-	case orgstaff.FieldIdenNo:
-		return m.IdenNo()
+	case orgstaff.FieldResignDate:
+		return m.ResignDate()
 	case orgstaff.FieldCreator:
 		return m.Creator()
 	}
@@ -4633,12 +4798,18 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldGender(ctx)
 	case orgstaff.FieldBirthDate:
 		return m.OldBirthDate(ctx)
+	case orgstaff.FieldIdenNo:
+		return m.OldIdenNo(ctx)
+	case orgstaff.FieldWorkerNo:
+		return m.OldWorkerNo(ctx)
+	case orgstaff.FieldCubicle:
+		return m.OldCubicle(ctx)
 	case orgstaff.FieldEntryDate:
 		return m.OldEntryDate(ctx)
 	case orgstaff.FieldRegularDate:
 		return m.OldRegularDate(ctx)
-	case orgstaff.FieldIdenNo:
-		return m.OldIdenNo(ctx)
+	case orgstaff.FieldResignDate:
+		return m.OldResignDate(ctx)
 	case orgstaff.FieldCreator:
 		return m.OldCreator(ctx)
 	}
@@ -4741,6 +4912,27 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetBirthDate(v)
 		return nil
+	case orgstaff.FieldIdenNo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIdenNo(v)
+		return nil
+	case orgstaff.FieldWorkerNo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetWorkerNo(v)
+		return nil
+	case orgstaff.FieldCubicle:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCubicle(v)
+		return nil
 	case orgstaff.FieldEntryDate:
 		v, ok := value.(string)
 		if !ok {
@@ -4755,12 +4947,12 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetRegularDate(v)
 		return nil
-	case orgstaff.FieldIdenNo:
+	case orgstaff.FieldResignDate:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetIdenNo(v)
+		m.SetResignDate(v)
 		return nil
 	case orgstaff.FieldCreator:
 		v, ok := value.(string)
@@ -4844,14 +5036,23 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldBirthDate) {
 		fields = append(fields, orgstaff.FieldBirthDate)
 	}
+	if m.FieldCleared(orgstaff.FieldIdenNo) {
+		fields = append(fields, orgstaff.FieldIdenNo)
+	}
+	if m.FieldCleared(orgstaff.FieldWorkerNo) {
+		fields = append(fields, orgstaff.FieldWorkerNo)
+	}
+	if m.FieldCleared(orgstaff.FieldCubicle) {
+		fields = append(fields, orgstaff.FieldCubicle)
+	}
 	if m.FieldCleared(orgstaff.FieldEntryDate) {
 		fields = append(fields, orgstaff.FieldEntryDate)
 	}
 	if m.FieldCleared(orgstaff.FieldRegularDate) {
 		fields = append(fields, orgstaff.FieldRegularDate)
 	}
-	if m.FieldCleared(orgstaff.FieldIdenNo) {
-		fields = append(fields, orgstaff.FieldIdenNo)
+	if m.FieldCleared(orgstaff.FieldResignDate) {
+		fields = append(fields, orgstaff.FieldResignDate)
 	}
 	if m.FieldCleared(orgstaff.FieldCreator) {
 		fields = append(fields, orgstaff.FieldCreator)
@@ -4900,14 +5101,23 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 	case orgstaff.FieldBirthDate:
 		m.ClearBirthDate()
 		return nil
+	case orgstaff.FieldIdenNo:
+		m.ClearIdenNo()
+		return nil
+	case orgstaff.FieldWorkerNo:
+		m.ClearWorkerNo()
+		return nil
+	case orgstaff.FieldCubicle:
+		m.ClearCubicle()
+		return nil
 	case orgstaff.FieldEntryDate:
 		m.ClearEntryDate()
 		return nil
 	case orgstaff.FieldRegularDate:
 		m.ClearRegularDate()
 		return nil
-	case orgstaff.FieldIdenNo:
-		m.ClearIdenNo()
+	case orgstaff.FieldResignDate:
+		m.ClearResignDate()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ClearCreator()
@@ -4959,14 +5169,23 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 	case orgstaff.FieldBirthDate:
 		m.ResetBirthDate()
 		return nil
+	case orgstaff.FieldIdenNo:
+		m.ResetIdenNo()
+		return nil
+	case orgstaff.FieldWorkerNo:
+		m.ResetWorkerNo()
+		return nil
+	case orgstaff.FieldCubicle:
+		m.ResetCubicle()
+		return nil
 	case orgstaff.FieldEntryDate:
 		m.ResetEntryDate()
 		return nil
 	case orgstaff.FieldRegularDate:
 		m.ResetRegularDate()
 		return nil
-	case orgstaff.FieldIdenNo:
-		m.ResetIdenNo()
+	case orgstaff.FieldResignDate:
+		m.ResetResignDate()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ResetCreator()

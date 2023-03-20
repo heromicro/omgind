@@ -11,11 +11,15 @@ type OrgStaff struct {
 
 	BirthDate string `json:"birth_date" binding:"required"` // 出生日期
 	Gender    string `json:"gender" binding:"required"`     // 性别
+	IdenNo    string `json:"iden_no" `                      // 身份证号
 
+	WorkerNo    string `json:"worker_no" binding:"required"`  // 工号
+	Cubicle     string `json:"cubicle"`                       // 工位
 	EntryDate   string `json:"entry_date" binding:"required"` // 入职日期
 	RegularDate string `json:"regular_date"`                  // 转正日期
-	IdenNo      string `json:"iden_no" `                      // 身份证号
-	OrgID       string `json:"org_id"`                        // 企业id
+	ResignDate  string `json:"resign_date"`                   // 离职日期
+
+	OrgID string `json:"org_id"` // 企业id
 
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`

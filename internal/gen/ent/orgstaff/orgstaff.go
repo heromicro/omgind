@@ -38,12 +38,18 @@ const (
 	FieldGender = "gender"
 	// FieldBirthDate holds the string denoting the birth_date field in the database.
 	FieldBirthDate = "birth_date"
+	// FieldIdenNo holds the string denoting the iden_no field in the database.
+	FieldIdenNo = "iden_no"
+	// FieldWorkerNo holds the string denoting the worker_no field in the database.
+	FieldWorkerNo = "worker_no"
+	// FieldCubicle holds the string denoting the cubicle field in the database.
+	FieldCubicle = "cubicle"
 	// FieldEntryDate holds the string denoting the entry_date field in the database.
 	FieldEntryDate = "entry_date"
 	// FieldRegularDate holds the string denoting the regular_date field in the database.
 	FieldRegularDate = "regu_date"
-	// FieldIdenNo holds the string denoting the iden_no field in the database.
-	FieldIdenNo = "iden_no"
+	// FieldResignDate holds the string denoting the resign_date field in the database.
+	FieldResignDate = "resign_date"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// Table holds the table name of the orgstaff in the database.
@@ -66,9 +72,12 @@ var Columns = []string{
 	FieldMobile,
 	FieldGender,
 	FieldBirthDate,
+	FieldIdenNo,
+	FieldWorkerNo,
+	FieldCubicle,
 	FieldEntryDate,
 	FieldRegularDate,
-	FieldIdenNo,
+	FieldResignDate,
 	FieldCreator,
 }
 

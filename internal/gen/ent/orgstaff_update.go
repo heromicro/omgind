@@ -231,6 +231,66 @@ func (osu *OrgStaffUpdate) ClearBirthDate() *OrgStaffUpdate {
 	return osu
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (osu *OrgStaffUpdate) SetIdenNo(s string) *OrgStaffUpdate {
+	osu.mutation.SetIdenNo(s)
+	return osu
+}
+
+// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableIdenNo(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetIdenNo(*s)
+	}
+	return osu
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (osu *OrgStaffUpdate) ClearIdenNo() *OrgStaffUpdate {
+	osu.mutation.ClearIdenNo()
+	return osu
+}
+
+// SetWorkerNo sets the "worker_no" field.
+func (osu *OrgStaffUpdate) SetWorkerNo(s string) *OrgStaffUpdate {
+	osu.mutation.SetWorkerNo(s)
+	return osu
+}
+
+// SetNillableWorkerNo sets the "worker_no" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableWorkerNo(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetWorkerNo(*s)
+	}
+	return osu
+}
+
+// ClearWorkerNo clears the value of the "worker_no" field.
+func (osu *OrgStaffUpdate) ClearWorkerNo() *OrgStaffUpdate {
+	osu.mutation.ClearWorkerNo()
+	return osu
+}
+
+// SetCubicle sets the "cubicle" field.
+func (osu *OrgStaffUpdate) SetCubicle(s string) *OrgStaffUpdate {
+	osu.mutation.SetCubicle(s)
+	return osu
+}
+
+// SetNillableCubicle sets the "cubicle" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableCubicle(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetCubicle(*s)
+	}
+	return osu
+}
+
+// ClearCubicle clears the value of the "cubicle" field.
+func (osu *OrgStaffUpdate) ClearCubicle() *OrgStaffUpdate {
+	osu.mutation.ClearCubicle()
+	return osu
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (osu *OrgStaffUpdate) SetEntryDate(s string) *OrgStaffUpdate {
 	osu.mutation.SetEntryDate(s)
@@ -271,23 +331,23 @@ func (osu *OrgStaffUpdate) ClearRegularDate() *OrgStaffUpdate {
 	return osu
 }
 
-// SetIdenNo sets the "iden_no" field.
-func (osu *OrgStaffUpdate) SetIdenNo(s string) *OrgStaffUpdate {
-	osu.mutation.SetIdenNo(s)
+// SetResignDate sets the "resign_date" field.
+func (osu *OrgStaffUpdate) SetResignDate(s string) *OrgStaffUpdate {
+	osu.mutation.SetResignDate(s)
 	return osu
 }
 
-// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableIdenNo(s *string) *OrgStaffUpdate {
+// SetNillableResignDate sets the "resign_date" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableResignDate(s *string) *OrgStaffUpdate {
 	if s != nil {
-		osu.SetIdenNo(*s)
+		osu.SetResignDate(*s)
 	}
 	return osu
 }
 
-// ClearIdenNo clears the value of the "iden_no" field.
-func (osu *OrgStaffUpdate) ClearIdenNo() *OrgStaffUpdate {
-	osu.mutation.ClearIdenNo()
+// ClearResignDate clears the value of the "resign_date" field.
+func (osu *OrgStaffUpdate) ClearResignDate() *OrgStaffUpdate {
+	osu.mutation.ClearResignDate()
 	return osu
 }
 
@@ -466,6 +526,24 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if osu.mutation.BirthDateCleared() {
 		_spec.ClearField(orgstaff.FieldBirthDate, field.TypeString)
 	}
+	if value, ok := osu.mutation.IdenNo(); ok {
+		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
+	}
+	if osu.mutation.IdenNoCleared() {
+		_spec.ClearField(orgstaff.FieldIdenNo, field.TypeString)
+	}
+	if value, ok := osu.mutation.WorkerNo(); ok {
+		_spec.SetField(orgstaff.FieldWorkerNo, field.TypeString, value)
+	}
+	if osu.mutation.WorkerNoCleared() {
+		_spec.ClearField(orgstaff.FieldWorkerNo, field.TypeString)
+	}
+	if value, ok := osu.mutation.Cubicle(); ok {
+		_spec.SetField(orgstaff.FieldCubicle, field.TypeString, value)
+	}
+	if osu.mutation.CubicleCleared() {
+		_spec.ClearField(orgstaff.FieldCubicle, field.TypeString)
+	}
 	if value, ok := osu.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeString, value)
 	}
@@ -478,11 +556,11 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if osu.mutation.RegularDateCleared() {
 		_spec.ClearField(orgstaff.FieldRegularDate, field.TypeString)
 	}
-	if value, ok := osu.mutation.IdenNo(); ok {
-		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
+	if value, ok := osu.mutation.ResignDate(); ok {
+		_spec.SetField(orgstaff.FieldResignDate, field.TypeString, value)
 	}
-	if osu.mutation.IdenNoCleared() {
-		_spec.ClearField(orgstaff.FieldIdenNo, field.TypeString)
+	if osu.mutation.ResignDateCleared() {
+		_spec.ClearField(orgstaff.FieldResignDate, field.TypeString)
 	}
 	if value, ok := osu.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -715,6 +793,66 @@ func (osuo *OrgStaffUpdateOne) ClearBirthDate() *OrgStaffUpdateOne {
 	return osuo
 }
 
+// SetIdenNo sets the "iden_no" field.
+func (osuo *OrgStaffUpdateOne) SetIdenNo(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetIdenNo(s)
+	return osuo
+}
+
+// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableIdenNo(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetIdenNo(*s)
+	}
+	return osuo
+}
+
+// ClearIdenNo clears the value of the "iden_no" field.
+func (osuo *OrgStaffUpdateOne) ClearIdenNo() *OrgStaffUpdateOne {
+	osuo.mutation.ClearIdenNo()
+	return osuo
+}
+
+// SetWorkerNo sets the "worker_no" field.
+func (osuo *OrgStaffUpdateOne) SetWorkerNo(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetWorkerNo(s)
+	return osuo
+}
+
+// SetNillableWorkerNo sets the "worker_no" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableWorkerNo(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetWorkerNo(*s)
+	}
+	return osuo
+}
+
+// ClearWorkerNo clears the value of the "worker_no" field.
+func (osuo *OrgStaffUpdateOne) ClearWorkerNo() *OrgStaffUpdateOne {
+	osuo.mutation.ClearWorkerNo()
+	return osuo
+}
+
+// SetCubicle sets the "cubicle" field.
+func (osuo *OrgStaffUpdateOne) SetCubicle(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetCubicle(s)
+	return osuo
+}
+
+// SetNillableCubicle sets the "cubicle" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableCubicle(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetCubicle(*s)
+	}
+	return osuo
+}
+
+// ClearCubicle clears the value of the "cubicle" field.
+func (osuo *OrgStaffUpdateOne) ClearCubicle() *OrgStaffUpdateOne {
+	osuo.mutation.ClearCubicle()
+	return osuo
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (osuo *OrgStaffUpdateOne) SetEntryDate(s string) *OrgStaffUpdateOne {
 	osuo.mutation.SetEntryDate(s)
@@ -755,23 +893,23 @@ func (osuo *OrgStaffUpdateOne) ClearRegularDate() *OrgStaffUpdateOne {
 	return osuo
 }
 
-// SetIdenNo sets the "iden_no" field.
-func (osuo *OrgStaffUpdateOne) SetIdenNo(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetIdenNo(s)
+// SetResignDate sets the "resign_date" field.
+func (osuo *OrgStaffUpdateOne) SetResignDate(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetResignDate(s)
 	return osuo
 }
 
-// SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableIdenNo(s *string) *OrgStaffUpdateOne {
+// SetNillableResignDate sets the "resign_date" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableResignDate(s *string) *OrgStaffUpdateOne {
 	if s != nil {
-		osuo.SetIdenNo(*s)
+		osuo.SetResignDate(*s)
 	}
 	return osuo
 }
 
-// ClearIdenNo clears the value of the "iden_no" field.
-func (osuo *OrgStaffUpdateOne) ClearIdenNo() *OrgStaffUpdateOne {
-	osuo.mutation.ClearIdenNo()
+// ClearResignDate clears the value of the "resign_date" field.
+func (osuo *OrgStaffUpdateOne) ClearResignDate() *OrgStaffUpdateOne {
+	osuo.mutation.ClearResignDate()
 	return osuo
 }
 
@@ -980,6 +1118,24 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	if osuo.mutation.BirthDateCleared() {
 		_spec.ClearField(orgstaff.FieldBirthDate, field.TypeString)
 	}
+	if value, ok := osuo.mutation.IdenNo(); ok {
+		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
+	}
+	if osuo.mutation.IdenNoCleared() {
+		_spec.ClearField(orgstaff.FieldIdenNo, field.TypeString)
+	}
+	if value, ok := osuo.mutation.WorkerNo(); ok {
+		_spec.SetField(orgstaff.FieldWorkerNo, field.TypeString, value)
+	}
+	if osuo.mutation.WorkerNoCleared() {
+		_spec.ClearField(orgstaff.FieldWorkerNo, field.TypeString)
+	}
+	if value, ok := osuo.mutation.Cubicle(); ok {
+		_spec.SetField(orgstaff.FieldCubicle, field.TypeString, value)
+	}
+	if osuo.mutation.CubicleCleared() {
+		_spec.ClearField(orgstaff.FieldCubicle, field.TypeString)
+	}
 	if value, ok := osuo.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeString, value)
 	}
@@ -992,11 +1148,11 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	if osuo.mutation.RegularDateCleared() {
 		_spec.ClearField(orgstaff.FieldRegularDate, field.TypeString)
 	}
-	if value, ok := osuo.mutation.IdenNo(); ok {
-		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
+	if value, ok := osuo.mutation.ResignDate(); ok {
+		_spec.SetField(orgstaff.FieldResignDate, field.TypeString, value)
 	}
-	if osuo.mutation.IdenNoCleared() {
-		_spec.ClearField(orgstaff.FieldIdenNo, field.TypeString)
+	if osuo.mutation.ResignDateCleared() {
+		_spec.ClearField(orgstaff.FieldResignDate, field.TypeString)
 	}
 	if value, ok := osuo.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
