@@ -32,6 +32,12 @@ type DictQueryParam struct {
 	WithItem *bool    `form:"wi"`      //
 
 	IsActive *bool `form:"is_active"` //
+
+	NameEn_Order   string `form:"name_en__order"`   //
+	NameCn_Order   string `form:"name_cn__order"`   //
+	IsActive_Order string `form:"is_active__order"` //
+	Sort_Order     string `form:"sort__order"`      // asc/desc
+
 }
 
 // DictQueryOptions 查询可选参数项

@@ -9,6 +9,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -63,7 +64,11 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 	opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysDict.Query().Where(sysdict.DeletedAtIsNil(), sysdict.IsDelEQ(false))
-
+	if v := params.WithItem; v != nil && *v {
+		query = query.WithItems(func(sdiq *ent.SysDictItemQuery) {
+			sdiq.Where(sysdictitem.IsDelEQ(false)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive)
+		})
+	}
 	if v := params.IDs; len(v) > 0 {
 		query = query.Where(sysdict.IDIn(v...))
 	}
@@ -95,7 +100,30 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 		return &schema.DictQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+	if v := params.Sort_Order; v != "" {
+		of := MakeUpOrderField(sysdict.FieldSort, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.NameCn_Order; v != "" {
+		of := MakeUpOrderField(sysdict.FieldNameCn, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.NameEn_Order; v != "" {
+		of := MakeUpOrderField(sysdict.FieldNameEn, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.IsActive_Order; v != "" {
+		of := MakeUpOrderField(sysdict.FieldIsActive, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if len(opt.OrderFields) == 0 {
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdict.FieldID, schema.OrderByDESC))
+	}
+
 	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
@@ -117,7 +145,7 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 		PageResult: pr,
 		Data:       ToSchemaSysDicts(rlist),
 	}
-	
+
 	return qr, nil
 }
 
