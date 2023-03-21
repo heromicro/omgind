@@ -2677,19 +2677,74 @@ paths:
         in: header
         name: Authorization
         type: string
-      - default: 1
-        description: 分页索引
+      - description: id之后的
+        in: query
+        name: after
+        type: string
+      - in: query
+        name: areaCode
+        type: string
+      - description: id之前的
+        in: query
+        name: before
+        type: string
+      - in: query
+        name: cityID
+        type: string
+      - description: asc, desc
+        in: query
+        name: cityID_Order
+        type: string
+      - in: query
+        name: countryID
+        type: string
+      - description: asc, desc
+        in: query
+        name: countryID_Order
+        type: string
+      - in: query
+        name: countyID
+        type: string
+      - description: asc, desc
+        in: query
+        name: countyID_Order
+        type: string
+      - description: asc, desc
+        in: query
+        name: createdAt_Order
+        type: string
+      - description: 当前页
         in: query
         name: current
-        required: true
         type: integer
-      - default: 10
-        description: 分页大小
+      - description: asc, desc
         in: query
+        name: id_Order
+        type: string
+      - in: query
+        name: mobile
+        type: string
+      - description: 是否仅查询count
+        in: query
+        name: onlyCount
+        type: boolean
+      - description: 页大小
+        in: query
+        maximum: 100
         name: pageSize
-        required: true
         type: integer
-      - description: 查询值
+      - description: 是否使用分页查询
+        in: query
+        name: pagination
+        type: boolean
+      - in: query
+        name: provinceID
+        type: string
+      - description: asc, desc
+        in: query
+        name: provinceID_Order
+        type: string
+      - description: 模糊查询
         in: query
         name: queryValue
         type: string
@@ -2917,22 +2972,68 @@ paths:
         in: header
         name: Authorization
         type: string
-      - default: 1
-        description: 分页索引
+      - description: id之后的
+        in: query
+        name: after
+        type: string
+      - description: id之前的
+        in: query
+        name: before
+        type: string
+      - description: 当前页
         in: query
         name: current
-        required: true
         type: integer
-      - default: 10
-        description: 分页大小
+      - description: 唯一标识列表
         in: query
+        items:
+          type: string
+        name: ids
+        type: array
+      - in: query
+        name: isActive
+        type: boolean
+      - in: query
+        name: isActive_Order
+        type: string
+      - description: 字典名称(中)
+        in: query
+        name: nameCn
+        type: string
+      - in: query
+        name: nameCn_Order
+        type: string
+      - description: 字典名称(英)
+        in: query
+        name: nameEn
+        type: string
+      - in: query
+        name: nameEn_Order
+        type: string
+      - description: 是否仅查询count
+        in: query
+        name: onlyCount
+        type: boolean
+      - description: 页大小
+        in: query
+        maximum: 100
         name: pageSize
-        required: true
         type: integer
-      - description: 查询值
+      - description: 是否使用分页查询
+        in: query
+        name: pagination
+        type: boolean
+      - description: 模糊查询
         in: query
         name: queryValue
         type: string
+      - description: asc/desc
+        in: query
+        name: sort_Order
+        type: string
+      - in: query
+        name: withItem
+        type: boolean
       responses:
         "200":
           description: OK

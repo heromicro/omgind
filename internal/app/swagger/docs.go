@@ -2790,24 +2790,111 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "分页索引",
-                        "name": "current",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "default": 10,
-                        "description": "分页大小",
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true
+                        "type": "string",
+                        "description": "id之后的",
+                        "name": "after",
+                        "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "查询值",
+                        "name": "areaCode",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id之前的",
+                        "name": "before",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "cityID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "cityID_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "countryID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "countryID_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "countyID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "countyID_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "createdAt_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页",
+                        "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "id_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "mobile",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "onlyCount",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否使用分页查询",
+                        "name": "pagination",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "provinceID",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "provinceID_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模糊查询",
                         "name": "queryValue",
                         "in": "query"
                     }
@@ -3168,25 +3255,98 @@ const docTemplate = `{
                         "in": "header"
                     },
                     {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "分页索引",
-                        "name": "current",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "default": 10,
-                        "description": "分页大小",
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true
+                        "type": "string",
+                        "description": "id之后的",
+                        "name": "after",
+                        "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "查询值",
+                        "description": "id之前的",
+                        "name": "before",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页",
+                        "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "唯一标识列表",
+                        "name": "ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "isActive",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "isActive_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "字典名称(中)",
+                        "name": "nameCn",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "nameCn_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "字典名称(英)",
+                        "name": "nameEn",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "nameEn_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "onlyCount",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否使用分页查询",
+                        "name": "pagination",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模糊查询",
                         "name": "queryValue",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc/desc",
+                        "name": "sort_Order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "withItem",
                         "in": "query"
                     }
                 ],

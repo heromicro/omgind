@@ -14,11 +14,6 @@ const (
 	FailStatus  StatusText = "FAIL"
 )
 
-// StatusResult 响应状态
-// type StatusResult struct {
-// 	Status StatusText `json:"status"` // 状态(OK)
-// }
-
 type CodeEnum int
 
 func (c CodeEnum) Int() int {
