@@ -31,10 +31,10 @@ func (a *SysDistrict) Query(c *gin.Context) {
 //	@Tags		行政区域
 //	@Summary	查询数据
 //	@Security	ApiKeyAuth
-//	@Param		object			query		schema.SysDistrictQueryParam	false	"查询参数"
-//	@Success	200				{array}		schema.ListResult{list=schema.SysDistricts,pagination=schema.PaginationResult}
-//	@Failure	401				{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
-//	@Failure	500				{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
+//	@Param		object	query		schema.SysDistrictQueryParam	false	"查询参数"
+//	@Success	200		{array}		schema.ListResult{list=schema.SysDistricts,pagination=schema.PaginationResult}
+//	@Failure	401		{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
+//	@Failure	500		{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/sys-district/{id}/substricts [get]
 func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
 }

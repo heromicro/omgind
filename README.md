@@ -17,7 +17,7 @@
 - 遵循 `RESTful API` 设计规范 & 基于接口的编程规范
 - 基于 `GIN` 框架，提供了丰富的中间件支持（JWTAuth、CORS、RequestLogger、RequestRateLimiter、TraceID、CasbinEnforce、Recover、GZIP）
 - 基于 `Casbin` 的 RBAC 访问控制模型 -- **权限控制可以细粒度到按钮 & 接口**
-- 基于 `entgo` 的数据库ORM
+- 基于 `entgo` 的数据库 ORM
 - 基于 `WIRE` 的依赖注入 -- 依赖注入本身的作用是解决了各个模块间层级依赖繁琐的初始化过程
 - 基于 `Logrus & Context` 实现了日志输出，通过结合 Context 实现了统一的 TraceID/UserID 等关键字段的输出(同时支持日志钩子写入到`Gorm`/`entgo`)
 - 基于 `JWT` 的用户认证 -- 基于 JWT 的黑名单验证机制
@@ -122,13 +122,19 @@ fields:
     required: true
     max: 32  # 配置最大值
     min: 5   # 配置最小值
-    
+
   - name: Memo
     type: string
     comment: 任务备注
     required: false
-    
-    
+
+
+```
+
+#### format swag comment
+
+```
+  swag fmt
 ```
 
 #### 执行生成命令并运行
