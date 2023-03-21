@@ -1236,9 +1236,11 @@ paths:
       - in: query
         name: code
         type: string
-      - description: asc, desc
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
-        name: createdAt_Order
+        name: created_at__order
         type: string
       - description: 当前页
         in: query
@@ -1247,9 +1249,11 @@ paths:
       - in: query
         name: isActive
         type: boolean
-      - description: asc desc
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
-        name: isActive_Order
+        name: is_active__order
         type: string
       - in: query
         name: name
@@ -1274,9 +1278,11 @@ paths:
         in: query
         name: queryValue
         type: string
-      - description: asc desc
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
-        name: sort_Order
+        name: sort__order
         type: string
       responses:
         "200":
