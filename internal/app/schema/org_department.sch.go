@@ -27,10 +27,10 @@ type OrgDepartmentQueryParam struct {
 
 	QueryValue string `form:"queryValue"` // 模糊查询
 
-	Name     string `form:"name"`      //
-	Code     string `form:"code"`      //
-	IsActive *bool  `form:"is_active"` //
-	OrgID    string `form:"org_id"`    //
+	Name     string `form:"name" json:"name"`           //
+	Code     string `form:"code" json:"code"`           //
+	IsActive *bool  `form:"is_active" json:"is_active"` //
+	OrgID    string `form:"org_id" json:"org_id"`       //
 
 	// example: "asc"
 	// example: "desc"

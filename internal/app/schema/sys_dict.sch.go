@@ -33,10 +33,10 @@ type DictQueryParam struct {
 
 	IsActive *bool `form:"is_active"` //
 
-	NameEn_Order   string `form:"name_en__order"`   //
-	NameCn_Order   string `form:"name_cn__order"`   //
-	IsActive_Order string `form:"is_active__order"` //
-	Sort_Order     string `form:"sort__order"`      // asc/desc
+	NameEn_Order   string `form:"name_en__order"`                           //
+	NameCn_Order   string `form:"name_cn__order"`                           //
+	IsActive_Order string `form:"is_active__order" json:"is_active__order"` //
+	Sort_Order     string `form:"sort__order" json:"sort__order"`           // asc/desc
 
 }
 

@@ -38,24 +38,24 @@ type OrgStaff struct {
 // OrgStaffQueryParam 查询条件
 type OrgStaffQueryParam struct {
 	PaginationParam
-	QueryValue string `form:"queryValue"` // 模糊查询
+	QueryValue string `form:"queryValue" json:"queryValue"` // 模糊查询
 
-	FirstName string `form:"first_name"` //
-	LastName  string `form:"last_name"`  //
-	Gender    string `form:"gender"`     //
-	IsActive  *bool  `form:"is_active"`  //
-	OrgID     string `form:"org_id"`     //
+	FirstName string `form:"first_name" json:"first_name"` //
+	LastName  string `form:"last_name" json:"last_name"`   //
+	Gender    string `form:"gender" json:"gender"`         //
+	IsActive  *bool  `form:"is_active" json:"is_active"`   //
+	OrgID     string `form:"org_id" json:"org_id"`         //
 
-	CreatedAt_Order string `form:"created_at__order"` // asc, desc
-	IsActive_Order  string `form:"is_active__order"`  //
-	Sort_Order      string `form:"sort__order"`       // asc/desc
+	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc, desc
+	IsActive_Order  string `form:"is_active__order" json:"is_active__order"`   //
+	Sort_Order      string `form:"sort__order" json:"sort__order"`             // asc/desc
 
-	BirthDate_Order string `form:"birth_date__order"` // asc/desc
+	BirthDate_Order string `form:"birth_date__order" json:"birth_date__order"` // asc/desc
 
-	WorkerNo_Order    string `form:"worker_no__order"`    // asc/desc
-	EntryDate_Order   string `form:"entry_date__order"`   // asc/desc
-	RegularDate_Order string `form:"regular_date__order"` // asc/desc
-	ResignDate_Order  string `form:"resign_date__order"`  // asc/desc
+	WorkerNo_Order    string `form:"worker_no__order" json:"worker_no__order"`       // asc/desc
+	EntryDate_Order   string `form:"entry_date__order" json:"entry_date__order"`     // asc/desc
+	RegularDate_Order string `form:"regular_date__order" json:"regular_date__order"` // asc/desc
+	ResignDate_Order  string `form:"resign_date__order" json:"resign_date__order"`   // asc/desc
 
 }
 

@@ -48,25 +48,25 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc desc",
-                        "name": "code_Order",
+                        "name": "code__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "create_at 结束",
-                        "name": "createdAt_Ed",
+                        "name": "created_at__ed",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "createdAt_Order",
+                        "name": "created_at__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "create_at 开始",
-                        "name": "createdAt_St",
+                        "name": "created_at__st",
                         "in": "query"
                     },
                     {
@@ -78,7 +78,7 @@ const docTemplate = `{
                     {
                         "type": "boolean",
                         "description": "状态",
-                        "name": "isActive",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
@@ -90,7 +90,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc desc",
-                        "name": "name_Order",
+                        "name": "name__order",
                         "in": "query"
                     },
                     {
@@ -121,19 +121,19 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "description": "create_at 结束",
-                        "name": "sort_Ed",
+                        "name": "sort__ed",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc desc",
-                        "name": "sort_Order",
+                        "name": "sort__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "create_at 结束",
-                        "name": "sort_St",
+                        "name": "sort__st",
                         "in": "query"
                     }
                 ],
@@ -501,7 +501,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "boolean",
-                        "name": "isActive",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
@@ -523,7 +523,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "orgID",
+                        "name": "org_id",
                         "in": "query"
                     },
                     {
@@ -981,7 +981,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "cityID_Order",
+                        "name": "city_id__order",
                         "in": "query"
                     },
                     {
@@ -992,19 +992,19 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "countryID_Order",
+                        "name": "country_id__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "countyID_Order",
+                        "name": "county_id__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "createdAt_Order",
+                        "name": "created_at__order",
                         "in": "query"
                     },
                     {
@@ -1015,13 +1015,13 @@ const docTemplate = `{
                     },
                     {
                         "type": "boolean",
-                        "name": "isActive",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc desc",
-                        "name": "isActive_Order",
+                        "name": "is_active__order",
                         "in": "query"
                     },
                     {
@@ -1037,7 +1037,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "ownerId",
+                        "name": "owner_id",
                         "in": "query"
                     },
                     {
@@ -1056,7 +1056,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "provinceID_Order",
+                        "name": "province_id__order",
                         "in": "query"
                     },
                     {
@@ -1068,7 +1068,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc desc",
-                        "name": "sort_Order",
+                        "name": "sort__order",
                         "in": "query"
                     }
                 ],
@@ -1506,7 +1506,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "createdAt_Order",
+                        "name": "created_at__order",
                         "in": "query"
                     },
                     {
@@ -1517,12 +1517,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "boolean",
-                        "name": "isActive",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "name": "isActive_Order",
+                        "name": "is_active__order",
                         "in": "query"
                     },
                     {
@@ -1538,7 +1538,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "orgID",
+                        "name": "org_id",
                         "in": "query"
                     },
                     {
@@ -1563,7 +1563,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc desc",
-                        "name": "sort_Order",
+                        "name": "sort__order",
                         "in": "query"
                     }
                 ],
@@ -1996,13 +1996,13 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc/desc",
-                        "name": "birthDate_Order",
+                        "name": "birth_date__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "createdAt_Order",
+                        "name": "created_at__order",
                         "in": "query"
                     },
                     {
@@ -2014,12 +2014,12 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc/desc",
-                        "name": "entryDate_Order",
+                        "name": "entry_date__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "name": "firstName",
+                        "name": "first_name",
                         "in": "query"
                     },
                     {
@@ -2029,17 +2029,17 @@ const docTemplate = `{
                     },
                     {
                         "type": "boolean",
-                        "name": "isActive",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "name": "isActive_Order",
+                        "name": "is_active__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "name": "lastName",
+                        "name": "last_name",
                         "in": "query"
                     },
                     {
@@ -2050,7 +2050,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "orgID",
+                        "name": "org_id",
                         "in": "query"
                     },
                     {
@@ -2075,25 +2075,25 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc/desc",
-                        "name": "regularDate_Order",
+                        "name": "regular_date__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc/desc",
-                        "name": "resignDate_Order",
+                        "name": "resign_date__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc/desc",
-                        "name": "sort_Order",
+                        "name": "sort__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc/desc",
-                        "name": "workerNo_Order",
+                        "name": "worker_no__order",
                         "in": "query"
                     }
                 ],
@@ -2797,7 +2797,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "areaCode",
+                        "name": "area_code",
                         "in": "query"
                     },
                     {
@@ -2808,41 +2808,41 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "cityID",
+                        "name": "city_id",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "cityID_Order",
+                        "name": "city_id__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "name": "countryID",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "asc, desc",
-                        "name": "countryID_Order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "name": "countyID",
+                        "name": "country_id",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "countyID_Order",
+                        "name": "country_id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "county_id",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "createdAt_Order",
+                        "name": "county_id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "created_at__order",
                         "in": "query"
                     },
                     {
@@ -2854,7 +2854,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "id_Order",
+                        "name": "id__order",
                         "in": "query"
                     },
                     {
@@ -2883,13 +2883,13 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "provinceID",
+                        "name": "province_id",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "provinceID_Order",
+                        "name": "province_id__order",
                         "in": "query"
                     },
                     {
@@ -3288,7 +3288,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "name": "isActive_Order",
+                        "name": "is_active__order",
                         "in": "query"
                     },
                     {
@@ -3341,7 +3341,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc/desc",
-                        "name": "sort_Order",
+                        "name": "sort__order",
                         "in": "query"
                     },
                     {
@@ -3702,7 +3702,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "createdAt_Order",
+                        "name": "created_at__order",
                         "in": "query"
                     },
                     {
@@ -3720,37 +3720,37 @@ const docTemplate = `{
                     {
                         "type": "boolean",
                         "description": "状态",
-                        "name": "isActive",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "是否是直辖",
-                        "name": "isDirect",
+                        "name": "is_direct",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "热门城市",
-                        "name": "isHot",
+                        "name": "is_hot",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "是否是子叶",
-                        "name": "isLeaf",
+                        "name": "is_leaf",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "主要城市",
-                        "name": "isMain",
+                        "name": "is_main",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "状态",
-                        "name": "isReal",
+                        "name": "is_real",
                         "in": "query"
                     },
                     {
@@ -3761,20 +3761,38 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "名称",
-                        "name": "nameEN",
+                        "description": "asc desc",
+                        "name": "name__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "asc desc",
-                        "name": "name_Order",
+                        "description": "名称",
+                        "name": "name_en",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "是否仅查询count",
                         "name": "onlyCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.area_code",
+                        "name": "p_area_code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.initials",
+                        "name": "p_initials",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.pid",
+                        "name": "p_pid",
                         "in": "query"
                     },
                     {
@@ -3792,26 +3810,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "parent.area_code",
-                        "name": "parentAreaCode",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
                         "description": "pid",
-                        "name": "parentID",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "parent.initials",
-                        "name": "parentInitials",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "parent.pid",
-                        "name": "parentParentID",
+                        "name": "pid",
                         "in": "query"
                     },
                     {
@@ -3828,68 +3828,68 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "树id",
-                        "name": "treeID",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "asc desc",
-                        "name": "treeID_Order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
                         "description": "tree_left 结束",
                         "name": "treeLeft",
                         "in": "query"
                     },
                     {
                         "type": "integer",
+                        "description": "树id",
+                        "name": "tree_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "tree_id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "tree_left 结束",
-                        "name": "treeLeft_Ed",
+                        "name": "tree_left__ed",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "左值 asc desc",
-                        "name": "treeLeft_Order",
+                        "name": "tree_left__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_left 结束",
-                        "name": "treeLeft_St",
+                        "name": "tree_left__st",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_level",
-                        "name": "treeLevel",
+                        "name": "tree_level",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "层级 asc desc",
-                        "name": "treeLevel_Order",
+                        "name": "tree_level__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_right 结束",
-                        "name": "treeRight",
+                        "name": "tree_right",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_right 结束",
-                        "name": "treeRight_Ed",
+                        "name": "tree_right__ed",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_right 结束",
-                        "name": "treeRight_St",
+                        "name": "tree_right__st",
                         "in": "query"
                     }
                 ],
@@ -4262,7 +4262,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "asc, desc",
-                        "name": "createdAt_Order",
+                        "name": "created_at__order",
                         "in": "query"
                     },
                     {
@@ -4280,37 +4280,37 @@ const docTemplate = `{
                     {
                         "type": "boolean",
                         "description": "状态",
-                        "name": "isActive",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "是否是直辖",
-                        "name": "isDirect",
+                        "name": "is_direct",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "热门城市",
-                        "name": "isHot",
+                        "name": "is_hot",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "是否是子叶",
-                        "name": "isLeaf",
+                        "name": "is_leaf",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "主要城市",
-                        "name": "isMain",
+                        "name": "is_main",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "状态",
-                        "name": "isReal",
+                        "name": "is_real",
                         "in": "query"
                     },
                     {
@@ -4321,20 +4321,38 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "名称",
-                        "name": "nameEN",
+                        "description": "asc desc",
+                        "name": "name__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "asc desc",
-                        "name": "name_Order",
+                        "description": "名称",
+                        "name": "name_en",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
                         "description": "是否仅查询count",
                         "name": "onlyCount",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.area_code",
+                        "name": "p_area_code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.initials",
+                        "name": "p_initials",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.pid",
+                        "name": "p_pid",
                         "in": "query"
                     },
                     {
@@ -4352,26 +4370,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "parent.area_code",
-                        "name": "parentAreaCode",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
                         "description": "pid",
-                        "name": "parentID",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "parent.initials",
-                        "name": "parentInitials",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "parent.pid",
-                        "name": "parentParentID",
+                        "name": "pid",
                         "in": "query"
                     },
                     {
@@ -4388,68 +4388,68 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "树id",
-                        "name": "treeID",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "asc desc",
-                        "name": "treeID_Order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
                         "description": "tree_left 结束",
                         "name": "treeLeft",
                         "in": "query"
                     },
                     {
                         "type": "integer",
+                        "description": "树id",
+                        "name": "tree_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc desc",
+                        "name": "tree_id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "tree_left 结束",
-                        "name": "treeLeft_Ed",
+                        "name": "tree_left__ed",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "左值 asc desc",
-                        "name": "treeLeft_Order",
+                        "name": "tree_left__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_left 结束",
-                        "name": "treeLeft_St",
+                        "name": "tree_left__st",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_level",
-                        "name": "treeLevel",
+                        "name": "tree_level",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "层级 asc desc",
-                        "name": "treeLevel_Order",
+                        "name": "tree_level__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_right 结束",
-                        "name": "treeRight",
+                        "name": "tree_right",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_right 结束",
-                        "name": "treeRight_Ed",
+                        "name": "tree_right__ed",
                         "in": "query"
                     },
                     {
                         "type": "integer",
                         "description": "tree_right 结束",
-                        "name": "treeRight_St",
+                        "name": "tree_right__st",
                         "in": "query"
                     }
                 ],

@@ -24,16 +24,16 @@ type OrgPosition struct {
 // OrgPositionQueryParam 查询条件
 type OrgPositionQueryParam struct {
 	PaginationParam
-	QueryValue string `form:"queryValue"` // 模糊查询
+	QueryValue string `form:"queryValue" json:"queryValue"` // 模糊查询
 
-	Name     string `form:"name"`      //
-	Code     string `form:"code"`      //
-	IsActive *bool  `form:"is_active"` //
-	OrgID    string `form:"org_id"`    //
+	Name     string `form:"name" json:"name"`           //
+	Code     string `form:"code" json:"code"`           //
+	IsActive *bool  `form:"is_active" json:"is_active"` //
+	OrgID    string `form:"org_id" json:"org_id"`       //
 
-	CreatedAt_Order string `form:"created_at__order"` // asc, desc
-	IsActive_Order  string `form:"is_active__order"`  //
-	Sort_Order      string `form:"sort__order"`       // asc desc
+	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc, desc
+	IsActive_Order  string `form:"is_active__order" json:"is_active__order"`   //
+	Sort_Order      string `form:"sort__order" json:"sort__order"`             // asc desc
 
 }
 
