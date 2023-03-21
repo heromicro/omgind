@@ -33,6 +33,7 @@ type OrgOrgan struct {
 // OrgOrganQueryParam 查询条件
 type OrgOrganQueryParam struct {
 	PaginationParam
+
 	QueryValue string  `form:"queryValue"` // 模糊查询
 	Code       *string `form:"code"`       //
 	Name       string  `form:"name"`       //
@@ -52,6 +53,10 @@ type OrgOrganQueryParam struct {
 // OrgOrganQueryOptions 查询可选参数项
 type OrgOrganQueryOptions struct {
 	OrderFields []*OrderField // 排序字段
+
+	FieldsAll      bool     `default:"true"` // all fields
+	FieldsIncludes []string // includes fields
+	FieldsExcludes []string // exlcudes fields
 }
 
 // OrgOrganQueryResult 查询结果

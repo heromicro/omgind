@@ -2,7 +2,6 @@ package repo
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/heromicro/omgind/internal/app/schema"
@@ -28,8 +27,8 @@ func ToSchemaOrgPosition(et *ent.OrgPosition) *schema.OrgPosition {
 	item := new(schema.OrgPosition)
 	structure.Copy(et, item)
 
-	log.Println(" ------ ===== ", et.Edges.Organ)
-	log.Println(" ------ ===== ", et.Edges.Organ.Edges.Haddr)
+	// log.Println(" ------ ===== ", et.Edges.Organ)
+	// log.Println(" ------ ===== ", et.Edges.Organ.Edges.Haddr)
 	if et.Edges.Organ != nil {
 		item.Org = ToSchemaOrgOrganShow(et.Edges.Organ)
 	}
@@ -184,7 +183,9 @@ func (a *OrgPosition) Create(ctx context.Context, item schema.OrgPosition) (*sch
 	if err != nil {
 		return nil, err
 	}
+
 	sch_orgposition := ToSchemaOrgPosition(r_orgposition)
+
 	return sch_orgposition, nil
 }
 

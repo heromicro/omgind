@@ -29,6 +29,11 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 	return a.OrgOrganRepo.Query(ctx, params, opts...)
 }
 
+// Query 查询数据
+func (a *OrgOrgan) QuerySelect(ctx context.Context, params schema.OrgOrganQueryParam, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrganQueryResult, error) {
+	return a.OrgOrganRepo.QuerySelect(ctx, params, opts...)
+}
+
 // Get 查询指定数据
 func (a *OrgOrgan) Get(ctx context.Context, id string, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrgan, error) {
 	item, err := a.OrgOrganRepo.Get(ctx, id, opts...)

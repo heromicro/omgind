@@ -4,14 +4,14 @@ import (
 	"context"
 	"time"
 
+	"github.com/google/wire"
+
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
-
-	"github.com/google/wire"
 )
 
 // OrgOrganSet 注入OrgOrgan
@@ -77,11 +77,16 @@ func (a *OrgOrgan) getQueryOption(opts ...schema.OrgOrganQueryOptions) schema.Or
 func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrganQueryResult, error) {
 	opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.OrgOrgan.Query().WithHaddr(func(saq *ent.SysAddressQuery) {
+	query := a.EntCli.OrgOrgan.Query()
+
+	// if opt.FieldsAll || (slices.Contains(opt.FieldsIncludes, orgorgan.EdgeHaddr) && !slices.Contains(opt.FieldsExcludes, orgorgan.EdgeHaddr)) {
+	query = query.WithHaddr(func(saq *ent.SysAddressQuery) {
 		saq.Select(sysaddress.FieldID, sysaddress.FieldCountry, sysaddress.FieldCountryID, sysaddress.FieldProvince, sysaddress.FieldProvinceID, sysaddress.FieldCity, sysaddress.FieldCityID, sysaddress.FieldCounty, sysaddress.FieldCountyID, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldFirstName, sysaddress.FieldLastName, sysaddress.FieldDaddr, sysaddress.FieldZipCode)
 	})
+	// }
 
 	query = query.Where(orgorgan.DeletedAtIsNil())
+
 	// TODO: 查询条件
 	if v := params.Name; v != "" {
 		query = query.Where(orgorgan.NameContains(v))
@@ -128,7 +133,93 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 	}
 	query = query.Limit(params.Limit()).Offset(params.Offset())
 
-	list, err1 := query.All(ctx)
+	var query_select *ent.OrgOrganSelect
+	if len(opt.FieldsIncludes) > 0 {
+		query_select = query.Select(opt.FieldsIncludes...)
+	}
+	var list []*ent.OrgOrgan
+	if query_select != nil {
+		list, err = query_select.All(ctx)
+	} else {
+		list, err = query.All(ctx)
+	}
+
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	qr := &schema.OrgOrganQueryResult{
+		PageResult: pr,
+		Data:       ToSchemaOrgOrgans(list),
+	}
+
+	return qr, nil
+}
+
+// Query 查询数据
+func (a *OrgOrgan) QuerySelect(ctx context.Context, params schema.OrgOrganQueryParam, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrganQueryResult, error) {
+
+	opt := a.getQueryOption(opts...)
+
+	query := a.EntCli.OrgOrgan.Query().Where(orgorgan.IsDelEQ(false))
+
+	query = query.Where(orgorgan.DeletedAtIsNil())
+	// TODO: 查询条件
+	if v := params.QueryValue; v != "" {
+		query = query.Where(orgorgan.Or(orgorgan.NameContains(v), orgorgan.CodeContains(v)))
+	}
+
+	if v := params.Name; v != "" {
+		query = query.Where(orgorgan.NameContains(v))
+	}
+
+	if v := params.Code; v != nil && *v != "" {
+		query = query.Where(orgorgan.CodeContains(*v))
+	}
+
+	if v := params.IsActive; v != nil {
+		query = query.Where(orgorgan.IsActiveEQ(*v))
+	}
+
+	count, err := query.Count(ctx)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	// get total
+	pr := &schema.PaginationResult{Total: count}
+	if params.PaginationParam.OnlyCount {
+		return &schema.OrgOrganQueryResult{PageResult: pr}, nil
+	}
+
+	if v := params.IsActive_Order; v != "" {
+		of := MakeUpOrderField(orgorgan.FieldIsActive, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.Sort_Order; v != "" {
+		of := MakeUpOrderField(orgorgan.FieldSort, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if len(opt.OrderFields) == 0 {
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgorgan.FieldID, schema.OrderByDESC))
+	}
+
+	query = query.Order(ParseOrder(opt.OrderFields)...)
+
+	pr.Current = params.PaginationParam.GetCurrent()
+	pr.PageSize = params.PaginationParam.GetPageSize()
+	if params.Offset() > count {
+		return &schema.OrgOrganQueryResult{PageResult: pr}, nil
+	}
+	query = query.Limit(params.Limit()).Offset(params.Offset())
+
+	var query_select *ent.OrgOrganSelect
+	if opt.FieldsIncludes != nil {
+		query_select = query.Select(opt.FieldsIncludes...)
+	}
+
+	list, err1 := query_select.All(ctx)
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}

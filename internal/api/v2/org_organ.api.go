@@ -1,11 +1,15 @@
 package api_v2
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
+
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/app/service"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 )
 
 // OrgOrganSet 注入OrgOrgan
@@ -27,12 +31,38 @@ func (a *OrgOrgan) Query(c *gin.Context) {
 
 	params.Pagination = true
 	result, err := a.OrgOrganSrv.Query(ctx, params)
+
 	if err != nil {
 		ginx.ResError(c, err)
 		return
 	}
 
 	ginx.ResPage(c, result.Data, result.PageResult)
+}
+
+// QuerySelect 查询选择数据
+func (a *OrgOrgan) QuerySelect(c *gin.Context) {
+	ctx := c.Request.Context()
+	var params schema.OrgOrganQueryParam
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		log.Printf(" ------- ------ %+v \n", err)
+
+		ginx.ResError(c, err)
+		return
+	}
+
+	log.Printf(" ------- ------ %+v \n", params)
+
+	result, err := a.OrgOrganSrv.QuerySelect(ctx, params, schema.OrgOrganQueryOptions{
+		OrderFields:    schema.NewOrderFields(schema.NewOrderField("id", schema.OrderByDESC)),
+		FieldsAll:      false,
+		FieldsIncludes: []string{orgorgan.FieldID, orgorgan.FieldName},
+	})
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	ginx.ResList(c, result.Data)
 }
 
 // Get 查询指定数据
