@@ -33,6 +33,8 @@ type DictQueryParam struct {
 
 	IsActive *bool `form:"is_active"` //
 
+	// example: asc
+	// example: desc
 	NameEn_Order   string `form:"name_en__order"`                           //
 	NameCn_Order   string `form:"name_cn__order"`                           //
 	IsActive_Order string `form:"is_active__order" json:"is_active__order"` //

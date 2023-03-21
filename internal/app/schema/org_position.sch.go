@@ -31,6 +31,8 @@ type OrgPositionQueryParam struct {
 	IsActive *bool  `form:"is_active" json:"is_active"` //
 	OrgID    string `form:"org_id" json:"org_id"`       //
 
+	// example: asc
+	// example: desc
 	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc, desc
 	IsActive_Order  string `form:"is_active__order" json:"is_active__order"`   //
 	Sort_Order      string `form:"sort__order" json:"sort__order"`             // asc desc

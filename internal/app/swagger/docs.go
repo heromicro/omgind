@@ -991,7 +991,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "country_id__order",
                         "in": "query"
                     },
@@ -1505,7 +1505,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
                         "in": "query"
                     },
@@ -2001,7 +2001,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
                         "in": "query"
                     },
@@ -2841,7 +2841,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
                         "in": "query"
                     },
@@ -3310,6 +3310,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "example: asc\nexample: desc",
                         "name": "nameEn_Order",
                         "in": "query"
                     },
@@ -3701,7 +3702,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
                         "in": "query"
                     },
@@ -4261,7 +4262,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
                         "in": "query"
                     },

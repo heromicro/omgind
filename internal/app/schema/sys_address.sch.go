@@ -43,6 +43,8 @@ type SysAddressQueryParam struct {
 	AreaCode   *string `form:"area_code" json:"area_code"`
 	Mobile     *string `form:"mobile" json:"mobile"`
 
+	// example: asc
+	// example: desc
 	CreatedAt_Order  string `form:"created_at__order" json:"created_at__order"`   // asc, desc
 	ID_Order         string `form:"id__order" json:"id__order"`                   // asc, desc
 	CountryID_Order  string `form:"country_id__order" json:"country_id__order"`   // asc, desc

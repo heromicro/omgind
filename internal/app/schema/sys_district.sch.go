@@ -75,6 +75,8 @@ type SysDistrictQueryParam struct {
 	TreeRight_St *int64 `form:"tree_right__st" json:"tree_right__st"` // tree_right 结束
 	TreeRight_Ed *int64 `form:"tree_right__ed" json:"tree_right__ed"` // tree_right 结束
 
+	// example: asc
+	// example: desc
 	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc, desc
 	Name_Order      string `form:"name__order" json:"name__order"`             // asc desc
 	TreeID_Order    string `form:"tree_id__order" json:"tree_id__order"`       // asc desc

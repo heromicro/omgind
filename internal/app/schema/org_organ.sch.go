@@ -44,6 +44,8 @@ type OrgOrganQueryParam struct {
 	IsActive_Order  string `form:"is_active__order" json:"is_active__order"`   // asc desc
 	Sort_Order      string `form:"sort__order" json:"sort__order"`             // asc desc
 
+	// example: asc
+	// example: desc
 	CountryID_Order  string `form:"country_id__order" json:"country_id__order"`   // asc, desc
 	ProvinceID_Order string `form:"province_id__order" json:"province_id__order"` // asc, desc
 	CityID_Order     string `form:"city_id__order" json:"city_id__order"`         // asc, desc

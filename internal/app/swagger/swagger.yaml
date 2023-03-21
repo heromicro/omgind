@@ -1557,7 +1557,9 @@ paths:
       - in: query
         name: code
         type: string
-      - description: asc, desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: country_id__order
         type: string
@@ -1880,7 +1882,9 @@ paths:
       - in: query
         name: code
         type: string
-      - description: asc, desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: created_at__order
         type: string
@@ -2191,7 +2195,9 @@ paths:
         in: query
         name: birth_date__order
         type: string
-      - description: asc, desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: created_at__order
         type: string
@@ -2715,7 +2721,9 @@ paths:
         in: query
         name: county_id__order
         type: string
-      - description: asc, desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: created_at__order
         type: string
@@ -3013,7 +3021,10 @@ paths:
         in: query
         name: nameEn
         type: string
-      - in: query
+      - description: |-
+          example: asc
+          example: desc
+        in: query
         name: nameEn_Order
         type: string
       - description: 是否仅查询count
@@ -3260,7 +3271,9 @@ paths:
         in: query
         name: before
         type: string
-      - description: asc, desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: created_at__order
         type: string
@@ -3617,7 +3630,9 @@ paths:
         in: query
         name: before
         type: string
-      - description: asc, desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: created_at__order
         type: string
