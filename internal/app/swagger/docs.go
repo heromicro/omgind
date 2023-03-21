@@ -452,6 +452,1754 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v2/org-departments": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "查询数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "分页索引",
+                        "name": "current",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "分页大小",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询值",
+                        "name": "queryValue",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/schema.ListResult"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/definitions/schema.OrgDepartment"
+                                                }
+                                            },
+                                            "pagination": {
+                                                "$ref": "#/definitions/schema.PaginationResult"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "创建数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "创建数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgDepartment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.IDResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-departments/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgDepartment"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "更新数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgDepartment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "删除数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-departments/{id}/disable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "禁用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-departments/{id}/enable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "启用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-departments/{id}/view": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "部门管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgDepartment"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-organs": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "组织管理"
+                ],
+                "summary": "查询数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "分页索引",
+                        "name": "current",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "分页大小",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询值",
+                        "name": "queryValue",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/schema.ListResult"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/definitions/schema.OrgOrgan"
+                                                }
+                                            },
+                                            "pagination": {
+                                                "$ref": "#/definitions/schema.PaginationResult"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "组织管理"
+                ],
+                "summary": "创建数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "创建数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgOrgan"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.IDResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-organs/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "组织管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgOrgan"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "组织管理"
+                ],
+                "summary": "更新数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgOrgan"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "组织管理"
+                ],
+                "summary": "删除数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-organs/{id}/disable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "组织管理"
+                ],
+                "summary": "禁用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-organs/{id}/enable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "组织管理"
+                ],
+                "summary": "启用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-organs/{id}/view": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "组织管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgOrgan"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-positions": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "职位管理"
+                ],
+                "summary": "查询数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "分页索引",
+                        "name": "current",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "分页大小",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询值",
+                        "name": "queryValue",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/schema.ListResult"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/definitions/schema.OrgPosition"
+                                                }
+                                            },
+                                            "pagination": {
+                                                "$ref": "#/definitions/schema.PaginationResult"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "职位管理"
+                ],
+                "summary": "创建数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "创建数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgPosition"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.IDResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-positions/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "职位管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgPosition"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "职位管理"
+                ],
+                "summary": "更新数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgPosition"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "职位管理"
+                ],
+                "summary": "删除数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-positions/{id}/disable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "职位管理"
+                ],
+                "summary": "禁用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-positions/{id}/enable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "职位管理"
+                ],
+                "summary": "启用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-positions/{id}/view": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "职位管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgPosition"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-staffs": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "员工管理"
+                ],
+                "summary": "查询数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "分页索引",
+                        "name": "current",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "分页大小",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询值",
+                        "name": "queryValue",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/definitions/schema.ListResult"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "list": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/definitions/schema.OrgStaff"
+                                                }
+                                            },
+                                            "pagination": {
+                                                "$ref": "#/definitions/schema.PaginationResult"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "员工管理"
+                ],
+                "summary": "创建数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "创建数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgStaff"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.IDResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-staffs/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "员工管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgStaff"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "员工管理"
+                ],
+                "summary": "更新数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgStaff"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "员工管理"
+                ],
+                "summary": "删除数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-staffs/{id}/disable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "员工管理"
+                ],
+                "summary": "禁用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-staffs/{id}/enable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "员工管理"
+                ],
+                "summary": "启用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/org-staffs/{id}/view": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "员工管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.OrgStaff"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v2/pub/current/menutree": {
             "get": {
                 "security": [
@@ -3915,6 +5663,311 @@ const docTemplate = `{
                 }
             }
         },
+        "schema.OrgDepartment": {
+            "type": "object",
+            "required": [
+                "is_active",
+                "name"
+            ],
+            "properties": {
+                "code": {
+                    "description": "助记码",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
+                "memo": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "org": {
+                    "$ref": "#/definitions/schema.OrgOrganShow"
+                },
+                "org_id": {
+                    "description": "企业id",
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "schema.OrgOrgan": {
+            "type": "object",
+            "required": [
+                "is_active",
+                "name",
+                "sname"
+            ],
+            "properties": {
+                "code": {
+                    "description": "助记码",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "haddr": {
+                    "description": "总部地址",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.SysAddress"
+                        }
+                    ]
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "iden_no": {
+                    "description": "执照号",
+                    "type": "string"
+                },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
+                "memo": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "owner_id": {
+                    "description": "所有者user.id",
+                    "type": "string"
+                },
+                "sname": {
+                    "description": "短名称",
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "schema.OrgOrganShow": {
+            "type": "object",
+            "required": [
+                "name",
+                "sname"
+            ],
+            "properties": {
+                "haddr": {
+                    "description": "总部地址",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.SysAddress"
+                        }
+                    ]
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "iden_no": {
+                    "description": "执照号",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "sname": {
+                    "description": "短名称",
+                    "type": "string"
+                }
+            }
+        },
+        "schema.OrgPosition": {
+            "type": "object",
+            "required": [
+                "is_active",
+                "name"
+            ],
+            "properties": {
+                "code": {
+                    "description": "助记码",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
+                "memo": {
+                    "type": "string"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "org": {
+                    "$ref": "#/definitions/schema.OrgOrganShow"
+                },
+                "org_id": {
+                    "description": "企业id",
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "schema.OrgStaff": {
+            "type": "object",
+            "required": [
+                "birth_date",
+                "entry_date",
+                "first_name",
+                "gender",
+                "is_active",
+                "last_name",
+                "mobile",
+                "worker_no"
+            ],
+            "properties": {
+                "birth_date": {
+                    "description": "出生日期",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "creator": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "cubicle": {
+                    "description": "工位",
+                    "type": "string"
+                },
+                "entry_date": {
+                    "description": "入职日期",
+                    "type": "string"
+                },
+                "first_name": {
+                    "description": "名",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "性别",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "iden_addr": {
+                    "description": "身份证地址",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.SysAddress"
+                        }
+                    ]
+                },
+                "iden_no": {
+                    "description": "身份证号",
+                    "type": "string"
+                },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
+                },
+                "last_name": {
+                    "description": "姓",
+                    "type": "string"
+                },
+                "memo": {
+                    "type": "string"
+                },
+                "mobile": {
+                    "description": "电话",
+                    "type": "string"
+                },
+                "org": {
+                    "$ref": "#/definitions/schema.OrgOrganShow"
+                },
+                "org_id": {
+                    "description": "企业id",
+                    "type": "string"
+                },
+                "regular_date": {
+                    "description": "转正日期",
+                    "type": "string"
+                },
+                "resi_addr": {
+                    "description": "现居地址",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.SysAddress"
+                        }
+                    ]
+                },
+                "resign_date": {
+                    "description": "离职日期",
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "worker_no": {
+                    "description": "工号",
+                    "type": "string"
+                }
+            }
+        },
         "schema.PaginationResult": {
             "type": "object",
             "properties": {
@@ -4129,6 +6182,10 @@ const docTemplate = `{
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
+                },
+                "is_active": {
+                    "description": "状态",
+                    "type": "boolean"
                 },
                 "last_name": {
                     "description": "联系人姓",
