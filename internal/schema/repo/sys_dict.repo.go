@@ -117,7 +117,7 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 		PageResult: pr,
 		Data:       ToSchemaSysDicts(rlist),
 	}
-
+	
 	return qr, nil
 }
 

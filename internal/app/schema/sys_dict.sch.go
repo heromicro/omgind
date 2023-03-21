@@ -23,12 +23,15 @@ type Dict struct {
 // DictQueryParam 查询条件
 type DictQueryParam struct {
 	PaginationParam
-	IDs        []string `form:"-"`          // 唯一标识列表
-	NameCn     string   `form:"-"`          // 字典名称(中)
-	NameEn     string   `form:"-"`          // 字典名称(英)
-	QueryValue string   `form:"queryValue"` // 模糊查询
-	IsActive   *bool    `form:"is_active"`
-	SqlRaw     string
+
+	QueryValue string `form:"queryValue"` // 模糊查询
+
+	IDs      []string `form:"ids"`     // 唯一标识列表
+	NameCn   string   `form:"name_cn"` // 字典名称(中)
+	NameEn   string   `form:"name_en"` // 字典名称(英)
+	WithItem *bool    `form:"wi"`      //
+
+	IsActive *bool `form:"is_active"` //
 }
 
 // DictQueryOptions 查询可选参数项

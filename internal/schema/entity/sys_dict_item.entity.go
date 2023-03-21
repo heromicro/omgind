@@ -32,11 +32,11 @@ func (sdd SysDictItem) Fields() []ent.Field {
 	}
 }
 
-//func (sdd SysDictItem) Edges() []ent.Edge {
-//	return []ent.Edge{
-//		//edge.From("SysDict", SysDict.Type).Field("dict_id").Ref("SysDictItems").Unique().Required(),
-//	}
-//}
+func (sdd SysDictItem) Edges() []ent.Edge {
+	return []ent.Edge{
+		// edge.From("dict", SysDict.Type).Field("dict_id").Ref("items").Unique().Required(),
+	}
+}
 
 func (SysDictItem) Indexes() []ent.Index {
 	return []ent.Index{}
