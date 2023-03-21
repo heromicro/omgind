@@ -213,15 +213,17 @@ var (
 		{Name: "last_name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Size: 32},
 		{Name: "gender", Type: field.TypeEnum, Nullable: true, Enums: []string{"M", "F"}},
-		{Name: "birth_date", Type: field.TypeString, Nullable: true},
+		{Name: "birth_date", Type: field.TypeTime, Nullable: true},
 		{Name: "iden_no", Type: field.TypeString, Nullable: true},
-		{Name: "worker_no", Type: field.TypeString, Nullable: true},
-		{Name: "cubicle", Type: field.TypeString, Nullable: true},
-		{Name: "entry_date", Type: field.TypeString, Nullable: true},
-		{Name: "regu_date", Type: field.TypeString, Nullable: true},
-		{Name: "resign_date", Type: field.TypeString, Nullable: true},
+		{Name: "worker_no", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "cubicle", Type: field.TypeString, Nullable: true, Size: 32},
+		{Name: "entry_date", Type: field.TypeTime, Nullable: true},
+		{Name: "regu_date", Type: field.TypeTime, Nullable: true},
+		{Name: "resign_date", Type: field.TypeTime, Nullable: true},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "rsaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
+		{Name: "idaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
 	}
 	// OrgStaffsTable holds the schema information for the "org_staffs" table.
 	OrgStaffsTable = &schema.Table{
@@ -233,6 +235,18 @@ var (
 				Symbol:     "org_staffs_org_organs_staffs",
 				Columns:    []*schema.Column{OrgStaffsColumns[20]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "org_staffs_sys_addresses_staff_resi",
+				Columns:    []*schema.Column{OrgStaffsColumns[21]},
+				RefColumns: []*schema.Column{SysAddressesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "org_staffs_sys_addresses_staff_iden",
+				Columns:    []*schema.Column{OrgStaffsColumns[22]},
+				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -1119,5 +1133,7 @@ func init() {
 	OrgOrgansTable.ForeignKeys[0].RefTable = SysAddressesTable
 	OrgPositionsTable.ForeignKeys[0].RefTable = OrgOrgansTable
 	OrgStaffsTable.ForeignKeys[0].RefTable = OrgOrgansTable
+	OrgStaffsTable.ForeignKeys[1].RefTable = SysAddressesTable
+	OrgStaffsTable.ForeignKeys[2].RefTable = SysAddressesTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 }

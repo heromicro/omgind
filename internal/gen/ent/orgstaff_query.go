@@ -15,17 +15,20 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
 // OrgStaffQuery is the builder for querying OrgStaff entities.
 type OrgStaffQuery struct {
 	config
-	ctx        *QueryContext
-	order      []OrderFunc
-	inters     []Interceptor
-	predicates []predicate.OrgStaff
-	withOrgan  *OrgOrganQuery
-	modifiers  []func(*sql.Selector)
+	ctx          *QueryContext
+	order        []OrderFunc
+	inters       []Interceptor
+	predicates   []predicate.OrgStaff
+	withOrgan    *OrgOrganQuery
+	withIdenAddr *SysAddressQuery
+	withResiAddr *SysAddressQuery
+	modifiers    []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -80,6 +83,56 @@ func (osq *OrgStaffQuery) QueryOrgan() *OrgOrganQuery {
 		)
 		schemaConfig := osq.schemaConfig
 		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryIdenAddr chains the current query on the "iden_addr" edge.
+func (osq *OrgStaffQuery) QueryIdenAddr() *SysAddressQuery {
+	query := (&SysAddressClient{config: osq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := osq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := osq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, selector),
+			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.IdenAddrTable, orgstaff.IdenAddrColumn),
+		)
+		schemaConfig := osq.schemaConfig
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryResiAddr chains the current query on the "resi_addr" edge.
+func (osq *OrgStaffQuery) QueryResiAddr() *SysAddressQuery {
+	query := (&SysAddressClient{config: osq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := osq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := osq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, selector),
+			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.ResiAddrTable, orgstaff.ResiAddrColumn),
+		)
+		schemaConfig := osq.schemaConfig
+		step.To.Schema = schemaConfig.SysAddress
 		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
 		return fromU, nil
@@ -274,12 +327,14 @@ func (osq *OrgStaffQuery) Clone() *OrgStaffQuery {
 		return nil
 	}
 	return &OrgStaffQuery{
-		config:     osq.config,
-		ctx:        osq.ctx.Clone(),
-		order:      append([]OrderFunc{}, osq.order...),
-		inters:     append([]Interceptor{}, osq.inters...),
-		predicates: append([]predicate.OrgStaff{}, osq.predicates...),
-		withOrgan:  osq.withOrgan.Clone(),
+		config:       osq.config,
+		ctx:          osq.ctx.Clone(),
+		order:        append([]OrderFunc{}, osq.order...),
+		inters:       append([]Interceptor{}, osq.inters...),
+		predicates:   append([]predicate.OrgStaff{}, osq.predicates...),
+		withOrgan:    osq.withOrgan.Clone(),
+		withIdenAddr: osq.withIdenAddr.Clone(),
+		withResiAddr: osq.withResiAddr.Clone(),
 		// clone intermediate query.
 		sql:  osq.sql.Clone(),
 		path: osq.path,
@@ -294,6 +349,28 @@ func (osq *OrgStaffQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *OrgStaffQuery
 		opt(query)
 	}
 	osq.withOrgan = query
+	return osq
+}
+
+// WithIdenAddr tells the query-builder to eager-load the nodes that are connected to
+// the "iden_addr" edge. The optional arguments are used to configure the query builder of the edge.
+func (osq *OrgStaffQuery) WithIdenAddr(opts ...func(*SysAddressQuery)) *OrgStaffQuery {
+	query := (&SysAddressClient{config: osq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	osq.withIdenAddr = query
+	return osq
+}
+
+// WithResiAddr tells the query-builder to eager-load the nodes that are connected to
+// the "resi_addr" edge. The optional arguments are used to configure the query builder of the edge.
+func (osq *OrgStaffQuery) WithResiAddr(opts ...func(*SysAddressQuery)) *OrgStaffQuery {
+	query := (&SysAddressClient{config: osq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	osq.withResiAddr = query
 	return osq
 }
 
@@ -375,8 +452,10 @@ func (osq *OrgStaffQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 	var (
 		nodes       = []*OrgStaff{}
 		_spec       = osq.querySpec()
-		loadedTypes = [1]bool{
+		loadedTypes = [3]bool{
 			osq.withOrgan != nil,
+			osq.withIdenAddr != nil,
+			osq.withResiAddr != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
@@ -408,6 +487,18 @@ func (osq *OrgStaffQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 			return nil, err
 		}
 	}
+	if query := osq.withIdenAddr; query != nil {
+		if err := osq.loadIdenAddr(ctx, query, nodes, nil,
+			func(n *OrgStaff, e *SysAddress) { n.Edges.IdenAddr = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := osq.withResiAddr; query != nil {
+		if err := osq.loadResiAddr(ctx, query, nodes, nil,
+			func(n *OrgStaff, e *SysAddress) { n.Edges.ResiAddr = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
 }
 
@@ -436,6 +527,70 @@ func (osq *OrgStaffQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, n
 		nodes, ok := nodeids[n.ID]
 		if !ok {
 			return fmt.Errorf(`unexpected foreign-key "org_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (osq *OrgStaffQuery) loadIdenAddr(ctx context.Context, query *SysAddressQuery, nodes []*OrgStaff, init func(*OrgStaff), assign func(*OrgStaff, *SysAddress)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*OrgStaff)
+	for i := range nodes {
+		if nodes[i].IdenAddrID == nil {
+			continue
+		}
+		fk := *nodes[i].IdenAddrID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(sysaddress.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "iden_addr_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (osq *OrgStaffQuery) loadResiAddr(ctx context.Context, query *SysAddressQuery, nodes []*OrgStaff, init func(*OrgStaff), assign func(*OrgStaff, *SysAddress)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*OrgStaff)
+	for i := range nodes {
+		if nodes[i].ResiAddrID == nil {
+			continue
+		}
+		fk := *nodes[i].ResiAddrID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(sysaddress.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "resi_addr_id" returned %v`, n.ID)
 		}
 		for i := range nodes {
 			assign(nodes[i], n)

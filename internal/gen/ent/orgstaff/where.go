@@ -107,13 +107,23 @@ func Mobile(v string) predicate.OrgStaff {
 }
 
 // BirthDate applies equality check predicate on the "birth_date" field. It's identical to BirthDateEQ.
-func BirthDate(v string) predicate.OrgStaff {
+func BirthDate(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldBirthDate, v))
 }
 
 // IdenNo applies equality check predicate on the "iden_no" field. It's identical to IdenNoEQ.
 func IdenNo(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldIdenNo, v))
+}
+
+// IdenAddrID applies equality check predicate on the "iden_addr_id" field. It's identical to IdenAddrIDEQ.
+func IdenAddrID(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldIdenAddrID, v))
+}
+
+// ResiAddrID applies equality check predicate on the "resi_addr_id" field. It's identical to ResiAddrIDEQ.
+func ResiAddrID(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldResiAddrID, v))
 }
 
 // WorkerNo applies equality check predicate on the "worker_no" field. It's identical to WorkerNoEQ.
@@ -127,17 +137,17 @@ func Cubicle(v string) predicate.OrgStaff {
 }
 
 // EntryDate applies equality check predicate on the "entry_date" field. It's identical to EntryDateEQ.
-func EntryDate(v string) predicate.OrgStaff {
+func EntryDate(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldEntryDate, v))
 }
 
 // RegularDate applies equality check predicate on the "regular_date" field. It's identical to RegularDateEQ.
-func RegularDate(v string) predicate.OrgStaff {
+func RegularDate(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldRegularDate, v))
 }
 
 // ResignDate applies equality check predicate on the "resign_date" field. It's identical to ResignDateEQ.
-func ResignDate(v string) predicate.OrgStaff {
+func ResignDate(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldResignDate, v))
 }
 
@@ -692,58 +702,43 @@ func GenderNotNil() predicate.OrgStaff {
 }
 
 // BirthDateEQ applies the EQ predicate on the "birth_date" field.
-func BirthDateEQ(v string) predicate.OrgStaff {
+func BirthDateEQ(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldBirthDate, v))
 }
 
 // BirthDateNEQ applies the NEQ predicate on the "birth_date" field.
-func BirthDateNEQ(v string) predicate.OrgStaff {
+func BirthDateNEQ(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNEQ(FieldBirthDate, v))
 }
 
 // BirthDateIn applies the In predicate on the "birth_date" field.
-func BirthDateIn(vs ...string) predicate.OrgStaff {
+func BirthDateIn(vs ...time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldIn(FieldBirthDate, vs...))
 }
 
 // BirthDateNotIn applies the NotIn predicate on the "birth_date" field.
-func BirthDateNotIn(vs ...string) predicate.OrgStaff {
+func BirthDateNotIn(vs ...time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotIn(FieldBirthDate, vs...))
 }
 
 // BirthDateGT applies the GT predicate on the "birth_date" field.
-func BirthDateGT(v string) predicate.OrgStaff {
+func BirthDateGT(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldGT(FieldBirthDate, v))
 }
 
 // BirthDateGTE applies the GTE predicate on the "birth_date" field.
-func BirthDateGTE(v string) predicate.OrgStaff {
+func BirthDateGTE(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldGTE(FieldBirthDate, v))
 }
 
 // BirthDateLT applies the LT predicate on the "birth_date" field.
-func BirthDateLT(v string) predicate.OrgStaff {
+func BirthDateLT(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLT(FieldBirthDate, v))
 }
 
 // BirthDateLTE applies the LTE predicate on the "birth_date" field.
-func BirthDateLTE(v string) predicate.OrgStaff {
+func BirthDateLTE(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLTE(FieldBirthDate, v))
-}
-
-// BirthDateContains applies the Contains predicate on the "birth_date" field.
-func BirthDateContains(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContains(FieldBirthDate, v))
-}
-
-// BirthDateHasPrefix applies the HasPrefix predicate on the "birth_date" field.
-func BirthDateHasPrefix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasPrefix(FieldBirthDate, v))
-}
-
-// BirthDateHasSuffix applies the HasSuffix predicate on the "birth_date" field.
-func BirthDateHasSuffix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasSuffix(FieldBirthDate, v))
 }
 
 // BirthDateIsNil applies the IsNil predicate on the "birth_date" field.
@@ -754,16 +749,6 @@ func BirthDateIsNil() predicate.OrgStaff {
 // BirthDateNotNil applies the NotNil predicate on the "birth_date" field.
 func BirthDateNotNil() predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotNull(FieldBirthDate))
-}
-
-// BirthDateEqualFold applies the EqualFold predicate on the "birth_date" field.
-func BirthDateEqualFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEqualFold(FieldBirthDate, v))
-}
-
-// BirthDateContainsFold applies the ContainsFold predicate on the "birth_date" field.
-func BirthDateContainsFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContainsFold(FieldBirthDate, v))
 }
 
 // IdenNoEQ applies the EQ predicate on the "iden_no" field.
@@ -839,6 +824,156 @@ func IdenNoEqualFold(v string) predicate.OrgStaff {
 // IdenNoContainsFold applies the ContainsFold predicate on the "iden_no" field.
 func IdenNoContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldIdenNo, v))
+}
+
+// IdenAddrIDEQ applies the EQ predicate on the "iden_addr_id" field.
+func IdenAddrIDEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDNEQ applies the NEQ predicate on the "iden_addr_id" field.
+func IdenAddrIDNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDIn applies the In predicate on the "iden_addr_id" field.
+func IdenAddrIDIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldIdenAddrID, vs...))
+}
+
+// IdenAddrIDNotIn applies the NotIn predicate on the "iden_addr_id" field.
+func IdenAddrIDNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldIdenAddrID, vs...))
+}
+
+// IdenAddrIDGT applies the GT predicate on the "iden_addr_id" field.
+func IdenAddrIDGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDGTE applies the GTE predicate on the "iden_addr_id" field.
+func IdenAddrIDGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDLT applies the LT predicate on the "iden_addr_id" field.
+func IdenAddrIDLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDLTE applies the LTE predicate on the "iden_addr_id" field.
+func IdenAddrIDLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDContains applies the Contains predicate on the "iden_addr_id" field.
+func IdenAddrIDContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDHasPrefix applies the HasPrefix predicate on the "iden_addr_id" field.
+func IdenAddrIDHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDHasSuffix applies the HasSuffix predicate on the "iden_addr_id" field.
+func IdenAddrIDHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDIsNil applies the IsNil predicate on the "iden_addr_id" field.
+func IdenAddrIDIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldIdenAddrID))
+}
+
+// IdenAddrIDNotNil applies the NotNil predicate on the "iden_addr_id" field.
+func IdenAddrIDNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldIdenAddrID))
+}
+
+// IdenAddrIDEqualFold applies the EqualFold predicate on the "iden_addr_id" field.
+func IdenAddrIDEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldIdenAddrID, v))
+}
+
+// IdenAddrIDContainsFold applies the ContainsFold predicate on the "iden_addr_id" field.
+func IdenAddrIDContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldIdenAddrID, v))
+}
+
+// ResiAddrIDEQ applies the EQ predicate on the "resi_addr_id" field.
+func ResiAddrIDEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldResiAddrID, v))
+}
+
+// ResiAddrIDNEQ applies the NEQ predicate on the "resi_addr_id" field.
+func ResiAddrIDNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldResiAddrID, v))
+}
+
+// ResiAddrIDIn applies the In predicate on the "resi_addr_id" field.
+func ResiAddrIDIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldResiAddrID, vs...))
+}
+
+// ResiAddrIDNotIn applies the NotIn predicate on the "resi_addr_id" field.
+func ResiAddrIDNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldResiAddrID, vs...))
+}
+
+// ResiAddrIDGT applies the GT predicate on the "resi_addr_id" field.
+func ResiAddrIDGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldResiAddrID, v))
+}
+
+// ResiAddrIDGTE applies the GTE predicate on the "resi_addr_id" field.
+func ResiAddrIDGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldResiAddrID, v))
+}
+
+// ResiAddrIDLT applies the LT predicate on the "resi_addr_id" field.
+func ResiAddrIDLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldResiAddrID, v))
+}
+
+// ResiAddrIDLTE applies the LTE predicate on the "resi_addr_id" field.
+func ResiAddrIDLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldResiAddrID, v))
+}
+
+// ResiAddrIDContains applies the Contains predicate on the "resi_addr_id" field.
+func ResiAddrIDContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldResiAddrID, v))
+}
+
+// ResiAddrIDHasPrefix applies the HasPrefix predicate on the "resi_addr_id" field.
+func ResiAddrIDHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldResiAddrID, v))
+}
+
+// ResiAddrIDHasSuffix applies the HasSuffix predicate on the "resi_addr_id" field.
+func ResiAddrIDHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldResiAddrID, v))
+}
+
+// ResiAddrIDIsNil applies the IsNil predicate on the "resi_addr_id" field.
+func ResiAddrIDIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldResiAddrID))
+}
+
+// ResiAddrIDNotNil applies the NotNil predicate on the "resi_addr_id" field.
+func ResiAddrIDNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldResiAddrID))
+}
+
+// ResiAddrIDEqualFold applies the EqualFold predicate on the "resi_addr_id" field.
+func ResiAddrIDEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldResiAddrID, v))
+}
+
+// ResiAddrIDContainsFold applies the ContainsFold predicate on the "resi_addr_id" field.
+func ResiAddrIDContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldResiAddrID, v))
 }
 
 // WorkerNoEQ applies the EQ predicate on the "worker_no" field.
@@ -992,58 +1127,43 @@ func CubicleContainsFold(v string) predicate.OrgStaff {
 }
 
 // EntryDateEQ applies the EQ predicate on the "entry_date" field.
-func EntryDateEQ(v string) predicate.OrgStaff {
+func EntryDateEQ(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldEntryDate, v))
 }
 
 // EntryDateNEQ applies the NEQ predicate on the "entry_date" field.
-func EntryDateNEQ(v string) predicate.OrgStaff {
+func EntryDateNEQ(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNEQ(FieldEntryDate, v))
 }
 
 // EntryDateIn applies the In predicate on the "entry_date" field.
-func EntryDateIn(vs ...string) predicate.OrgStaff {
+func EntryDateIn(vs ...time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldIn(FieldEntryDate, vs...))
 }
 
 // EntryDateNotIn applies the NotIn predicate on the "entry_date" field.
-func EntryDateNotIn(vs ...string) predicate.OrgStaff {
+func EntryDateNotIn(vs ...time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotIn(FieldEntryDate, vs...))
 }
 
 // EntryDateGT applies the GT predicate on the "entry_date" field.
-func EntryDateGT(v string) predicate.OrgStaff {
+func EntryDateGT(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldGT(FieldEntryDate, v))
 }
 
 // EntryDateGTE applies the GTE predicate on the "entry_date" field.
-func EntryDateGTE(v string) predicate.OrgStaff {
+func EntryDateGTE(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldGTE(FieldEntryDate, v))
 }
 
 // EntryDateLT applies the LT predicate on the "entry_date" field.
-func EntryDateLT(v string) predicate.OrgStaff {
+func EntryDateLT(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLT(FieldEntryDate, v))
 }
 
 // EntryDateLTE applies the LTE predicate on the "entry_date" field.
-func EntryDateLTE(v string) predicate.OrgStaff {
+func EntryDateLTE(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLTE(FieldEntryDate, v))
-}
-
-// EntryDateContains applies the Contains predicate on the "entry_date" field.
-func EntryDateContains(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContains(FieldEntryDate, v))
-}
-
-// EntryDateHasPrefix applies the HasPrefix predicate on the "entry_date" field.
-func EntryDateHasPrefix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasPrefix(FieldEntryDate, v))
-}
-
-// EntryDateHasSuffix applies the HasSuffix predicate on the "entry_date" field.
-func EntryDateHasSuffix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasSuffix(FieldEntryDate, v))
 }
 
 // EntryDateIsNil applies the IsNil predicate on the "entry_date" field.
@@ -1056,69 +1176,44 @@ func EntryDateNotNil() predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotNull(FieldEntryDate))
 }
 
-// EntryDateEqualFold applies the EqualFold predicate on the "entry_date" field.
-func EntryDateEqualFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEqualFold(FieldEntryDate, v))
-}
-
-// EntryDateContainsFold applies the ContainsFold predicate on the "entry_date" field.
-func EntryDateContainsFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContainsFold(FieldEntryDate, v))
-}
-
 // RegularDateEQ applies the EQ predicate on the "regular_date" field.
-func RegularDateEQ(v string) predicate.OrgStaff {
+func RegularDateEQ(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldRegularDate, v))
 }
 
 // RegularDateNEQ applies the NEQ predicate on the "regular_date" field.
-func RegularDateNEQ(v string) predicate.OrgStaff {
+func RegularDateNEQ(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNEQ(FieldRegularDate, v))
 }
 
 // RegularDateIn applies the In predicate on the "regular_date" field.
-func RegularDateIn(vs ...string) predicate.OrgStaff {
+func RegularDateIn(vs ...time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldIn(FieldRegularDate, vs...))
 }
 
 // RegularDateNotIn applies the NotIn predicate on the "regular_date" field.
-func RegularDateNotIn(vs ...string) predicate.OrgStaff {
+func RegularDateNotIn(vs ...time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotIn(FieldRegularDate, vs...))
 }
 
 // RegularDateGT applies the GT predicate on the "regular_date" field.
-func RegularDateGT(v string) predicate.OrgStaff {
+func RegularDateGT(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldGT(FieldRegularDate, v))
 }
 
 // RegularDateGTE applies the GTE predicate on the "regular_date" field.
-func RegularDateGTE(v string) predicate.OrgStaff {
+func RegularDateGTE(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldGTE(FieldRegularDate, v))
 }
 
 // RegularDateLT applies the LT predicate on the "regular_date" field.
-func RegularDateLT(v string) predicate.OrgStaff {
+func RegularDateLT(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLT(FieldRegularDate, v))
 }
 
 // RegularDateLTE applies the LTE predicate on the "regular_date" field.
-func RegularDateLTE(v string) predicate.OrgStaff {
+func RegularDateLTE(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLTE(FieldRegularDate, v))
-}
-
-// RegularDateContains applies the Contains predicate on the "regular_date" field.
-func RegularDateContains(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContains(FieldRegularDate, v))
-}
-
-// RegularDateHasPrefix applies the HasPrefix predicate on the "regular_date" field.
-func RegularDateHasPrefix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasPrefix(FieldRegularDate, v))
-}
-
-// RegularDateHasSuffix applies the HasSuffix predicate on the "regular_date" field.
-func RegularDateHasSuffix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasSuffix(FieldRegularDate, v))
 }
 
 // RegularDateIsNil applies the IsNil predicate on the "regular_date" field.
@@ -1131,69 +1226,44 @@ func RegularDateNotNil() predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotNull(FieldRegularDate))
 }
 
-// RegularDateEqualFold applies the EqualFold predicate on the "regular_date" field.
-func RegularDateEqualFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEqualFold(FieldRegularDate, v))
-}
-
-// RegularDateContainsFold applies the ContainsFold predicate on the "regular_date" field.
-func RegularDateContainsFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContainsFold(FieldRegularDate, v))
-}
-
 // ResignDateEQ applies the EQ predicate on the "resign_date" field.
-func ResignDateEQ(v string) predicate.OrgStaff {
+func ResignDateEQ(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldResignDate, v))
 }
 
 // ResignDateNEQ applies the NEQ predicate on the "resign_date" field.
-func ResignDateNEQ(v string) predicate.OrgStaff {
+func ResignDateNEQ(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNEQ(FieldResignDate, v))
 }
 
 // ResignDateIn applies the In predicate on the "resign_date" field.
-func ResignDateIn(vs ...string) predicate.OrgStaff {
+func ResignDateIn(vs ...time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldIn(FieldResignDate, vs...))
 }
 
 // ResignDateNotIn applies the NotIn predicate on the "resign_date" field.
-func ResignDateNotIn(vs ...string) predicate.OrgStaff {
+func ResignDateNotIn(vs ...time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotIn(FieldResignDate, vs...))
 }
 
 // ResignDateGT applies the GT predicate on the "resign_date" field.
-func ResignDateGT(v string) predicate.OrgStaff {
+func ResignDateGT(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldGT(FieldResignDate, v))
 }
 
 // ResignDateGTE applies the GTE predicate on the "resign_date" field.
-func ResignDateGTE(v string) predicate.OrgStaff {
+func ResignDateGTE(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldGTE(FieldResignDate, v))
 }
 
 // ResignDateLT applies the LT predicate on the "resign_date" field.
-func ResignDateLT(v string) predicate.OrgStaff {
+func ResignDateLT(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLT(FieldResignDate, v))
 }
 
 // ResignDateLTE applies the LTE predicate on the "resign_date" field.
-func ResignDateLTE(v string) predicate.OrgStaff {
+func ResignDateLTE(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLTE(FieldResignDate, v))
-}
-
-// ResignDateContains applies the Contains predicate on the "resign_date" field.
-func ResignDateContains(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContains(FieldResignDate, v))
-}
-
-// ResignDateHasPrefix applies the HasPrefix predicate on the "resign_date" field.
-func ResignDateHasPrefix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasPrefix(FieldResignDate, v))
-}
-
-// ResignDateHasSuffix applies the HasSuffix predicate on the "resign_date" field.
-func ResignDateHasSuffix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasSuffix(FieldResignDate, v))
 }
 
 // ResignDateIsNil applies the IsNil predicate on the "resign_date" field.
@@ -1204,16 +1274,6 @@ func ResignDateIsNil() predicate.OrgStaff {
 // ResignDateNotNil applies the NotNil predicate on the "resign_date" field.
 func ResignDateNotNil() predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotNull(FieldResignDate))
-}
-
-// ResignDateEqualFold applies the EqualFold predicate on the "resign_date" field.
-func ResignDateEqualFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEqualFold(FieldResignDate, v))
-}
-
-// ResignDateContainsFold applies the ContainsFold predicate on the "resign_date" field.
-func ResignDateContainsFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContainsFold(FieldResignDate, v))
 }
 
 // OrgIDEQ applies the EQ predicate on the "org_id" field.
@@ -1390,6 +1450,72 @@ func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgStaff {
 		)
 		schemaConfig := internal.SchemaConfigFromContext(s.Context())
 		step.To.Schema = schemaConfig.OrgOrgan
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasIdenAddr applies the HasEdge predicate on the "iden_addr" edge.
+func HasIdenAddr() predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, IdenAddrTable, IdenAddrColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasIdenAddrWith applies the HasEdge predicate on the "iden_addr" edge with a given conditions (other predicates).
+func HasIdenAddrWith(preds ...predicate.SysAddress) predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(IdenAddrInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, IdenAddrTable, IdenAddrColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasResiAddr applies the HasEdge predicate on the "resi_addr" edge.
+func HasResiAddr() predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, ResiAddrTable, ResiAddrColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasResiAddrWith applies the HasEdge predicate on the "resi_addr" edge with a given conditions (other predicates).
+func HasResiAddrWith(preds ...predicate.SysAddress) predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ResiAddrInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, ResiAddrTable, ResiAddrColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysAddress
 		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

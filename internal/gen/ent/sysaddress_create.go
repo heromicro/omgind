@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
@@ -393,6 +394,44 @@ func (sac *SysAddressCreate) SetOrgan(o *OrgOrgan) *SysAddressCreate {
 	return sac.SetOrganID(o.ID)
 }
 
+// SetStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID.
+func (sac *SysAddressCreate) SetStaffResiID(id string) *SysAddressCreate {
+	sac.mutation.SetStaffResiID(id)
+	return sac
+}
+
+// SetNillableStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableStaffResiID(id *string) *SysAddressCreate {
+	if id != nil {
+		sac = sac.SetStaffResiID(*id)
+	}
+	return sac
+}
+
+// SetStaffResi sets the "staff_resi" edge to the OrgStaff entity.
+func (sac *SysAddressCreate) SetStaffResi(o *OrgStaff) *SysAddressCreate {
+	return sac.SetStaffResiID(o.ID)
+}
+
+// SetStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID.
+func (sac *SysAddressCreate) SetStaffIdenID(id string) *SysAddressCreate {
+	sac.mutation.SetStaffIdenID(id)
+	return sac
+}
+
+// SetNillableStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID if the given value is not nil.
+func (sac *SysAddressCreate) SetNillableStaffIdenID(id *string) *SysAddressCreate {
+	if id != nil {
+		sac = sac.SetStaffIdenID(*id)
+	}
+	return sac
+}
+
+// SetStaffIden sets the "staff_iden" edge to the OrgStaff entity.
+func (sac *SysAddressCreate) SetStaffIden(o *OrgStaff) *SysAddressCreate {
+	return sac.SetStaffIdenID(o.ID)
+}
+
 // Mutation returns the SysAddressMutation object of the builder.
 func (sac *SysAddressCreate) Mutation() *SysAddressMutation {
 	return sac.mutation
@@ -692,6 +731,46 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 			},
 		}
 		edge.Schema = sac.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := sac.mutation.StaffResiIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffResiTable,
+			Columns: []string{sysaddress.StaffResiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sac.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := sac.mutation.StaffIdenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffIdenTable,
+			Columns: []string{sysaddress.StaffIdenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sac.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

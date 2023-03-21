@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
@@ -21,12 +22,14 @@ import (
 // SysAddressQuery is the builder for querying SysAddress entities.
 type SysAddressQuery struct {
 	config
-	ctx        *QueryContext
-	order      []OrderFunc
-	inters     []Interceptor
-	predicates []predicate.SysAddress
-	withOrgan  *OrgOrganQuery
-	modifiers  []func(*sql.Selector)
+	ctx           *QueryContext
+	order         []OrderFunc
+	inters        []Interceptor
+	predicates    []predicate.SysAddress
+	withOrgan     *OrgOrganQuery
+	withStaffResi *OrgStaffQuery
+	withStaffIden *OrgStaffQuery
+	modifiers     []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -82,6 +85,56 @@ func (saq *SysAddressQuery) QueryOrgan() *OrgOrganQuery {
 		schemaConfig := saq.schemaConfig
 		step.To.Schema = schemaConfig.OrgOrgan
 		step.Edge.Schema = schemaConfig.OrgOrgan
+		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryStaffResi chains the current query on the "staff_resi" edge.
+func (saq *SysAddressQuery) QueryStaffResi() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: saq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := saq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := saq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, selector),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffResiTable, sysaddress.StaffResiColumn),
+		)
+		schemaConfig := saq.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryStaffIden chains the current query on the "staff_iden" edge.
+func (saq *SysAddressQuery) QueryStaffIden() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: saq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := saq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := saq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, selector),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffIdenTable, sysaddress.StaffIdenColumn),
+		)
+		schemaConfig := saq.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -275,12 +328,14 @@ func (saq *SysAddressQuery) Clone() *SysAddressQuery {
 		return nil
 	}
 	return &SysAddressQuery{
-		config:     saq.config,
-		ctx:        saq.ctx.Clone(),
-		order:      append([]OrderFunc{}, saq.order...),
-		inters:     append([]Interceptor{}, saq.inters...),
-		predicates: append([]predicate.SysAddress{}, saq.predicates...),
-		withOrgan:  saq.withOrgan.Clone(),
+		config:        saq.config,
+		ctx:           saq.ctx.Clone(),
+		order:         append([]OrderFunc{}, saq.order...),
+		inters:        append([]Interceptor{}, saq.inters...),
+		predicates:    append([]predicate.SysAddress{}, saq.predicates...),
+		withOrgan:     saq.withOrgan.Clone(),
+		withStaffResi: saq.withStaffResi.Clone(),
+		withStaffIden: saq.withStaffIden.Clone(),
 		// clone intermediate query.
 		sql:  saq.sql.Clone(),
 		path: saq.path,
@@ -295,6 +350,28 @@ func (saq *SysAddressQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *SysAddressQ
 		opt(query)
 	}
 	saq.withOrgan = query
+	return saq
+}
+
+// WithStaffResi tells the query-builder to eager-load the nodes that are connected to
+// the "staff_resi" edge. The optional arguments are used to configure the query builder of the edge.
+func (saq *SysAddressQuery) WithStaffResi(opts ...func(*OrgStaffQuery)) *SysAddressQuery {
+	query := (&OrgStaffClient{config: saq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	saq.withStaffResi = query
+	return saq
+}
+
+// WithStaffIden tells the query-builder to eager-load the nodes that are connected to
+// the "staff_iden" edge. The optional arguments are used to configure the query builder of the edge.
+func (saq *SysAddressQuery) WithStaffIden(opts ...func(*OrgStaffQuery)) *SysAddressQuery {
+	query := (&OrgStaffClient{config: saq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	saq.withStaffIden = query
 	return saq
 }
 
@@ -376,8 +453,10 @@ func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 	var (
 		nodes       = []*SysAddress{}
 		_spec       = saq.querySpec()
-		loadedTypes = [1]bool{
+		loadedTypes = [3]bool{
 			saq.withOrgan != nil,
+			saq.withStaffResi != nil,
+			saq.withStaffIden != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
@@ -409,6 +488,18 @@ func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 			return nil, err
 		}
 	}
+	if query := saq.withStaffResi; query != nil {
+		if err := saq.loadStaffResi(ctx, query, nodes, nil,
+			func(n *SysAddress, e *OrgStaff) { n.Edges.StaffResi = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := saq.withStaffIden; query != nil {
+		if err := saq.loadStaffIden(ctx, query, nodes, nil,
+			func(n *SysAddress, e *OrgStaff) { n.Edges.StaffIden = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
 }
 
@@ -434,6 +525,60 @@ func (saq *SysAddressQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery,
 		node, ok := nodeids[*fk]
 		if !ok {
 			return fmt.Errorf(`unexpected foreign-key "haddr_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (saq *SysAddressQuery) loadStaffResi(ctx context.Context, query *OrgStaffQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgStaff)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*SysAddress)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+	}
+	query.Where(predicate.OrgStaff(func(s *sql.Selector) {
+		s.Where(sql.InValues(sysaddress.StaffResiColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.ResiAddrID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "resi_addr_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "resi_addr_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
+func (saq *SysAddressQuery) loadStaffIden(ctx context.Context, query *OrgStaffQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgStaff)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*SysAddress)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+	}
+	query.Where(predicate.OrgStaff(func(s *sql.Selector) {
+		s.Where(sql.InValues(sysaddress.StaffIdenColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.IdenAddrID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "iden_addr_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "iden_addr_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}

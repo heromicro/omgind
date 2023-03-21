@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
 // OrgStaffCreate is the builder for creating a OrgStaff entity.
@@ -179,15 +180,15 @@ func (osc *OrgStaffCreate) SetNillableGender(o *orgstaff.Gender) *OrgStaffCreate
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (osc *OrgStaffCreate) SetBirthDate(s string) *OrgStaffCreate {
-	osc.mutation.SetBirthDate(s)
+func (osc *OrgStaffCreate) SetBirthDate(t time.Time) *OrgStaffCreate {
+	osc.mutation.SetBirthDate(t)
 	return osc
 }
 
 // SetNillableBirthDate sets the "birth_date" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableBirthDate(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetBirthDate(*s)
+func (osc *OrgStaffCreate) SetNillableBirthDate(t *time.Time) *OrgStaffCreate {
+	if t != nil {
+		osc.SetBirthDate(*t)
 	}
 	return osc
 }
@@ -202,6 +203,34 @@ func (osc *OrgStaffCreate) SetIdenNo(s string) *OrgStaffCreate {
 func (osc *OrgStaffCreate) SetNillableIdenNo(s *string) *OrgStaffCreate {
 	if s != nil {
 		osc.SetIdenNo(*s)
+	}
+	return osc
+}
+
+// SetIdenAddrID sets the "iden_addr_id" field.
+func (osc *OrgStaffCreate) SetIdenAddrID(s string) *OrgStaffCreate {
+	osc.mutation.SetIdenAddrID(s)
+	return osc
+}
+
+// SetNillableIdenAddrID sets the "iden_addr_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableIdenAddrID(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetIdenAddrID(*s)
+	}
+	return osc
+}
+
+// SetResiAddrID sets the "resi_addr_id" field.
+func (osc *OrgStaffCreate) SetResiAddrID(s string) *OrgStaffCreate {
+	osc.mutation.SetResiAddrID(s)
+	return osc
+}
+
+// SetNillableResiAddrID sets the "resi_addr_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableResiAddrID(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetResiAddrID(*s)
 	}
 	return osc
 }
@@ -235,43 +264,43 @@ func (osc *OrgStaffCreate) SetNillableCubicle(s *string) *OrgStaffCreate {
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (osc *OrgStaffCreate) SetEntryDate(s string) *OrgStaffCreate {
-	osc.mutation.SetEntryDate(s)
+func (osc *OrgStaffCreate) SetEntryDate(t time.Time) *OrgStaffCreate {
+	osc.mutation.SetEntryDate(t)
 	return osc
 }
 
 // SetNillableEntryDate sets the "entry_date" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableEntryDate(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetEntryDate(*s)
+func (osc *OrgStaffCreate) SetNillableEntryDate(t *time.Time) *OrgStaffCreate {
+	if t != nil {
+		osc.SetEntryDate(*t)
 	}
 	return osc
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (osc *OrgStaffCreate) SetRegularDate(s string) *OrgStaffCreate {
-	osc.mutation.SetRegularDate(s)
+func (osc *OrgStaffCreate) SetRegularDate(t time.Time) *OrgStaffCreate {
+	osc.mutation.SetRegularDate(t)
 	return osc
 }
 
 // SetNillableRegularDate sets the "regular_date" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableRegularDate(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetRegularDate(*s)
+func (osc *OrgStaffCreate) SetNillableRegularDate(t *time.Time) *OrgStaffCreate {
+	if t != nil {
+		osc.SetRegularDate(*t)
 	}
 	return osc
 }
 
 // SetResignDate sets the "resign_date" field.
-func (osc *OrgStaffCreate) SetResignDate(s string) *OrgStaffCreate {
-	osc.mutation.SetResignDate(s)
+func (osc *OrgStaffCreate) SetResignDate(t time.Time) *OrgStaffCreate {
+	osc.mutation.SetResignDate(t)
 	return osc
 }
 
 // SetNillableResignDate sets the "resign_date" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableResignDate(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetResignDate(*s)
+func (osc *OrgStaffCreate) SetNillableResignDate(t *time.Time) *OrgStaffCreate {
+	if t != nil {
+		osc.SetResignDate(*t)
 	}
 	return osc
 }
@@ -335,6 +364,16 @@ func (osc *OrgStaffCreate) SetNillableOrganID(id *string) *OrgStaffCreate {
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
 func (osc *OrgStaffCreate) SetOrgan(o *OrgOrgan) *OrgStaffCreate {
 	return osc.SetOrganID(o.ID)
+}
+
+// SetIdenAddr sets the "iden_addr" edge to the SysAddress entity.
+func (osc *OrgStaffCreate) SetIdenAddr(s *SysAddress) *OrgStaffCreate {
+	return osc.SetIdenAddrID(s.ID)
+}
+
+// SetResiAddr sets the "resi_addr" edge to the SysAddress entity.
+func (osc *OrgStaffCreate) SetResiAddr(s *SysAddress) *OrgStaffCreate {
+	return osc.SetResiAddrID(s.ID)
 }
 
 // Mutation returns the OrgStaffMutation object of the builder.
@@ -438,6 +477,26 @@ func (osc *OrgStaffCreate) check() error {
 			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
 		}
 	}
+	if v, ok := osc.mutation.IdenAddrID(); ok {
+		if err := orgstaff.IdenAddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "iden_addr_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.iden_addr_id": %w`, err)}
+		}
+	}
+	if v, ok := osc.mutation.ResiAddrID(); ok {
+		if err := orgstaff.ResiAddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "resi_addr_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.resi_addr_id": %w`, err)}
+		}
+	}
+	if v, ok := osc.mutation.WorkerNo(); ok {
+		if err := orgstaff.WorkerNoValidator(v); err != nil {
+			return &ValidationError{Name: "worker_no", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.worker_no": %w`, err)}
+		}
+	}
+	if v, ok := osc.mutation.Cubicle(); ok {
+		if err := orgstaff.CubicleValidator(v); err != nil {
+			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.cubicle": %w`, err)}
+		}
+	}
 	if v, ok := osc.mutation.OrgID(); ok {
 		if err := orgstaff.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
@@ -530,7 +589,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_node.Gender = &value
 	}
 	if value, ok := osc.mutation.BirthDate(); ok {
-		_spec.SetField(orgstaff.FieldBirthDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldBirthDate, field.TypeTime, value)
 		_node.BirthDate = &value
 	}
 	if value, ok := osc.mutation.IdenNo(); ok {
@@ -546,15 +605,15 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_node.Cubicle = &value
 	}
 	if value, ok := osc.mutation.EntryDate(); ok {
-		_spec.SetField(orgstaff.FieldEntryDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)
 		_node.EntryDate = &value
 	}
 	if value, ok := osc.mutation.RegularDate(); ok {
-		_spec.SetField(orgstaff.FieldRegularDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldRegularDate, field.TypeTime, value)
 		_node.RegularDate = &value
 	}
 	if value, ok := osc.mutation.ResignDate(); ok {
-		_spec.SetField(orgstaff.FieldResignDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldResignDate, field.TypeTime, value)
 		_node.ResignDate = &value
 	}
 	if value, ok := osc.mutation.Creator(); ok {
@@ -580,6 +639,48 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.OrgID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := osc.mutation.IdenAddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.IdenAddrTable,
+			Columns: []string{orgstaff.IdenAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = osc.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.IdenAddrID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := osc.mutation.ResiAddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.ResiAddrTable,
+			Columns: []string{orgstaff.ResiAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = osc.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.ResiAddrID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
@@ -803,7 +904,7 @@ func (u *OrgStaffUpsert) ClearGender() *OrgStaffUpsert {
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (u *OrgStaffUpsert) SetBirthDate(v string) *OrgStaffUpsert {
+func (u *OrgStaffUpsert) SetBirthDate(v time.Time) *OrgStaffUpsert {
 	u.Set(orgstaff.FieldBirthDate, v)
 	return u
 }
@@ -835,6 +936,42 @@ func (u *OrgStaffUpsert) UpdateIdenNo() *OrgStaffUpsert {
 // ClearIdenNo clears the value of the "iden_no" field.
 func (u *OrgStaffUpsert) ClearIdenNo() *OrgStaffUpsert {
 	u.SetNull(orgstaff.FieldIdenNo)
+	return u
+}
+
+// SetIdenAddrID sets the "iden_addr_id" field.
+func (u *OrgStaffUpsert) SetIdenAddrID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldIdenAddrID, v)
+	return u
+}
+
+// UpdateIdenAddrID sets the "iden_addr_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateIdenAddrID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldIdenAddrID)
+	return u
+}
+
+// ClearIdenAddrID clears the value of the "iden_addr_id" field.
+func (u *OrgStaffUpsert) ClearIdenAddrID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldIdenAddrID)
+	return u
+}
+
+// SetResiAddrID sets the "resi_addr_id" field.
+func (u *OrgStaffUpsert) SetResiAddrID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldResiAddrID, v)
+	return u
+}
+
+// UpdateResiAddrID sets the "resi_addr_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateResiAddrID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldResiAddrID)
+	return u
+}
+
+// ClearResiAddrID clears the value of the "resi_addr_id" field.
+func (u *OrgStaffUpsert) ClearResiAddrID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldResiAddrID)
 	return u
 }
 
@@ -875,7 +1012,7 @@ func (u *OrgStaffUpsert) ClearCubicle() *OrgStaffUpsert {
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (u *OrgStaffUpsert) SetEntryDate(v string) *OrgStaffUpsert {
+func (u *OrgStaffUpsert) SetEntryDate(v time.Time) *OrgStaffUpsert {
 	u.Set(orgstaff.FieldEntryDate, v)
 	return u
 }
@@ -893,7 +1030,7 @@ func (u *OrgStaffUpsert) ClearEntryDate() *OrgStaffUpsert {
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (u *OrgStaffUpsert) SetRegularDate(v string) *OrgStaffUpsert {
+func (u *OrgStaffUpsert) SetRegularDate(v time.Time) *OrgStaffUpsert {
 	u.Set(orgstaff.FieldRegularDate, v)
 	return u
 }
@@ -911,7 +1048,7 @@ func (u *OrgStaffUpsert) ClearRegularDate() *OrgStaffUpsert {
 }
 
 // SetResignDate sets the "resign_date" field.
-func (u *OrgStaffUpsert) SetResignDate(v string) *OrgStaffUpsert {
+func (u *OrgStaffUpsert) SetResignDate(v time.Time) *OrgStaffUpsert {
 	u.Set(orgstaff.FieldResignDate, v)
 	return u
 }
@@ -1212,7 +1349,7 @@ func (u *OrgStaffUpsertOne) ClearGender() *OrgStaffUpsertOne {
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (u *OrgStaffUpsertOne) SetBirthDate(v string) *OrgStaffUpsertOne {
+func (u *OrgStaffUpsertOne) SetBirthDate(v time.Time) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetBirthDate(v)
 	})
@@ -1250,6 +1387,48 @@ func (u *OrgStaffUpsertOne) UpdateIdenNo() *OrgStaffUpsertOne {
 func (u *OrgStaffUpsertOne) ClearIdenNo() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearIdenNo()
+	})
+}
+
+// SetIdenAddrID sets the "iden_addr_id" field.
+func (u *OrgStaffUpsertOne) SetIdenAddrID(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetIdenAddrID(v)
+	})
+}
+
+// UpdateIdenAddrID sets the "iden_addr_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateIdenAddrID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateIdenAddrID()
+	})
+}
+
+// ClearIdenAddrID clears the value of the "iden_addr_id" field.
+func (u *OrgStaffUpsertOne) ClearIdenAddrID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearIdenAddrID()
+	})
+}
+
+// SetResiAddrID sets the "resi_addr_id" field.
+func (u *OrgStaffUpsertOne) SetResiAddrID(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetResiAddrID(v)
+	})
+}
+
+// UpdateResiAddrID sets the "resi_addr_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateResiAddrID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateResiAddrID()
+	})
+}
+
+// ClearResiAddrID clears the value of the "resi_addr_id" field.
+func (u *OrgStaffUpsertOne) ClearResiAddrID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearResiAddrID()
 	})
 }
 
@@ -1296,7 +1475,7 @@ func (u *OrgStaffUpsertOne) ClearCubicle() *OrgStaffUpsertOne {
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (u *OrgStaffUpsertOne) SetEntryDate(v string) *OrgStaffUpsertOne {
+func (u *OrgStaffUpsertOne) SetEntryDate(v time.Time) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetEntryDate(v)
 	})
@@ -1317,7 +1496,7 @@ func (u *OrgStaffUpsertOne) ClearEntryDate() *OrgStaffUpsertOne {
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (u *OrgStaffUpsertOne) SetRegularDate(v string) *OrgStaffUpsertOne {
+func (u *OrgStaffUpsertOne) SetRegularDate(v time.Time) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetRegularDate(v)
 	})
@@ -1338,7 +1517,7 @@ func (u *OrgStaffUpsertOne) ClearRegularDate() *OrgStaffUpsertOne {
 }
 
 // SetResignDate sets the "resign_date" field.
-func (u *OrgStaffUpsertOne) SetResignDate(v string) *OrgStaffUpsertOne {
+func (u *OrgStaffUpsertOne) SetResignDate(v time.Time) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetResignDate(v)
 	})
@@ -1811,7 +1990,7 @@ func (u *OrgStaffUpsertBulk) ClearGender() *OrgStaffUpsertBulk {
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (u *OrgStaffUpsertBulk) SetBirthDate(v string) *OrgStaffUpsertBulk {
+func (u *OrgStaffUpsertBulk) SetBirthDate(v time.Time) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetBirthDate(v)
 	})
@@ -1849,6 +2028,48 @@ func (u *OrgStaffUpsertBulk) UpdateIdenNo() *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) ClearIdenNo() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearIdenNo()
+	})
+}
+
+// SetIdenAddrID sets the "iden_addr_id" field.
+func (u *OrgStaffUpsertBulk) SetIdenAddrID(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetIdenAddrID(v)
+	})
+}
+
+// UpdateIdenAddrID sets the "iden_addr_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateIdenAddrID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateIdenAddrID()
+	})
+}
+
+// ClearIdenAddrID clears the value of the "iden_addr_id" field.
+func (u *OrgStaffUpsertBulk) ClearIdenAddrID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearIdenAddrID()
+	})
+}
+
+// SetResiAddrID sets the "resi_addr_id" field.
+func (u *OrgStaffUpsertBulk) SetResiAddrID(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetResiAddrID(v)
+	})
+}
+
+// UpdateResiAddrID sets the "resi_addr_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateResiAddrID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateResiAddrID()
+	})
+}
+
+// ClearResiAddrID clears the value of the "resi_addr_id" field.
+func (u *OrgStaffUpsertBulk) ClearResiAddrID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearResiAddrID()
 	})
 }
 
@@ -1895,7 +2116,7 @@ func (u *OrgStaffUpsertBulk) ClearCubicle() *OrgStaffUpsertBulk {
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (u *OrgStaffUpsertBulk) SetEntryDate(v string) *OrgStaffUpsertBulk {
+func (u *OrgStaffUpsertBulk) SetEntryDate(v time.Time) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetEntryDate(v)
 	})
@@ -1916,7 +2137,7 @@ func (u *OrgStaffUpsertBulk) ClearEntryDate() *OrgStaffUpsertBulk {
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (u *OrgStaffUpsertBulk) SetRegularDate(v string) *OrgStaffUpsertBulk {
+func (u *OrgStaffUpsertBulk) SetRegularDate(v time.Time) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetRegularDate(v)
 	})
@@ -1937,7 +2158,7 @@ func (u *OrgStaffUpsertBulk) ClearRegularDate() *OrgStaffUpsertBulk {
 }
 
 // SetResignDate sets the "resign_date" field.
-func (u *OrgStaffUpsertBulk) SetResignDate(v string) *OrgStaffUpsertBulk {
+func (u *OrgStaffUpsertBulk) SetResignDate(v time.Time) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetResignDate(v)
 	})

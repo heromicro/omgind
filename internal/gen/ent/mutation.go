@@ -3908,35 +3908,39 @@ func (m *OrgPositionMutation) ResetEdge(name string) error {
 // OrgStaffMutation represents an operation that mutates the OrgStaff nodes in the graph.
 type OrgStaffMutation struct {
 	config
-	op            Op
-	typ           string
-	id            *string
-	is_del        *bool
-	sort          *int32
-	addsort       *int32
-	created_at    *time.Time
-	updated_at    *time.Time
-	deleted_at    *time.Time
-	is_active     *bool
-	memo          *string
-	first_name    *string
-	last_name     *string
-	mobile        *string
-	gender        *orgstaff.Gender
-	birth_date    *string
-	iden_no       *string
-	worker_no     *string
-	cubicle       *string
-	entry_date    *string
-	regular_date  *string
-	resign_date   *string
-	creator       *string
-	clearedFields map[string]struct{}
-	organ         *string
-	clearedorgan  bool
-	done          bool
-	oldValue      func(context.Context) (*OrgStaff, error)
-	predicates    []predicate.OrgStaff
+	op               Op
+	typ              string
+	id               *string
+	is_del           *bool
+	sort             *int32
+	addsort          *int32
+	created_at       *time.Time
+	updated_at       *time.Time
+	deleted_at       *time.Time
+	is_active        *bool
+	memo             *string
+	first_name       *string
+	last_name        *string
+	mobile           *string
+	gender           *orgstaff.Gender
+	birth_date       *time.Time
+	iden_no          *string
+	worker_no        *string
+	cubicle          *string
+	entry_date       *time.Time
+	regular_date     *time.Time
+	resign_date      *time.Time
+	creator          *string
+	clearedFields    map[string]struct{}
+	organ            *string
+	clearedorgan     bool
+	iden_addr        *string
+	clearediden_addr bool
+	resi_addr        *string
+	clearedresi_addr bool
+	done             bool
+	oldValue         func(context.Context) (*OrgStaff, error)
+	predicates       []predicate.OrgStaff
 }
 
 var _ ent.Mutation = (*OrgStaffMutation)(nil)
@@ -4564,12 +4568,12 @@ func (m *OrgStaffMutation) ResetGender() {
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (m *OrgStaffMutation) SetBirthDate(s string) {
-	m.birth_date = &s
+func (m *OrgStaffMutation) SetBirthDate(t time.Time) {
+	m.birth_date = &t
 }
 
 // BirthDate returns the value of the "birth_date" field in the mutation.
-func (m *OrgStaffMutation) BirthDate() (r string, exists bool) {
+func (m *OrgStaffMutation) BirthDate() (r time.Time, exists bool) {
 	v := m.birth_date
 	if v == nil {
 		return
@@ -4580,7 +4584,7 @@ func (m *OrgStaffMutation) BirthDate() (r string, exists bool) {
 // OldBirthDate returns the old "birth_date" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldBirthDate(ctx context.Context) (v *string, err error) {
+func (m *OrgStaffMutation) OldBirthDate(ctx context.Context) (v *time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldBirthDate is only allowed on UpdateOne operations")
 	}
@@ -4659,6 +4663,104 @@ func (m *OrgStaffMutation) IdenNoCleared() bool {
 func (m *OrgStaffMutation) ResetIdenNo() {
 	m.iden_no = nil
 	delete(m.clearedFields, orgstaff.FieldIdenNo)
+}
+
+// SetIdenAddrID sets the "iden_addr_id" field.
+func (m *OrgStaffMutation) SetIdenAddrID(s string) {
+	m.iden_addr = &s
+}
+
+// IdenAddrID returns the value of the "iden_addr_id" field in the mutation.
+func (m *OrgStaffMutation) IdenAddrID() (r string, exists bool) {
+	v := m.iden_addr
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIdenAddrID returns the old "iden_addr_id" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldIdenAddrID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIdenAddrID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIdenAddrID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIdenAddrID: %w", err)
+	}
+	return oldValue.IdenAddrID, nil
+}
+
+// ClearIdenAddrID clears the value of the "iden_addr_id" field.
+func (m *OrgStaffMutation) ClearIdenAddrID() {
+	m.iden_addr = nil
+	m.clearedFields[orgstaff.FieldIdenAddrID] = struct{}{}
+}
+
+// IdenAddrIDCleared returns if the "iden_addr_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) IdenAddrIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldIdenAddrID]
+	return ok
+}
+
+// ResetIdenAddrID resets all changes to the "iden_addr_id" field.
+func (m *OrgStaffMutation) ResetIdenAddrID() {
+	m.iden_addr = nil
+	delete(m.clearedFields, orgstaff.FieldIdenAddrID)
+}
+
+// SetResiAddrID sets the "resi_addr_id" field.
+func (m *OrgStaffMutation) SetResiAddrID(s string) {
+	m.resi_addr = &s
+}
+
+// ResiAddrID returns the value of the "resi_addr_id" field in the mutation.
+func (m *OrgStaffMutation) ResiAddrID() (r string, exists bool) {
+	v := m.resi_addr
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldResiAddrID returns the old "resi_addr_id" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldResiAddrID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldResiAddrID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldResiAddrID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldResiAddrID: %w", err)
+	}
+	return oldValue.ResiAddrID, nil
+}
+
+// ClearResiAddrID clears the value of the "resi_addr_id" field.
+func (m *OrgStaffMutation) ClearResiAddrID() {
+	m.resi_addr = nil
+	m.clearedFields[orgstaff.FieldResiAddrID] = struct{}{}
+}
+
+// ResiAddrIDCleared returns if the "resi_addr_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) ResiAddrIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldResiAddrID]
+	return ok
+}
+
+// ResetResiAddrID resets all changes to the "resi_addr_id" field.
+func (m *OrgStaffMutation) ResetResiAddrID() {
+	m.resi_addr = nil
+	delete(m.clearedFields, orgstaff.FieldResiAddrID)
 }
 
 // SetWorkerNo sets the "worker_no" field.
@@ -4760,12 +4862,12 @@ func (m *OrgStaffMutation) ResetCubicle() {
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (m *OrgStaffMutation) SetEntryDate(s string) {
-	m.entry_date = &s
+func (m *OrgStaffMutation) SetEntryDate(t time.Time) {
+	m.entry_date = &t
 }
 
 // EntryDate returns the value of the "entry_date" field in the mutation.
-func (m *OrgStaffMutation) EntryDate() (r string, exists bool) {
+func (m *OrgStaffMutation) EntryDate() (r time.Time, exists bool) {
 	v := m.entry_date
 	if v == nil {
 		return
@@ -4776,7 +4878,7 @@ func (m *OrgStaffMutation) EntryDate() (r string, exists bool) {
 // OldEntryDate returns the old "entry_date" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldEntryDate(ctx context.Context) (v *string, err error) {
+func (m *OrgStaffMutation) OldEntryDate(ctx context.Context) (v *time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldEntryDate is only allowed on UpdateOne operations")
 	}
@@ -4809,12 +4911,12 @@ func (m *OrgStaffMutation) ResetEntryDate() {
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (m *OrgStaffMutation) SetRegularDate(s string) {
-	m.regular_date = &s
+func (m *OrgStaffMutation) SetRegularDate(t time.Time) {
+	m.regular_date = &t
 }
 
 // RegularDate returns the value of the "regular_date" field in the mutation.
-func (m *OrgStaffMutation) RegularDate() (r string, exists bool) {
+func (m *OrgStaffMutation) RegularDate() (r time.Time, exists bool) {
 	v := m.regular_date
 	if v == nil {
 		return
@@ -4825,7 +4927,7 @@ func (m *OrgStaffMutation) RegularDate() (r string, exists bool) {
 // OldRegularDate returns the old "regular_date" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldRegularDate(ctx context.Context) (v *string, err error) {
+func (m *OrgStaffMutation) OldRegularDate(ctx context.Context) (v *time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldRegularDate is only allowed on UpdateOne operations")
 	}
@@ -4858,12 +4960,12 @@ func (m *OrgStaffMutation) ResetRegularDate() {
 }
 
 // SetResignDate sets the "resign_date" field.
-func (m *OrgStaffMutation) SetResignDate(s string) {
-	m.resign_date = &s
+func (m *OrgStaffMutation) SetResignDate(t time.Time) {
+	m.resign_date = &t
 }
 
 // ResignDate returns the value of the "resign_date" field in the mutation.
-func (m *OrgStaffMutation) ResignDate() (r string, exists bool) {
+func (m *OrgStaffMutation) ResignDate() (r time.Time, exists bool) {
 	v := m.resign_date
 	if v == nil {
 		return
@@ -4874,7 +4976,7 @@ func (m *OrgStaffMutation) ResignDate() (r string, exists bool) {
 // OldResignDate returns the old "resign_date" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldResignDate(ctx context.Context) (v *string, err error) {
+func (m *OrgStaffMutation) OldResignDate(ctx context.Context) (v *time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldResignDate is only allowed on UpdateOne operations")
 	}
@@ -5043,6 +5145,58 @@ func (m *OrgStaffMutation) ResetOrgan() {
 	m.clearedorgan = false
 }
 
+// ClearIdenAddr clears the "iden_addr" edge to the SysAddress entity.
+func (m *OrgStaffMutation) ClearIdenAddr() {
+	m.clearediden_addr = true
+}
+
+// IdenAddrCleared reports if the "iden_addr" edge to the SysAddress entity was cleared.
+func (m *OrgStaffMutation) IdenAddrCleared() bool {
+	return m.IdenAddrIDCleared() || m.clearediden_addr
+}
+
+// IdenAddrIDs returns the "iden_addr" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// IdenAddrID instead. It exists only for internal usage by the builders.
+func (m *OrgStaffMutation) IdenAddrIDs() (ids []string) {
+	if id := m.iden_addr; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetIdenAddr resets all changes to the "iden_addr" edge.
+func (m *OrgStaffMutation) ResetIdenAddr() {
+	m.iden_addr = nil
+	m.clearediden_addr = false
+}
+
+// ClearResiAddr clears the "resi_addr" edge to the SysAddress entity.
+func (m *OrgStaffMutation) ClearResiAddr() {
+	m.clearedresi_addr = true
+}
+
+// ResiAddrCleared reports if the "resi_addr" edge to the SysAddress entity was cleared.
+func (m *OrgStaffMutation) ResiAddrCleared() bool {
+	return m.ResiAddrIDCleared() || m.clearedresi_addr
+}
+
+// ResiAddrIDs returns the "resi_addr" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// ResiAddrID instead. It exists only for internal usage by the builders.
+func (m *OrgStaffMutation) ResiAddrIDs() (ids []string) {
+	if id := m.resi_addr; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetResiAddr resets all changes to the "resi_addr" edge.
+func (m *OrgStaffMutation) ResetResiAddr() {
+	m.resi_addr = nil
+	m.clearedresi_addr = false
+}
+
 // Where appends a list predicates to the OrgStaffMutation builder.
 func (m *OrgStaffMutation) Where(ps ...predicate.OrgStaff) {
 	m.predicates = append(m.predicates, ps...)
@@ -5077,7 +5231,7 @@ func (m *OrgStaffMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgStaffMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 22)
 	if m.is_del != nil {
 		fields = append(fields, orgstaff.FieldIsDel)
 	}
@@ -5116,6 +5270,12 @@ func (m *OrgStaffMutation) Fields() []string {
 	}
 	if m.iden_no != nil {
 		fields = append(fields, orgstaff.FieldIdenNo)
+	}
+	if m.iden_addr != nil {
+		fields = append(fields, orgstaff.FieldIdenAddrID)
+	}
+	if m.resi_addr != nil {
+		fields = append(fields, orgstaff.FieldResiAddrID)
 	}
 	if m.worker_no != nil {
 		fields = append(fields, orgstaff.FieldWorkerNo)
@@ -5172,6 +5332,10 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.BirthDate()
 	case orgstaff.FieldIdenNo:
 		return m.IdenNo()
+	case orgstaff.FieldIdenAddrID:
+		return m.IdenAddrID()
+	case orgstaff.FieldResiAddrID:
+		return m.ResiAddrID()
 	case orgstaff.FieldWorkerNo:
 		return m.WorkerNo()
 	case orgstaff.FieldCubicle:
@@ -5221,6 +5385,10 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldBirthDate(ctx)
 	case orgstaff.FieldIdenNo:
 		return m.OldIdenNo(ctx)
+	case orgstaff.FieldIdenAddrID:
+		return m.OldIdenAddrID(ctx)
+	case orgstaff.FieldResiAddrID:
+		return m.OldResiAddrID(ctx)
 	case orgstaff.FieldWorkerNo:
 		return m.OldWorkerNo(ctx)
 	case orgstaff.FieldCubicle:
@@ -5322,7 +5490,7 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		m.SetGender(v)
 		return nil
 	case orgstaff.FieldBirthDate:
-		v, ok := value.(string)
+		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -5334,6 +5502,20 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIdenNo(v)
+		return nil
+	case orgstaff.FieldIdenAddrID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIdenAddrID(v)
+		return nil
+	case orgstaff.FieldResiAddrID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetResiAddrID(v)
 		return nil
 	case orgstaff.FieldWorkerNo:
 		v, ok := value.(string)
@@ -5350,21 +5532,21 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		m.SetCubicle(v)
 		return nil
 	case orgstaff.FieldEntryDate:
-		v, ok := value.(string)
+		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetEntryDate(v)
 		return nil
 	case orgstaff.FieldRegularDate:
-		v, ok := value.(string)
+		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetRegularDate(v)
 		return nil
 	case orgstaff.FieldResignDate:
-		v, ok := value.(string)
+		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -5459,6 +5641,12 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldIdenNo) {
 		fields = append(fields, orgstaff.FieldIdenNo)
 	}
+	if m.FieldCleared(orgstaff.FieldIdenAddrID) {
+		fields = append(fields, orgstaff.FieldIdenAddrID)
+	}
+	if m.FieldCleared(orgstaff.FieldResiAddrID) {
+		fields = append(fields, orgstaff.FieldResiAddrID)
+	}
 	if m.FieldCleared(orgstaff.FieldWorkerNo) {
 		fields = append(fields, orgstaff.FieldWorkerNo)
 	}
@@ -5523,6 +5711,12 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 		return nil
 	case orgstaff.FieldIdenNo:
 		m.ClearIdenNo()
+		return nil
+	case orgstaff.FieldIdenAddrID:
+		m.ClearIdenAddrID()
+		return nil
+	case orgstaff.FieldResiAddrID:
+		m.ClearResiAddrID()
 		return nil
 	case orgstaff.FieldWorkerNo:
 		m.ClearWorkerNo()
@@ -5592,6 +5786,12 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 	case orgstaff.FieldIdenNo:
 		m.ResetIdenNo()
 		return nil
+	case orgstaff.FieldIdenAddrID:
+		m.ResetIdenAddrID()
+		return nil
+	case orgstaff.FieldResiAddrID:
+		m.ResetResiAddrID()
+		return nil
 	case orgstaff.FieldWorkerNo:
 		m.ResetWorkerNo()
 		return nil
@@ -5619,9 +5819,15 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *OrgStaffMutation) AddedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 3)
 	if m.organ != nil {
 		edges = append(edges, orgstaff.EdgeOrgan)
+	}
+	if m.iden_addr != nil {
+		edges = append(edges, orgstaff.EdgeIdenAddr)
+	}
+	if m.resi_addr != nil {
+		edges = append(edges, orgstaff.EdgeResiAddr)
 	}
 	return edges
 }
@@ -5634,13 +5840,21 @@ func (m *OrgStaffMutation) AddedIDs(name string) []ent.Value {
 		if id := m.organ; id != nil {
 			return []ent.Value{*id}
 		}
+	case orgstaff.EdgeIdenAddr:
+		if id := m.iden_addr; id != nil {
+			return []ent.Value{*id}
+		}
+	case orgstaff.EdgeResiAddr:
+		if id := m.resi_addr; id != nil {
+			return []ent.Value{*id}
+		}
 	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *OrgStaffMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 3)
 	return edges
 }
 
@@ -5652,9 +5866,15 @@ func (m *OrgStaffMutation) RemovedIDs(name string) []ent.Value {
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *OrgStaffMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 3)
 	if m.clearedorgan {
 		edges = append(edges, orgstaff.EdgeOrgan)
+	}
+	if m.clearediden_addr {
+		edges = append(edges, orgstaff.EdgeIdenAddr)
+	}
+	if m.clearedresi_addr {
+		edges = append(edges, orgstaff.EdgeResiAddr)
 	}
 	return edges
 }
@@ -5665,6 +5885,10 @@ func (m *OrgStaffMutation) EdgeCleared(name string) bool {
 	switch name {
 	case orgstaff.EdgeOrgan:
 		return m.clearedorgan
+	case orgstaff.EdgeIdenAddr:
+		return m.clearediden_addr
+	case orgstaff.EdgeResiAddr:
+		return m.clearedresi_addr
 	}
 	return false
 }
@@ -5675,6 +5899,12 @@ func (m *OrgStaffMutation) ClearEdge(name string) error {
 	switch name {
 	case orgstaff.EdgeOrgan:
 		m.ClearOrgan()
+		return nil
+	case orgstaff.EdgeIdenAddr:
+		m.ClearIdenAddr()
+		return nil
+	case orgstaff.EdgeResiAddr:
+		m.ClearResiAddr()
 		return nil
 	}
 	return fmt.Errorf("unknown OrgStaff unique edge %s", name)
@@ -5687,6 +5917,12 @@ func (m *OrgStaffMutation) ResetEdge(name string) error {
 	case orgstaff.EdgeOrgan:
 		m.ResetOrgan()
 		return nil
+	case orgstaff.EdgeIdenAddr:
+		m.ResetIdenAddr()
+		return nil
+	case orgstaff.EdgeResiAddr:
+		m.ResetResiAddr()
+		return nil
 	}
 	return fmt.Errorf("unknown OrgStaff edge %s", name)
 }
@@ -5694,40 +5930,44 @@ func (m *OrgStaffMutation) ResetEdge(name string) error {
 // SysAddressMutation represents an operation that mutates the SysAddress nodes in the graph.
 type SysAddressMutation struct {
 	config
-	op            Op
-	typ           string
-	id            *string
-	is_del        *bool
-	user_id       *string
-	org_id        *string
-	sort          *int32
-	addsort       *int32
-	created_at    *time.Time
-	updated_at    *time.Time
-	deleted_at    *time.Time
-	is_active     *bool
-	memo          *string
-	country       *string
-	province      *string
-	city          *string
-	county        *string
-	country_id    *string
-	province_id   *string
-	city_id       *string
-	county_id     *string
-	zip_code      *string
-	daddr         *string
-	first_name    *string
-	last_name     *string
-	area_code     *string
-	mobile        *string
-	creator       *string
-	clearedFields map[string]struct{}
-	organ         *string
-	clearedorgan  bool
-	done          bool
-	oldValue      func(context.Context) (*SysAddress, error)
-	predicates    []predicate.SysAddress
+	op                Op
+	typ               string
+	id                *string
+	is_del            *bool
+	user_id           *string
+	org_id            *string
+	sort              *int32
+	addsort           *int32
+	created_at        *time.Time
+	updated_at        *time.Time
+	deleted_at        *time.Time
+	is_active         *bool
+	memo              *string
+	country           *string
+	province          *string
+	city              *string
+	county            *string
+	country_id        *string
+	province_id       *string
+	city_id           *string
+	county_id         *string
+	zip_code          *string
+	daddr             *string
+	first_name        *string
+	last_name         *string
+	area_code         *string
+	mobile            *string
+	creator           *string
+	clearedFields     map[string]struct{}
+	organ             *string
+	clearedorgan      bool
+	staff_resi        *string
+	clearedstaff_resi bool
+	staff_iden        *string
+	clearedstaff_iden bool
+	done              bool
+	oldValue          func(context.Context) (*SysAddress, error)
+	predicates        []predicate.SysAddress
 }
 
 var _ ent.Mutation = (*SysAddressMutation)(nil)
@@ -7030,6 +7270,84 @@ func (m *SysAddressMutation) ResetOrgan() {
 	m.clearedorgan = false
 }
 
+// SetStaffResiID sets the "staff_resi" edge to the OrgStaff entity by id.
+func (m *SysAddressMutation) SetStaffResiID(id string) {
+	m.staff_resi = &id
+}
+
+// ClearStaffResi clears the "staff_resi" edge to the OrgStaff entity.
+func (m *SysAddressMutation) ClearStaffResi() {
+	m.clearedstaff_resi = true
+}
+
+// StaffResiCleared reports if the "staff_resi" edge to the OrgStaff entity was cleared.
+func (m *SysAddressMutation) StaffResiCleared() bool {
+	return m.clearedstaff_resi
+}
+
+// StaffResiID returns the "staff_resi" edge ID in the mutation.
+func (m *SysAddressMutation) StaffResiID() (id string, exists bool) {
+	if m.staff_resi != nil {
+		return *m.staff_resi, true
+	}
+	return
+}
+
+// StaffResiIDs returns the "staff_resi" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// StaffResiID instead. It exists only for internal usage by the builders.
+func (m *SysAddressMutation) StaffResiIDs() (ids []string) {
+	if id := m.staff_resi; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetStaffResi resets all changes to the "staff_resi" edge.
+func (m *SysAddressMutation) ResetStaffResi() {
+	m.staff_resi = nil
+	m.clearedstaff_resi = false
+}
+
+// SetStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by id.
+func (m *SysAddressMutation) SetStaffIdenID(id string) {
+	m.staff_iden = &id
+}
+
+// ClearStaffIden clears the "staff_iden" edge to the OrgStaff entity.
+func (m *SysAddressMutation) ClearStaffIden() {
+	m.clearedstaff_iden = true
+}
+
+// StaffIdenCleared reports if the "staff_iden" edge to the OrgStaff entity was cleared.
+func (m *SysAddressMutation) StaffIdenCleared() bool {
+	return m.clearedstaff_iden
+}
+
+// StaffIdenID returns the "staff_iden" edge ID in the mutation.
+func (m *SysAddressMutation) StaffIdenID() (id string, exists bool) {
+	if m.staff_iden != nil {
+		return *m.staff_iden, true
+	}
+	return
+}
+
+// StaffIdenIDs returns the "staff_iden" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// StaffIdenID instead. It exists only for internal usage by the builders.
+func (m *SysAddressMutation) StaffIdenIDs() (ids []string) {
+	if id := m.staff_iden; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetStaffIden resets all changes to the "staff_iden" edge.
+func (m *SysAddressMutation) ResetStaffIden() {
+	m.staff_iden = nil
+	m.clearedstaff_iden = false
+}
+
 // Where appends a list predicates to the SysAddressMutation builder.
 func (m *SysAddressMutation) Where(ps ...predicate.SysAddress) {
 	m.predicates = append(m.predicates, ps...)
@@ -7698,9 +8016,15 @@ func (m *SysAddressMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *SysAddressMutation) AddedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 3)
 	if m.organ != nil {
 		edges = append(edges, sysaddress.EdgeOrgan)
+	}
+	if m.staff_resi != nil {
+		edges = append(edges, sysaddress.EdgeStaffResi)
+	}
+	if m.staff_iden != nil {
+		edges = append(edges, sysaddress.EdgeStaffIden)
 	}
 	return edges
 }
@@ -7713,13 +8037,21 @@ func (m *SysAddressMutation) AddedIDs(name string) []ent.Value {
 		if id := m.organ; id != nil {
 			return []ent.Value{*id}
 		}
+	case sysaddress.EdgeStaffResi:
+		if id := m.staff_resi; id != nil {
+			return []ent.Value{*id}
+		}
+	case sysaddress.EdgeStaffIden:
+		if id := m.staff_iden; id != nil {
+			return []ent.Value{*id}
+		}
 	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *SysAddressMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 3)
 	return edges
 }
 
@@ -7731,9 +8063,15 @@ func (m *SysAddressMutation) RemovedIDs(name string) []ent.Value {
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *SysAddressMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 1)
+	edges := make([]string, 0, 3)
 	if m.clearedorgan {
 		edges = append(edges, sysaddress.EdgeOrgan)
+	}
+	if m.clearedstaff_resi {
+		edges = append(edges, sysaddress.EdgeStaffResi)
+	}
+	if m.clearedstaff_iden {
+		edges = append(edges, sysaddress.EdgeStaffIden)
 	}
 	return edges
 }
@@ -7744,6 +8082,10 @@ func (m *SysAddressMutation) EdgeCleared(name string) bool {
 	switch name {
 	case sysaddress.EdgeOrgan:
 		return m.clearedorgan
+	case sysaddress.EdgeStaffResi:
+		return m.clearedstaff_resi
+	case sysaddress.EdgeStaffIden:
+		return m.clearedstaff_iden
 	}
 	return false
 }
@@ -7755,6 +8097,12 @@ func (m *SysAddressMutation) ClearEdge(name string) error {
 	case sysaddress.EdgeOrgan:
 		m.ClearOrgan()
 		return nil
+	case sysaddress.EdgeStaffResi:
+		m.ClearStaffResi()
+		return nil
+	case sysaddress.EdgeStaffIden:
+		m.ClearStaffIden()
+		return nil
 	}
 	return fmt.Errorf("unknown SysAddress unique edge %s", name)
 }
@@ -7765,6 +8113,12 @@ func (m *SysAddressMutation) ResetEdge(name string) error {
 	switch name {
 	case sysaddress.EdgeOrgan:
 		m.ResetOrgan()
+		return nil
+	case sysaddress.EdgeStaffResi:
+		m.ResetStaffResi()
+		return nil
+	case sysaddress.EdgeStaffIden:
+		m.ResetStaffIden()
 		return nil
 	}
 	return fmt.Errorf("unknown SysAddress edge %s", name)

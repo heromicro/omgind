@@ -15,6 +15,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
 // OrgStaffUpdate is the builder for updating OrgStaff entities.
@@ -213,15 +214,15 @@ func (osu *OrgStaffUpdate) ClearGender() *OrgStaffUpdate {
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (osu *OrgStaffUpdate) SetBirthDate(s string) *OrgStaffUpdate {
-	osu.mutation.SetBirthDate(s)
+func (osu *OrgStaffUpdate) SetBirthDate(t time.Time) *OrgStaffUpdate {
+	osu.mutation.SetBirthDate(t)
 	return osu
 }
 
 // SetNillableBirthDate sets the "birth_date" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableBirthDate(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetBirthDate(*s)
+func (osu *OrgStaffUpdate) SetNillableBirthDate(t *time.Time) *OrgStaffUpdate {
+	if t != nil {
+		osu.SetBirthDate(*t)
 	}
 	return osu
 }
@@ -249,6 +250,46 @@ func (osu *OrgStaffUpdate) SetNillableIdenNo(s *string) *OrgStaffUpdate {
 // ClearIdenNo clears the value of the "iden_no" field.
 func (osu *OrgStaffUpdate) ClearIdenNo() *OrgStaffUpdate {
 	osu.mutation.ClearIdenNo()
+	return osu
+}
+
+// SetIdenAddrID sets the "iden_addr_id" field.
+func (osu *OrgStaffUpdate) SetIdenAddrID(s string) *OrgStaffUpdate {
+	osu.mutation.SetIdenAddrID(s)
+	return osu
+}
+
+// SetNillableIdenAddrID sets the "iden_addr_id" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableIdenAddrID(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetIdenAddrID(*s)
+	}
+	return osu
+}
+
+// ClearIdenAddrID clears the value of the "iden_addr_id" field.
+func (osu *OrgStaffUpdate) ClearIdenAddrID() *OrgStaffUpdate {
+	osu.mutation.ClearIdenAddrID()
+	return osu
+}
+
+// SetResiAddrID sets the "resi_addr_id" field.
+func (osu *OrgStaffUpdate) SetResiAddrID(s string) *OrgStaffUpdate {
+	osu.mutation.SetResiAddrID(s)
+	return osu
+}
+
+// SetNillableResiAddrID sets the "resi_addr_id" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableResiAddrID(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetResiAddrID(*s)
+	}
+	return osu
+}
+
+// ClearResiAddrID clears the value of the "resi_addr_id" field.
+func (osu *OrgStaffUpdate) ClearResiAddrID() *OrgStaffUpdate {
+	osu.mutation.ClearResiAddrID()
 	return osu
 }
 
@@ -293,15 +334,15 @@ func (osu *OrgStaffUpdate) ClearCubicle() *OrgStaffUpdate {
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (osu *OrgStaffUpdate) SetEntryDate(s string) *OrgStaffUpdate {
-	osu.mutation.SetEntryDate(s)
+func (osu *OrgStaffUpdate) SetEntryDate(t time.Time) *OrgStaffUpdate {
+	osu.mutation.SetEntryDate(t)
 	return osu
 }
 
 // SetNillableEntryDate sets the "entry_date" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableEntryDate(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetEntryDate(*s)
+func (osu *OrgStaffUpdate) SetNillableEntryDate(t *time.Time) *OrgStaffUpdate {
+	if t != nil {
+		osu.SetEntryDate(*t)
 	}
 	return osu
 }
@@ -313,15 +354,15 @@ func (osu *OrgStaffUpdate) ClearEntryDate() *OrgStaffUpdate {
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (osu *OrgStaffUpdate) SetRegularDate(s string) *OrgStaffUpdate {
-	osu.mutation.SetRegularDate(s)
+func (osu *OrgStaffUpdate) SetRegularDate(t time.Time) *OrgStaffUpdate {
+	osu.mutation.SetRegularDate(t)
 	return osu
 }
 
 // SetNillableRegularDate sets the "regular_date" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableRegularDate(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetRegularDate(*s)
+func (osu *OrgStaffUpdate) SetNillableRegularDate(t *time.Time) *OrgStaffUpdate {
+	if t != nil {
+		osu.SetRegularDate(*t)
 	}
 	return osu
 }
@@ -333,15 +374,15 @@ func (osu *OrgStaffUpdate) ClearRegularDate() *OrgStaffUpdate {
 }
 
 // SetResignDate sets the "resign_date" field.
-func (osu *OrgStaffUpdate) SetResignDate(s string) *OrgStaffUpdate {
-	osu.mutation.SetResignDate(s)
+func (osu *OrgStaffUpdate) SetResignDate(t time.Time) *OrgStaffUpdate {
+	osu.mutation.SetResignDate(t)
 	return osu
 }
 
 // SetNillableResignDate sets the "resign_date" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableResignDate(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetResignDate(*s)
+func (osu *OrgStaffUpdate) SetNillableResignDate(t *time.Time) *OrgStaffUpdate {
+	if t != nil {
+		osu.SetResignDate(*t)
 	}
 	return osu
 }
@@ -411,6 +452,16 @@ func (osu *OrgStaffUpdate) SetOrgan(o *OrgOrgan) *OrgStaffUpdate {
 	return osu.SetOrganID(o.ID)
 }
 
+// SetIdenAddr sets the "iden_addr" edge to the SysAddress entity.
+func (osu *OrgStaffUpdate) SetIdenAddr(s *SysAddress) *OrgStaffUpdate {
+	return osu.SetIdenAddrID(s.ID)
+}
+
+// SetResiAddr sets the "resi_addr" edge to the SysAddress entity.
+func (osu *OrgStaffUpdate) SetResiAddr(s *SysAddress) *OrgStaffUpdate {
+	return osu.SetResiAddrID(s.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osu *OrgStaffUpdate) Mutation() *OrgStaffMutation {
 	return osu.mutation
@@ -419,6 +470,18 @@ func (osu *OrgStaffUpdate) Mutation() *OrgStaffMutation {
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
 func (osu *OrgStaffUpdate) ClearOrgan() *OrgStaffUpdate {
 	osu.mutation.ClearOrgan()
+	return osu
+}
+
+// ClearIdenAddr clears the "iden_addr" edge to the SysAddress entity.
+func (osu *OrgStaffUpdate) ClearIdenAddr() *OrgStaffUpdate {
+	osu.mutation.ClearIdenAddr()
+	return osu
+}
+
+// ClearResiAddr clears the "resi_addr" edge to the SysAddress entity.
+func (osu *OrgStaffUpdate) ClearResiAddr() *OrgStaffUpdate {
+	osu.mutation.ClearResiAddr()
 	return osu
 }
 
@@ -483,6 +546,26 @@ func (osu *OrgStaffUpdate) check() error {
 	if v, ok := osu.mutation.Gender(); ok {
 		if err := orgstaff.GenderValidator(v); err != nil {
 			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
+		}
+	}
+	if v, ok := osu.mutation.IdenAddrID(); ok {
+		if err := orgstaff.IdenAddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "iden_addr_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.iden_addr_id": %w`, err)}
+		}
+	}
+	if v, ok := osu.mutation.ResiAddrID(); ok {
+		if err := orgstaff.ResiAddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "resi_addr_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.resi_addr_id": %w`, err)}
+		}
+	}
+	if v, ok := osu.mutation.WorkerNo(); ok {
+		if err := orgstaff.WorkerNoValidator(v); err != nil {
+			return &ValidationError{Name: "worker_no", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.worker_no": %w`, err)}
+		}
+	}
+	if v, ok := osu.mutation.Cubicle(); ok {
+		if err := orgstaff.CubicleValidator(v); err != nil {
+			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.cubicle": %w`, err)}
 		}
 	}
 	if v, ok := osu.mutation.OrgID(); ok {
@@ -569,10 +652,10 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.ClearField(orgstaff.FieldGender, field.TypeEnum)
 	}
 	if value, ok := osu.mutation.BirthDate(); ok {
-		_spec.SetField(orgstaff.FieldBirthDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldBirthDate, field.TypeTime, value)
 	}
 	if osu.mutation.BirthDateCleared() {
-		_spec.ClearField(orgstaff.FieldBirthDate, field.TypeString)
+		_spec.ClearField(orgstaff.FieldBirthDate, field.TypeTime)
 	}
 	if value, ok := osu.mutation.IdenNo(); ok {
 		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
@@ -593,22 +676,22 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.ClearField(orgstaff.FieldCubicle, field.TypeString)
 	}
 	if value, ok := osu.mutation.EntryDate(); ok {
-		_spec.SetField(orgstaff.FieldEntryDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)
 	}
 	if osu.mutation.EntryDateCleared() {
-		_spec.ClearField(orgstaff.FieldEntryDate, field.TypeString)
+		_spec.ClearField(orgstaff.FieldEntryDate, field.TypeTime)
 	}
 	if value, ok := osu.mutation.RegularDate(); ok {
-		_spec.SetField(orgstaff.FieldRegularDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldRegularDate, field.TypeTime, value)
 	}
 	if osu.mutation.RegularDateCleared() {
-		_spec.ClearField(orgstaff.FieldRegularDate, field.TypeString)
+		_spec.ClearField(orgstaff.FieldRegularDate, field.TypeTime)
 	}
 	if value, ok := osu.mutation.ResignDate(); ok {
-		_spec.SetField(orgstaff.FieldResignDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldResignDate, field.TypeTime, value)
 	}
 	if osu.mutation.ResignDateCleared() {
-		_spec.ClearField(orgstaff.FieldResignDate, field.TypeString)
+		_spec.ClearField(orgstaff.FieldResignDate, field.TypeTime)
 	}
 	if value, ok := osu.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -644,6 +727,80 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeString,
 					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = osu.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if osu.mutation.IdenAddrCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.IdenAddrTable,
+			Columns: []string{orgstaff.IdenAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = osu.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osu.mutation.IdenAddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.IdenAddrTable,
+			Columns: []string{orgstaff.IdenAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = osu.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if osu.mutation.ResiAddrCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.ResiAddrTable,
+			Columns: []string{orgstaff.ResiAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = osu.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osu.mutation.ResiAddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.ResiAddrTable,
+			Columns: []string{orgstaff.ResiAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
 				},
 			},
 		}
@@ -859,15 +1016,15 @@ func (osuo *OrgStaffUpdateOne) ClearGender() *OrgStaffUpdateOne {
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (osuo *OrgStaffUpdateOne) SetBirthDate(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetBirthDate(s)
+func (osuo *OrgStaffUpdateOne) SetBirthDate(t time.Time) *OrgStaffUpdateOne {
+	osuo.mutation.SetBirthDate(t)
 	return osuo
 }
 
 // SetNillableBirthDate sets the "birth_date" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableBirthDate(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetBirthDate(*s)
+func (osuo *OrgStaffUpdateOne) SetNillableBirthDate(t *time.Time) *OrgStaffUpdateOne {
+	if t != nil {
+		osuo.SetBirthDate(*t)
 	}
 	return osuo
 }
@@ -895,6 +1052,46 @@ func (osuo *OrgStaffUpdateOne) SetNillableIdenNo(s *string) *OrgStaffUpdateOne {
 // ClearIdenNo clears the value of the "iden_no" field.
 func (osuo *OrgStaffUpdateOne) ClearIdenNo() *OrgStaffUpdateOne {
 	osuo.mutation.ClearIdenNo()
+	return osuo
+}
+
+// SetIdenAddrID sets the "iden_addr_id" field.
+func (osuo *OrgStaffUpdateOne) SetIdenAddrID(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetIdenAddrID(s)
+	return osuo
+}
+
+// SetNillableIdenAddrID sets the "iden_addr_id" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableIdenAddrID(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetIdenAddrID(*s)
+	}
+	return osuo
+}
+
+// ClearIdenAddrID clears the value of the "iden_addr_id" field.
+func (osuo *OrgStaffUpdateOne) ClearIdenAddrID() *OrgStaffUpdateOne {
+	osuo.mutation.ClearIdenAddrID()
+	return osuo
+}
+
+// SetResiAddrID sets the "resi_addr_id" field.
+func (osuo *OrgStaffUpdateOne) SetResiAddrID(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetResiAddrID(s)
+	return osuo
+}
+
+// SetNillableResiAddrID sets the "resi_addr_id" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableResiAddrID(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetResiAddrID(*s)
+	}
+	return osuo
+}
+
+// ClearResiAddrID clears the value of the "resi_addr_id" field.
+func (osuo *OrgStaffUpdateOne) ClearResiAddrID() *OrgStaffUpdateOne {
+	osuo.mutation.ClearResiAddrID()
 	return osuo
 }
 
@@ -939,15 +1136,15 @@ func (osuo *OrgStaffUpdateOne) ClearCubicle() *OrgStaffUpdateOne {
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (osuo *OrgStaffUpdateOne) SetEntryDate(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetEntryDate(s)
+func (osuo *OrgStaffUpdateOne) SetEntryDate(t time.Time) *OrgStaffUpdateOne {
+	osuo.mutation.SetEntryDate(t)
 	return osuo
 }
 
 // SetNillableEntryDate sets the "entry_date" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableEntryDate(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetEntryDate(*s)
+func (osuo *OrgStaffUpdateOne) SetNillableEntryDate(t *time.Time) *OrgStaffUpdateOne {
+	if t != nil {
+		osuo.SetEntryDate(*t)
 	}
 	return osuo
 }
@@ -959,15 +1156,15 @@ func (osuo *OrgStaffUpdateOne) ClearEntryDate() *OrgStaffUpdateOne {
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (osuo *OrgStaffUpdateOne) SetRegularDate(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetRegularDate(s)
+func (osuo *OrgStaffUpdateOne) SetRegularDate(t time.Time) *OrgStaffUpdateOne {
+	osuo.mutation.SetRegularDate(t)
 	return osuo
 }
 
 // SetNillableRegularDate sets the "regular_date" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableRegularDate(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetRegularDate(*s)
+func (osuo *OrgStaffUpdateOne) SetNillableRegularDate(t *time.Time) *OrgStaffUpdateOne {
+	if t != nil {
+		osuo.SetRegularDate(*t)
 	}
 	return osuo
 }
@@ -979,15 +1176,15 @@ func (osuo *OrgStaffUpdateOne) ClearRegularDate() *OrgStaffUpdateOne {
 }
 
 // SetResignDate sets the "resign_date" field.
-func (osuo *OrgStaffUpdateOne) SetResignDate(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetResignDate(s)
+func (osuo *OrgStaffUpdateOne) SetResignDate(t time.Time) *OrgStaffUpdateOne {
+	osuo.mutation.SetResignDate(t)
 	return osuo
 }
 
 // SetNillableResignDate sets the "resign_date" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableResignDate(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetResignDate(*s)
+func (osuo *OrgStaffUpdateOne) SetNillableResignDate(t *time.Time) *OrgStaffUpdateOne {
+	if t != nil {
+		osuo.SetResignDate(*t)
 	}
 	return osuo
 }
@@ -1057,6 +1254,16 @@ func (osuo *OrgStaffUpdateOne) SetOrgan(o *OrgOrgan) *OrgStaffUpdateOne {
 	return osuo.SetOrganID(o.ID)
 }
 
+// SetIdenAddr sets the "iden_addr" edge to the SysAddress entity.
+func (osuo *OrgStaffUpdateOne) SetIdenAddr(s *SysAddress) *OrgStaffUpdateOne {
+	return osuo.SetIdenAddrID(s.ID)
+}
+
+// SetResiAddr sets the "resi_addr" edge to the SysAddress entity.
+func (osuo *OrgStaffUpdateOne) SetResiAddr(s *SysAddress) *OrgStaffUpdateOne {
+	return osuo.SetResiAddrID(s.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osuo *OrgStaffUpdateOne) Mutation() *OrgStaffMutation {
 	return osuo.mutation
@@ -1065,6 +1272,18 @@ func (osuo *OrgStaffUpdateOne) Mutation() *OrgStaffMutation {
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
 func (osuo *OrgStaffUpdateOne) ClearOrgan() *OrgStaffUpdateOne {
 	osuo.mutation.ClearOrgan()
+	return osuo
+}
+
+// ClearIdenAddr clears the "iden_addr" edge to the SysAddress entity.
+func (osuo *OrgStaffUpdateOne) ClearIdenAddr() *OrgStaffUpdateOne {
+	osuo.mutation.ClearIdenAddr()
+	return osuo
+}
+
+// ClearResiAddr clears the "resi_addr" edge to the SysAddress entity.
+func (osuo *OrgStaffUpdateOne) ClearResiAddr() *OrgStaffUpdateOne {
+	osuo.mutation.ClearResiAddr()
 	return osuo
 }
 
@@ -1142,6 +1361,26 @@ func (osuo *OrgStaffUpdateOne) check() error {
 	if v, ok := osuo.mutation.Gender(); ok {
 		if err := orgstaff.GenderValidator(v); err != nil {
 			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
+		}
+	}
+	if v, ok := osuo.mutation.IdenAddrID(); ok {
+		if err := orgstaff.IdenAddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "iden_addr_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.iden_addr_id": %w`, err)}
+		}
+	}
+	if v, ok := osuo.mutation.ResiAddrID(); ok {
+		if err := orgstaff.ResiAddrIDValidator(v); err != nil {
+			return &ValidationError{Name: "resi_addr_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.resi_addr_id": %w`, err)}
+		}
+	}
+	if v, ok := osuo.mutation.WorkerNo(); ok {
+		if err := orgstaff.WorkerNoValidator(v); err != nil {
+			return &ValidationError{Name: "worker_no", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.worker_no": %w`, err)}
+		}
+	}
+	if v, ok := osuo.mutation.Cubicle(); ok {
+		if err := orgstaff.CubicleValidator(v); err != nil {
+			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.cubicle": %w`, err)}
 		}
 	}
 	if v, ok := osuo.mutation.OrgID(); ok {
@@ -1245,10 +1484,10 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		_spec.ClearField(orgstaff.FieldGender, field.TypeEnum)
 	}
 	if value, ok := osuo.mutation.BirthDate(); ok {
-		_spec.SetField(orgstaff.FieldBirthDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldBirthDate, field.TypeTime, value)
 	}
 	if osuo.mutation.BirthDateCleared() {
-		_spec.ClearField(orgstaff.FieldBirthDate, field.TypeString)
+		_spec.ClearField(orgstaff.FieldBirthDate, field.TypeTime)
 	}
 	if value, ok := osuo.mutation.IdenNo(); ok {
 		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
@@ -1269,22 +1508,22 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		_spec.ClearField(orgstaff.FieldCubicle, field.TypeString)
 	}
 	if value, ok := osuo.mutation.EntryDate(); ok {
-		_spec.SetField(orgstaff.FieldEntryDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)
 	}
 	if osuo.mutation.EntryDateCleared() {
-		_spec.ClearField(orgstaff.FieldEntryDate, field.TypeString)
+		_spec.ClearField(orgstaff.FieldEntryDate, field.TypeTime)
 	}
 	if value, ok := osuo.mutation.RegularDate(); ok {
-		_spec.SetField(orgstaff.FieldRegularDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldRegularDate, field.TypeTime, value)
 	}
 	if osuo.mutation.RegularDateCleared() {
-		_spec.ClearField(orgstaff.FieldRegularDate, field.TypeString)
+		_spec.ClearField(orgstaff.FieldRegularDate, field.TypeTime)
 	}
 	if value, ok := osuo.mutation.ResignDate(); ok {
-		_spec.SetField(orgstaff.FieldResignDate, field.TypeString, value)
+		_spec.SetField(orgstaff.FieldResignDate, field.TypeTime, value)
 	}
 	if osuo.mutation.ResignDateCleared() {
-		_spec.ClearField(orgstaff.FieldResignDate, field.TypeString)
+		_spec.ClearField(orgstaff.FieldResignDate, field.TypeTime)
 	}
 	if value, ok := osuo.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -1320,6 +1559,80 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeString,
 					Column: orgorgan.FieldID,
+				},
+			},
+		}
+		edge.Schema = osuo.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if osuo.mutation.IdenAddrCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.IdenAddrTable,
+			Columns: []string{orgstaff.IdenAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = osuo.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osuo.mutation.IdenAddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.IdenAddrTable,
+			Columns: []string{orgstaff.IdenAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = osuo.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if osuo.mutation.ResiAddrCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.ResiAddrTable,
+			Columns: []string{orgstaff.ResiAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
+				},
+			},
+		}
+		edge.Schema = osuo.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osuo.mutation.ResiAddrIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: true,
+			Table:   orgstaff.ResiAddrTable,
+			Columns: []string{orgstaff.ResiAddrColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: sysaddress.FieldID,
 				},
 			},
 		}

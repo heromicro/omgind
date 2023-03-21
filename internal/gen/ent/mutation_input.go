@@ -567,16 +567,20 @@ type CreateOrgStaffInput struct {
 	LastName    *string
 	Mobile      *string
 	Gender      *orgstaff.Gender
-	BirthDate   *string
+	BirthDate   *time.Time
 	IdenNo      *string
+	IdenAddrID  *string
+	ResiAddrID  *string
 	WorkerNo    *string
 	Cubicle     *string
-	EntryDate   *string
-	RegularDate *string
-	ResignDate  *string
+	EntryDate   *time.Time
+	RegularDate *time.Time
+	ResignDate  *time.Time
 	OrgID       *string
 	Creator     *string
 	Organ       *string
+	IdenAddr    *string
+	ResiAddr    *string
 }
 
 // Mutate applies the CreateOrgStaffInput on the OrgStaffCreate builder.
@@ -620,6 +624,12 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.IdenNo; v != nil {
 		m.SetIdenNo(*v)
 	}
+	if v := i.IdenAddrID; v != nil {
+		m.SetIdenAddrID(*v)
+	}
+	if v := i.ResiAddrID; v != nil {
+		m.SetResiAddrID(*v)
+	}
 	if v := i.WorkerNo; v != nil {
 		m.SetWorkerNo(*v)
 	}
@@ -643,6 +653,12 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	}
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
+	}
+	if v := i.IdenAddr; v != nil {
+		m.SetIdenAddrID(*v)
+	}
+	if v := i.ResiAddr; v != nil {
+		m.SetResiAddrID(*v)
 	}
 }
 
@@ -671,19 +687,23 @@ type UpdateOrgStaffInput struct {
 	ClearMobile      bool
 	Gender           *orgstaff.Gender
 	ClearGender      bool
-	BirthDate        *string
+	BirthDate        *time.Time
 	ClearBirthDate   bool
 	IdenNo           *string
 	ClearIdenNo      bool
+	IdenAddrID       *string
+	ClearIdenAddrID  bool
+	ResiAddrID       *string
+	ClearResiAddrID  bool
 	WorkerNo         *string
 	ClearWorkerNo    bool
 	Cubicle          *string
 	ClearCubicle     bool
-	EntryDate        *string
+	EntryDate        *time.Time
 	ClearEntryDate   bool
-	RegularDate      *string
+	RegularDate      *time.Time
 	ClearRegularDate bool
-	ResignDate       *string
+	ResignDate       *time.Time
 	ClearResignDate  bool
 	OrgID            *string
 	ClearOrgID       bool
@@ -691,6 +711,10 @@ type UpdateOrgStaffInput struct {
 	ClearCreator     bool
 	Organ            *string
 	ClearOrgan       bool
+	IdenAddr         *string
+	ClearIdenAddr    bool
+	ResiAddr         *string
+	ClearResiAddr    bool
 }
 
 // Mutate applies the UpdateOrgStaffInput on the OrgStaffMutation.
@@ -758,6 +782,18 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.IdenNo; v != nil {
 		m.SetIdenNo(*v)
 	}
+	if i.ClearIdenAddrID {
+		m.ClearIdenAddrID()
+	}
+	if v := i.IdenAddrID; v != nil {
+		m.SetIdenAddrID(*v)
+	}
+	if i.ClearResiAddrID {
+		m.ClearResiAddrID()
+	}
+	if v := i.ResiAddrID; v != nil {
+		m.SetResiAddrID(*v)
+	}
 	if i.ClearWorkerNo {
 		m.ClearWorkerNo()
 	}
@@ -806,6 +842,18 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
 	}
+	if i.ClearIdenAddr {
+		m.ClearIdenAddr()
+	}
+	if v := i.IdenAddr; v != nil {
+		m.SetIdenAddrID(*v)
+	}
+	if i.ClearResiAddr {
+		m.ClearResiAddr()
+	}
+	if v := i.ResiAddr; v != nil {
+		m.SetResiAddrID(*v)
+	}
 }
 
 // SetInput applies the change-set in the UpdateOrgStaffInput on the update builder.
@@ -847,6 +895,8 @@ type CreateSysAddressInput struct {
 	Mobile     *string
 	Creator    *string
 	Organ      *string
+	StaffResi  *string
+	StaffIden  *string
 }
 
 // Mutate applies the CreateSysAddressInput on the SysAddressCreate builder.
@@ -926,6 +976,12 @@ func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
 	}
+	if v := i.StaffResi; v != nil {
+		m.SetStaffResiID(*v)
+	}
+	if v := i.StaffIden; v != nil {
+		m.SetStaffIdenID(*v)
+	}
 }
 
 // SetInput applies the change-set in the CreateSysAddressInput on the create builder.
@@ -979,6 +1035,10 @@ type UpdateSysAddressInput struct {
 	ClearCreator    bool
 	Organ           *string
 	ClearOrgan      bool
+	StaffResi       *string
+	ClearStaffResi  bool
+	StaffIden       *string
+	ClearStaffIden  bool
 }
 
 // Mutate applies the UpdateSysAddressInput on the SysAddressMutation.
@@ -1111,6 +1171,18 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	}
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
+	}
+	if i.ClearStaffResi {
+		m.ClearStaffResi()
+	}
+	if v := i.StaffResi; v != nil {
+		m.SetStaffResiID(*v)
+	}
+	if i.ClearStaffIden {
+		m.ClearStaffIden()
+	}
+	if v := i.StaffIden; v != nil {
+		m.SetStaffIdenID(*v)
 	}
 }
 

@@ -61,6 +61,10 @@ const (
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
 	EdgeOrgan = "organ"
+	// EdgeStaffResi holds the string denoting the staff_resi edge name in mutations.
+	EdgeStaffResi = "staff_resi"
+	// EdgeStaffIden holds the string denoting the staff_iden edge name in mutations.
+	EdgeStaffIden = "staff_iden"
 	// Table holds the table name of the sysaddress in the database.
 	Table = "sys_addresses"
 	// OrganTable is the table that holds the organ relation/edge.
@@ -70,6 +74,20 @@ const (
 	OrganInverseTable = "org_organs"
 	// OrganColumn is the table column denoting the organ relation/edge.
 	OrganColumn = "haddr_id"
+	// StaffResiTable is the table that holds the staff_resi relation/edge.
+	StaffResiTable = "org_staffs"
+	// StaffResiInverseTable is the table name for the OrgStaff entity.
+	// It exists in this package in order to avoid circular dependency with the "orgstaff" package.
+	StaffResiInverseTable = "org_staffs"
+	// StaffResiColumn is the table column denoting the staff_resi relation/edge.
+	StaffResiColumn = "rsaddr_id"
+	// StaffIdenTable is the table that holds the staff_iden relation/edge.
+	StaffIdenTable = "org_staffs"
+	// StaffIdenInverseTable is the table name for the OrgStaff entity.
+	// It exists in this package in order to avoid circular dependency with the "orgstaff" package.
+	StaffIdenInverseTable = "org_staffs"
+	// StaffIdenColumn is the table column denoting the staff_iden relation/edge.
+	StaffIdenColumn = "idaddr_id"
 )
 
 // Columns holds all SQL columns for sysaddress fields.

@@ -38,6 +38,10 @@ const (
 	FieldBirthDate = "birth_date"
 	// FieldIdenNo holds the string denoting the iden_no field in the database.
 	FieldIdenNo = "iden_no"
+	// FieldIdenAddrID holds the string denoting the iden_addr_id field in the database.
+	FieldIdenAddrID = "idaddr_id"
+	// FieldResiAddrID holds the string denoting the resi_addr_id field in the database.
+	FieldResiAddrID = "rsaddr_id"
 	// FieldWorkerNo holds the string denoting the worker_no field in the database.
 	FieldWorkerNo = "worker_no"
 	// FieldCubicle holds the string denoting the cubicle field in the database.
@@ -54,6 +58,10 @@ const (
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
 	EdgeOrgan = "organ"
+	// EdgeIdenAddr holds the string denoting the iden_addr edge name in mutations.
+	EdgeIdenAddr = "iden_addr"
+	// EdgeResiAddr holds the string denoting the resi_addr edge name in mutations.
+	EdgeResiAddr = "resi_addr"
 	// Table holds the table name of the orgstaff in the database.
 	Table = "org_staffs"
 	// OrganTable is the table that holds the organ relation/edge.
@@ -63,6 +71,20 @@ const (
 	OrganInverseTable = "org_organs"
 	// OrganColumn is the table column denoting the organ relation/edge.
 	OrganColumn = "org_id"
+	// IdenAddrTable is the table that holds the iden_addr relation/edge.
+	IdenAddrTable = "org_staffs"
+	// IdenAddrInverseTable is the table name for the SysAddress entity.
+	// It exists in this package in order to avoid circular dependency with the "sysaddress" package.
+	IdenAddrInverseTable = "sys_addresses"
+	// IdenAddrColumn is the table column denoting the iden_addr relation/edge.
+	IdenAddrColumn = "idaddr_id"
+	// ResiAddrTable is the table that holds the resi_addr relation/edge.
+	ResiAddrTable = "org_staffs"
+	// ResiAddrInverseTable is the table name for the SysAddress entity.
+	// It exists in this package in order to avoid circular dependency with the "sysaddress" package.
+	ResiAddrInverseTable = "sys_addresses"
+	// ResiAddrColumn is the table column denoting the resi_addr relation/edge.
+	ResiAddrColumn = "rsaddr_id"
 )
 
 // Columns holds all SQL columns for orgstaff fields.
@@ -81,6 +103,8 @@ var Columns = []string{
 	FieldGender,
 	FieldBirthDate,
 	FieldIdenNo,
+	FieldIdenAddrID,
+	FieldResiAddrID,
 	FieldWorkerNo,
 	FieldCubicle,
 	FieldEntryDate,
@@ -123,6 +147,14 @@ var (
 	LastNameValidator func(string) error
 	// MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	MobileValidator func(string) error
+	// IdenAddrIDValidator is a validator for the "iden_addr_id" field. It is called by the builders before save.
+	IdenAddrIDValidator func(string) error
+	// ResiAddrIDValidator is a validator for the "resi_addr_id" field. It is called by the builders before save.
+	ResiAddrIDValidator func(string) error
+	// WorkerNoValidator is a validator for the "worker_no" field. It is called by the builders before save.
+	WorkerNoValidator func(string) error
+	// CubicleValidator is a validator for the "cubicle" field. It is called by the builders before save.
+	CubicleValidator func(string) error
 	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	OrgIDValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.

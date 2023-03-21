@@ -322,8 +322,24 @@ func init() {
 	orgstaffDescMobile := orgstaffFields[2].Descriptor()
 	// orgstaff.MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	orgstaff.MobileValidator = orgstaffDescMobile.Validators[0].(func(string) error)
+	// orgstaffDescIdenAddrID is the schema descriptor for iden_addr_id field.
+	orgstaffDescIdenAddrID := orgstaffFields[6].Descriptor()
+	// orgstaff.IdenAddrIDValidator is a validator for the "iden_addr_id" field. It is called by the builders before save.
+	orgstaff.IdenAddrIDValidator = orgstaffDescIdenAddrID.Validators[0].(func(string) error)
+	// orgstaffDescResiAddrID is the schema descriptor for resi_addr_id field.
+	orgstaffDescResiAddrID := orgstaffFields[7].Descriptor()
+	// orgstaff.ResiAddrIDValidator is a validator for the "resi_addr_id" field. It is called by the builders before save.
+	orgstaff.ResiAddrIDValidator = orgstaffDescResiAddrID.Validators[0].(func(string) error)
+	// orgstaffDescWorkerNo is the schema descriptor for worker_no field.
+	orgstaffDescWorkerNo := orgstaffFields[8].Descriptor()
+	// orgstaff.WorkerNoValidator is a validator for the "worker_no" field. It is called by the builders before save.
+	orgstaff.WorkerNoValidator = orgstaffDescWorkerNo.Validators[0].(func(string) error)
+	// orgstaffDescCubicle is the schema descriptor for cubicle field.
+	orgstaffDescCubicle := orgstaffFields[9].Descriptor()
+	// orgstaff.CubicleValidator is a validator for the "cubicle" field. It is called by the builders before save.
+	orgstaff.CubicleValidator = orgstaffDescCubicle.Validators[0].(func(string) error)
 	// orgstaffDescOrgID is the schema descriptor for org_id field.
-	orgstaffDescOrgID := orgstaffFields[11].Descriptor()
+	orgstaffDescOrgID := orgstaffFields[13].Descriptor()
 	// orgstaff.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	orgstaff.OrgIDValidator = orgstaffDescOrgID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.

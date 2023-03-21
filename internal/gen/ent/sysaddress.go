@@ -9,6 +9,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
@@ -74,9 +75,13 @@ type SysAddress struct {
 type SysAddressEdges struct {
 	// Organ holds the value of the organ edge.
 	Organ *OrgOrgan `json:"organ,omitempty"`
+	// StaffResi holds the value of the staff_resi edge.
+	StaffResi *OrgStaff `json:"staff_resi,omitempty"`
+	// StaffIden holds the value of the staff_iden edge.
+	StaffIden *OrgStaff `json:"staff_iden,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [3]bool
 }
 
 // OrganOrErr returns the Organ value or an error if the edge
@@ -90,6 +95,32 @@ func (e SysAddressEdges) OrganOrErr() (*OrgOrgan, error) {
 		return e.Organ, nil
 	}
 	return nil, &NotLoadedError{edge: "organ"}
+}
+
+// StaffResiOrErr returns the StaffResi value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysAddressEdges) StaffResiOrErr() (*OrgStaff, error) {
+	if e.loadedTypes[1] {
+		if e.StaffResi == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgstaff.Label}
+		}
+		return e.StaffResi, nil
+	}
+	return nil, &NotLoadedError{edge: "staff_resi"}
+}
+
+// StaffIdenOrErr returns the StaffIden value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysAddressEdges) StaffIdenOrErr() (*OrgStaff, error) {
+	if e.loadedTypes[2] {
+		if e.StaffIden == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgstaff.Label}
+		}
+		return e.StaffIden, nil
+	}
+	return nil, &NotLoadedError{edge: "staff_iden"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -299,6 +330,16 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 // QueryOrgan queries the "organ" edge of the SysAddress entity.
 func (sa *SysAddress) QueryOrgan() *OrgOrganQuery {
 	return NewSysAddressClient(sa.config).QueryOrgan(sa)
+}
+
+// QueryStaffResi queries the "staff_resi" edge of the SysAddress entity.
+func (sa *SysAddress) QueryStaffResi() *OrgStaffQuery {
+	return NewSysAddressClient(sa.config).QueryStaffResi(sa)
+}
+
+// QueryStaffIden queries the "staff_iden" edge of the SysAddress entity.
+func (sa *SysAddress) QueryStaffIden() *OrgStaffQuery {
+	return NewSysAddressClient(sa.config).QueryStaffIden(sa)
 }
 
 // Update returns a builder for updating this SysAddress.

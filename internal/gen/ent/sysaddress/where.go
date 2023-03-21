@@ -1769,6 +1769,72 @@ func HasOrganWith(preds ...predicate.OrgOrgan) predicate.SysAddress {
 	})
 }
 
+// HasStaffResi applies the HasEdge predicate on the "staff_resi" edge.
+func HasStaffResi() predicate.SysAddress {
+	return predicate.SysAddress(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, StaffResiTable, StaffResiColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStaffResiWith applies the HasEdge predicate on the "staff_resi" edge with a given conditions (other predicates).
+func HasStaffResiWith(preds ...predicate.OrgStaff) predicate.SysAddress {
+	return predicate.SysAddress(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StaffResiInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, StaffResiTable, StaffResiColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasStaffIden applies the HasEdge predicate on the "staff_iden" edge.
+func HasStaffIden() predicate.SysAddress {
+	return predicate.SysAddress(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, StaffIdenTable, StaffIdenColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStaffIdenWith applies the HasEdge predicate on the "staff_iden" edge with a given conditions (other predicates).
+func HasStaffIdenWith(preds ...predicate.OrgStaff) predicate.SysAddress {
+	return predicate.SysAddress(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StaffIdenInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, StaffIdenTable, StaffIdenColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // And groups predicates with the AND operator between them.
 func And(predicates ...predicate.SysAddress) predicate.SysAddress {
 	return predicate.SysAddress(func(s *sql.Selector) {

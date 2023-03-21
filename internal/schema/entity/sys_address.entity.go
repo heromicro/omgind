@@ -54,6 +54,9 @@ func (SysAddress) Fields() []ent.Field {
 func (SysAddress) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("organ", OrgOrgan.Type).Unique(),
+
+		edge.To("staff_resi", OrgStaff.Type).Unique(),
+		edge.To("staff_iden", OrgStaff.Type).Unique(), 
 	}
 }
 

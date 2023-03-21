@@ -922,6 +922,44 @@ func (c *OrgStaffClient) QueryOrgan(os *OrgStaff) *OrgOrganQuery {
 	return query
 }
 
+// QueryIdenAddr queries the iden_addr edge of a OrgStaff.
+func (c *OrgStaffClient) QueryIdenAddr(os *OrgStaff) *SysAddressQuery {
+	query := (&SysAddressClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := os.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
+			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.IdenAddrTable, orgstaff.IdenAddrColumn),
+		)
+		schemaConfig := os.schemaConfig
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryResiAddr queries the resi_addr edge of a OrgStaff.
+func (c *OrgStaffClient) QueryResiAddr(os *OrgStaff) *SysAddressQuery {
+	query := (&SysAddressClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := os.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
+			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.ResiAddrTable, orgstaff.ResiAddrColumn),
+		)
+		schemaConfig := os.schemaConfig
+		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *OrgStaffClient) Hooks() []Hook {
 	return c.hooks.OrgStaff
@@ -1053,6 +1091,44 @@ func (c *SysAddressClient) QueryOrgan(sa *SysAddress) *OrgOrganQuery {
 		schemaConfig := sa.schemaConfig
 		step.To.Schema = schemaConfig.OrgOrgan
 		step.Edge.Schema = schemaConfig.OrgOrgan
+		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryStaffResi queries the staff_resi edge of a SysAddress.
+func (c *SysAddressClient) QueryStaffResi(sa *SysAddress) *OrgStaffQuery {
+	query := (&OrgStaffClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := sa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, id),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffResiTable, sysaddress.StaffResiColumn),
+		)
+		schemaConfig := sa.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryStaffIden queries the staff_iden edge of a SysAddress.
+func (c *SysAddressClient) QueryStaffIden(sa *SysAddress) *OrgStaffQuery {
+	query := (&OrgStaffClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := sa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, id),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffIdenTable, sysaddress.StaffIdenColumn),
+		)
+		schemaConfig := sa.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
 		return fromV, nil
 	}

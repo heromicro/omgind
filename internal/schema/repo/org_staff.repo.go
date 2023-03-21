@@ -29,6 +29,14 @@ func ToSchemaOrgStaff(et *ent.OrgStaff) *schema.OrgStaff {
 	if et.Edges.Organ != nil {
 		item.Org = ToSchemaOrgOrganShow(et.Edges.Organ)
 	}
+
+	if et.Edges.IdenAddr != nil {
+		item.IdenAddr = ToSchemaSysAddress(et.Edges.IdenAddr)
+	}
+	if et.Edges.ResiAddr != nil {
+		item.ResiAddr = ToSchemaSysAddress(et.Edges.ResiAddr)
+	}
+
 	return item
 }
 

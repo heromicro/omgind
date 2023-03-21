@@ -9,15 +9,15 @@ type OrgStaff struct {
 	LastName  string `json:"last_name" binding:"required"`  // 姓
 	Mobile    string `json:"mobile" binding:"required"`     // 电话
 
-	BirthDate string `json:"birth_date" binding:"required"` // 出生日期
-	Gender    string `json:"gender" binding:"required"`     // 性别
-	IdenNo    string `json:"iden_no" `                      // 身份证号
+	BirthDate *time.Time `json:"birth_date" binding:"required"` // 出生日期
+	Gender    string     `json:"gender" binding:"required"`     // 性别
+	IdenNo    string     `json:"iden_no" `                      // 身份证号
 
-	WorkerNo    string `json:"worker_no" binding:"required"`  // 工号
-	Cubicle     string `json:"cubicle"`                       // 工位
-	EntryDate   string `json:"entry_date" binding:"required"` // 入职日期
-	RegularDate string `json:"regular_date"`                  // 转正日期
-	ResignDate  string `json:"resign_date"`                   // 离职日期
+	WorkerNo    string     `json:"worker_no" binding:"required"`  // 工号
+	Cubicle     string     `json:"cubicle"`                       // 工位
+	EntryDate   *time.Time `json:"entry_date" binding:"required"` // 入职日期
+	RegularDate *time.Time `json:"regular_date"`                  // 转正日期
+	ResignDate  *time.Time `json:"resign_date"`                   // 离职日期
 
 	OrgID string        `json:"org_id"` // 企业id
 	Org   *OrgOrganShow `json:"org"`    //
@@ -25,6 +25,9 @@ type OrgStaff struct {
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`
 	Memo     *string `json:"memo"` //
+
+	IdenAddr *SysAddress `json:"iden_addr"` // 身份证地址
+	ResiAddr *SysAddress `json:"resi_addr"` // 现居地址
 
 	Creator   string     `json:"creator"`    // 创建者
 	CreatedAt *time.Time `json:"created_at"` // 创建时间

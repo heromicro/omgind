@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
 
 // OrgStaff is the model entity for the OrgStaff schema.
@@ -40,19 +41,23 @@ type OrgStaff struct {
 	// 性别
 	Gender *orgstaff.Gender `json:"gender,omitempty"`
 	// 出生日期
-	BirthDate *string `json:"birth_date,omitempty"`
+	BirthDate *time.Time `json:"birth_date,omitempty"`
 	// 身份证号码
 	IdenNo *string `json:"iden_no,omitempty"`
+	// 身份证地址
+	IdenAddrID *string `json:"iden_addr_id,omitempty"`
+	// 现居地址
+	ResiAddrID *string `json:"resi_addr_id,omitempty"`
 	// 工号
 	WorkerNo *string `json:"worker_no,omitempty"`
 	// 工位
 	Cubicle *string `json:"cubicle,omitempty"`
 	// 入职日期
-	EntryDate *string `json:"entry_date,omitempty"`
+	EntryDate *time.Time `json:"entry_date,omitempty"`
 	// 转正日期
-	RegularDate *string `json:"regular_date,omitempty"`
+	RegularDate *time.Time `json:"regular_date,omitempty"`
 	// 离职日期
-	ResignDate *string `json:"resign_date,omitempty"`
+	ResignDate *time.Time `json:"resign_date,omitempty"`
 	// 企业id
 	OrgID *string `json:"org_id,omitempty"`
 	// 创建者
@@ -66,9 +71,13 @@ type OrgStaff struct {
 type OrgStaffEdges struct {
 	// Organ holds the value of the organ edge.
 	Organ *OrgOrgan `json:"organ,omitempty"`
+	// IdenAddr holds the value of the iden_addr edge.
+	IdenAddr *SysAddress `json:"iden_addr,omitempty"`
+	// ResiAddr holds the value of the resi_addr edge.
+	ResiAddr *SysAddress `json:"resi_addr,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [3]bool
 }
 
 // OrganOrErr returns the Organ value or an error if the edge
@@ -84,6 +93,32 @@ func (e OrgStaffEdges) OrganOrErr() (*OrgOrgan, error) {
 	return nil, &NotLoadedError{edge: "organ"}
 }
 
+// IdenAddrOrErr returns the IdenAddr value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e OrgStaffEdges) IdenAddrOrErr() (*SysAddress, error) {
+	if e.loadedTypes[1] {
+		if e.IdenAddr == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: sysaddress.Label}
+		}
+		return e.IdenAddr, nil
+	}
+	return nil, &NotLoadedError{edge: "iden_addr"}
+}
+
+// ResiAddrOrErr returns the ResiAddr value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e OrgStaffEdges) ResiAddrOrErr() (*SysAddress, error) {
+	if e.loadedTypes[2] {
+		if e.ResiAddr == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: sysaddress.Label}
+		}
+		return e.ResiAddr, nil
+	}
+	return nil, &NotLoadedError{edge: "resi_addr"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
@@ -93,9 +128,9 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldBirthDate, orgstaff.FieldIdenNo, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate, orgstaff.FieldOrgID, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
-		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt:
+		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type OrgStaff", columns[i])
@@ -193,11 +228,11 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				*os.Gender = orgstaff.Gender(value.String)
 			}
 		case orgstaff.FieldBirthDate:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field birth_date", values[i])
 			} else if value.Valid {
-				os.BirthDate = new(string)
-				*os.BirthDate = value.String
+				os.BirthDate = new(time.Time)
+				*os.BirthDate = value.Time
 			}
 		case orgstaff.FieldIdenNo:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -205,6 +240,20 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				os.IdenNo = new(string)
 				*os.IdenNo = value.String
+			}
+		case orgstaff.FieldIdenAddrID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field iden_addr_id", values[i])
+			} else if value.Valid {
+				os.IdenAddrID = new(string)
+				*os.IdenAddrID = value.String
+			}
+		case orgstaff.FieldResiAddrID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field resi_addr_id", values[i])
+			} else if value.Valid {
+				os.ResiAddrID = new(string)
+				*os.ResiAddrID = value.String
 			}
 		case orgstaff.FieldWorkerNo:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -221,25 +270,25 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				*os.Cubicle = value.String
 			}
 		case orgstaff.FieldEntryDate:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field entry_date", values[i])
 			} else if value.Valid {
-				os.EntryDate = new(string)
-				*os.EntryDate = value.String
+				os.EntryDate = new(time.Time)
+				*os.EntryDate = value.Time
 			}
 		case orgstaff.FieldRegularDate:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field regular_date", values[i])
 			} else if value.Valid {
-				os.RegularDate = new(string)
-				*os.RegularDate = value.String
+				os.RegularDate = new(time.Time)
+				*os.RegularDate = value.Time
 			}
 		case orgstaff.FieldResignDate:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field resign_date", values[i])
 			} else if value.Valid {
-				os.ResignDate = new(string)
-				*os.ResignDate = value.String
+				os.ResignDate = new(time.Time)
+				*os.ResignDate = value.Time
 			}
 		case orgstaff.FieldOrgID:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -263,6 +312,16 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 // QueryOrgan queries the "organ" edge of the OrgStaff entity.
 func (os *OrgStaff) QueryOrgan() *OrgOrganQuery {
 	return NewOrgStaffClient(os.config).QueryOrgan(os)
+}
+
+// QueryIdenAddr queries the "iden_addr" edge of the OrgStaff entity.
+func (os *OrgStaff) QueryIdenAddr() *SysAddressQuery {
+	return NewOrgStaffClient(os.config).QueryIdenAddr(os)
+}
+
+// QueryResiAddr queries the "resi_addr" edge of the OrgStaff entity.
+func (os *OrgStaff) QueryResiAddr() *SysAddressQuery {
+	return NewOrgStaffClient(os.config).QueryResiAddr(os)
 }
 
 // Update returns a builder for updating this OrgStaff.
@@ -339,11 +398,21 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	if v := os.BirthDate; v != nil {
 		builder.WriteString("birth_date=")
-		builder.WriteString(*v)
+		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	if v := os.IdenNo; v != nil {
 		builder.WriteString("iden_no=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := os.IdenAddrID; v != nil {
+		builder.WriteString("iden_addr_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := os.ResiAddrID; v != nil {
+		builder.WriteString("resi_addr_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
@@ -359,17 +428,17 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	if v := os.EntryDate; v != nil {
 		builder.WriteString("entry_date=")
-		builder.WriteString(*v)
+		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	if v := os.RegularDate; v != nil {
 		builder.WriteString("regular_date=")
-		builder.WriteString(*v)
+		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	if v := os.ResignDate; v != nil {
 		builder.WriteString("resign_date=")
-		builder.WriteString(*v)
+		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	if v := os.OrgID; v != nil {

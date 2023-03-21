@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
@@ -471,6 +472,44 @@ func (sau *SysAddressUpdate) SetOrgan(o *OrgOrgan) *SysAddressUpdate {
 	return sau.SetOrganID(o.ID)
 }
 
+// SetStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID.
+func (sau *SysAddressUpdate) SetStaffResiID(id string) *SysAddressUpdate {
+	sau.mutation.SetStaffResiID(id)
+	return sau
+}
+
+// SetNillableStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID if the given value is not nil.
+func (sau *SysAddressUpdate) SetNillableStaffResiID(id *string) *SysAddressUpdate {
+	if id != nil {
+		sau = sau.SetStaffResiID(*id)
+	}
+	return sau
+}
+
+// SetStaffResi sets the "staff_resi" edge to the OrgStaff entity.
+func (sau *SysAddressUpdate) SetStaffResi(o *OrgStaff) *SysAddressUpdate {
+	return sau.SetStaffResiID(o.ID)
+}
+
+// SetStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID.
+func (sau *SysAddressUpdate) SetStaffIdenID(id string) *SysAddressUpdate {
+	sau.mutation.SetStaffIdenID(id)
+	return sau
+}
+
+// SetNillableStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID if the given value is not nil.
+func (sau *SysAddressUpdate) SetNillableStaffIdenID(id *string) *SysAddressUpdate {
+	if id != nil {
+		sau = sau.SetStaffIdenID(*id)
+	}
+	return sau
+}
+
+// SetStaffIden sets the "staff_iden" edge to the OrgStaff entity.
+func (sau *SysAddressUpdate) SetStaffIden(o *OrgStaff) *SysAddressUpdate {
+	return sau.SetStaffIdenID(o.ID)
+}
+
 // Mutation returns the SysAddressMutation object of the builder.
 func (sau *SysAddressUpdate) Mutation() *SysAddressMutation {
 	return sau.mutation
@@ -479,6 +518,18 @@ func (sau *SysAddressUpdate) Mutation() *SysAddressMutation {
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
 func (sau *SysAddressUpdate) ClearOrgan() *SysAddressUpdate {
 	sau.mutation.ClearOrgan()
+	return sau
+}
+
+// ClearStaffResi clears the "staff_resi" edge to the OrgStaff entity.
+func (sau *SysAddressUpdate) ClearStaffResi() *SysAddressUpdate {
+	sau.mutation.ClearStaffResi()
+	return sau
+}
+
+// ClearStaffIden clears the "staff_iden" edge to the OrgStaff entity.
+func (sau *SysAddressUpdate) ClearStaffIden() *SysAddressUpdate {
+	sau.mutation.ClearStaffIden()
 	return sau
 }
 
@@ -770,6 +821,80 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			},
 		}
 		edge.Schema = sau.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if sau.mutation.StaffResiCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffResiTable,
+			Columns: []string{sysaddress.StaffResiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sau.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sau.mutation.StaffResiIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffResiTable,
+			Columns: []string{sysaddress.StaffResiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sau.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if sau.mutation.StaffIdenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffIdenTable,
+			Columns: []string{sysaddress.StaffIdenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sau.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sau.mutation.StaffIdenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffIdenTable,
+			Columns: []string{sysaddress.StaffIdenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sau.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1239,6 +1364,44 @@ func (sauo *SysAddressUpdateOne) SetOrgan(o *OrgOrgan) *SysAddressUpdateOne {
 	return sauo.SetOrganID(o.ID)
 }
 
+// SetStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID.
+func (sauo *SysAddressUpdateOne) SetStaffResiID(id string) *SysAddressUpdateOne {
+	sauo.mutation.SetStaffResiID(id)
+	return sauo
+}
+
+// SetNillableStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID if the given value is not nil.
+func (sauo *SysAddressUpdateOne) SetNillableStaffResiID(id *string) *SysAddressUpdateOne {
+	if id != nil {
+		sauo = sauo.SetStaffResiID(*id)
+	}
+	return sauo
+}
+
+// SetStaffResi sets the "staff_resi" edge to the OrgStaff entity.
+func (sauo *SysAddressUpdateOne) SetStaffResi(o *OrgStaff) *SysAddressUpdateOne {
+	return sauo.SetStaffResiID(o.ID)
+}
+
+// SetStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID.
+func (sauo *SysAddressUpdateOne) SetStaffIdenID(id string) *SysAddressUpdateOne {
+	sauo.mutation.SetStaffIdenID(id)
+	return sauo
+}
+
+// SetNillableStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID if the given value is not nil.
+func (sauo *SysAddressUpdateOne) SetNillableStaffIdenID(id *string) *SysAddressUpdateOne {
+	if id != nil {
+		sauo = sauo.SetStaffIdenID(*id)
+	}
+	return sauo
+}
+
+// SetStaffIden sets the "staff_iden" edge to the OrgStaff entity.
+func (sauo *SysAddressUpdateOne) SetStaffIden(o *OrgStaff) *SysAddressUpdateOne {
+	return sauo.SetStaffIdenID(o.ID)
+}
+
 // Mutation returns the SysAddressMutation object of the builder.
 func (sauo *SysAddressUpdateOne) Mutation() *SysAddressMutation {
 	return sauo.mutation
@@ -1247,6 +1410,18 @@ func (sauo *SysAddressUpdateOne) Mutation() *SysAddressMutation {
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
 func (sauo *SysAddressUpdateOne) ClearOrgan() *SysAddressUpdateOne {
 	sauo.mutation.ClearOrgan()
+	return sauo
+}
+
+// ClearStaffResi clears the "staff_resi" edge to the OrgStaff entity.
+func (sauo *SysAddressUpdateOne) ClearStaffResi() *SysAddressUpdateOne {
+	sauo.mutation.ClearStaffResi()
+	return sauo
+}
+
+// ClearStaffIden clears the "staff_iden" edge to the OrgStaff entity.
+func (sauo *SysAddressUpdateOne) ClearStaffIden() *SysAddressUpdateOne {
+	sauo.mutation.ClearStaffIden()
 	return sauo
 }
 
@@ -1568,6 +1743,80 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 			},
 		}
 		edge.Schema = sauo.schemaConfig.OrgOrgan
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if sauo.mutation.StaffResiCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffResiTable,
+			Columns: []string{sysaddress.StaffResiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sauo.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sauo.mutation.StaffResiIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffResiTable,
+			Columns: []string{sysaddress.StaffResiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sauo.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if sauo.mutation.StaffIdenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffIdenTable,
+			Columns: []string{sysaddress.StaffIdenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sauo.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sauo.mutation.StaffIdenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2O,
+			Inverse: false,
+			Table:   sysaddress.StaffIdenTable,
+			Columns: []string{sysaddress.StaffIdenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeString,
+					Column: orgstaff.FieldID,
+				},
+			},
+		}
+		edge.Schema = sauo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
