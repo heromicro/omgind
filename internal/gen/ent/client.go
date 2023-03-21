@@ -1253,6 +1253,25 @@ func (c *SysDictClient) GetX(ctx context.Context, id string) *SysDict {
 	return obj
 }
 
+// QueryItems queries the items edge of a SysDict.
+func (c *SysDictClient) QueryItems(sd *SysDict) *SysDictItemQuery {
+	query := (&SysDictItemClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := sd.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdict.Table, sysdict.FieldID, id),
+			sqlgraph.To(sysdictitem.Table, sysdictitem.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, sysdict.ItemsTable, sysdict.ItemsColumn),
+		)
+		schemaConfig := sd.schemaConfig
+		step.To.Schema = schemaConfig.SysDictItem
+		step.Edge.Schema = schemaConfig.SysDictItem
+		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *SysDictClient) Hooks() []Hook {
 	return c.hooks.SysDict
@@ -1369,6 +1388,25 @@ func (c *SysDictItemClient) GetX(ctx context.Context, id string) *SysDictItem {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryDict queries the dict edge of a SysDictItem.
+func (c *SysDictItemClient) QueryDict(sdi *SysDictItem) *SysDictQuery {
+	query := (&SysDictClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := sdi.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdictitem.Table, sysdictitem.FieldID, id),
+			sqlgraph.To(sysdict.Table, sysdict.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, sysdictitem.DictTable, sysdictitem.DictColumn),
+		)
+		schemaConfig := sdi.schemaConfig
+		step.To.Schema = schemaConfig.SysDict
+		step.Edge.Schema = schemaConfig.SysDictItem
+		fromV = sqlgraph.Neighbors(sdi.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.

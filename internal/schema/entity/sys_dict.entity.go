@@ -2,6 +2,7 @@ package entity
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/schema/mixin"
 )
@@ -33,7 +34,7 @@ func (sd SysDict) Fields() []ent.Field {
 
 func (sd SysDict) Edges() []ent.Edge {
 	return []ent.Edge{
-		//edge.To("SysDictItems", SysDictItem.Type),
+		edge.To("items", SysDictItem.Type),
 	}
 }
 

@@ -54,6 +54,16 @@ func IDLTE(id string) predicate.SysRole {
 	return predicate.SysRole(sql.FieldLTE(FieldID, id))
 }
 
+// IDEqualFold applies the EqualFold predicate on the ID field.
+func IDEqualFold(id string) predicate.SysRole {
+	return predicate.SysRole(sql.FieldEqualFold(FieldID, id))
+}
+
+// IDContainsFold applies the ContainsFold predicate on the ID field.
+func IDContainsFold(id string) predicate.SysRole {
+	return predicate.SysRole(sql.FieldContainsFold(FieldID, id))
+}
+
 // IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
 func IsDel(v bool) predicate.SysRole {
 	return predicate.SysRole(sql.FieldEQ(FieldIsDel, v))

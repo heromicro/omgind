@@ -56,6 +56,16 @@ func IDLTE(id string) predicate.OrgPosition {
 	return predicate.OrgPosition(sql.FieldLTE(FieldID, id))
 }
 
+// IDEqualFold applies the EqualFold predicate on the ID field.
+func IDEqualFold(id string) predicate.OrgPosition {
+	return predicate.OrgPosition(sql.FieldEqualFold(FieldID, id))
+}
+
+// IDContainsFold applies the ContainsFold predicate on the ID field.
+func IDContainsFold(id string) predicate.OrgPosition {
+	return predicate.OrgPosition(sql.FieldContainsFold(FieldID, id))
+}
+
 // IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
 func IsDel(v bool) predicate.OrgPosition {
 	return predicate.OrgPosition(sql.FieldEQ(FieldIsDel, v))

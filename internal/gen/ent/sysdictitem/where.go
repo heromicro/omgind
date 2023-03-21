@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -52,6 +54,16 @@ func IDLT(id string) predicate.SysDictItem {
 // IDLTE applies the LTE predicate on the ID field.
 func IDLTE(id string) predicate.SysDictItem {
 	return predicate.SysDictItem(sql.FieldLTE(FieldID, id))
+}
+
+// IDEqualFold applies the EqualFold predicate on the ID field.
+func IDEqualFold(id string) predicate.SysDictItem {
+	return predicate.SysDictItem(sql.FieldEqualFold(FieldID, id))
+}
+
+// IDContainsFold applies the ContainsFold predicate on the ID field.
+func IDContainsFold(id string) predicate.SysDictItem {
+	return predicate.SysDictItem(sql.FieldContainsFold(FieldID, id))
 }
 
 // IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
@@ -552,6 +564,39 @@ func DictIDEqualFold(v string) predicate.SysDictItem {
 // DictIDContainsFold applies the ContainsFold predicate on the "dict_id" field.
 func DictIDContainsFold(v string) predicate.SysDictItem {
 	return predicate.SysDictItem(sql.FieldContainsFold(FieldDictID, v))
+}
+
+// HasDict applies the HasEdge predicate on the "dict" edge.
+func HasDict() predicate.SysDictItem {
+	return predicate.SysDictItem(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, DictTable, DictColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysDict
+		step.Edge.Schema = schemaConfig.SysDictItem
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasDictWith applies the HasEdge predicate on the "dict" edge with a given conditions (other predicates).
+func HasDictWith(preds ...predicate.SysDict) predicate.SysDictItem {
+	return predicate.SysDictItem(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(DictInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, DictTable, DictColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.SysDict
+		step.Edge.Schema = schemaConfig.SysDictItem
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

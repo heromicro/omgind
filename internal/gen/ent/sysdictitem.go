@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 )
 
@@ -36,6 +37,31 @@ type SysDictItem struct {
 	Value int `json:"value,omitempty"`
 	// sys_dict.id
 	DictID string `json:"dict_id,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the SysDictItemQuery when eager-loading is set.
+	Edges SysDictItemEdges `json:"edges"`
+}
+
+// SysDictItemEdges holds the relations/edges for other nodes in the graph.
+type SysDictItemEdges struct {
+	// Dict holds the value of the dict edge.
+	Dict *SysDict `json:"dict,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [1]bool
+}
+
+// DictOrErr returns the Dict value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysDictItemEdges) DictOrErr() (*SysDict, error) {
+	if e.loadedTypes[0] {
+		if e.Dict == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: sysdict.Label}
+		}
+		return e.Dict, nil
+	}
+	return nil, &NotLoadedError{edge: "dict"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -139,6 +165,11 @@ func (sdi *SysDictItem) assignValues(columns []string, values []any) error {
 		}
 	}
 	return nil
+}
+
+// QueryDict queries the "dict" edge of the SysDictItem entity.
+func (sdi *SysDictItem) QueryDict() *SysDictQuery {
+	return NewSysDictItemClient(sdi.config).QueryDict(sdi)
 }
 
 // Update returns a builder for updating this SysDictItem.

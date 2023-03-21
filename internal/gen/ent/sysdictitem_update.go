@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 )
 
@@ -156,9 +157,20 @@ func (sdiu *SysDictItemUpdate) SetDictID(s string) *SysDictItemUpdate {
 	return sdiu
 }
 
+// SetDict sets the "dict" edge to the SysDict entity.
+func (sdiu *SysDictItemUpdate) SetDict(s *SysDict) *SysDictItemUpdate {
+	return sdiu.SetDictID(s.ID)
+}
+
 // Mutation returns the SysDictItemMutation object of the builder.
 func (sdiu *SysDictItemUpdate) Mutation() *SysDictItemMutation {
 	return sdiu.mutation
+}
+
+// ClearDict clears the "dict" edge to the SysDict entity.
+func (sdiu *SysDictItemUpdate) ClearDict() *SysDictItemUpdate {
+	sdiu.mutation.ClearDict()
+	return sdiu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -213,6 +225,9 @@ func (sdiu *SysDictItemUpdate) check() error {
 		if err := sysdictitem.DictIDValidator(v); err != nil {
 			return &ValidationError{Name: "dict_id", err: fmt.Errorf(`ent: validator failed for field "SysDictItem.dict_id": %w`, err)}
 		}
+	}
+	if _, ok := sdiu.mutation.DictID(); sdiu.mutation.DictCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "SysDictItem.dict"`)
 	}
 	return nil
 }
@@ -277,8 +292,36 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sdiu.mutation.AddedValue(); ok {
 		_spec.AddField(sysdictitem.FieldValue, field.TypeInt, value)
 	}
-	if value, ok := sdiu.mutation.DictID(); ok {
-		_spec.SetField(sysdictitem.FieldDictID, field.TypeString, value)
+	if sdiu.mutation.DictCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdictitem.DictTable,
+			Columns: []string{sysdictitem.DictColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = sdiu.schemaConfig.SysDictItem
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sdiu.mutation.DictIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdictitem.DictTable,
+			Columns: []string{sysdictitem.DictColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = sdiu.schemaConfig.SysDictItem
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = sdiu.schemaConfig.SysDictItem
 	ctx = internal.NewSchemaConfigContext(ctx, sdiu.schemaConfig)
@@ -430,9 +473,20 @@ func (sdiuo *SysDictItemUpdateOne) SetDictID(s string) *SysDictItemUpdateOne {
 	return sdiuo
 }
 
+// SetDict sets the "dict" edge to the SysDict entity.
+func (sdiuo *SysDictItemUpdateOne) SetDict(s *SysDict) *SysDictItemUpdateOne {
+	return sdiuo.SetDictID(s.ID)
+}
+
 // Mutation returns the SysDictItemMutation object of the builder.
 func (sdiuo *SysDictItemUpdateOne) Mutation() *SysDictItemMutation {
 	return sdiuo.mutation
+}
+
+// ClearDict clears the "dict" edge to the SysDict entity.
+func (sdiuo *SysDictItemUpdateOne) ClearDict() *SysDictItemUpdateOne {
+	sdiuo.mutation.ClearDict()
+	return sdiuo
 }
 
 // Where appends a list predicates to the SysDictItemUpdate builder.
@@ -500,6 +554,9 @@ func (sdiuo *SysDictItemUpdateOne) check() error {
 		if err := sysdictitem.DictIDValidator(v); err != nil {
 			return &ValidationError{Name: "dict_id", err: fmt.Errorf(`ent: validator failed for field "SysDictItem.dict_id": %w`, err)}
 		}
+	}
+	if _, ok := sdiuo.mutation.DictID(); sdiuo.mutation.DictCleared() && !ok {
+		return errors.New(`ent: clearing a required unique edge "SysDictItem.dict"`)
 	}
 	return nil
 }
@@ -581,8 +638,36 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 	if value, ok := sdiuo.mutation.AddedValue(); ok {
 		_spec.AddField(sysdictitem.FieldValue, field.TypeInt, value)
 	}
-	if value, ok := sdiuo.mutation.DictID(); ok {
-		_spec.SetField(sysdictitem.FieldDictID, field.TypeString, value)
+	if sdiuo.mutation.DictCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdictitem.DictTable,
+			Columns: []string{sysdictitem.DictColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = sdiuo.schemaConfig.SysDictItem
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sdiuo.mutation.DictIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdictitem.DictTable,
+			Columns: []string{sysdictitem.DictColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = sdiuo.schemaConfig.SysDictItem
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.Node.Schema = sdiuo.schemaConfig.SysDictItem
 	ctx = internal.NewSchemaConfigContext(ctx, sdiuo.schemaConfig)

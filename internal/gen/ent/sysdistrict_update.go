@@ -1102,10 +1102,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{sysdistrict.ParentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sdu.schemaConfig.SysDistrict
@@ -1119,10 +1116,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{sysdistrict.ParentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sdu.schemaConfig.SysDistrict
@@ -1139,10 +1133,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{sysdistrict.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sdu.schemaConfig.SysDistrict
@@ -1156,10 +1147,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{sysdistrict.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sdu.schemaConfig.SysDistrict
@@ -1176,10 +1164,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{sysdistrict.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sdu.schemaConfig.SysDistrict
@@ -2314,10 +2299,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Columns: []string{sysdistrict.ParentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sduo.schemaConfig.SysDistrict
@@ -2331,10 +2313,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Columns: []string{sysdistrict.ParentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sduo.schemaConfig.SysDistrict
@@ -2351,10 +2330,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Columns: []string{sysdistrict.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sduo.schemaConfig.SysDistrict
@@ -2368,10 +2344,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Columns: []string{sysdistrict.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sduo.schemaConfig.SysDistrict
@@ -2388,10 +2361,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			Columns: []string{sysdistrict.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sduo.schemaConfig.SysDistrict

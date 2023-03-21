@@ -29,8 +29,17 @@ const (
 	FieldNameCn = "name_cn"
 	// FieldNameEn holds the string denoting the name_en field in the database.
 	FieldNameEn = "name_en"
+	// EdgeItems holds the string denoting the items edge name in mutations.
+	EdgeItems = "items"
 	// Table holds the table name of the sysdict in the database.
 	Table = "sys_dicts"
+	// ItemsTable is the table that holds the items relation/edge.
+	ItemsTable = "sys_dict_items"
+	// ItemsInverseTable is the table name for the SysDictItem entity.
+	// It exists in this package in order to avoid circular dependency with the "sysdictitem" package.
+	ItemsInverseTable = "sys_dict_items"
+	// ItemsColumn is the table column denoting the items relation/edge.
+	ItemsColumn = "dict_id"
 )
 
 // Columns holds all SQL columns for sysdict fields.

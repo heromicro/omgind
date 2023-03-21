@@ -342,6 +342,10 @@ func init() {
 	orgstaffDescOrgID := orgstaffFields[13].Descriptor()
 	// orgstaff.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	orgstaff.OrgIDValidator = orgstaffDescOrgID.Validators[0].(func(string) error)
+	// orgstaffDescEmploymentStatus is the schema descriptor for employment_status field.
+	orgstaffDescEmploymentStatus := orgstaffFields[14].Descriptor()
+	// orgstaff.DefaultEmploymentStatus holds the default value on creation for the employment_status field.
+	orgstaff.DefaultEmploymentStatus = orgstaffDescEmploymentStatus.Default.(int)
 	// orgstaffDescID is the schema descriptor for id field.
 	orgstaffDescID := orgstaffMixinFields0[0].Descriptor()
 	// orgstaff.DefaultID holds the default value on creation for the id field.
@@ -608,9 +612,9 @@ func init() {
 			validators[0].(func(string) error),
 			validators[1].(func(string) error),
 		}
-		return func(dict_id string) error {
+		return func(dict string) error {
 			for _, fn := range fns {
-				if err := fn(dict_id); err != nil {
+				if err := fn(dict); err != nil {
 					return err
 				}
 			}
@@ -1679,6 +1683,6 @@ func init() {
 }
 
 const (
-	Version = "v0.11.9"                                         // Version of ent codegen.
-	Sum     = "h1:dbbCkAiPVTRBIJwoZctiSYjB7zxQIBOzVSU5H9VYIQI=" // Sum of ent codegen.
+	Version = "v0.11.10"                                        // Version of ent codegen.
+	Sum     = "h1:iqn32ybY5HRW3xSAyMNdNKpZhKgMf1Zunsej9yPKUI8=" // Sum of ent codegen.
 )

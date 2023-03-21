@@ -56,6 +56,16 @@ func IDLTE(id string) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldLTE(FieldID, id))
 }
 
+// IDEqualFold applies the EqualFold predicate on the ID field.
+func IDEqualFold(id string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldEqualFold(FieldID, id))
+}
+
+// IDContainsFold applies the ContainsFold predicate on the ID field.
+func IDContainsFold(id string) predicate.SysDistrict {
+	return predicate.SysDistrict(sql.FieldContainsFold(FieldID, id))
+}
+
 // IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
 func IsDel(v bool) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldEQ(FieldIsDel, v))

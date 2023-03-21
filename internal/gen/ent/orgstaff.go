@@ -60,6 +60,8 @@ type OrgStaff struct {
 	ResignDate *time.Time `json:"resign_date,omitempty"`
 	// 企业id
 	OrgID *string `json:"org_id,omitempty"`
+	// 在职状态
+	EmploymentStatus int `json:"employment_status,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -126,7 +128,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case orgstaff.FieldIsDel, orgstaff.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case orgstaff.FieldSort:
+		case orgstaff.FieldSort, orgstaff.FieldEmploymentStatus:
 			values[i] = new(sql.NullInt64)
 		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
@@ -297,6 +299,12 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				os.OrgID = new(string)
 				*os.OrgID = value.String
 			}
+		case orgstaff.FieldEmploymentStatus:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field employment_status", values[i])
+			} else if value.Valid {
+				os.EmploymentStatus = int(value.Int64)
+			}
 		case orgstaff.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -445,6 +453,9 @@ func (os *OrgStaff) String() string {
 		builder.WriteString("org_id=")
 		builder.WriteString(*v)
 	}
+	builder.WriteString(", ")
+	builder.WriteString("employment_status=")
+	builder.WriteString(fmt.Sprintf("%v", os.EmploymentStatus))
 	builder.WriteString(", ")
 	if v := os.Creator; v != nil {
 		builder.WriteString("creator=")

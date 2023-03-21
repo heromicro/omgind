@@ -54,6 +54,8 @@ const (
 	FieldResignDate = "resign_date"
 	// FieldOrgID holds the string denoting the org_id field in the database.
 	FieldOrgID = "org_id"
+	// FieldEmploymentStatus holds the string denoting the employment_status field in the database.
+	FieldEmploymentStatus = "empt_sts"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
@@ -111,6 +113,7 @@ var Columns = []string{
 	FieldRegularDate,
 	FieldResignDate,
 	FieldOrgID,
+	FieldEmploymentStatus,
 	FieldCreator,
 }
 
@@ -157,6 +160,8 @@ var (
 	CubicleValidator func(string) error
 	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	OrgIDValidator func(string) error
+	// DefaultEmploymentStatus holds the default value on creation for the "employment_status" field.
+	DefaultEmploymentStatus int
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

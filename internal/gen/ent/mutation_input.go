@@ -556,31 +556,32 @@ func (u *OrgPositionUpdateOne) SetInput(i UpdateOrgPositionInput) *OrgPositionUp
 
 // CreateOrgStaffInput represents a mutation input for creating orgstaffs.
 type CreateOrgStaffInput struct {
-	IsDel       *bool
-	Sort        *int32
-	CreatedAt   *time.Time
-	UpdatedAt   *time.Time
-	DeletedAt   *time.Time
-	IsActive    *bool
-	Memo        *string
-	FirstName   *string
-	LastName    *string
-	Mobile      *string
-	Gender      *orgstaff.Gender
-	BirthDate   *time.Time
-	IdenNo      *string
-	IdenAddrID  *string
-	ResiAddrID  *string
-	WorkerNo    *string
-	Cubicle     *string
-	EntryDate   *time.Time
-	RegularDate *time.Time
-	ResignDate  *time.Time
-	OrgID       *string
-	Creator     *string
-	Organ       *string
-	IdenAddr    *string
-	ResiAddr    *string
+	IsDel            *bool
+	Sort             *int32
+	CreatedAt        *time.Time
+	UpdatedAt        *time.Time
+	DeletedAt        *time.Time
+	IsActive         *bool
+	Memo             *string
+	FirstName        *string
+	LastName         *string
+	Mobile           *string
+	Gender           *orgstaff.Gender
+	BirthDate        *time.Time
+	IdenNo           *string
+	IdenAddrID       *string
+	ResiAddrID       *string
+	WorkerNo         *string
+	Cubicle          *string
+	EntryDate        *time.Time
+	RegularDate      *time.Time
+	ResignDate       *time.Time
+	OrgID            *string
+	EmploymentStatus *int
+	Creator          *string
+	Organ            *string
+	IdenAddr         *string
+	ResiAddr         *string
 }
 
 // Mutate applies the CreateOrgStaffInput on the OrgStaffCreate builder.
@@ -648,6 +649,9 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
 	}
+	if v := i.EmploymentStatus; v != nil {
+		m.SetEmploymentStatus(*v)
+	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
 	}
@@ -707,6 +711,7 @@ type UpdateOrgStaffInput struct {
 	ClearResignDate  bool
 	OrgID            *string
 	ClearOrgID       bool
+	EmploymentStatus *int
 	Creator          *string
 	ClearCreator     bool
 	Organ            *string
@@ -829,6 +834,9 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	}
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
+	}
+	if v := i.EmploymentStatus; v != nil {
+		m.SetEmploymentStatus(*v)
 	}
 	if i.ClearCreator {
 		m.ClearCreator()
@@ -1209,6 +1217,7 @@ type CreateSysDictInput struct {
 	IsActive  *bool
 	NameCn    string
 	NameEn    string
+	Items     []string
 }
 
 // Mutate applies the CreateSysDictInput on the SysDictCreate builder.
@@ -1236,6 +1245,9 @@ func (i *CreateSysDictInput) Mutate(m *SysDictCreate) {
 	}
 	m.SetNameCn(i.NameCn)
 	m.SetNameEn(i.NameEn)
+	if ids := i.Items; len(ids) > 0 {
+		m.AddItemIDs(ids...)
+	}
 }
 
 // SetInput applies the change-set in the CreateSysDictInput on the create builder.
@@ -1257,6 +1269,8 @@ type UpdateSysDictInput struct {
 	IsActive       *bool
 	NameCn         *string
 	NameEn         *string
+	AddItemIDs     []string
+	RemoveItemIDs  []string
 }
 
 // Mutate applies the UpdateSysDictInput on the SysDictMutation.
@@ -1294,6 +1308,12 @@ func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	if v := i.NameEn; v != nil {
 		m.SetNameEn(*v)
 	}
+	if ids := i.AddItemIDs; len(ids) > 0 {
+		m.AddItemIDs(ids...)
+	}
+	if ids := i.RemoveItemIDs; len(ids) > 0 {
+		m.RemoveItemIDs(ids...)
+	}
 }
 
 // SetInput applies the change-set in the UpdateSysDictInput on the update builder.
@@ -1320,6 +1340,7 @@ type CreateSysDictItemInput struct {
 	Label     string
 	Value     int
 	DictID    string
+	Dict      string
 }
 
 // Mutate applies the CreateSysDictItemInput on the SysDictItemCreate builder.
@@ -1348,6 +1369,7 @@ func (i *CreateSysDictItemInput) Mutate(m *SysDictItemCreate) {
 	m.SetLabel(i.Label)
 	m.SetValue(i.Value)
 	m.SetDictID(i.DictID)
+	m.SetDictID(i.Dict)
 }
 
 // SetInput applies the change-set in the CreateSysDictItemInput on the create builder.
@@ -1370,6 +1392,8 @@ type UpdateSysDictItemInput struct {
 	Label          *string
 	Value          *int
 	DictID         *string
+	Dict           *string
+	ClearDict      bool
 }
 
 // Mutate applies the UpdateSysDictItemInput on the SysDictItemMutation.
@@ -1408,6 +1432,12 @@ func (i *UpdateSysDictItemInput) Mutate(m *SysDictItemMutation) {
 		m.SetValue(*v)
 	}
 	if v := i.DictID; v != nil {
+		m.SetDictID(*v)
+	}
+	if i.ClearDict {
+		m.ClearDict()
+	}
+	if v := i.Dict; v != nil {
 		m.SetDictID(*v)
 	}
 }

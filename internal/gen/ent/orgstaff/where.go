@@ -56,6 +56,16 @@ func IDLTE(id string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldLTE(FieldID, id))
 }
 
+// IDEqualFold applies the EqualFold predicate on the ID field.
+func IDEqualFold(id string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldID, id))
+}
+
+// IDContainsFold applies the ContainsFold predicate on the ID field.
+func IDContainsFold(id string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldID, id))
+}
+
 // IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
 func IsDel(v bool) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldIsDel, v))
@@ -154,6 +164,11 @@ func ResignDate(v time.Time) predicate.OrgStaff {
 // OrgID applies equality check predicate on the "org_id" field. It's identical to OrgIDEQ.
 func OrgID(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldOrgID, v))
+}
+
+// EmploymentStatus applies equality check predicate on the "employment_status" field. It's identical to EmploymentStatusEQ.
+func EmploymentStatus(v int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldEmploymentStatus, v))
 }
 
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
@@ -1349,6 +1364,46 @@ func OrgIDEqualFold(v string) predicate.OrgStaff {
 // OrgIDContainsFold applies the ContainsFold predicate on the "org_id" field.
 func OrgIDContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldOrgID, v))
+}
+
+// EmploymentStatusEQ applies the EQ predicate on the "employment_status" field.
+func EmploymentStatusEQ(v int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldEmploymentStatus, v))
+}
+
+// EmploymentStatusNEQ applies the NEQ predicate on the "employment_status" field.
+func EmploymentStatusNEQ(v int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldEmploymentStatus, v))
+}
+
+// EmploymentStatusIn applies the In predicate on the "employment_status" field.
+func EmploymentStatusIn(vs ...int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldEmploymentStatus, vs...))
+}
+
+// EmploymentStatusNotIn applies the NotIn predicate on the "employment_status" field.
+func EmploymentStatusNotIn(vs ...int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldEmploymentStatus, vs...))
+}
+
+// EmploymentStatusGT applies the GT predicate on the "employment_status" field.
+func EmploymentStatusGT(v int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldEmploymentStatus, v))
+}
+
+// EmploymentStatusGTE applies the GTE predicate on the "employment_status" field.
+func EmploymentStatusGTE(v int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldEmploymentStatus, v))
+}
+
+// EmploymentStatusLT applies the LT predicate on the "employment_status" field.
+func EmploymentStatusLT(v int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldEmploymentStatus, v))
+}
+
+// EmploymentStatusLTE applies the LTE predicate on the "employment_status" field.
+func EmploymentStatusLTE(v int) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldEmploymentStatus, v))
 }
 
 // CreatorEQ applies the EQ predicate on the "creator" field.

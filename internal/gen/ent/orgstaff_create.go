@@ -319,6 +319,20 @@ func (osc *OrgStaffCreate) SetNillableOrgID(s *string) *OrgStaffCreate {
 	return osc
 }
 
+// SetEmploymentStatus sets the "employment_status" field.
+func (osc *OrgStaffCreate) SetEmploymentStatus(i int) *OrgStaffCreate {
+	osc.mutation.SetEmploymentStatus(i)
+	return osc
+}
+
+// SetNillableEmploymentStatus sets the "employment_status" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableEmploymentStatus(i *int) *OrgStaffCreate {
+	if i != nil {
+		osc.SetEmploymentStatus(*i)
+	}
+	return osc
+}
+
 // SetCreator sets the "creator" field.
 func (osc *OrgStaffCreate) SetCreator(s string) *OrgStaffCreate {
 	osc.mutation.SetCreator(s)
@@ -435,6 +449,10 @@ func (osc *OrgStaffCreate) defaults() {
 		v := orgstaff.DefaultMemo
 		osc.mutation.SetMemo(v)
 	}
+	if _, ok := osc.mutation.EmploymentStatus(); !ok {
+		v := orgstaff.DefaultEmploymentStatus
+		osc.mutation.SetEmploymentStatus(v)
+	}
 	if _, ok := osc.mutation.ID(); !ok {
 		v := orgstaff.DefaultID()
 		osc.mutation.SetID(v)
@@ -501,6 +519,9 @@ func (osc *OrgStaffCreate) check() error {
 		if err := orgstaff.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
+	}
+	if _, ok := osc.mutation.EmploymentStatus(); !ok {
+		return &ValidationError{Name: "employment_status", err: errors.New(`ent: missing required field "OrgStaff.employment_status"`)}
 	}
 	if v, ok := osc.mutation.ID(); ok {
 		if err := orgstaff.IDValidator(v); err != nil {
@@ -616,6 +637,10 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgstaff.FieldResignDate, field.TypeTime, value)
 		_node.ResignDate = &value
 	}
+	if value, ok := osc.mutation.EmploymentStatus(); ok {
+		_spec.SetField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
+		_node.EmploymentStatus = value
+	}
 	if value, ok := osc.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
@@ -628,10 +653,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 			Columns: []string{orgstaff.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osc.schemaConfig.OrgStaff
@@ -649,10 +671,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 			Columns: []string{orgstaff.IdenAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osc.schemaConfig.OrgStaff
@@ -670,10 +689,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 			Columns: []string{orgstaff.ResiAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osc.schemaConfig.OrgStaff
@@ -1080,6 +1096,24 @@ func (u *OrgStaffUpsert) UpdateOrgID() *OrgStaffUpsert {
 // ClearOrgID clears the value of the "org_id" field.
 func (u *OrgStaffUpsert) ClearOrgID() *OrgStaffUpsert {
 	u.SetNull(orgstaff.FieldOrgID)
+	return u
+}
+
+// SetEmploymentStatus sets the "employment_status" field.
+func (u *OrgStaffUpsert) SetEmploymentStatus(v int) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldEmploymentStatus, v)
+	return u
+}
+
+// UpdateEmploymentStatus sets the "employment_status" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateEmploymentStatus() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldEmploymentStatus)
+	return u
+}
+
+// AddEmploymentStatus adds v to the "employment_status" field.
+func (u *OrgStaffUpsert) AddEmploymentStatus(v int) *OrgStaffUpsert {
+	u.Add(orgstaff.FieldEmploymentStatus, v)
 	return u
 }
 
@@ -1555,6 +1589,27 @@ func (u *OrgStaffUpsertOne) UpdateOrgID() *OrgStaffUpsertOne {
 func (u *OrgStaffUpsertOne) ClearOrgID() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearOrgID()
+	})
+}
+
+// SetEmploymentStatus sets the "employment_status" field.
+func (u *OrgStaffUpsertOne) SetEmploymentStatus(v int) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetEmploymentStatus(v)
+	})
+}
+
+// AddEmploymentStatus adds v to the "employment_status" field.
+func (u *OrgStaffUpsertOne) AddEmploymentStatus(v int) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.AddEmploymentStatus(v)
+	})
+}
+
+// UpdateEmploymentStatus sets the "employment_status" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateEmploymentStatus() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateEmploymentStatus()
 	})
 }
 
@@ -2196,6 +2251,27 @@ func (u *OrgStaffUpsertBulk) UpdateOrgID() *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) ClearOrgID() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearOrgID()
+	})
+}
+
+// SetEmploymentStatus sets the "employment_status" field.
+func (u *OrgStaffUpsertBulk) SetEmploymentStatus(v int) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetEmploymentStatus(v)
+	})
+}
+
+// AddEmploymentStatus adds v to the "employment_status" field.
+func (u *OrgStaffUpsertBulk) AddEmploymentStatus(v int) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.AddEmploymentStatus(v)
+	})
+}
+
+// UpdateEmploymentStatus sets the "employment_status" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateEmploymentStatus() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateEmploymentStatus()
 	})
 }
 

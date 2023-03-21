@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 )
 
@@ -23,6 +24,7 @@ type SysDictItemQuery struct {
 	order      []OrderFunc
 	inters     []Interceptor
 	predicates []predicate.SysDictItem
+	withDict   *SysDictQuery
 	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -58,6 +60,31 @@ func (sdiq *SysDictItemQuery) Unique(unique bool) *SysDictItemQuery {
 func (sdiq *SysDictItemQuery) Order(o ...OrderFunc) *SysDictItemQuery {
 	sdiq.order = append(sdiq.order, o...)
 	return sdiq
+}
+
+// QueryDict chains the current query on the "dict" edge.
+func (sdiq *SysDictItemQuery) QueryDict() *SysDictQuery {
+	query := (&SysDictClient{config: sdiq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sdiq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := sdiq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdictitem.Table, sysdictitem.FieldID, selector),
+			sqlgraph.To(sysdict.Table, sysdict.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, sysdictitem.DictTable, sysdictitem.DictColumn),
+		)
+		schemaConfig := sdiq.schemaConfig
+		step.To.Schema = schemaConfig.SysDict
+		step.Edge.Schema = schemaConfig.SysDictItem
+		fromU = sqlgraph.SetNeighbors(sdiq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first SysDictItem entity from the query.
@@ -252,10 +279,22 @@ func (sdiq *SysDictItemQuery) Clone() *SysDictItemQuery {
 		order:      append([]OrderFunc{}, sdiq.order...),
 		inters:     append([]Interceptor{}, sdiq.inters...),
 		predicates: append([]predicate.SysDictItem{}, sdiq.predicates...),
+		withDict:   sdiq.withDict.Clone(),
 		// clone intermediate query.
 		sql:  sdiq.sql.Clone(),
 		path: sdiq.path,
 	}
+}
+
+// WithDict tells the query-builder to eager-load the nodes that are connected to
+// the "dict" edge. The optional arguments are used to configure the query builder of the edge.
+func (sdiq *SysDictItemQuery) WithDict(opts ...func(*SysDictQuery)) *SysDictItemQuery {
+	query := (&SysDictClient{config: sdiq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	sdiq.withDict = query
+	return sdiq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -334,8 +373,11 @@ func (sdiq *SysDictItemQuery) prepareQuery(ctx context.Context) error {
 
 func (sdiq *SysDictItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysDictItem, error) {
 	var (
-		nodes = []*SysDictItem{}
-		_spec = sdiq.querySpec()
+		nodes       = []*SysDictItem{}
+		_spec       = sdiq.querySpec()
+		loadedTypes = [1]bool{
+			sdiq.withDict != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysDictItem).scanValues(nil, columns)
@@ -343,6 +385,7 @@ func (sdiq *SysDictItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysDictItem{config: sdiq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	_spec.Node.Schema = sdiq.schemaConfig.SysDictItem
@@ -359,7 +402,43 @@ func (sdiq *SysDictItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := sdiq.withDict; query != nil {
+		if err := sdiq.loadDict(ctx, query, nodes, nil,
+			func(n *SysDictItem, e *SysDict) { n.Edges.Dict = e }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (sdiq *SysDictItemQuery) loadDict(ctx context.Context, query *SysDictQuery, nodes []*SysDictItem, init func(*SysDictItem), assign func(*SysDictItem, *SysDict)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*SysDictItem)
+	for i := range nodes {
+		fk := nodes[i].DictID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(sysdict.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "dict_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
 }
 
 func (sdiq *SysDictItemQuery) sqlCount(ctx context.Context) (int, error) {

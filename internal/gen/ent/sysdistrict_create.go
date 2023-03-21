@@ -882,10 +882,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 			Columns: []string{sysdistrict.ParentColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sdc.schemaConfig.SysDistrict
@@ -903,10 +900,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 			Columns: []string{sysdistrict.ChildrenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysdistrict.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sdc.schemaConfig.SysDistrict

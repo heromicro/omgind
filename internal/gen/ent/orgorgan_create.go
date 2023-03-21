@@ -500,10 +500,7 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 			Columns: []string{orgorgan.HaddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = ooc.schemaConfig.OrgOrgan
@@ -521,10 +518,7 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 			Columns: []string{orgorgan.DepartmentsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgdepartment.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = ooc.schemaConfig.OrgDepartment
@@ -541,10 +535,7 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 			Columns: []string{orgorgan.StaffsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = ooc.schemaConfig.OrgStaff
@@ -561,10 +552,7 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 			Columns: []string{orgorgan.PositionsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgposition.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = ooc.schemaConfig.OrgPosition

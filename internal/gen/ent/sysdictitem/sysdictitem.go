@@ -31,8 +31,17 @@ const (
 	FieldValue = "val"
 	// FieldDictID holds the string denoting the dict_id field in the database.
 	FieldDictID = "dict_id"
+	// EdgeDict holds the string denoting the dict edge name in mutations.
+	EdgeDict = "dict"
 	// Table holds the table name of the sysdictitem in the database.
 	Table = "sys_dict_items"
+	// DictTable is the table that holds the dict relation/edge.
+	DictTable = "sys_dict_items"
+	// DictInverseTable is the table name for the SysDict entity.
+	// It exists in this package in order to avoid circular dependency with the "sysdict" package.
+	DictInverseTable = "sys_dicts"
+	// DictColumn is the table column denoting the dict relation/edge.
+	DictColumn = "dict_id"
 )
 
 // Columns holds all SQL columns for sysdictitem fields.

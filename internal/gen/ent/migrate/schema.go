@@ -220,6 +220,7 @@ var (
 		{Name: "entry_date", Type: field.TypeTime, Nullable: true},
 		{Name: "regu_date", Type: field.TypeTime, Nullable: true},
 		{Name: "resign_date", Type: field.TypeTime, Nullable: true},
+		{Name: "empt_sts", Type: field.TypeInt, Default: 1},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "rsaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
@@ -233,19 +234,19 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "org_staffs_org_organs_staffs",
-				Columns:    []*schema.Column{OrgStaffsColumns[20]},
+				Columns:    []*schema.Column{OrgStaffsColumns[21]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_sys_addresses_staff_resi",
-				Columns:    []*schema.Column{OrgStaffsColumns[21]},
+				Columns:    []*schema.Column{OrgStaffsColumns[22]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_sys_addresses_staff_iden",
-				Columns:    []*schema.Column{OrgStaffsColumns[22]},
+				Columns:    []*schema.Column{OrgStaffsColumns[23]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -429,6 +430,14 @@ var (
 		Name:       "sys_dict_items",
 		Columns:    SysDictItemsColumns,
 		PrimaryKey: []*schema.Column{SysDictItemsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "sys_dict_items_sys_dicts_items",
+				Columns:    []*schema.Column{SysDictItemsColumns[10]},
+				RefColumns: []*schema.Column{SysDictsColumns[0]},
+				OnDelete:   schema.NoAction,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "sysdictitem_id",
@@ -1135,5 +1144,6 @@ func init() {
 	OrgStaffsTable.ForeignKeys[0].RefTable = OrgOrgansTable
 	OrgStaffsTable.ForeignKeys[1].RefTable = SysAddressesTable
 	OrgStaffsTable.ForeignKeys[2].RefTable = SysAddressesTable
+	SysDictItemsTable.ForeignKeys[0].RefTable = SysDictsTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 }

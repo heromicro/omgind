@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 )
 
@@ -153,6 +154,11 @@ func (sdic *SysDictItemCreate) SetNillableID(s *string) *SysDictItemCreate {
 	return sdic
 }
 
+// SetDict sets the "dict" edge to the SysDict entity.
+func (sdic *SysDictItemCreate) SetDict(s *SysDict) *SysDictItemCreate {
+	return sdic.SetDictID(s.ID)
+}
+
 // Mutation returns the SysDictItemMutation object of the builder.
 func (sdic *SysDictItemCreate) Mutation() *SysDictItemMutation {
 	return sdic.mutation
@@ -258,6 +264,9 @@ func (sdic *SysDictItemCreate) check() error {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "SysDictItem.id": %w`, err)}
 		}
 	}
+	if _, ok := sdic.mutation.DictID(); !ok {
+		return &ValidationError{Name: "dict", err: errors.New(`ent: missing required edge "SysDictItem.dict"`)}
+	}
 	return nil
 }
 
@@ -331,9 +340,23 @@ func (sdic *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec)
 		_spec.SetField(sysdictitem.FieldValue, field.TypeInt, value)
 		_node.Value = value
 	}
-	if value, ok := sdic.mutation.DictID(); ok {
-		_spec.SetField(sysdictitem.FieldDictID, field.TypeString, value)
-		_node.DictID = value
+	if nodes := sdic.mutation.DictIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysdictitem.DictTable,
+			Columns: []string{sysdictitem.DictColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = sdic.schemaConfig.SysDictItem
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.DictID = nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

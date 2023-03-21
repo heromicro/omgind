@@ -54,6 +54,16 @@ func IDLTE(id string) predicate.SysMenu {
 	return predicate.SysMenu(sql.FieldLTE(FieldID, id))
 }
 
+// IDEqualFold applies the EqualFold predicate on the ID field.
+func IDEqualFold(id string) predicate.SysMenu {
+	return predicate.SysMenu(sql.FieldEqualFold(FieldID, id))
+}
+
+// IDContainsFold applies the ContainsFold predicate on the ID field.
+func IDContainsFold(id string) predicate.SysMenu {
+	return predicate.SysMenu(sql.FieldContainsFold(FieldID, id))
+}
+
 // IsDel applies equality check predicate on the "is_del" field. It's identical to IsDelEQ.
 func IsDel(v bool) predicate.SysMenu {
 	return predicate.SysMenu(sql.FieldEQ(FieldIsDel, v))

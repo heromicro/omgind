@@ -413,6 +413,27 @@ func (osu *OrgStaffUpdate) ClearOrgID() *OrgStaffUpdate {
 	return osu
 }
 
+// SetEmploymentStatus sets the "employment_status" field.
+func (osu *OrgStaffUpdate) SetEmploymentStatus(i int) *OrgStaffUpdate {
+	osu.mutation.ResetEmploymentStatus()
+	osu.mutation.SetEmploymentStatus(i)
+	return osu
+}
+
+// SetNillableEmploymentStatus sets the "employment_status" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableEmploymentStatus(i *int) *OrgStaffUpdate {
+	if i != nil {
+		osu.SetEmploymentStatus(*i)
+	}
+	return osu
+}
+
+// AddEmploymentStatus adds i to the "employment_status" field.
+func (osu *OrgStaffUpdate) AddEmploymentStatus(i int) *OrgStaffUpdate {
+	osu.mutation.AddEmploymentStatus(i)
+	return osu
+}
+
 // SetCreator sets the "creator" field.
 func (osu *OrgStaffUpdate) SetCreator(s string) *OrgStaffUpdate {
 	osu.mutation.SetCreator(s)
@@ -693,6 +714,12 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if osu.mutation.ResignDateCleared() {
 		_spec.ClearField(orgstaff.FieldResignDate, field.TypeTime)
 	}
+	if value, ok := osu.mutation.EmploymentStatus(); ok {
+		_spec.SetField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
+	}
+	if value, ok := osu.mutation.AddedEmploymentStatus(); ok {
+		_spec.AddField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
+	}
 	if value, ok := osu.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
 	}
@@ -707,10 +734,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgstaff.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osu.schemaConfig.OrgStaff
@@ -724,10 +748,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgstaff.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osu.schemaConfig.OrgStaff
@@ -744,10 +765,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgstaff.IdenAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osu.schemaConfig.OrgStaff
@@ -761,10 +779,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgstaff.IdenAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osu.schemaConfig.OrgStaff
@@ -781,10 +796,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgstaff.ResiAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osu.schemaConfig.OrgStaff
@@ -798,10 +810,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgstaff.ResiAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osu.schemaConfig.OrgStaff
@@ -1215,6 +1224,27 @@ func (osuo *OrgStaffUpdateOne) ClearOrgID() *OrgStaffUpdateOne {
 	return osuo
 }
 
+// SetEmploymentStatus sets the "employment_status" field.
+func (osuo *OrgStaffUpdateOne) SetEmploymentStatus(i int) *OrgStaffUpdateOne {
+	osuo.mutation.ResetEmploymentStatus()
+	osuo.mutation.SetEmploymentStatus(i)
+	return osuo
+}
+
+// SetNillableEmploymentStatus sets the "employment_status" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableEmploymentStatus(i *int) *OrgStaffUpdateOne {
+	if i != nil {
+		osuo.SetEmploymentStatus(*i)
+	}
+	return osuo
+}
+
+// AddEmploymentStatus adds i to the "employment_status" field.
+func (osuo *OrgStaffUpdateOne) AddEmploymentStatus(i int) *OrgStaffUpdateOne {
+	osuo.mutation.AddEmploymentStatus(i)
+	return osuo
+}
+
 // SetCreator sets the "creator" field.
 func (osuo *OrgStaffUpdateOne) SetCreator(s string) *OrgStaffUpdateOne {
 	osuo.mutation.SetCreator(s)
@@ -1525,6 +1555,12 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	if osuo.mutation.ResignDateCleared() {
 		_spec.ClearField(orgstaff.FieldResignDate, field.TypeTime)
 	}
+	if value, ok := osuo.mutation.EmploymentStatus(); ok {
+		_spec.SetField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
+	}
+	if value, ok := osuo.mutation.AddedEmploymentStatus(); ok {
+		_spec.AddField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
+	}
 	if value, ok := osuo.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
 	}
@@ -1539,10 +1575,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			Columns: []string{orgstaff.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osuo.schemaConfig.OrgStaff
@@ -1556,10 +1589,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			Columns: []string{orgstaff.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osuo.schemaConfig.OrgStaff
@@ -1576,10 +1606,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			Columns: []string{orgstaff.IdenAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osuo.schemaConfig.OrgStaff
@@ -1593,10 +1620,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			Columns: []string{orgstaff.IdenAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osuo.schemaConfig.OrgStaff
@@ -1613,10 +1637,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			Columns: []string{orgstaff.ResiAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osuo.schemaConfig.OrgStaff
@@ -1630,10 +1651,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			Columns: []string{orgstaff.ResiAddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osuo.schemaConfig.OrgStaff

@@ -397,10 +397,7 @@ func (odc *OrgDepartmentCreate) createSpec() (*OrgDepartment, *sqlgraph.CreateSp
 			Columns: []string{orgdepartment.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = odc.schemaConfig.OrgDepartment

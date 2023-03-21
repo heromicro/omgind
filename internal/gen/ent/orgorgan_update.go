@@ -570,10 +570,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.HaddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgOrgan
@@ -587,10 +584,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.HaddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgOrgan
@@ -607,10 +601,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.DepartmentsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgdepartment.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgDepartment
@@ -624,10 +615,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.DepartmentsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgdepartment.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgDepartment
@@ -644,10 +632,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.DepartmentsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgdepartment.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgDepartment
@@ -664,10 +649,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.StaffsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgStaff
@@ -681,10 +663,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.StaffsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgStaff
@@ -701,10 +680,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.StaffsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgStaff
@@ -721,10 +697,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.PositionsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgposition.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgPosition
@@ -738,10 +711,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.PositionsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgposition.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgPosition
@@ -758,10 +728,7 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Columns: []string{orgorgan.PositionsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgposition.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oou.schemaConfig.OrgPosition
@@ -1360,10 +1327,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.HaddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgOrgan
@@ -1377,10 +1341,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.HaddrColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: sysaddress.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgOrgan
@@ -1397,10 +1358,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.DepartmentsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgdepartment.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgDepartment
@@ -1414,10 +1372,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.DepartmentsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgdepartment.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgDepartment
@@ -1434,10 +1389,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.DepartmentsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgdepartment.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgDepartment
@@ -1454,10 +1406,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.StaffsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgStaff
@@ -1471,10 +1420,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.StaffsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgStaff
@@ -1491,10 +1437,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.StaffsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgStaff
@@ -1511,10 +1454,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.PositionsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgposition.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgPosition
@@ -1528,10 +1468,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.PositionsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgposition.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgPosition
@@ -1548,10 +1485,7 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 			Columns: []string{orgorgan.PositionsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgposition.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oouo.schemaConfig.OrgPosition

@@ -724,10 +724,7 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 			Columns: []string{sysaddress.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sac.schemaConfig.OrgOrgan
@@ -744,10 +741,7 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 			Columns: []string{sysaddress.StaffResiColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sac.schemaConfig.OrgStaff
@@ -764,10 +758,7 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 			Columns: []string{sysaddress.StaffIdenColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgstaff.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = sac.schemaConfig.OrgStaff

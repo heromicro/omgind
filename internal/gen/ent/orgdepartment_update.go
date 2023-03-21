@@ -380,10 +380,7 @@ func (odu *OrgDepartmentUpdate) sqlSave(ctx context.Context) (n int, err error) 
 			Columns: []string{orgdepartment.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = odu.schemaConfig.OrgDepartment
@@ -397,10 +394,7 @@ func (odu *OrgDepartmentUpdate) sqlSave(ctx context.Context) (n int, err error) 
 			Columns: []string{orgdepartment.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = odu.schemaConfig.OrgDepartment
@@ -812,10 +806,7 @@ func (oduo *OrgDepartmentUpdateOne) sqlSave(ctx context.Context) (_node *OrgDepa
 			Columns: []string{orgdepartment.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oduo.schemaConfig.OrgDepartment
@@ -829,10 +820,7 @@ func (oduo *OrgDepartmentUpdateOne) sqlSave(ctx context.Context) (_node *OrgDepa
 			Columns: []string{orgdepartment.OrganColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: &sqlgraph.FieldSpec{
-					Type:   field.TypeString,
-					Column: orgorgan.FieldID,
-				},
+				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = oduo.schemaConfig.OrgDepartment

@@ -54,6 +54,16 @@ func IDLTE(id string) predicate.SysLogging {
 	return predicate.SysLogging(sql.FieldLTE(FieldID, id))
 }
 
+// IDEqualFold applies the EqualFold predicate on the ID field.
+func IDEqualFold(id string) predicate.SysLogging {
+	return predicate.SysLogging(sql.FieldEqualFold(FieldID, id))
+}
+
+// IDContainsFold applies the ContainsFold predicate on the ID field.
+func IDContainsFold(id string) predicate.SysLogging {
+	return predicate.SysLogging(sql.FieldContainsFold(FieldID, id))
+}
+
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v time.Time) predicate.SysLogging {
 	return predicate.SysLogging(sql.FieldEQ(FieldCreatedAt, v))
