@@ -13,13 +13,12 @@ type SysAddress struct {
 }
 
 // Query 查询数据
+//
 //	@Tags		地址管理
 //	@Summary	查询数据
 //	@Security	ApiKeyAuth
-//	@Param		Authorization	header		string	false	"Bearer 用户令牌"
-//	@Param		current			query		int		true	"分页索引"	default(1)
-//	@Param		pageSize		query		int		true	"分页大小"	default(10)
-//	@Param		queryValue		query		string	false	"查询值"
+//	@Param		Authorization	header		string						false	"Bearer 用户令牌"
+//	@Param		object			query		schema.SysAddressQueryParam	false	"查询参数"	default{}
 //	@Success	200				{array}		schema.ListResult{list=schema.SysAddresses,pagination=schema.PaginationResult}
 //	@Failure	401				{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500				{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
@@ -28,6 +27,7 @@ func (a *SysAddress) Query(c *gin.Context) {
 }
 
 // Get 查询指定数据
+//
 //	@Tags		地址管理
 //	@Summary	查询指定数据
 //	@Security	ApiKeyAuth
@@ -42,6 +42,7 @@ func (a *SysAddress) Get(c *gin.Context) {
 }
 
 // Create 创建数据
+//
 //	@Tags		地址管理
 //	@Summary	创建数据
 //	@Security	ApiKeyAuth
@@ -56,6 +57,7 @@ func (a *SysAddress) Create(c *gin.Context) {
 }
 
 // Update 更新数据
+//
 //	@Tags		地址管理
 //	@Summary	更新数据
 //	@Security	ApiKeyAuth
@@ -71,6 +73,7 @@ func (a *SysAddress) Update(c *gin.Context) {
 }
 
 // Delete 删除数据
+//
 //	@Tags		地址管理
 //	@Summary	删除数据
 //	@Security	ApiKeyAuth
@@ -84,6 +87,7 @@ func (a *SysAddress) Delete(c *gin.Context) {
 }
 
 // Enable 启用数据
+//
 //	@Tags		地址管理
 //	@Summary	启用数据
 //	@Security	ApiKeyAuth
@@ -96,6 +100,7 @@ func (a *SysAddress) Enable(c *gin.Context) {
 }
 
 // Disable 禁用数据
+//
 //	@Tags		地址管理
 //	@Summary	禁用数据
 //	@Security	ApiKeyAuth
