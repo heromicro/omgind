@@ -3908,42 +3908,43 @@ func (m *OrgPositionMutation) ResetEdge(name string) error {
 // OrgStaffMutation represents an operation that mutates the OrgStaff nodes in the graph.
 type OrgStaffMutation struct {
 	config
-	op                   Op
-	typ                  string
-	id                   *string
-	is_del               *bool
-	sort                 *int32
-	addsort              *int32
-	created_at           *time.Time
-	updated_at           *time.Time
-	deleted_at           *time.Time
-	is_active            *bool
-	memo                 *string
-	first_name           *string
-	last_name            *string
-	mobile               *string
-	gender               *orgstaff.Gender
-	birth_date           *time.Time
-	iden_no              *string
-	worker_no            *string
-	cubicle              *string
-	entry_date           *time.Time
-	regular_date         *time.Time
-	resign_date          *time.Time
-	employment_status    *int
-	addemployment_status *int
-	es_dict_id           *string
-	creator              *string
-	clearedFields        map[string]struct{}
-	organ                *string
-	clearedorgan         bool
-	iden_addr            *string
-	clearediden_addr     bool
-	resi_addr            *string
-	clearedresi_addr     bool
-	done                 bool
-	oldValue             func(context.Context) (*OrgStaff, error)
-	predicates           []predicate.OrgStaff
+	op               Op
+	typ              string
+	id               *string
+	is_del           *bool
+	sort             *int32
+	addsort          *int32
+	created_at       *time.Time
+	updated_at       *time.Time
+	deleted_at       *time.Time
+	is_active        *bool
+	memo             *string
+	first_name       *string
+	last_name        *string
+	mobile           *string
+	gender           *orgstaff.Gender
+	gndr_dict_id     *string
+	birth_date       *time.Time
+	iden_no          *string
+	worker_no        *string
+	cubicle          *string
+	entry_date       *time.Time
+	regular_date     *time.Time
+	resign_date      *time.Time
+	emp_stat         *int32
+	addemp_stat      *int32
+	emst_dict_id     *string
+	creator          *string
+	clearedFields    map[string]struct{}
+	organ            *string
+	clearedorgan     bool
+	iden_addr        *string
+	clearediden_addr bool
+	resi_addr        *string
+	clearedresi_addr bool
+	done             bool
+	oldValue         func(context.Context) (*OrgStaff, error)
+	predicates       []predicate.OrgStaff
 }
 
 var _ ent.Mutation = (*OrgStaffMutation)(nil)
@@ -4570,6 +4571,55 @@ func (m *OrgStaffMutation) ResetGender() {
 	delete(m.clearedFields, orgstaff.FieldGender)
 }
 
+// SetGndrDictID sets the "gndr_dict_id" field.
+func (m *OrgStaffMutation) SetGndrDictID(s string) {
+	m.gndr_dict_id = &s
+}
+
+// GndrDictID returns the value of the "gndr_dict_id" field in the mutation.
+func (m *OrgStaffMutation) GndrDictID() (r string, exists bool) {
+	v := m.gndr_dict_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldGndrDictID returns the old "gndr_dict_id" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldGndrDictID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldGndrDictID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldGndrDictID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldGndrDictID: %w", err)
+	}
+	return oldValue.GndrDictID, nil
+}
+
+// ClearGndrDictID clears the value of the "gndr_dict_id" field.
+func (m *OrgStaffMutation) ClearGndrDictID() {
+	m.gndr_dict_id = nil
+	m.clearedFields[orgstaff.FieldGndrDictID] = struct{}{}
+}
+
+// GndrDictIDCleared returns if the "gndr_dict_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) GndrDictIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldGndrDictID]
+	return ok
+}
+
+// ResetGndrDictID resets all changes to the "gndr_dict_id" field.
+func (m *OrgStaffMutation) ResetGndrDictID() {
+	m.gndr_dict_id = nil
+	delete(m.clearedFields, orgstaff.FieldGndrDictID)
+}
+
 // SetBirthDate sets the "birth_date" field.
 func (m *OrgStaffMutation) SetBirthDate(t time.Time) {
 	m.birth_date = &t
@@ -5060,109 +5110,109 @@ func (m *OrgStaffMutation) ResetOrgID() {
 	delete(m.clearedFields, orgstaff.FieldOrgID)
 }
 
-// SetEmploymentStatus sets the "employment_status" field.
-func (m *OrgStaffMutation) SetEmploymentStatus(i int) {
-	m.employment_status = &i
-	m.addemployment_status = nil
+// SetEmpStat sets the "emp_stat" field.
+func (m *OrgStaffMutation) SetEmpStat(i int32) {
+	m.emp_stat = &i
+	m.addemp_stat = nil
 }
 
-// EmploymentStatus returns the value of the "employment_status" field in the mutation.
-func (m *OrgStaffMutation) EmploymentStatus() (r int, exists bool) {
-	v := m.employment_status
+// EmpStat returns the value of the "emp_stat" field in the mutation.
+func (m *OrgStaffMutation) EmpStat() (r int32, exists bool) {
+	v := m.emp_stat
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldEmploymentStatus returns the old "employment_status" field's value of the OrgStaff entity.
+// OldEmpStat returns the old "emp_stat" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldEmploymentStatus(ctx context.Context) (v int, err error) {
+func (m *OrgStaffMutation) OldEmpStat(ctx context.Context) (v int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldEmploymentStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldEmpStat is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldEmploymentStatus requires an ID field in the mutation")
+		return v, errors.New("OldEmpStat requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldEmploymentStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldEmpStat: %w", err)
 	}
-	return oldValue.EmploymentStatus, nil
+	return oldValue.EmpStat, nil
 }
 
-// AddEmploymentStatus adds i to the "employment_status" field.
-func (m *OrgStaffMutation) AddEmploymentStatus(i int) {
-	if m.addemployment_status != nil {
-		*m.addemployment_status += i
+// AddEmpStat adds i to the "emp_stat" field.
+func (m *OrgStaffMutation) AddEmpStat(i int32) {
+	if m.addemp_stat != nil {
+		*m.addemp_stat += i
 	} else {
-		m.addemployment_status = &i
+		m.addemp_stat = &i
 	}
 }
 
-// AddedEmploymentStatus returns the value that was added to the "employment_status" field in this mutation.
-func (m *OrgStaffMutation) AddedEmploymentStatus() (r int, exists bool) {
-	v := m.addemployment_status
+// AddedEmpStat returns the value that was added to the "emp_stat" field in this mutation.
+func (m *OrgStaffMutation) AddedEmpStat() (r int32, exists bool) {
+	v := m.addemp_stat
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetEmploymentStatus resets all changes to the "employment_status" field.
-func (m *OrgStaffMutation) ResetEmploymentStatus() {
-	m.employment_status = nil
-	m.addemployment_status = nil
+// ResetEmpStat resets all changes to the "emp_stat" field.
+func (m *OrgStaffMutation) ResetEmpStat() {
+	m.emp_stat = nil
+	m.addemp_stat = nil
 }
 
-// SetEsDictID sets the "es_dict_id" field.
-func (m *OrgStaffMutation) SetEsDictID(s string) {
-	m.es_dict_id = &s
+// SetEmstDictID sets the "emst_dict_id" field.
+func (m *OrgStaffMutation) SetEmstDictID(s string) {
+	m.emst_dict_id = &s
 }
 
-// EsDictID returns the value of the "es_dict_id" field in the mutation.
-func (m *OrgStaffMutation) EsDictID() (r string, exists bool) {
-	v := m.es_dict_id
+// EmstDictID returns the value of the "emst_dict_id" field in the mutation.
+func (m *OrgStaffMutation) EmstDictID() (r string, exists bool) {
+	v := m.emst_dict_id
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldEsDictID returns the old "es_dict_id" field's value of the OrgStaff entity.
+// OldEmstDictID returns the old "emst_dict_id" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldEsDictID(ctx context.Context) (v *string, err error) {
+func (m *OrgStaffMutation) OldEmstDictID(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldEsDictID is only allowed on UpdateOne operations")
+		return v, errors.New("OldEmstDictID is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldEsDictID requires an ID field in the mutation")
+		return v, errors.New("OldEmstDictID requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldEsDictID: %w", err)
+		return v, fmt.Errorf("querying old value for OldEmstDictID: %w", err)
 	}
-	return oldValue.EsDictID, nil
+	return oldValue.EmstDictID, nil
 }
 
-// ClearEsDictID clears the value of the "es_dict_id" field.
-func (m *OrgStaffMutation) ClearEsDictID() {
-	m.es_dict_id = nil
-	m.clearedFields[orgstaff.FieldEsDictID] = struct{}{}
+// ClearEmstDictID clears the value of the "emst_dict_id" field.
+func (m *OrgStaffMutation) ClearEmstDictID() {
+	m.emst_dict_id = nil
+	m.clearedFields[orgstaff.FieldEmstDictID] = struct{}{}
 }
 
-// EsDictIDCleared returns if the "es_dict_id" field was cleared in this mutation.
-func (m *OrgStaffMutation) EsDictIDCleared() bool {
-	_, ok := m.clearedFields[orgstaff.FieldEsDictID]
+// EmstDictIDCleared returns if the "emst_dict_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) EmstDictIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldEmstDictID]
 	return ok
 }
 
-// ResetEsDictID resets all changes to the "es_dict_id" field.
-func (m *OrgStaffMutation) ResetEsDictID() {
-	m.es_dict_id = nil
-	delete(m.clearedFields, orgstaff.FieldEsDictID)
+// ResetEmstDictID resets all changes to the "emst_dict_id" field.
+func (m *OrgStaffMutation) ResetEmstDictID() {
+	m.emst_dict_id = nil
+	delete(m.clearedFields, orgstaff.FieldEmstDictID)
 }
 
 // SetCreator sets the "creator" field.
@@ -5339,7 +5389,7 @@ func (m *OrgStaffMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgStaffMutation) Fields() []string {
-	fields := make([]string, 0, 24)
+	fields := make([]string, 0, 25)
 	if m.is_del != nil {
 		fields = append(fields, orgstaff.FieldIsDel)
 	}
@@ -5373,6 +5423,9 @@ func (m *OrgStaffMutation) Fields() []string {
 	if m.gender != nil {
 		fields = append(fields, orgstaff.FieldGender)
 	}
+	if m.gndr_dict_id != nil {
+		fields = append(fields, orgstaff.FieldGndrDictID)
+	}
 	if m.birth_date != nil {
 		fields = append(fields, orgstaff.FieldBirthDate)
 	}
@@ -5403,11 +5456,11 @@ func (m *OrgStaffMutation) Fields() []string {
 	if m.organ != nil {
 		fields = append(fields, orgstaff.FieldOrgID)
 	}
-	if m.employment_status != nil {
-		fields = append(fields, orgstaff.FieldEmploymentStatus)
+	if m.emp_stat != nil {
+		fields = append(fields, orgstaff.FieldEmpStat)
 	}
-	if m.es_dict_id != nil {
-		fields = append(fields, orgstaff.FieldEsDictID)
+	if m.emst_dict_id != nil {
+		fields = append(fields, orgstaff.FieldEmstDictID)
 	}
 	if m.creator != nil {
 		fields = append(fields, orgstaff.FieldCreator)
@@ -5442,6 +5495,8 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.Mobile()
 	case orgstaff.FieldGender:
 		return m.Gender()
+	case orgstaff.FieldGndrDictID:
+		return m.GndrDictID()
 	case orgstaff.FieldBirthDate:
 		return m.BirthDate()
 	case orgstaff.FieldIdenNo:
@@ -5462,10 +5517,10 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.ResignDate()
 	case orgstaff.FieldOrgID:
 		return m.OrgID()
-	case orgstaff.FieldEmploymentStatus:
-		return m.EmploymentStatus()
-	case orgstaff.FieldEsDictID:
-		return m.EsDictID()
+	case orgstaff.FieldEmpStat:
+		return m.EmpStat()
+	case orgstaff.FieldEmstDictID:
+		return m.EmstDictID()
 	case orgstaff.FieldCreator:
 		return m.Creator()
 	}
@@ -5499,6 +5554,8 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldMobile(ctx)
 	case orgstaff.FieldGender:
 		return m.OldGender(ctx)
+	case orgstaff.FieldGndrDictID:
+		return m.OldGndrDictID(ctx)
 	case orgstaff.FieldBirthDate:
 		return m.OldBirthDate(ctx)
 	case orgstaff.FieldIdenNo:
@@ -5519,10 +5576,10 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldResignDate(ctx)
 	case orgstaff.FieldOrgID:
 		return m.OldOrgID(ctx)
-	case orgstaff.FieldEmploymentStatus:
-		return m.OldEmploymentStatus(ctx)
-	case orgstaff.FieldEsDictID:
-		return m.OldEsDictID(ctx)
+	case orgstaff.FieldEmpStat:
+		return m.OldEmpStat(ctx)
+	case orgstaff.FieldEmstDictID:
+		return m.OldEmstDictID(ctx)
 	case orgstaff.FieldCreator:
 		return m.OldCreator(ctx)
 	}
@@ -5611,6 +5668,13 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetGender(v)
 		return nil
+	case orgstaff.FieldGndrDictID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetGndrDictID(v)
+		return nil
 	case orgstaff.FieldBirthDate:
 		v, ok := value.(time.Time)
 		if !ok {
@@ -5681,19 +5745,19 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetOrgID(v)
 		return nil
-	case orgstaff.FieldEmploymentStatus:
-		v, ok := value.(int)
+	case orgstaff.FieldEmpStat:
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetEmploymentStatus(v)
+		m.SetEmpStat(v)
 		return nil
-	case orgstaff.FieldEsDictID:
+	case orgstaff.FieldEmstDictID:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetEsDictID(v)
+		m.SetEmstDictID(v)
 		return nil
 	case orgstaff.FieldCreator:
 		v, ok := value.(string)
@@ -5713,8 +5777,8 @@ func (m *OrgStaffMutation) AddedFields() []string {
 	if m.addsort != nil {
 		fields = append(fields, orgstaff.FieldSort)
 	}
-	if m.addemployment_status != nil {
-		fields = append(fields, orgstaff.FieldEmploymentStatus)
+	if m.addemp_stat != nil {
+		fields = append(fields, orgstaff.FieldEmpStat)
 	}
 	return fields
 }
@@ -5726,8 +5790,8 @@ func (m *OrgStaffMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case orgstaff.FieldSort:
 		return m.AddedSort()
-	case orgstaff.FieldEmploymentStatus:
-		return m.AddedEmploymentStatus()
+	case orgstaff.FieldEmpStat:
+		return m.AddedEmpStat()
 	}
 	return nil, false
 }
@@ -5744,12 +5808,12 @@ func (m *OrgStaffMutation) AddField(name string, value ent.Value) error {
 		}
 		m.AddSort(v)
 		return nil
-	case orgstaff.FieldEmploymentStatus:
-		v, ok := value.(int)
+	case orgstaff.FieldEmpStat:
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.AddEmploymentStatus(v)
+		m.AddEmpStat(v)
 		return nil
 	}
 	return fmt.Errorf("unknown OrgStaff numeric field %s", name)
@@ -5783,6 +5847,9 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldGender) {
 		fields = append(fields, orgstaff.FieldGender)
 	}
+	if m.FieldCleared(orgstaff.FieldGndrDictID) {
+		fields = append(fields, orgstaff.FieldGndrDictID)
+	}
 	if m.FieldCleared(orgstaff.FieldBirthDate) {
 		fields = append(fields, orgstaff.FieldBirthDate)
 	}
@@ -5813,8 +5880,8 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldOrgID) {
 		fields = append(fields, orgstaff.FieldOrgID)
 	}
-	if m.FieldCleared(orgstaff.FieldEsDictID) {
-		fields = append(fields, orgstaff.FieldEsDictID)
+	if m.FieldCleared(orgstaff.FieldEmstDictID) {
+		fields = append(fields, orgstaff.FieldEmstDictID)
 	}
 	if m.FieldCleared(orgstaff.FieldCreator) {
 		fields = append(fields, orgstaff.FieldCreator)
@@ -5857,6 +5924,9 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 	case orgstaff.FieldGender:
 		m.ClearGender()
 		return nil
+	case orgstaff.FieldGndrDictID:
+		m.ClearGndrDictID()
+		return nil
 	case orgstaff.FieldBirthDate:
 		m.ClearBirthDate()
 		return nil
@@ -5887,8 +5957,8 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 	case orgstaff.FieldOrgID:
 		m.ClearOrgID()
 		return nil
-	case orgstaff.FieldEsDictID:
-		m.ClearEsDictID()
+	case orgstaff.FieldEmstDictID:
+		m.ClearEmstDictID()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ClearCreator()
@@ -5934,6 +6004,9 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 	case orgstaff.FieldGender:
 		m.ResetGender()
 		return nil
+	case orgstaff.FieldGndrDictID:
+		m.ResetGndrDictID()
+		return nil
 	case orgstaff.FieldBirthDate:
 		m.ResetBirthDate()
 		return nil
@@ -5964,11 +6037,11 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 	case orgstaff.FieldOrgID:
 		m.ResetOrgID()
 		return nil
-	case orgstaff.FieldEmploymentStatus:
-		m.ResetEmploymentStatus()
+	case orgstaff.FieldEmpStat:
+		m.ResetEmpStat()
 		return nil
-	case orgstaff.FieldEsDictID:
-		m.ResetEsDictID()
+	case orgstaff.FieldEmstDictID:
+		m.ResetEmstDictID()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ResetCreator()

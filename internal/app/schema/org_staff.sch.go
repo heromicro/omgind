@@ -2,8 +2,7 @@ package schema
 
 import "time"
 
-// OrgStaff 员工对象
-type OrgStaff struct {
+type OrgStaff0 struct {
 	ID        string `json:"id"`                            // 唯一标识
 	FirstName string `json:"first_name" binding:"required"` // 名
 	LastName  string `json:"last_name" binding:"required"`  // 姓
@@ -13,11 +12,26 @@ type OrgStaff struct {
 	Gender    string     `json:"gender" binding:"required"`     // 性别
 	IdenNo    string     `json:"iden_no" `                      // 身份证号
 
+	OrgID string        `json:"org_id"` // 企业id
+	Org   *OrgOrganShow `json:"org"`    //
+
+	IdenAddr *SysAddress `json:"iden_addr"` // 身份证地址
+	ResiAddr *SysAddress `json:"resi_addr"` // 现居地址
+
+}
+
+type OrgStaff1 struct {
 	WorkerNo    string     `json:"worker_no" binding:"required"`  // 工号
 	Cubicle     string     `json:"cubicle"`                       // 工位
 	EntryDate   *time.Time `json:"entry_date" binding:"required"` // 入职日期
 	RegularDate *time.Time `json:"regular_date"`                  // 转正日期
 	ResignDate  *time.Time `json:"resign_date"`                   // 离职日期
+}
+
+// OrgStaff 员工对象
+type OrgStaff struct {
+	OrgStaff0
+	OrgStaff1
 
 	OrgID string        `json:"org_id"` // 企业id
 	Org   *OrgOrganShow `json:"org"`    //
@@ -25,9 +39,6 @@ type OrgStaff struct {
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`
 	Memo     *string `json:"memo"` //
-
-	IdenAddr *SysAddress `json:"iden_addr"` // 身份证地址
-	ResiAddr *SysAddress `json:"resi_addr"` // 现居地址
 
 	Creator   string     `json:"creator"`    // 创建者
 	CreatedAt *time.Time `json:"created_at"` // 创建时间
@@ -71,6 +82,8 @@ type OrgStaffQueryResult struct {
 	Data       OrgStaffs
 	PageResult *PaginationResult
 }
+
+type OrgStaff0s []*OrgStaff0
 
 // OrgStaffs 员工管理列表
 type OrgStaffs []*OrgStaff

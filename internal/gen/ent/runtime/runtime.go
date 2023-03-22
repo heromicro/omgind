@@ -322,34 +322,38 @@ func init() {
 	orgstaffDescMobile := orgstaffFields[2].Descriptor()
 	// orgstaff.MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	orgstaff.MobileValidator = orgstaffDescMobile.Validators[0].(func(string) error)
+	// orgstaffDescGndrDictID is the schema descriptor for gndr_dict_id field.
+	orgstaffDescGndrDictID := orgstaffFields[4].Descriptor()
+	// orgstaff.GndrDictIDValidator is a validator for the "gndr_dict_id" field. It is called by the builders before save.
+	orgstaff.GndrDictIDValidator = orgstaffDescGndrDictID.Validators[0].(func(string) error)
 	// orgstaffDescIdenAddrID is the schema descriptor for iden_addr_id field.
-	orgstaffDescIdenAddrID := orgstaffFields[6].Descriptor()
+	orgstaffDescIdenAddrID := orgstaffFields[7].Descriptor()
 	// orgstaff.IdenAddrIDValidator is a validator for the "iden_addr_id" field. It is called by the builders before save.
 	orgstaff.IdenAddrIDValidator = orgstaffDescIdenAddrID.Validators[0].(func(string) error)
 	// orgstaffDescResiAddrID is the schema descriptor for resi_addr_id field.
-	orgstaffDescResiAddrID := orgstaffFields[7].Descriptor()
+	orgstaffDescResiAddrID := orgstaffFields[8].Descriptor()
 	// orgstaff.ResiAddrIDValidator is a validator for the "resi_addr_id" field. It is called by the builders before save.
 	orgstaff.ResiAddrIDValidator = orgstaffDescResiAddrID.Validators[0].(func(string) error)
 	// orgstaffDescWorkerNo is the schema descriptor for worker_no field.
-	orgstaffDescWorkerNo := orgstaffFields[8].Descriptor()
+	orgstaffDescWorkerNo := orgstaffFields[9].Descriptor()
 	// orgstaff.WorkerNoValidator is a validator for the "worker_no" field. It is called by the builders before save.
 	orgstaff.WorkerNoValidator = orgstaffDescWorkerNo.Validators[0].(func(string) error)
 	// orgstaffDescCubicle is the schema descriptor for cubicle field.
-	orgstaffDescCubicle := orgstaffFields[9].Descriptor()
+	orgstaffDescCubicle := orgstaffFields[10].Descriptor()
 	// orgstaff.CubicleValidator is a validator for the "cubicle" field. It is called by the builders before save.
 	orgstaff.CubicleValidator = orgstaffDescCubicle.Validators[0].(func(string) error)
 	// orgstaffDescOrgID is the schema descriptor for org_id field.
-	orgstaffDescOrgID := orgstaffFields[13].Descriptor()
+	orgstaffDescOrgID := orgstaffFields[14].Descriptor()
 	// orgstaff.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	orgstaff.OrgIDValidator = orgstaffDescOrgID.Validators[0].(func(string) error)
-	// orgstaffDescEmploymentStatus is the schema descriptor for employment_status field.
-	orgstaffDescEmploymentStatus := orgstaffFields[14].Descriptor()
-	// orgstaff.DefaultEmploymentStatus holds the default value on creation for the employment_status field.
-	orgstaff.DefaultEmploymentStatus = orgstaffDescEmploymentStatus.Default.(int)
-	// orgstaffDescEsDictID is the schema descriptor for es_dict_id field.
-	orgstaffDescEsDictID := orgstaffFields[15].Descriptor()
-	// orgstaff.EsDictIDValidator is a validator for the "es_dict_id" field. It is called by the builders before save.
-	orgstaff.EsDictIDValidator = orgstaffDescEsDictID.Validators[0].(func(string) error)
+	// orgstaffDescEmpStat is the schema descriptor for emp_stat field.
+	orgstaffDescEmpStat := orgstaffFields[15].Descriptor()
+	// orgstaff.DefaultEmpStat holds the default value on creation for the emp_stat field.
+	orgstaff.DefaultEmpStat = orgstaffDescEmpStat.Default.(int32)
+	// orgstaffDescEmstDictID is the schema descriptor for emst_dict_id field.
+	orgstaffDescEmstDictID := orgstaffFields[16].Descriptor()
+	// orgstaff.EmstDictIDValidator is a validator for the "emst_dict_id" field. It is called by the builders before save.
+	orgstaff.EmstDictIDValidator = orgstaffDescEmstDictID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.
 	orgstaffDescID := orgstaffMixinFields0[0].Descriptor()
 	// orgstaff.DefaultID holds the default value on creation for the id field.

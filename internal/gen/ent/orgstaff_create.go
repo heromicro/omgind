@@ -179,6 +179,20 @@ func (osc *OrgStaffCreate) SetNillableGender(o *orgstaff.Gender) *OrgStaffCreate
 	return osc
 }
 
+// SetGndrDictID sets the "gndr_dict_id" field.
+func (osc *OrgStaffCreate) SetGndrDictID(s string) *OrgStaffCreate {
+	osc.mutation.SetGndrDictID(s)
+	return osc
+}
+
+// SetNillableGndrDictID sets the "gndr_dict_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableGndrDictID(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetGndrDictID(*s)
+	}
+	return osc
+}
+
 // SetBirthDate sets the "birth_date" field.
 func (osc *OrgStaffCreate) SetBirthDate(t time.Time) *OrgStaffCreate {
 	osc.mutation.SetBirthDate(t)
@@ -319,30 +333,30 @@ func (osc *OrgStaffCreate) SetNillableOrgID(s *string) *OrgStaffCreate {
 	return osc
 }
 
-// SetEmploymentStatus sets the "employment_status" field.
-func (osc *OrgStaffCreate) SetEmploymentStatus(i int) *OrgStaffCreate {
-	osc.mutation.SetEmploymentStatus(i)
+// SetEmpStat sets the "emp_stat" field.
+func (osc *OrgStaffCreate) SetEmpStat(i int32) *OrgStaffCreate {
+	osc.mutation.SetEmpStat(i)
 	return osc
 }
 
-// SetNillableEmploymentStatus sets the "employment_status" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableEmploymentStatus(i *int) *OrgStaffCreate {
+// SetNillableEmpStat sets the "emp_stat" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableEmpStat(i *int32) *OrgStaffCreate {
 	if i != nil {
-		osc.SetEmploymentStatus(*i)
+		osc.SetEmpStat(*i)
 	}
 	return osc
 }
 
-// SetEsDictID sets the "es_dict_id" field.
-func (osc *OrgStaffCreate) SetEsDictID(s string) *OrgStaffCreate {
-	osc.mutation.SetEsDictID(s)
+// SetEmstDictID sets the "emst_dict_id" field.
+func (osc *OrgStaffCreate) SetEmstDictID(s string) *OrgStaffCreate {
+	osc.mutation.SetEmstDictID(s)
 	return osc
 }
 
-// SetNillableEsDictID sets the "es_dict_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableEsDictID(s *string) *OrgStaffCreate {
+// SetNillableEmstDictID sets the "emst_dict_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableEmstDictID(s *string) *OrgStaffCreate {
 	if s != nil {
-		osc.SetEsDictID(*s)
+		osc.SetEmstDictID(*s)
 	}
 	return osc
 }
@@ -463,9 +477,9 @@ func (osc *OrgStaffCreate) defaults() {
 		v := orgstaff.DefaultMemo
 		osc.mutation.SetMemo(v)
 	}
-	if _, ok := osc.mutation.EmploymentStatus(); !ok {
-		v := orgstaff.DefaultEmploymentStatus
-		osc.mutation.SetEmploymentStatus(v)
+	if _, ok := osc.mutation.EmpStat(); !ok {
+		v := orgstaff.DefaultEmpStat
+		osc.mutation.SetEmpStat(v)
 	}
 	if _, ok := osc.mutation.ID(); !ok {
 		v := orgstaff.DefaultID()
@@ -509,6 +523,11 @@ func (osc *OrgStaffCreate) check() error {
 			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
 		}
 	}
+	if v, ok := osc.mutation.GndrDictID(); ok {
+		if err := orgstaff.GndrDictIDValidator(v); err != nil {
+			return &ValidationError{Name: "gndr_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gndr_dict_id": %w`, err)}
+		}
+	}
 	if v, ok := osc.mutation.IdenAddrID(); ok {
 		if err := orgstaff.IdenAddrIDValidator(v); err != nil {
 			return &ValidationError{Name: "iden_addr_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.iden_addr_id": %w`, err)}
@@ -534,12 +553,12 @@ func (osc *OrgStaffCreate) check() error {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
-	if _, ok := osc.mutation.EmploymentStatus(); !ok {
-		return &ValidationError{Name: "employment_status", err: errors.New(`ent: missing required field "OrgStaff.employment_status"`)}
+	if _, ok := osc.mutation.EmpStat(); !ok {
+		return &ValidationError{Name: "emp_stat", err: errors.New(`ent: missing required field "OrgStaff.emp_stat"`)}
 	}
-	if v, ok := osc.mutation.EsDictID(); ok {
-		if err := orgstaff.EsDictIDValidator(v); err != nil {
-			return &ValidationError{Name: "es_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.es_dict_id": %w`, err)}
+	if v, ok := osc.mutation.EmstDictID(); ok {
+		if err := orgstaff.EmstDictIDValidator(v); err != nil {
+			return &ValidationError{Name: "emst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.emst_dict_id": %w`, err)}
 		}
 	}
 	if v, ok := osc.mutation.ID(); ok {
@@ -628,6 +647,10 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgstaff.FieldGender, field.TypeEnum, value)
 		_node.Gender = &value
 	}
+	if value, ok := osc.mutation.GndrDictID(); ok {
+		_spec.SetField(orgstaff.FieldGndrDictID, field.TypeString, value)
+		_node.GndrDictID = &value
+	}
 	if value, ok := osc.mutation.BirthDate(); ok {
 		_spec.SetField(orgstaff.FieldBirthDate, field.TypeTime, value)
 		_node.BirthDate = &value
@@ -656,13 +679,13 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgstaff.FieldResignDate, field.TypeTime, value)
 		_node.ResignDate = &value
 	}
-	if value, ok := osc.mutation.EmploymentStatus(); ok {
-		_spec.SetField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
-		_node.EmploymentStatus = value
+	if value, ok := osc.mutation.EmpStat(); ok {
+		_spec.SetField(orgstaff.FieldEmpStat, field.TypeInt32, value)
+		_node.EmpStat = value
 	}
-	if value, ok := osc.mutation.EsDictID(); ok {
-		_spec.SetField(orgstaff.FieldEsDictID, field.TypeString, value)
-		_node.EsDictID = &value
+	if value, ok := osc.mutation.EmstDictID(); ok {
+		_spec.SetField(orgstaff.FieldEmstDictID, field.TypeString, value)
+		_node.EmstDictID = &value
 	}
 	if value, ok := osc.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -942,6 +965,24 @@ func (u *OrgStaffUpsert) ClearGender() *OrgStaffUpsert {
 	return u
 }
 
+// SetGndrDictID sets the "gndr_dict_id" field.
+func (u *OrgStaffUpsert) SetGndrDictID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldGndrDictID, v)
+	return u
+}
+
+// UpdateGndrDictID sets the "gndr_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateGndrDictID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldGndrDictID)
+	return u
+}
+
+// ClearGndrDictID clears the value of the "gndr_dict_id" field.
+func (u *OrgStaffUpsert) ClearGndrDictID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldGndrDictID)
+	return u
+}
+
 // SetBirthDate sets the "birth_date" field.
 func (u *OrgStaffUpsert) SetBirthDate(v time.Time) *OrgStaffUpsert {
 	u.Set(orgstaff.FieldBirthDate, v)
@@ -1122,39 +1163,39 @@ func (u *OrgStaffUpsert) ClearOrgID() *OrgStaffUpsert {
 	return u
 }
 
-// SetEmploymentStatus sets the "employment_status" field.
-func (u *OrgStaffUpsert) SetEmploymentStatus(v int) *OrgStaffUpsert {
-	u.Set(orgstaff.FieldEmploymentStatus, v)
+// SetEmpStat sets the "emp_stat" field.
+func (u *OrgStaffUpsert) SetEmpStat(v int32) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldEmpStat, v)
 	return u
 }
 
-// UpdateEmploymentStatus sets the "employment_status" field to the value that was provided on create.
-func (u *OrgStaffUpsert) UpdateEmploymentStatus() *OrgStaffUpsert {
-	u.SetExcluded(orgstaff.FieldEmploymentStatus)
+// UpdateEmpStat sets the "emp_stat" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateEmpStat() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldEmpStat)
 	return u
 }
 
-// AddEmploymentStatus adds v to the "employment_status" field.
-func (u *OrgStaffUpsert) AddEmploymentStatus(v int) *OrgStaffUpsert {
-	u.Add(orgstaff.FieldEmploymentStatus, v)
+// AddEmpStat adds v to the "emp_stat" field.
+func (u *OrgStaffUpsert) AddEmpStat(v int32) *OrgStaffUpsert {
+	u.Add(orgstaff.FieldEmpStat, v)
 	return u
 }
 
-// SetEsDictID sets the "es_dict_id" field.
-func (u *OrgStaffUpsert) SetEsDictID(v string) *OrgStaffUpsert {
-	u.Set(orgstaff.FieldEsDictID, v)
+// SetEmstDictID sets the "emst_dict_id" field.
+func (u *OrgStaffUpsert) SetEmstDictID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldEmstDictID, v)
 	return u
 }
 
-// UpdateEsDictID sets the "es_dict_id" field to the value that was provided on create.
-func (u *OrgStaffUpsert) UpdateEsDictID() *OrgStaffUpsert {
-	u.SetExcluded(orgstaff.FieldEsDictID)
+// UpdateEmstDictID sets the "emst_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateEmstDictID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldEmstDictID)
 	return u
 }
 
-// ClearEsDictID clears the value of the "es_dict_id" field.
-func (u *OrgStaffUpsert) ClearEsDictID() *OrgStaffUpsert {
-	u.SetNull(orgstaff.FieldEsDictID)
+// ClearEmstDictID clears the value of the "emst_dict_id" field.
+func (u *OrgStaffUpsert) ClearEmstDictID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldEmstDictID)
 	return u
 }
 
@@ -1423,6 +1464,27 @@ func (u *OrgStaffUpsertOne) ClearGender() *OrgStaffUpsertOne {
 	})
 }
 
+// SetGndrDictID sets the "gndr_dict_id" field.
+func (u *OrgStaffUpsertOne) SetGndrDictID(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetGndrDictID(v)
+	})
+}
+
+// UpdateGndrDictID sets the "gndr_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateGndrDictID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateGndrDictID()
+	})
+}
+
+// ClearGndrDictID clears the value of the "gndr_dict_id" field.
+func (u *OrgStaffUpsertOne) ClearGndrDictID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearGndrDictID()
+	})
+}
+
 // SetBirthDate sets the "birth_date" field.
 func (u *OrgStaffUpsertOne) SetBirthDate(v time.Time) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
@@ -1633,45 +1695,45 @@ func (u *OrgStaffUpsertOne) ClearOrgID() *OrgStaffUpsertOne {
 	})
 }
 
-// SetEmploymentStatus sets the "employment_status" field.
-func (u *OrgStaffUpsertOne) SetEmploymentStatus(v int) *OrgStaffUpsertOne {
+// SetEmpStat sets the "emp_stat" field.
+func (u *OrgStaffUpsertOne) SetEmpStat(v int32) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetEmploymentStatus(v)
+		s.SetEmpStat(v)
 	})
 }
 
-// AddEmploymentStatus adds v to the "employment_status" field.
-func (u *OrgStaffUpsertOne) AddEmploymentStatus(v int) *OrgStaffUpsertOne {
+// AddEmpStat adds v to the "emp_stat" field.
+func (u *OrgStaffUpsertOne) AddEmpStat(v int32) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.AddEmploymentStatus(v)
+		s.AddEmpStat(v)
 	})
 }
 
-// UpdateEmploymentStatus sets the "employment_status" field to the value that was provided on create.
-func (u *OrgStaffUpsertOne) UpdateEmploymentStatus() *OrgStaffUpsertOne {
+// UpdateEmpStat sets the "emp_stat" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateEmpStat() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateEmploymentStatus()
+		s.UpdateEmpStat()
 	})
 }
 
-// SetEsDictID sets the "es_dict_id" field.
-func (u *OrgStaffUpsertOne) SetEsDictID(v string) *OrgStaffUpsertOne {
+// SetEmstDictID sets the "emst_dict_id" field.
+func (u *OrgStaffUpsertOne) SetEmstDictID(v string) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetEsDictID(v)
+		s.SetEmstDictID(v)
 	})
 }
 
-// UpdateEsDictID sets the "es_dict_id" field to the value that was provided on create.
-func (u *OrgStaffUpsertOne) UpdateEsDictID() *OrgStaffUpsertOne {
+// UpdateEmstDictID sets the "emst_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateEmstDictID() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateEsDictID()
+		s.UpdateEmstDictID()
 	})
 }
 
-// ClearEsDictID clears the value of the "es_dict_id" field.
-func (u *OrgStaffUpsertOne) ClearEsDictID() *OrgStaffUpsertOne {
+// ClearEmstDictID clears the value of the "emst_dict_id" field.
+func (u *OrgStaffUpsertOne) ClearEmstDictID() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.ClearEsDictID()
+		s.ClearEmstDictID()
 	})
 }
 
@@ -2106,6 +2168,27 @@ func (u *OrgStaffUpsertBulk) ClearGender() *OrgStaffUpsertBulk {
 	})
 }
 
+// SetGndrDictID sets the "gndr_dict_id" field.
+func (u *OrgStaffUpsertBulk) SetGndrDictID(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetGndrDictID(v)
+	})
+}
+
+// UpdateGndrDictID sets the "gndr_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateGndrDictID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateGndrDictID()
+	})
+}
+
+// ClearGndrDictID clears the value of the "gndr_dict_id" field.
+func (u *OrgStaffUpsertBulk) ClearGndrDictID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearGndrDictID()
+	})
+}
+
 // SetBirthDate sets the "birth_date" field.
 func (u *OrgStaffUpsertBulk) SetBirthDate(v time.Time) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
@@ -2316,45 +2399,45 @@ func (u *OrgStaffUpsertBulk) ClearOrgID() *OrgStaffUpsertBulk {
 	})
 }
 
-// SetEmploymentStatus sets the "employment_status" field.
-func (u *OrgStaffUpsertBulk) SetEmploymentStatus(v int) *OrgStaffUpsertBulk {
+// SetEmpStat sets the "emp_stat" field.
+func (u *OrgStaffUpsertBulk) SetEmpStat(v int32) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetEmploymentStatus(v)
+		s.SetEmpStat(v)
 	})
 }
 
-// AddEmploymentStatus adds v to the "employment_status" field.
-func (u *OrgStaffUpsertBulk) AddEmploymentStatus(v int) *OrgStaffUpsertBulk {
+// AddEmpStat adds v to the "emp_stat" field.
+func (u *OrgStaffUpsertBulk) AddEmpStat(v int32) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.AddEmploymentStatus(v)
+		s.AddEmpStat(v)
 	})
 }
 
-// UpdateEmploymentStatus sets the "employment_status" field to the value that was provided on create.
-func (u *OrgStaffUpsertBulk) UpdateEmploymentStatus() *OrgStaffUpsertBulk {
+// UpdateEmpStat sets the "emp_stat" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateEmpStat() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateEmploymentStatus()
+		s.UpdateEmpStat()
 	})
 }
 
-// SetEsDictID sets the "es_dict_id" field.
-func (u *OrgStaffUpsertBulk) SetEsDictID(v string) *OrgStaffUpsertBulk {
+// SetEmstDictID sets the "emst_dict_id" field.
+func (u *OrgStaffUpsertBulk) SetEmstDictID(v string) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetEsDictID(v)
+		s.SetEmstDictID(v)
 	})
 }
 
-// UpdateEsDictID sets the "es_dict_id" field to the value that was provided on create.
-func (u *OrgStaffUpsertBulk) UpdateEsDictID() *OrgStaffUpsertBulk {
+// UpdateEmstDictID sets the "emst_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateEmstDictID() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateEsDictID()
+		s.UpdateEmstDictID()
 	})
 }
 
-// ClearEsDictID clears the value of the "es_dict_id" field.
-func (u *OrgStaffUpsertBulk) ClearEsDictID() *OrgStaffUpsertBulk {
+// ClearEmstDictID clears the value of the "emst_dict_id" field.
+func (u *OrgStaffUpsertBulk) ClearEmstDictID() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.ClearEsDictID()
+		s.ClearEmstDictID()
 	})
 }
 

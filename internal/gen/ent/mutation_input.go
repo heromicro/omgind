@@ -557,33 +557,34 @@ func (u *OrgPositionUpdateOne) SetInput(i UpdateOrgPositionInput) *OrgPositionUp
 
 // CreateOrgStaffInput represents a mutation input for creating orgstaffs.
 type CreateOrgStaffInput struct {
-	IsDel            *bool
-	Sort             *int32
-	CreatedAt        *time.Time
-	UpdatedAt        *time.Time
-	DeletedAt        *time.Time
-	IsActive         *bool
-	Memo             *string
-	FirstName        *string
-	LastName         *string
-	Mobile           *string
-	Gender           *orgstaff.Gender
-	BirthDate        *time.Time
-	IdenNo           *string
-	IdenAddrID       *string
-	ResiAddrID       *string
-	WorkerNo         *string
-	Cubicle          *string
-	EntryDate        *time.Time
-	RegularDate      *time.Time
-	ResignDate       *time.Time
-	OrgID            *string
-	EmploymentStatus *int
-	EsDictID         *string
-	Creator          *string
-	Organ            *string
-	IdenAddr         *string
-	ResiAddr         *string
+	IsDel       *bool
+	Sort        *int32
+	CreatedAt   *time.Time
+	UpdatedAt   *time.Time
+	DeletedAt   *time.Time
+	IsActive    *bool
+	Memo        *string
+	FirstName   *string
+	LastName    *string
+	Mobile      *string
+	Gender      *orgstaff.Gender
+	GndrDictID  *string
+	BirthDate   *time.Time
+	IdenNo      *string
+	IdenAddrID  *string
+	ResiAddrID  *string
+	WorkerNo    *string
+	Cubicle     *string
+	EntryDate   *time.Time
+	RegularDate *time.Time
+	ResignDate  *time.Time
+	OrgID       *string
+	EmpStat     *int32
+	EmstDictID  *string
+	Creator     *string
+	Organ       *string
+	IdenAddr    *string
+	ResiAddr    *string
 }
 
 // Mutate applies the CreateOrgStaffInput on the OrgStaffCreate builder.
@@ -621,6 +622,9 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.Gender; v != nil {
 		m.SetGender(*v)
 	}
+	if v := i.GndrDictID; v != nil {
+		m.SetGndrDictID(*v)
+	}
 	if v := i.BirthDate; v != nil {
 		m.SetBirthDate(*v)
 	}
@@ -651,11 +655,11 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
 	}
-	if v := i.EmploymentStatus; v != nil {
-		m.SetEmploymentStatus(*v)
+	if v := i.EmpStat; v != nil {
+		m.SetEmpStat(*v)
 	}
-	if v := i.EsDictID; v != nil {
-		m.SetEsDictID(*v)
+	if v := i.EmstDictID; v != nil {
+		m.SetEmstDictID(*v)
 	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
@@ -696,6 +700,8 @@ type UpdateOrgStaffInput struct {
 	ClearMobile      bool
 	Gender           *orgstaff.Gender
 	ClearGender      bool
+	GndrDictID       *string
+	ClearGndrDictID  bool
 	BirthDate        *time.Time
 	ClearBirthDate   bool
 	IdenNo           *string
@@ -716,9 +722,9 @@ type UpdateOrgStaffInput struct {
 	ClearResignDate  bool
 	OrgID            *string
 	ClearOrgID       bool
-	EmploymentStatus *int
-	EsDictID         *string
-	ClearEsDictID    bool
+	EmpStat          *int32
+	EmstDictID       *string
+	ClearEmstDictID  bool
 	Creator          *string
 	ClearCreator     bool
 	Organ            *string
@@ -782,6 +788,12 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.Gender; v != nil {
 		m.SetGender(*v)
 	}
+	if i.ClearGndrDictID {
+		m.ClearGndrDictID()
+	}
+	if v := i.GndrDictID; v != nil {
+		m.SetGndrDictID(*v)
+	}
 	if i.ClearBirthDate {
 		m.ClearBirthDate()
 	}
@@ -842,14 +854,14 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
 	}
-	if v := i.EmploymentStatus; v != nil {
-		m.SetEmploymentStatus(*v)
+	if v := i.EmpStat; v != nil {
+		m.SetEmpStat(*v)
 	}
-	if i.ClearEsDictID {
-		m.ClearEsDictID()
+	if i.ClearEmstDictID {
+		m.ClearEmstDictID()
 	}
-	if v := i.EsDictID; v != nil {
-		m.SetEsDictID(*v)
+	if v := i.EmstDictID; v != nil {
+		m.SetEmstDictID(*v)
 	}
 	if i.ClearCreator {
 		m.ClearCreator()
