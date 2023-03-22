@@ -39,7 +39,7 @@ type OrgStaff struct {
 	// 电话
 	Mobile *string `json:"mobile,omitempty"`
 	// 性别
-	Gender *orgstaff.Gender `json:"gender,omitempty"`
+	Gender *int32 `json:"gender,omitempty"`
 	// gender options
 	GndrDictID *string `json:"gndr_dict_id,omitempty"`
 	// 出生日期
@@ -65,7 +65,7 @@ type OrgStaff struct {
 	// 在职状态
 	EmpStat int32 `json:"emp_stat,omitempty"`
 	// empst_stat options
-	EmstDictID *string `json:"emst_dict_id,omitempty"`
+	EmpstDictID *string `json:"empst_dict_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -132,9 +132,9 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case orgstaff.FieldIsDel, orgstaff.FieldIsActive:
 			values[i] = new(sql.NullBool)
-		case orgstaff.FieldSort, orgstaff.FieldEmpStat:
+		case orgstaff.FieldSort, orgstaff.FieldGender, orgstaff.FieldEmpStat:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldGndrDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldEmstDictID, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGndrDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldEmpstDictID, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
@@ -227,11 +227,11 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				*os.Mobile = value.String
 			}
 		case orgstaff.FieldGender:
-			if value, ok := values[i].(*sql.NullString); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field gender", values[i])
 			} else if value.Valid {
-				os.Gender = new(orgstaff.Gender)
-				*os.Gender = orgstaff.Gender(value.String)
+				os.Gender = new(int32)
+				*os.Gender = int32(value.Int64)
 			}
 		case orgstaff.FieldGndrDictID:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -316,12 +316,12 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				os.EmpStat = int32(value.Int64)
 			}
-		case orgstaff.FieldEmstDictID:
+		case orgstaff.FieldEmpstDictID:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field emst_dict_id", values[i])
+				return fmt.Errorf("unexpected type %T for field empst_dict_id", values[i])
 			} else if value.Valid {
-				os.EmstDictID = new(string)
-				*os.EmstDictID = value.String
+				os.EmpstDictID = new(string)
+				*os.EmpstDictID = value.String
 			}
 		case orgstaff.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -480,8 +480,8 @@ func (os *OrgStaff) String() string {
 	builder.WriteString("emp_stat=")
 	builder.WriteString(fmt.Sprintf("%v", os.EmpStat))
 	builder.WriteString(", ")
-	if v := os.EmstDictID; v != nil {
-		builder.WriteString("emst_dict_id=")
+	if v := os.EmpstDictID; v != nil {
+		builder.WriteString("empst_dict_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

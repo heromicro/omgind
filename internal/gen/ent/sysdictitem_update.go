@@ -157,6 +157,20 @@ func (sdiu *SysDictItemUpdate) SetDictID(s string) *SysDictItemUpdate {
 	return sdiu
 }
 
+// SetNillableDictID sets the "dict_id" field if the given value is not nil.
+func (sdiu *SysDictItemUpdate) SetNillableDictID(s *string) *SysDictItemUpdate {
+	if s != nil {
+		sdiu.SetDictID(*s)
+	}
+	return sdiu
+}
+
+// ClearDictID clears the value of the "dict_id" field.
+func (sdiu *SysDictItemUpdate) ClearDictID() *SysDictItemUpdate {
+	sdiu.mutation.ClearDictID()
+	return sdiu
+}
+
 // SetDict sets the "dict" edge to the SysDict entity.
 func (sdiu *SysDictItemUpdate) SetDict(s *SysDict) *SysDictItemUpdate {
 	return sdiu.SetDictID(s.ID)
@@ -225,9 +239,6 @@ func (sdiu *SysDictItemUpdate) check() error {
 		if err := sysdictitem.DictIDValidator(v); err != nil {
 			return &ValidationError{Name: "dict_id", err: fmt.Errorf(`ent: validator failed for field "SysDictItem.dict_id": %w`, err)}
 		}
-	}
-	if _, ok := sdiu.mutation.DictID(); sdiu.mutation.DictCleared() && !ok {
-		return errors.New(`ent: clearing a required unique edge "SysDictItem.dict"`)
 	}
 	return nil
 }
@@ -473,6 +484,20 @@ func (sdiuo *SysDictItemUpdateOne) SetDictID(s string) *SysDictItemUpdateOne {
 	return sdiuo
 }
 
+// SetNillableDictID sets the "dict_id" field if the given value is not nil.
+func (sdiuo *SysDictItemUpdateOne) SetNillableDictID(s *string) *SysDictItemUpdateOne {
+	if s != nil {
+		sdiuo.SetDictID(*s)
+	}
+	return sdiuo
+}
+
+// ClearDictID clears the value of the "dict_id" field.
+func (sdiuo *SysDictItemUpdateOne) ClearDictID() *SysDictItemUpdateOne {
+	sdiuo.mutation.ClearDictID()
+	return sdiuo
+}
+
 // SetDict sets the "dict" edge to the SysDict entity.
 func (sdiuo *SysDictItemUpdateOne) SetDict(s *SysDict) *SysDictItemUpdateOne {
 	return sdiuo.SetDictID(s.ID)
@@ -554,9 +579,6 @@ func (sdiuo *SysDictItemUpdateOne) check() error {
 		if err := sysdictitem.DictIDValidator(v); err != nil {
 			return &ValidationError{Name: "dict_id", err: fmt.Errorf(`ent: validator failed for field "SysDictItem.dict_id": %w`, err)}
 		}
-	}
-	if _, ok := sdiuo.mutation.DictID(); sdiuo.mutation.DictCleared() && !ok {
-		return errors.New(`ent: clearing a required unique edge "SysDictItem.dict"`)
 	}
 	return nil
 }

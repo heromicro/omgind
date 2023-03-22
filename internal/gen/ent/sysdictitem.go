@@ -36,7 +36,7 @@ type SysDictItem struct {
 	// 字典值
 	Value int `json:"value,omitempty"`
 	// sys_dict.id
-	DictID string `json:"dict_id,omitempty"`
+	DictID *string `json:"dict_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysDictItemQuery when eager-loading is set.
 	Edges SysDictItemEdges `json:"edges"`
@@ -160,7 +160,8 @@ func (sdi *SysDictItem) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field dict_id", values[i])
 			} else if value.Valid {
-				sdi.DictID = value.String
+				sdi.DictID = new(string)
+				*sdi.DictID = value.String
 			}
 		}
 	}
@@ -230,8 +231,10 @@ func (sdi *SysDictItem) String() string {
 	builder.WriteString("value=")
 	builder.WriteString(fmt.Sprintf("%v", sdi.Value))
 	builder.WriteString(", ")
-	builder.WriteString("dict_id=")
-	builder.WriteString(sdi.DictID)
+	if v := sdi.DictID; v != nil {
+		builder.WriteString("dict_id=")
+		builder.WriteString(*v)
+	}
 	builder.WriteByte(')')
 	return builder.String()
 }

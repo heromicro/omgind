@@ -166,15 +166,15 @@ func (osc *OrgStaffCreate) SetNillableMobile(s *string) *OrgStaffCreate {
 }
 
 // SetGender sets the "gender" field.
-func (osc *OrgStaffCreate) SetGender(o orgstaff.Gender) *OrgStaffCreate {
-	osc.mutation.SetGender(o)
+func (osc *OrgStaffCreate) SetGender(i int32) *OrgStaffCreate {
+	osc.mutation.SetGender(i)
 	return osc
 }
 
 // SetNillableGender sets the "gender" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableGender(o *orgstaff.Gender) *OrgStaffCreate {
-	if o != nil {
-		osc.SetGender(*o)
+func (osc *OrgStaffCreate) SetNillableGender(i *int32) *OrgStaffCreate {
+	if i != nil {
+		osc.SetGender(*i)
 	}
 	return osc
 }
@@ -347,16 +347,16 @@ func (osc *OrgStaffCreate) SetNillableEmpStat(i *int32) *OrgStaffCreate {
 	return osc
 }
 
-// SetEmstDictID sets the "emst_dict_id" field.
-func (osc *OrgStaffCreate) SetEmstDictID(s string) *OrgStaffCreate {
-	osc.mutation.SetEmstDictID(s)
+// SetEmpstDictID sets the "empst_dict_id" field.
+func (osc *OrgStaffCreate) SetEmpstDictID(s string) *OrgStaffCreate {
+	osc.mutation.SetEmpstDictID(s)
 	return osc
 }
 
-// SetNillableEmstDictID sets the "emst_dict_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableEmstDictID(s *string) *OrgStaffCreate {
+// SetNillableEmpstDictID sets the "empst_dict_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableEmpstDictID(s *string) *OrgStaffCreate {
 	if s != nil {
-		osc.SetEmstDictID(*s)
+		osc.SetEmpstDictID(*s)
 	}
 	return osc
 }
@@ -518,11 +518,6 @@ func (osc *OrgStaffCreate) check() error {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.mobile": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.Gender(); ok {
-		if err := orgstaff.GenderValidator(v); err != nil {
-			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
-		}
-	}
 	if v, ok := osc.mutation.GndrDictID(); ok {
 		if err := orgstaff.GndrDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "gndr_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gndr_dict_id": %w`, err)}
@@ -556,9 +551,9 @@ func (osc *OrgStaffCreate) check() error {
 	if _, ok := osc.mutation.EmpStat(); !ok {
 		return &ValidationError{Name: "emp_stat", err: errors.New(`ent: missing required field "OrgStaff.emp_stat"`)}
 	}
-	if v, ok := osc.mutation.EmstDictID(); ok {
-		if err := orgstaff.EmstDictIDValidator(v); err != nil {
-			return &ValidationError{Name: "emst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.emst_dict_id": %w`, err)}
+	if v, ok := osc.mutation.EmpstDictID(); ok {
+		if err := orgstaff.EmpstDictIDValidator(v); err != nil {
+			return &ValidationError{Name: "empst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.empst_dict_id": %w`, err)}
 		}
 	}
 	if v, ok := osc.mutation.ID(); ok {
@@ -644,7 +639,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_node.Mobile = &value
 	}
 	if value, ok := osc.mutation.Gender(); ok {
-		_spec.SetField(orgstaff.FieldGender, field.TypeEnum, value)
+		_spec.SetField(orgstaff.FieldGender, field.TypeInt32, value)
 		_node.Gender = &value
 	}
 	if value, ok := osc.mutation.GndrDictID(); ok {
@@ -683,9 +678,9 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgstaff.FieldEmpStat, field.TypeInt32, value)
 		_node.EmpStat = value
 	}
-	if value, ok := osc.mutation.EmstDictID(); ok {
-		_spec.SetField(orgstaff.FieldEmstDictID, field.TypeString, value)
-		_node.EmstDictID = &value
+	if value, ok := osc.mutation.EmpstDictID(); ok {
+		_spec.SetField(orgstaff.FieldEmpstDictID, field.TypeString, value)
+		_node.EmpstDictID = &value
 	}
 	if value, ok := osc.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -948,7 +943,7 @@ func (u *OrgStaffUpsert) ClearMobile() *OrgStaffUpsert {
 }
 
 // SetGender sets the "gender" field.
-func (u *OrgStaffUpsert) SetGender(v orgstaff.Gender) *OrgStaffUpsert {
+func (u *OrgStaffUpsert) SetGender(v int32) *OrgStaffUpsert {
 	u.Set(orgstaff.FieldGender, v)
 	return u
 }
@@ -956,6 +951,12 @@ func (u *OrgStaffUpsert) SetGender(v orgstaff.Gender) *OrgStaffUpsert {
 // UpdateGender sets the "gender" field to the value that was provided on create.
 func (u *OrgStaffUpsert) UpdateGender() *OrgStaffUpsert {
 	u.SetExcluded(orgstaff.FieldGender)
+	return u
+}
+
+// AddGender adds v to the "gender" field.
+func (u *OrgStaffUpsert) AddGender(v int32) *OrgStaffUpsert {
+	u.Add(orgstaff.FieldGender, v)
 	return u
 }
 
@@ -1181,21 +1182,21 @@ func (u *OrgStaffUpsert) AddEmpStat(v int32) *OrgStaffUpsert {
 	return u
 }
 
-// SetEmstDictID sets the "emst_dict_id" field.
-func (u *OrgStaffUpsert) SetEmstDictID(v string) *OrgStaffUpsert {
-	u.Set(orgstaff.FieldEmstDictID, v)
+// SetEmpstDictID sets the "empst_dict_id" field.
+func (u *OrgStaffUpsert) SetEmpstDictID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldEmpstDictID, v)
 	return u
 }
 
-// UpdateEmstDictID sets the "emst_dict_id" field to the value that was provided on create.
-func (u *OrgStaffUpsert) UpdateEmstDictID() *OrgStaffUpsert {
-	u.SetExcluded(orgstaff.FieldEmstDictID)
+// UpdateEmpstDictID sets the "empst_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateEmpstDictID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldEmpstDictID)
 	return u
 }
 
-// ClearEmstDictID clears the value of the "emst_dict_id" field.
-func (u *OrgStaffUpsert) ClearEmstDictID() *OrgStaffUpsert {
-	u.SetNull(orgstaff.FieldEmstDictID)
+// ClearEmpstDictID clears the value of the "empst_dict_id" field.
+func (u *OrgStaffUpsert) ClearEmpstDictID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldEmpstDictID)
 	return u
 }
 
@@ -1444,9 +1445,16 @@ func (u *OrgStaffUpsertOne) ClearMobile() *OrgStaffUpsertOne {
 }
 
 // SetGender sets the "gender" field.
-func (u *OrgStaffUpsertOne) SetGender(v orgstaff.Gender) *OrgStaffUpsertOne {
+func (u *OrgStaffUpsertOne) SetGender(v int32) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetGender(v)
+	})
+}
+
+// AddGender adds v to the "gender" field.
+func (u *OrgStaffUpsertOne) AddGender(v int32) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.AddGender(v)
 	})
 }
 
@@ -1716,24 +1724,24 @@ func (u *OrgStaffUpsertOne) UpdateEmpStat() *OrgStaffUpsertOne {
 	})
 }
 
-// SetEmstDictID sets the "emst_dict_id" field.
-func (u *OrgStaffUpsertOne) SetEmstDictID(v string) *OrgStaffUpsertOne {
+// SetEmpstDictID sets the "empst_dict_id" field.
+func (u *OrgStaffUpsertOne) SetEmpstDictID(v string) *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetEmstDictID(v)
+		s.SetEmpstDictID(v)
 	})
 }
 
-// UpdateEmstDictID sets the "emst_dict_id" field to the value that was provided on create.
-func (u *OrgStaffUpsertOne) UpdateEmstDictID() *OrgStaffUpsertOne {
+// UpdateEmpstDictID sets the "empst_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateEmpstDictID() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateEmstDictID()
+		s.UpdateEmpstDictID()
 	})
 }
 
-// ClearEmstDictID clears the value of the "emst_dict_id" field.
-func (u *OrgStaffUpsertOne) ClearEmstDictID() *OrgStaffUpsertOne {
+// ClearEmpstDictID clears the value of the "empst_dict_id" field.
+func (u *OrgStaffUpsertOne) ClearEmpstDictID() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.ClearEmstDictID()
+		s.ClearEmpstDictID()
 	})
 }
 
@@ -2148,9 +2156,16 @@ func (u *OrgStaffUpsertBulk) ClearMobile() *OrgStaffUpsertBulk {
 }
 
 // SetGender sets the "gender" field.
-func (u *OrgStaffUpsertBulk) SetGender(v orgstaff.Gender) *OrgStaffUpsertBulk {
+func (u *OrgStaffUpsertBulk) SetGender(v int32) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.SetGender(v)
+	})
+}
+
+// AddGender adds v to the "gender" field.
+func (u *OrgStaffUpsertBulk) AddGender(v int32) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.AddGender(v)
 	})
 }
 
@@ -2420,24 +2435,24 @@ func (u *OrgStaffUpsertBulk) UpdateEmpStat() *OrgStaffUpsertBulk {
 	})
 }
 
-// SetEmstDictID sets the "emst_dict_id" field.
-func (u *OrgStaffUpsertBulk) SetEmstDictID(v string) *OrgStaffUpsertBulk {
+// SetEmpstDictID sets the "empst_dict_id" field.
+func (u *OrgStaffUpsertBulk) SetEmpstDictID(v string) *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetEmstDictID(v)
+		s.SetEmpstDictID(v)
 	})
 }
 
-// UpdateEmstDictID sets the "emst_dict_id" field to the value that was provided on create.
-func (u *OrgStaffUpsertBulk) UpdateEmstDictID() *OrgStaffUpsertBulk {
+// UpdateEmpstDictID sets the "empst_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateEmpstDictID() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateEmstDictID()
+		s.UpdateEmpstDictID()
 	})
 }
 
-// ClearEmstDictID clears the value of the "emst_dict_id" field.
-func (u *OrgStaffUpsertBulk) ClearEmstDictID() *OrgStaffUpsertBulk {
+// ClearEmpstDictID clears the value of the "empst_dict_id" field.
+func (u *OrgStaffUpsertBulk) ClearEmpstDictID() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
-		s.ClearEmstDictID()
+		s.ClearEmpstDictID()
 	})
 }
 

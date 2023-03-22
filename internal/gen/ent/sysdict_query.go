@@ -432,9 +432,12 @@ func (sdq *SysDictQuery) loadItems(ctx context.Context, query *SysDictItemQuery,
 	}
 	for _, n := range neighbors {
 		fk := n.DictID
-		node, ok := nodeids[fk]
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "dict_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "dict_id" returned %v for node %v`, fk, n.ID)
+			return fmt.Errorf(`unexpected foreign-key "dict_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}

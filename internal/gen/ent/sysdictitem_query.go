@@ -415,7 +415,10 @@ func (sdiq *SysDictItemQuery) loadDict(ctx context.Context, query *SysDictQuery,
 	ids := make([]string, 0, len(nodes))
 	nodeids := make(map[string][]*SysDictItem)
 	for i := range nodes {
-		fk := nodes[i].DictID
+		if nodes[i].DictID == nil {
+			continue
+		}
+		fk := *nodes[i].DictID
 		if _, ok := nodeids[fk]; !ok {
 			ids = append(ids, fk)
 		}

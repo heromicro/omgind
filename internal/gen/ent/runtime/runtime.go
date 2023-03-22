@@ -350,10 +350,10 @@ func init() {
 	orgstaffDescEmpStat := orgstaffFields[15].Descriptor()
 	// orgstaff.DefaultEmpStat holds the default value on creation for the emp_stat field.
 	orgstaff.DefaultEmpStat = orgstaffDescEmpStat.Default.(int32)
-	// orgstaffDescEmstDictID is the schema descriptor for emst_dict_id field.
-	orgstaffDescEmstDictID := orgstaffFields[16].Descriptor()
-	// orgstaff.EmstDictIDValidator is a validator for the "emst_dict_id" field. It is called by the builders before save.
-	orgstaff.EmstDictIDValidator = orgstaffDescEmstDictID.Validators[0].(func(string) error)
+	// orgstaffDescEmpstDictID is the schema descriptor for empst_dict_id field.
+	orgstaffDescEmpstDictID := orgstaffFields[16].Descriptor()
+	// orgstaff.EmpstDictIDValidator is a validator for the "empst_dict_id" field. It is called by the builders before save.
+	orgstaff.EmpstDictIDValidator = orgstaffDescEmpstDictID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.
 	orgstaffDescID := orgstaffMixinFields0[0].Descriptor()
 	// orgstaff.DefaultID holds the default value on creation for the id field.
@@ -614,21 +614,7 @@ func init() {
 	// sysdictitemDescDictID is the schema descriptor for dict_id field.
 	sysdictitemDescDictID := sysdictitemFields[2].Descriptor()
 	// sysdictitem.DictIDValidator is a validator for the "dict_id" field. It is called by the builders before save.
-	sysdictitem.DictIDValidator = func() func(string) error {
-		validators := sysdictitemDescDictID.Validators
-		fns := [...]func(string) error{
-			validators[0].(func(string) error),
-			validators[1].(func(string) error),
-		}
-		return func(dict string) error {
-			for _, fn := range fns {
-				if err := fn(dict); err != nil {
-					return err
-				}
-			}
-			return nil
-		}
-	}()
+	sysdictitem.DictIDValidator = sysdictitemDescDictID.Validators[0].(func(string) error)
 	// sysdictitemDescID is the schema descriptor for id field.
 	sysdictitemDescID := sysdictitemMixinFields0[0].Descriptor()
 	// sysdictitem.DefaultID holds the default value on creation for the id field.

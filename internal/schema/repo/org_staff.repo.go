@@ -89,8 +89,8 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 		query = query.Where(orgstaff.IsActiveEQ(*v))
 	}
 
-	if v := params.Gender; v != "" {
-		query = query.Where(orgstaff.GenderEQ(orgstaff.Gender(v)))
+	if v := params.Gender; v != nil {
+		query = query.Where(orgstaff.GenderEQ(*v))
 	}
 
 	if v := params.OrgID; v != "" {

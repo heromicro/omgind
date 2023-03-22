@@ -3,7 +3,6 @@
 package orgstaff
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -58,8 +57,8 @@ const (
 	FieldOrgID = "org_id"
 	// FieldEmpStat holds the string denoting the emp_stat field in the database.
 	FieldEmpStat = "emp_stat"
-	// FieldEmstDictID holds the string denoting the emst_dict_id field in the database.
-	FieldEmstDictID = "emst_dict_id"
+	// FieldEmpstDictID holds the string denoting the empst_dict_id field in the database.
+	FieldEmpstDictID = "empst_dict_id"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
@@ -119,7 +118,7 @@ var Columns = []string{
 	FieldResignDate,
 	FieldOrgID,
 	FieldEmpStat,
-	FieldEmstDictID,
+	FieldEmpstDictID,
 	FieldCreator,
 }
 
@@ -170,33 +169,10 @@ var (
 	OrgIDValidator func(string) error
 	// DefaultEmpStat holds the default value on creation for the "emp_stat" field.
 	DefaultEmpStat int32
-	// EmstDictIDValidator is a validator for the "emst_dict_id" field. It is called by the builders before save.
-	EmstDictIDValidator func(string) error
+	// EmpstDictIDValidator is a validator for the "empst_dict_id" field. It is called by the builders before save.
+	EmpstDictIDValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(string) error
 )
-
-// Gender defines the type for the "gender" enum field.
-type Gender string
-
-// Gender values.
-const (
-	GenderMale   Gender = "M"
-	GenderFemale Gender = "F"
-)
-
-func (ge Gender) String() string {
-	return string(ge)
-}
-
-// GenderValidator is a validator for the "gender" field enum values. It is called by the builders before save.
-func GenderValidator(ge Gender) error {
-	switch ge {
-	case GenderMale, GenderFemale:
-		return nil
-	default:
-		return fmt.Errorf("orgstaff: invalid enum value for gender field: %q", ge)
-	}
-}

@@ -3922,7 +3922,8 @@ type OrgStaffMutation struct {
 	first_name       *string
 	last_name        *string
 	mobile           *string
-	gender           *orgstaff.Gender
+	gender           *int32
+	addgender        *int32
 	gndr_dict_id     *string
 	birth_date       *time.Time
 	iden_no          *string
@@ -3933,7 +3934,7 @@ type OrgStaffMutation struct {
 	resign_date      *time.Time
 	emp_stat         *int32
 	addemp_stat      *int32
-	emst_dict_id     *string
+	empst_dict_id    *string
 	creator          *string
 	clearedFields    map[string]struct{}
 	organ            *string
@@ -4523,12 +4524,13 @@ func (m *OrgStaffMutation) ResetMobile() {
 }
 
 // SetGender sets the "gender" field.
-func (m *OrgStaffMutation) SetGender(o orgstaff.Gender) {
-	m.gender = &o
+func (m *OrgStaffMutation) SetGender(i int32) {
+	m.gender = &i
+	m.addgender = nil
 }
 
 // Gender returns the value of the "gender" field in the mutation.
-func (m *OrgStaffMutation) Gender() (r orgstaff.Gender, exists bool) {
+func (m *OrgStaffMutation) Gender() (r int32, exists bool) {
 	v := m.gender
 	if v == nil {
 		return
@@ -4539,7 +4541,7 @@ func (m *OrgStaffMutation) Gender() (r orgstaff.Gender, exists bool) {
 // OldGender returns the old "gender" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldGender(ctx context.Context) (v *orgstaff.Gender, err error) {
+func (m *OrgStaffMutation) OldGender(ctx context.Context) (v *int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldGender is only allowed on UpdateOne operations")
 	}
@@ -4553,9 +4555,28 @@ func (m *OrgStaffMutation) OldGender(ctx context.Context) (v *orgstaff.Gender, e
 	return oldValue.Gender, nil
 }
 
+// AddGender adds i to the "gender" field.
+func (m *OrgStaffMutation) AddGender(i int32) {
+	if m.addgender != nil {
+		*m.addgender += i
+	} else {
+		m.addgender = &i
+	}
+}
+
+// AddedGender returns the value that was added to the "gender" field in this mutation.
+func (m *OrgStaffMutation) AddedGender() (r int32, exists bool) {
+	v := m.addgender
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
 // ClearGender clears the value of the "gender" field.
 func (m *OrgStaffMutation) ClearGender() {
 	m.gender = nil
+	m.addgender = nil
 	m.clearedFields[orgstaff.FieldGender] = struct{}{}
 }
 
@@ -4568,6 +4589,7 @@ func (m *OrgStaffMutation) GenderCleared() bool {
 // ResetGender resets all changes to the "gender" field.
 func (m *OrgStaffMutation) ResetGender() {
 	m.gender = nil
+	m.addgender = nil
 	delete(m.clearedFields, orgstaff.FieldGender)
 }
 
@@ -5166,53 +5188,53 @@ func (m *OrgStaffMutation) ResetEmpStat() {
 	m.addemp_stat = nil
 }
 
-// SetEmstDictID sets the "emst_dict_id" field.
-func (m *OrgStaffMutation) SetEmstDictID(s string) {
-	m.emst_dict_id = &s
+// SetEmpstDictID sets the "empst_dict_id" field.
+func (m *OrgStaffMutation) SetEmpstDictID(s string) {
+	m.empst_dict_id = &s
 }
 
-// EmstDictID returns the value of the "emst_dict_id" field in the mutation.
-func (m *OrgStaffMutation) EmstDictID() (r string, exists bool) {
-	v := m.emst_dict_id
+// EmpstDictID returns the value of the "empst_dict_id" field in the mutation.
+func (m *OrgStaffMutation) EmpstDictID() (r string, exists bool) {
+	v := m.empst_dict_id
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldEmstDictID returns the old "emst_dict_id" field's value of the OrgStaff entity.
+// OldEmpstDictID returns the old "empst_dict_id" field's value of the OrgStaff entity.
 // If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgStaffMutation) OldEmstDictID(ctx context.Context) (v *string, err error) {
+func (m *OrgStaffMutation) OldEmpstDictID(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldEmstDictID is only allowed on UpdateOne operations")
+		return v, errors.New("OldEmpstDictID is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldEmstDictID requires an ID field in the mutation")
+		return v, errors.New("OldEmpstDictID requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldEmstDictID: %w", err)
+		return v, fmt.Errorf("querying old value for OldEmpstDictID: %w", err)
 	}
-	return oldValue.EmstDictID, nil
+	return oldValue.EmpstDictID, nil
 }
 
-// ClearEmstDictID clears the value of the "emst_dict_id" field.
-func (m *OrgStaffMutation) ClearEmstDictID() {
-	m.emst_dict_id = nil
-	m.clearedFields[orgstaff.FieldEmstDictID] = struct{}{}
+// ClearEmpstDictID clears the value of the "empst_dict_id" field.
+func (m *OrgStaffMutation) ClearEmpstDictID() {
+	m.empst_dict_id = nil
+	m.clearedFields[orgstaff.FieldEmpstDictID] = struct{}{}
 }
 
-// EmstDictIDCleared returns if the "emst_dict_id" field was cleared in this mutation.
-func (m *OrgStaffMutation) EmstDictIDCleared() bool {
-	_, ok := m.clearedFields[orgstaff.FieldEmstDictID]
+// EmpstDictIDCleared returns if the "empst_dict_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) EmpstDictIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldEmpstDictID]
 	return ok
 }
 
-// ResetEmstDictID resets all changes to the "emst_dict_id" field.
-func (m *OrgStaffMutation) ResetEmstDictID() {
-	m.emst_dict_id = nil
-	delete(m.clearedFields, orgstaff.FieldEmstDictID)
+// ResetEmpstDictID resets all changes to the "empst_dict_id" field.
+func (m *OrgStaffMutation) ResetEmpstDictID() {
+	m.empst_dict_id = nil
+	delete(m.clearedFields, orgstaff.FieldEmpstDictID)
 }
 
 // SetCreator sets the "creator" field.
@@ -5459,8 +5481,8 @@ func (m *OrgStaffMutation) Fields() []string {
 	if m.emp_stat != nil {
 		fields = append(fields, orgstaff.FieldEmpStat)
 	}
-	if m.emst_dict_id != nil {
-		fields = append(fields, orgstaff.FieldEmstDictID)
+	if m.empst_dict_id != nil {
+		fields = append(fields, orgstaff.FieldEmpstDictID)
 	}
 	if m.creator != nil {
 		fields = append(fields, orgstaff.FieldCreator)
@@ -5519,8 +5541,8 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.OrgID()
 	case orgstaff.FieldEmpStat:
 		return m.EmpStat()
-	case orgstaff.FieldEmstDictID:
-		return m.EmstDictID()
+	case orgstaff.FieldEmpstDictID:
+		return m.EmpstDictID()
 	case orgstaff.FieldCreator:
 		return m.Creator()
 	}
@@ -5578,8 +5600,8 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldOrgID(ctx)
 	case orgstaff.FieldEmpStat:
 		return m.OldEmpStat(ctx)
-	case orgstaff.FieldEmstDictID:
-		return m.OldEmstDictID(ctx)
+	case orgstaff.FieldEmpstDictID:
+		return m.OldEmpstDictID(ctx)
 	case orgstaff.FieldCreator:
 		return m.OldCreator(ctx)
 	}
@@ -5662,7 +5684,7 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		m.SetMobile(v)
 		return nil
 	case orgstaff.FieldGender:
-		v, ok := value.(orgstaff.Gender)
+		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -5752,12 +5774,12 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetEmpStat(v)
 		return nil
-	case orgstaff.FieldEmstDictID:
+	case orgstaff.FieldEmpstDictID:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetEmstDictID(v)
+		m.SetEmpstDictID(v)
 		return nil
 	case orgstaff.FieldCreator:
 		v, ok := value.(string)
@@ -5777,6 +5799,9 @@ func (m *OrgStaffMutation) AddedFields() []string {
 	if m.addsort != nil {
 		fields = append(fields, orgstaff.FieldSort)
 	}
+	if m.addgender != nil {
+		fields = append(fields, orgstaff.FieldGender)
+	}
 	if m.addemp_stat != nil {
 		fields = append(fields, orgstaff.FieldEmpStat)
 	}
@@ -5790,6 +5815,8 @@ func (m *OrgStaffMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
 	case orgstaff.FieldSort:
 		return m.AddedSort()
+	case orgstaff.FieldGender:
+		return m.AddedGender()
 	case orgstaff.FieldEmpStat:
 		return m.AddedEmpStat()
 	}
@@ -5807,6 +5834,13 @@ func (m *OrgStaffMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddSort(v)
+		return nil
+	case orgstaff.FieldGender:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddGender(v)
 		return nil
 	case orgstaff.FieldEmpStat:
 		v, ok := value.(int32)
@@ -5880,8 +5914,8 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldOrgID) {
 		fields = append(fields, orgstaff.FieldOrgID)
 	}
-	if m.FieldCleared(orgstaff.FieldEmstDictID) {
-		fields = append(fields, orgstaff.FieldEmstDictID)
+	if m.FieldCleared(orgstaff.FieldEmpstDictID) {
+		fields = append(fields, orgstaff.FieldEmpstDictID)
 	}
 	if m.FieldCleared(orgstaff.FieldCreator) {
 		fields = append(fields, orgstaff.FieldCreator)
@@ -5957,8 +5991,8 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 	case orgstaff.FieldOrgID:
 		m.ClearOrgID()
 		return nil
-	case orgstaff.FieldEmstDictID:
-		m.ClearEmstDictID()
+	case orgstaff.FieldEmpstDictID:
+		m.ClearEmpstDictID()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ClearCreator()
@@ -6040,8 +6074,8 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 	case orgstaff.FieldEmpStat:
 		m.ResetEmpStat()
 		return nil
-	case orgstaff.FieldEmstDictID:
-		m.ResetEmstDictID()
+	case orgstaff.FieldEmpstDictID:
+		m.ResetEmpstDictID()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ResetCreator()
@@ -9945,7 +9979,7 @@ func (m *SysDictItemMutation) DictID() (r string, exists bool) {
 // OldDictID returns the old "dict_id" field's value of the SysDictItem entity.
 // If the SysDictItem object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysDictItemMutation) OldDictID(ctx context.Context) (v string, err error) {
+func (m *SysDictItemMutation) OldDictID(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldDictID is only allowed on UpdateOne operations")
 	}
@@ -9959,9 +9993,22 @@ func (m *SysDictItemMutation) OldDictID(ctx context.Context) (v string, err erro
 	return oldValue.DictID, nil
 }
 
+// ClearDictID clears the value of the "dict_id" field.
+func (m *SysDictItemMutation) ClearDictID() {
+	m.dict = nil
+	m.clearedFields[sysdictitem.FieldDictID] = struct{}{}
+}
+
+// DictIDCleared returns if the "dict_id" field was cleared in this mutation.
+func (m *SysDictItemMutation) DictIDCleared() bool {
+	_, ok := m.clearedFields[sysdictitem.FieldDictID]
+	return ok
+}
+
 // ResetDictID resets all changes to the "dict_id" field.
 func (m *SysDictItemMutation) ResetDictID() {
 	m.dict = nil
+	delete(m.clearedFields, sysdictitem.FieldDictID)
 }
 
 // ClearDict clears the "dict" edge to the SysDict entity.
@@ -9971,7 +10018,7 @@ func (m *SysDictItemMutation) ClearDict() {
 
 // DictCleared reports if the "dict" edge to the SysDict entity was cleared.
 func (m *SysDictItemMutation) DictCleared() bool {
-	return m.cleareddict
+	return m.DictIDCleared() || m.cleareddict
 }
 
 // DictIDs returns the "dict" edge IDs in the mutation.
@@ -10260,6 +10307,9 @@ func (m *SysDictItemMutation) ClearedFields() []string {
 	if m.FieldCleared(sysdictitem.FieldDeletedAt) {
 		fields = append(fields, sysdictitem.FieldDeletedAt)
 	}
+	if m.FieldCleared(sysdictitem.FieldDictID) {
+		fields = append(fields, sysdictitem.FieldDictID)
+	}
 	return fields
 }
 
@@ -10285,6 +10335,9 @@ func (m *SysDictItemMutation) ClearField(name string) error {
 		return nil
 	case sysdictitem.FieldDeletedAt:
 		m.ClearDeletedAt()
+		return nil
+	case sysdictitem.FieldDictID:
+		m.ClearDictID()
 		return nil
 	}
 	return fmt.Errorf("unknown SysDictItem nullable field %s", name)

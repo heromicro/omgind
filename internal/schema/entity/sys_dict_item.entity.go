@@ -29,13 +29,13 @@ func (sdd SysDictItem) Fields() []ent.Field {
 			MaxLen(128).StructTag(`json:"label,omitempty"`).Comment("显示值"),
 		field.Int("value").StorageKey("val").StructTag(`json:"value,omitempty"`).Comment("字典值"),
 
-		field.String("dict_id").MaxLen(36).NotEmpty().Comment("sys_dict.id"),
+		field.String("dict_id").MaxLen(36).Nillable().Optional().Comment("sys_dict.id"),
 	}
 }
 
 func (sdd SysDictItem) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.From("dict", SysDict.Type).Field("dict_id").Ref("items").Unique().Required(),
+		edge.From("dict", SysDict.Type).Field("dict_id").Ref("items").Unique(),
 	}
 }
 

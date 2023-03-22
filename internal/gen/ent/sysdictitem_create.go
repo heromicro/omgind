@@ -140,6 +140,14 @@ func (sdic *SysDictItemCreate) SetDictID(s string) *SysDictItemCreate {
 	return sdic
 }
 
+// SetNillableDictID sets the "dict_id" field if the given value is not nil.
+func (sdic *SysDictItemCreate) SetNillableDictID(s *string) *SysDictItemCreate {
+	if s != nil {
+		sdic.SetDictID(*s)
+	}
+	return sdic
+}
+
 // SetID sets the "id" field.
 func (sdic *SysDictItemCreate) SetID(s string) *SysDictItemCreate {
 	sdic.mutation.SetID(s)
@@ -251,9 +259,6 @@ func (sdic *SysDictItemCreate) check() error {
 	if _, ok := sdic.mutation.Value(); !ok {
 		return &ValidationError{Name: "value", err: errors.New(`ent: missing required field "SysDictItem.value"`)}
 	}
-	if _, ok := sdic.mutation.DictID(); !ok {
-		return &ValidationError{Name: "dict_id", err: errors.New(`ent: missing required field "SysDictItem.dict_id"`)}
-	}
 	if v, ok := sdic.mutation.DictID(); ok {
 		if err := sysdictitem.DictIDValidator(v); err != nil {
 			return &ValidationError{Name: "dict_id", err: fmt.Errorf(`ent: validator failed for field "SysDictItem.dict_id": %w`, err)}
@@ -263,9 +268,6 @@ func (sdic *SysDictItemCreate) check() error {
 		if err := sysdictitem.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "SysDictItem.id": %w`, err)}
 		}
-	}
-	if _, ok := sdic.mutation.DictID(); !ok {
-		return &ValidationError{Name: "dict", err: errors.New(`ent: missing required edge "SysDictItem.dict"`)}
 	}
 	return nil
 }
@@ -355,7 +357,7 @@ func (sdic *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec)
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.DictID = nodes[0]
+		_node.DictID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
@@ -545,6 +547,12 @@ func (u *SysDictItemUpsert) SetDictID(v string) *SysDictItemUpsert {
 // UpdateDictID sets the "dict_id" field to the value that was provided on create.
 func (u *SysDictItemUpsert) UpdateDictID() *SysDictItemUpsert {
 	u.SetExcluded(sysdictitem.FieldDictID)
+	return u
+}
+
+// ClearDictID clears the value of the "dict_id" field.
+func (u *SysDictItemUpsert) ClearDictID() *SysDictItemUpsert {
+	u.SetNull(sysdictitem.FieldDictID)
 	return u
 }
 
@@ -757,6 +765,13 @@ func (u *SysDictItemUpsertOne) SetDictID(v string) *SysDictItemUpsertOne {
 func (u *SysDictItemUpsertOne) UpdateDictID() *SysDictItemUpsertOne {
 	return u.Update(func(s *SysDictItemUpsert) {
 		s.UpdateDictID()
+	})
+}
+
+// ClearDictID clears the value of the "dict_id" field.
+func (u *SysDictItemUpsertOne) ClearDictID() *SysDictItemUpsertOne {
+	return u.Update(func(s *SysDictItemUpsert) {
+		s.ClearDictID()
 	})
 }
 
@@ -1132,6 +1147,13 @@ func (u *SysDictItemUpsertBulk) SetDictID(v string) *SysDictItemUpsertBulk {
 func (u *SysDictItemUpsertBulk) UpdateDictID() *SysDictItemUpsertBulk {
 	return u.Update(func(s *SysDictItemUpsert) {
 		s.UpdateDictID()
+	})
+}
+
+// ClearDictID clears the value of the "dict_id" field.
+func (u *SysDictItemUpsertBulk) ClearDictID() *SysDictItemUpsertBulk {
+	return u.Update(func(s *SysDictItemUpsert) {
+		s.ClearDictID()
 	})
 }
 

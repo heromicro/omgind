@@ -194,16 +194,23 @@ func (osu *OrgStaffUpdate) ClearMobile() *OrgStaffUpdate {
 }
 
 // SetGender sets the "gender" field.
-func (osu *OrgStaffUpdate) SetGender(o orgstaff.Gender) *OrgStaffUpdate {
-	osu.mutation.SetGender(o)
+func (osu *OrgStaffUpdate) SetGender(i int32) *OrgStaffUpdate {
+	osu.mutation.ResetGender()
+	osu.mutation.SetGender(i)
 	return osu
 }
 
 // SetNillableGender sets the "gender" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableGender(o *orgstaff.Gender) *OrgStaffUpdate {
-	if o != nil {
-		osu.SetGender(*o)
+func (osu *OrgStaffUpdate) SetNillableGender(i *int32) *OrgStaffUpdate {
+	if i != nil {
+		osu.SetGender(*i)
 	}
+	return osu
+}
+
+// AddGender adds i to the "gender" field.
+func (osu *OrgStaffUpdate) AddGender(i int32) *OrgStaffUpdate {
+	osu.mutation.AddGender(i)
 	return osu
 }
 
@@ -454,23 +461,23 @@ func (osu *OrgStaffUpdate) AddEmpStat(i int32) *OrgStaffUpdate {
 	return osu
 }
 
-// SetEmstDictID sets the "emst_dict_id" field.
-func (osu *OrgStaffUpdate) SetEmstDictID(s string) *OrgStaffUpdate {
-	osu.mutation.SetEmstDictID(s)
+// SetEmpstDictID sets the "empst_dict_id" field.
+func (osu *OrgStaffUpdate) SetEmpstDictID(s string) *OrgStaffUpdate {
+	osu.mutation.SetEmpstDictID(s)
 	return osu
 }
 
-// SetNillableEmstDictID sets the "emst_dict_id" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableEmstDictID(s *string) *OrgStaffUpdate {
+// SetNillableEmpstDictID sets the "empst_dict_id" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableEmpstDictID(s *string) *OrgStaffUpdate {
 	if s != nil {
-		osu.SetEmstDictID(*s)
+		osu.SetEmpstDictID(*s)
 	}
 	return osu
 }
 
-// ClearEmstDictID clears the value of the "emst_dict_id" field.
-func (osu *OrgStaffUpdate) ClearEmstDictID() *OrgStaffUpdate {
-	osu.mutation.ClearEmstDictID()
+// ClearEmpstDictID clears the value of the "empst_dict_id" field.
+func (osu *OrgStaffUpdate) ClearEmpstDictID() *OrgStaffUpdate {
+	osu.mutation.ClearEmpstDictID()
 	return osu
 }
 
@@ -604,11 +611,6 @@ func (osu *OrgStaffUpdate) check() error {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.mobile": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.Gender(); ok {
-		if err := orgstaff.GenderValidator(v); err != nil {
-			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
-		}
-	}
 	if v, ok := osu.mutation.GndrDictID(); ok {
 		if err := orgstaff.GndrDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "gndr_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gndr_dict_id": %w`, err)}
@@ -639,9 +641,9 @@ func (osu *OrgStaffUpdate) check() error {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.EmstDictID(); ok {
-		if err := orgstaff.EmstDictIDValidator(v); err != nil {
-			return &ValidationError{Name: "emst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.emst_dict_id": %w`, err)}
+	if v, ok := osu.mutation.EmpstDictID(); ok {
+		if err := orgstaff.EmpstDictIDValidator(v); err != nil {
+			return &ValidationError{Name: "empst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.empst_dict_id": %w`, err)}
 		}
 	}
 	return nil
@@ -717,10 +719,13 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.ClearField(orgstaff.FieldMobile, field.TypeString)
 	}
 	if value, ok := osu.mutation.Gender(); ok {
-		_spec.SetField(orgstaff.FieldGender, field.TypeEnum, value)
+		_spec.SetField(orgstaff.FieldGender, field.TypeInt32, value)
+	}
+	if value, ok := osu.mutation.AddedGender(); ok {
+		_spec.AddField(orgstaff.FieldGender, field.TypeInt32, value)
 	}
 	if osu.mutation.GenderCleared() {
-		_spec.ClearField(orgstaff.FieldGender, field.TypeEnum)
+		_spec.ClearField(orgstaff.FieldGender, field.TypeInt32)
 	}
 	if value, ok := osu.mutation.GndrDictID(); ok {
 		_spec.SetField(orgstaff.FieldGndrDictID, field.TypeString, value)
@@ -776,11 +781,11 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := osu.mutation.AddedEmpStat(); ok {
 		_spec.AddField(orgstaff.FieldEmpStat, field.TypeInt32, value)
 	}
-	if value, ok := osu.mutation.EmstDictID(); ok {
-		_spec.SetField(orgstaff.FieldEmstDictID, field.TypeString, value)
+	if value, ok := osu.mutation.EmpstDictID(); ok {
+		_spec.SetField(orgstaff.FieldEmpstDictID, field.TypeString, value)
 	}
-	if osu.mutation.EmstDictIDCleared() {
-		_spec.ClearField(orgstaff.FieldEmstDictID, field.TypeString)
+	if osu.mutation.EmpstDictIDCleared() {
+		_spec.ClearField(orgstaff.FieldEmpstDictID, field.TypeString)
 	}
 	if value, ok := osu.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -1067,16 +1072,23 @@ func (osuo *OrgStaffUpdateOne) ClearMobile() *OrgStaffUpdateOne {
 }
 
 // SetGender sets the "gender" field.
-func (osuo *OrgStaffUpdateOne) SetGender(o orgstaff.Gender) *OrgStaffUpdateOne {
-	osuo.mutation.SetGender(o)
+func (osuo *OrgStaffUpdateOne) SetGender(i int32) *OrgStaffUpdateOne {
+	osuo.mutation.ResetGender()
+	osuo.mutation.SetGender(i)
 	return osuo
 }
 
 // SetNillableGender sets the "gender" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableGender(o *orgstaff.Gender) *OrgStaffUpdateOne {
-	if o != nil {
-		osuo.SetGender(*o)
+func (osuo *OrgStaffUpdateOne) SetNillableGender(i *int32) *OrgStaffUpdateOne {
+	if i != nil {
+		osuo.SetGender(*i)
 	}
+	return osuo
+}
+
+// AddGender adds i to the "gender" field.
+func (osuo *OrgStaffUpdateOne) AddGender(i int32) *OrgStaffUpdateOne {
+	osuo.mutation.AddGender(i)
 	return osuo
 }
 
@@ -1327,23 +1339,23 @@ func (osuo *OrgStaffUpdateOne) AddEmpStat(i int32) *OrgStaffUpdateOne {
 	return osuo
 }
 
-// SetEmstDictID sets the "emst_dict_id" field.
-func (osuo *OrgStaffUpdateOne) SetEmstDictID(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetEmstDictID(s)
+// SetEmpstDictID sets the "empst_dict_id" field.
+func (osuo *OrgStaffUpdateOne) SetEmpstDictID(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetEmpstDictID(s)
 	return osuo
 }
 
-// SetNillableEmstDictID sets the "emst_dict_id" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableEmstDictID(s *string) *OrgStaffUpdateOne {
+// SetNillableEmpstDictID sets the "empst_dict_id" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableEmpstDictID(s *string) *OrgStaffUpdateOne {
 	if s != nil {
-		osuo.SetEmstDictID(*s)
+		osuo.SetEmpstDictID(*s)
 	}
 	return osuo
 }
 
-// ClearEmstDictID clears the value of the "emst_dict_id" field.
-func (osuo *OrgStaffUpdateOne) ClearEmstDictID() *OrgStaffUpdateOne {
-	osuo.mutation.ClearEmstDictID()
+// ClearEmpstDictID clears the value of the "empst_dict_id" field.
+func (osuo *OrgStaffUpdateOne) ClearEmpstDictID() *OrgStaffUpdateOne {
+	osuo.mutation.ClearEmpstDictID()
 	return osuo
 }
 
@@ -1490,11 +1502,6 @@ func (osuo *OrgStaffUpdateOne) check() error {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.mobile": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.Gender(); ok {
-		if err := orgstaff.GenderValidator(v); err != nil {
-			return &ValidationError{Name: "gender", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gender": %w`, err)}
-		}
-	}
 	if v, ok := osuo.mutation.GndrDictID(); ok {
 		if err := orgstaff.GndrDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "gndr_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.gndr_dict_id": %w`, err)}
@@ -1525,9 +1532,9 @@ func (osuo *OrgStaffUpdateOne) check() error {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.EmstDictID(); ok {
-		if err := orgstaff.EmstDictIDValidator(v); err != nil {
-			return &ValidationError{Name: "emst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.emst_dict_id": %w`, err)}
+	if v, ok := osuo.mutation.EmpstDictID(); ok {
+		if err := orgstaff.EmpstDictIDValidator(v); err != nil {
+			return &ValidationError{Name: "empst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.empst_dict_id": %w`, err)}
 		}
 	}
 	return nil
@@ -1620,10 +1627,13 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		_spec.ClearField(orgstaff.FieldMobile, field.TypeString)
 	}
 	if value, ok := osuo.mutation.Gender(); ok {
-		_spec.SetField(orgstaff.FieldGender, field.TypeEnum, value)
+		_spec.SetField(orgstaff.FieldGender, field.TypeInt32, value)
+	}
+	if value, ok := osuo.mutation.AddedGender(); ok {
+		_spec.AddField(orgstaff.FieldGender, field.TypeInt32, value)
 	}
 	if osuo.mutation.GenderCleared() {
-		_spec.ClearField(orgstaff.FieldGender, field.TypeEnum)
+		_spec.ClearField(orgstaff.FieldGender, field.TypeInt32)
 	}
 	if value, ok := osuo.mutation.GndrDictID(); ok {
 		_spec.SetField(orgstaff.FieldGndrDictID, field.TypeString, value)
@@ -1679,11 +1689,11 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	if value, ok := osuo.mutation.AddedEmpStat(); ok {
 		_spec.AddField(orgstaff.FieldEmpStat, field.TypeInt32, value)
 	}
-	if value, ok := osuo.mutation.EmstDictID(); ok {
-		_spec.SetField(orgstaff.FieldEmstDictID, field.TypeString, value)
+	if value, ok := osuo.mutation.EmpstDictID(); ok {
+		_spec.SetField(orgstaff.FieldEmpstDictID, field.TypeString, value)
 	}
-	if osuo.mutation.EmstDictIDCleared() {
-		_spec.ClearField(orgstaff.FieldEmstDictID, field.TypeString)
+	if osuo.mutation.EmpstDictIDCleared() {
+		_spec.ClearField(orgstaff.FieldEmpstDictID, field.TypeString)
 	}
 	if value, ok := osuo.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)

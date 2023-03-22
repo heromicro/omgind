@@ -26,10 +26,10 @@ type Dict struct {
 func ToSchemaSysDict(dit *ent.SysDict) *schema.Dict {
 	item := new(schema.Dict)
 	structure.Copy(dit, item)
-	// if dit.Edges.Items != nil {
-	// 	ditems := ToSchemaDictItems(dit.Edges.Items)
-	// 	item.Items = ditems
-	// }
+	if dit.Edges.Items != nil {
+		ditems := ToSchemaDictItems(dit.Edges.Items)
+		item.Items = ditems
+	}
 	return item
 }
 
@@ -159,6 +159,7 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 
 	log.Println(" ------ ======= --- id ", id)
 	log.Println(" ------ ======= -- -params  ", params)
+
 	opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysDict.Query()
@@ -168,7 +169,7 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 	}
 
 	query = query.WithItems(func(sdiq *ent.SysDictItemQuery) {
-		sdiq.Order(ent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo)
+		sdiq.Order(ent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID)
 	})
 
 	if id == "-" {

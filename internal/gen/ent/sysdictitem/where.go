@@ -556,6 +556,16 @@ func DictIDHasSuffix(v string) predicate.SysDictItem {
 	return predicate.SysDictItem(sql.FieldHasSuffix(FieldDictID, v))
 }
 
+// DictIDIsNil applies the IsNil predicate on the "dict_id" field.
+func DictIDIsNil() predicate.SysDictItem {
+	return predicate.SysDictItem(sql.FieldIsNull(FieldDictID))
+}
+
+// DictIDNotNil applies the NotNil predicate on the "dict_id" field.
+func DictIDNotNil() predicate.SysDictItem {
+	return predicate.SysDictItem(sql.FieldNotNull(FieldDictID))
+}
+
 // DictIDEqualFold applies the EqualFold predicate on the "dict_id" field.
 func DictIDEqualFold(v string) predicate.SysDictItem {
 	return predicate.SysDictItem(sql.FieldEqualFold(FieldDictID, v))

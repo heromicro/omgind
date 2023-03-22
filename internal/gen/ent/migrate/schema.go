@@ -212,7 +212,7 @@ var (
 		{Name: "first_name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "last_name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Size: 32},
-		{Name: "gender", Type: field.TypeEnum, Nullable: true, Enums: []string{"M", "F"}},
+		{Name: "gender", Type: field.TypeInt32, Nullable: true},
 		{Name: "gndr_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "birth_date", Type: field.TypeTime, Nullable: true},
 		{Name: "iden_no", Type: field.TypeString, Nullable: true},
@@ -222,7 +222,7 @@ var (
 		{Name: "regu_date", Type: field.TypeTime, Nullable: true},
 		{Name: "resign_date", Type: field.TypeTime, Nullable: true},
 		{Name: "emp_stat", Type: field.TypeInt32, Default: 1},
-		{Name: "emst_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "empst_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "rsaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
@@ -426,7 +426,7 @@ var (
 		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "label", Type: field.TypeString, Size: 128},
 		{Name: "val", Type: field.TypeInt},
-		{Name: "dict_id", Type: field.TypeString, Size: 36},
+		{Name: "dict_id", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// SysDictItemsTable holds the schema information for the "sys_dict_items" table.
 	SysDictItemsTable = &schema.Table{
@@ -438,7 +438,7 @@ var (
 				Symbol:     "sys_dict_items_sys_dicts_items",
 				Columns:    []*schema.Column{SysDictItemsColumns[10]},
 				RefColumns: []*schema.Column{SysDictsColumns[0]},
-				OnDelete:   schema.NoAction,
+				OnDelete:   schema.SetNull,
 			},
 		},
 		Indexes: []*schema.Index{

@@ -5,7 +5,6 @@ package ent
 import (
 	"time"
 
-	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 )
 
@@ -567,7 +566,7 @@ type CreateOrgStaffInput struct {
 	FirstName   *string
 	LastName    *string
 	Mobile      *string
-	Gender      *orgstaff.Gender
+	Gender      *int32
 	GndrDictID  *string
 	BirthDate   *time.Time
 	IdenNo      *string
@@ -580,7 +579,7 @@ type CreateOrgStaffInput struct {
 	ResignDate  *time.Time
 	OrgID       *string
 	EmpStat     *int32
-	EmstDictID  *string
+	EmpstDictID *string
 	Creator     *string
 	Organ       *string
 	IdenAddr    *string
@@ -658,8 +657,8 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.EmpStat; v != nil {
 		m.SetEmpStat(*v)
 	}
-	if v := i.EmstDictID; v != nil {
-		m.SetEmstDictID(*v)
+	if v := i.EmpstDictID; v != nil {
+		m.SetEmpstDictID(*v)
 	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
@@ -698,7 +697,7 @@ type UpdateOrgStaffInput struct {
 	ClearLastName    bool
 	Mobile           *string
 	ClearMobile      bool
-	Gender           *orgstaff.Gender
+	Gender           *int32
 	ClearGender      bool
 	GndrDictID       *string
 	ClearGndrDictID  bool
@@ -723,8 +722,8 @@ type UpdateOrgStaffInput struct {
 	OrgID            *string
 	ClearOrgID       bool
 	EmpStat          *int32
-	EmstDictID       *string
-	ClearEmstDictID  bool
+	EmpstDictID      *string
+	ClearEmpstDictID bool
 	Creator          *string
 	ClearCreator     bool
 	Organ            *string
@@ -857,11 +856,11 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.EmpStat; v != nil {
 		m.SetEmpStat(*v)
 	}
-	if i.ClearEmstDictID {
-		m.ClearEmstDictID()
+	if i.ClearEmpstDictID {
+		m.ClearEmpstDictID()
 	}
-	if v := i.EmstDictID; v != nil {
-		m.SetEmstDictID(*v)
+	if v := i.EmpstDictID; v != nil {
+		m.SetEmpstDictID(*v)
 	}
 	if i.ClearCreator {
 		m.ClearCreator()
@@ -1372,8 +1371,8 @@ type CreateSysDictItemInput struct {
 	IsActive  *bool
 	Label     string
 	Value     int
-	DictID    string
-	Dict      string
+	DictID    *string
+	Dict      *string
 }
 
 // Mutate applies the CreateSysDictItemInput on the SysDictItemCreate builder.
@@ -1401,8 +1400,12 @@ func (i *CreateSysDictItemInput) Mutate(m *SysDictItemCreate) {
 	}
 	m.SetLabel(i.Label)
 	m.SetValue(i.Value)
-	m.SetDictID(i.DictID)
-	m.SetDictID(i.Dict)
+	if v := i.DictID; v != nil {
+		m.SetDictID(*v)
+	}
+	if v := i.Dict; v != nil {
+		m.SetDictID(*v)
+	}
 }
 
 // SetInput applies the change-set in the CreateSysDictItemInput on the create builder.
@@ -1425,6 +1428,7 @@ type UpdateSysDictItemInput struct {
 	Label          *string
 	Value          *int
 	DictID         *string
+	ClearDictID    bool
 	Dict           *string
 	ClearDict      bool
 }
@@ -1463,6 +1467,9 @@ func (i *UpdateSysDictItemInput) Mutate(m *SysDictItemMutation) {
 	}
 	if v := i.Value; v != nil {
 		m.SetValue(*v)
+	}
+	if i.ClearDictID {
+		m.ClearDictID()
 	}
 	if v := i.DictID; v != nil {
 		m.SetDictID(*v)
