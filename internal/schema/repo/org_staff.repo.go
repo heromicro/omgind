@@ -76,7 +76,7 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 
 	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
-	})
+	}).WithIdenAddr().WithResiAddr()
 
 	query = query.Where(orgstaff.DeletedAtIsNil())
 	// TODO: 查询条件
@@ -168,7 +168,8 @@ func (a *OrgStaff) Get(ctx context.Context, id string, opts ...schema.OrgStaffQu
 
 	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
-	})
+	}).WithIdenAddr().WithResiAddr()
+
 	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -185,7 +186,8 @@ func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQ
 
 	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo).WithHaddr()
-	})
+	}).WithIdenAddr().WithResiAddr()
+
 	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {
 		if ent.IsNotFound(err) {
@@ -195,40 +197,6 @@ func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQ
 	}
 
 	return ToSchemaOrgStaff(r_orgstaff), nil
-}
-
-// Create 创建数据
-func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.OrgStaff, error) {
-
-	// TODO: check org_id
-
-	iteminput := a.ToEntCreateOrgStaffInput(&item)
-
-	r_orgstaff, err := a.EntCli.OrgStaff.Create().SetInput(*iteminput).Save(ctx)
-
-	if err != nil {
-		return nil, err
-	}
-	sch_orgstaff := ToSchemaOrgStaff(r_orgstaff)
-	return sch_orgstaff, nil
-}
-
-// Update 更新数据
-func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) (*schema.OrgStaff, error) {
-
-	// TODO: check org_id
-
-	oitem, err := a.EntCli.OrgStaff.Query().Where(orgstaff.IDEQ(id)).Only(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	iteminput := a.ToEntUpdateOrgStaffInput(&item)
-
-	r_orgstaff, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_orgstaff := ToSchemaOrgStaff(r_orgstaff)
-
-	return sch_orgstaff, nil
 }
 
 // Delete 删除数据

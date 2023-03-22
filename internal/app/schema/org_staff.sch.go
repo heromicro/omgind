@@ -8,10 +8,11 @@ type OrgStaff0 struct {
 	LastName  string `json:"last_name" binding:"required"`  // 姓
 	Mobile    string `json:"mobile" binding:"required"`     // 电话
 
-	BirthDate  *time.Time `json:"birth_date" binding:"required"`   // 出生日期
-	Gender     int32      `json:"gender" binding:"required"`       // 性别
-	GndrDictID string     `json:"gndr_dict_id" binding:"required"` // 性别dict id
-	IdenNo     string     `json:"iden_no" `                        // 身份证号
+	BirthDate    *time.Time `json:"birth_date" binding:"required"`     // 出生日期
+	Gender       int32      `json:"gender" binding:"required"`         // 性别
+	GenderDictID string     `json:"gender_dict_id" binding:"required"` // 性别dict id
+	GenderDict   *Dict      `json:"gender_dict"`                       //
+	IdenNo       string     `json:"iden_no" `                          // 身份证号
 
 	OrgID string        `json:"org_id"` // 企业id
 	Org   *OrgOrganShow `json:"org"`    //
@@ -26,6 +27,7 @@ type OrgStaff1 struct {
 	Cubicle     string `json:"cubicle"`       // 工位
 	EmpStat     int32  `json:"emp_stat"`      // 在职状态
 	EmpstDictID string `json:"empst_dict_id"` // 在职状态
+	EmpstDict   string `json:"empst_dict"`    //
 
 	EntryDate   *time.Time `json:"entry_date" binding:"required"` // 入职日期
 	RegularDate *time.Time `json:"regular_date"`                  // 转正日期

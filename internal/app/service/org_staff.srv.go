@@ -8,6 +8,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -67,16 +68,16 @@ func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.Or
 
 	err := repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
-		iden_addr, err := a.EntCli.SysAddress.Create().SetInput(*iden_addr_iteminput).Save(ctx)
+		iden_addr, err := tx.SysAddress.Create().SetInput(*iden_addr_iteminput).Save(ctx)
 		if err != nil {
 			return err
 		}
-		resi_addr, err := a.EntCli.SysAddress.Create().SetInput(*resi_addr_iteminput).Save(ctx)
+		resi_addr, err := tx.SysAddress.Create().SetInput(*resi_addr_iteminput).Save(ctx)
 		if err != nil {
 			return err
 		}
 
-		rr_orgstaff, err = a.EntCli.OrgStaff.Create().SetInput(*staff_input).SetIdenAddrID(iden_addr.ID).SetResiAddrID(resi_addr.ID).Save(ctx)
+		rr_orgstaff, err = tx.OrgStaff.Create().SetInput(*staff_input).SetIdenAddrID(iden_addr.ID).SetResiAddrID(resi_addr.ID).Save(ctx)
 		if err != nil {
 			return err
 		}
@@ -101,16 +102,78 @@ func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.Or
 // Update 更新数据
 func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) (*schema.OrgStaff, error) {
 
-	oitem, err := a.OrgStaffRepo.Get(ctx, id)
+	oitem, err := a.EntCli.OrgStaff.Query().Where(orgstaff.IDEQ(id), orgstaff.IsDel(false)).WithIdenAddr().WithResiAddr().First(ctx)
 	if err != nil {
 		return nil, err
 	} else if oitem == nil {
 		return nil, errors.ErrNotFound
 	}
 
-	item.ID = oitem.ID
+	iden_addr_create_input := a.SysAddressRepo.ToEntCreateSysAddressInput(item.IdenAddr)
+	iden_addr_update_input := a.SysAddressRepo.ToEntUpdateSysAddressInput(item.IdenAddr)
+	item.IdenAddr = nil
 
-	return a.OrgStaffRepo.Update(ctx, id, item)
+	resi_addr_create_input := a.SysAddressRepo.ToEntCreateSysAddressInput(item.ResiAddr)
+	resi_addr_update_input := a.SysAddressRepo.ToEntUpdateSysAddressInput(item.ResiAddr)
+	item.ResiAddr = nil
+
+	staff_input := a.OrgStaffRepo.ToEntUpdateOrgStaffInput(&item)
+
+	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+		var iden_addr *ent.SysAddress
+
+		if v := oitem.IdenAddrID; v != nil {
+			_, err = tx.SysAddress.Update().Where(sysaddress.IDEQ(*v)).SetInput(*iden_addr_update_input).Save(ctx)
+			if err != nil {
+				return nil
+			}
+		} else {
+			iden_addr, err = tx.SysAddress.Create().SetInput(*iden_addr_create_input).Save(ctx)
+			if err != nil {
+				return err
+			}
+		}
+
+		var resi_addr *ent.SysAddress
+		if v := oitem.ResiAddrID; v != nil {
+			_, err = tx.SysAddress.Update().Where(sysaddress.IDEQ(*v)).SetInput(*resi_addr_update_input).Save(ctx)
+			if err != nil {
+				return nil
+			}
+		} else {
+			resi_addr, err = tx.SysAddress.Create().SetInput(*resi_addr_create_input).Save(ctx)
+			if err != nil {
+				return err
+			}
+		}
+
+		udpate_staff := tx.OrgStaff.Update().Where(orgstaff.IDEQ(id)).SetInput(*staff_input)
+		if iden_addr != nil {
+			udpate_staff = udpate_staff.SetIdenAddrID(iden_addr.ID)
+		}
+		if resi_addr != nil {
+			udpate_staff = udpate_staff.SetIdenAddrID(resi_addr.ID)
+		}
+
+		_, err = udpate_staff.Save(ctx)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	r_staff, err := a.EntCli.OrgStaff.Query().Where(orgstaff.IDEQ(id)).WithIdenAddr().WithResiAddr().First(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	sch_orgstaff := repo.ToSchemaOrgStaff(r_staff)
+
+	return sch_orgstaff, nil
 }
 
 // Delete 删除数据

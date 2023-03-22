@@ -106,18 +106,31 @@ func (a *OrgOrgan) Update(ctx context.Context, id string, item schema.OrgOrgan) 
 		return nil, errors.ErrNotFound
 	}
 
-	addr_iteminput := a.SysAddressRepo.ToEntUpdateSysAddressInput(item.Haddr)
+	addr_create_input := a.SysAddressRepo.ToEntCreateSysAddressInput(item.Haddr)
+	addr_update_input := a.SysAddressRepo.ToEntUpdateSysAddressInput(item.Haddr)
 	item.Haddr = nil
 	organ_iteminput := a.OrgOrganRepo.ToEntUpdateOrgOrganInput(&item)
 
 	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
-
-		_, err := a.EntCli.SysAddress.Update().Where(sysaddress.IDEQ(*oitem.HaddrID)).SetInput(*addr_iteminput).Save(ctx)
-		if err != nil {
-			return err
+		var haddr *ent.SysAddress
+		if v := oitem.HaddrID; v != nil {
+			_, err := tx.SysAddress.Update().Where(sysaddress.IDEQ(*v)).SetInput(*addr_update_input).Save(ctx)
+			if err != nil {
+				return err
+			}
+		} else {
+			haddr, err = tx.SysAddress.Create().SetInput(*addr_create_input).Save(ctx)
+			if err != nil {
+				return err
+			}
 		}
 
-		_, err = a.EntCli.OrgOrgan.Update().Where(orgorgan.IDEQ(id)).SetInput(*organ_iteminput).Save(ctx)
+		update_orga := tx.OrgOrgan.Update().Where(orgorgan.IDEQ(id)).SetInput(*organ_iteminput)
+		if haddr != nil {
+			update_orga = update_orga.SetHaddrID(haddr.ID)
+		}
+
+		_, err = update_orga.Save(ctx)
 		if err != nil {
 			return nil
 		}
@@ -134,7 +147,6 @@ func (a *OrgOrgan) Update(ctx context.Context, id string, item schema.OrgOrgan) 
 	}
 
 	sch_orgorgan := repo.ToSchemaOrgOrgan(r_orgorgan)
-	sch_orgorgan.Haddr = repo.ToSchemaSysAddress(r_orgorgan.Edges.Haddr)
 
 	return sch_orgorgan, nil
 }
