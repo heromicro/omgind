@@ -29,6 +29,11 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 	return a.DictRepo.Query(ctx, params, opts...)
 }
 
+// QueryOne 查询数据
+func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQueryParam, opts ...schema.DictQueryOptions) (*schema.DictQueryResult, error) {
+	return a.DictRepo.QueryItems(ctx, id, params, opts...)
+}
+
 // Get 查询指定数据
 func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptions) (*schema.Dict, error) {
 	item, err := a.DictRepo.Get(ctx, id, opts...)
@@ -37,28 +42,15 @@ func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptio
 	} else if item == nil {
 		return nil, errors.ErrNotFound
 	}
-	ditems, err := a.QueryItems(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	item.Items = ditems
-
-	return item, nil
-}
-
-func (d Dict) QueryItems(ctx context.Context, id string) (schema.DictItems, error) {
-
-	result, err := d.DictItemRepo.Query(ctx, schema.DictItemQueryParam{
+	ditems, err := a.DictItemRepo.Query(ctx, schema.DictItemQueryParam{
 		DictID: id,
 	})
-
 	if err != nil {
 		return nil, err
-	} else if len(result.Data) == 0 {
-		return nil, nil
 	}
+	item.Items = ditems.Data
 
-	return result.Data, nil
+	return item, nil
 }
 
 func (d *Dict) checkName(ctx context.Context, item schema.Dict) error {

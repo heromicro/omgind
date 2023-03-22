@@ -24,20 +24,20 @@ type Dict struct {
 type DictQueryParam struct {
 	PaginationParam
 
-	QueryValue string `form:"queryValue"` // 模糊查询
+	QueryValue string `form:"queryValue" json:"queryValue"` // 模糊查询
 
-	IDs      []string `form:"ids"`     // 唯一标识列表
-	NameCn   string   `form:"name_cn"` // 字典名称(中)
-	NameEn   string   `form:"name_en"` // 字典名称(英)
-	WithItem *bool    `form:"wi"`      //
+	IDs      []string `form:"ids" json:"ids"`         // 唯一标识列表
+	NameCn   string   `form:"name_cn" json:"name_cn"` // 字典名称(中)
+	NameEn   string   `form:"name_en" json:"name_en"` // 字典名称(英)
+	WithItem *bool    `form:"wi" json:"wi"`           //
 
-	IsActive *bool `form:"is_active"` //
+	IsActive *bool `form:"is_active" json:"is_active"` //
 
 	// example: asc
 	// example: desc
-	NameEn_Order   string `form:"name_en__order"`                           //
-	NameCn_Order   string `form:"name_cn__order"`                           //
-	IsActive_Order string `form:"is_active__order" json:"is_active__order"` //
+	NameEn_Order   string `form:"name_en__order" json:"name_en__order"`     // asc/desc
+	NameCn_Order   string `form:"name_cn__order" json:"name_cn__order"`     // asc/desc
+	IsActive_Order string `form:"is_active__order" json:"is_active__order"` // asc/desc
 	Sort_Order     string `form:"sort__order" json:"sort__order"`           // asc/desc
 
 }

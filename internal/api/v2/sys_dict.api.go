@@ -35,6 +35,25 @@ func (a *Dict) Query(c *gin.Context) {
 	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
+// Query 查询数据
+func (a *Dict) QueryItems(c *gin.Context) {
+	ctx := c.Request.Context()
+	var params schema.DictQueryParam
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+
+	params.Pagination = true
+	result, err := a.DictSrv.QueryItems(ctx, c.Param("id"), params)
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+
+	ginx.ResSuccess(c, result.Data)
+}
+
 // Get 查询指定数据
 func (a *Dict) Get(c *gin.Context) {
 	ctx := c.Request.Context()

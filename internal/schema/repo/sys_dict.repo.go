@@ -25,6 +25,10 @@ type Dict struct {
 func ToSchemaSysDict(dit *ent.SysDict) *schema.Dict {
 	item := new(schema.Dict)
 	structure.Copy(dit, item)
+	if dit.Edges.Items != nil {
+		ditems := ToSchemaDictItems(dit.Edges.Items)
+		item.Items = ditems
+	}
 	return item
 }
 
@@ -149,10 +153,69 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 	return qr, nil
 }
 
+// Query 查询数据
+func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQueryParam, opts ...schema.DictQueryOptions) (*schema.DictQueryResult, error) {
+
+	query := a.EntCli.SysDict.Query()
+
+	if id != "-" {
+		query = query.Where(sysdict.IDEQ(id))
+	}
+
+	query = query.WithItems(func(sdiq *ent.SysDictItemQuery) {
+		sdiq.Order(ent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo)
+	})
+
+	if id == "-" {
+		if v := params.NameCn; v != "" {
+			query = query.Where(sysdict.NameCnEQ(v))
+		} else if v := params.NameEn; v != "" {
+			query = query.Where(sysdict.NameEnEQ(v))
+		}
+	}
+
+	count, err := query.Count(ctx)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	// get total
+	pr := &schema.PaginationResult{Total: count}
+	if params.PaginationParam.OnlyCount {
+		return &schema.DictQueryResult{PageResult: pr}, nil
+	}
+
+	pr.Current = params.PaginationParam.GetCurrent()
+	pr.PageSize = params.PaginationParam.GetPageSize()
+	if params.Offset() > count {
+		return &schema.DictQueryResult{PageResult: pr}, nil
+	}
+
+	query = query.Limit(1).Offset(params.Offset())
+
+	list, err := query.All(ctx)
+	// log.Println(" -------  err ===== === ", err)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	rlist := ent.SysDicts(list)
+
+	qr := &schema.DictQueryResult{
+		PageResult: pr,
+		Data:       ToSchemaSysDicts(rlist),
+	}
+
+	return qr, nil
+}
+
 // Get 查询指定数据
 func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptions) (*schema.Dict, error) {
 
-	dict, err := a.EntCli.SysDict.Query().Where(sysdict.IDEQ(id)).Only(ctx)
+	query := a.EntCli.SysDict.Query().WithItems(func(sdiq *ent.SysDictItemQuery) {
+		sdiq.Order(ent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo)
+	})
+
+	dict, err := query.Where(sysdict.IDEQ(id)).Only(ctx)
 	if err != nil {
 		return nil, err
 	}

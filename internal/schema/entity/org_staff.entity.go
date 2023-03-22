@@ -31,6 +31,7 @@ func (OrgStaff) Fields() []ent.Field {
 		field.String("mobile").MaxLen(32).Nillable().Optional().StorageKey("mobile").Comment("电话"),
 
 		field.Enum("gender").NamedValues("Male", "M", "Female", "F").StorageKey("gender").Nillable().Optional().Comment("性别"),
+		field.String("gndr_dict_id").MaxLen(36).Nillable().Optional().StorageKey("gndr_dict_id").Comment("gender options"),
 
 		field.Time("birth_date").Nillable().Optional().StorageKey("birth_date").Comment("出生日期"),
 
@@ -48,7 +49,9 @@ func (OrgStaff) Fields() []ent.Field {
 
 		field.String("org_id").MaxLen(36).Nillable().Optional().StorageKey("org_id").Comment("企业id"),
 
-		field.Int("employment_status").Default(1).StorageKey("empt_sts").Comment("在职状态"),
+		field.Int("emp_stat").Default(1).StorageKey("emp_stat").Comment("在职状态"),
+
+		field.String("emst_dict_id").MaxLen(36).Nillable().Optional().StorageKey("emst_dict_id").Comment("empst_stat options"),
 
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
@@ -62,6 +65,9 @@ func (OrgStaff) Edges() []ent.Edge {
 
 		edge.From("iden_addr", SysAddress.Type).Ref("staff_iden").Unique().Field("iden_addr_id"),
 		edge.From("resi_addr", SysAddress.Type).Ref("staff_resi").Unique().Field("resi_addr_id"),
+
+		// edge.From("gender_dict", OrgOrgan.Type).Ref("staff_gender").Field("gndr_dict_id").Unique(),
+		// edge.From("emstat_dict", OrgOrgan.Type).Ref("staff_gender").Field("emst_dict_id").Unique(),
 	}
 }
 

@@ -29,6 +29,9 @@ func (sd SysDict) Fields() []ent.Field {
 			MaxLen(128).StructTag(`json:"name_cn,omitempty"`).Comment("字典名（中）"),
 		field.String("name_en").StorageKey("name_en").
 			MaxLen(128).StructTag(`json:"name_en,omitempty"`).Comment("字典名（英）"),
+
+		field.Enum("tipe").Values("int", "string").Default("int").StorageKey("tipe").StructTag(`json:"tipe,omitempty"`).Comment("值类型"),
+		
 	}
 }
 
