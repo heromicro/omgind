@@ -1,8 +1,6 @@
 package api_v2
 
 import (
-	"log"
-
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 
@@ -45,13 +43,13 @@ func (a *OrgOrgan) QuerySelect(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.OrgOrganQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		log.Printf(" ------- ------ %+v \n", err)
+		// log.Printf(" ------- ------ %+v \n", err)
 
 		ginx.ResError(c, err)
 		return
 	}
 
-	log.Printf(" ------- ------ %+v \n", params)
+	// log.Printf(" ------- ------ %+v \n", params)
 
 	result, err := a.OrgOrganSrv.QuerySelect(ctx, params, schema.OrgOrganQueryOptions{
 		OrderFields:    schema.NewOrderFields(schema.NewOrderField("id", schema.OrderByDESC)),

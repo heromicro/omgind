@@ -43,13 +43,13 @@ func (a *Role) QuerySelect(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.RoleQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		log.Printf(" ------- ------ %+v \n", err)
+		// log.Printf(" ------- ------ %+v \n", err)
 
 		ginx.ResError(c, err)
 		return
 	}
 
-	log.Printf(" ------- ------ %+v \n", params)
+	// log.Printf(" ------- ------ %+v \n", params)
 
 	result, err := a.RoleSrv.Query(ctx, params, schema.RoleQueryOptions{
 		OrderFields: schema.NewOrderFields(schema.NewOrderField("sort", schema.OrderByDESC)),
