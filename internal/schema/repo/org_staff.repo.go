@@ -203,6 +203,7 @@ func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.Or
 	// TODO: check org_id
 
 	iteminput := a.ToEntCreateOrgStaffInput(&item)
+
 	r_orgstaff, err := a.EntCli.OrgStaff.Create().SetInput(*iteminput).Save(ctx)
 
 	if err != nil {

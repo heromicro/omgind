@@ -22,10 +22,10 @@ type OrgStaff0 struct {
 }
 
 type OrgStaff1 struct {
-	WorkerNo    string `json:"worker_no" binding:"required"` // 工号
-	Cubicle     string `json:"cubicle"`                      // 工位
-	EmpStat     int32  `json:"emp_stat"`                     // 在职状态
-	EmpstDictID string `json:"empst_dict_id"`                // 在职状态
+	WorkerNo    string `json:"worker_no"`     // 工号
+	Cubicle     string `json:"cubicle"`       // 工位
+	EmpStat     int32  `json:"emp_stat"`      // 在职状态
+	EmpstDictID string `json:"empst_dict_id"` // 在职状态
 
 	EntryDate   *time.Time `json:"entry_date" binding:"required"` // 入职日期
 	RegularDate *time.Time `json:"regular_date"`                  // 转正日期

@@ -60,7 +60,6 @@ func (a *OrgOrgan) View(ctx context.Context, id string, opts ...schema.OrgOrganQ
 
 // Create 创建数据
 func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.OrgOrgan, error) {
-	// TODO: check?
 
 	addr_iteminput := a.SysAddressRepo.ToEntCreateSysAddressInput(item.Haddr)
 	item.Haddr = nil
@@ -92,7 +91,7 @@ func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.Or
 	}
 
 	sch_orgorgan := repo.ToSchemaOrgOrgan(r_orgorgan)
-	sch_orgorgan.Haddr = repo.ToSchemaSysAddress(r_orgorgan.Edges.Haddr)
+	// sch_orgorgan.Haddr = repo.ToSchemaSysAddress(r_orgorgan.Edges.Haddr)
 
 	return sch_orgorgan, nil
 }

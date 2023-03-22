@@ -7,6 +7,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -18,7 +19,8 @@ var OrgStaffSet = wire.NewSet(wire.Struct(new(OrgStaff), "*"))
 type OrgStaff struct {
 	EntCli *ent.Client
 
-	OrgStaffRepo *repo.OrgStaff
+	OrgStaffRepo   *repo.OrgStaff
+	SysAddressRepo *repo.SysAddress
 }
 
 // Query 查询数据
@@ -52,12 +54,46 @@ func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQ
 
 // Create 创建数据
 func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.OrgStaff, error) {
-	// TODO: check?
 
-	sch_orgstaff, err := a.OrgStaffRepo.Create(ctx, item)
+	iden_addr_iteminput := a.SysAddressRepo.ToEntCreateSysAddressInput(item.IdenAddr)
+	item.IdenAddr = nil
+
+	resi_addr_iteminput := a.SysAddressRepo.ToEntCreateSysAddressInput(item.ResiAddr)
+	item.ResiAddr = nil
+
+	staff_input := a.OrgStaffRepo.ToEntCreateOrgStaffInput(&item)
+
+	var rr_orgstaff *ent.OrgStaff
+
+	err := repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+
+		iden_addr, err := a.EntCli.SysAddress.Create().SetInput(*iden_addr_iteminput).Save(ctx)
+		if err != nil {
+			return err
+		}
+		resi_addr, err := a.EntCli.SysAddress.Create().SetInput(*resi_addr_iteminput).Save(ctx)
+		if err != nil {
+			return err
+		}
+
+		rr_orgstaff, err = a.EntCli.OrgStaff.Create().SetInput(*staff_input).SetIdenAddrID(iden_addr.ID).SetResiAddrID(resi_addr.ID).Save(ctx)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
 	if err != nil {
 		return nil, err
 	}
+
+	r_orgstaff, err := a.EntCli.OrgStaff.Query().Where(orgstaff.IDEQ(rr_orgstaff.ID)).WithIdenAddr().WithResiAddr().First(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	sch_orgstaff := repo.ToSchemaOrgStaff(r_orgstaff)
 
 	return sch_orgstaff, nil
 }
