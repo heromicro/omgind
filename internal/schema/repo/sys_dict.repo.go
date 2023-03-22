@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/google/wire"
@@ -25,10 +26,10 @@ type Dict struct {
 func ToSchemaSysDict(dit *ent.SysDict) *schema.Dict {
 	item := new(schema.Dict)
 	structure.Copy(dit, item)
-	if dit.Edges.Items != nil {
-		ditems := ToSchemaDictItems(dit.Edges.Items)
-		item.Items = ditems
-	}
+	// if dit.Edges.Items != nil {
+	// 	ditems := ToSchemaDictItems(dit.Edges.Items)
+	// 	item.Items = ditems
+	// }
 	return item
 }
 
@@ -156,6 +157,10 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 // Query 查询数据
 func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQueryParam, opts ...schema.DictQueryOptions) (*schema.DictQueryResult, error) {
 
+	log.Println(" ------ ======= --- id ", id)
+	log.Println(" ------ ======= -- -params  ", params)
+	opt := a.getQueryOption(opts...)
+
 	query := a.EntCli.SysDict.Query()
 
 	if id != "-" {
@@ -174,6 +179,12 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 		}
 	}
 
+	if len(opt.OrderFields) == 0 {
+		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdict.FieldID, schema.OrderByDESC))
+	}
+
+	query = query.Order(ParseOrder(opt.OrderFields)...)
+
 	count, err := query.Count(ctx)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -191,10 +202,12 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 		return &schema.DictQueryResult{PageResult: pr}, nil
 	}
 
-	query = query.Limit(1).Offset(params.Offset())
+	query = query.Limit(params.Limit()).Offset(params.Offset())
 
 	list, err := query.All(ctx)
-	// log.Println(" -------  err ===== === ", err)
+
+	log.Println(" -------  err ===== === ", err)
+
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -211,7 +224,8 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 // Get 查询指定数据
 func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptions) (*schema.Dict, error) {
 
-	query := a.EntCli.SysDict.Query().WithItems(func(sdiq *ent.SysDictItemQuery) {
+	query := a.EntCli.SysDict.Query()
+	query = query.WithItems(func(sdiq *ent.SysDictItemQuery) {
 		sdiq.Order(ent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo)
 	})
 

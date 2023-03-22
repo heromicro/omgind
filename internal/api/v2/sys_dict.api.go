@@ -44,7 +44,6 @@ func (a *Dict) QueryItems(c *gin.Context) {
 		return
 	}
 
-	params.Pagination = true
 	result, err := a.DictSrv.QueryItems(ctx, c.Param("id"), params)
 	if err != nil {
 		ginx.ResError(c, err)
