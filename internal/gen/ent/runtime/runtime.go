@@ -346,6 +346,10 @@ func init() {
 	orgstaffDescEmploymentStatus := orgstaffFields[14].Descriptor()
 	// orgstaff.DefaultEmploymentStatus holds the default value on creation for the employment_status field.
 	orgstaff.DefaultEmploymentStatus = orgstaffDescEmploymentStatus.Default.(int)
+	// orgstaffDescEsDictID is the schema descriptor for es_dict_id field.
+	orgstaffDescEsDictID := orgstaffFields[15].Descriptor()
+	// orgstaff.EsDictIDValidator is a validator for the "es_dict_id" field. It is called by the builders before save.
+	orgstaff.EsDictIDValidator = orgstaffDescEsDictID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.
 	orgstaffDescID := orgstaffMixinFields0[0].Descriptor()
 	// orgstaff.DefaultID holds the default value on creation for the id field.

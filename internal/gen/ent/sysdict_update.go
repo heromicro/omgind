@@ -144,6 +144,20 @@ func (sdu *SysDictUpdate) SetNameEn(s string) *SysDictUpdate {
 	return sdu
 }
 
+// SetTipe sets the "tipe" field.
+func (sdu *SysDictUpdate) SetTipe(s sysdict.Tipe) *SysDictUpdate {
+	sdu.mutation.SetTipe(s)
+	return sdu
+}
+
+// SetNillableTipe sets the "tipe" field if the given value is not nil.
+func (sdu *SysDictUpdate) SetNillableTipe(s *sysdict.Tipe) *SysDictUpdate {
+	if s != nil {
+		sdu.SetTipe(*s)
+	}
+	return sdu
+}
+
 // AddItemIDs adds the "items" edge to the SysDictItem entity by IDs.
 func (sdu *SysDictUpdate) AddItemIDs(ids ...string) *SysDictUpdate {
 	sdu.mutation.AddItemIDs(ids...)
@@ -238,6 +252,11 @@ func (sdu *SysDictUpdate) check() error {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`ent: validator failed for field "SysDict.name_en": %w`, err)}
 		}
 	}
+	if v, ok := sdu.mutation.Tipe(); ok {
+		if err := sysdict.TipeValidator(v); err != nil {
+			return &ValidationError{Name: "tipe", err: fmt.Errorf(`ent: validator failed for field "SysDict.tipe": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -297,6 +316,9 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := sdu.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
+	}
+	if value, ok := sdu.mutation.Tipe(); ok {
+		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)
 	}
 	if sdu.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -483,6 +505,20 @@ func (sduo *SysDictUpdateOne) SetNameEn(s string) *SysDictUpdateOne {
 	return sduo
 }
 
+// SetTipe sets the "tipe" field.
+func (sduo *SysDictUpdateOne) SetTipe(s sysdict.Tipe) *SysDictUpdateOne {
+	sduo.mutation.SetTipe(s)
+	return sduo
+}
+
+// SetNillableTipe sets the "tipe" field if the given value is not nil.
+func (sduo *SysDictUpdateOne) SetNillableTipe(s *sysdict.Tipe) *SysDictUpdateOne {
+	if s != nil {
+		sduo.SetTipe(*s)
+	}
+	return sduo
+}
+
 // AddItemIDs adds the "items" edge to the SysDictItem entity by IDs.
 func (sduo *SysDictUpdateOne) AddItemIDs(ids ...string) *SysDictUpdateOne {
 	sduo.mutation.AddItemIDs(ids...)
@@ -590,6 +626,11 @@ func (sduo *SysDictUpdateOne) check() error {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`ent: validator failed for field "SysDict.name_en": %w`, err)}
 		}
 	}
+	if v, ok := sduo.mutation.Tipe(); ok {
+		if err := sysdict.TipeValidator(v); err != nil {
+			return &ValidationError{Name: "tipe", err: fmt.Errorf(`ent: validator failed for field "SysDict.tipe": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -666,6 +707,9 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 	}
 	if value, ok := sduo.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
+	}
+	if value, ok := sduo.mutation.Tipe(); ok {
+		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)
 	}
 	if sduo.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{

@@ -62,6 +62,8 @@ type OrgStaff struct {
 	OrgID *string `json:"org_id,omitempty"`
 	// 在职状态
 	EmploymentStatus int `json:"employment_status,omitempty"`
+	// employment_status options
+	EsDictID *string `json:"es_dict_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -130,7 +132,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort, orgstaff.FieldEmploymentStatus:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGender, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldEsDictID, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
@@ -305,6 +307,13 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				os.EmploymentStatus = int(value.Int64)
 			}
+		case orgstaff.FieldEsDictID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field es_dict_id", values[i])
+			} else if value.Valid {
+				os.EsDictID = new(string)
+				*os.EsDictID = value.String
+			}
 		case orgstaff.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -456,6 +465,11 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("employment_status=")
 	builder.WriteString(fmt.Sprintf("%v", os.EmploymentStatus))
+	builder.WriteString(", ")
+	if v := os.EsDictID; v != nil {
+		builder.WriteString("es_dict_id=")
+		builder.WriteString(*v)
+	}
 	builder.WriteString(", ")
 	if v := os.Creator; v != nil {
 		builder.WriteString("creator=")

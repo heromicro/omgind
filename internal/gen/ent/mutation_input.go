@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 )
 
 // CreateOrgDepartmentInput represents a mutation input for creating orgdepartments.
@@ -578,6 +579,7 @@ type CreateOrgStaffInput struct {
 	ResignDate       *time.Time
 	OrgID            *string
 	EmploymentStatus *int
+	EsDictID         *string
 	Creator          *string
 	Organ            *string
 	IdenAddr         *string
@@ -652,6 +654,9 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.EmploymentStatus; v != nil {
 		m.SetEmploymentStatus(*v)
 	}
+	if v := i.EsDictID; v != nil {
+		m.SetEsDictID(*v)
+	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
 	}
@@ -712,6 +717,8 @@ type UpdateOrgStaffInput struct {
 	OrgID            *string
 	ClearOrgID       bool
 	EmploymentStatus *int
+	EsDictID         *string
+	ClearEsDictID    bool
 	Creator          *string
 	ClearCreator     bool
 	Organ            *string
@@ -837,6 +844,12 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	}
 	if v := i.EmploymentStatus; v != nil {
 		m.SetEmploymentStatus(*v)
+	}
+	if i.ClearEsDictID {
+		m.ClearEsDictID()
+	}
+	if v := i.EsDictID; v != nil {
+		m.SetEsDictID(*v)
 	}
 	if i.ClearCreator {
 		m.ClearCreator()
@@ -1217,6 +1230,7 @@ type CreateSysDictInput struct {
 	IsActive  *bool
 	NameCn    string
 	NameEn    string
+	Tipe      *sysdict.Tipe
 	Items     []string
 }
 
@@ -1245,6 +1259,9 @@ func (i *CreateSysDictInput) Mutate(m *SysDictCreate) {
 	}
 	m.SetNameCn(i.NameCn)
 	m.SetNameEn(i.NameEn)
+	if v := i.Tipe; v != nil {
+		m.SetTipe(*v)
+	}
 	if ids := i.Items; len(ids) > 0 {
 		m.AddItemIDs(ids...)
 	}
@@ -1269,6 +1286,7 @@ type UpdateSysDictInput struct {
 	IsActive       *bool
 	NameCn         *string
 	NameEn         *string
+	Tipe           *sysdict.Tipe
 	AddItemIDs     []string
 	RemoveItemIDs  []string
 }
@@ -1307,6 +1325,9 @@ func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	}
 	if v := i.NameEn; v != nil {
 		m.SetNameEn(*v)
+	}
+	if v := i.Tipe; v != nil {
+		m.SetTipe(*v)
 	}
 	if ids := i.AddItemIDs; len(ids) > 0 {
 		m.AddItemIDs(ids...)

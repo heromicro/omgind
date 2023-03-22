@@ -56,6 +56,8 @@ const (
 	FieldOrgID = "org_id"
 	// FieldEmploymentStatus holds the string denoting the employment_status field in the database.
 	FieldEmploymentStatus = "empt_sts"
+	// FieldEsDictID holds the string denoting the es_dict_id field in the database.
+	FieldEsDictID = "es_dict_id"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
@@ -114,6 +116,7 @@ var Columns = []string{
 	FieldResignDate,
 	FieldOrgID,
 	FieldEmploymentStatus,
+	FieldEsDictID,
 	FieldCreator,
 }
 
@@ -162,6 +165,8 @@ var (
 	OrgIDValidator func(string) error
 	// DefaultEmploymentStatus holds the default value on creation for the "employment_status" field.
 	DefaultEmploymentStatus int
+	// EsDictIDValidator is a validator for the "es_dict_id" field. It is called by the builders before save.
+	EsDictIDValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

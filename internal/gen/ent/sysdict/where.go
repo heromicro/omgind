@@ -526,6 +526,26 @@ func NameEnContainsFold(v string) predicate.SysDict {
 	return predicate.SysDict(sql.FieldContainsFold(FieldNameEn, v))
 }
 
+// TipeEQ applies the EQ predicate on the "tipe" field.
+func TipeEQ(v Tipe) predicate.SysDict {
+	return predicate.SysDict(sql.FieldEQ(FieldTipe, v))
+}
+
+// TipeNEQ applies the NEQ predicate on the "tipe" field.
+func TipeNEQ(v Tipe) predicate.SysDict {
+	return predicate.SysDict(sql.FieldNEQ(FieldTipe, v))
+}
+
+// TipeIn applies the In predicate on the "tipe" field.
+func TipeIn(vs ...Tipe) predicate.SysDict {
+	return predicate.SysDict(sql.FieldIn(FieldTipe, vs...))
+}
+
+// TipeNotIn applies the NotIn predicate on the "tipe" field.
+func TipeNotIn(vs ...Tipe) predicate.SysDict {
+	return predicate.SysDict(sql.FieldNotIn(FieldTipe, vs...))
+}
+
 // HasItems applies the HasEdge predicate on the "items" edge.
 func HasItems() predicate.SysDict {
 	return predicate.SysDict(func(s *sql.Selector) {

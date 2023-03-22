@@ -434,6 +434,26 @@ func (osu *OrgStaffUpdate) AddEmploymentStatus(i int) *OrgStaffUpdate {
 	return osu
 }
 
+// SetEsDictID sets the "es_dict_id" field.
+func (osu *OrgStaffUpdate) SetEsDictID(s string) *OrgStaffUpdate {
+	osu.mutation.SetEsDictID(s)
+	return osu
+}
+
+// SetNillableEsDictID sets the "es_dict_id" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableEsDictID(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetEsDictID(*s)
+	}
+	return osu
+}
+
+// ClearEsDictID clears the value of the "es_dict_id" field.
+func (osu *OrgStaffUpdate) ClearEsDictID() *OrgStaffUpdate {
+	osu.mutation.ClearEsDictID()
+	return osu
+}
+
 // SetCreator sets the "creator" field.
 func (osu *OrgStaffUpdate) SetCreator(s string) *OrgStaffUpdate {
 	osu.mutation.SetCreator(s)
@@ -594,6 +614,11 @@ func (osu *OrgStaffUpdate) check() error {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
+	if v, ok := osu.mutation.EsDictID(); ok {
+		if err := orgstaff.EsDictIDValidator(v); err != nil {
+			return &ValidationError{Name: "es_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.es_dict_id": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -719,6 +744,12 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := osu.mutation.AddedEmploymentStatus(); ok {
 		_spec.AddField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
+	}
+	if value, ok := osu.mutation.EsDictID(); ok {
+		_spec.SetField(orgstaff.FieldEsDictID, field.TypeString, value)
+	}
+	if osu.mutation.EsDictIDCleared() {
+		_spec.ClearField(orgstaff.FieldEsDictID, field.TypeString)
 	}
 	if value, ok := osu.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -1245,6 +1276,26 @@ func (osuo *OrgStaffUpdateOne) AddEmploymentStatus(i int) *OrgStaffUpdateOne {
 	return osuo
 }
 
+// SetEsDictID sets the "es_dict_id" field.
+func (osuo *OrgStaffUpdateOne) SetEsDictID(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetEsDictID(s)
+	return osuo
+}
+
+// SetNillableEsDictID sets the "es_dict_id" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableEsDictID(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetEsDictID(*s)
+	}
+	return osuo
+}
+
+// ClearEsDictID clears the value of the "es_dict_id" field.
+func (osuo *OrgStaffUpdateOne) ClearEsDictID() *OrgStaffUpdateOne {
+	osuo.mutation.ClearEsDictID()
+	return osuo
+}
+
 // SetCreator sets the "creator" field.
 func (osuo *OrgStaffUpdateOne) SetCreator(s string) *OrgStaffUpdateOne {
 	osuo.mutation.SetCreator(s)
@@ -1418,6 +1469,11 @@ func (osuo *OrgStaffUpdateOne) check() error {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
+	if v, ok := osuo.mutation.EsDictID(); ok {
+		if err := orgstaff.EsDictIDValidator(v); err != nil {
+			return &ValidationError{Name: "es_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.es_dict_id": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -1560,6 +1616,12 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	}
 	if value, ok := osuo.mutation.AddedEmploymentStatus(); ok {
 		_spec.AddField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
+	}
+	if value, ok := osuo.mutation.EsDictID(); ok {
+		_spec.SetField(orgstaff.FieldEsDictID, field.TypeString, value)
+	}
+	if osuo.mutation.EsDictIDCleared() {
+		_spec.ClearField(orgstaff.FieldEsDictID, field.TypeString)
 	}
 	if value, ok := osuo.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)

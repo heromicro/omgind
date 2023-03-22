@@ -3932,6 +3932,7 @@ type OrgStaffMutation struct {
 	resign_date          *time.Time
 	employment_status    *int
 	addemployment_status *int
+	es_dict_id           *string
 	creator              *string
 	clearedFields        map[string]struct{}
 	organ                *string
@@ -5115,6 +5116,55 @@ func (m *OrgStaffMutation) ResetEmploymentStatus() {
 	m.addemployment_status = nil
 }
 
+// SetEsDictID sets the "es_dict_id" field.
+func (m *OrgStaffMutation) SetEsDictID(s string) {
+	m.es_dict_id = &s
+}
+
+// EsDictID returns the value of the "es_dict_id" field in the mutation.
+func (m *OrgStaffMutation) EsDictID() (r string, exists bool) {
+	v := m.es_dict_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEsDictID returns the old "es_dict_id" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldEsDictID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldEsDictID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldEsDictID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEsDictID: %w", err)
+	}
+	return oldValue.EsDictID, nil
+}
+
+// ClearEsDictID clears the value of the "es_dict_id" field.
+func (m *OrgStaffMutation) ClearEsDictID() {
+	m.es_dict_id = nil
+	m.clearedFields[orgstaff.FieldEsDictID] = struct{}{}
+}
+
+// EsDictIDCleared returns if the "es_dict_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) EsDictIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldEsDictID]
+	return ok
+}
+
+// ResetEsDictID resets all changes to the "es_dict_id" field.
+func (m *OrgStaffMutation) ResetEsDictID() {
+	m.es_dict_id = nil
+	delete(m.clearedFields, orgstaff.FieldEsDictID)
+}
+
 // SetCreator sets the "creator" field.
 func (m *OrgStaffMutation) SetCreator(s string) {
 	m.creator = &s
@@ -5289,7 +5339,7 @@ func (m *OrgStaffMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgStaffMutation) Fields() []string {
-	fields := make([]string, 0, 23)
+	fields := make([]string, 0, 24)
 	if m.is_del != nil {
 		fields = append(fields, orgstaff.FieldIsDel)
 	}
@@ -5356,6 +5406,9 @@ func (m *OrgStaffMutation) Fields() []string {
 	if m.employment_status != nil {
 		fields = append(fields, orgstaff.FieldEmploymentStatus)
 	}
+	if m.es_dict_id != nil {
+		fields = append(fields, orgstaff.FieldEsDictID)
+	}
 	if m.creator != nil {
 		fields = append(fields, orgstaff.FieldCreator)
 	}
@@ -5411,6 +5464,8 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.OrgID()
 	case orgstaff.FieldEmploymentStatus:
 		return m.EmploymentStatus()
+	case orgstaff.FieldEsDictID:
+		return m.EsDictID()
 	case orgstaff.FieldCreator:
 		return m.Creator()
 	}
@@ -5466,6 +5521,8 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldOrgID(ctx)
 	case orgstaff.FieldEmploymentStatus:
 		return m.OldEmploymentStatus(ctx)
+	case orgstaff.FieldEsDictID:
+		return m.OldEsDictID(ctx)
 	case orgstaff.FieldCreator:
 		return m.OldCreator(ctx)
 	}
@@ -5631,6 +5688,13 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetEmploymentStatus(v)
 		return nil
+	case orgstaff.FieldEsDictID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEsDictID(v)
+		return nil
 	case orgstaff.FieldCreator:
 		v, ok := value.(string)
 		if !ok {
@@ -5749,6 +5813,9 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldOrgID) {
 		fields = append(fields, orgstaff.FieldOrgID)
 	}
+	if m.FieldCleared(orgstaff.FieldEsDictID) {
+		fields = append(fields, orgstaff.FieldEsDictID)
+	}
 	if m.FieldCleared(orgstaff.FieldCreator) {
 		fields = append(fields, orgstaff.FieldCreator)
 	}
@@ -5819,6 +5886,9 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 		return nil
 	case orgstaff.FieldOrgID:
 		m.ClearOrgID()
+		return nil
+	case orgstaff.FieldEsDictID:
+		m.ClearEsDictID()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ClearCreator()
@@ -5896,6 +5966,9 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 		return nil
 	case orgstaff.FieldEmploymentStatus:
 		m.ResetEmploymentStatus()
+		return nil
+	case orgstaff.FieldEsDictID:
+		m.ResetEsDictID()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ResetCreator()
@@ -8227,6 +8300,7 @@ type SysDictMutation struct {
 	is_active     *bool
 	name_cn       *string
 	name_en       *string
+	tipe          *sysdict.Tipe
 	clearedFields map[string]struct{}
 	items         map[string]struct{}
 	removeditems  map[string]struct{}
@@ -8736,6 +8810,42 @@ func (m *SysDictMutation) ResetNameEn() {
 	m.name_en = nil
 }
 
+// SetTipe sets the "tipe" field.
+func (m *SysDictMutation) SetTipe(s sysdict.Tipe) {
+	m.tipe = &s
+}
+
+// Tipe returns the value of the "tipe" field in the mutation.
+func (m *SysDictMutation) Tipe() (r sysdict.Tipe, exists bool) {
+	v := m.tipe
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTipe returns the old "tipe" field's value of the SysDict entity.
+// If the SysDict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDictMutation) OldTipe(ctx context.Context) (v sysdict.Tipe, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTipe is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTipe requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTipe: %w", err)
+	}
+	return oldValue.Tipe, nil
+}
+
+// ResetTipe resets all changes to the "tipe" field.
+func (m *SysDictMutation) ResetTipe() {
+	m.tipe = nil
+}
+
 // AddItemIDs adds the "items" edge to the SysDictItem entity by ids.
 func (m *SysDictMutation) AddItemIDs(ids ...string) {
 	if m.items == nil {
@@ -8824,7 +8934,7 @@ func (m *SysDictMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysDictMutation) Fields() []string {
-	fields := make([]string, 0, 9)
+	fields := make([]string, 0, 10)
 	if m.is_del != nil {
 		fields = append(fields, sysdict.FieldIsDel)
 	}
@@ -8852,6 +8962,9 @@ func (m *SysDictMutation) Fields() []string {
 	if m.name_en != nil {
 		fields = append(fields, sysdict.FieldNameEn)
 	}
+	if m.tipe != nil {
+		fields = append(fields, sysdict.FieldTipe)
+	}
 	return fields
 }
 
@@ -8878,6 +8991,8 @@ func (m *SysDictMutation) Field(name string) (ent.Value, bool) {
 		return m.NameCn()
 	case sysdict.FieldNameEn:
 		return m.NameEn()
+	case sysdict.FieldTipe:
+		return m.Tipe()
 	}
 	return nil, false
 }
@@ -8905,6 +9020,8 @@ func (m *SysDictMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldNameCn(ctx)
 	case sysdict.FieldNameEn:
 		return m.OldNameEn(ctx)
+	case sysdict.FieldTipe:
+		return m.OldTipe(ctx)
 	}
 	return nil, fmt.Errorf("unknown SysDict field %s", name)
 }
@@ -8976,6 +9093,13 @@ func (m *SysDictMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetNameEn(v)
+		return nil
+	case sysdict.FieldTipe:
+		v, ok := value.(sysdict.Tipe)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTipe(v)
 		return nil
 	}
 	return fmt.Errorf("unknown SysDict field %s", name)
@@ -9094,6 +9218,9 @@ func (m *SysDictMutation) ResetField(name string) error {
 		return nil
 	case sysdict.FieldNameEn:
 		m.ResetNameEn()
+		return nil
+	case sysdict.FieldTipe:
+		m.ResetTipe()
 		return nil
 	}
 	return fmt.Errorf("unknown SysDict field %s", name)

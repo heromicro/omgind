@@ -3,6 +3,7 @@
 package sysdict
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -29,6 +30,8 @@ const (
 	FieldNameCn = "name_cn"
 	// FieldNameEn holds the string denoting the name_en field in the database.
 	FieldNameEn = "name_en"
+	// FieldTipe holds the string denoting the tipe field in the database.
+	FieldTipe = "tipe"
 	// EdgeItems holds the string denoting the items edge name in mutations.
 	EdgeItems = "items"
 	// Table holds the table name of the sysdict in the database.
@@ -54,6 +57,7 @@ var Columns = []string{
 	FieldIsActive,
 	FieldNameCn,
 	FieldNameEn,
+	FieldTipe,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -92,3 +96,29 @@ var (
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(string) error
 )
+
+// Tipe defines the type for the "tipe" enum field.
+type Tipe string
+
+// TipeInt is the default value of the Tipe enum.
+const DefaultTipe = TipeInt
+
+// Tipe values.
+const (
+	TipeInt    Tipe = "int"
+	TipeString Tipe = "string"
+)
+
+func (t Tipe) String() string {
+	return string(t)
+}
+
+// TipeValidator is a validator for the "tipe" field enum values. It is called by the builders before save.
+func TipeValidator(t Tipe) error {
+	switch t {
+	case TipeInt, TipeString:
+		return nil
+	default:
+		return fmt.Errorf("sysdict: invalid enum value for tipe field: %q", t)
+	}
+}

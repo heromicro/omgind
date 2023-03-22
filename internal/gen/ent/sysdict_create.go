@@ -134,6 +134,20 @@ func (sdc *SysDictCreate) SetNameEn(s string) *SysDictCreate {
 	return sdc
 }
 
+// SetTipe sets the "tipe" field.
+func (sdc *SysDictCreate) SetTipe(s sysdict.Tipe) *SysDictCreate {
+	sdc.mutation.SetTipe(s)
+	return sdc
+}
+
+// SetNillableTipe sets the "tipe" field if the given value is not nil.
+func (sdc *SysDictCreate) SetNillableTipe(s *sysdict.Tipe) *SysDictCreate {
+	if s != nil {
+		sdc.SetTipe(*s)
+	}
+	return sdc
+}
+
 // SetID sets the "id" field.
 func (sdc *SysDictCreate) SetID(s string) *SysDictCreate {
 	sdc.mutation.SetID(s)
@@ -222,6 +236,10 @@ func (sdc *SysDictCreate) defaults() {
 		v := sysdict.DefaultIsActive
 		sdc.mutation.SetIsActive(v)
 	}
+	if _, ok := sdc.mutation.Tipe(); !ok {
+		v := sysdict.DefaultTipe
+		sdc.mutation.SetTipe(v)
+	}
 	if _, ok := sdc.mutation.ID(); !ok {
 		v := sysdict.DefaultID()
 		sdc.mutation.SetID(v)
@@ -258,6 +276,14 @@ func (sdc *SysDictCreate) check() error {
 	if v, ok := sdc.mutation.NameEn(); ok {
 		if err := sysdict.NameEnValidator(v); err != nil {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`ent: validator failed for field "SysDict.name_en": %w`, err)}
+		}
+	}
+	if _, ok := sdc.mutation.Tipe(); !ok {
+		return &ValidationError{Name: "tipe", err: errors.New(`ent: missing required field "SysDict.tipe"`)}
+	}
+	if v, ok := sdc.mutation.Tipe(); ok {
+		if err := sysdict.TipeValidator(v); err != nil {
+			return &ValidationError{Name: "tipe", err: fmt.Errorf(`ent: validator failed for field "SysDict.tipe": %w`, err)}
 		}
 	}
 	if v, ok := sdc.mutation.ID(); ok {
@@ -337,6 +363,10 @@ func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 	if value, ok := sdc.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 		_node.NameEn = value
+	}
+	if value, ok := sdc.mutation.Tipe(); ok {
+		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)
+		_node.Tipe = value
 	}
 	if nodes := sdc.mutation.ItemsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -524,6 +554,18 @@ func (u *SysDictUpsert) SetNameEn(v string) *SysDictUpsert {
 // UpdateNameEn sets the "name_en" field to the value that was provided on create.
 func (u *SysDictUpsert) UpdateNameEn() *SysDictUpsert {
 	u.SetExcluded(sysdict.FieldNameEn)
+	return u
+}
+
+// SetTipe sets the "tipe" field.
+func (u *SysDictUpsert) SetTipe(v sysdict.Tipe) *SysDictUpsert {
+	u.Set(sysdict.FieldTipe, v)
+	return u
+}
+
+// UpdateTipe sets the "tipe" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateTipe() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldTipe)
 	return u
 }
 
@@ -715,6 +757,20 @@ func (u *SysDictUpsertOne) SetNameEn(v string) *SysDictUpsertOne {
 func (u *SysDictUpsertOne) UpdateNameEn() *SysDictUpsertOne {
 	return u.Update(func(s *SysDictUpsert) {
 		s.UpdateNameEn()
+	})
+}
+
+// SetTipe sets the "tipe" field.
+func (u *SysDictUpsertOne) SetTipe(v sysdict.Tipe) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetTipe(v)
+	})
+}
+
+// UpdateTipe sets the "tipe" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateTipe() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateTipe()
 	})
 }
 
@@ -1069,6 +1125,20 @@ func (u *SysDictUpsertBulk) SetNameEn(v string) *SysDictUpsertBulk {
 func (u *SysDictUpsertBulk) UpdateNameEn() *SysDictUpsertBulk {
 	return u.Update(func(s *SysDictUpsert) {
 		s.UpdateNameEn()
+	})
+}
+
+// SetTipe sets the "tipe" field.
+func (u *SysDictUpsertBulk) SetTipe(v sysdict.Tipe) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetTipe(v)
+	})
+}
+
+// UpdateTipe sets the "tipe" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateTipe() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateTipe()
 	})
 }
 

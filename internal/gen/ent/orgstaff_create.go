@@ -333,6 +333,20 @@ func (osc *OrgStaffCreate) SetNillableEmploymentStatus(i *int) *OrgStaffCreate {
 	return osc
 }
 
+// SetEsDictID sets the "es_dict_id" field.
+func (osc *OrgStaffCreate) SetEsDictID(s string) *OrgStaffCreate {
+	osc.mutation.SetEsDictID(s)
+	return osc
+}
+
+// SetNillableEsDictID sets the "es_dict_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableEsDictID(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetEsDictID(*s)
+	}
+	return osc
+}
+
 // SetCreator sets the "creator" field.
 func (osc *OrgStaffCreate) SetCreator(s string) *OrgStaffCreate {
 	osc.mutation.SetCreator(s)
@@ -523,6 +537,11 @@ func (osc *OrgStaffCreate) check() error {
 	if _, ok := osc.mutation.EmploymentStatus(); !ok {
 		return &ValidationError{Name: "employment_status", err: errors.New(`ent: missing required field "OrgStaff.employment_status"`)}
 	}
+	if v, ok := osc.mutation.EsDictID(); ok {
+		if err := orgstaff.EsDictIDValidator(v); err != nil {
+			return &ValidationError{Name: "es_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.es_dict_id": %w`, err)}
+		}
+	}
 	if v, ok := osc.mutation.ID(); ok {
 		if err := orgstaff.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.id": %w`, err)}
@@ -640,6 +659,10 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 	if value, ok := osc.mutation.EmploymentStatus(); ok {
 		_spec.SetField(orgstaff.FieldEmploymentStatus, field.TypeInt, value)
 		_node.EmploymentStatus = value
+	}
+	if value, ok := osc.mutation.EsDictID(); ok {
+		_spec.SetField(orgstaff.FieldEsDictID, field.TypeString, value)
+		_node.EsDictID = &value
 	}
 	if value, ok := osc.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -1114,6 +1137,24 @@ func (u *OrgStaffUpsert) UpdateEmploymentStatus() *OrgStaffUpsert {
 // AddEmploymentStatus adds v to the "employment_status" field.
 func (u *OrgStaffUpsert) AddEmploymentStatus(v int) *OrgStaffUpsert {
 	u.Add(orgstaff.FieldEmploymentStatus, v)
+	return u
+}
+
+// SetEsDictID sets the "es_dict_id" field.
+func (u *OrgStaffUpsert) SetEsDictID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldEsDictID, v)
+	return u
+}
+
+// UpdateEsDictID sets the "es_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateEsDictID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldEsDictID)
+	return u
+}
+
+// ClearEsDictID clears the value of the "es_dict_id" field.
+func (u *OrgStaffUpsert) ClearEsDictID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldEsDictID)
 	return u
 }
 
@@ -1610,6 +1651,27 @@ func (u *OrgStaffUpsertOne) AddEmploymentStatus(v int) *OrgStaffUpsertOne {
 func (u *OrgStaffUpsertOne) UpdateEmploymentStatus() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.UpdateEmploymentStatus()
+	})
+}
+
+// SetEsDictID sets the "es_dict_id" field.
+func (u *OrgStaffUpsertOne) SetEsDictID(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetEsDictID(v)
+	})
+}
+
+// UpdateEsDictID sets the "es_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateEsDictID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateEsDictID()
+	})
+}
+
+// ClearEsDictID clears the value of the "es_dict_id" field.
+func (u *OrgStaffUpsertOne) ClearEsDictID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearEsDictID()
 	})
 }
 
@@ -2272,6 +2334,27 @@ func (u *OrgStaffUpsertBulk) AddEmploymentStatus(v int) *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) UpdateEmploymentStatus() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.UpdateEmploymentStatus()
+	})
+}
+
+// SetEsDictID sets the "es_dict_id" field.
+func (u *OrgStaffUpsertBulk) SetEsDictID(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetEsDictID(v)
+	})
+}
+
+// UpdateEsDictID sets the "es_dict_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateEsDictID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateEsDictID()
+	})
+}
+
+// ClearEsDictID clears the value of the "es_dict_id" field.
+func (u *OrgStaffUpsertBulk) ClearEsDictID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearEsDictID()
 	})
 }
 
