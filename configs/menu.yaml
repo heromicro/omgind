@@ -189,6 +189,12 @@
           resources:
             - method: PATCH
               path: "/api/v2/sys-dicts/:id/enable"
+        - code: items
+          name: 启用
+          resources:
+            - method: GET
+              path: "/api/v2/sys-dicts/:id/items"
+        
 
     - name: 行政区域
       icon: key
@@ -391,11 +397,15 @@
         - code: add
           name: 新增
           resources:
+            - method: GET
+              path: "/api/v2/sys-dicts/:id/items"
             - method: POST
               path: "/api/v2/org-staffs"
         - code: edit
           name: 编辑
           resources: 
+            - method: GET
+              path: "/api/v2/sys-dicts/:id/items"
             - method: GET
               path: "/api/v2/org-staffs/:id"
             - method: PUT
