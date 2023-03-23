@@ -169,7 +169,7 @@ func (a *OrgDepartment) View(ctx context.Context, id string, opts ...schema.OrgD
 	return ToSchemaOrgDepartment(r_orgdepartment), nil
 }
 
-func (a *OrgDepartment) GetAllSubDepts(ctx context.Context, pid string, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryResult, error) {
+func (a *OrgDepartment) GetAllSubs(ctx context.Context, pid string, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryResult, error) {
 
 	opt := a.getQueryOption(opts...)
 

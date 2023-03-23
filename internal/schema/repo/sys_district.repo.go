@@ -221,7 +221,7 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	return qr, nil
 }
 
-func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
+func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
 
 	opt := a.getQueryOption(opts...)
 

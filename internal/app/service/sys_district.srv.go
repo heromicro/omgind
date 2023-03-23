@@ -143,8 +143,8 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 }
 
 // Query 查询数据
-func (a *SysDistrict) GetAllSubDistricts(ctx context.Context, pid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
-	return a.SysDistrictRepo.GetAllSubDistricts(ctx, pid, params, opts...)
+func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
+	return a.SysDistrictRepo.GetAllSubs(ctx, pid, params, opts...)
 }
 
 // Query 查询数据

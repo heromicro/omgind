@@ -36,7 +36,7 @@ func (a *SysDistrict) Query(c *gin.Context) {
 //	@Failure	401		{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500		{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/sys-district/{id}/substricts [get]
-func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
+func (a *SysDistrict) GetAllSubs(c *gin.Context) {
 }
 
 // Get 查询指定数据

@@ -16,5 +16,7 @@ func (r *Router) initOrgDepartmentRouterV2(urg *gin.RouterGroup, api *api_v2.Org
 		gOrgDepartment.PATCH(":id/enable", api.Enable)
 		gOrgDepartment.PATCH(":id/disable", api.Disable)
 		gOrgDepartment.GET(":id/view", api.View)
+		gOrgDepartment.GET(":id/subs", api.GetAllSubs)
+		gOrgDepartment.GET(":id/tree", api.QueryTree)
 	}
 }

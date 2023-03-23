@@ -62,7 +62,7 @@ func (a *SysDistrict) View(c *gin.Context) {
 }
 
 // Get 所有的行政区
-func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
+func (a *SysDistrict) GetAllSubs(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.SysDistrictQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
@@ -76,7 +76,7 @@ func (a *SysDistrict) GetAllSubDistricts(c *gin.Context) {
 	log.Println(" --- ---- === ==== pid ", pid)
 	log.Println(" ----- -- ==== === URL ", c.Request.URL)
 
-	result, err := a.SysDistrictSrv.GetAllSubDistricts(ctx, pid, params)
+	result, err := a.SysDistrictSrv.GetAllSubs(ctx, pid, params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

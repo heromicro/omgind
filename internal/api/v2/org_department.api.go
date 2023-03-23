@@ -60,7 +60,7 @@ func (a *OrgDepartment) View(c *gin.Context) {
 }
 
 // Get 所有的行政区
-func (a *OrgDepartment) GetAllSubDepts(c *gin.Context) {
+func (a *OrgDepartment) GetAllSubs(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.OrgDepartmentQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
@@ -74,7 +74,7 @@ func (a *OrgDepartment) GetAllSubDepts(c *gin.Context) {
 	log.Println(" --- ---- === ==== pid ", pid)
 	log.Println(" ----- -- ==== === URL ", c.Request.URL)
 
-	result, err := a.OrgDepartmentSrv.GetAllSubDepts(ctx, pid, params)
+	result, err := a.OrgDepartmentSrv.GetAllSubs(ctx, pid, params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

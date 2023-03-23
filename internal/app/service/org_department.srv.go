@@ -51,8 +51,8 @@ func (a *OrgDepartment) View(ctx context.Context, id string, opts ...schema.OrgD
 }
 
 // View 查询指定数据
-func (a *OrgDepartment) GetAllSubDepts(ctx context.Context, pid string, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryResult, error) {
-	item, err := a.OrgDepartmentRepo.GetAllSubDepts(ctx, pid, params, opts...)
+func (a *OrgDepartment) GetAllSubs(ctx context.Context, pid string, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryResult, error) {
+	item, err := a.OrgDepartmentRepo.GetAllSubs(ctx, pid, params, opts...)
 	if err != nil {
 		return nil, err
 	} else if item == nil {
