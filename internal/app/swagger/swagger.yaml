@@ -443,6 +443,14 @@ definitions:
       cubicle:
         description: 工位
         type: string
+      empy_stat:
+        description: 在职状态
+        type: integer
+      empyst_dict:
+        type: string
+      empyst_dict_id:
+        description: 在职状态
+        type: string
       entry_date:
         description: 入职日期
         type: string
@@ -451,6 +459,11 @@ definitions:
         type: string
       gender:
         description: 性别
+        type: integer
+      gender_dict:
+        $ref: '#/definitions/schema.Dict'
+      gender_dict_id:
+        description: 性别dict id
         type: string
       id:
         description: 唯一标识
@@ -459,6 +472,9 @@ definitions:
         allOf:
         - $ref: '#/definitions/schema.SysAddress'
         description: 身份证地址
+      iden_addr_id:
+        description: 身份证地址
+        type: string
       iden_no:
         description: 身份证号
         type: string
@@ -485,6 +501,9 @@ definitions:
         allOf:
         - $ref: '#/definitions/schema.SysAddress'
         description: 现居地址
+      resi_addr_id:
+        description: 现居地址
+        type: string
       resign_date:
         description: 离职日期
         type: string
@@ -498,13 +517,15 @@ definitions:
         type: string
     required:
     - birth_date
+    - empy_stat
+    - empyst_dict_id
     - entry_date
     - first_name
     - gender
+    - gender_dict_id
     - is_active
     - last_name
     - mobile
-    - worker_no
     type: object
   schema.PaginationResult:
     properties:
@@ -1218,7 +1239,7 @@ paths:
       summary: 启用数据
       tags:
       - Demo
-  /api/v2/org-departments:
+  /api/v2/org-depts:
     get:
       parameters:
       - description: Bearer 用户令牌
@@ -1255,8 +1276,22 @@ paths:
         in: query
         name: is_active__order
         type: string
+      - description: 是否是子叶
+        in: query
+        name: is_leaf
+        type: boolean
+      - description: 状态
+        in: query
+        name: is_real
+        type: boolean
       - in: query
         name: name
+        type: string
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: name__order
         type: string
       - description: 是否仅查询count
         in: query
@@ -1264,6 +1299,10 @@ paths:
         type: boolean
       - in: query
         name: org_id
+        type: string
+      - description: parent.pid
+        in: query
+        name: p_pid
         type: string
       - description: 页大小
         in: query
@@ -1274,6 +1313,10 @@ paths:
         in: query
         name: pagination
         type: boolean
+      - description: pid
+        in: query
+        name: pid
+        type: string
       - description: 模糊查询
         in: query
         name: queryValue
@@ -1284,6 +1327,52 @@ paths:
         in: query
         name: sort__order
         type: string
+      - description: tree_left 结束
+        in: query
+        name: treeLeft
+        type: integer
+      - description: 树id
+        in: query
+        name: tree_id
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: tree_id__order
+        type: string
+      - description: tree_left 结束
+        in: query
+        name: tree_left__ed
+        type: integer
+      - description: 左值 asc desc
+        in: query
+        name: tree_left__order
+        type: string
+      - description: tree_left 结束
+        in: query
+        name: tree_left__st
+        type: integer
+      - description: tree_level
+        in: query
+        name: tree_level
+        type: integer
+      - description: 层级 asc desc
+        in: query
+        name: tree_level__order
+        type: string
+      - description: tree_right 结束
+        in: query
+        name: tree_right
+        type: integer
+      - description: tree_right 结束
+        in: query
+        name: tree_right__ed
+        type: integer
+      - description: tree_right 结束
+        in: query
+        name: tree_right__st
+        type: integer
       responses:
         "200":
           description: OK
@@ -1347,7 +1436,7 @@ paths:
       summary: 创建数据
       tags:
       - 部门管理
-  /api/v2/org-departments/{id}:
+  /api/v2/org-depts/{id}:
     delete:
       parameters:
       - description: Bearer 用户令牌
@@ -1449,7 +1538,7 @@ paths:
       summary: 更新数据
       tags:
       - 部门管理
-  /api/v2/org-departments/{id}/disable:
+  /api/v2/org-depts/{id}/disable:
     patch:
       parameters:
       - description: 唯一标识
@@ -1475,7 +1564,7 @@ paths:
       summary: 禁用数据
       tags:
       - 部门管理
-  /api/v2/org-departments/{id}/enable:
+  /api/v2/org-depts/{id}/enable:
     patch:
       parameters:
       - description: 唯一标识
@@ -1501,7 +1590,7 @@ paths:
       summary: 启用数据
       tags:
       - 部门管理
-  /api/v2/org-departments/{id}/view:
+  /api/v2/org-depts/{id}/view:
     get:
       parameters:
       - description: Bearer 用户令牌
@@ -2214,7 +2303,7 @@ paths:
         type: string
       - in: query
         name: gender
-        type: string
+        type: integer
       - in: query
         name: is_active
         type: boolean
@@ -3005,27 +3094,29 @@ paths:
         name: ids
         type: array
       - in: query
-        name: isActive
+        name: is_active
         type: boolean
-      - in: query
+      - description: asc/desc
+        in: query
         name: is_active__order
         type: string
       - description: 字典名称(中)
         in: query
-        name: nameCn
+        name: name_cn
         type: string
-      - in: query
-        name: nameCn_Order
+      - description: asc/desc
+        in: query
+        name: name_cn__order
         type: string
       - description: 字典名称(英)
         in: query
-        name: nameEn
+        name: name_en
         type: string
       - description: |-
           example: asc
           example: desc
         in: query
-        name: nameEn_Order
+        name: name_en__order
         type: string
       - description: 是否仅查询count
         in: query
@@ -3049,7 +3140,7 @@ paths:
         name: sort__order
         type: string
       - in: query
-        name: withItem
+        name: wi
         type: boolean
       responses:
         "200":

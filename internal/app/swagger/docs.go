@@ -452,7 +452,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/org-departments": {
+        "/api/v2/org-depts": {
             "get": {
                 "security": [
                     {
@@ -511,8 +511,26 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "boolean",
+                        "description": "是否是子叶",
+                        "name": "is_leaf",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "is_real",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "name__order",
                         "in": "query"
                     },
                     {
@@ -524,6 +542,12 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "name": "org_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "parent.pid",
+                        "name": "p_pid",
                         "in": "query"
                     },
                     {
@@ -541,6 +565,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "pid",
+                        "name": "pid",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "模糊查询",
                         "name": "queryValue",
                         "in": "query"
@@ -549,6 +579,72 @@ const docTemplate = `{
                         "type": "string",
                         "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "treeLeft",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "树id",
+                        "name": "tree_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "tree_id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "tree_left__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "左值 asc desc",
+                        "name": "tree_left__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "tree_left__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_level",
+                        "name": "tree_level",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "层级 asc desc",
+                        "name": "tree_level__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "tree_right",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "tree_right__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_right 结束",
+                        "name": "tree_right__st",
                         "in": "query"
                     }
                 ],
@@ -649,7 +745,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/org-departments/{id}": {
+        "/api/v2/org-depts/{id}": {
             "get": {
                 "security": [
                     {
@@ -810,7 +906,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/org-departments/{id}/disable": {
+        "/api/v2/org-depts/{id}/disable": {
             "patch": {
                 "security": [
                     {
@@ -852,7 +948,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/org-departments/{id}/enable": {
+        "/api/v2/org-depts/{id}/enable": {
             "patch": {
                 "security": [
                     {
@@ -894,7 +990,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/org-departments/{id}/view": {
+        "/api/v2/org-depts/{id}/view": {
             "get": {
                 "security": [
                     {
@@ -2023,7 +2119,7 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "name": "gender",
                         "in": "query"
                     },
@@ -3283,35 +3379,37 @@ const docTemplate = `{
                     },
                     {
                         "type": "boolean",
-                        "name": "isActive",
+                        "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "string",
+                        "description": "asc/desc",
                         "name": "is_active__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "字典名称(中)",
-                        "name": "nameCn",
+                        "name": "name_cn",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "name": "nameCn_Order",
+                        "description": "asc/desc",
+                        "name": "name_cn__order",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "字典名称(英)",
-                        "name": "nameEn",
+                        "name": "name_en",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "example: asc\nexample: desc",
-                        "name": "nameEn_Order",
+                        "name": "name_en__order",
                         "in": "query"
                     },
                     {
@@ -3347,7 +3445,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "boolean",
-                        "name": "withItem",
+                        "name": "wi",
                         "in": "query"
                     }
                 ],
@@ -6318,13 +6416,15 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "birth_date",
+                "empy_stat",
+                "empyst_dict_id",
                 "entry_date",
                 "first_name",
                 "gender",
+                "gender_dict_id",
                 "is_active",
                 "last_name",
-                "mobile",
-                "worker_no"
+                "mobile"
             ],
             "properties": {
                 "birth_date": {
@@ -6343,6 +6443,17 @@ const docTemplate = `{
                     "description": "工位",
                     "type": "string"
                 },
+                "empy_stat": {
+                    "description": "在职状态",
+                    "type": "integer"
+                },
+                "empyst_dict": {
+                    "type": "string"
+                },
+                "empyst_dict_id": {
+                    "description": "在职状态",
+                    "type": "string"
+                },
                 "entry_date": {
                     "description": "入职日期",
                     "type": "string"
@@ -6353,6 +6464,13 @@ const docTemplate = `{
                 },
                 "gender": {
                     "description": "性别",
+                    "type": "integer"
+                },
+                "gender_dict": {
+                    "$ref": "#/definitions/schema.Dict"
+                },
+                "gender_dict_id": {
+                    "description": "性别dict id",
                     "type": "string"
                 },
                 "id": {
@@ -6366,6 +6484,10 @@ const docTemplate = `{
                             "$ref": "#/definitions/schema.SysAddress"
                         }
                     ]
+                },
+                "iden_addr_id": {
+                    "description": "身份证地址",
+                    "type": "string"
                 },
                 "iden_no": {
                     "description": "身份证号",
@@ -6404,6 +6526,10 @@ const docTemplate = `{
                             "$ref": "#/definitions/schema.SysAddress"
                         }
                     ]
+                },
+                "resi_addr_id": {
+                    "description": "现居地址",
+                    "type": "string"
                 },
                 "resign_date": {
                     "description": "离职日期",
