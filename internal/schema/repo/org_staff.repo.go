@@ -118,6 +118,11 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 	}
 
 	if v := params.CreatedAt_Order; v != "" {
+		of := MakeUpOrderField(orgstaff.FieldCreatedAt, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.BirthDate_Order; v != "" {
 		of := MakeUpOrderField(orgstaff.FieldBirthDate, v)
 		opt.OrderFields = append(opt.OrderFields, of)
 	}
