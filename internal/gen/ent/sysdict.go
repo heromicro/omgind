@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 )
 
@@ -38,16 +39,22 @@ type SysDict struct {
 	Tipe sysdict.Tipe `json:"tipe,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysDictQuery when eager-loading is set.
-	Edges SysDictEdges `json:"edges"`
+	Edges                 SysDictEdges `json:"edges"`
+	sys_dict_staff_gender *string
+	sys_dict_staff_empyst *string
 }
 
 // SysDictEdges holds the relations/edges for other nodes in the graph.
 type SysDictEdges struct {
 	// Items holds the value of the items edge.
 	Items []*SysDictItem `json:"items,omitempty"`
+	// StaffGender holds the value of the staff_gender edge.
+	StaffGender *OrgStaff `json:"staff_gender,omitempty"`
+	// StaffEmpyst holds the value of the staff_empyst edge.
+	StaffEmpyst *OrgStaff `json:"staff_empyst,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [3]bool
 }
 
 // ItemsOrErr returns the Items value or an error if the edge
@@ -57,6 +64,32 @@ func (e SysDictEdges) ItemsOrErr() ([]*SysDictItem, error) {
 		return e.Items, nil
 	}
 	return nil, &NotLoadedError{edge: "items"}
+}
+
+// StaffGenderOrErr returns the StaffGender value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysDictEdges) StaffGenderOrErr() (*OrgStaff, error) {
+	if e.loadedTypes[1] {
+		if e.StaffGender == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgstaff.Label}
+		}
+		return e.StaffGender, nil
+	}
+	return nil, &NotLoadedError{edge: "staff_gender"}
+}
+
+// StaffEmpystOrErr returns the StaffEmpyst value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysDictEdges) StaffEmpystOrErr() (*OrgStaff, error) {
+	if e.loadedTypes[2] {
+		if e.StaffEmpyst == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgstaff.Label}
+		}
+		return e.StaffEmpyst, nil
+	}
+	return nil, &NotLoadedError{edge: "staff_empyst"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -72,6 +105,10 @@ func (*SysDict) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullString)
 		case sysdict.FieldCreatedAt, sysdict.FieldUpdatedAt, sysdict.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
+		case sysdict.ForeignKeys[0]: // sys_dict_staff_gender
+			values[i] = new(sql.NullString)
+		case sysdict.ForeignKeys[1]: // sys_dict_staff_empyst
+			values[i] = new(sql.NullString)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SysDict", columns[i])
 		}
@@ -157,6 +194,20 @@ func (sd *SysDict) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				sd.Tipe = sysdict.Tipe(value.String)
 			}
+		case sysdict.ForeignKeys[0]:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field sys_dict_staff_gender", values[i])
+			} else if value.Valid {
+				sd.sys_dict_staff_gender = new(string)
+				*sd.sys_dict_staff_gender = value.String
+			}
+		case sysdict.ForeignKeys[1]:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field sys_dict_staff_empyst", values[i])
+			} else if value.Valid {
+				sd.sys_dict_staff_empyst = new(string)
+				*sd.sys_dict_staff_empyst = value.String
+			}
 		}
 	}
 	return nil
@@ -165,6 +216,16 @@ func (sd *SysDict) assignValues(columns []string, values []any) error {
 // QueryItems queries the "items" edge of the SysDict entity.
 func (sd *SysDict) QueryItems() *SysDictItemQuery {
 	return NewSysDictClient(sd.config).QueryItems(sd)
+}
+
+// QueryStaffGender queries the "staff_gender" edge of the SysDict entity.
+func (sd *SysDict) QueryStaffGender() *OrgStaffQuery {
+	return NewSysDictClient(sd.config).QueryStaffGender(sd)
+}
+
+// QueryStaffEmpyst queries the "staff_empyst" edge of the SysDict entity.
+func (sd *SysDict) QueryStaffEmpyst() *OrgStaffQuery {
+	return NewSysDictClient(sd.config).QueryStaffEmpyst(sd)
 }
 
 // Update returns a builder for updating this SysDict.

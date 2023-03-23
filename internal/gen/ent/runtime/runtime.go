@@ -322,10 +322,10 @@ func init() {
 	orgstaffDescMobile := orgstaffFields[2].Descriptor()
 	// orgstaff.MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	orgstaff.MobileValidator = orgstaffDescMobile.Validators[0].(func(string) error)
-	// orgstaffDescGndrDictID is the schema descriptor for gndr_dict_id field.
-	orgstaffDescGndrDictID := orgstaffFields[4].Descriptor()
-	// orgstaff.GndrDictIDValidator is a validator for the "gndr_dict_id" field. It is called by the builders before save.
-	orgstaff.GndrDictIDValidator = orgstaffDescGndrDictID.Validators[0].(func(string) error)
+	// orgstaffDescGenderDictID is the schema descriptor for gender_dict_id field.
+	orgstaffDescGenderDictID := orgstaffFields[4].Descriptor()
+	// orgstaff.GenderDictIDValidator is a validator for the "gender_dict_id" field. It is called by the builders before save.
+	orgstaff.GenderDictIDValidator = orgstaffDescGenderDictID.Validators[0].(func(string) error)
 	// orgstaffDescIdenAddrID is the schema descriptor for iden_addr_id field.
 	orgstaffDescIdenAddrID := orgstaffFields[7].Descriptor()
 	// orgstaff.IdenAddrIDValidator is a validator for the "iden_addr_id" field. It is called by the builders before save.
@@ -346,14 +346,14 @@ func init() {
 	orgstaffDescOrgID := orgstaffFields[14].Descriptor()
 	// orgstaff.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	orgstaff.OrgIDValidator = orgstaffDescOrgID.Validators[0].(func(string) error)
-	// orgstaffDescEmpStat is the schema descriptor for emp_stat field.
-	orgstaffDescEmpStat := orgstaffFields[15].Descriptor()
-	// orgstaff.DefaultEmpStat holds the default value on creation for the emp_stat field.
-	orgstaff.DefaultEmpStat = orgstaffDescEmpStat.Default.(int32)
-	// orgstaffDescEmpstDictID is the schema descriptor for empst_dict_id field.
-	orgstaffDescEmpstDictID := orgstaffFields[16].Descriptor()
-	// orgstaff.EmpstDictIDValidator is a validator for the "empst_dict_id" field. It is called by the builders before save.
-	orgstaff.EmpstDictIDValidator = orgstaffDescEmpstDictID.Validators[0].(func(string) error)
+	// orgstaffDescEmpyStat is the schema descriptor for empy_stat field.
+	orgstaffDescEmpyStat := orgstaffFields[15].Descriptor()
+	// orgstaff.DefaultEmpyStat holds the default value on creation for the empy_stat field.
+	orgstaff.DefaultEmpyStat = orgstaffDescEmpyStat.Default.(int32)
+	// orgstaffDescEmpystDictID is the schema descriptor for empyst_dict_id field.
+	orgstaffDescEmpystDictID := orgstaffFields[16].Descriptor()
+	// orgstaff.EmpystDictIDValidator is a validator for the "empyst_dict_id" field. It is called by the builders before save.
+	orgstaff.EmpystDictIDValidator = orgstaffDescEmpystDictID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.
 	orgstaffDescID := orgstaffMixinFields0[0].Descriptor()
 	// orgstaff.DefaultID holds the default value on creation for the id field.

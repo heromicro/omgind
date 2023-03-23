@@ -37,6 +37,12 @@ func (sd SysDict) Fields() []ent.Field {
 func (sd SysDict) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("items", SysDictItem.Type),
+
+		edge.To("staff_gender", OrgStaff.Type).Unique(),
+		edge.To("staff_empyst", OrgStaff.Type).Unique(),
+
+		//
+
 	}
 }
 

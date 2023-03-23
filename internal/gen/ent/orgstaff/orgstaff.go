@@ -33,8 +33,8 @@ const (
 	FieldMobile = "mobile"
 	// FieldGender holds the string denoting the gender field in the database.
 	FieldGender = "gender"
-	// FieldGndrDictID holds the string denoting the gndr_dict_id field in the database.
-	FieldGndrDictID = "gndr_dict_id"
+	// FieldGenderDictID holds the string denoting the gender_dict_id field in the database.
+	FieldGenderDictID = "gender_dict_id"
 	// FieldBirthDate holds the string denoting the birth_date field in the database.
 	FieldBirthDate = "birth_date"
 	// FieldIdenNo holds the string denoting the iden_no field in the database.
@@ -55,10 +55,10 @@ const (
 	FieldResignDate = "resign_date"
 	// FieldOrgID holds the string denoting the org_id field in the database.
 	FieldOrgID = "org_id"
-	// FieldEmpStat holds the string denoting the emp_stat field in the database.
-	FieldEmpStat = "emp_stat"
-	// FieldEmpstDictID holds the string denoting the empst_dict_id field in the database.
-	FieldEmpstDictID = "empst_dict_id"
+	// FieldEmpyStat holds the string denoting the empy_stat field in the database.
+	FieldEmpyStat = "empy_stat"
+	// FieldEmpystDictID holds the string denoting the empyst_dict_id field in the database.
+	FieldEmpystDictID = "empyst_dict_id"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
@@ -106,7 +106,7 @@ var Columns = []string{
 	FieldLastName,
 	FieldMobile,
 	FieldGender,
-	FieldGndrDictID,
+	FieldGenderDictID,
 	FieldBirthDate,
 	FieldIdenNo,
 	FieldIdenAddrID,
@@ -117,8 +117,8 @@ var Columns = []string{
 	FieldRegularDate,
 	FieldResignDate,
 	FieldOrgID,
-	FieldEmpStat,
-	FieldEmpstDictID,
+	FieldEmpyStat,
+	FieldEmpystDictID,
 	FieldCreator,
 }
 
@@ -155,8 +155,8 @@ var (
 	LastNameValidator func(string) error
 	// MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	MobileValidator func(string) error
-	// GndrDictIDValidator is a validator for the "gndr_dict_id" field. It is called by the builders before save.
-	GndrDictIDValidator func(string) error
+	// GenderDictIDValidator is a validator for the "gender_dict_id" field. It is called by the builders before save.
+	GenderDictIDValidator func(string) error
 	// IdenAddrIDValidator is a validator for the "iden_addr_id" field. It is called by the builders before save.
 	IdenAddrIDValidator func(string) error
 	// ResiAddrIDValidator is a validator for the "resi_addr_id" field. It is called by the builders before save.
@@ -167,10 +167,10 @@ var (
 	CubicleValidator func(string) error
 	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	OrgIDValidator func(string) error
-	// DefaultEmpStat holds the default value on creation for the "emp_stat" field.
-	DefaultEmpStat int32
-	// EmpstDictIDValidator is a validator for the "empst_dict_id" field. It is called by the builders before save.
-	EmpstDictIDValidator func(string) error
+	// DefaultEmpyStat holds the default value on creation for the "empy_stat" field.
+	DefaultEmpyStat int32
+	// EmpystDictIDValidator is a validator for the "empyst_dict_id" field. It is called by the builders before save.
+	EmpystDictIDValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

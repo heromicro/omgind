@@ -213,7 +213,7 @@ var (
 		{Name: "last_name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Size: 32},
 		{Name: "gender", Type: field.TypeInt32, Nullable: true},
-		{Name: "gndr_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "gender_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "birth_date", Type: field.TypeTime, Nullable: true},
 		{Name: "iden_no", Type: field.TypeString, Nullable: true},
 		{Name: "worker_no", Type: field.TypeString, Nullable: true, Size: 16},
@@ -221,8 +221,8 @@ var (
 		{Name: "entry_date", Type: field.TypeTime, Nullable: true},
 		{Name: "regu_date", Type: field.TypeTime, Nullable: true},
 		{Name: "resign_date", Type: field.TypeTime, Nullable: true},
-		{Name: "emp_stat", Type: field.TypeInt32, Default: 1},
-		{Name: "empst_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "empy_stat", Type: field.TypeInt32, Default: 1},
+		{Name: "empyst_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "rsaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
@@ -375,12 +375,28 @@ var (
 		{Name: "name_cn", Type: field.TypeString, Size: 128},
 		{Name: "name_en", Type: field.TypeString, Size: 128},
 		{Name: "tipe", Type: field.TypeEnum, Enums: []string{"int", "string"}, Default: "int"},
+		{Name: "sys_dict_staff_gender", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "sys_dict_staff_empyst", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// SysDictsTable holds the schema information for the "sys_dicts" table.
 	SysDictsTable = &schema.Table{
 		Name:       "sys_dicts",
 		Columns:    SysDictsColumns,
 		PrimaryKey: []*schema.Column{SysDictsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "sys_dicts_org_staffs_staff_gender",
+				Columns:    []*schema.Column{SysDictsColumns[11]},
+				RefColumns: []*schema.Column{OrgStaffsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "sys_dicts_org_staffs_staff_empyst",
+				Columns:    []*schema.Column{SysDictsColumns[12]},
+				RefColumns: []*schema.Column{OrgStaffsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "sysdict_id",
@@ -1147,6 +1163,8 @@ func init() {
 	OrgStaffsTable.ForeignKeys[0].RefTable = OrgOrgansTable
 	OrgStaffsTable.ForeignKeys[1].RefTable = SysAddressesTable
 	OrgStaffsTable.ForeignKeys[2].RefTable = SysAddressesTable
+	SysDictsTable.ForeignKeys[0].RefTable = OrgStaffsTable
+	SysDictsTable.ForeignKeys[1].RefTable = OrgStaffsTable
 	SysDictItemsTable.ForeignKeys[0].RefTable = SysDictsTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 }

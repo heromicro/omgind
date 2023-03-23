@@ -121,9 +121,9 @@ func Gender(v int32) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldGender, v))
 }
 
-// GndrDictID applies equality check predicate on the "gndr_dict_id" field. It's identical to GndrDictIDEQ.
-func GndrDictID(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldGndrDictID, v))
+// GenderDictID applies equality check predicate on the "gender_dict_id" field. It's identical to GenderDictIDEQ.
+func GenderDictID(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldGenderDictID, v))
 }
 
 // BirthDate applies equality check predicate on the "birth_date" field. It's identical to BirthDateEQ.
@@ -176,14 +176,14 @@ func OrgID(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldOrgID, v))
 }
 
-// EmpStat applies equality check predicate on the "emp_stat" field. It's identical to EmpStatEQ.
-func EmpStat(v int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldEmpStat, v))
+// EmpyStat applies equality check predicate on the "empy_stat" field. It's identical to EmpyStatEQ.
+func EmpyStat(v int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldEmpyStat, v))
 }
 
-// EmpstDictID applies equality check predicate on the "empst_dict_id" field. It's identical to EmpstDictIDEQ.
-func EmpstDictID(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldEmpstDictID, v))
+// EmpystDictID applies equality check predicate on the "empyst_dict_id" field. It's identical to EmpystDictIDEQ.
+func EmpystDictID(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldEmpystDictID, v))
 }
 
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
@@ -751,79 +751,79 @@ func GenderNotNil() predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldNotNull(FieldGender))
 }
 
-// GndrDictIDEQ applies the EQ predicate on the "gndr_dict_id" field.
-func GndrDictIDEQ(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldGndrDictID, v))
+// GenderDictIDEQ applies the EQ predicate on the "gender_dict_id" field.
+func GenderDictIDEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldGenderDictID, v))
 }
 
-// GndrDictIDNEQ applies the NEQ predicate on the "gndr_dict_id" field.
-func GndrDictIDNEQ(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNEQ(FieldGndrDictID, v))
+// GenderDictIDNEQ applies the NEQ predicate on the "gender_dict_id" field.
+func GenderDictIDNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldGenderDictID, v))
 }
 
-// GndrDictIDIn applies the In predicate on the "gndr_dict_id" field.
-func GndrDictIDIn(vs ...string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIn(FieldGndrDictID, vs...))
+// GenderDictIDIn applies the In predicate on the "gender_dict_id" field.
+func GenderDictIDIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldGenderDictID, vs...))
 }
 
-// GndrDictIDNotIn applies the NotIn predicate on the "gndr_dict_id" field.
-func GndrDictIDNotIn(vs ...string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotIn(FieldGndrDictID, vs...))
+// GenderDictIDNotIn applies the NotIn predicate on the "gender_dict_id" field.
+func GenderDictIDNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldGenderDictID, vs...))
 }
 
-// GndrDictIDGT applies the GT predicate on the "gndr_dict_id" field.
-func GndrDictIDGT(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGT(FieldGndrDictID, v))
+// GenderDictIDGT applies the GT predicate on the "gender_dict_id" field.
+func GenderDictIDGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldGenderDictID, v))
 }
 
-// GndrDictIDGTE applies the GTE predicate on the "gndr_dict_id" field.
-func GndrDictIDGTE(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGTE(FieldGndrDictID, v))
+// GenderDictIDGTE applies the GTE predicate on the "gender_dict_id" field.
+func GenderDictIDGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldGenderDictID, v))
 }
 
-// GndrDictIDLT applies the LT predicate on the "gndr_dict_id" field.
-func GndrDictIDLT(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLT(FieldGndrDictID, v))
+// GenderDictIDLT applies the LT predicate on the "gender_dict_id" field.
+func GenderDictIDLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldGenderDictID, v))
 }
 
-// GndrDictIDLTE applies the LTE predicate on the "gndr_dict_id" field.
-func GndrDictIDLTE(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLTE(FieldGndrDictID, v))
+// GenderDictIDLTE applies the LTE predicate on the "gender_dict_id" field.
+func GenderDictIDLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldGenderDictID, v))
 }
 
-// GndrDictIDContains applies the Contains predicate on the "gndr_dict_id" field.
-func GndrDictIDContains(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContains(FieldGndrDictID, v))
+// GenderDictIDContains applies the Contains predicate on the "gender_dict_id" field.
+func GenderDictIDContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldGenderDictID, v))
 }
 
-// GndrDictIDHasPrefix applies the HasPrefix predicate on the "gndr_dict_id" field.
-func GndrDictIDHasPrefix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasPrefix(FieldGndrDictID, v))
+// GenderDictIDHasPrefix applies the HasPrefix predicate on the "gender_dict_id" field.
+func GenderDictIDHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldGenderDictID, v))
 }
 
-// GndrDictIDHasSuffix applies the HasSuffix predicate on the "gndr_dict_id" field.
-func GndrDictIDHasSuffix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasSuffix(FieldGndrDictID, v))
+// GenderDictIDHasSuffix applies the HasSuffix predicate on the "gender_dict_id" field.
+func GenderDictIDHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldGenderDictID, v))
 }
 
-// GndrDictIDIsNil applies the IsNil predicate on the "gndr_dict_id" field.
-func GndrDictIDIsNil() predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIsNull(FieldGndrDictID))
+// GenderDictIDIsNil applies the IsNil predicate on the "gender_dict_id" field.
+func GenderDictIDIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldGenderDictID))
 }
 
-// GndrDictIDNotNil applies the NotNil predicate on the "gndr_dict_id" field.
-func GndrDictIDNotNil() predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotNull(FieldGndrDictID))
+// GenderDictIDNotNil applies the NotNil predicate on the "gender_dict_id" field.
+func GenderDictIDNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldGenderDictID))
 }
 
-// GndrDictIDEqualFold applies the EqualFold predicate on the "gndr_dict_id" field.
-func GndrDictIDEqualFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEqualFold(FieldGndrDictID, v))
+// GenderDictIDEqualFold applies the EqualFold predicate on the "gender_dict_id" field.
+func GenderDictIDEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldGenderDictID, v))
 }
 
-// GndrDictIDContainsFold applies the ContainsFold predicate on the "gndr_dict_id" field.
-func GndrDictIDContainsFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContainsFold(FieldGndrDictID, v))
+// GenderDictIDContainsFold applies the ContainsFold predicate on the "gender_dict_id" field.
+func GenderDictIDContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldGenderDictID, v))
 }
 
 // BirthDateEQ applies the EQ predicate on the "birth_date" field.
@@ -1476,119 +1476,119 @@ func OrgIDContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldOrgID, v))
 }
 
-// EmpStatEQ applies the EQ predicate on the "emp_stat" field.
-func EmpStatEQ(v int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldEmpStat, v))
+// EmpyStatEQ applies the EQ predicate on the "empy_stat" field.
+func EmpyStatEQ(v int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldEmpyStat, v))
 }
 
-// EmpStatNEQ applies the NEQ predicate on the "emp_stat" field.
-func EmpStatNEQ(v int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNEQ(FieldEmpStat, v))
+// EmpyStatNEQ applies the NEQ predicate on the "empy_stat" field.
+func EmpyStatNEQ(v int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldEmpyStat, v))
 }
 
-// EmpStatIn applies the In predicate on the "emp_stat" field.
-func EmpStatIn(vs ...int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIn(FieldEmpStat, vs...))
+// EmpyStatIn applies the In predicate on the "empy_stat" field.
+func EmpyStatIn(vs ...int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldEmpyStat, vs...))
 }
 
-// EmpStatNotIn applies the NotIn predicate on the "emp_stat" field.
-func EmpStatNotIn(vs ...int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotIn(FieldEmpStat, vs...))
+// EmpyStatNotIn applies the NotIn predicate on the "empy_stat" field.
+func EmpyStatNotIn(vs ...int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldEmpyStat, vs...))
 }
 
-// EmpStatGT applies the GT predicate on the "emp_stat" field.
-func EmpStatGT(v int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGT(FieldEmpStat, v))
+// EmpyStatGT applies the GT predicate on the "empy_stat" field.
+func EmpyStatGT(v int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldEmpyStat, v))
 }
 
-// EmpStatGTE applies the GTE predicate on the "emp_stat" field.
-func EmpStatGTE(v int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGTE(FieldEmpStat, v))
+// EmpyStatGTE applies the GTE predicate on the "empy_stat" field.
+func EmpyStatGTE(v int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldEmpyStat, v))
 }
 
-// EmpStatLT applies the LT predicate on the "emp_stat" field.
-func EmpStatLT(v int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLT(FieldEmpStat, v))
+// EmpyStatLT applies the LT predicate on the "empy_stat" field.
+func EmpyStatLT(v int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldEmpyStat, v))
 }
 
-// EmpStatLTE applies the LTE predicate on the "emp_stat" field.
-func EmpStatLTE(v int32) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLTE(FieldEmpStat, v))
+// EmpyStatLTE applies the LTE predicate on the "empy_stat" field.
+func EmpyStatLTE(v int32) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldEmpyStat, v))
 }
 
-// EmpstDictIDEQ applies the EQ predicate on the "empst_dict_id" field.
-func EmpstDictIDEQ(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEQ(FieldEmpstDictID, v))
+// EmpystDictIDEQ applies the EQ predicate on the "empyst_dict_id" field.
+func EmpystDictIDEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDNEQ applies the NEQ predicate on the "empst_dict_id" field.
-func EmpstDictIDNEQ(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNEQ(FieldEmpstDictID, v))
+// EmpystDictIDNEQ applies the NEQ predicate on the "empyst_dict_id" field.
+func EmpystDictIDNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDIn applies the In predicate on the "empst_dict_id" field.
-func EmpstDictIDIn(vs ...string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIn(FieldEmpstDictID, vs...))
+// EmpystDictIDIn applies the In predicate on the "empyst_dict_id" field.
+func EmpystDictIDIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldEmpystDictID, vs...))
 }
 
-// EmpstDictIDNotIn applies the NotIn predicate on the "empst_dict_id" field.
-func EmpstDictIDNotIn(vs ...string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotIn(FieldEmpstDictID, vs...))
+// EmpystDictIDNotIn applies the NotIn predicate on the "empyst_dict_id" field.
+func EmpystDictIDNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldEmpystDictID, vs...))
 }
 
-// EmpstDictIDGT applies the GT predicate on the "empst_dict_id" field.
-func EmpstDictIDGT(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGT(FieldEmpstDictID, v))
+// EmpystDictIDGT applies the GT predicate on the "empyst_dict_id" field.
+func EmpystDictIDGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDGTE applies the GTE predicate on the "empst_dict_id" field.
-func EmpstDictIDGTE(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldGTE(FieldEmpstDictID, v))
+// EmpystDictIDGTE applies the GTE predicate on the "empyst_dict_id" field.
+func EmpystDictIDGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDLT applies the LT predicate on the "empst_dict_id" field.
-func EmpstDictIDLT(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLT(FieldEmpstDictID, v))
+// EmpystDictIDLT applies the LT predicate on the "empyst_dict_id" field.
+func EmpystDictIDLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDLTE applies the LTE predicate on the "empst_dict_id" field.
-func EmpstDictIDLTE(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldLTE(FieldEmpstDictID, v))
+// EmpystDictIDLTE applies the LTE predicate on the "empyst_dict_id" field.
+func EmpystDictIDLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDContains applies the Contains predicate on the "empst_dict_id" field.
-func EmpstDictIDContains(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContains(FieldEmpstDictID, v))
+// EmpystDictIDContains applies the Contains predicate on the "empyst_dict_id" field.
+func EmpystDictIDContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDHasPrefix applies the HasPrefix predicate on the "empst_dict_id" field.
-func EmpstDictIDHasPrefix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasPrefix(FieldEmpstDictID, v))
+// EmpystDictIDHasPrefix applies the HasPrefix predicate on the "empyst_dict_id" field.
+func EmpystDictIDHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDHasSuffix applies the HasSuffix predicate on the "empst_dict_id" field.
-func EmpstDictIDHasSuffix(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldHasSuffix(FieldEmpstDictID, v))
+// EmpystDictIDHasSuffix applies the HasSuffix predicate on the "empyst_dict_id" field.
+func EmpystDictIDHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDIsNil applies the IsNil predicate on the "empst_dict_id" field.
-func EmpstDictIDIsNil() predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldIsNull(FieldEmpstDictID))
+// EmpystDictIDIsNil applies the IsNil predicate on the "empyst_dict_id" field.
+func EmpystDictIDIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldEmpystDictID))
 }
 
-// EmpstDictIDNotNil applies the NotNil predicate on the "empst_dict_id" field.
-func EmpstDictIDNotNil() predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldNotNull(FieldEmpstDictID))
+// EmpystDictIDNotNil applies the NotNil predicate on the "empyst_dict_id" field.
+func EmpystDictIDNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldEmpystDictID))
 }
 
-// EmpstDictIDEqualFold applies the EqualFold predicate on the "empst_dict_id" field.
-func EmpstDictIDEqualFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldEqualFold(FieldEmpstDictID, v))
+// EmpystDictIDEqualFold applies the EqualFold predicate on the "empyst_dict_id" field.
+func EmpystDictIDEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldEmpystDictID, v))
 }
 
-// EmpstDictIDContainsFold applies the ContainsFold predicate on the "empst_dict_id" field.
-func EmpstDictIDContainsFold(v string) predicate.OrgStaff {
-	return predicate.OrgStaff(sql.FieldContainsFold(FieldEmpstDictID, v))
+// EmpystDictIDContainsFold applies the ContainsFold predicate on the "empyst_dict_id" field.
+func EmpystDictIDContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldEmpystDictID, v))
 }
 
 // CreatorEQ applies the EQ predicate on the "creator" field.

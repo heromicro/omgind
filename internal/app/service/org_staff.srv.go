@@ -120,8 +120,8 @@ func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) 
 	staff_input := a.OrgStaffRepo.ToEntUpdateOrgStaffInput(&item)
 
 	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
-		var iden_addr *ent.SysAddress
 
+		var iden_addr *ent.SysAddress
 		if v := oitem.IdenAddrID; v != nil {
 			_, err = tx.SysAddress.Update().Where(sysaddress.IDEQ(*v)).SetInput(*iden_addr_update_input).Save(ctx)
 			if err != nil {
@@ -151,8 +151,9 @@ func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) 
 		if iden_addr != nil {
 			udpate_staff = udpate_staff.SetIdenAddrID(iden_addr.ID)
 		}
+
 		if resi_addr != nil {
-			udpate_staff = udpate_staff.SetIdenAddrID(resi_addr.ID)
+			udpate_staff = udpate_staff.SetResiAddrID(resi_addr.ID)
 		}
 
 		_, err = udpate_staff.Save(ctx)

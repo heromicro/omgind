@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -21,12 +22,15 @@ import (
 // SysDictQuery is the builder for querying SysDict entities.
 type SysDictQuery struct {
 	config
-	ctx        *QueryContext
-	order      []OrderFunc
-	inters     []Interceptor
-	predicates []predicate.SysDict
-	withItems  *SysDictItemQuery
-	modifiers  []func(*sql.Selector)
+	ctx             *QueryContext
+	order           []OrderFunc
+	inters          []Interceptor
+	predicates      []predicate.SysDict
+	withItems       *SysDictItemQuery
+	withStaffGender *OrgStaffQuery
+	withStaffEmpyst *OrgStaffQuery
+	withFKs         bool
+	modifiers       []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -82,6 +86,56 @@ func (sdq *SysDictQuery) QueryItems() *SysDictItemQuery {
 		schemaConfig := sdq.schemaConfig
 		step.To.Schema = schemaConfig.SysDictItem
 		step.Edge.Schema = schemaConfig.SysDictItem
+		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryStaffGender chains the current query on the "staff_gender" edge.
+func (sdq *SysDictQuery) QueryStaffGender() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: sdq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sdq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := sdq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdict.Table, sysdict.FieldID, selector),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, sysdict.StaffGenderTable, sysdict.StaffGenderColumn),
+		)
+		schemaConfig := sdq.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.SysDict
+		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryStaffEmpyst chains the current query on the "staff_empyst" edge.
+func (sdq *SysDictQuery) QueryStaffEmpyst() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: sdq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sdq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := sdq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysdict.Table, sysdict.FieldID, selector),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, sysdict.StaffEmpystTable, sysdict.StaffEmpystColumn),
+		)
+		schemaConfig := sdq.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.SysDict
 		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -275,12 +329,14 @@ func (sdq *SysDictQuery) Clone() *SysDictQuery {
 		return nil
 	}
 	return &SysDictQuery{
-		config:     sdq.config,
-		ctx:        sdq.ctx.Clone(),
-		order:      append([]OrderFunc{}, sdq.order...),
-		inters:     append([]Interceptor{}, sdq.inters...),
-		predicates: append([]predicate.SysDict{}, sdq.predicates...),
-		withItems:  sdq.withItems.Clone(),
+		config:          sdq.config,
+		ctx:             sdq.ctx.Clone(),
+		order:           append([]OrderFunc{}, sdq.order...),
+		inters:          append([]Interceptor{}, sdq.inters...),
+		predicates:      append([]predicate.SysDict{}, sdq.predicates...),
+		withItems:       sdq.withItems.Clone(),
+		withStaffGender: sdq.withStaffGender.Clone(),
+		withStaffEmpyst: sdq.withStaffEmpyst.Clone(),
 		// clone intermediate query.
 		sql:  sdq.sql.Clone(),
 		path: sdq.path,
@@ -295,6 +351,28 @@ func (sdq *SysDictQuery) WithItems(opts ...func(*SysDictItemQuery)) *SysDictQuer
 		opt(query)
 	}
 	sdq.withItems = query
+	return sdq
+}
+
+// WithStaffGender tells the query-builder to eager-load the nodes that are connected to
+// the "staff_gender" edge. The optional arguments are used to configure the query builder of the edge.
+func (sdq *SysDictQuery) WithStaffGender(opts ...func(*OrgStaffQuery)) *SysDictQuery {
+	query := (&OrgStaffClient{config: sdq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	sdq.withStaffGender = query
+	return sdq
+}
+
+// WithStaffEmpyst tells the query-builder to eager-load the nodes that are connected to
+// the "staff_empyst" edge. The optional arguments are used to configure the query builder of the edge.
+func (sdq *SysDictQuery) WithStaffEmpyst(opts ...func(*OrgStaffQuery)) *SysDictQuery {
+	query := (&OrgStaffClient{config: sdq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	sdq.withStaffEmpyst = query
 	return sdq
 }
 
@@ -375,11 +453,20 @@ func (sdq *SysDictQuery) prepareQuery(ctx context.Context) error {
 func (sdq *SysDictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysDict, error) {
 	var (
 		nodes       = []*SysDict{}
+		withFKs     = sdq.withFKs
 		_spec       = sdq.querySpec()
-		loadedTypes = [1]bool{
+		loadedTypes = [3]bool{
 			sdq.withItems != nil,
+			sdq.withStaffGender != nil,
+			sdq.withStaffEmpyst != nil,
 		}
 	)
+	if sdq.withStaffGender != nil || sdq.withStaffEmpyst != nil {
+		withFKs = true
+	}
+	if withFKs {
+		_spec.Node.Columns = append(_spec.Node.Columns, sysdict.ForeignKeys...)
+	}
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysDict).scanValues(nil, columns)
 	}
@@ -407,6 +494,18 @@ func (sdq *SysDictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		if err := sdq.loadItems(ctx, query, nodes,
 			func(n *SysDict) { n.Edges.Items = []*SysDictItem{} },
 			func(n *SysDict, e *SysDictItem) { n.Edges.Items = append(n.Edges.Items, e) }); err != nil {
+			return nil, err
+		}
+	}
+	if query := sdq.withStaffGender; query != nil {
+		if err := sdq.loadStaffGender(ctx, query, nodes, nil,
+			func(n *SysDict, e *OrgStaff) { n.Edges.StaffGender = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := sdq.withStaffEmpyst; query != nil {
+		if err := sdq.loadStaffEmpyst(ctx, query, nodes, nil,
+			func(n *SysDict, e *OrgStaff) { n.Edges.StaffEmpyst = e }); err != nil {
 			return nil, err
 		}
 	}
@@ -440,6 +539,70 @@ func (sdq *SysDictQuery) loadItems(ctx context.Context, query *SysDictItemQuery,
 			return fmt.Errorf(`unexpected foreign-key "dict_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
+	}
+	return nil
+}
+func (sdq *SysDictQuery) loadStaffGender(ctx context.Context, query *OrgStaffQuery, nodes []*SysDict, init func(*SysDict), assign func(*SysDict, *OrgStaff)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*SysDict)
+	for i := range nodes {
+		if nodes[i].sys_dict_staff_gender == nil {
+			continue
+		}
+		fk := *nodes[i].sys_dict_staff_gender
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(orgstaff.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "sys_dict_staff_gender" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (sdq *SysDictQuery) loadStaffEmpyst(ctx context.Context, query *OrgStaffQuery, nodes []*SysDict, init func(*SysDict), assign func(*SysDict, *OrgStaff)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*SysDict)
+	for i := range nodes {
+		if nodes[i].sys_dict_staff_empyst == nil {
+			continue
+		}
+		fk := *nodes[i].sys_dict_staff_empyst
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(orgstaff.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "sys_dict_staff_empyst" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
 	}
 	return nil
 }

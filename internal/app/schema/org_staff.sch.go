@@ -17,17 +17,19 @@ type OrgStaff0 struct {
 	OrgID string        `json:"org_id"` // 企业id
 	Org   *OrgOrganShow `json:"org"`    //
 
-	IdenAddr *SysAddress `json:"iden_addr"` // 身份证地址
-	ResiAddr *SysAddress `json:"resi_addr"` // 现居地址
+	IdenAddrID *string     `json:"iden_addr_id"` // 身份证地址
+	IdenAddr   *SysAddress `json:"iden_addr"`    // 身份证地址
+	ResiAddrID *string     `json:"resi_addr_id"` // 现居地址
+	ResiAddr   *SysAddress `json:"resi_addr"`    // 现居地址
 
 }
 
 type OrgStaff1 struct {
-	WorkerNo    string `json:"worker_no"`     // 工号
-	Cubicle     string `json:"cubicle"`       // 工位
-	EmpStat     int32  `json:"emp_stat"`      // 在职状态
-	EmpstDictID string `json:"empst_dict_id"` // 在职状态
-	EmpstDict   string `json:"empst_dict"`    //
+	WorkerNo     string `json:"worker_no"`                         // 工号
+	Cubicle      string `json:"cubicle"`                           // 工位
+	EmpyStat     *int32 `json:"empy_stat" binding:"required"`      // 在职状态
+	EmpystDictID string `json:"empyst_dict_id" binding:"required"` // 在职状态
+	EmpystDict   string `json:"empyst_dict"`                       //
 
 	EntryDate   *time.Time `json:"entry_date" binding:"required"` // 入职日期
 	RegularDate *time.Time `json:"regular_date"`                  // 转正日期

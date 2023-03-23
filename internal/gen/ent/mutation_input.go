@@ -556,34 +556,34 @@ func (u *OrgPositionUpdateOne) SetInput(i UpdateOrgPositionInput) *OrgPositionUp
 
 // CreateOrgStaffInput represents a mutation input for creating orgstaffs.
 type CreateOrgStaffInput struct {
-	IsDel       *bool
-	Sort        *int32
-	CreatedAt   *time.Time
-	UpdatedAt   *time.Time
-	DeletedAt   *time.Time
-	IsActive    *bool
-	Memo        *string
-	FirstName   *string
-	LastName    *string
-	Mobile      *string
-	Gender      *int32
-	GndrDictID  *string
-	BirthDate   *time.Time
-	IdenNo      *string
-	IdenAddrID  *string
-	ResiAddrID  *string
-	WorkerNo    *string
-	Cubicle     *string
-	EntryDate   *time.Time
-	RegularDate *time.Time
-	ResignDate  *time.Time
-	OrgID       *string
-	EmpStat     *int32
-	EmpstDictID *string
-	Creator     *string
-	Organ       *string
-	IdenAddr    *string
-	ResiAddr    *string
+	IsDel        *bool
+	Sort         *int32
+	CreatedAt    *time.Time
+	UpdatedAt    *time.Time
+	DeletedAt    *time.Time
+	IsActive     *bool
+	Memo         *string
+	FirstName    *string
+	LastName     *string
+	Mobile       *string
+	Gender       *int32
+	GenderDictID *string
+	BirthDate    *time.Time
+	IdenNo       *string
+	IdenAddrID   *string
+	ResiAddrID   *string
+	WorkerNo     *string
+	Cubicle      *string
+	EntryDate    *time.Time
+	RegularDate  *time.Time
+	ResignDate   *time.Time
+	OrgID        *string
+	EmpyStat     *int32
+	EmpystDictID *string
+	Creator      *string
+	Organ        *string
+	IdenAddr     *string
+	ResiAddr     *string
 }
 
 // Mutate applies the CreateOrgStaffInput on the OrgStaffCreate builder.
@@ -621,8 +621,8 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.Gender; v != nil {
 		m.SetGender(*v)
 	}
-	if v := i.GndrDictID; v != nil {
-		m.SetGndrDictID(*v)
+	if v := i.GenderDictID; v != nil {
+		m.SetGenderDictID(*v)
 	}
 	if v := i.BirthDate; v != nil {
 		m.SetBirthDate(*v)
@@ -654,11 +654,11 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
 	}
-	if v := i.EmpStat; v != nil {
-		m.SetEmpStat(*v)
+	if v := i.EmpyStat; v != nil {
+		m.SetEmpyStat(*v)
 	}
-	if v := i.EmpstDictID; v != nil {
-		m.SetEmpstDictID(*v)
+	if v := i.EmpystDictID; v != nil {
+		m.SetEmpystDictID(*v)
 	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
@@ -682,56 +682,56 @@ func (c *OrgStaffCreate) SetInput(i CreateOrgStaffInput) *OrgStaffCreate {
 
 // UpdateOrgStaffInput represents a mutation input for updating orgstaffs.
 type UpdateOrgStaffInput struct {
-	IsDel            *bool
-	Sort             *int32
-	UpdatedAt        *time.Time
-	ClearUpdatedAt   bool
-	DeletedAt        *time.Time
-	ClearDeletedAt   bool
-	IsActive         *bool
-	Memo             *string
-	ClearMemo        bool
-	FirstName        *string
-	ClearFirstName   bool
-	LastName         *string
-	ClearLastName    bool
-	Mobile           *string
-	ClearMobile      bool
-	Gender           *int32
-	ClearGender      bool
-	GndrDictID       *string
-	ClearGndrDictID  bool
-	BirthDate        *time.Time
-	ClearBirthDate   bool
-	IdenNo           *string
-	ClearIdenNo      bool
-	IdenAddrID       *string
-	ClearIdenAddrID  bool
-	ResiAddrID       *string
-	ClearResiAddrID  bool
-	WorkerNo         *string
-	ClearWorkerNo    bool
-	Cubicle          *string
-	ClearCubicle     bool
-	EntryDate        *time.Time
-	ClearEntryDate   bool
-	RegularDate      *time.Time
-	ClearRegularDate bool
-	ResignDate       *time.Time
-	ClearResignDate  bool
-	OrgID            *string
-	ClearOrgID       bool
-	EmpStat          *int32
-	EmpstDictID      *string
-	ClearEmpstDictID bool
-	Creator          *string
-	ClearCreator     bool
-	Organ            *string
-	ClearOrgan       bool
-	IdenAddr         *string
-	ClearIdenAddr    bool
-	ResiAddr         *string
-	ClearResiAddr    bool
+	IsDel             *bool
+	Sort              *int32
+	UpdatedAt         *time.Time
+	ClearUpdatedAt    bool
+	DeletedAt         *time.Time
+	ClearDeletedAt    bool
+	IsActive          *bool
+	Memo              *string
+	ClearMemo         bool
+	FirstName         *string
+	ClearFirstName    bool
+	LastName          *string
+	ClearLastName     bool
+	Mobile            *string
+	ClearMobile       bool
+	Gender            *int32
+	ClearGender       bool
+	GenderDictID      *string
+	ClearGenderDictID bool
+	BirthDate         *time.Time
+	ClearBirthDate    bool
+	IdenNo            *string
+	ClearIdenNo       bool
+	IdenAddrID        *string
+	ClearIdenAddrID   bool
+	ResiAddrID        *string
+	ClearResiAddrID   bool
+	WorkerNo          *string
+	ClearWorkerNo     bool
+	Cubicle           *string
+	ClearCubicle      bool
+	EntryDate         *time.Time
+	ClearEntryDate    bool
+	RegularDate       *time.Time
+	ClearRegularDate  bool
+	ResignDate        *time.Time
+	ClearResignDate   bool
+	OrgID             *string
+	ClearOrgID        bool
+	EmpyStat          *int32
+	EmpystDictID      *string
+	ClearEmpystDictID bool
+	Creator           *string
+	ClearCreator      bool
+	Organ             *string
+	ClearOrgan        bool
+	IdenAddr          *string
+	ClearIdenAddr     bool
+	ResiAddr          *string
+	ClearResiAddr     bool
 }
 
 // Mutate applies the UpdateOrgStaffInput on the OrgStaffMutation.
@@ -787,11 +787,11 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.Gender; v != nil {
 		m.SetGender(*v)
 	}
-	if i.ClearGndrDictID {
-		m.ClearGndrDictID()
+	if i.ClearGenderDictID {
+		m.ClearGenderDictID()
 	}
-	if v := i.GndrDictID; v != nil {
-		m.SetGndrDictID(*v)
+	if v := i.GenderDictID; v != nil {
+		m.SetGenderDictID(*v)
 	}
 	if i.ClearBirthDate {
 		m.ClearBirthDate()
@@ -853,14 +853,14 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
 	}
-	if v := i.EmpStat; v != nil {
-		m.SetEmpStat(*v)
+	if v := i.EmpyStat; v != nil {
+		m.SetEmpyStat(*v)
 	}
-	if i.ClearEmpstDictID {
-		m.ClearEmpstDictID()
+	if i.ClearEmpystDictID {
+		m.ClearEmpystDictID()
 	}
-	if v := i.EmpstDictID; v != nil {
-		m.SetEmpstDictID(*v)
+	if v := i.EmpystDictID; v != nil {
+		m.SetEmpystDictID(*v)
 	}
 	if i.ClearCreator {
 		m.ClearCreator()
@@ -1232,17 +1232,19 @@ func (u *SysAddressUpdateOne) SetInput(i UpdateSysAddressInput) *SysAddressUpdat
 
 // CreateSysDictInput represents a mutation input for creating sysdicts.
 type CreateSysDictInput struct {
-	IsDel     *bool
-	Memo      *string
-	Sort      *int32
-	CreatedAt *time.Time
-	UpdatedAt *time.Time
-	DeletedAt *time.Time
-	IsActive  *bool
-	NameCn    string
-	NameEn    string
-	Tipe      *sysdict.Tipe
-	Items     []string
+	IsDel       *bool
+	Memo        *string
+	Sort        *int32
+	CreatedAt   *time.Time
+	UpdatedAt   *time.Time
+	DeletedAt   *time.Time
+	IsActive    *bool
+	NameCn      string
+	NameEn      string
+	Tipe        *sysdict.Tipe
+	Items       []string
+	StaffGender *string
+	StaffEmpyst *string
 }
 
 // Mutate applies the CreateSysDictInput on the SysDictCreate builder.
@@ -1276,6 +1278,12 @@ func (i *CreateSysDictInput) Mutate(m *SysDictCreate) {
 	if ids := i.Items; len(ids) > 0 {
 		m.AddItemIDs(ids...)
 	}
+	if v := i.StaffGender; v != nil {
+		m.SetStaffGenderID(*v)
+	}
+	if v := i.StaffEmpyst; v != nil {
+		m.SetStaffEmpystID(*v)
+	}
 }
 
 // SetInput applies the change-set in the CreateSysDictInput on the create builder.
@@ -1286,20 +1294,24 @@ func (c *SysDictCreate) SetInput(i CreateSysDictInput) *SysDictCreate {
 
 // UpdateSysDictInput represents a mutation input for updating sysdicts.
 type UpdateSysDictInput struct {
-	IsDel          *bool
-	Memo           *string
-	ClearMemo      bool
-	Sort           *int32
-	UpdatedAt      *time.Time
-	ClearUpdatedAt bool
-	DeletedAt      *time.Time
-	ClearDeletedAt bool
-	IsActive       *bool
-	NameCn         *string
-	NameEn         *string
-	Tipe           *sysdict.Tipe
-	AddItemIDs     []string
-	RemoveItemIDs  []string
+	IsDel            *bool
+	Memo             *string
+	ClearMemo        bool
+	Sort             *int32
+	UpdatedAt        *time.Time
+	ClearUpdatedAt   bool
+	DeletedAt        *time.Time
+	ClearDeletedAt   bool
+	IsActive         *bool
+	NameCn           *string
+	NameEn           *string
+	Tipe             *sysdict.Tipe
+	AddItemIDs       []string
+	RemoveItemIDs    []string
+	StaffGender      *string
+	ClearStaffGender bool
+	StaffEmpyst      *string
+	ClearStaffEmpyst bool
 }
 
 // Mutate applies the UpdateSysDictInput on the SysDictMutation.
@@ -1345,6 +1357,18 @@ func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	}
 	if ids := i.RemoveItemIDs; len(ids) > 0 {
 		m.RemoveItemIDs(ids...)
+	}
+	if i.ClearStaffGender {
+		m.ClearStaffGender()
+	}
+	if v := i.StaffGender; v != nil {
+		m.SetStaffGenderID(*v)
+	}
+	if i.ClearStaffEmpyst {
+		m.ClearStaffEmpyst()
+	}
+	if v := i.StaffEmpyst; v != nil {
+		m.SetStaffEmpystID(*v)
 	}
 }
 

@@ -579,6 +579,72 @@ func HasItemsWith(preds ...predicate.SysDictItem) predicate.SysDict {
 	})
 }
 
+// HasStaffGender applies the HasEdge predicate on the "staff_gender" edge.
+func HasStaffGender() predicate.SysDict {
+	return predicate.SysDict(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, StaffGenderTable, StaffGenderColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.SysDict
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStaffGenderWith applies the HasEdge predicate on the "staff_gender" edge with a given conditions (other predicates).
+func HasStaffGenderWith(preds ...predicate.OrgStaff) predicate.SysDict {
+	return predicate.SysDict(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StaffGenderInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, StaffGenderTable, StaffGenderColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.SysDict
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasStaffEmpyst applies the HasEdge predicate on the "staff_empyst" edge.
+func HasStaffEmpyst() predicate.SysDict {
+	return predicate.SysDict(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, StaffEmpystTable, StaffEmpystColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.SysDict
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStaffEmpystWith applies the HasEdge predicate on the "staff_empyst" edge with a given conditions (other predicates).
+func HasStaffEmpystWith(preds ...predicate.OrgStaff) predicate.SysDict {
+	return predicate.SysDict(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StaffEmpystInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, StaffEmpystTable, StaffEmpystColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.SysDict
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // And groups predicates with the AND operator between them.
 func And(predicates ...predicate.SysDict) predicate.SysDict {
 	return predicate.SysDict(func(s *sql.Selector) {
