@@ -35,7 +35,7 @@ func (a *SysDistrict) Query(c *gin.Context) {
 //	@Success	200		{array}		schema.ListResult{list=schema.SysDistricts,pagination=schema.PaginationResult}
 //	@Failure	401		{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500		{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
-//	@Router		/api/v2/sys-district/{id}/substricts [get]
+//	@Router		/api/v2/sys-district/{id}/subs [get]
 func (a *SysDistrict) GetAllSubs(c *gin.Context) {
 }
 

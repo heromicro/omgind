@@ -3710,7 +3710,7 @@ paths:
       summary: 启用数据
       tags:
       - 行政区域
-  /api/v2/sys-district/{id}/substricts:
+  /api/v2/sys-district/{id}/subs:
     get:
       parameters:
       - description: id之后的

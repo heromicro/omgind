@@ -4334,7 +4334,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v2/sys-district/{id}/substricts": {
+        "/api/v2/sys-district/{id}/subs": {
             "get": {
                 "security": [
                     {
