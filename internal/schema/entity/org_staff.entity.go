@@ -53,6 +53,8 @@ func (OrgStaff) Fields() []ent.Field {
 
 		field.String("empyst_dict_id").MaxLen(36).Nillable().Optional().StorageKey("empyst_dict_id").Comment("empst_stat options"),
 
+		field.String("dept_id").MaxLen(36).Nillable().Optional().StorageKey("dept_id").Comment("department.id"),
+
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
 }
@@ -61,13 +63,18 @@ func (OrgStaff) Edges() []ent.Edge {
 
 	return []ent.Edge{
 
+		// M2O
 		edge.From("organ", OrgOrgan.Type).Ref("staffs").Field("org_id").Unique(),
 
-		edge.From("iden_addr", SysAddress.Type).Ref("staff_iden").Unique().Field("iden_addr_id"),
-		edge.From("resi_addr", SysAddress.Type).Ref("staff_resi").Unique().Field("resi_addr_id"),
+		// O2O
+		edge.From("iden_addr", SysAddress.Type).Ref("staff_iden").Field("iden_addr_id").Unique(),
+		edge.From("resi_addr", SysAddress.Type).Ref("staff_resi").Field("resi_addr_id").Unique(),
 
 		// edge.From("gender_dict", SysDict.Type).Ref("staff_gender").Field("gender_dict_id").Unique(),
 		// edge.From("empyst_dict", SysDict.Type).Ref("staff_empyst").Field("empyst_dict_id").Unique(),
+
+		// M2O
+		edge.From("department", OrgDepartment.Type).Ref("staffs").Field("dept_id"),
 	}
 }
 
