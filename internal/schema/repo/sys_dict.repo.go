@@ -2,7 +2,6 @@ package repo
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/google/wire"
@@ -157,8 +156,8 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 // Query 查询数据
 func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQueryParam, opts ...schema.DictQueryOptions) (*schema.DictQueryResult, error) {
 
-	log.Println(" ------ ======= --- id ", id)
-	log.Println(" ------ ======= -- -params  ", params)
+	// log.Println(" ------ ======= --- id ", id)
+	// log.Println(" ------ ======= -- -params  ", params)
 
 	opt := a.getQueryOption(opts...)
 
@@ -207,7 +206,7 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 
 	list, err := query.All(ctx)
 
-	log.Println(" -------  err ===== === ", err)
+	// log.Println(" -------  err ===== === ", err)
 
 	if err != nil {
 		return nil, errors.WithStack(err)
