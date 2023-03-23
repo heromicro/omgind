@@ -346,7 +346,7 @@
 
     - name: 部门管理
       icon: audit
-      router: "/organ/department"
+      router: "/organ/dept"
       sort: 49
       level: 2
       actions:
