@@ -66,8 +66,8 @@ func (OrgStaff) Edges() []ent.Edge {
 		edge.From("iden_addr", SysAddress.Type).Ref("staff_iden").Unique().Field("iden_addr_id"),
 		edge.From("resi_addr", SysAddress.Type).Ref("staff_resi").Unique().Field("resi_addr_id"),
 
-		// edge.From("gender_dict", OrgOrgan.Type).Ref("staff_gender").Field("gender_dict_id").Unique(),
-		// edge.From("empyst_dict", OrgOrgan.Type).Ref("staff_empyst").Field("empyst_dict_id").Unique(),
+		// edge.From("gender_dict", SysDict.Type).Ref("staff_gender").Field("gender_dict_id").Unique(),
+		// edge.From("empyst_dict", SysDict.Type).Ref("staff_empyst").Field("empyst_dict_id").Unique(),
 	}
 }
 
