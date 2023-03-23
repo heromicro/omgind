@@ -169,6 +169,192 @@ func (a *OrgDepartment) View(ctx context.Context, id string, opts ...schema.OrgD
 	return ToSchemaOrgDepartment(r_orgdepartment), nil
 }
 
+func (a *OrgDepartment) GetAllSubDepts(ctx context.Context, pid string, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryResult, error) {
+
+	opt := a.getQueryOption(opts...)
+
+	query := a.EntCli.OrgDepartment.Query()
+
+	query = query.Where(orgdepartment.DeletedAtIsNil(), orgdepartment.IsDelEQ(false))
+	// TODO: 查询条件
+
+	if pid == "-" {
+		query = query.Where(orgdepartment.Or(orgdepartment.ParentIDEQ(pid), orgdepartment.ParentIDIsNil()))
+	} else {
+		query = query.Where(orgdepartment.ParentIDEQ(pid))
+	}
+
+	if v := params.Name; v != "" {
+		query = query.Where(orgdepartment.NameEQ(v))
+	}
+
+	if v := params.IsReal; v != nil {
+		query = query.Where(orgdepartment.IsRealEQ(*v))
+	}
+
+	if v := params.IsLeaf; v != nil {
+		query = query.Where(orgdepartment.IsLeafEQ(*v))
+	}
+
+	if v := params.IsActive; v != nil {
+		query = query.Where(orgdepartment.IsActiveEQ(*v))
+	}
+
+	if v := params.TreeLevel; v != nil {
+		query = query.Where(orgdepartment.TreeLevelEQ(*v))
+	}
+	if v := params.TreeLeft; v != nil {
+		query = query.Where(orgdepartment.TreeLeftGTE(*v))
+	}
+
+	if v := params.TreeLeft_St; v != nil {
+		query = query.Where(orgdepartment.TreeLeftGTE(*v))
+	}
+	if v := params.TreeLeft_Ed; v != nil {
+		query = query.Where(orgdepartment.TreeLeftLTE(*v))
+	}
+
+	if v := params.TreeRight; v != nil {
+		query = query.Where(orgdepartment.TreeRightLTE(*v))
+	}
+
+	if v := params.TreeRight_St; v != nil {
+		query = query.Where(orgdepartment.TreeRightGTE(*v))
+	}
+	if v := params.TreeRight_Ed; v != nil {
+		query = query.Where(orgdepartment.TreeRightLTE(*v))
+	}
+
+	// 父级pid
+	if v := params.ParentParentID; v != nil {
+		query = query.Where(orgdepartment.HasParentWith(orgdepartment.ParentIDEQ(*v)))
+	}
+
+	count, err := query.Count(ctx)
+	// log.Println(" ------- == === === ===== count 11111 ", count)
+	// log.Println(" ------- ===== ==== ====  err ", err)
+
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	// get total
+	pr := &schema.PaginationResult{Total: count}
+	if params.PaginationParam.OnlyCount {
+		return &schema.OrgDepartmentQueryResult{PageResult: pr}, nil
+	}
+
+	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
+
+	if v := params.CreatedAt_Order; v != "" {
+		of := MakeUpOrderField(orgdepartment.FieldCreatedAt, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.Name_Order; v != "" {
+		of := MakeUpOrderField(orgdepartment.FieldName, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.TreeID_Order; v != "" {
+		of := MakeUpOrderField(orgdepartment.FieldTreeID, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.TreeLevel_Order; v != "" {
+		of := MakeUpOrderField(orgdepartment.FieldTreeLevel, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if v := params.TreeLeft_Order; v != "" {
+		of := MakeUpOrderField(orgdepartment.FieldTreeLeft, v)
+		opt.OrderFields = append(opt.OrderFields, of)
+	}
+
+	if len(opt.OrderFields) == 0 {
+		of := MakeUpOrderField(orgdepartment.FieldTreeID, "asc")
+		opt.OrderFields = append(opt.OrderFields, of)
+
+		of2 := MakeUpOrderField(orgdepartment.FieldSort, "asc")
+		opt.OrderFields = append(opt.OrderFields, of2)
+	}
+
+	query = query.Order(ParseOrder(opt.OrderFields)...)
+
+	pr.Current = params.PaginationParam.GetCurrent()
+	pr.PageSize = params.PaginationParam.GetPageSize()
+
+	// log.Println(" ------- ===== params.Offset() ", params.Offset())
+	// log.Println(" ---- === ==== count 22222 ", count)
+
+	if params.Offset() > count {
+		return &schema.OrgDepartmentQueryResult{PageResult: pr}, nil
+	}
+	query = query.Limit(params.Limit()).Offset(params.Offset())
+
+	//
+	squery := query.Select(orgdepartment.FieldID, orgdepartment.FieldName, orgdepartment.FieldParentID, orgdepartment.FieldIsLeaf)
+
+	list, err1 := squery.All(ctx)
+
+	// log.Println(" ------- ===== ===== === list ", list)
+
+	if err1 != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	qr := &schema.OrgDepartmentQueryResult{
+		PageResult: pr,
+		Data:       ToSchemaOrgDepartments(list),
+	}
+
+	return qr, nil
+}
+
+func (a *OrgDepartment) GetTree(ctx context.Context, tpid string, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryTreeResult, error) {
+	opt := a.getQueryOption(opts...)
+
+	parent_query := a.EntCli.OrgDepartment.Query().Where(orgdepartment.DeletedAtIsNil())
+
+	parent_query = parent_query.Where(orgdepartment.IDEQ(tpid))
+
+	parent, err := parent_query.Select(orgdepartment.FieldID, orgdepartment.FieldTreeID).First(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	tree_query := a.EntCli.OrgDepartment.Query().Where(orgdepartment.IsDelEQ(false), orgdepartment.TreeIDEQ(*parent.TreeID)).Where(orgdepartment.IDNEQ(parent.ID))
+
+	of1 := MakeUpOrderField(orgdepartment.FieldTreeLevel, "asc")
+	opt.OrderFields = append(opt.OrderFields, of1)
+	of2 := MakeUpOrderField(orgdepartment.FieldSort, "asc")
+	opt.OrderFields = append(opt.OrderFields, of2)
+	tree_query = tree_query.Order(ParseOrder(opt.OrderFields)...)
+
+	select_tree := tree_query.Select(orgdepartment.FieldID, orgdepartment.FieldName, orgdepartment.FieldParentID, orgdepartment.FieldIsLeaf, orgdepartment.FieldTreeID, orgdepartment.FieldTreeLeft, orgdepartment.FieldTreeRight)
+
+	subs, err := select_tree.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	top_query := a.EntCli.OrgDepartment.Query().Where(orgdepartment.IsDel(false), orgdepartment.TreeLevel(1), orgdepartment.ParentIDIsNil())
+
+	top, err := top_query.All(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	sch_sub := ToSchemaOrgDepartments(subs)
+	sch_top := ToSchemaOrgDepartments(top)
+	data := &schema.OrgDepartmentQueryTreeResult{
+		Top:  sch_top,
+		Subs: sch_sub,
+	}
+
+	return data, nil
+}
+
 // Create 创建数据
 func (a *OrgDepartment) Create(ctx context.Context, item schema.OrgDepartment) (*schema.OrgDepartment, error) {
 

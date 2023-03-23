@@ -50,6 +50,23 @@ func (a *OrgDepartment) View(ctx context.Context, id string, opts ...schema.OrgD
 	return item, nil
 }
 
+// View 查询指定数据
+func (a *OrgDepartment) GetAllSubDepts(ctx context.Context, pid string, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryResult, error) {
+	item, err := a.OrgDepartmentRepo.GetAllSubDepts(ctx, pid, params, opts...)
+	if err != nil {
+		return nil, err
+	} else if item == nil {
+		return nil, errors.ErrNotFound
+	}
+
+	return item, nil
+}
+
+// Query 查询数据
+func (a *OrgDepartment) GetTree(ctx context.Context, tpid string, params schema.OrgDepartmentQueryParam, opts ...schema.OrgDepartmentQueryOptions) (*schema.OrgDepartmentQueryTreeResult, error) {
+	return a.OrgDepartmentRepo.GetTree(ctx, tpid, params, opts...)
+}
+
 // Create 创建数据
 func (a *OrgDepartment) Create(ctx context.Context, item schema.OrgDepartment) (*schema.OrgDepartment, error) {
 	// TODO: check?

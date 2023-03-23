@@ -132,6 +132,154 @@ func (odu *OrgDepartmentUpdate) ClearMemo() *OrgDepartmentUpdate {
 	return odu
 }
 
+// SetTreeID sets the "tree_id" field.
+func (odu *OrgDepartmentUpdate) SetTreeID(i int64) *OrgDepartmentUpdate {
+	odu.mutation.ResetTreeID()
+	odu.mutation.SetTreeID(i)
+	return odu
+}
+
+// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableTreeID(i *int64) *OrgDepartmentUpdate {
+	if i != nil {
+		odu.SetTreeID(*i)
+	}
+	return odu
+}
+
+// AddTreeID adds i to the "tree_id" field.
+func (odu *OrgDepartmentUpdate) AddTreeID(i int64) *OrgDepartmentUpdate {
+	odu.mutation.AddTreeID(i)
+	return odu
+}
+
+// ClearTreeID clears the value of the "tree_id" field.
+func (odu *OrgDepartmentUpdate) ClearTreeID() *OrgDepartmentUpdate {
+	odu.mutation.ClearTreeID()
+	return odu
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (odu *OrgDepartmentUpdate) SetTreeLevel(i int32) *OrgDepartmentUpdate {
+	odu.mutation.ResetTreeLevel()
+	odu.mutation.SetTreeLevel(i)
+	return odu
+}
+
+// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableTreeLevel(i *int32) *OrgDepartmentUpdate {
+	if i != nil {
+		odu.SetTreeLevel(*i)
+	}
+	return odu
+}
+
+// AddTreeLevel adds i to the "tree_level" field.
+func (odu *OrgDepartmentUpdate) AddTreeLevel(i int32) *OrgDepartmentUpdate {
+	odu.mutation.AddTreeLevel(i)
+	return odu
+}
+
+// ClearTreeLevel clears the value of the "tree_level" field.
+func (odu *OrgDepartmentUpdate) ClearTreeLevel() *OrgDepartmentUpdate {
+	odu.mutation.ClearTreeLevel()
+	return odu
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (odu *OrgDepartmentUpdate) SetTreeLeft(i int64) *OrgDepartmentUpdate {
+	odu.mutation.ResetTreeLeft()
+	odu.mutation.SetTreeLeft(i)
+	return odu
+}
+
+// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableTreeLeft(i *int64) *OrgDepartmentUpdate {
+	if i != nil {
+		odu.SetTreeLeft(*i)
+	}
+	return odu
+}
+
+// AddTreeLeft adds i to the "tree_left" field.
+func (odu *OrgDepartmentUpdate) AddTreeLeft(i int64) *OrgDepartmentUpdate {
+	odu.mutation.AddTreeLeft(i)
+	return odu
+}
+
+// ClearTreeLeft clears the value of the "tree_left" field.
+func (odu *OrgDepartmentUpdate) ClearTreeLeft() *OrgDepartmentUpdate {
+	odu.mutation.ClearTreeLeft()
+	return odu
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (odu *OrgDepartmentUpdate) SetTreeRight(i int64) *OrgDepartmentUpdate {
+	odu.mutation.ResetTreeRight()
+	odu.mutation.SetTreeRight(i)
+	return odu
+}
+
+// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableTreeRight(i *int64) *OrgDepartmentUpdate {
+	if i != nil {
+		odu.SetTreeRight(*i)
+	}
+	return odu
+}
+
+// AddTreeRight adds i to the "tree_right" field.
+func (odu *OrgDepartmentUpdate) AddTreeRight(i int64) *OrgDepartmentUpdate {
+	odu.mutation.AddTreeRight(i)
+	return odu
+}
+
+// ClearTreeRight clears the value of the "tree_right" field.
+func (odu *OrgDepartmentUpdate) ClearTreeRight() *OrgDepartmentUpdate {
+	odu.mutation.ClearTreeRight()
+	return odu
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (odu *OrgDepartmentUpdate) SetIsLeaf(b bool) *OrgDepartmentUpdate {
+	odu.mutation.SetIsLeaf(b)
+	return odu
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableIsLeaf(b *bool) *OrgDepartmentUpdate {
+	if b != nil {
+		odu.SetIsLeaf(*b)
+	}
+	return odu
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (odu *OrgDepartmentUpdate) ClearIsLeaf() *OrgDepartmentUpdate {
+	odu.mutation.ClearIsLeaf()
+	return odu
+}
+
+// SetTreePath sets the "tree_path" field.
+func (odu *OrgDepartmentUpdate) SetTreePath(s string) *OrgDepartmentUpdate {
+	odu.mutation.SetTreePath(s)
+	return odu
+}
+
+// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableTreePath(s *string) *OrgDepartmentUpdate {
+	if s != nil {
+		odu.SetTreePath(*s)
+	}
+	return odu
+}
+
+// ClearTreePath clears the value of the "tree_path" field.
+func (odu *OrgDepartmentUpdate) ClearTreePath() *OrgDepartmentUpdate {
+	odu.mutation.ClearTreePath()
+	return odu
+}
+
 // SetName sets the "name" field.
 func (odu *OrgDepartmentUpdate) SetName(s string) *OrgDepartmentUpdate {
 	odu.mutation.SetName(s)
@@ -192,6 +340,46 @@ func (odu *OrgDepartmentUpdate) ClearOrgID() *OrgDepartmentUpdate {
 	return odu
 }
 
+// SetParentID sets the "parent_id" field.
+func (odu *OrgDepartmentUpdate) SetParentID(s string) *OrgDepartmentUpdate {
+	odu.mutation.SetParentID(s)
+	return odu
+}
+
+// SetNillableParentID sets the "parent_id" field if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableParentID(s *string) *OrgDepartmentUpdate {
+	if s != nil {
+		odu.SetParentID(*s)
+	}
+	return odu
+}
+
+// ClearParentID clears the value of the "parent_id" field.
+func (odu *OrgDepartmentUpdate) ClearParentID() *OrgDepartmentUpdate {
+	odu.mutation.ClearParentID()
+	return odu
+}
+
+// SetIsReal sets the "is_real" field.
+func (odu *OrgDepartmentUpdate) SetIsReal(b bool) *OrgDepartmentUpdate {
+	odu.mutation.SetIsReal(b)
+	return odu
+}
+
+// SetNillableIsReal sets the "is_real" field if the given value is not nil.
+func (odu *OrgDepartmentUpdate) SetNillableIsReal(b *bool) *OrgDepartmentUpdate {
+	if b != nil {
+		odu.SetIsReal(*b)
+	}
+	return odu
+}
+
+// ClearIsReal clears the value of the "is_real" field.
+func (odu *OrgDepartmentUpdate) ClearIsReal() *OrgDepartmentUpdate {
+	odu.mutation.ClearIsReal()
+	return odu
+}
+
 // SetCreator sets the "creator" field.
 func (odu *OrgDepartmentUpdate) SetCreator(s string) *OrgDepartmentUpdate {
 	odu.mutation.SetCreator(s)
@@ -210,6 +398,26 @@ func (odu *OrgDepartmentUpdate) SetNillableCreator(s *string) *OrgDepartmentUpda
 func (odu *OrgDepartmentUpdate) ClearCreator() *OrgDepartmentUpdate {
 	odu.mutation.ClearCreator()
 	return odu
+}
+
+// SetParent sets the "parent" edge to the OrgDepartment entity.
+func (odu *OrgDepartmentUpdate) SetParent(o *OrgDepartment) *OrgDepartmentUpdate {
+	return odu.SetParentID(o.ID)
+}
+
+// AddChildIDs adds the "children" edge to the OrgDepartment entity by IDs.
+func (odu *OrgDepartmentUpdate) AddChildIDs(ids ...string) *OrgDepartmentUpdate {
+	odu.mutation.AddChildIDs(ids...)
+	return odu
+}
+
+// AddChildren adds the "children" edges to the OrgDepartment entity.
+func (odu *OrgDepartmentUpdate) AddChildren(o ...*OrgDepartment) *OrgDepartmentUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return odu.AddChildIDs(ids...)
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
@@ -234,6 +442,33 @@ func (odu *OrgDepartmentUpdate) SetOrgan(o *OrgOrgan) *OrgDepartmentUpdate {
 // Mutation returns the OrgDepartmentMutation object of the builder.
 func (odu *OrgDepartmentUpdate) Mutation() *OrgDepartmentMutation {
 	return odu.mutation
+}
+
+// ClearParent clears the "parent" edge to the OrgDepartment entity.
+func (odu *OrgDepartmentUpdate) ClearParent() *OrgDepartmentUpdate {
+	odu.mutation.ClearParent()
+	return odu
+}
+
+// ClearChildren clears all "children" edges to the OrgDepartment entity.
+func (odu *OrgDepartmentUpdate) ClearChildren() *OrgDepartmentUpdate {
+	odu.mutation.ClearChildren()
+	return odu
+}
+
+// RemoveChildIDs removes the "children" edge to OrgDepartment entities by IDs.
+func (odu *OrgDepartmentUpdate) RemoveChildIDs(ids ...string) *OrgDepartmentUpdate {
+	odu.mutation.RemoveChildIDs(ids...)
+	return odu
+}
+
+// RemoveChildren removes "children" edges to OrgDepartment entities.
+func (odu *OrgDepartmentUpdate) RemoveChildren(o ...*OrgDepartment) *OrgDepartmentUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return odu.RemoveChildIDs(ids...)
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
@@ -300,6 +535,11 @@ func (odu *OrgDepartmentUpdate) check() error {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgDepartment.org_id": %w`, err)}
 		}
 	}
+	if v, ok := odu.mutation.ParentID(); ok {
+		if err := orgdepartment.ParentIDValidator(v); err != nil {
+			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`ent: validator failed for field "OrgDepartment.parent_id": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -354,6 +594,54 @@ func (odu *OrgDepartmentUpdate) sqlSave(ctx context.Context) (n int, err error) 
 	if odu.mutation.MemoCleared() {
 		_spec.ClearField(orgdepartment.FieldMemo, field.TypeString)
 	}
+	if value, ok := odu.mutation.TreeID(); ok {
+		_spec.SetField(orgdepartment.FieldTreeID, field.TypeInt64, value)
+	}
+	if value, ok := odu.mutation.AddedTreeID(); ok {
+		_spec.AddField(orgdepartment.FieldTreeID, field.TypeInt64, value)
+	}
+	if odu.mutation.TreeIDCleared() {
+		_spec.ClearField(orgdepartment.FieldTreeID, field.TypeInt64)
+	}
+	if value, ok := odu.mutation.TreeLevel(); ok {
+		_spec.SetField(orgdepartment.FieldTreeLevel, field.TypeInt32, value)
+	}
+	if value, ok := odu.mutation.AddedTreeLevel(); ok {
+		_spec.AddField(orgdepartment.FieldTreeLevel, field.TypeInt32, value)
+	}
+	if odu.mutation.TreeLevelCleared() {
+		_spec.ClearField(orgdepartment.FieldTreeLevel, field.TypeInt32)
+	}
+	if value, ok := odu.mutation.TreeLeft(); ok {
+		_spec.SetField(orgdepartment.FieldTreeLeft, field.TypeInt64, value)
+	}
+	if value, ok := odu.mutation.AddedTreeLeft(); ok {
+		_spec.AddField(orgdepartment.FieldTreeLeft, field.TypeInt64, value)
+	}
+	if odu.mutation.TreeLeftCleared() {
+		_spec.ClearField(orgdepartment.FieldTreeLeft, field.TypeInt64)
+	}
+	if value, ok := odu.mutation.TreeRight(); ok {
+		_spec.SetField(orgdepartment.FieldTreeRight, field.TypeInt64, value)
+	}
+	if value, ok := odu.mutation.AddedTreeRight(); ok {
+		_spec.AddField(orgdepartment.FieldTreeRight, field.TypeInt64, value)
+	}
+	if odu.mutation.TreeRightCleared() {
+		_spec.ClearField(orgdepartment.FieldTreeRight, field.TypeInt64)
+	}
+	if value, ok := odu.mutation.IsLeaf(); ok {
+		_spec.SetField(orgdepartment.FieldIsLeaf, field.TypeBool, value)
+	}
+	if odu.mutation.IsLeafCleared() {
+		_spec.ClearField(orgdepartment.FieldIsLeaf, field.TypeBool)
+	}
+	if value, ok := odu.mutation.TreePath(); ok {
+		_spec.SetField(orgdepartment.FieldTreePath, field.TypeString, value)
+	}
+	if odu.mutation.TreePathCleared() {
+		_spec.ClearField(orgdepartment.FieldTreePath, field.TypeString)
+	}
 	if value, ok := odu.mutation.Name(); ok {
 		_spec.SetField(orgdepartment.FieldName, field.TypeString, value)
 	}
@@ -366,11 +654,96 @@ func (odu *OrgDepartmentUpdate) sqlSave(ctx context.Context) (n int, err error) 
 	if odu.mutation.CodeCleared() {
 		_spec.ClearField(orgdepartment.FieldCode, field.TypeString)
 	}
+	if value, ok := odu.mutation.IsReal(); ok {
+		_spec.SetField(orgdepartment.FieldIsReal, field.TypeBool, value)
+	}
+	if odu.mutation.IsRealCleared() {
+		_spec.ClearField(orgdepartment.FieldIsReal, field.TypeBool)
+	}
 	if value, ok := odu.mutation.Creator(); ok {
 		_spec.SetField(orgdepartment.FieldCreator, field.TypeString, value)
 	}
 	if odu.mutation.CreatorCleared() {
 		_spec.ClearField(orgdepartment.FieldCreator, field.TypeString)
+	}
+	if odu.mutation.ParentCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.ParentTable,
+			Columns: []string{orgdepartment.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgDepartment
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := odu.mutation.ParentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.ParentTable,
+			Columns: []string{orgdepartment.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if odu.mutation.ChildrenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdepartment.ChildrenTable,
+			Columns: []string{orgdepartment.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgDepartment
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := odu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !odu.mutation.ChildrenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdepartment.ChildrenTable,
+			Columns: []string{orgdepartment.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := odu.mutation.ChildrenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdepartment.ChildrenTable,
+			Columns: []string{orgdepartment.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if odu.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -528,6 +901,154 @@ func (oduo *OrgDepartmentUpdateOne) ClearMemo() *OrgDepartmentUpdateOne {
 	return oduo
 }
 
+// SetTreeID sets the "tree_id" field.
+func (oduo *OrgDepartmentUpdateOne) SetTreeID(i int64) *OrgDepartmentUpdateOne {
+	oduo.mutation.ResetTreeID()
+	oduo.mutation.SetTreeID(i)
+	return oduo
+}
+
+// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableTreeID(i *int64) *OrgDepartmentUpdateOne {
+	if i != nil {
+		oduo.SetTreeID(*i)
+	}
+	return oduo
+}
+
+// AddTreeID adds i to the "tree_id" field.
+func (oduo *OrgDepartmentUpdateOne) AddTreeID(i int64) *OrgDepartmentUpdateOne {
+	oduo.mutation.AddTreeID(i)
+	return oduo
+}
+
+// ClearTreeID clears the value of the "tree_id" field.
+func (oduo *OrgDepartmentUpdateOne) ClearTreeID() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearTreeID()
+	return oduo
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (oduo *OrgDepartmentUpdateOne) SetTreeLevel(i int32) *OrgDepartmentUpdateOne {
+	oduo.mutation.ResetTreeLevel()
+	oduo.mutation.SetTreeLevel(i)
+	return oduo
+}
+
+// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableTreeLevel(i *int32) *OrgDepartmentUpdateOne {
+	if i != nil {
+		oduo.SetTreeLevel(*i)
+	}
+	return oduo
+}
+
+// AddTreeLevel adds i to the "tree_level" field.
+func (oduo *OrgDepartmentUpdateOne) AddTreeLevel(i int32) *OrgDepartmentUpdateOne {
+	oduo.mutation.AddTreeLevel(i)
+	return oduo
+}
+
+// ClearTreeLevel clears the value of the "tree_level" field.
+func (oduo *OrgDepartmentUpdateOne) ClearTreeLevel() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearTreeLevel()
+	return oduo
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (oduo *OrgDepartmentUpdateOne) SetTreeLeft(i int64) *OrgDepartmentUpdateOne {
+	oduo.mutation.ResetTreeLeft()
+	oduo.mutation.SetTreeLeft(i)
+	return oduo
+}
+
+// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableTreeLeft(i *int64) *OrgDepartmentUpdateOne {
+	if i != nil {
+		oduo.SetTreeLeft(*i)
+	}
+	return oduo
+}
+
+// AddTreeLeft adds i to the "tree_left" field.
+func (oduo *OrgDepartmentUpdateOne) AddTreeLeft(i int64) *OrgDepartmentUpdateOne {
+	oduo.mutation.AddTreeLeft(i)
+	return oduo
+}
+
+// ClearTreeLeft clears the value of the "tree_left" field.
+func (oduo *OrgDepartmentUpdateOne) ClearTreeLeft() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearTreeLeft()
+	return oduo
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (oduo *OrgDepartmentUpdateOne) SetTreeRight(i int64) *OrgDepartmentUpdateOne {
+	oduo.mutation.ResetTreeRight()
+	oduo.mutation.SetTreeRight(i)
+	return oduo
+}
+
+// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableTreeRight(i *int64) *OrgDepartmentUpdateOne {
+	if i != nil {
+		oduo.SetTreeRight(*i)
+	}
+	return oduo
+}
+
+// AddTreeRight adds i to the "tree_right" field.
+func (oduo *OrgDepartmentUpdateOne) AddTreeRight(i int64) *OrgDepartmentUpdateOne {
+	oduo.mutation.AddTreeRight(i)
+	return oduo
+}
+
+// ClearTreeRight clears the value of the "tree_right" field.
+func (oduo *OrgDepartmentUpdateOne) ClearTreeRight() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearTreeRight()
+	return oduo
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (oduo *OrgDepartmentUpdateOne) SetIsLeaf(b bool) *OrgDepartmentUpdateOne {
+	oduo.mutation.SetIsLeaf(b)
+	return oduo
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableIsLeaf(b *bool) *OrgDepartmentUpdateOne {
+	if b != nil {
+		oduo.SetIsLeaf(*b)
+	}
+	return oduo
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (oduo *OrgDepartmentUpdateOne) ClearIsLeaf() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearIsLeaf()
+	return oduo
+}
+
+// SetTreePath sets the "tree_path" field.
+func (oduo *OrgDepartmentUpdateOne) SetTreePath(s string) *OrgDepartmentUpdateOne {
+	oduo.mutation.SetTreePath(s)
+	return oduo
+}
+
+// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableTreePath(s *string) *OrgDepartmentUpdateOne {
+	if s != nil {
+		oduo.SetTreePath(*s)
+	}
+	return oduo
+}
+
+// ClearTreePath clears the value of the "tree_path" field.
+func (oduo *OrgDepartmentUpdateOne) ClearTreePath() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearTreePath()
+	return oduo
+}
+
 // SetName sets the "name" field.
 func (oduo *OrgDepartmentUpdateOne) SetName(s string) *OrgDepartmentUpdateOne {
 	oduo.mutation.SetName(s)
@@ -588,6 +1109,46 @@ func (oduo *OrgDepartmentUpdateOne) ClearOrgID() *OrgDepartmentUpdateOne {
 	return oduo
 }
 
+// SetParentID sets the "parent_id" field.
+func (oduo *OrgDepartmentUpdateOne) SetParentID(s string) *OrgDepartmentUpdateOne {
+	oduo.mutation.SetParentID(s)
+	return oduo
+}
+
+// SetNillableParentID sets the "parent_id" field if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableParentID(s *string) *OrgDepartmentUpdateOne {
+	if s != nil {
+		oduo.SetParentID(*s)
+	}
+	return oduo
+}
+
+// ClearParentID clears the value of the "parent_id" field.
+func (oduo *OrgDepartmentUpdateOne) ClearParentID() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearParentID()
+	return oduo
+}
+
+// SetIsReal sets the "is_real" field.
+func (oduo *OrgDepartmentUpdateOne) SetIsReal(b bool) *OrgDepartmentUpdateOne {
+	oduo.mutation.SetIsReal(b)
+	return oduo
+}
+
+// SetNillableIsReal sets the "is_real" field if the given value is not nil.
+func (oduo *OrgDepartmentUpdateOne) SetNillableIsReal(b *bool) *OrgDepartmentUpdateOne {
+	if b != nil {
+		oduo.SetIsReal(*b)
+	}
+	return oduo
+}
+
+// ClearIsReal clears the value of the "is_real" field.
+func (oduo *OrgDepartmentUpdateOne) ClearIsReal() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearIsReal()
+	return oduo
+}
+
 // SetCreator sets the "creator" field.
 func (oduo *OrgDepartmentUpdateOne) SetCreator(s string) *OrgDepartmentUpdateOne {
 	oduo.mutation.SetCreator(s)
@@ -606,6 +1167,26 @@ func (oduo *OrgDepartmentUpdateOne) SetNillableCreator(s *string) *OrgDepartment
 func (oduo *OrgDepartmentUpdateOne) ClearCreator() *OrgDepartmentUpdateOne {
 	oduo.mutation.ClearCreator()
 	return oduo
+}
+
+// SetParent sets the "parent" edge to the OrgDepartment entity.
+func (oduo *OrgDepartmentUpdateOne) SetParent(o *OrgDepartment) *OrgDepartmentUpdateOne {
+	return oduo.SetParentID(o.ID)
+}
+
+// AddChildIDs adds the "children" edge to the OrgDepartment entity by IDs.
+func (oduo *OrgDepartmentUpdateOne) AddChildIDs(ids ...string) *OrgDepartmentUpdateOne {
+	oduo.mutation.AddChildIDs(ids...)
+	return oduo
+}
+
+// AddChildren adds the "children" edges to the OrgDepartment entity.
+func (oduo *OrgDepartmentUpdateOne) AddChildren(o ...*OrgDepartment) *OrgDepartmentUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oduo.AddChildIDs(ids...)
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
@@ -630,6 +1211,33 @@ func (oduo *OrgDepartmentUpdateOne) SetOrgan(o *OrgOrgan) *OrgDepartmentUpdateOn
 // Mutation returns the OrgDepartmentMutation object of the builder.
 func (oduo *OrgDepartmentUpdateOne) Mutation() *OrgDepartmentMutation {
 	return oduo.mutation
+}
+
+// ClearParent clears the "parent" edge to the OrgDepartment entity.
+func (oduo *OrgDepartmentUpdateOne) ClearParent() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearParent()
+	return oduo
+}
+
+// ClearChildren clears all "children" edges to the OrgDepartment entity.
+func (oduo *OrgDepartmentUpdateOne) ClearChildren() *OrgDepartmentUpdateOne {
+	oduo.mutation.ClearChildren()
+	return oduo
+}
+
+// RemoveChildIDs removes the "children" edge to OrgDepartment entities by IDs.
+func (oduo *OrgDepartmentUpdateOne) RemoveChildIDs(ids ...string) *OrgDepartmentUpdateOne {
+	oduo.mutation.RemoveChildIDs(ids...)
+	return oduo
+}
+
+// RemoveChildren removes "children" edges to OrgDepartment entities.
+func (oduo *OrgDepartmentUpdateOne) RemoveChildren(o ...*OrgDepartment) *OrgDepartmentUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oduo.RemoveChildIDs(ids...)
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
@@ -709,6 +1317,11 @@ func (oduo *OrgDepartmentUpdateOne) check() error {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgDepartment.org_id": %w`, err)}
 		}
 	}
+	if v, ok := oduo.mutation.ParentID(); ok {
+		if err := orgdepartment.ParentIDValidator(v); err != nil {
+			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`ent: validator failed for field "OrgDepartment.parent_id": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -780,6 +1393,54 @@ func (oduo *OrgDepartmentUpdateOne) sqlSave(ctx context.Context) (_node *OrgDepa
 	if oduo.mutation.MemoCleared() {
 		_spec.ClearField(orgdepartment.FieldMemo, field.TypeString)
 	}
+	if value, ok := oduo.mutation.TreeID(); ok {
+		_spec.SetField(orgdepartment.FieldTreeID, field.TypeInt64, value)
+	}
+	if value, ok := oduo.mutation.AddedTreeID(); ok {
+		_spec.AddField(orgdepartment.FieldTreeID, field.TypeInt64, value)
+	}
+	if oduo.mutation.TreeIDCleared() {
+		_spec.ClearField(orgdepartment.FieldTreeID, field.TypeInt64)
+	}
+	if value, ok := oduo.mutation.TreeLevel(); ok {
+		_spec.SetField(orgdepartment.FieldTreeLevel, field.TypeInt32, value)
+	}
+	if value, ok := oduo.mutation.AddedTreeLevel(); ok {
+		_spec.AddField(orgdepartment.FieldTreeLevel, field.TypeInt32, value)
+	}
+	if oduo.mutation.TreeLevelCleared() {
+		_spec.ClearField(orgdepartment.FieldTreeLevel, field.TypeInt32)
+	}
+	if value, ok := oduo.mutation.TreeLeft(); ok {
+		_spec.SetField(orgdepartment.FieldTreeLeft, field.TypeInt64, value)
+	}
+	if value, ok := oduo.mutation.AddedTreeLeft(); ok {
+		_spec.AddField(orgdepartment.FieldTreeLeft, field.TypeInt64, value)
+	}
+	if oduo.mutation.TreeLeftCleared() {
+		_spec.ClearField(orgdepartment.FieldTreeLeft, field.TypeInt64)
+	}
+	if value, ok := oduo.mutation.TreeRight(); ok {
+		_spec.SetField(orgdepartment.FieldTreeRight, field.TypeInt64, value)
+	}
+	if value, ok := oduo.mutation.AddedTreeRight(); ok {
+		_spec.AddField(orgdepartment.FieldTreeRight, field.TypeInt64, value)
+	}
+	if oduo.mutation.TreeRightCleared() {
+		_spec.ClearField(orgdepartment.FieldTreeRight, field.TypeInt64)
+	}
+	if value, ok := oduo.mutation.IsLeaf(); ok {
+		_spec.SetField(orgdepartment.FieldIsLeaf, field.TypeBool, value)
+	}
+	if oduo.mutation.IsLeafCleared() {
+		_spec.ClearField(orgdepartment.FieldIsLeaf, field.TypeBool)
+	}
+	if value, ok := oduo.mutation.TreePath(); ok {
+		_spec.SetField(orgdepartment.FieldTreePath, field.TypeString, value)
+	}
+	if oduo.mutation.TreePathCleared() {
+		_spec.ClearField(orgdepartment.FieldTreePath, field.TypeString)
+	}
 	if value, ok := oduo.mutation.Name(); ok {
 		_spec.SetField(orgdepartment.FieldName, field.TypeString, value)
 	}
@@ -792,11 +1453,96 @@ func (oduo *OrgDepartmentUpdateOne) sqlSave(ctx context.Context) (_node *OrgDepa
 	if oduo.mutation.CodeCleared() {
 		_spec.ClearField(orgdepartment.FieldCode, field.TypeString)
 	}
+	if value, ok := oduo.mutation.IsReal(); ok {
+		_spec.SetField(orgdepartment.FieldIsReal, field.TypeBool, value)
+	}
+	if oduo.mutation.IsRealCleared() {
+		_spec.ClearField(orgdepartment.FieldIsReal, field.TypeBool)
+	}
 	if value, ok := oduo.mutation.Creator(); ok {
 		_spec.SetField(orgdepartment.FieldCreator, field.TypeString, value)
 	}
 	if oduo.mutation.CreatorCleared() {
 		_spec.ClearField(orgdepartment.FieldCreator, field.TypeString)
+	}
+	if oduo.mutation.ParentCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.ParentTable,
+			Columns: []string{orgdepartment.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgDepartment
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oduo.mutation.ParentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.ParentTable,
+			Columns: []string{orgdepartment.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if oduo.mutation.ChildrenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdepartment.ChildrenTable,
+			Columns: []string{orgdepartment.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgDepartment
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oduo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !oduo.mutation.ChildrenCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdepartment.ChildrenTable,
+			Columns: []string{orgdepartment.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oduo.mutation.ChildrenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdepartment.ChildrenTable,
+			Columns: []string{orgdepartment.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if oduo.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{

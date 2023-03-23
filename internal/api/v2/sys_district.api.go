@@ -99,7 +99,7 @@ func (a *SysDistrict) QueryTree(c *gin.Context) {
 		// params.ParentID = ptr.String("")
 	}
 
-	params.PageSize = 100
+	params.PageSize = 200
 
 	result, err := a.SysDistrictSrv.GetTree(ctx, pid, params)
 

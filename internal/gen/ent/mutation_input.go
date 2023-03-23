@@ -17,10 +17,20 @@ type CreateOrgDepartmentInput struct {
 	DeletedAt *time.Time
 	IsActive  *bool
 	Memo      *string
+	TreeID    *int64
+	TreeLevel *int32
+	TreeLeft  *int64
+	TreeRight *int64
+	IsLeaf    *bool
+	TreePath  *string
 	Name      *string
 	Code      *string
 	OrgID     *string
+	ParentID  *string
+	IsReal    *bool
 	Creator   *string
+	Parent    *string
+	Children  []string
 	Organ     *string
 }
 
@@ -47,6 +57,24 @@ func (i *CreateOrgDepartmentInput) Mutate(m *OrgDepartmentCreate) {
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
 	}
+	if v := i.TreeID; v != nil {
+		m.SetTreeID(*v)
+	}
+	if v := i.TreeLevel; v != nil {
+		m.SetTreeLevel(*v)
+	}
+	if v := i.TreeLeft; v != nil {
+		m.SetTreeLeft(*v)
+	}
+	if v := i.TreeRight; v != nil {
+		m.SetTreeRight(*v)
+	}
+	if v := i.IsLeaf; v != nil {
+		m.SetIsLeaf(*v)
+	}
+	if v := i.TreePath; v != nil {
+		m.SetTreePath(*v)
+	}
 	if v := i.Name; v != nil {
 		m.SetName(*v)
 	}
@@ -56,8 +84,20 @@ func (i *CreateOrgDepartmentInput) Mutate(m *OrgDepartmentCreate) {
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
 	}
+	if v := i.ParentID; v != nil {
+		m.SetParentID(*v)
+	}
+	if v := i.IsReal; v != nil {
+		m.SetIsReal(*v)
+	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
+	}
+	if v := i.Parent; v != nil {
+		m.SetParentID(*v)
+	}
+	if ids := i.Children; len(ids) > 0 {
+		m.AddChildIDs(ids...)
 	}
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
@@ -81,14 +121,34 @@ type UpdateOrgDepartmentInput struct {
 	IsActive       *bool
 	Memo           *string
 	ClearMemo      bool
+	TreeID         *int64
+	ClearTreeID    bool
+	TreeLevel      *int32
+	ClearTreeLevel bool
+	TreeLeft       *int64
+	ClearTreeLeft  bool
+	TreeRight      *int64
+	ClearTreeRight bool
+	IsLeaf         *bool
+	ClearIsLeaf    bool
+	TreePath       *string
+	ClearTreePath  bool
 	Name           *string
 	ClearName      bool
 	Code           *string
 	ClearCode      bool
 	OrgID          *string
 	ClearOrgID     bool
+	ParentID       *string
+	ClearParentID  bool
+	IsReal         *bool
+	ClearIsReal    bool
 	Creator        *string
 	ClearCreator   bool
+	Parent         *string
+	ClearParent    bool
+	AddChildIDs    []string
+	RemoveChildIDs []string
 	Organ          *string
 	ClearOrgan     bool
 }
@@ -122,6 +182,42 @@ func (i *UpdateOrgDepartmentInput) Mutate(m *OrgDepartmentMutation) {
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
 	}
+	if i.ClearTreeID {
+		m.ClearTreeID()
+	}
+	if v := i.TreeID; v != nil {
+		m.SetTreeID(*v)
+	}
+	if i.ClearTreeLevel {
+		m.ClearTreeLevel()
+	}
+	if v := i.TreeLevel; v != nil {
+		m.SetTreeLevel(*v)
+	}
+	if i.ClearTreeLeft {
+		m.ClearTreeLeft()
+	}
+	if v := i.TreeLeft; v != nil {
+		m.SetTreeLeft(*v)
+	}
+	if i.ClearTreeRight {
+		m.ClearTreeRight()
+	}
+	if v := i.TreeRight; v != nil {
+		m.SetTreeRight(*v)
+	}
+	if i.ClearIsLeaf {
+		m.ClearIsLeaf()
+	}
+	if v := i.IsLeaf; v != nil {
+		m.SetIsLeaf(*v)
+	}
+	if i.ClearTreePath {
+		m.ClearTreePath()
+	}
+	if v := i.TreePath; v != nil {
+		m.SetTreePath(*v)
+	}
 	if i.ClearName {
 		m.ClearName()
 	}
@@ -140,11 +236,35 @@ func (i *UpdateOrgDepartmentInput) Mutate(m *OrgDepartmentMutation) {
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
 	}
+	if i.ClearParentID {
+		m.ClearParentID()
+	}
+	if v := i.ParentID; v != nil {
+		m.SetParentID(*v)
+	}
+	if i.ClearIsReal {
+		m.ClearIsReal()
+	}
+	if v := i.IsReal; v != nil {
+		m.SetIsReal(*v)
+	}
 	if i.ClearCreator {
 		m.ClearCreator()
 	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
+	}
+	if i.ClearParent {
+		m.ClearParent()
+	}
+	if v := i.Parent; v != nil {
+		m.SetParentID(*v)
+	}
+	if ids := i.AddChildIDs; len(ids) > 0 {
+		m.AddChildIDs(ids...)
+	}
+	if ids := i.RemoveChildIDs; len(ids) > 0 {
+		m.RemoveChildIDs(ids...)
 	}
 	if i.ClearOrgan {
 		m.ClearOrgan()

@@ -101,6 +101,36 @@ func Memo(v string) predicate.OrgDepartment {
 	return predicate.OrgDepartment(sql.FieldEQ(FieldMemo, v))
 }
 
+// TreeID applies equality check predicate on the "tree_id" field. It's identical to TreeIDEQ.
+func TreeID(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreeID, v))
+}
+
+// TreeLevel applies equality check predicate on the "tree_level" field. It's identical to TreeLevelEQ.
+func TreeLevel(v int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreeLevel, v))
+}
+
+// TreeLeft applies equality check predicate on the "tree_left" field. It's identical to TreeLeftEQ.
+func TreeLeft(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreeLeft, v))
+}
+
+// TreeRight applies equality check predicate on the "tree_right" field. It's identical to TreeRightEQ.
+func TreeRight(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreeRight, v))
+}
+
+// IsLeaf applies equality check predicate on the "is_leaf" field. It's identical to IsLeafEQ.
+func IsLeaf(v bool) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldIsLeaf, v))
+}
+
+// TreePath applies equality check predicate on the "tree_path" field. It's identical to TreePathEQ.
+func TreePath(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreePath, v))
+}
+
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.OrgDepartment {
 	return predicate.OrgDepartment(sql.FieldEQ(FieldName, v))
@@ -114,6 +144,16 @@ func Code(v string) predicate.OrgDepartment {
 // OrgID applies equality check predicate on the "org_id" field. It's identical to OrgIDEQ.
 func OrgID(v string) predicate.OrgDepartment {
 	return predicate.OrgDepartment(sql.FieldEQ(FieldOrgID, v))
+}
+
+// ParentID applies equality check predicate on the "parent_id" field. It's identical to ParentIDEQ.
+func ParentID(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldParentID, v))
+}
+
+// IsReal applies equality check predicate on the "is_real" field. It's identical to IsRealEQ.
+func IsReal(v bool) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldIsReal, v))
 }
 
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
@@ -406,6 +446,301 @@ func MemoContainsFold(v string) predicate.OrgDepartment {
 	return predicate.OrgDepartment(sql.FieldContainsFold(FieldMemo, v))
 }
 
+// TreeIDEQ applies the EQ predicate on the "tree_id" field.
+func TreeIDEQ(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreeID, v))
+}
+
+// TreeIDNEQ applies the NEQ predicate on the "tree_id" field.
+func TreeIDNEQ(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNEQ(FieldTreeID, v))
+}
+
+// TreeIDIn applies the In predicate on the "tree_id" field.
+func TreeIDIn(vs ...int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIn(FieldTreeID, vs...))
+}
+
+// TreeIDNotIn applies the NotIn predicate on the "tree_id" field.
+func TreeIDNotIn(vs ...int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotIn(FieldTreeID, vs...))
+}
+
+// TreeIDGT applies the GT predicate on the "tree_id" field.
+func TreeIDGT(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGT(FieldTreeID, v))
+}
+
+// TreeIDGTE applies the GTE predicate on the "tree_id" field.
+func TreeIDGTE(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGTE(FieldTreeID, v))
+}
+
+// TreeIDLT applies the LT predicate on the "tree_id" field.
+func TreeIDLT(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLT(FieldTreeID, v))
+}
+
+// TreeIDLTE applies the LTE predicate on the "tree_id" field.
+func TreeIDLTE(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLTE(FieldTreeID, v))
+}
+
+// TreeIDIsNil applies the IsNil predicate on the "tree_id" field.
+func TreeIDIsNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIsNull(FieldTreeID))
+}
+
+// TreeIDNotNil applies the NotNil predicate on the "tree_id" field.
+func TreeIDNotNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotNull(FieldTreeID))
+}
+
+// TreeLevelEQ applies the EQ predicate on the "tree_level" field.
+func TreeLevelEQ(v int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreeLevel, v))
+}
+
+// TreeLevelNEQ applies the NEQ predicate on the "tree_level" field.
+func TreeLevelNEQ(v int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNEQ(FieldTreeLevel, v))
+}
+
+// TreeLevelIn applies the In predicate on the "tree_level" field.
+func TreeLevelIn(vs ...int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIn(FieldTreeLevel, vs...))
+}
+
+// TreeLevelNotIn applies the NotIn predicate on the "tree_level" field.
+func TreeLevelNotIn(vs ...int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotIn(FieldTreeLevel, vs...))
+}
+
+// TreeLevelGT applies the GT predicate on the "tree_level" field.
+func TreeLevelGT(v int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGT(FieldTreeLevel, v))
+}
+
+// TreeLevelGTE applies the GTE predicate on the "tree_level" field.
+func TreeLevelGTE(v int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGTE(FieldTreeLevel, v))
+}
+
+// TreeLevelLT applies the LT predicate on the "tree_level" field.
+func TreeLevelLT(v int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLT(FieldTreeLevel, v))
+}
+
+// TreeLevelLTE applies the LTE predicate on the "tree_level" field.
+func TreeLevelLTE(v int32) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLTE(FieldTreeLevel, v))
+}
+
+// TreeLevelIsNil applies the IsNil predicate on the "tree_level" field.
+func TreeLevelIsNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIsNull(FieldTreeLevel))
+}
+
+// TreeLevelNotNil applies the NotNil predicate on the "tree_level" field.
+func TreeLevelNotNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotNull(FieldTreeLevel))
+}
+
+// TreeLeftEQ applies the EQ predicate on the "tree_left" field.
+func TreeLeftEQ(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreeLeft, v))
+}
+
+// TreeLeftNEQ applies the NEQ predicate on the "tree_left" field.
+func TreeLeftNEQ(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNEQ(FieldTreeLeft, v))
+}
+
+// TreeLeftIn applies the In predicate on the "tree_left" field.
+func TreeLeftIn(vs ...int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIn(FieldTreeLeft, vs...))
+}
+
+// TreeLeftNotIn applies the NotIn predicate on the "tree_left" field.
+func TreeLeftNotIn(vs ...int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotIn(FieldTreeLeft, vs...))
+}
+
+// TreeLeftGT applies the GT predicate on the "tree_left" field.
+func TreeLeftGT(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGT(FieldTreeLeft, v))
+}
+
+// TreeLeftGTE applies the GTE predicate on the "tree_left" field.
+func TreeLeftGTE(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGTE(FieldTreeLeft, v))
+}
+
+// TreeLeftLT applies the LT predicate on the "tree_left" field.
+func TreeLeftLT(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLT(FieldTreeLeft, v))
+}
+
+// TreeLeftLTE applies the LTE predicate on the "tree_left" field.
+func TreeLeftLTE(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLTE(FieldTreeLeft, v))
+}
+
+// TreeLeftIsNil applies the IsNil predicate on the "tree_left" field.
+func TreeLeftIsNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIsNull(FieldTreeLeft))
+}
+
+// TreeLeftNotNil applies the NotNil predicate on the "tree_left" field.
+func TreeLeftNotNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotNull(FieldTreeLeft))
+}
+
+// TreeRightEQ applies the EQ predicate on the "tree_right" field.
+func TreeRightEQ(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreeRight, v))
+}
+
+// TreeRightNEQ applies the NEQ predicate on the "tree_right" field.
+func TreeRightNEQ(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNEQ(FieldTreeRight, v))
+}
+
+// TreeRightIn applies the In predicate on the "tree_right" field.
+func TreeRightIn(vs ...int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIn(FieldTreeRight, vs...))
+}
+
+// TreeRightNotIn applies the NotIn predicate on the "tree_right" field.
+func TreeRightNotIn(vs ...int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotIn(FieldTreeRight, vs...))
+}
+
+// TreeRightGT applies the GT predicate on the "tree_right" field.
+func TreeRightGT(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGT(FieldTreeRight, v))
+}
+
+// TreeRightGTE applies the GTE predicate on the "tree_right" field.
+func TreeRightGTE(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGTE(FieldTreeRight, v))
+}
+
+// TreeRightLT applies the LT predicate on the "tree_right" field.
+func TreeRightLT(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLT(FieldTreeRight, v))
+}
+
+// TreeRightLTE applies the LTE predicate on the "tree_right" field.
+func TreeRightLTE(v int64) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLTE(FieldTreeRight, v))
+}
+
+// TreeRightIsNil applies the IsNil predicate on the "tree_right" field.
+func TreeRightIsNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIsNull(FieldTreeRight))
+}
+
+// TreeRightNotNil applies the NotNil predicate on the "tree_right" field.
+func TreeRightNotNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotNull(FieldTreeRight))
+}
+
+// IsLeafEQ applies the EQ predicate on the "is_leaf" field.
+func IsLeafEQ(v bool) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldIsLeaf, v))
+}
+
+// IsLeafNEQ applies the NEQ predicate on the "is_leaf" field.
+func IsLeafNEQ(v bool) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNEQ(FieldIsLeaf, v))
+}
+
+// IsLeafIsNil applies the IsNil predicate on the "is_leaf" field.
+func IsLeafIsNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIsNull(FieldIsLeaf))
+}
+
+// IsLeafNotNil applies the NotNil predicate on the "is_leaf" field.
+func IsLeafNotNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotNull(FieldIsLeaf))
+}
+
+// TreePathEQ applies the EQ predicate on the "tree_path" field.
+func TreePathEQ(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldTreePath, v))
+}
+
+// TreePathNEQ applies the NEQ predicate on the "tree_path" field.
+func TreePathNEQ(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNEQ(FieldTreePath, v))
+}
+
+// TreePathIn applies the In predicate on the "tree_path" field.
+func TreePathIn(vs ...string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIn(FieldTreePath, vs...))
+}
+
+// TreePathNotIn applies the NotIn predicate on the "tree_path" field.
+func TreePathNotIn(vs ...string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotIn(FieldTreePath, vs...))
+}
+
+// TreePathGT applies the GT predicate on the "tree_path" field.
+func TreePathGT(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGT(FieldTreePath, v))
+}
+
+// TreePathGTE applies the GTE predicate on the "tree_path" field.
+func TreePathGTE(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGTE(FieldTreePath, v))
+}
+
+// TreePathLT applies the LT predicate on the "tree_path" field.
+func TreePathLT(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLT(FieldTreePath, v))
+}
+
+// TreePathLTE applies the LTE predicate on the "tree_path" field.
+func TreePathLTE(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLTE(FieldTreePath, v))
+}
+
+// TreePathContains applies the Contains predicate on the "tree_path" field.
+func TreePathContains(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldContains(FieldTreePath, v))
+}
+
+// TreePathHasPrefix applies the HasPrefix predicate on the "tree_path" field.
+func TreePathHasPrefix(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldHasPrefix(FieldTreePath, v))
+}
+
+// TreePathHasSuffix applies the HasSuffix predicate on the "tree_path" field.
+func TreePathHasSuffix(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldHasSuffix(FieldTreePath, v))
+}
+
+// TreePathIsNil applies the IsNil predicate on the "tree_path" field.
+func TreePathIsNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIsNull(FieldTreePath))
+}
+
+// TreePathNotNil applies the NotNil predicate on the "tree_path" field.
+func TreePathNotNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotNull(FieldTreePath))
+}
+
+// TreePathEqualFold applies the EqualFold predicate on the "tree_path" field.
+func TreePathEqualFold(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEqualFold(FieldTreePath, v))
+}
+
+// TreePathContainsFold applies the ContainsFold predicate on the "tree_path" field.
+func TreePathContainsFold(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldContainsFold(FieldTreePath, v))
+}
+
 // NameEQ applies the EQ predicate on the "name" field.
 func NameEQ(v string) predicate.OrgDepartment {
 	return predicate.OrgDepartment(sql.FieldEQ(FieldName, v))
@@ -631,6 +966,101 @@ func OrgIDContainsFold(v string) predicate.OrgDepartment {
 	return predicate.OrgDepartment(sql.FieldContainsFold(FieldOrgID, v))
 }
 
+// ParentIDEQ applies the EQ predicate on the "parent_id" field.
+func ParentIDEQ(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldParentID, v))
+}
+
+// ParentIDNEQ applies the NEQ predicate on the "parent_id" field.
+func ParentIDNEQ(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNEQ(FieldParentID, v))
+}
+
+// ParentIDIn applies the In predicate on the "parent_id" field.
+func ParentIDIn(vs ...string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIn(FieldParentID, vs...))
+}
+
+// ParentIDNotIn applies the NotIn predicate on the "parent_id" field.
+func ParentIDNotIn(vs ...string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotIn(FieldParentID, vs...))
+}
+
+// ParentIDGT applies the GT predicate on the "parent_id" field.
+func ParentIDGT(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGT(FieldParentID, v))
+}
+
+// ParentIDGTE applies the GTE predicate on the "parent_id" field.
+func ParentIDGTE(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldGTE(FieldParentID, v))
+}
+
+// ParentIDLT applies the LT predicate on the "parent_id" field.
+func ParentIDLT(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLT(FieldParentID, v))
+}
+
+// ParentIDLTE applies the LTE predicate on the "parent_id" field.
+func ParentIDLTE(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldLTE(FieldParentID, v))
+}
+
+// ParentIDContains applies the Contains predicate on the "parent_id" field.
+func ParentIDContains(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldContains(FieldParentID, v))
+}
+
+// ParentIDHasPrefix applies the HasPrefix predicate on the "parent_id" field.
+func ParentIDHasPrefix(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldHasPrefix(FieldParentID, v))
+}
+
+// ParentIDHasSuffix applies the HasSuffix predicate on the "parent_id" field.
+func ParentIDHasSuffix(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldHasSuffix(FieldParentID, v))
+}
+
+// ParentIDIsNil applies the IsNil predicate on the "parent_id" field.
+func ParentIDIsNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIsNull(FieldParentID))
+}
+
+// ParentIDNotNil applies the NotNil predicate on the "parent_id" field.
+func ParentIDNotNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotNull(FieldParentID))
+}
+
+// ParentIDEqualFold applies the EqualFold predicate on the "parent_id" field.
+func ParentIDEqualFold(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEqualFold(FieldParentID, v))
+}
+
+// ParentIDContainsFold applies the ContainsFold predicate on the "parent_id" field.
+func ParentIDContainsFold(v string) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldContainsFold(FieldParentID, v))
+}
+
+// IsRealEQ applies the EQ predicate on the "is_real" field.
+func IsRealEQ(v bool) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldEQ(FieldIsReal, v))
+}
+
+// IsRealNEQ applies the NEQ predicate on the "is_real" field.
+func IsRealNEQ(v bool) predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNEQ(FieldIsReal, v))
+}
+
+// IsRealIsNil applies the IsNil predicate on the "is_real" field.
+func IsRealIsNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldIsNull(FieldIsReal))
+}
+
+// IsRealNotNil applies the NotNil predicate on the "is_real" field.
+func IsRealNotNil() predicate.OrgDepartment {
+	return predicate.OrgDepartment(sql.FieldNotNull(FieldIsReal))
+}
+
 // CreatorEQ applies the EQ predicate on the "creator" field.
 func CreatorEQ(v string) predicate.OrgDepartment {
 	return predicate.OrgDepartment(sql.FieldEQ(FieldCreator, v))
@@ -704,6 +1134,72 @@ func CreatorEqualFold(v string) predicate.OrgDepartment {
 // CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
 func CreatorContainsFold(v string) predicate.OrgDepartment {
 	return predicate.OrgDepartment(sql.FieldContainsFold(FieldCreator, v))
+}
+
+// HasParent applies the HasEdge predicate on the "parent" edge.
+func HasParent() predicate.OrgDepartment {
+	return predicate.OrgDepartment(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ParentTable, ParentColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasParentWith applies the HasEdge predicate on the "parent" edge with a given conditions (other predicates).
+func HasParentWith(preds ...predicate.OrgDepartment) predicate.OrgDepartment {
+	return predicate.OrgDepartment(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ParentTable, ParentColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasChildren applies the HasEdge predicate on the "children" edge.
+func HasChildren() predicate.OrgDepartment {
+	return predicate.OrgDepartment(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasChildrenWith applies the HasEdge predicate on the "children" edge with a given conditions (other predicates).
+func HasChildrenWith(preds ...predicate.OrgDepartment) predicate.OrgDepartment {
+	return predicate.OrgDepartment(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // HasOrgan applies the HasEdge predicate on the "organ" edge.

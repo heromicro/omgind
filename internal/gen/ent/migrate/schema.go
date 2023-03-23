@@ -18,9 +18,17 @@ var (
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
+		{Name: "tree_id", Type: field.TypeInt64, Nullable: true},
+		{Name: "tree_level", Type: field.TypeInt32, Nullable: true},
+		{Name: "tree_left", Type: field.TypeInt64, Nullable: true},
+		{Name: "tree_right", Type: field.TypeInt64, Nullable: true},
+		{Name: "is_leaf", Type: field.TypeBool, Nullable: true, Default: true},
+		{Name: "t_path", Type: field.TypeString, Nullable: true, Size: 2147483647},
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "is_r", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
+		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// OrgDepartmentsTable holds the schema information for the "org_departments" table.
@@ -30,8 +38,14 @@ var (
 		PrimaryKey: []*schema.Column{OrgDepartmentsColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
+				Symbol:     "org_departments_org_departments_children",
+				Columns:    []*schema.Column{OrgDepartmentsColumns[18]},
+				RefColumns: []*schema.Column{OrgDepartmentsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
 				Symbol:     "org_departments_org_organs_departments",
-				Columns:    []*schema.Column{OrgDepartmentsColumns[11]},
+				Columns:    []*schema.Column{OrgDepartmentsColumns[19]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -66,6 +80,26 @@ var (
 				Name:    "orgdepartment_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{OrgDepartmentsColumns[6]},
+			},
+			{
+				Name:    "orgdepartment_tree_id",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[8]},
+			},
+			{
+				Name:    "orgdepartment_tree_id_tree_left",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[8], OrgDepartmentsColumns[10]},
+			},
+			{
+				Name:    "orgdepartment_tree_id_tree_right",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[8], OrgDepartmentsColumns[11]},
+			},
+			{
+				Name:    "orgdepartment_tree_id_tree_left_tree_right",
+				Unique:  false,
+				Columns: []*schema.Column{OrgDepartmentsColumns[8], OrgDepartmentsColumns[10], OrgDepartmentsColumns[11]},
 			},
 		},
 	}
@@ -1142,7 +1176,8 @@ var (
 )
 
 func init() {
-	OrgDepartmentsTable.ForeignKeys[0].RefTable = OrgOrgansTable
+	OrgDepartmentsTable.ForeignKeys[0].RefTable = OrgDepartmentsTable
+	OrgDepartmentsTable.ForeignKeys[1].RefTable = OrgOrgansTable
 	OrgOrgansTable.ForeignKeys[0].RefTable = SysAddressesTable
 	OrgPositionsTable.ForeignKeys[0].RefTable = OrgOrgansTable
 	OrgStaffsTable.ForeignKeys[0].RefTable = OrgOrgansTable

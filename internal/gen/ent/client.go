@@ -435,6 +435,44 @@ func (c *OrgDepartmentClient) GetX(ctx context.Context, id string) *OrgDepartmen
 	return obj
 }
 
+// QueryParent queries the parent edge of a OrgDepartment.
+func (c *OrgDepartmentClient) QueryParent(od *OrgDepartment) *OrgDepartmentQuery {
+	query := (&OrgDepartmentClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := od.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, id),
+			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgdepartment.ParentTable, orgdepartment.ParentColumn),
+		)
+		schemaConfig := od.schemaConfig
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a OrgDepartment.
+func (c *OrgDepartmentClient) QueryChildren(od *OrgDepartment) *OrgDepartmentQuery {
+	query := (&OrgDepartmentClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := od.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, id),
+			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgdepartment.ChildrenTable, orgdepartment.ChildrenColumn),
+		)
+		schemaConfig := od.schemaConfig
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryOrgan queries the organ edge of a OrgDepartment.
 func (c *OrgDepartmentClient) QueryOrgan(od *OrgDepartment) *OrgOrganQuery {
 	query := (&OrgOrganClient{config: c.config}).Query()

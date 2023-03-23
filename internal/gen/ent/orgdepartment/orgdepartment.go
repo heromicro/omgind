@@ -25,18 +25,46 @@ const (
 	FieldIsActive = "is_active"
 	// FieldMemo holds the string denoting the memo field in the database.
 	FieldMemo = "memo"
+	// FieldTreeID holds the string denoting the tree_id field in the database.
+	FieldTreeID = "tree_id"
+	// FieldTreeLevel holds the string denoting the tree_level field in the database.
+	FieldTreeLevel = "tree_level"
+	// FieldTreeLeft holds the string denoting the tree_left field in the database.
+	FieldTreeLeft = "tree_left"
+	// FieldTreeRight holds the string denoting the tree_right field in the database.
+	FieldTreeRight = "tree_right"
+	// FieldIsLeaf holds the string denoting the is_leaf field in the database.
+	FieldIsLeaf = "is_leaf"
+	// FieldTreePath holds the string denoting the tree_path field in the database.
+	FieldTreePath = "t_path"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
 	// FieldCode holds the string denoting the code field in the database.
 	FieldCode = "code"
 	// FieldOrgID holds the string denoting the org_id field in the database.
 	FieldOrgID = "org_id"
+	// FieldParentID holds the string denoting the parent_id field in the database.
+	FieldParentID = "pid"
+	// FieldIsReal holds the string denoting the is_real field in the database.
+	FieldIsReal = "is_r"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
+	// EdgeParent holds the string denoting the parent edge name in mutations.
+	EdgeParent = "parent"
+	// EdgeChildren holds the string denoting the children edge name in mutations.
+	EdgeChildren = "children"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
 	EdgeOrgan = "organ"
 	// Table holds the table name of the orgdepartment in the database.
 	Table = "org_departments"
+	// ParentTable is the table that holds the parent relation/edge.
+	ParentTable = "org_departments"
+	// ParentColumn is the table column denoting the parent relation/edge.
+	ParentColumn = "pid"
+	// ChildrenTable is the table that holds the children relation/edge.
+	ChildrenTable = "org_departments"
+	// ChildrenColumn is the table column denoting the children relation/edge.
+	ChildrenColumn = "pid"
 	// OrganTable is the table that holds the organ relation/edge.
 	OrganTable = "org_departments"
 	// OrganInverseTable is the table name for the OrgOrgan entity.
@@ -56,9 +84,17 @@ var Columns = []string{
 	FieldDeletedAt,
 	FieldIsActive,
 	FieldMemo,
+	FieldTreeID,
+	FieldTreeLevel,
+	FieldTreeLeft,
+	FieldTreeRight,
+	FieldIsLeaf,
+	FieldTreePath,
 	FieldName,
 	FieldCode,
 	FieldOrgID,
+	FieldParentID,
+	FieldIsReal,
 	FieldCreator,
 }
 
@@ -89,12 +125,18 @@ var (
 	DefaultMemo string
 	// MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	MemoValidator func(string) error
+	// DefaultIsLeaf holds the default value on creation for the "is_leaf" field.
+	DefaultIsLeaf bool
 	// NameValidator is a validator for the "name" field. It is called by the builders before save.
 	NameValidator func(string) error
 	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
 	CodeValidator func(string) error
 	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	OrgIDValidator func(string) error
+	// ParentIDValidator is a validator for the "parent_id" field. It is called by the builders before save.
+	ParentIDValidator func(string) error
+	// DefaultIsReal holds the default value on creation for the "is_real" field.
+	DefaultIsReal bool
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

@@ -1,6 +1,8 @@
 package api_v2
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"github.com/heromicro/omgind/internal/app/ginx"
@@ -55,6 +57,52 @@ func (a *OrgDepartment) View(c *gin.Context) {
 		return
 	}
 	ginx.ResSuccess(c, item)
+}
+
+// Get 所有的行政区
+func (a *OrgDepartment) GetAllSubDepts(c *gin.Context) {
+	ctx := c.Request.Context()
+	var params schema.OrgDepartmentQueryParam
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	var pid string = c.Param("id")
+	params.Current = 1
+	params.PageSize = 1000
+
+	log.Println(" --- ---- === ==== pid ", pid)
+	log.Println(" ----- -- ==== === URL ", c.Request.URL)
+
+	result, err := a.OrgDepartmentSrv.GetAllSubDepts(ctx, pid, params)
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	ginx.ResPage(c, result.Data, result.PageResult)
+}
+
+// QueryTree 查询菜单树
+func (a *OrgDepartment) QueryTree(c *gin.Context) {
+
+	ctx := c.Request.Context()
+	var params schema.OrgDepartmentQueryParam
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	var pid string = c.Param("id")
+
+	params.PageSize = 200
+
+	result, err := a.OrgDepartmentSrv.GetTree(ctx, pid, params)
+
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+
+	ginx.ResSuccess(c, result)
 }
 
 // Create 创建数据

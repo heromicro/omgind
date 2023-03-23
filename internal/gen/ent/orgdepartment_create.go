@@ -122,6 +122,90 @@ func (odc *OrgDepartmentCreate) SetNillableMemo(s *string) *OrgDepartmentCreate 
 	return odc
 }
 
+// SetTreeID sets the "tree_id" field.
+func (odc *OrgDepartmentCreate) SetTreeID(i int64) *OrgDepartmentCreate {
+	odc.mutation.SetTreeID(i)
+	return odc
+}
+
+// SetNillableTreeID sets the "tree_id" field if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableTreeID(i *int64) *OrgDepartmentCreate {
+	if i != nil {
+		odc.SetTreeID(*i)
+	}
+	return odc
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (odc *OrgDepartmentCreate) SetTreeLevel(i int32) *OrgDepartmentCreate {
+	odc.mutation.SetTreeLevel(i)
+	return odc
+}
+
+// SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableTreeLevel(i *int32) *OrgDepartmentCreate {
+	if i != nil {
+		odc.SetTreeLevel(*i)
+	}
+	return odc
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (odc *OrgDepartmentCreate) SetTreeLeft(i int64) *OrgDepartmentCreate {
+	odc.mutation.SetTreeLeft(i)
+	return odc
+}
+
+// SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableTreeLeft(i *int64) *OrgDepartmentCreate {
+	if i != nil {
+		odc.SetTreeLeft(*i)
+	}
+	return odc
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (odc *OrgDepartmentCreate) SetTreeRight(i int64) *OrgDepartmentCreate {
+	odc.mutation.SetTreeRight(i)
+	return odc
+}
+
+// SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableTreeRight(i *int64) *OrgDepartmentCreate {
+	if i != nil {
+		odc.SetTreeRight(*i)
+	}
+	return odc
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (odc *OrgDepartmentCreate) SetIsLeaf(b bool) *OrgDepartmentCreate {
+	odc.mutation.SetIsLeaf(b)
+	return odc
+}
+
+// SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableIsLeaf(b *bool) *OrgDepartmentCreate {
+	if b != nil {
+		odc.SetIsLeaf(*b)
+	}
+	return odc
+}
+
+// SetTreePath sets the "tree_path" field.
+func (odc *OrgDepartmentCreate) SetTreePath(s string) *OrgDepartmentCreate {
+	odc.mutation.SetTreePath(s)
+	return odc
+}
+
+// SetNillableTreePath sets the "tree_path" field if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableTreePath(s *string) *OrgDepartmentCreate {
+	if s != nil {
+		odc.SetTreePath(*s)
+	}
+	return odc
+}
+
 // SetName sets the "name" field.
 func (odc *OrgDepartmentCreate) SetName(s string) *OrgDepartmentCreate {
 	odc.mutation.SetName(s)
@@ -164,6 +248,34 @@ func (odc *OrgDepartmentCreate) SetNillableOrgID(s *string) *OrgDepartmentCreate
 	return odc
 }
 
+// SetParentID sets the "parent_id" field.
+func (odc *OrgDepartmentCreate) SetParentID(s string) *OrgDepartmentCreate {
+	odc.mutation.SetParentID(s)
+	return odc
+}
+
+// SetNillableParentID sets the "parent_id" field if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableParentID(s *string) *OrgDepartmentCreate {
+	if s != nil {
+		odc.SetParentID(*s)
+	}
+	return odc
+}
+
+// SetIsReal sets the "is_real" field.
+func (odc *OrgDepartmentCreate) SetIsReal(b bool) *OrgDepartmentCreate {
+	odc.mutation.SetIsReal(b)
+	return odc
+}
+
+// SetNillableIsReal sets the "is_real" field if the given value is not nil.
+func (odc *OrgDepartmentCreate) SetNillableIsReal(b *bool) *OrgDepartmentCreate {
+	if b != nil {
+		odc.SetIsReal(*b)
+	}
+	return odc
+}
+
 // SetCreator sets the "creator" field.
 func (odc *OrgDepartmentCreate) SetCreator(s string) *OrgDepartmentCreate {
 	odc.mutation.SetCreator(s)
@@ -190,6 +302,26 @@ func (odc *OrgDepartmentCreate) SetNillableID(s *string) *OrgDepartmentCreate {
 		odc.SetID(*s)
 	}
 	return odc
+}
+
+// SetParent sets the "parent" edge to the OrgDepartment entity.
+func (odc *OrgDepartmentCreate) SetParent(o *OrgDepartment) *OrgDepartmentCreate {
+	return odc.SetParentID(o.ID)
+}
+
+// AddChildIDs adds the "children" edge to the OrgDepartment entity by IDs.
+func (odc *OrgDepartmentCreate) AddChildIDs(ids ...string) *OrgDepartmentCreate {
+	odc.mutation.AddChildIDs(ids...)
+	return odc
+}
+
+// AddChildren adds the "children" edges to the OrgDepartment entity.
+func (odc *OrgDepartmentCreate) AddChildren(o ...*OrgDepartment) *OrgDepartmentCreate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return odc.AddChildIDs(ids...)
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
@@ -270,6 +402,14 @@ func (odc *OrgDepartmentCreate) defaults() {
 		v := orgdepartment.DefaultMemo
 		odc.mutation.SetMemo(v)
 	}
+	if _, ok := odc.mutation.IsLeaf(); !ok {
+		v := orgdepartment.DefaultIsLeaf
+		odc.mutation.SetIsLeaf(v)
+	}
+	if _, ok := odc.mutation.IsReal(); !ok {
+		v := orgdepartment.DefaultIsReal
+		odc.mutation.SetIsReal(v)
+	}
 	if _, ok := odc.mutation.ID(); !ok {
 		v := orgdepartment.DefaultID()
 		odc.mutation.SetID(v)
@@ -305,6 +445,11 @@ func (odc *OrgDepartmentCreate) check() error {
 	if v, ok := odc.mutation.OrgID(); ok {
 		if err := orgdepartment.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgDepartment.org_id": %w`, err)}
+		}
+	}
+	if v, ok := odc.mutation.ParentID(); ok {
+		if err := orgdepartment.ParentIDValidator(v); err != nil {
+			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`ent: validator failed for field "OrgDepartment.parent_id": %w`, err)}
 		}
 	}
 	if v, ok := odc.mutation.ID(); ok {
@@ -377,6 +522,30 @@ func (odc *OrgDepartmentCreate) createSpec() (*OrgDepartment, *sqlgraph.CreateSp
 		_spec.SetField(orgdepartment.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
+	if value, ok := odc.mutation.TreeID(); ok {
+		_spec.SetField(orgdepartment.FieldTreeID, field.TypeInt64, value)
+		_node.TreeID = &value
+	}
+	if value, ok := odc.mutation.TreeLevel(); ok {
+		_spec.SetField(orgdepartment.FieldTreeLevel, field.TypeInt32, value)
+		_node.TreeLevel = &value
+	}
+	if value, ok := odc.mutation.TreeLeft(); ok {
+		_spec.SetField(orgdepartment.FieldTreeLeft, field.TypeInt64, value)
+		_node.TreeLeft = &value
+	}
+	if value, ok := odc.mutation.TreeRight(); ok {
+		_spec.SetField(orgdepartment.FieldTreeRight, field.TypeInt64, value)
+		_node.TreeRight = &value
+	}
+	if value, ok := odc.mutation.IsLeaf(); ok {
+		_spec.SetField(orgdepartment.FieldIsLeaf, field.TypeBool, value)
+		_node.IsLeaf = &value
+	}
+	if value, ok := odc.mutation.TreePath(); ok {
+		_spec.SetField(orgdepartment.FieldTreePath, field.TypeString, value)
+		_node.TreePath = &value
+	}
 	if value, ok := odc.mutation.Name(); ok {
 		_spec.SetField(orgdepartment.FieldName, field.TypeString, value)
 		_node.Name = &value
@@ -385,9 +554,48 @@ func (odc *OrgDepartmentCreate) createSpec() (*OrgDepartment, *sqlgraph.CreateSp
 		_spec.SetField(orgdepartment.FieldCode, field.TypeString, value)
 		_node.Code = &value
 	}
+	if value, ok := odc.mutation.IsReal(); ok {
+		_spec.SetField(orgdepartment.FieldIsReal, field.TypeBool, value)
+		_node.IsReal = &value
+	}
 	if value, ok := odc.mutation.Creator(); ok {
 		_spec.SetField(orgdepartment.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
+	}
+	if nodes := odc.mutation.ParentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgdepartment.ParentTable,
+			Columns: []string{orgdepartment.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odc.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.ParentID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := odc.mutation.ChildrenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdepartment.ChildrenTable,
+			Columns: []string{orgdepartment.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odc.schemaConfig.OrgDepartment
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := odc.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -555,6 +763,138 @@ func (u *OrgDepartmentUpsert) ClearMemo() *OrgDepartmentUpsert {
 	return u
 }
 
+// SetTreeID sets the "tree_id" field.
+func (u *OrgDepartmentUpsert) SetTreeID(v int64) *OrgDepartmentUpsert {
+	u.Set(orgdepartment.FieldTreeID, v)
+	return u
+}
+
+// UpdateTreeID sets the "tree_id" field to the value that was provided on create.
+func (u *OrgDepartmentUpsert) UpdateTreeID() *OrgDepartmentUpsert {
+	u.SetExcluded(orgdepartment.FieldTreeID)
+	return u
+}
+
+// AddTreeID adds v to the "tree_id" field.
+func (u *OrgDepartmentUpsert) AddTreeID(v int64) *OrgDepartmentUpsert {
+	u.Add(orgdepartment.FieldTreeID, v)
+	return u
+}
+
+// ClearTreeID clears the value of the "tree_id" field.
+func (u *OrgDepartmentUpsert) ClearTreeID() *OrgDepartmentUpsert {
+	u.SetNull(orgdepartment.FieldTreeID)
+	return u
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (u *OrgDepartmentUpsert) SetTreeLevel(v int32) *OrgDepartmentUpsert {
+	u.Set(orgdepartment.FieldTreeLevel, v)
+	return u
+}
+
+// UpdateTreeLevel sets the "tree_level" field to the value that was provided on create.
+func (u *OrgDepartmentUpsert) UpdateTreeLevel() *OrgDepartmentUpsert {
+	u.SetExcluded(orgdepartment.FieldTreeLevel)
+	return u
+}
+
+// AddTreeLevel adds v to the "tree_level" field.
+func (u *OrgDepartmentUpsert) AddTreeLevel(v int32) *OrgDepartmentUpsert {
+	u.Add(orgdepartment.FieldTreeLevel, v)
+	return u
+}
+
+// ClearTreeLevel clears the value of the "tree_level" field.
+func (u *OrgDepartmentUpsert) ClearTreeLevel() *OrgDepartmentUpsert {
+	u.SetNull(orgdepartment.FieldTreeLevel)
+	return u
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (u *OrgDepartmentUpsert) SetTreeLeft(v int64) *OrgDepartmentUpsert {
+	u.Set(orgdepartment.FieldTreeLeft, v)
+	return u
+}
+
+// UpdateTreeLeft sets the "tree_left" field to the value that was provided on create.
+func (u *OrgDepartmentUpsert) UpdateTreeLeft() *OrgDepartmentUpsert {
+	u.SetExcluded(orgdepartment.FieldTreeLeft)
+	return u
+}
+
+// AddTreeLeft adds v to the "tree_left" field.
+func (u *OrgDepartmentUpsert) AddTreeLeft(v int64) *OrgDepartmentUpsert {
+	u.Add(orgdepartment.FieldTreeLeft, v)
+	return u
+}
+
+// ClearTreeLeft clears the value of the "tree_left" field.
+func (u *OrgDepartmentUpsert) ClearTreeLeft() *OrgDepartmentUpsert {
+	u.SetNull(orgdepartment.FieldTreeLeft)
+	return u
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (u *OrgDepartmentUpsert) SetTreeRight(v int64) *OrgDepartmentUpsert {
+	u.Set(orgdepartment.FieldTreeRight, v)
+	return u
+}
+
+// UpdateTreeRight sets the "tree_right" field to the value that was provided on create.
+func (u *OrgDepartmentUpsert) UpdateTreeRight() *OrgDepartmentUpsert {
+	u.SetExcluded(orgdepartment.FieldTreeRight)
+	return u
+}
+
+// AddTreeRight adds v to the "tree_right" field.
+func (u *OrgDepartmentUpsert) AddTreeRight(v int64) *OrgDepartmentUpsert {
+	u.Add(orgdepartment.FieldTreeRight, v)
+	return u
+}
+
+// ClearTreeRight clears the value of the "tree_right" field.
+func (u *OrgDepartmentUpsert) ClearTreeRight() *OrgDepartmentUpsert {
+	u.SetNull(orgdepartment.FieldTreeRight)
+	return u
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (u *OrgDepartmentUpsert) SetIsLeaf(v bool) *OrgDepartmentUpsert {
+	u.Set(orgdepartment.FieldIsLeaf, v)
+	return u
+}
+
+// UpdateIsLeaf sets the "is_leaf" field to the value that was provided on create.
+func (u *OrgDepartmentUpsert) UpdateIsLeaf() *OrgDepartmentUpsert {
+	u.SetExcluded(orgdepartment.FieldIsLeaf)
+	return u
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (u *OrgDepartmentUpsert) ClearIsLeaf() *OrgDepartmentUpsert {
+	u.SetNull(orgdepartment.FieldIsLeaf)
+	return u
+}
+
+// SetTreePath sets the "tree_path" field.
+func (u *OrgDepartmentUpsert) SetTreePath(v string) *OrgDepartmentUpsert {
+	u.Set(orgdepartment.FieldTreePath, v)
+	return u
+}
+
+// UpdateTreePath sets the "tree_path" field to the value that was provided on create.
+func (u *OrgDepartmentUpsert) UpdateTreePath() *OrgDepartmentUpsert {
+	u.SetExcluded(orgdepartment.FieldTreePath)
+	return u
+}
+
+// ClearTreePath clears the value of the "tree_path" field.
+func (u *OrgDepartmentUpsert) ClearTreePath() *OrgDepartmentUpsert {
+	u.SetNull(orgdepartment.FieldTreePath)
+	return u
+}
+
 // SetName sets the "name" field.
 func (u *OrgDepartmentUpsert) SetName(v string) *OrgDepartmentUpsert {
 	u.Set(orgdepartment.FieldName, v)
@@ -606,6 +946,42 @@ func (u *OrgDepartmentUpsert) UpdateOrgID() *OrgDepartmentUpsert {
 // ClearOrgID clears the value of the "org_id" field.
 func (u *OrgDepartmentUpsert) ClearOrgID() *OrgDepartmentUpsert {
 	u.SetNull(orgdepartment.FieldOrgID)
+	return u
+}
+
+// SetParentID sets the "parent_id" field.
+func (u *OrgDepartmentUpsert) SetParentID(v string) *OrgDepartmentUpsert {
+	u.Set(orgdepartment.FieldParentID, v)
+	return u
+}
+
+// UpdateParentID sets the "parent_id" field to the value that was provided on create.
+func (u *OrgDepartmentUpsert) UpdateParentID() *OrgDepartmentUpsert {
+	u.SetExcluded(orgdepartment.FieldParentID)
+	return u
+}
+
+// ClearParentID clears the value of the "parent_id" field.
+func (u *OrgDepartmentUpsert) ClearParentID() *OrgDepartmentUpsert {
+	u.SetNull(orgdepartment.FieldParentID)
+	return u
+}
+
+// SetIsReal sets the "is_real" field.
+func (u *OrgDepartmentUpsert) SetIsReal(v bool) *OrgDepartmentUpsert {
+	u.Set(orgdepartment.FieldIsReal, v)
+	return u
+}
+
+// UpdateIsReal sets the "is_real" field to the value that was provided on create.
+func (u *OrgDepartmentUpsert) UpdateIsReal() *OrgDepartmentUpsert {
+	u.SetExcluded(orgdepartment.FieldIsReal)
+	return u
+}
+
+// ClearIsReal clears the value of the "is_real" field.
+func (u *OrgDepartmentUpsert) ClearIsReal() *OrgDepartmentUpsert {
+	u.SetNull(orgdepartment.FieldIsReal)
 	return u
 }
 
@@ -790,6 +1166,160 @@ func (u *OrgDepartmentUpsertOne) ClearMemo() *OrgDepartmentUpsertOne {
 	})
 }
 
+// SetTreeID sets the "tree_id" field.
+func (u *OrgDepartmentUpsertOne) SetTreeID(v int64) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreeID(v)
+	})
+}
+
+// AddTreeID adds v to the "tree_id" field.
+func (u *OrgDepartmentUpsertOne) AddTreeID(v int64) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.AddTreeID(v)
+	})
+}
+
+// UpdateTreeID sets the "tree_id" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertOne) UpdateTreeID() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreeID()
+	})
+}
+
+// ClearTreeID clears the value of the "tree_id" field.
+func (u *OrgDepartmentUpsertOne) ClearTreeID() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreeID()
+	})
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (u *OrgDepartmentUpsertOne) SetTreeLevel(v int32) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreeLevel(v)
+	})
+}
+
+// AddTreeLevel adds v to the "tree_level" field.
+func (u *OrgDepartmentUpsertOne) AddTreeLevel(v int32) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.AddTreeLevel(v)
+	})
+}
+
+// UpdateTreeLevel sets the "tree_level" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertOne) UpdateTreeLevel() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreeLevel()
+	})
+}
+
+// ClearTreeLevel clears the value of the "tree_level" field.
+func (u *OrgDepartmentUpsertOne) ClearTreeLevel() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreeLevel()
+	})
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (u *OrgDepartmentUpsertOne) SetTreeLeft(v int64) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreeLeft(v)
+	})
+}
+
+// AddTreeLeft adds v to the "tree_left" field.
+func (u *OrgDepartmentUpsertOne) AddTreeLeft(v int64) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.AddTreeLeft(v)
+	})
+}
+
+// UpdateTreeLeft sets the "tree_left" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertOne) UpdateTreeLeft() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreeLeft()
+	})
+}
+
+// ClearTreeLeft clears the value of the "tree_left" field.
+func (u *OrgDepartmentUpsertOne) ClearTreeLeft() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreeLeft()
+	})
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (u *OrgDepartmentUpsertOne) SetTreeRight(v int64) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreeRight(v)
+	})
+}
+
+// AddTreeRight adds v to the "tree_right" field.
+func (u *OrgDepartmentUpsertOne) AddTreeRight(v int64) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.AddTreeRight(v)
+	})
+}
+
+// UpdateTreeRight sets the "tree_right" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertOne) UpdateTreeRight() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreeRight()
+	})
+}
+
+// ClearTreeRight clears the value of the "tree_right" field.
+func (u *OrgDepartmentUpsertOne) ClearTreeRight() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreeRight()
+	})
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (u *OrgDepartmentUpsertOne) SetIsLeaf(v bool) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetIsLeaf(v)
+	})
+}
+
+// UpdateIsLeaf sets the "is_leaf" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertOne) UpdateIsLeaf() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateIsLeaf()
+	})
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (u *OrgDepartmentUpsertOne) ClearIsLeaf() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearIsLeaf()
+	})
+}
+
+// SetTreePath sets the "tree_path" field.
+func (u *OrgDepartmentUpsertOne) SetTreePath(v string) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreePath(v)
+	})
+}
+
+// UpdateTreePath sets the "tree_path" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertOne) UpdateTreePath() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreePath()
+	})
+}
+
+// ClearTreePath clears the value of the "tree_path" field.
+func (u *OrgDepartmentUpsertOne) ClearTreePath() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreePath()
+	})
+}
+
 // SetName sets the "name" field.
 func (u *OrgDepartmentUpsertOne) SetName(v string) *OrgDepartmentUpsertOne {
 	return u.Update(func(s *OrgDepartmentUpsert) {
@@ -850,6 +1380,48 @@ func (u *OrgDepartmentUpsertOne) UpdateOrgID() *OrgDepartmentUpsertOne {
 func (u *OrgDepartmentUpsertOne) ClearOrgID() *OrgDepartmentUpsertOne {
 	return u.Update(func(s *OrgDepartmentUpsert) {
 		s.ClearOrgID()
+	})
+}
+
+// SetParentID sets the "parent_id" field.
+func (u *OrgDepartmentUpsertOne) SetParentID(v string) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetParentID(v)
+	})
+}
+
+// UpdateParentID sets the "parent_id" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertOne) UpdateParentID() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateParentID()
+	})
+}
+
+// ClearParentID clears the value of the "parent_id" field.
+func (u *OrgDepartmentUpsertOne) ClearParentID() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearParentID()
+	})
+}
+
+// SetIsReal sets the "is_real" field.
+func (u *OrgDepartmentUpsertOne) SetIsReal(v bool) *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetIsReal(v)
+	})
+}
+
+// UpdateIsReal sets the "is_real" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertOne) UpdateIsReal() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateIsReal()
+	})
+}
+
+// ClearIsReal clears the value of the "is_real" field.
+func (u *OrgDepartmentUpsertOne) ClearIsReal() *OrgDepartmentUpsertOne {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearIsReal()
 	})
 }
 
@@ -1200,6 +1772,160 @@ func (u *OrgDepartmentUpsertBulk) ClearMemo() *OrgDepartmentUpsertBulk {
 	})
 }
 
+// SetTreeID sets the "tree_id" field.
+func (u *OrgDepartmentUpsertBulk) SetTreeID(v int64) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreeID(v)
+	})
+}
+
+// AddTreeID adds v to the "tree_id" field.
+func (u *OrgDepartmentUpsertBulk) AddTreeID(v int64) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.AddTreeID(v)
+	})
+}
+
+// UpdateTreeID sets the "tree_id" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertBulk) UpdateTreeID() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreeID()
+	})
+}
+
+// ClearTreeID clears the value of the "tree_id" field.
+func (u *OrgDepartmentUpsertBulk) ClearTreeID() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreeID()
+	})
+}
+
+// SetTreeLevel sets the "tree_level" field.
+func (u *OrgDepartmentUpsertBulk) SetTreeLevel(v int32) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreeLevel(v)
+	})
+}
+
+// AddTreeLevel adds v to the "tree_level" field.
+func (u *OrgDepartmentUpsertBulk) AddTreeLevel(v int32) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.AddTreeLevel(v)
+	})
+}
+
+// UpdateTreeLevel sets the "tree_level" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertBulk) UpdateTreeLevel() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreeLevel()
+	})
+}
+
+// ClearTreeLevel clears the value of the "tree_level" field.
+func (u *OrgDepartmentUpsertBulk) ClearTreeLevel() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreeLevel()
+	})
+}
+
+// SetTreeLeft sets the "tree_left" field.
+func (u *OrgDepartmentUpsertBulk) SetTreeLeft(v int64) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreeLeft(v)
+	})
+}
+
+// AddTreeLeft adds v to the "tree_left" field.
+func (u *OrgDepartmentUpsertBulk) AddTreeLeft(v int64) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.AddTreeLeft(v)
+	})
+}
+
+// UpdateTreeLeft sets the "tree_left" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertBulk) UpdateTreeLeft() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreeLeft()
+	})
+}
+
+// ClearTreeLeft clears the value of the "tree_left" field.
+func (u *OrgDepartmentUpsertBulk) ClearTreeLeft() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreeLeft()
+	})
+}
+
+// SetTreeRight sets the "tree_right" field.
+func (u *OrgDepartmentUpsertBulk) SetTreeRight(v int64) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreeRight(v)
+	})
+}
+
+// AddTreeRight adds v to the "tree_right" field.
+func (u *OrgDepartmentUpsertBulk) AddTreeRight(v int64) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.AddTreeRight(v)
+	})
+}
+
+// UpdateTreeRight sets the "tree_right" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertBulk) UpdateTreeRight() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreeRight()
+	})
+}
+
+// ClearTreeRight clears the value of the "tree_right" field.
+func (u *OrgDepartmentUpsertBulk) ClearTreeRight() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreeRight()
+	})
+}
+
+// SetIsLeaf sets the "is_leaf" field.
+func (u *OrgDepartmentUpsertBulk) SetIsLeaf(v bool) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetIsLeaf(v)
+	})
+}
+
+// UpdateIsLeaf sets the "is_leaf" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertBulk) UpdateIsLeaf() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateIsLeaf()
+	})
+}
+
+// ClearIsLeaf clears the value of the "is_leaf" field.
+func (u *OrgDepartmentUpsertBulk) ClearIsLeaf() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearIsLeaf()
+	})
+}
+
+// SetTreePath sets the "tree_path" field.
+func (u *OrgDepartmentUpsertBulk) SetTreePath(v string) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetTreePath(v)
+	})
+}
+
+// UpdateTreePath sets the "tree_path" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertBulk) UpdateTreePath() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateTreePath()
+	})
+}
+
+// ClearTreePath clears the value of the "tree_path" field.
+func (u *OrgDepartmentUpsertBulk) ClearTreePath() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearTreePath()
+	})
+}
+
 // SetName sets the "name" field.
 func (u *OrgDepartmentUpsertBulk) SetName(v string) *OrgDepartmentUpsertBulk {
 	return u.Update(func(s *OrgDepartmentUpsert) {
@@ -1260,6 +1986,48 @@ func (u *OrgDepartmentUpsertBulk) UpdateOrgID() *OrgDepartmentUpsertBulk {
 func (u *OrgDepartmentUpsertBulk) ClearOrgID() *OrgDepartmentUpsertBulk {
 	return u.Update(func(s *OrgDepartmentUpsert) {
 		s.ClearOrgID()
+	})
+}
+
+// SetParentID sets the "parent_id" field.
+func (u *OrgDepartmentUpsertBulk) SetParentID(v string) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetParentID(v)
+	})
+}
+
+// UpdateParentID sets the "parent_id" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertBulk) UpdateParentID() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateParentID()
+	})
+}
+
+// ClearParentID clears the value of the "parent_id" field.
+func (u *OrgDepartmentUpsertBulk) ClearParentID() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearParentID()
+	})
+}
+
+// SetIsReal sets the "is_real" field.
+func (u *OrgDepartmentUpsertBulk) SetIsReal(v bool) *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.SetIsReal(v)
+	})
+}
+
+// UpdateIsReal sets the "is_real" field to the value that was provided on create.
+func (u *OrgDepartmentUpsertBulk) UpdateIsReal() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.UpdateIsReal()
+	})
+}
+
+// ClearIsReal clears the value of the "is_real" field.
+func (u *OrgDepartmentUpsertBulk) ClearIsReal() *OrgDepartmentUpsertBulk {
+	return u.Update(func(s *OrgDepartmentUpsert) {
+		s.ClearIsReal()
 	})
 }
 

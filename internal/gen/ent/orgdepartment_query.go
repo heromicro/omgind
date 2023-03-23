@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
@@ -20,12 +21,14 @@ import (
 // OrgDepartmentQuery is the builder for querying OrgDepartment entities.
 type OrgDepartmentQuery struct {
 	config
-	ctx        *QueryContext
-	order      []OrderFunc
-	inters     []Interceptor
-	predicates []predicate.OrgDepartment
-	withOrgan  *OrgOrganQuery
-	modifiers  []func(*sql.Selector)
+	ctx          *QueryContext
+	order        []OrderFunc
+	inters       []Interceptor
+	predicates   []predicate.OrgDepartment
+	withParent   *OrgDepartmentQuery
+	withChildren *OrgDepartmentQuery
+	withOrgan    *OrgOrganQuery
+	modifiers    []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -60,6 +63,56 @@ func (odq *OrgDepartmentQuery) Unique(unique bool) *OrgDepartmentQuery {
 func (odq *OrgDepartmentQuery) Order(o ...OrderFunc) *OrgDepartmentQuery {
 	odq.order = append(odq.order, o...)
 	return odq
+}
+
+// QueryParent chains the current query on the "parent" edge.
+func (odq *OrgDepartmentQuery) QueryParent() *OrgDepartmentQuery {
+	query := (&OrgDepartmentClient{config: odq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := odq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := odq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, selector),
+			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgdepartment.ParentTable, orgdepartment.ParentColumn),
+		)
+		schemaConfig := odq.schemaConfig
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryChildren chains the current query on the "children" edge.
+func (odq *OrgDepartmentQuery) QueryChildren() *OrgDepartmentQuery {
+	query := (&OrgDepartmentClient{config: odq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := odq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := odq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, selector),
+			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgdepartment.ChildrenTable, orgdepartment.ChildrenColumn),
+		)
+		schemaConfig := odq.schemaConfig
+		step.To.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDepartment
+		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // QueryOrgan chains the current query on the "organ" edge.
@@ -274,16 +327,40 @@ func (odq *OrgDepartmentQuery) Clone() *OrgDepartmentQuery {
 		return nil
 	}
 	return &OrgDepartmentQuery{
-		config:     odq.config,
-		ctx:        odq.ctx.Clone(),
-		order:      append([]OrderFunc{}, odq.order...),
-		inters:     append([]Interceptor{}, odq.inters...),
-		predicates: append([]predicate.OrgDepartment{}, odq.predicates...),
-		withOrgan:  odq.withOrgan.Clone(),
+		config:       odq.config,
+		ctx:          odq.ctx.Clone(),
+		order:        append([]OrderFunc{}, odq.order...),
+		inters:       append([]Interceptor{}, odq.inters...),
+		predicates:   append([]predicate.OrgDepartment{}, odq.predicates...),
+		withParent:   odq.withParent.Clone(),
+		withChildren: odq.withChildren.Clone(),
+		withOrgan:    odq.withOrgan.Clone(),
 		// clone intermediate query.
 		sql:  odq.sql.Clone(),
 		path: odq.path,
 	}
+}
+
+// WithParent tells the query-builder to eager-load the nodes that are connected to
+// the "parent" edge. The optional arguments are used to configure the query builder of the edge.
+func (odq *OrgDepartmentQuery) WithParent(opts ...func(*OrgDepartmentQuery)) *OrgDepartmentQuery {
+	query := (&OrgDepartmentClient{config: odq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	odq.withParent = query
+	return odq
+}
+
+// WithChildren tells the query-builder to eager-load the nodes that are connected to
+// the "children" edge. The optional arguments are used to configure the query builder of the edge.
+func (odq *OrgDepartmentQuery) WithChildren(opts ...func(*OrgDepartmentQuery)) *OrgDepartmentQuery {
+	query := (&OrgDepartmentClient{config: odq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	odq.withChildren = query
+	return odq
 }
 
 // WithOrgan tells the query-builder to eager-load the nodes that are connected to
@@ -375,7 +452,9 @@ func (odq *OrgDepartmentQuery) sqlAll(ctx context.Context, hooks ...queryHook) (
 	var (
 		nodes       = []*OrgDepartment{}
 		_spec       = odq.querySpec()
-		loadedTypes = [1]bool{
+		loadedTypes = [3]bool{
+			odq.withParent != nil,
+			odq.withChildren != nil,
 			odq.withOrgan != nil,
 		}
 	)
@@ -402,6 +481,19 @@ func (odq *OrgDepartmentQuery) sqlAll(ctx context.Context, hooks ...queryHook) (
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := odq.withParent; query != nil {
+		if err := odq.loadParent(ctx, query, nodes, nil,
+			func(n *OrgDepartment, e *OrgDepartment) { n.Edges.Parent = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := odq.withChildren; query != nil {
+		if err := odq.loadChildren(ctx, query, nodes,
+			func(n *OrgDepartment) { n.Edges.Children = []*OrgDepartment{} },
+			func(n *OrgDepartment, e *OrgDepartment) { n.Edges.Children = append(n.Edges.Children, e) }); err != nil {
+			return nil, err
+		}
+	}
 	if query := odq.withOrgan; query != nil {
 		if err := odq.loadOrgan(ctx, query, nodes, nil,
 			func(n *OrgDepartment, e *OrgOrgan) { n.Edges.Organ = e }); err != nil {
@@ -411,6 +503,68 @@ func (odq *OrgDepartmentQuery) sqlAll(ctx context.Context, hooks ...queryHook) (
 	return nodes, nil
 }
 
+func (odq *OrgDepartmentQuery) loadParent(ctx context.Context, query *OrgDepartmentQuery, nodes []*OrgDepartment, init func(*OrgDepartment), assign func(*OrgDepartment, *OrgDepartment)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*OrgDepartment)
+	for i := range nodes {
+		if nodes[i].ParentID == nil {
+			continue
+		}
+		fk := *nodes[i].ParentID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(orgdepartment.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "parent_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (odq *OrgDepartmentQuery) loadChildren(ctx context.Context, query *OrgDepartmentQuery, nodes []*OrgDepartment, init func(*OrgDepartment), assign func(*OrgDepartment, *OrgDepartment)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*OrgDepartment)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.OrgDepartment(func(s *sql.Selector) {
+		s.Where(sql.InValues(orgdepartment.ChildrenColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.ParentID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "parent_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
+}
 func (odq *OrgDepartmentQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*OrgDepartment, init func(*OrgDepartment), assign func(*OrgDepartment, *OrgOrgan)) error {
 	ids := make([]string, 0, len(nodes))
 	nodeids := make(map[string][]*OrgDepartment)

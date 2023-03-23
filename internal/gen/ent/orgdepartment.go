@@ -31,12 +31,28 @@ type OrgDepartment struct {
 	IsActive bool `json:"is_active,omitempty"`
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
+	// tree id
+	TreeID *int64 `json:"tree_id"`
+	// level in tree, toppest level is 1
+	TreeLevel *int32 `json:"level"`
+	// mptt's left
+	TreeLeft *int64 `json:"tree_left"`
+	// mptt's right
+	TreeRight *int64 `json:"tree_right"`
+	// is leaf node
+	IsLeaf *bool `json:"is_leaf"`
+	// tree path,topest is null or zero length string, subber has fathers ids join by slash(/), eg: pid1/pid2
+	TreePath *string `json:"tree_path"`
 	// 名称
 	Name *string `json:"name,omitempty"`
 	// 助记码
 	Code *string `json:"code,omitempty"`
 	// 企业id
 	OrgID *string `json:"org_id,omitempty"`
+	// 父级id
+	ParentID *string `json:"parent_id,omitempty"`
+	// 是否虚拟部门
+	IsReal *bool `json:"is_real,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -46,17 +62,43 @@ type OrgDepartment struct {
 
 // OrgDepartmentEdges holds the relations/edges for other nodes in the graph.
 type OrgDepartmentEdges struct {
+	// Parent holds the value of the parent edge.
+	Parent *OrgDepartment `json:"parent,omitempty"`
+	// Children holds the value of the children edge.
+	Children []*OrgDepartment `json:"children,omitempty"`
 	// Organ holds the value of the organ edge.
 	Organ *OrgOrgan `json:"organ,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [3]bool
+}
+
+// ParentOrErr returns the Parent value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e OrgDepartmentEdges) ParentOrErr() (*OrgDepartment, error) {
+	if e.loadedTypes[0] {
+		if e.Parent == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgdepartment.Label}
+		}
+		return e.Parent, nil
+	}
+	return nil, &NotLoadedError{edge: "parent"}
+}
+
+// ChildrenOrErr returns the Children value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrgDepartmentEdges) ChildrenOrErr() ([]*OrgDepartment, error) {
+	if e.loadedTypes[1] {
+		return e.Children, nil
+	}
+	return nil, &NotLoadedError{edge: "children"}
 }
 
 // OrganOrErr returns the Organ value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e OrgDepartmentEdges) OrganOrErr() (*OrgOrgan, error) {
-	if e.loadedTypes[0] {
+	if e.loadedTypes[2] {
 		if e.Organ == nil {
 			// Edge was loaded but was not found.
 			return nil, &NotFoundError{label: orgorgan.Label}
@@ -71,11 +113,11 @@ func (*OrgDepartment) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orgdepartment.FieldIsDel, orgdepartment.FieldIsActive:
+		case orgdepartment.FieldIsDel, orgdepartment.FieldIsActive, orgdepartment.FieldIsLeaf, orgdepartment.FieldIsReal:
 			values[i] = new(sql.NullBool)
-		case orgdepartment.FieldSort:
+		case orgdepartment.FieldSort, orgdepartment.FieldTreeID, orgdepartment.FieldTreeLevel, orgdepartment.FieldTreeLeft, orgdepartment.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
-		case orgdepartment.FieldID, orgdepartment.FieldMemo, orgdepartment.FieldName, orgdepartment.FieldCode, orgdepartment.FieldOrgID, orgdepartment.FieldCreator:
+		case orgdepartment.FieldID, orgdepartment.FieldMemo, orgdepartment.FieldTreePath, orgdepartment.FieldName, orgdepartment.FieldCode, orgdepartment.FieldOrgID, orgdepartment.FieldParentID, orgdepartment.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgdepartment.FieldCreatedAt, orgdepartment.FieldUpdatedAt, orgdepartment.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -146,6 +188,48 @@ func (od *OrgDepartment) assignValues(columns []string, values []any) error {
 				od.Memo = new(string)
 				*od.Memo = value.String
 			}
+		case orgdepartment.FieldTreeID:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_id", values[i])
+			} else if value.Valid {
+				od.TreeID = new(int64)
+				*od.TreeID = value.Int64
+			}
+		case orgdepartment.FieldTreeLevel:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_level", values[i])
+			} else if value.Valid {
+				od.TreeLevel = new(int32)
+				*od.TreeLevel = int32(value.Int64)
+			}
+		case orgdepartment.FieldTreeLeft:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_left", values[i])
+			} else if value.Valid {
+				od.TreeLeft = new(int64)
+				*od.TreeLeft = value.Int64
+			}
+		case orgdepartment.FieldTreeRight:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_right", values[i])
+			} else if value.Valid {
+				od.TreeRight = new(int64)
+				*od.TreeRight = value.Int64
+			}
+		case orgdepartment.FieldIsLeaf:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_leaf", values[i])
+			} else if value.Valid {
+				od.IsLeaf = new(bool)
+				*od.IsLeaf = value.Bool
+			}
+		case orgdepartment.FieldTreePath:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field tree_path", values[i])
+			} else if value.Valid {
+				od.TreePath = new(string)
+				*od.TreePath = value.String
+			}
 		case orgdepartment.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
@@ -167,6 +251,20 @@ func (od *OrgDepartment) assignValues(columns []string, values []any) error {
 				od.OrgID = new(string)
 				*od.OrgID = value.String
 			}
+		case orgdepartment.FieldParentID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field parent_id", values[i])
+			} else if value.Valid {
+				od.ParentID = new(string)
+				*od.ParentID = value.String
+			}
+		case orgdepartment.FieldIsReal:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_real", values[i])
+			} else if value.Valid {
+				od.IsReal = new(bool)
+				*od.IsReal = value.Bool
+			}
 		case orgdepartment.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -177,6 +275,16 @@ func (od *OrgDepartment) assignValues(columns []string, values []any) error {
 		}
 	}
 	return nil
+}
+
+// QueryParent queries the "parent" edge of the OrgDepartment entity.
+func (od *OrgDepartment) QueryParent() *OrgDepartmentQuery {
+	return NewOrgDepartmentClient(od.config).QueryParent(od)
+}
+
+// QueryChildren queries the "children" edge of the OrgDepartment entity.
+func (od *OrgDepartment) QueryChildren() *OrgDepartmentQuery {
+	return NewOrgDepartmentClient(od.config).QueryChildren(od)
 }
 
 // QueryOrgan queries the "organ" edge of the OrgDepartment entity.
@@ -236,6 +344,36 @@ func (od *OrgDepartment) String() string {
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
+	if v := od.TreeID; v != nil {
+		builder.WriteString("tree_id=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := od.TreeLevel; v != nil {
+		builder.WriteString("tree_level=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := od.TreeLeft; v != nil {
+		builder.WriteString("tree_left=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := od.TreeRight; v != nil {
+		builder.WriteString("tree_right=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := od.IsLeaf; v != nil {
+		builder.WriteString("is_leaf=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := od.TreePath; v != nil {
+		builder.WriteString("tree_path=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
 	if v := od.Name; v != nil {
 		builder.WriteString("name=")
 		builder.WriteString(*v)
@@ -249,6 +387,16 @@ func (od *OrgDepartment) String() string {
 	if v := od.OrgID; v != nil {
 		builder.WriteString("org_id=")
 		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := od.ParentID; v != nil {
+		builder.WriteString("parent_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := od.IsReal; v != nil {
+		builder.WriteString("is_real=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
 	if v := od.Creator; v != nil {

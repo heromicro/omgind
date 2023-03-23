@@ -20,6 +20,7 @@ func (OrgDepartment) Mixin() []ent.Mixin {
 		mixin.TimeMixin{},
 		mixin.ActiveMixin{},
 		mixin.MemoMixin{},
+		mixin.MpttTreeMixin{},
 	}
 }
 
@@ -31,12 +32,18 @@ func (OrgDepartment) Fields() []ent.Field {
 
 		field.String("org_id").MaxLen(36).Nillable().Optional().StorageKey("org_id").Comment("企业id"),
 
+		field.String("parent_id").MaxLen(36).Nillable().Optional().StorageKey("pid").Comment("父级id"),
+		field.Bool("is_real").Default(true).Nillable().Optional().StorageKey("is_r").Comment("是否虚拟部门"),
+
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
 }
 
 func (OrgDepartment) Edges() []ent.Edge {
 	return []ent.Edge{
+		// same O2M
+		edge.To("children", OrgDepartment.Type).From("parent").Field("parent_id").Unique(),
+
 		// M2O
 		edge.From("organ", OrgOrgan.Type).Ref("departments").Field("org_id").Unique(),
 		// O2M
