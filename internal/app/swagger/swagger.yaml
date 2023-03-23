@@ -290,7 +290,7 @@ definitions:
         description: 排序值
         type: integer
     type: object
-  schema.OrgDepartment:
+  schema.OrgDept:
     properties:
       code:
         description: 助记码
@@ -1294,7 +1294,7 @@ paths:
               - properties:
                   list:
                     items:
-                      $ref: '#/definitions/schema.OrgDepartment'
+                      $ref: '#/definitions/schema.OrgDept'
                     type: array
                   pagination:
                     $ref: '#/definitions/schema.PaginationResult'
@@ -1324,7 +1324,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/schema.OrgDepartment'
+          $ref: '#/definitions/schema.OrgDept'
       responses:
         "200":
           description: OK
@@ -1392,7 +1392,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.OrgDepartment'
+            $ref: '#/definitions/schema.OrgDept'
         "401":
           description: '{error:{code:0,message:未授权}}'
           schema:
@@ -1426,7 +1426,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/schema.OrgDepartment'
+          $ref: '#/definitions/schema.OrgDept'
       responses:
         "200":
           description: '{status:OK}'
@@ -1517,7 +1517,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.OrgDepartment'
+            $ref: '#/definitions/schema.OrgDept'
         "401":
           description: '{error:{code:0,message:未授权}}'
           schema:

@@ -212,15 +212,15 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2OrgPosition := &api_v2.OrgPosition{
 		OrgPositionSrv: serviceOrgPosition,
 	}
-	orgDepartment := &repo.OrgDepartment{
+	orgDept := &repo.OrgDept{
 		EntCli: client,
 	}
-	serviceOrgDepartment := &service.OrgDepartment{
+	serviceOrgDept := &service.OrgDept{
 		EntCli:            client,
-		OrgDepartmentRepo: orgDepartment,
+		OrgDeptRepo: orgDept,
 	}
-	api_v2OrgDepartment := &api_v2.OrgDepartment{
-		OrgDepartmentSrv: serviceOrgDepartment,
+	api_v2OrgDept := &api_v2.OrgDept{
+		OrgDeptSrv: serviceOrgDept,
 	}
 	routerRouter := &router.Router{
 		Auth:               auther,
@@ -236,7 +236,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		OrgOrganAPIV2:      api_v2OrgOrgan,
 		OrgStaffAPIV2:      api_v2OrgStaff,
 		OrgPositionAPIV2:   api_v2OrgPosition,
-		OrgDepartmentAPIV2: api_v2OrgDepartment,
+		OrgDeptAPIV2: api_v2OrgDept,
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{

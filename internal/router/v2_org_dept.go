@@ -5,7 +5,7 @@ import (
 	api_v2 "github.com/heromicro/omgind/internal/api/v2"
 )
 
-func (r *Router) initOrgDepartmentRouterV2(urg *gin.RouterGroup, api *api_v2.OrgDepartment, pathcomp string) {
+func (r *Router) initOrgDeptRouterV2(urg *gin.RouterGroup, api *api_v2.OrgDept, pathcomp string) {
 	gOrgDept := urg.Group(pathcomp)
 	{
 		gOrgDept.GET("", api.Query)

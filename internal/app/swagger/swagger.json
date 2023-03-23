@@ -560,7 +560,7 @@
                                             "list": {
                                                 "type": "array",
                                                 "items": {
-                                                    "$ref": "#/definitions/schema.OrgDepartment"
+                                                    "$ref": "#/definitions/schema.OrgDept"
                                                 }
                                             },
                                             "pagination": {
@@ -609,7 +609,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.OrgDepartment"
+                            "$ref": "#/definitions/schema.OrgDept"
                         }
                     }
                 ],
@@ -671,7 +671,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.OrgDepartment"
+                            "$ref": "#/definitions/schema.OrgDept"
                         }
                     },
                     "401": {
@@ -724,7 +724,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.OrgDepartment"
+                            "$ref": "#/definitions/schema.OrgDept"
                         }
                     }
                 ],
@@ -916,7 +916,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.OrgDepartment"
+                            "$ref": "#/definitions/schema.OrgDept"
                         }
                     },
                     "401": {
@@ -6109,7 +6109,7 @@
                 }
             }
         },
-        "schema.OrgDepartment": {
+        "schema.OrgDept": {
             "type": "object",
             "required": [
                 "is_active",

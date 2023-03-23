@@ -8,12 +8,12 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 )
 
-// OrgDepartment is the model entity for the OrgDepartment schema.
-type OrgDepartment struct {
+// OrgDept is the model entity for the OrgDept schema.
+type OrgDept struct {
 	config `json:"-" sql:"-"`
 	// ID of the ent.
 	ID string `json:"id,omitempty"`
@@ -56,16 +56,16 @@ type OrgDepartment struct {
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
-	// The values are being populated by the OrgDepartmentQuery when eager-loading is set.
-	Edges OrgDepartmentEdges `json:"edges"`
+	// The values are being populated by the OrgDeptQuery when eager-loading is set.
+	Edges OrgDeptEdges `json:"edges"`
 }
 
-// OrgDepartmentEdges holds the relations/edges for other nodes in the graph.
-type OrgDepartmentEdges struct {
+// OrgDeptEdges holds the relations/edges for other nodes in the graph.
+type OrgDeptEdges struct {
 	// Parent holds the value of the parent edge.
-	Parent *OrgDepartment `json:"parent,omitempty"`
+	Parent *OrgDept `json:"parent,omitempty"`
 	// Children holds the value of the children edge.
-	Children []*OrgDepartment `json:"children,omitempty"`
+	Children []*OrgDept `json:"children,omitempty"`
 	// Organ holds the value of the organ edge.
 	Organ *OrgOrgan `json:"organ,omitempty"`
 	// loadedTypes holds the information for reporting if a
@@ -75,11 +75,11 @@ type OrgDepartmentEdges struct {
 
 // ParentOrErr returns the Parent value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e OrgDepartmentEdges) ParentOrErr() (*OrgDepartment, error) {
+func (e OrgDeptEdges) ParentOrErr() (*OrgDept, error) {
 	if e.loadedTypes[0] {
 		if e.Parent == nil {
 			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: orgdepartment.Label}
+			return nil, &NotFoundError{label: orgdept.Label}
 		}
 		return e.Parent, nil
 	}
@@ -88,7 +88,7 @@ func (e OrgDepartmentEdges) ParentOrErr() (*OrgDepartment, error) {
 
 // ChildrenOrErr returns the Children value or an error if the edge
 // was not loaded in eager-loading.
-func (e OrgDepartmentEdges) ChildrenOrErr() ([]*OrgDepartment, error) {
+func (e OrgDeptEdges) ChildrenOrErr() ([]*OrgDept, error) {
 	if e.loadedTypes[1] {
 		return e.Children, nil
 	}
@@ -97,7 +97,7 @@ func (e OrgDepartmentEdges) ChildrenOrErr() ([]*OrgDepartment, error) {
 
 // OrganOrErr returns the Organ value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
-func (e OrgDepartmentEdges) OrganOrErr() (*OrgOrgan, error) {
+func (e OrgDeptEdges) OrganOrErr() (*OrgOrgan, error) {
 	if e.loadedTypes[2] {
 		if e.Organ == nil {
 			// Edge was loaded but was not found.
@@ -109,163 +109,163 @@ func (e OrgDepartmentEdges) OrganOrErr() (*OrgOrgan, error) {
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
-func (*OrgDepartment) scanValues(columns []string) ([]any, error) {
+func (*OrgDept) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orgdepartment.FieldIsDel, orgdepartment.FieldIsActive, orgdepartment.FieldIsLeaf, orgdepartment.FieldIsReal:
+		case orgdept.FieldIsDel, orgdept.FieldIsActive, orgdept.FieldIsLeaf, orgdept.FieldIsReal:
 			values[i] = new(sql.NullBool)
-		case orgdepartment.FieldSort, orgdepartment.FieldTreeID, orgdepartment.FieldTreeLevel, orgdepartment.FieldTreeLeft, orgdepartment.FieldTreeRight:
+		case orgdept.FieldSort, orgdept.FieldTreeID, orgdept.FieldTreeLevel, orgdept.FieldTreeLeft, orgdept.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
-		case orgdepartment.FieldID, orgdepartment.FieldMemo, orgdepartment.FieldTreePath, orgdepartment.FieldName, orgdepartment.FieldCode, orgdepartment.FieldOrgID, orgdepartment.FieldParentID, orgdepartment.FieldCreator:
+		case orgdept.FieldID, orgdept.FieldMemo, orgdept.FieldTreePath, orgdept.FieldName, orgdept.FieldCode, orgdept.FieldOrgID, orgdept.FieldParentID, orgdept.FieldCreator:
 			values[i] = new(sql.NullString)
-		case orgdepartment.FieldCreatedAt, orgdepartment.FieldUpdatedAt, orgdepartment.FieldDeletedAt:
+		case orgdept.FieldCreatedAt, orgdept.FieldUpdatedAt, orgdept.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type OrgDepartment", columns[i])
+			return nil, fmt.Errorf("unexpected column %q for type OrgDept", columns[i])
 		}
 	}
 	return values, nil
 }
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
-// to the OrgDepartment fields.
-func (od *OrgDepartment) assignValues(columns []string, values []any) error {
+// to the OrgDept fields.
+func (od *OrgDept) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
 	for i := range columns {
 		switch columns[i] {
-		case orgdepartment.FieldID:
+		case orgdept.FieldID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
 				od.ID = value.String
 			}
-		case orgdepartment.FieldIsDel:
+		case orgdept.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
 				od.IsDel = value.Bool
 			}
-		case orgdepartment.FieldSort:
+		case orgdept.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
 				od.Sort = int32(value.Int64)
 			}
-		case orgdepartment.FieldCreatedAt:
+		case orgdept.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
 				od.CreatedAt = new(time.Time)
 				*od.CreatedAt = value.Time
 			}
-		case orgdepartment.FieldUpdatedAt:
+		case orgdept.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
 				od.UpdatedAt = new(time.Time)
 				*od.UpdatedAt = value.Time
 			}
-		case orgdepartment.FieldDeletedAt:
+		case orgdept.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
 				od.DeletedAt = new(time.Time)
 				*od.DeletedAt = value.Time
 			}
-		case orgdepartment.FieldIsActive:
+		case orgdept.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
 				od.IsActive = value.Bool
 			}
-		case orgdepartment.FieldMemo:
+		case orgdept.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
 				od.Memo = new(string)
 				*od.Memo = value.String
 			}
-		case orgdepartment.FieldTreeID:
+		case orgdept.FieldTreeID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_id", values[i])
 			} else if value.Valid {
 				od.TreeID = new(int64)
 				*od.TreeID = value.Int64
 			}
-		case orgdepartment.FieldTreeLevel:
+		case orgdept.FieldTreeLevel:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_level", values[i])
 			} else if value.Valid {
 				od.TreeLevel = new(int32)
 				*od.TreeLevel = int32(value.Int64)
 			}
-		case orgdepartment.FieldTreeLeft:
+		case orgdept.FieldTreeLeft:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_left", values[i])
 			} else if value.Valid {
 				od.TreeLeft = new(int64)
 				*od.TreeLeft = value.Int64
 			}
-		case orgdepartment.FieldTreeRight:
+		case orgdept.FieldTreeRight:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_right", values[i])
 			} else if value.Valid {
 				od.TreeRight = new(int64)
 				*od.TreeRight = value.Int64
 			}
-		case orgdepartment.FieldIsLeaf:
+		case orgdept.FieldIsLeaf:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_leaf", values[i])
 			} else if value.Valid {
 				od.IsLeaf = new(bool)
 				*od.IsLeaf = value.Bool
 			}
-		case orgdepartment.FieldTreePath:
+		case orgdept.FieldTreePath:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_path", values[i])
 			} else if value.Valid {
 				od.TreePath = new(string)
 				*od.TreePath = value.String
 			}
-		case orgdepartment.FieldName:
+		case orgdept.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
 				od.Name = new(string)
 				*od.Name = value.String
 			}
-		case orgdepartment.FieldCode:
+		case orgdept.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
 				od.Code = new(string)
 				*od.Code = value.String
 			}
-		case orgdepartment.FieldOrgID:
+		case orgdept.FieldOrgID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field org_id", values[i])
 			} else if value.Valid {
 				od.OrgID = new(string)
 				*od.OrgID = value.String
 			}
-		case orgdepartment.FieldParentID:
+		case orgdept.FieldParentID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field parent_id", values[i])
 			} else if value.Valid {
 				od.ParentID = new(string)
 				*od.ParentID = value.String
 			}
-		case orgdepartment.FieldIsReal:
+		case orgdept.FieldIsReal:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_real", values[i])
 			} else if value.Valid {
 				od.IsReal = new(bool)
 				*od.IsReal = value.Bool
 			}
-		case orgdepartment.FieldCreator:
+		case orgdept.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
 			} else if value.Valid {
@@ -277,43 +277,43 @@ func (od *OrgDepartment) assignValues(columns []string, values []any) error {
 	return nil
 }
 
-// QueryParent queries the "parent" edge of the OrgDepartment entity.
-func (od *OrgDepartment) QueryParent() *OrgDepartmentQuery {
-	return NewOrgDepartmentClient(od.config).QueryParent(od)
+// QueryParent queries the "parent" edge of the OrgDept entity.
+func (od *OrgDept) QueryParent() *OrgDeptQuery {
+	return NewOrgDeptClient(od.config).QueryParent(od)
 }
 
-// QueryChildren queries the "children" edge of the OrgDepartment entity.
-func (od *OrgDepartment) QueryChildren() *OrgDepartmentQuery {
-	return NewOrgDepartmentClient(od.config).QueryChildren(od)
+// QueryChildren queries the "children" edge of the OrgDept entity.
+func (od *OrgDept) QueryChildren() *OrgDeptQuery {
+	return NewOrgDeptClient(od.config).QueryChildren(od)
 }
 
-// QueryOrgan queries the "organ" edge of the OrgDepartment entity.
-func (od *OrgDepartment) QueryOrgan() *OrgOrganQuery {
-	return NewOrgDepartmentClient(od.config).QueryOrgan(od)
+// QueryOrgan queries the "organ" edge of the OrgDept entity.
+func (od *OrgDept) QueryOrgan() *OrgOrganQuery {
+	return NewOrgDeptClient(od.config).QueryOrgan(od)
 }
 
-// Update returns a builder for updating this OrgDepartment.
-// Note that you need to call OrgDepartment.Unwrap() before calling this method if this OrgDepartment
+// Update returns a builder for updating this OrgDept.
+// Note that you need to call OrgDept.Unwrap() before calling this method if this OrgDept
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (od *OrgDepartment) Update() *OrgDepartmentUpdateOne {
-	return NewOrgDepartmentClient(od.config).UpdateOne(od)
+func (od *OrgDept) Update() *OrgDeptUpdateOne {
+	return NewOrgDeptClient(od.config).UpdateOne(od)
 }
 
-// Unwrap unwraps the OrgDepartment entity that was returned from a transaction after it was closed,
+// Unwrap unwraps the OrgDept entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (od *OrgDepartment) Unwrap() *OrgDepartment {
+func (od *OrgDept) Unwrap() *OrgDept {
 	_tx, ok := od.config.driver.(*txDriver)
 	if !ok {
-		panic("ent: OrgDepartment is not a transactional entity")
+		panic("ent: OrgDept is not a transactional entity")
 	}
 	od.config.driver = _tx.drv
 	return od
 }
 
 // String implements the fmt.Stringer.
-func (od *OrgDepartment) String() string {
+func (od *OrgDept) String() string {
 	var builder strings.Builder
-	builder.WriteString("OrgDepartment(")
+	builder.WriteString("OrgDept(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", od.ID))
 	builder.WriteString("is_del=")
 	builder.WriteString(fmt.Sprintf("%v", od.IsDel))
@@ -407,5 +407,5 @@ func (od *OrgDepartment) String() string {
 	return builder.String()
 }
 
-// OrgDepartments is a parsable slice of OrgDepartment.
-type OrgDepartments []*OrgDepartment
+// OrgDepts is a parsable slice of OrgDept.
+type OrgDepts []*OrgDept

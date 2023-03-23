@@ -13,7 +13,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
-	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -24,15 +24,15 @@ import (
 // OrgOrganQuery is the builder for querying OrgOrgan entities.
 type OrgOrganQuery struct {
 	config
-	ctx             *QueryContext
-	order           []OrderFunc
-	inters          []Interceptor
-	predicates      []predicate.OrgOrgan
-	withHaddr       *SysAddressQuery
-	withDepartments *OrgDepartmentQuery
-	withStaffs      *OrgStaffQuery
-	withPositions   *OrgPositionQuery
-	modifiers       []func(*sql.Selector)
+	ctx           *QueryContext
+	order         []OrderFunc
+	inters        []Interceptor
+	predicates    []predicate.OrgOrgan
+	withHaddr     *SysAddressQuery
+	withDepts     *OrgDeptQuery
+	withStaffs    *OrgStaffQuery
+	withPositions *OrgPositionQuery
+	modifiers     []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -94,9 +94,9 @@ func (ooq *OrgOrganQuery) QueryHaddr() *SysAddressQuery {
 	return query
 }
 
-// QueryDepartments chains the current query on the "departments" edge.
-func (ooq *OrgOrganQuery) QueryDepartments() *OrgDepartmentQuery {
-	query := (&OrgDepartmentClient{config: ooq.config}).Query()
+// QueryDepts chains the current query on the "depts" edge.
+func (ooq *OrgOrganQuery) QueryDepts() *OrgDeptQuery {
+	query := (&OrgDeptClient{config: ooq.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
 		if err := ooq.prepareQuery(ctx); err != nil {
 			return nil, err
@@ -107,12 +107,12 @@ func (ooq *OrgOrganQuery) QueryDepartments() *OrgDepartmentQuery {
 		}
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, selector),
-			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.DepartmentsTable, orgorgan.DepartmentsColumn),
+			sqlgraph.To(orgdept.Table, orgdept.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.DeptsTable, orgorgan.DeptsColumn),
 		)
 		schemaConfig := ooq.schemaConfig
-		step.To.Schema = schemaConfig.OrgDepartment
-		step.Edge.Schema = schemaConfig.OrgDepartment
+		step.To.Schema = schemaConfig.OrgDept
+		step.Edge.Schema = schemaConfig.OrgDept
 		fromU = sqlgraph.SetNeighbors(ooq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -356,15 +356,15 @@ func (ooq *OrgOrganQuery) Clone() *OrgOrganQuery {
 		return nil
 	}
 	return &OrgOrganQuery{
-		config:          ooq.config,
-		ctx:             ooq.ctx.Clone(),
-		order:           append([]OrderFunc{}, ooq.order...),
-		inters:          append([]Interceptor{}, ooq.inters...),
-		predicates:      append([]predicate.OrgOrgan{}, ooq.predicates...),
-		withHaddr:       ooq.withHaddr.Clone(),
-		withDepartments: ooq.withDepartments.Clone(),
-		withStaffs:      ooq.withStaffs.Clone(),
-		withPositions:   ooq.withPositions.Clone(),
+		config:        ooq.config,
+		ctx:           ooq.ctx.Clone(),
+		order:         append([]OrderFunc{}, ooq.order...),
+		inters:        append([]Interceptor{}, ooq.inters...),
+		predicates:    append([]predicate.OrgOrgan{}, ooq.predicates...),
+		withHaddr:     ooq.withHaddr.Clone(),
+		withDepts:     ooq.withDepts.Clone(),
+		withStaffs:    ooq.withStaffs.Clone(),
+		withPositions: ooq.withPositions.Clone(),
 		// clone intermediate query.
 		sql:  ooq.sql.Clone(),
 		path: ooq.path,
@@ -382,14 +382,14 @@ func (ooq *OrgOrganQuery) WithHaddr(opts ...func(*SysAddressQuery)) *OrgOrganQue
 	return ooq
 }
 
-// WithDepartments tells the query-builder to eager-load the nodes that are connected to
-// the "departments" edge. The optional arguments are used to configure the query builder of the edge.
-func (ooq *OrgOrganQuery) WithDepartments(opts ...func(*OrgDepartmentQuery)) *OrgOrganQuery {
-	query := (&OrgDepartmentClient{config: ooq.config}).Query()
+// WithDepts tells the query-builder to eager-load the nodes that are connected to
+// the "depts" edge. The optional arguments are used to configure the query builder of the edge.
+func (ooq *OrgOrganQuery) WithDepts(opts ...func(*OrgDeptQuery)) *OrgOrganQuery {
+	query := (&OrgDeptClient{config: ooq.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	ooq.withDepartments = query
+	ooq.withDepts = query
 	return ooq
 }
 
@@ -495,7 +495,7 @@ func (ooq *OrgOrganQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 		_spec       = ooq.querySpec()
 		loadedTypes = [4]bool{
 			ooq.withHaddr != nil,
-			ooq.withDepartments != nil,
+			ooq.withDepts != nil,
 			ooq.withStaffs != nil,
 			ooq.withPositions != nil,
 		}
@@ -529,10 +529,10 @@ func (ooq *OrgOrganQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 			return nil, err
 		}
 	}
-	if query := ooq.withDepartments; query != nil {
-		if err := ooq.loadDepartments(ctx, query, nodes,
-			func(n *OrgOrgan) { n.Edges.Departments = []*OrgDepartment{} },
-			func(n *OrgOrgan, e *OrgDepartment) { n.Edges.Departments = append(n.Edges.Departments, e) }); err != nil {
+	if query := ooq.withDepts; query != nil {
+		if err := ooq.loadDepts(ctx, query, nodes,
+			func(n *OrgOrgan) { n.Edges.Depts = []*OrgDept{} },
+			func(n *OrgOrgan, e *OrgDept) { n.Edges.Depts = append(n.Edges.Depts, e) }); err != nil {
 			return nil, err
 		}
 	}
@@ -585,7 +585,7 @@ func (ooq *OrgOrganQuery) loadHaddr(ctx context.Context, query *SysAddressQuery,
 	}
 	return nil
 }
-func (ooq *OrgOrganQuery) loadDepartments(ctx context.Context, query *OrgDepartmentQuery, nodes []*OrgOrgan, init func(*OrgOrgan), assign func(*OrgOrgan, *OrgDepartment)) error {
+func (ooq *OrgOrganQuery) loadDepts(ctx context.Context, query *OrgDeptQuery, nodes []*OrgOrgan, init func(*OrgOrgan), assign func(*OrgOrgan, *OrgDept)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[string]*OrgOrgan)
 	for i := range nodes {
@@ -595,8 +595,8 @@ func (ooq *OrgOrganQuery) loadDepartments(ctx context.Context, query *OrgDepartm
 			init(nodes[i])
 		}
 	}
-	query.Where(predicate.OrgDepartment(func(s *sql.Selector) {
-		s.Where(sql.InValues(orgorgan.DepartmentsColumn, fks...))
+	query.Where(predicate.OrgDept(func(s *sql.Selector) {
+		s.Where(sql.InValues(orgorgan.DeptsColumn, fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {

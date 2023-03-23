@@ -53,7 +53,7 @@ func (OrgStaff) Fields() []ent.Field {
 
 		field.String("empyst_dict_id").MaxLen(36).Nillable().Optional().StorageKey("empyst_dict_id").Comment("empst_stat options"),
 
-		field.String("dept_id").MaxLen(36).Nillable().Optional().StorageKey("dept_id").Comment("department.id"),
+		field.String("dept_id").MaxLen(36).Nillable().Optional().StorageKey("dept_id").Comment("dept.id"),
 
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
@@ -73,7 +73,7 @@ func (OrgStaff) Edges() []ent.Edge {
 		// edge.From("empyst_dict", SysDict.Type).Ref("staff_empyst").Field("empyst_dict_id").Unique(),
 
 		// M2O
-		// edge.From("department", OrgDepartment.Type).Ref("staffs").Field("dept_id").Unique(),
+		// edge.From("dept", OrgDept.Type).Ref("staffs").Field("dept_id").Unique(),
 	}
 }
 

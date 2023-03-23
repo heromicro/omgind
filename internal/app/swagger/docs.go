@@ -568,7 +568,7 @@ const docTemplate = `{
                                             "list": {
                                                 "type": "array",
                                                 "items": {
-                                                    "$ref": "#/definitions/schema.OrgDepartment"
+                                                    "$ref": "#/definitions/schema.OrgDept"
                                                 }
                                             },
                                             "pagination": {
@@ -617,7 +617,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.OrgDepartment"
+                            "$ref": "#/definitions/schema.OrgDept"
                         }
                     }
                 ],
@@ -679,7 +679,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.OrgDepartment"
+                            "$ref": "#/definitions/schema.OrgDept"
                         }
                     },
                     "401": {
@@ -732,7 +732,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/schema.OrgDepartment"
+                            "$ref": "#/definitions/schema.OrgDept"
                         }
                     }
                 ],
@@ -924,7 +924,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.OrgDepartment"
+                            "$ref": "#/definitions/schema.OrgDept"
                         }
                     },
                     "401": {
@@ -6117,7 +6117,7 @@ const docTemplate = `{
                 }
             }
         },
-        "schema.OrgDepartment": {
+        "schema.OrgDept": {
             "type": "object",
             "required": [
                 "is_active",

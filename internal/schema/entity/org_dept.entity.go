@@ -8,11 +8,11 @@ import (
 	"entgo.io/ent/schema/field"
 )
 
-type OrgDepartment struct {
+type OrgDept struct {
 	ent.Schema
 }
 
-func (OrgDepartment) Mixin() []ent.Mixin {
+func (OrgDept) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.IDMixin{},
 		mixin.SoftDelMixin{},
@@ -24,7 +24,7 @@ func (OrgDepartment) Mixin() []ent.Mixin {
 	}
 }
 
-func (OrgDepartment) Fields() []ent.Field {
+func (OrgDept) Fields() []ent.Field {
 
 	return []ent.Field{
 		field.String("name").MaxLen(64).Nillable().Optional().StorageKey("name").Comment("名称"),
@@ -39,22 +39,22 @@ func (OrgDepartment) Fields() []ent.Field {
 	}
 }
 
-func (OrgDepartment) Edges() []ent.Edge {
+func (OrgDept) Edges() []ent.Edge {
 	return []ent.Edge{
 		// same O2M
-		edge.To("children", OrgDepartment.Type).From("parent").Field("parent_id").Unique(),
+		edge.To("children", OrgDept.Type).From("parent").Field("parent_id").Unique(),
 
 		// M2O
-		edge.From("organ", OrgOrgan.Type).Ref("departments").Field("org_id").Unique(),
+		edge.From("organ", OrgOrgan.Type).Ref("depts").Field("org_id").Unique(),
 		// O2M
 		// edge.To("staffs", OrgStaff.Type),
 	}
 }
 
-func (OrgDepartment) Indexes() []ent.Index {
+func (OrgDept) Indexes() []ent.Index {
 	return []ent.Index{}
 }
 
-func (OrgDepartment) Hooks() []ent.Hook {
+func (OrgDept) Hooks() []ent.Hook {
 	return []ent.Hook{}
 }

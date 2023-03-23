@@ -11,7 +11,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -41,7 +41,7 @@ const (
 	OpUpdateOne = ent.OpUpdateOne
 
 	// Node types.
-	TypeOrgDepartment         = "OrgDepartment"
+	TypeOrgDept               = "OrgDept"
 	TypeOrgOrgan              = "OrgOrgan"
 	TypeOrgPosition           = "OrgPosition"
 	TypeOrgStaff              = "OrgStaff"
@@ -61,8 +61,8 @@ const (
 	TypeXxxDemo               = "XxxDemo"
 )
 
-// OrgDepartmentMutation represents an operation that mutates the OrgDepartment nodes in the graph.
-type OrgDepartmentMutation struct {
+// OrgDeptMutation represents an operation that mutates the OrgDept nodes in the graph.
+type OrgDeptMutation struct {
 	config
 	op              Op
 	typ             string
@@ -98,21 +98,21 @@ type OrgDepartmentMutation struct {
 	organ           *string
 	clearedorgan    bool
 	done            bool
-	oldValue        func(context.Context) (*OrgDepartment, error)
-	predicates      []predicate.OrgDepartment
+	oldValue        func(context.Context) (*OrgDept, error)
+	predicates      []predicate.OrgDept
 }
 
-var _ ent.Mutation = (*OrgDepartmentMutation)(nil)
+var _ ent.Mutation = (*OrgDeptMutation)(nil)
 
-// orgdepartmentOption allows management of the mutation configuration using functional options.
-type orgdepartmentOption func(*OrgDepartmentMutation)
+// orgdeptOption allows management of the mutation configuration using functional options.
+type orgdeptOption func(*OrgDeptMutation)
 
-// newOrgDepartmentMutation creates new mutation for the OrgDepartment entity.
-func newOrgDepartmentMutation(c config, op Op, opts ...orgdepartmentOption) *OrgDepartmentMutation {
-	m := &OrgDepartmentMutation{
+// newOrgDeptMutation creates new mutation for the OrgDept entity.
+func newOrgDeptMutation(c config, op Op, opts ...orgdeptOption) *OrgDeptMutation {
+	m := &OrgDeptMutation{
 		config:        c,
 		op:            op,
-		typ:           TypeOrgDepartment,
+		typ:           TypeOrgDept,
 		clearedFields: make(map[string]struct{}),
 	}
 	for _, opt := range opts {
@@ -121,20 +121,20 @@ func newOrgDepartmentMutation(c config, op Op, opts ...orgdepartmentOption) *Org
 	return m
 }
 
-// withOrgDepartmentID sets the ID field of the mutation.
-func withOrgDepartmentID(id string) orgdepartmentOption {
-	return func(m *OrgDepartmentMutation) {
+// withOrgDeptID sets the ID field of the mutation.
+func withOrgDeptID(id string) orgdeptOption {
+	return func(m *OrgDeptMutation) {
 		var (
 			err   error
 			once  sync.Once
-			value *OrgDepartment
+			value *OrgDept
 		)
-		m.oldValue = func(ctx context.Context) (*OrgDepartment, error) {
+		m.oldValue = func(ctx context.Context) (*OrgDept, error) {
 			once.Do(func() {
 				if m.done {
 					err = errors.New("querying old values post mutation is not allowed")
 				} else {
-					value, err = m.Client().OrgDepartment.Get(ctx, id)
+					value, err = m.Client().OrgDept.Get(ctx, id)
 				}
 			})
 			return value, err
@@ -143,10 +143,10 @@ func withOrgDepartmentID(id string) orgdepartmentOption {
 	}
 }
 
-// withOrgDepartment sets the old OrgDepartment of the mutation.
-func withOrgDepartment(node *OrgDepartment) orgdepartmentOption {
-	return func(m *OrgDepartmentMutation) {
-		m.oldValue = func(context.Context) (*OrgDepartment, error) {
+// withOrgDept sets the old OrgDept of the mutation.
+func withOrgDept(node *OrgDept) orgdeptOption {
+	return func(m *OrgDeptMutation) {
+		m.oldValue = func(context.Context) (*OrgDept, error) {
 			return node, nil
 		}
 		m.id = &node.ID
@@ -155,7 +155,7 @@ func withOrgDepartment(node *OrgDepartment) orgdepartmentOption {
 
 // Client returns a new `ent.Client` from the mutation. If the mutation was
 // executed in a transaction (ent.Tx), a transactional client is returned.
-func (m OrgDepartmentMutation) Client() *Client {
+func (m OrgDeptMutation) Client() *Client {
 	client := &Client{config: m.config}
 	client.init()
 	return client
@@ -163,7 +163,7 @@ func (m OrgDepartmentMutation) Client() *Client {
 
 // Tx returns an `ent.Tx` for mutations that were executed in transactions;
 // it returns an error otherwise.
-func (m OrgDepartmentMutation) Tx() (*Tx, error) {
+func (m OrgDeptMutation) Tx() (*Tx, error) {
 	if _, ok := m.driver.(*txDriver); !ok {
 		return nil, errors.New("ent: mutation is not running in a transaction")
 	}
@@ -173,14 +173,14 @@ func (m OrgDepartmentMutation) Tx() (*Tx, error) {
 }
 
 // SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of OrgDepartment entities.
-func (m *OrgDepartmentMutation) SetID(id string) {
+// operation is only accepted on creation of OrgDept entities.
+func (m *OrgDeptMutation) SetID(id string) {
 	m.id = &id
 }
 
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *OrgDepartmentMutation) ID() (id string, exists bool) {
+func (m *OrgDeptMutation) ID() (id string, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -191,7 +191,7 @@ func (m *OrgDepartmentMutation) ID() (id string, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *OrgDepartmentMutation) IDs(ctx context.Context) ([]string, error) {
+func (m *OrgDeptMutation) IDs(ctx context.Context) ([]string, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
@@ -200,19 +200,19 @@ func (m *OrgDepartmentMutation) IDs(ctx context.Context) ([]string, error) {
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
-		return m.Client().OrgDepartment.Query().Where(m.predicates...).IDs(ctx)
+		return m.Client().OrgDept.Query().Where(m.predicates...).IDs(ctx)
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
 }
 
 // SetIsDel sets the "is_del" field.
-func (m *OrgDepartmentMutation) SetIsDel(b bool) {
+func (m *OrgDeptMutation) SetIsDel(b bool) {
 	m.is_del = &b
 }
 
 // IsDel returns the value of the "is_del" field in the mutation.
-func (m *OrgDepartmentMutation) IsDel() (r bool, exists bool) {
+func (m *OrgDeptMutation) IsDel() (r bool, exists bool) {
 	v := m.is_del
 	if v == nil {
 		return
@@ -220,10 +220,10 @@ func (m *OrgDepartmentMutation) IsDel() (r bool, exists bool) {
 	return *v, true
 }
 
-// OldIsDel returns the old "is_del" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldIsDel returns the old "is_del" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldIsDel(ctx context.Context) (v bool, err error) {
+func (m *OrgDeptMutation) OldIsDel(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
 	}
@@ -238,18 +238,18 @@ func (m *OrgDepartmentMutation) OldIsDel(ctx context.Context) (v bool, err error
 }
 
 // ResetIsDel resets all changes to the "is_del" field.
-func (m *OrgDepartmentMutation) ResetIsDel() {
+func (m *OrgDeptMutation) ResetIsDel() {
 	m.is_del = nil
 }
 
 // SetSort sets the "sort" field.
-func (m *OrgDepartmentMutation) SetSort(i int32) {
+func (m *OrgDeptMutation) SetSort(i int32) {
 	m.sort = &i
 	m.addsort = nil
 }
 
 // Sort returns the value of the "sort" field in the mutation.
-func (m *OrgDepartmentMutation) Sort() (r int32, exists bool) {
+func (m *OrgDeptMutation) Sort() (r int32, exists bool) {
 	v := m.sort
 	if v == nil {
 		return
@@ -257,10 +257,10 @@ func (m *OrgDepartmentMutation) Sort() (r int32, exists bool) {
 	return *v, true
 }
 
-// OldSort returns the old "sort" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldSort returns the old "sort" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldSort(ctx context.Context) (v int32, err error) {
+func (m *OrgDeptMutation) OldSort(ctx context.Context) (v int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldSort is only allowed on UpdateOne operations")
 	}
@@ -275,7 +275,7 @@ func (m *OrgDepartmentMutation) OldSort(ctx context.Context) (v int32, err error
 }
 
 // AddSort adds i to the "sort" field.
-func (m *OrgDepartmentMutation) AddSort(i int32) {
+func (m *OrgDeptMutation) AddSort(i int32) {
 	if m.addsort != nil {
 		*m.addsort += i
 	} else {
@@ -284,7 +284,7 @@ func (m *OrgDepartmentMutation) AddSort(i int32) {
 }
 
 // AddedSort returns the value that was added to the "sort" field in this mutation.
-func (m *OrgDepartmentMutation) AddedSort() (r int32, exists bool) {
+func (m *OrgDeptMutation) AddedSort() (r int32, exists bool) {
 	v := m.addsort
 	if v == nil {
 		return
@@ -293,18 +293,18 @@ func (m *OrgDepartmentMutation) AddedSort() (r int32, exists bool) {
 }
 
 // ResetSort resets all changes to the "sort" field.
-func (m *OrgDepartmentMutation) ResetSort() {
+func (m *OrgDeptMutation) ResetSort() {
 	m.sort = nil
 	m.addsort = nil
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (m *OrgDepartmentMutation) SetCreatedAt(t time.Time) {
+func (m *OrgDeptMutation) SetCreatedAt(t time.Time) {
 	m.created_at = &t
 }
 
 // CreatedAt returns the value of the "created_at" field in the mutation.
-func (m *OrgDepartmentMutation) CreatedAt() (r time.Time, exists bool) {
+func (m *OrgDeptMutation) CreatedAt() (r time.Time, exists bool) {
 	v := m.created_at
 	if v == nil {
 		return
@@ -312,10 +312,10 @@ func (m *OrgDepartmentMutation) CreatedAt() (r time.Time, exists bool) {
 	return *v, true
 }
 
-// OldCreatedAt returns the old "created_at" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldCreatedAt returns the old "created_at" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldCreatedAt(ctx context.Context) (v *time.Time, err error) {
+func (m *OrgDeptMutation) OldCreatedAt(ctx context.Context) (v *time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
 	}
@@ -330,30 +330,30 @@ func (m *OrgDepartmentMutation) OldCreatedAt(ctx context.Context) (v *time.Time,
 }
 
 // ClearCreatedAt clears the value of the "created_at" field.
-func (m *OrgDepartmentMutation) ClearCreatedAt() {
+func (m *OrgDeptMutation) ClearCreatedAt() {
 	m.created_at = nil
-	m.clearedFields[orgdepartment.FieldCreatedAt] = struct{}{}
+	m.clearedFields[orgdept.FieldCreatedAt] = struct{}{}
 }
 
 // CreatedAtCleared returns if the "created_at" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) CreatedAtCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldCreatedAt]
+func (m *OrgDeptMutation) CreatedAtCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldCreatedAt]
 	return ok
 }
 
 // ResetCreatedAt resets all changes to the "created_at" field.
-func (m *OrgDepartmentMutation) ResetCreatedAt() {
+func (m *OrgDeptMutation) ResetCreatedAt() {
 	m.created_at = nil
-	delete(m.clearedFields, orgdepartment.FieldCreatedAt)
+	delete(m.clearedFields, orgdept.FieldCreatedAt)
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (m *OrgDepartmentMutation) SetUpdatedAt(t time.Time) {
+func (m *OrgDeptMutation) SetUpdatedAt(t time.Time) {
 	m.updated_at = &t
 }
 
 // UpdatedAt returns the value of the "updated_at" field in the mutation.
-func (m *OrgDepartmentMutation) UpdatedAt() (r time.Time, exists bool) {
+func (m *OrgDeptMutation) UpdatedAt() (r time.Time, exists bool) {
 	v := m.updated_at
 	if v == nil {
 		return
@@ -361,10 +361,10 @@ func (m *OrgDepartmentMutation) UpdatedAt() (r time.Time, exists bool) {
 	return *v, true
 }
 
-// OldUpdatedAt returns the old "updated_at" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldUpdatedAt returns the old "updated_at" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldUpdatedAt(ctx context.Context) (v *time.Time, err error) {
+func (m *OrgDeptMutation) OldUpdatedAt(ctx context.Context) (v *time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldUpdatedAt is only allowed on UpdateOne operations")
 	}
@@ -379,30 +379,30 @@ func (m *OrgDepartmentMutation) OldUpdatedAt(ctx context.Context) (v *time.Time,
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (m *OrgDepartmentMutation) ClearUpdatedAt() {
+func (m *OrgDeptMutation) ClearUpdatedAt() {
 	m.updated_at = nil
-	m.clearedFields[orgdepartment.FieldUpdatedAt] = struct{}{}
+	m.clearedFields[orgdept.FieldUpdatedAt] = struct{}{}
 }
 
 // UpdatedAtCleared returns if the "updated_at" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) UpdatedAtCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldUpdatedAt]
+func (m *OrgDeptMutation) UpdatedAtCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldUpdatedAt]
 	return ok
 }
 
 // ResetUpdatedAt resets all changes to the "updated_at" field.
-func (m *OrgDepartmentMutation) ResetUpdatedAt() {
+func (m *OrgDeptMutation) ResetUpdatedAt() {
 	m.updated_at = nil
-	delete(m.clearedFields, orgdepartment.FieldUpdatedAt)
+	delete(m.clearedFields, orgdept.FieldUpdatedAt)
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (m *OrgDepartmentMutation) SetDeletedAt(t time.Time) {
+func (m *OrgDeptMutation) SetDeletedAt(t time.Time) {
 	m.deleted_at = &t
 }
 
 // DeletedAt returns the value of the "deleted_at" field in the mutation.
-func (m *OrgDepartmentMutation) DeletedAt() (r time.Time, exists bool) {
+func (m *OrgDeptMutation) DeletedAt() (r time.Time, exists bool) {
 	v := m.deleted_at
 	if v == nil {
 		return
@@ -410,10 +410,10 @@ func (m *OrgDepartmentMutation) DeletedAt() (r time.Time, exists bool) {
 	return *v, true
 }
 
-// OldDeletedAt returns the old "deleted_at" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldDeletedAt returns the old "deleted_at" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldDeletedAt(ctx context.Context) (v *time.Time, err error) {
+func (m *OrgDeptMutation) OldDeletedAt(ctx context.Context) (v *time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
 	}
@@ -428,30 +428,30 @@ func (m *OrgDepartmentMutation) OldDeletedAt(ctx context.Context) (v *time.Time,
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (m *OrgDepartmentMutation) ClearDeletedAt() {
+func (m *OrgDeptMutation) ClearDeletedAt() {
 	m.deleted_at = nil
-	m.clearedFields[orgdepartment.FieldDeletedAt] = struct{}{}
+	m.clearedFields[orgdept.FieldDeletedAt] = struct{}{}
 }
 
 // DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) DeletedAtCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldDeletedAt]
+func (m *OrgDeptMutation) DeletedAtCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldDeletedAt]
 	return ok
 }
 
 // ResetDeletedAt resets all changes to the "deleted_at" field.
-func (m *OrgDepartmentMutation) ResetDeletedAt() {
+func (m *OrgDeptMutation) ResetDeletedAt() {
 	m.deleted_at = nil
-	delete(m.clearedFields, orgdepartment.FieldDeletedAt)
+	delete(m.clearedFields, orgdept.FieldDeletedAt)
 }
 
 // SetIsActive sets the "is_active" field.
-func (m *OrgDepartmentMutation) SetIsActive(b bool) {
+func (m *OrgDeptMutation) SetIsActive(b bool) {
 	m.is_active = &b
 }
 
 // IsActive returns the value of the "is_active" field in the mutation.
-func (m *OrgDepartmentMutation) IsActive() (r bool, exists bool) {
+func (m *OrgDeptMutation) IsActive() (r bool, exists bool) {
 	v := m.is_active
 	if v == nil {
 		return
@@ -459,10 +459,10 @@ func (m *OrgDepartmentMutation) IsActive() (r bool, exists bool) {
 	return *v, true
 }
 
-// OldIsActive returns the old "is_active" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldIsActive returns the old "is_active" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldIsActive(ctx context.Context) (v bool, err error) {
+func (m *OrgDeptMutation) OldIsActive(ctx context.Context) (v bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
 	}
@@ -477,17 +477,17 @@ func (m *OrgDepartmentMutation) OldIsActive(ctx context.Context) (v bool, err er
 }
 
 // ResetIsActive resets all changes to the "is_active" field.
-func (m *OrgDepartmentMutation) ResetIsActive() {
+func (m *OrgDeptMutation) ResetIsActive() {
 	m.is_active = nil
 }
 
 // SetMemo sets the "memo" field.
-func (m *OrgDepartmentMutation) SetMemo(s string) {
+func (m *OrgDeptMutation) SetMemo(s string) {
 	m.memo = &s
 }
 
 // Memo returns the value of the "memo" field in the mutation.
-func (m *OrgDepartmentMutation) Memo() (r string, exists bool) {
+func (m *OrgDeptMutation) Memo() (r string, exists bool) {
 	v := m.memo
 	if v == nil {
 		return
@@ -495,10 +495,10 @@ func (m *OrgDepartmentMutation) Memo() (r string, exists bool) {
 	return *v, true
 }
 
-// OldMemo returns the old "memo" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldMemo returns the old "memo" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldMemo(ctx context.Context) (v *string, err error) {
+func (m *OrgDeptMutation) OldMemo(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldMemo is only allowed on UpdateOne operations")
 	}
@@ -513,31 +513,31 @@ func (m *OrgDepartmentMutation) OldMemo(ctx context.Context) (v *string, err err
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (m *OrgDepartmentMutation) ClearMemo() {
+func (m *OrgDeptMutation) ClearMemo() {
 	m.memo = nil
-	m.clearedFields[orgdepartment.FieldMemo] = struct{}{}
+	m.clearedFields[orgdept.FieldMemo] = struct{}{}
 }
 
 // MemoCleared returns if the "memo" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) MemoCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldMemo]
+func (m *OrgDeptMutation) MemoCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldMemo]
 	return ok
 }
 
 // ResetMemo resets all changes to the "memo" field.
-func (m *OrgDepartmentMutation) ResetMemo() {
+func (m *OrgDeptMutation) ResetMemo() {
 	m.memo = nil
-	delete(m.clearedFields, orgdepartment.FieldMemo)
+	delete(m.clearedFields, orgdept.FieldMemo)
 }
 
 // SetTreeID sets the "tree_id" field.
-func (m *OrgDepartmentMutation) SetTreeID(i int64) {
+func (m *OrgDeptMutation) SetTreeID(i int64) {
 	m.tree_id = &i
 	m.addtree_id = nil
 }
 
 // TreeID returns the value of the "tree_id" field in the mutation.
-func (m *OrgDepartmentMutation) TreeID() (r int64, exists bool) {
+func (m *OrgDeptMutation) TreeID() (r int64, exists bool) {
 	v := m.tree_id
 	if v == nil {
 		return
@@ -545,10 +545,10 @@ func (m *OrgDepartmentMutation) TreeID() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldTreeID returns the old "tree_id" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldTreeID returns the old "tree_id" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldTreeID(ctx context.Context) (v *int64, err error) {
+func (m *OrgDeptMutation) OldTreeID(ctx context.Context) (v *int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTreeID is only allowed on UpdateOne operations")
 	}
@@ -563,7 +563,7 @@ func (m *OrgDepartmentMutation) OldTreeID(ctx context.Context) (v *int64, err er
 }
 
 // AddTreeID adds i to the "tree_id" field.
-func (m *OrgDepartmentMutation) AddTreeID(i int64) {
+func (m *OrgDeptMutation) AddTreeID(i int64) {
 	if m.addtree_id != nil {
 		*m.addtree_id += i
 	} else {
@@ -572,7 +572,7 @@ func (m *OrgDepartmentMutation) AddTreeID(i int64) {
 }
 
 // AddedTreeID returns the value that was added to the "tree_id" field in this mutation.
-func (m *OrgDepartmentMutation) AddedTreeID() (r int64, exists bool) {
+func (m *OrgDeptMutation) AddedTreeID() (r int64, exists bool) {
 	v := m.addtree_id
 	if v == nil {
 		return
@@ -581,33 +581,33 @@ func (m *OrgDepartmentMutation) AddedTreeID() (r int64, exists bool) {
 }
 
 // ClearTreeID clears the value of the "tree_id" field.
-func (m *OrgDepartmentMutation) ClearTreeID() {
+func (m *OrgDeptMutation) ClearTreeID() {
 	m.tree_id = nil
 	m.addtree_id = nil
-	m.clearedFields[orgdepartment.FieldTreeID] = struct{}{}
+	m.clearedFields[orgdept.FieldTreeID] = struct{}{}
 }
 
 // TreeIDCleared returns if the "tree_id" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) TreeIDCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldTreeID]
+func (m *OrgDeptMutation) TreeIDCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldTreeID]
 	return ok
 }
 
 // ResetTreeID resets all changes to the "tree_id" field.
-func (m *OrgDepartmentMutation) ResetTreeID() {
+func (m *OrgDeptMutation) ResetTreeID() {
 	m.tree_id = nil
 	m.addtree_id = nil
-	delete(m.clearedFields, orgdepartment.FieldTreeID)
+	delete(m.clearedFields, orgdept.FieldTreeID)
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (m *OrgDepartmentMutation) SetTreeLevel(i int32) {
+func (m *OrgDeptMutation) SetTreeLevel(i int32) {
 	m.tree_level = &i
 	m.addtree_level = nil
 }
 
 // TreeLevel returns the value of the "tree_level" field in the mutation.
-func (m *OrgDepartmentMutation) TreeLevel() (r int32, exists bool) {
+func (m *OrgDeptMutation) TreeLevel() (r int32, exists bool) {
 	v := m.tree_level
 	if v == nil {
 		return
@@ -615,10 +615,10 @@ func (m *OrgDepartmentMutation) TreeLevel() (r int32, exists bool) {
 	return *v, true
 }
 
-// OldTreeLevel returns the old "tree_level" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldTreeLevel returns the old "tree_level" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldTreeLevel(ctx context.Context) (v *int32, err error) {
+func (m *OrgDeptMutation) OldTreeLevel(ctx context.Context) (v *int32, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTreeLevel is only allowed on UpdateOne operations")
 	}
@@ -633,7 +633,7 @@ func (m *OrgDepartmentMutation) OldTreeLevel(ctx context.Context) (v *int32, err
 }
 
 // AddTreeLevel adds i to the "tree_level" field.
-func (m *OrgDepartmentMutation) AddTreeLevel(i int32) {
+func (m *OrgDeptMutation) AddTreeLevel(i int32) {
 	if m.addtree_level != nil {
 		*m.addtree_level += i
 	} else {
@@ -642,7 +642,7 @@ func (m *OrgDepartmentMutation) AddTreeLevel(i int32) {
 }
 
 // AddedTreeLevel returns the value that was added to the "tree_level" field in this mutation.
-func (m *OrgDepartmentMutation) AddedTreeLevel() (r int32, exists bool) {
+func (m *OrgDeptMutation) AddedTreeLevel() (r int32, exists bool) {
 	v := m.addtree_level
 	if v == nil {
 		return
@@ -651,33 +651,33 @@ func (m *OrgDepartmentMutation) AddedTreeLevel() (r int32, exists bool) {
 }
 
 // ClearTreeLevel clears the value of the "tree_level" field.
-func (m *OrgDepartmentMutation) ClearTreeLevel() {
+func (m *OrgDeptMutation) ClearTreeLevel() {
 	m.tree_level = nil
 	m.addtree_level = nil
-	m.clearedFields[orgdepartment.FieldTreeLevel] = struct{}{}
+	m.clearedFields[orgdept.FieldTreeLevel] = struct{}{}
 }
 
 // TreeLevelCleared returns if the "tree_level" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) TreeLevelCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldTreeLevel]
+func (m *OrgDeptMutation) TreeLevelCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldTreeLevel]
 	return ok
 }
 
 // ResetTreeLevel resets all changes to the "tree_level" field.
-func (m *OrgDepartmentMutation) ResetTreeLevel() {
+func (m *OrgDeptMutation) ResetTreeLevel() {
 	m.tree_level = nil
 	m.addtree_level = nil
-	delete(m.clearedFields, orgdepartment.FieldTreeLevel)
+	delete(m.clearedFields, orgdept.FieldTreeLevel)
 }
 
 // SetTreeLeft sets the "tree_left" field.
-func (m *OrgDepartmentMutation) SetTreeLeft(i int64) {
+func (m *OrgDeptMutation) SetTreeLeft(i int64) {
 	m.tree_left = &i
 	m.addtree_left = nil
 }
 
 // TreeLeft returns the value of the "tree_left" field in the mutation.
-func (m *OrgDepartmentMutation) TreeLeft() (r int64, exists bool) {
+func (m *OrgDeptMutation) TreeLeft() (r int64, exists bool) {
 	v := m.tree_left
 	if v == nil {
 		return
@@ -685,10 +685,10 @@ func (m *OrgDepartmentMutation) TreeLeft() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldTreeLeft returns the old "tree_left" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldTreeLeft returns the old "tree_left" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldTreeLeft(ctx context.Context) (v *int64, err error) {
+func (m *OrgDeptMutation) OldTreeLeft(ctx context.Context) (v *int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTreeLeft is only allowed on UpdateOne operations")
 	}
@@ -703,7 +703,7 @@ func (m *OrgDepartmentMutation) OldTreeLeft(ctx context.Context) (v *int64, err 
 }
 
 // AddTreeLeft adds i to the "tree_left" field.
-func (m *OrgDepartmentMutation) AddTreeLeft(i int64) {
+func (m *OrgDeptMutation) AddTreeLeft(i int64) {
 	if m.addtree_left != nil {
 		*m.addtree_left += i
 	} else {
@@ -712,7 +712,7 @@ func (m *OrgDepartmentMutation) AddTreeLeft(i int64) {
 }
 
 // AddedTreeLeft returns the value that was added to the "tree_left" field in this mutation.
-func (m *OrgDepartmentMutation) AddedTreeLeft() (r int64, exists bool) {
+func (m *OrgDeptMutation) AddedTreeLeft() (r int64, exists bool) {
 	v := m.addtree_left
 	if v == nil {
 		return
@@ -721,33 +721,33 @@ func (m *OrgDepartmentMutation) AddedTreeLeft() (r int64, exists bool) {
 }
 
 // ClearTreeLeft clears the value of the "tree_left" field.
-func (m *OrgDepartmentMutation) ClearTreeLeft() {
+func (m *OrgDeptMutation) ClearTreeLeft() {
 	m.tree_left = nil
 	m.addtree_left = nil
-	m.clearedFields[orgdepartment.FieldTreeLeft] = struct{}{}
+	m.clearedFields[orgdept.FieldTreeLeft] = struct{}{}
 }
 
 // TreeLeftCleared returns if the "tree_left" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) TreeLeftCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldTreeLeft]
+func (m *OrgDeptMutation) TreeLeftCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldTreeLeft]
 	return ok
 }
 
 // ResetTreeLeft resets all changes to the "tree_left" field.
-func (m *OrgDepartmentMutation) ResetTreeLeft() {
+func (m *OrgDeptMutation) ResetTreeLeft() {
 	m.tree_left = nil
 	m.addtree_left = nil
-	delete(m.clearedFields, orgdepartment.FieldTreeLeft)
+	delete(m.clearedFields, orgdept.FieldTreeLeft)
 }
 
 // SetTreeRight sets the "tree_right" field.
-func (m *OrgDepartmentMutation) SetTreeRight(i int64) {
+func (m *OrgDeptMutation) SetTreeRight(i int64) {
 	m.tree_right = &i
 	m.addtree_right = nil
 }
 
 // TreeRight returns the value of the "tree_right" field in the mutation.
-func (m *OrgDepartmentMutation) TreeRight() (r int64, exists bool) {
+func (m *OrgDeptMutation) TreeRight() (r int64, exists bool) {
 	v := m.tree_right
 	if v == nil {
 		return
@@ -755,10 +755,10 @@ func (m *OrgDepartmentMutation) TreeRight() (r int64, exists bool) {
 	return *v, true
 }
 
-// OldTreeRight returns the old "tree_right" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldTreeRight returns the old "tree_right" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldTreeRight(ctx context.Context) (v *int64, err error) {
+func (m *OrgDeptMutation) OldTreeRight(ctx context.Context) (v *int64, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTreeRight is only allowed on UpdateOne operations")
 	}
@@ -773,7 +773,7 @@ func (m *OrgDepartmentMutation) OldTreeRight(ctx context.Context) (v *int64, err
 }
 
 // AddTreeRight adds i to the "tree_right" field.
-func (m *OrgDepartmentMutation) AddTreeRight(i int64) {
+func (m *OrgDeptMutation) AddTreeRight(i int64) {
 	if m.addtree_right != nil {
 		*m.addtree_right += i
 	} else {
@@ -782,7 +782,7 @@ func (m *OrgDepartmentMutation) AddTreeRight(i int64) {
 }
 
 // AddedTreeRight returns the value that was added to the "tree_right" field in this mutation.
-func (m *OrgDepartmentMutation) AddedTreeRight() (r int64, exists bool) {
+func (m *OrgDeptMutation) AddedTreeRight() (r int64, exists bool) {
 	v := m.addtree_right
 	if v == nil {
 		return
@@ -791,32 +791,32 @@ func (m *OrgDepartmentMutation) AddedTreeRight() (r int64, exists bool) {
 }
 
 // ClearTreeRight clears the value of the "tree_right" field.
-func (m *OrgDepartmentMutation) ClearTreeRight() {
+func (m *OrgDeptMutation) ClearTreeRight() {
 	m.tree_right = nil
 	m.addtree_right = nil
-	m.clearedFields[orgdepartment.FieldTreeRight] = struct{}{}
+	m.clearedFields[orgdept.FieldTreeRight] = struct{}{}
 }
 
 // TreeRightCleared returns if the "tree_right" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) TreeRightCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldTreeRight]
+func (m *OrgDeptMutation) TreeRightCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldTreeRight]
 	return ok
 }
 
 // ResetTreeRight resets all changes to the "tree_right" field.
-func (m *OrgDepartmentMutation) ResetTreeRight() {
+func (m *OrgDeptMutation) ResetTreeRight() {
 	m.tree_right = nil
 	m.addtree_right = nil
-	delete(m.clearedFields, orgdepartment.FieldTreeRight)
+	delete(m.clearedFields, orgdept.FieldTreeRight)
 }
 
 // SetIsLeaf sets the "is_leaf" field.
-func (m *OrgDepartmentMutation) SetIsLeaf(b bool) {
+func (m *OrgDeptMutation) SetIsLeaf(b bool) {
 	m.is_leaf = &b
 }
 
 // IsLeaf returns the value of the "is_leaf" field in the mutation.
-func (m *OrgDepartmentMutation) IsLeaf() (r bool, exists bool) {
+func (m *OrgDeptMutation) IsLeaf() (r bool, exists bool) {
 	v := m.is_leaf
 	if v == nil {
 		return
@@ -824,10 +824,10 @@ func (m *OrgDepartmentMutation) IsLeaf() (r bool, exists bool) {
 	return *v, true
 }
 
-// OldIsLeaf returns the old "is_leaf" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldIsLeaf returns the old "is_leaf" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldIsLeaf(ctx context.Context) (v *bool, err error) {
+func (m *OrgDeptMutation) OldIsLeaf(ctx context.Context) (v *bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldIsLeaf is only allowed on UpdateOne operations")
 	}
@@ -842,30 +842,30 @@ func (m *OrgDepartmentMutation) OldIsLeaf(ctx context.Context) (v *bool, err err
 }
 
 // ClearIsLeaf clears the value of the "is_leaf" field.
-func (m *OrgDepartmentMutation) ClearIsLeaf() {
+func (m *OrgDeptMutation) ClearIsLeaf() {
 	m.is_leaf = nil
-	m.clearedFields[orgdepartment.FieldIsLeaf] = struct{}{}
+	m.clearedFields[orgdept.FieldIsLeaf] = struct{}{}
 }
 
 // IsLeafCleared returns if the "is_leaf" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) IsLeafCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldIsLeaf]
+func (m *OrgDeptMutation) IsLeafCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldIsLeaf]
 	return ok
 }
 
 // ResetIsLeaf resets all changes to the "is_leaf" field.
-func (m *OrgDepartmentMutation) ResetIsLeaf() {
+func (m *OrgDeptMutation) ResetIsLeaf() {
 	m.is_leaf = nil
-	delete(m.clearedFields, orgdepartment.FieldIsLeaf)
+	delete(m.clearedFields, orgdept.FieldIsLeaf)
 }
 
 // SetTreePath sets the "tree_path" field.
-func (m *OrgDepartmentMutation) SetTreePath(s string) {
+func (m *OrgDeptMutation) SetTreePath(s string) {
 	m.tree_path = &s
 }
 
 // TreePath returns the value of the "tree_path" field in the mutation.
-func (m *OrgDepartmentMutation) TreePath() (r string, exists bool) {
+func (m *OrgDeptMutation) TreePath() (r string, exists bool) {
 	v := m.tree_path
 	if v == nil {
 		return
@@ -873,10 +873,10 @@ func (m *OrgDepartmentMutation) TreePath() (r string, exists bool) {
 	return *v, true
 }
 
-// OldTreePath returns the old "tree_path" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldTreePath returns the old "tree_path" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldTreePath(ctx context.Context) (v *string, err error) {
+func (m *OrgDeptMutation) OldTreePath(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTreePath is only allowed on UpdateOne operations")
 	}
@@ -891,30 +891,30 @@ func (m *OrgDepartmentMutation) OldTreePath(ctx context.Context) (v *string, err
 }
 
 // ClearTreePath clears the value of the "tree_path" field.
-func (m *OrgDepartmentMutation) ClearTreePath() {
+func (m *OrgDeptMutation) ClearTreePath() {
 	m.tree_path = nil
-	m.clearedFields[orgdepartment.FieldTreePath] = struct{}{}
+	m.clearedFields[orgdept.FieldTreePath] = struct{}{}
 }
 
 // TreePathCleared returns if the "tree_path" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) TreePathCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldTreePath]
+func (m *OrgDeptMutation) TreePathCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldTreePath]
 	return ok
 }
 
 // ResetTreePath resets all changes to the "tree_path" field.
-func (m *OrgDepartmentMutation) ResetTreePath() {
+func (m *OrgDeptMutation) ResetTreePath() {
 	m.tree_path = nil
-	delete(m.clearedFields, orgdepartment.FieldTreePath)
+	delete(m.clearedFields, orgdept.FieldTreePath)
 }
 
 // SetName sets the "name" field.
-func (m *OrgDepartmentMutation) SetName(s string) {
+func (m *OrgDeptMutation) SetName(s string) {
 	m.name = &s
 }
 
 // Name returns the value of the "name" field in the mutation.
-func (m *OrgDepartmentMutation) Name() (r string, exists bool) {
+func (m *OrgDeptMutation) Name() (r string, exists bool) {
 	v := m.name
 	if v == nil {
 		return
@@ -922,10 +922,10 @@ func (m *OrgDepartmentMutation) Name() (r string, exists bool) {
 	return *v, true
 }
 
-// OldName returns the old "name" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldName returns the old "name" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldName(ctx context.Context) (v *string, err error) {
+func (m *OrgDeptMutation) OldName(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldName is only allowed on UpdateOne operations")
 	}
@@ -940,30 +940,30 @@ func (m *OrgDepartmentMutation) OldName(ctx context.Context) (v *string, err err
 }
 
 // ClearName clears the value of the "name" field.
-func (m *OrgDepartmentMutation) ClearName() {
+func (m *OrgDeptMutation) ClearName() {
 	m.name = nil
-	m.clearedFields[orgdepartment.FieldName] = struct{}{}
+	m.clearedFields[orgdept.FieldName] = struct{}{}
 }
 
 // NameCleared returns if the "name" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) NameCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldName]
+func (m *OrgDeptMutation) NameCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldName]
 	return ok
 }
 
 // ResetName resets all changes to the "name" field.
-func (m *OrgDepartmentMutation) ResetName() {
+func (m *OrgDeptMutation) ResetName() {
 	m.name = nil
-	delete(m.clearedFields, orgdepartment.FieldName)
+	delete(m.clearedFields, orgdept.FieldName)
 }
 
 // SetCode sets the "code" field.
-func (m *OrgDepartmentMutation) SetCode(s string) {
+func (m *OrgDeptMutation) SetCode(s string) {
 	m.code = &s
 }
 
 // Code returns the value of the "code" field in the mutation.
-func (m *OrgDepartmentMutation) Code() (r string, exists bool) {
+func (m *OrgDeptMutation) Code() (r string, exists bool) {
 	v := m.code
 	if v == nil {
 		return
@@ -971,10 +971,10 @@ func (m *OrgDepartmentMutation) Code() (r string, exists bool) {
 	return *v, true
 }
 
-// OldCode returns the old "code" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldCode returns the old "code" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldCode(ctx context.Context) (v *string, err error) {
+func (m *OrgDeptMutation) OldCode(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldCode is only allowed on UpdateOne operations")
 	}
@@ -989,30 +989,30 @@ func (m *OrgDepartmentMutation) OldCode(ctx context.Context) (v *string, err err
 }
 
 // ClearCode clears the value of the "code" field.
-func (m *OrgDepartmentMutation) ClearCode() {
+func (m *OrgDeptMutation) ClearCode() {
 	m.code = nil
-	m.clearedFields[orgdepartment.FieldCode] = struct{}{}
+	m.clearedFields[orgdept.FieldCode] = struct{}{}
 }
 
 // CodeCleared returns if the "code" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) CodeCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldCode]
+func (m *OrgDeptMutation) CodeCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldCode]
 	return ok
 }
 
 // ResetCode resets all changes to the "code" field.
-func (m *OrgDepartmentMutation) ResetCode() {
+func (m *OrgDeptMutation) ResetCode() {
 	m.code = nil
-	delete(m.clearedFields, orgdepartment.FieldCode)
+	delete(m.clearedFields, orgdept.FieldCode)
 }
 
 // SetOrgID sets the "org_id" field.
-func (m *OrgDepartmentMutation) SetOrgID(s string) {
+func (m *OrgDeptMutation) SetOrgID(s string) {
 	m.organ = &s
 }
 
 // OrgID returns the value of the "org_id" field in the mutation.
-func (m *OrgDepartmentMutation) OrgID() (r string, exists bool) {
+func (m *OrgDeptMutation) OrgID() (r string, exists bool) {
 	v := m.organ
 	if v == nil {
 		return
@@ -1020,10 +1020,10 @@ func (m *OrgDepartmentMutation) OrgID() (r string, exists bool) {
 	return *v, true
 }
 
-// OldOrgID returns the old "org_id" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldOrgID returns the old "org_id" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldOrgID(ctx context.Context) (v *string, err error) {
+func (m *OrgDeptMutation) OldOrgID(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldOrgID is only allowed on UpdateOne operations")
 	}
@@ -1038,30 +1038,30 @@ func (m *OrgDepartmentMutation) OldOrgID(ctx context.Context) (v *string, err er
 }
 
 // ClearOrgID clears the value of the "org_id" field.
-func (m *OrgDepartmentMutation) ClearOrgID() {
+func (m *OrgDeptMutation) ClearOrgID() {
 	m.organ = nil
-	m.clearedFields[orgdepartment.FieldOrgID] = struct{}{}
+	m.clearedFields[orgdept.FieldOrgID] = struct{}{}
 }
 
 // OrgIDCleared returns if the "org_id" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) OrgIDCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldOrgID]
+func (m *OrgDeptMutation) OrgIDCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldOrgID]
 	return ok
 }
 
 // ResetOrgID resets all changes to the "org_id" field.
-func (m *OrgDepartmentMutation) ResetOrgID() {
+func (m *OrgDeptMutation) ResetOrgID() {
 	m.organ = nil
-	delete(m.clearedFields, orgdepartment.FieldOrgID)
+	delete(m.clearedFields, orgdept.FieldOrgID)
 }
 
 // SetParentID sets the "parent_id" field.
-func (m *OrgDepartmentMutation) SetParentID(s string) {
+func (m *OrgDeptMutation) SetParentID(s string) {
 	m.parent = &s
 }
 
 // ParentID returns the value of the "parent_id" field in the mutation.
-func (m *OrgDepartmentMutation) ParentID() (r string, exists bool) {
+func (m *OrgDeptMutation) ParentID() (r string, exists bool) {
 	v := m.parent
 	if v == nil {
 		return
@@ -1069,10 +1069,10 @@ func (m *OrgDepartmentMutation) ParentID() (r string, exists bool) {
 	return *v, true
 }
 
-// OldParentID returns the old "parent_id" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldParentID returns the old "parent_id" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldParentID(ctx context.Context) (v *string, err error) {
+func (m *OrgDeptMutation) OldParentID(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldParentID is only allowed on UpdateOne operations")
 	}
@@ -1087,30 +1087,30 @@ func (m *OrgDepartmentMutation) OldParentID(ctx context.Context) (v *string, err
 }
 
 // ClearParentID clears the value of the "parent_id" field.
-func (m *OrgDepartmentMutation) ClearParentID() {
+func (m *OrgDeptMutation) ClearParentID() {
 	m.parent = nil
-	m.clearedFields[orgdepartment.FieldParentID] = struct{}{}
+	m.clearedFields[orgdept.FieldParentID] = struct{}{}
 }
 
 // ParentIDCleared returns if the "parent_id" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) ParentIDCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldParentID]
+func (m *OrgDeptMutation) ParentIDCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldParentID]
 	return ok
 }
 
 // ResetParentID resets all changes to the "parent_id" field.
-func (m *OrgDepartmentMutation) ResetParentID() {
+func (m *OrgDeptMutation) ResetParentID() {
 	m.parent = nil
-	delete(m.clearedFields, orgdepartment.FieldParentID)
+	delete(m.clearedFields, orgdept.FieldParentID)
 }
 
 // SetIsReal sets the "is_real" field.
-func (m *OrgDepartmentMutation) SetIsReal(b bool) {
+func (m *OrgDeptMutation) SetIsReal(b bool) {
 	m.is_real = &b
 }
 
 // IsReal returns the value of the "is_real" field in the mutation.
-func (m *OrgDepartmentMutation) IsReal() (r bool, exists bool) {
+func (m *OrgDeptMutation) IsReal() (r bool, exists bool) {
 	v := m.is_real
 	if v == nil {
 		return
@@ -1118,10 +1118,10 @@ func (m *OrgDepartmentMutation) IsReal() (r bool, exists bool) {
 	return *v, true
 }
 
-// OldIsReal returns the old "is_real" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldIsReal returns the old "is_real" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldIsReal(ctx context.Context) (v *bool, err error) {
+func (m *OrgDeptMutation) OldIsReal(ctx context.Context) (v *bool, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldIsReal is only allowed on UpdateOne operations")
 	}
@@ -1136,30 +1136,30 @@ func (m *OrgDepartmentMutation) OldIsReal(ctx context.Context) (v *bool, err err
 }
 
 // ClearIsReal clears the value of the "is_real" field.
-func (m *OrgDepartmentMutation) ClearIsReal() {
+func (m *OrgDeptMutation) ClearIsReal() {
 	m.is_real = nil
-	m.clearedFields[orgdepartment.FieldIsReal] = struct{}{}
+	m.clearedFields[orgdept.FieldIsReal] = struct{}{}
 }
 
 // IsRealCleared returns if the "is_real" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) IsRealCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldIsReal]
+func (m *OrgDeptMutation) IsRealCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldIsReal]
 	return ok
 }
 
 // ResetIsReal resets all changes to the "is_real" field.
-func (m *OrgDepartmentMutation) ResetIsReal() {
+func (m *OrgDeptMutation) ResetIsReal() {
 	m.is_real = nil
-	delete(m.clearedFields, orgdepartment.FieldIsReal)
+	delete(m.clearedFields, orgdept.FieldIsReal)
 }
 
 // SetCreator sets the "creator" field.
-func (m *OrgDepartmentMutation) SetCreator(s string) {
+func (m *OrgDeptMutation) SetCreator(s string) {
 	m.creator = &s
 }
 
 // Creator returns the value of the "creator" field in the mutation.
-func (m *OrgDepartmentMutation) Creator() (r string, exists bool) {
+func (m *OrgDeptMutation) Creator() (r string, exists bool) {
 	v := m.creator
 	if v == nil {
 		return
@@ -1167,10 +1167,10 @@ func (m *OrgDepartmentMutation) Creator() (r string, exists bool) {
 	return *v, true
 }
 
-// OldCreator returns the old "creator" field's value of the OrgDepartment entity.
-// If the OrgDepartment object wasn't provided to the builder, the object is fetched from the database.
+// OldCreator returns the old "creator" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *OrgDepartmentMutation) OldCreator(ctx context.Context) (v *string, err error) {
+func (m *OrgDeptMutation) OldCreator(ctx context.Context) (v *string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldCreator is only allowed on UpdateOne operations")
 	}
@@ -1185,37 +1185,37 @@ func (m *OrgDepartmentMutation) OldCreator(ctx context.Context) (v *string, err 
 }
 
 // ClearCreator clears the value of the "creator" field.
-func (m *OrgDepartmentMutation) ClearCreator() {
+func (m *OrgDeptMutation) ClearCreator() {
 	m.creator = nil
-	m.clearedFields[orgdepartment.FieldCreator] = struct{}{}
+	m.clearedFields[orgdept.FieldCreator] = struct{}{}
 }
 
 // CreatorCleared returns if the "creator" field was cleared in this mutation.
-func (m *OrgDepartmentMutation) CreatorCleared() bool {
-	_, ok := m.clearedFields[orgdepartment.FieldCreator]
+func (m *OrgDeptMutation) CreatorCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldCreator]
 	return ok
 }
 
 // ResetCreator resets all changes to the "creator" field.
-func (m *OrgDepartmentMutation) ResetCreator() {
+func (m *OrgDeptMutation) ResetCreator() {
 	m.creator = nil
-	delete(m.clearedFields, orgdepartment.FieldCreator)
+	delete(m.clearedFields, orgdept.FieldCreator)
 }
 
-// ClearParent clears the "parent" edge to the OrgDepartment entity.
-func (m *OrgDepartmentMutation) ClearParent() {
+// ClearParent clears the "parent" edge to the OrgDept entity.
+func (m *OrgDeptMutation) ClearParent() {
 	m.clearedparent = true
 }
 
-// ParentCleared reports if the "parent" edge to the OrgDepartment entity was cleared.
-func (m *OrgDepartmentMutation) ParentCleared() bool {
+// ParentCleared reports if the "parent" edge to the OrgDept entity was cleared.
+func (m *OrgDeptMutation) ParentCleared() bool {
 	return m.ParentIDCleared() || m.clearedparent
 }
 
 // ParentIDs returns the "parent" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // ParentID instead. It exists only for internal usage by the builders.
-func (m *OrgDepartmentMutation) ParentIDs() (ids []string) {
+func (m *OrgDeptMutation) ParentIDs() (ids []string) {
 	if id := m.parent; id != nil {
 		ids = append(ids, *id)
 	}
@@ -1223,13 +1223,13 @@ func (m *OrgDepartmentMutation) ParentIDs() (ids []string) {
 }
 
 // ResetParent resets all changes to the "parent" edge.
-func (m *OrgDepartmentMutation) ResetParent() {
+func (m *OrgDeptMutation) ResetParent() {
 	m.parent = nil
 	m.clearedparent = false
 }
 
-// AddChildIDs adds the "children" edge to the OrgDepartment entity by ids.
-func (m *OrgDepartmentMutation) AddChildIDs(ids ...string) {
+// AddChildIDs adds the "children" edge to the OrgDept entity by ids.
+func (m *OrgDeptMutation) AddChildIDs(ids ...string) {
 	if m.children == nil {
 		m.children = make(map[string]struct{})
 	}
@@ -1238,18 +1238,18 @@ func (m *OrgDepartmentMutation) AddChildIDs(ids ...string) {
 	}
 }
 
-// ClearChildren clears the "children" edge to the OrgDepartment entity.
-func (m *OrgDepartmentMutation) ClearChildren() {
+// ClearChildren clears the "children" edge to the OrgDept entity.
+func (m *OrgDeptMutation) ClearChildren() {
 	m.clearedchildren = true
 }
 
-// ChildrenCleared reports if the "children" edge to the OrgDepartment entity was cleared.
-func (m *OrgDepartmentMutation) ChildrenCleared() bool {
+// ChildrenCleared reports if the "children" edge to the OrgDept entity was cleared.
+func (m *OrgDeptMutation) ChildrenCleared() bool {
 	return m.clearedchildren
 }
 
-// RemoveChildIDs removes the "children" edge to the OrgDepartment entity by IDs.
-func (m *OrgDepartmentMutation) RemoveChildIDs(ids ...string) {
+// RemoveChildIDs removes the "children" edge to the OrgDept entity by IDs.
+func (m *OrgDeptMutation) RemoveChildIDs(ids ...string) {
 	if m.removedchildren == nil {
 		m.removedchildren = make(map[string]struct{})
 	}
@@ -1259,8 +1259,8 @@ func (m *OrgDepartmentMutation) RemoveChildIDs(ids ...string) {
 	}
 }
 
-// RemovedChildren returns the removed IDs of the "children" edge to the OrgDepartment entity.
-func (m *OrgDepartmentMutation) RemovedChildrenIDs() (ids []string) {
+// RemovedChildren returns the removed IDs of the "children" edge to the OrgDept entity.
+func (m *OrgDeptMutation) RemovedChildrenIDs() (ids []string) {
 	for id := range m.removedchildren {
 		ids = append(ids, id)
 	}
@@ -1268,7 +1268,7 @@ func (m *OrgDepartmentMutation) RemovedChildrenIDs() (ids []string) {
 }
 
 // ChildrenIDs returns the "children" edge IDs in the mutation.
-func (m *OrgDepartmentMutation) ChildrenIDs() (ids []string) {
+func (m *OrgDeptMutation) ChildrenIDs() (ids []string) {
 	for id := range m.children {
 		ids = append(ids, id)
 	}
@@ -1276,29 +1276,29 @@ func (m *OrgDepartmentMutation) ChildrenIDs() (ids []string) {
 }
 
 // ResetChildren resets all changes to the "children" edge.
-func (m *OrgDepartmentMutation) ResetChildren() {
+func (m *OrgDeptMutation) ResetChildren() {
 	m.children = nil
 	m.clearedchildren = false
 	m.removedchildren = nil
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by id.
-func (m *OrgDepartmentMutation) SetOrganID(id string) {
+func (m *OrgDeptMutation) SetOrganID(id string) {
 	m.organ = &id
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
-func (m *OrgDepartmentMutation) ClearOrgan() {
+func (m *OrgDeptMutation) ClearOrgan() {
 	m.clearedorgan = true
 }
 
 // OrganCleared reports if the "organ" edge to the OrgOrgan entity was cleared.
-func (m *OrgDepartmentMutation) OrganCleared() bool {
+func (m *OrgDeptMutation) OrganCleared() bool {
 	return m.OrgIDCleared() || m.clearedorgan
 }
 
 // OrganID returns the "organ" edge ID in the mutation.
-func (m *OrgDepartmentMutation) OrganID() (id string, exists bool) {
+func (m *OrgDeptMutation) OrganID() (id string, exists bool) {
 	if m.organ != nil {
 		return *m.organ, true
 	}
@@ -1308,7 +1308,7 @@ func (m *OrgDepartmentMutation) OrganID() (id string, exists bool) {
 // OrganIDs returns the "organ" edge IDs in the mutation.
 // Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
 // OrganID instead. It exists only for internal usage by the builders.
-func (m *OrgDepartmentMutation) OrganIDs() (ids []string) {
+func (m *OrgDeptMutation) OrganIDs() (ids []string) {
 	if id := m.organ; id != nil {
 		ids = append(ids, *id)
 	}
@@ -1316,20 +1316,20 @@ func (m *OrgDepartmentMutation) OrganIDs() (ids []string) {
 }
 
 // ResetOrgan resets all changes to the "organ" edge.
-func (m *OrgDepartmentMutation) ResetOrgan() {
+func (m *OrgDeptMutation) ResetOrgan() {
 	m.organ = nil
 	m.clearedorgan = false
 }
 
-// Where appends a list predicates to the OrgDepartmentMutation builder.
-func (m *OrgDepartmentMutation) Where(ps ...predicate.OrgDepartment) {
+// Where appends a list predicates to the OrgDeptMutation builder.
+func (m *OrgDeptMutation) Where(ps ...predicate.OrgDept) {
 	m.predicates = append(m.predicates, ps...)
 }
 
-// WhereP appends storage-level predicates to the OrgDepartmentMutation builder. Using this method,
+// WhereP appends storage-level predicates to the OrgDeptMutation builder. Using this method,
 // users can use type-assertion to append predicates that do not depend on any generated package.
-func (m *OrgDepartmentMutation) WhereP(ps ...func(*sql.Selector)) {
-	p := make([]predicate.OrgDepartment, len(ps))
+func (m *OrgDeptMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.OrgDept, len(ps))
 	for i := range ps {
 		p[i] = ps[i]
 	}
@@ -1337,81 +1337,81 @@ func (m *OrgDepartmentMutation) WhereP(ps ...func(*sql.Selector)) {
 }
 
 // Op returns the operation name.
-func (m *OrgDepartmentMutation) Op() Op {
+func (m *OrgDeptMutation) Op() Op {
 	return m.op
 }
 
 // SetOp allows setting the mutation operation.
-func (m *OrgDepartmentMutation) SetOp(op Op) {
+func (m *OrgDeptMutation) SetOp(op Op) {
 	m.op = op
 }
 
-// Type returns the node type of this mutation (OrgDepartment).
-func (m *OrgDepartmentMutation) Type() string {
+// Type returns the node type of this mutation (OrgDept).
+func (m *OrgDeptMutation) Type() string {
 	return m.typ
 }
 
 // Fields returns all fields that were changed during this mutation. Note that in
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
-func (m *OrgDepartmentMutation) Fields() []string {
+func (m *OrgDeptMutation) Fields() []string {
 	fields := make([]string, 0, 19)
 	if m.is_del != nil {
-		fields = append(fields, orgdepartment.FieldIsDel)
+		fields = append(fields, orgdept.FieldIsDel)
 	}
 	if m.sort != nil {
-		fields = append(fields, orgdepartment.FieldSort)
+		fields = append(fields, orgdept.FieldSort)
 	}
 	if m.created_at != nil {
-		fields = append(fields, orgdepartment.FieldCreatedAt)
+		fields = append(fields, orgdept.FieldCreatedAt)
 	}
 	if m.updated_at != nil {
-		fields = append(fields, orgdepartment.FieldUpdatedAt)
+		fields = append(fields, orgdept.FieldUpdatedAt)
 	}
 	if m.deleted_at != nil {
-		fields = append(fields, orgdepartment.FieldDeletedAt)
+		fields = append(fields, orgdept.FieldDeletedAt)
 	}
 	if m.is_active != nil {
-		fields = append(fields, orgdepartment.FieldIsActive)
+		fields = append(fields, orgdept.FieldIsActive)
 	}
 	if m.memo != nil {
-		fields = append(fields, orgdepartment.FieldMemo)
+		fields = append(fields, orgdept.FieldMemo)
 	}
 	if m.tree_id != nil {
-		fields = append(fields, orgdepartment.FieldTreeID)
+		fields = append(fields, orgdept.FieldTreeID)
 	}
 	if m.tree_level != nil {
-		fields = append(fields, orgdepartment.FieldTreeLevel)
+		fields = append(fields, orgdept.FieldTreeLevel)
 	}
 	if m.tree_left != nil {
-		fields = append(fields, orgdepartment.FieldTreeLeft)
+		fields = append(fields, orgdept.FieldTreeLeft)
 	}
 	if m.tree_right != nil {
-		fields = append(fields, orgdepartment.FieldTreeRight)
+		fields = append(fields, orgdept.FieldTreeRight)
 	}
 	if m.is_leaf != nil {
-		fields = append(fields, orgdepartment.FieldIsLeaf)
+		fields = append(fields, orgdept.FieldIsLeaf)
 	}
 	if m.tree_path != nil {
-		fields = append(fields, orgdepartment.FieldTreePath)
+		fields = append(fields, orgdept.FieldTreePath)
 	}
 	if m.name != nil {
-		fields = append(fields, orgdepartment.FieldName)
+		fields = append(fields, orgdept.FieldName)
 	}
 	if m.code != nil {
-		fields = append(fields, orgdepartment.FieldCode)
+		fields = append(fields, orgdept.FieldCode)
 	}
 	if m.organ != nil {
-		fields = append(fields, orgdepartment.FieldOrgID)
+		fields = append(fields, orgdept.FieldOrgID)
 	}
 	if m.parent != nil {
-		fields = append(fields, orgdepartment.FieldParentID)
+		fields = append(fields, orgdept.FieldParentID)
 	}
 	if m.is_real != nil {
-		fields = append(fields, orgdepartment.FieldIsReal)
+		fields = append(fields, orgdept.FieldIsReal)
 	}
 	if m.creator != nil {
-		fields = append(fields, orgdepartment.FieldCreator)
+		fields = append(fields, orgdept.FieldCreator)
 	}
 	return fields
 }
@@ -1419,45 +1419,45 @@ func (m *OrgDepartmentMutation) Fields() []string {
 // Field returns the value of a field with the given name. The second boolean
 // return value indicates that this field was not set, or was not defined in the
 // schema.
-func (m *OrgDepartmentMutation) Field(name string) (ent.Value, bool) {
+func (m *OrgDeptMutation) Field(name string) (ent.Value, bool) {
 	switch name {
-	case orgdepartment.FieldIsDel:
+	case orgdept.FieldIsDel:
 		return m.IsDel()
-	case orgdepartment.FieldSort:
+	case orgdept.FieldSort:
 		return m.Sort()
-	case orgdepartment.FieldCreatedAt:
+	case orgdept.FieldCreatedAt:
 		return m.CreatedAt()
-	case orgdepartment.FieldUpdatedAt:
+	case orgdept.FieldUpdatedAt:
 		return m.UpdatedAt()
-	case orgdepartment.FieldDeletedAt:
+	case orgdept.FieldDeletedAt:
 		return m.DeletedAt()
-	case orgdepartment.FieldIsActive:
+	case orgdept.FieldIsActive:
 		return m.IsActive()
-	case orgdepartment.FieldMemo:
+	case orgdept.FieldMemo:
 		return m.Memo()
-	case orgdepartment.FieldTreeID:
+	case orgdept.FieldTreeID:
 		return m.TreeID()
-	case orgdepartment.FieldTreeLevel:
+	case orgdept.FieldTreeLevel:
 		return m.TreeLevel()
-	case orgdepartment.FieldTreeLeft:
+	case orgdept.FieldTreeLeft:
 		return m.TreeLeft()
-	case orgdepartment.FieldTreeRight:
+	case orgdept.FieldTreeRight:
 		return m.TreeRight()
-	case orgdepartment.FieldIsLeaf:
+	case orgdept.FieldIsLeaf:
 		return m.IsLeaf()
-	case orgdepartment.FieldTreePath:
+	case orgdept.FieldTreePath:
 		return m.TreePath()
-	case orgdepartment.FieldName:
+	case orgdept.FieldName:
 		return m.Name()
-	case orgdepartment.FieldCode:
+	case orgdept.FieldCode:
 		return m.Code()
-	case orgdepartment.FieldOrgID:
+	case orgdept.FieldOrgID:
 		return m.OrgID()
-	case orgdepartment.FieldParentID:
+	case orgdept.FieldParentID:
 		return m.ParentID()
-	case orgdepartment.FieldIsReal:
+	case orgdept.FieldIsReal:
 		return m.IsReal()
-	case orgdepartment.FieldCreator:
+	case orgdept.FieldCreator:
 		return m.Creator()
 	}
 	return nil, false
@@ -1466,182 +1466,182 @@ func (m *OrgDepartmentMutation) Field(name string) (ent.Value, bool) {
 // OldField returns the old value of the field from the database. An error is
 // returned if the mutation operation is not UpdateOne, or the query to the
 // database failed.
-func (m *OrgDepartmentMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+func (m *OrgDeptMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
-	case orgdepartment.FieldIsDel:
+	case orgdept.FieldIsDel:
 		return m.OldIsDel(ctx)
-	case orgdepartment.FieldSort:
+	case orgdept.FieldSort:
 		return m.OldSort(ctx)
-	case orgdepartment.FieldCreatedAt:
+	case orgdept.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
-	case orgdepartment.FieldUpdatedAt:
+	case orgdept.FieldUpdatedAt:
 		return m.OldUpdatedAt(ctx)
-	case orgdepartment.FieldDeletedAt:
+	case orgdept.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
-	case orgdepartment.FieldIsActive:
+	case orgdept.FieldIsActive:
 		return m.OldIsActive(ctx)
-	case orgdepartment.FieldMemo:
+	case orgdept.FieldMemo:
 		return m.OldMemo(ctx)
-	case orgdepartment.FieldTreeID:
+	case orgdept.FieldTreeID:
 		return m.OldTreeID(ctx)
-	case orgdepartment.FieldTreeLevel:
+	case orgdept.FieldTreeLevel:
 		return m.OldTreeLevel(ctx)
-	case orgdepartment.FieldTreeLeft:
+	case orgdept.FieldTreeLeft:
 		return m.OldTreeLeft(ctx)
-	case orgdepartment.FieldTreeRight:
+	case orgdept.FieldTreeRight:
 		return m.OldTreeRight(ctx)
-	case orgdepartment.FieldIsLeaf:
+	case orgdept.FieldIsLeaf:
 		return m.OldIsLeaf(ctx)
-	case orgdepartment.FieldTreePath:
+	case orgdept.FieldTreePath:
 		return m.OldTreePath(ctx)
-	case orgdepartment.FieldName:
+	case orgdept.FieldName:
 		return m.OldName(ctx)
-	case orgdepartment.FieldCode:
+	case orgdept.FieldCode:
 		return m.OldCode(ctx)
-	case orgdepartment.FieldOrgID:
+	case orgdept.FieldOrgID:
 		return m.OldOrgID(ctx)
-	case orgdepartment.FieldParentID:
+	case orgdept.FieldParentID:
 		return m.OldParentID(ctx)
-	case orgdepartment.FieldIsReal:
+	case orgdept.FieldIsReal:
 		return m.OldIsReal(ctx)
-	case orgdepartment.FieldCreator:
+	case orgdept.FieldCreator:
 		return m.OldCreator(ctx)
 	}
-	return nil, fmt.Errorf("unknown OrgDepartment field %s", name)
+	return nil, fmt.Errorf("unknown OrgDept field %s", name)
 }
 
 // SetField sets the value of a field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *OrgDepartmentMutation) SetField(name string, value ent.Value) error {
+func (m *OrgDeptMutation) SetField(name string, value ent.Value) error {
 	switch name {
-	case orgdepartment.FieldIsDel:
+	case orgdept.FieldIsDel:
 		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIsDel(v)
 		return nil
-	case orgdepartment.FieldSort:
+	case orgdept.FieldSort:
 		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetSort(v)
 		return nil
-	case orgdepartment.FieldCreatedAt:
+	case orgdept.FieldCreatedAt:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCreatedAt(v)
 		return nil
-	case orgdepartment.FieldUpdatedAt:
+	case orgdept.FieldUpdatedAt:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUpdatedAt(v)
 		return nil
-	case orgdepartment.FieldDeletedAt:
+	case orgdept.FieldDeletedAt:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDeletedAt(v)
 		return nil
-	case orgdepartment.FieldIsActive:
+	case orgdept.FieldIsActive:
 		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIsActive(v)
 		return nil
-	case orgdepartment.FieldMemo:
+	case orgdept.FieldMemo:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetMemo(v)
 		return nil
-	case orgdepartment.FieldTreeID:
+	case orgdept.FieldTreeID:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTreeID(v)
 		return nil
-	case orgdepartment.FieldTreeLevel:
+	case orgdept.FieldTreeLevel:
 		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTreeLevel(v)
 		return nil
-	case orgdepartment.FieldTreeLeft:
+	case orgdept.FieldTreeLeft:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTreeLeft(v)
 		return nil
-	case orgdepartment.FieldTreeRight:
+	case orgdept.FieldTreeRight:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTreeRight(v)
 		return nil
-	case orgdepartment.FieldIsLeaf:
+	case orgdept.FieldIsLeaf:
 		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIsLeaf(v)
 		return nil
-	case orgdepartment.FieldTreePath:
+	case orgdept.FieldTreePath:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetTreePath(v)
 		return nil
-	case orgdepartment.FieldName:
+	case orgdept.FieldName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetName(v)
 		return nil
-	case orgdepartment.FieldCode:
+	case orgdept.FieldCode:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCode(v)
 		return nil
-	case orgdepartment.FieldOrgID:
+	case orgdept.FieldOrgID:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetOrgID(v)
 		return nil
-	case orgdepartment.FieldParentID:
+	case orgdept.FieldParentID:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetParentID(v)
 		return nil
-	case orgdepartment.FieldIsReal:
+	case orgdept.FieldIsReal:
 		v, ok := value.(bool)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIsReal(v)
 		return nil
-	case orgdepartment.FieldCreator:
+	case orgdept.FieldCreator:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
@@ -1649,27 +1649,27 @@ func (m *OrgDepartmentMutation) SetField(name string, value ent.Value) error {
 		m.SetCreator(v)
 		return nil
 	}
-	return fmt.Errorf("unknown OrgDepartment field %s", name)
+	return fmt.Errorf("unknown OrgDept field %s", name)
 }
 
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
-func (m *OrgDepartmentMutation) AddedFields() []string {
+func (m *OrgDeptMutation) AddedFields() []string {
 	var fields []string
 	if m.addsort != nil {
-		fields = append(fields, orgdepartment.FieldSort)
+		fields = append(fields, orgdept.FieldSort)
 	}
 	if m.addtree_id != nil {
-		fields = append(fields, orgdepartment.FieldTreeID)
+		fields = append(fields, orgdept.FieldTreeID)
 	}
 	if m.addtree_level != nil {
-		fields = append(fields, orgdepartment.FieldTreeLevel)
+		fields = append(fields, orgdept.FieldTreeLevel)
 	}
 	if m.addtree_left != nil {
-		fields = append(fields, orgdepartment.FieldTreeLeft)
+		fields = append(fields, orgdept.FieldTreeLeft)
 	}
 	if m.addtree_right != nil {
-		fields = append(fields, orgdepartment.FieldTreeRight)
+		fields = append(fields, orgdept.FieldTreeRight)
 	}
 	return fields
 }
@@ -1677,17 +1677,17 @@ func (m *OrgDepartmentMutation) AddedFields() []string {
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
-func (m *OrgDepartmentMutation) AddedField(name string) (ent.Value, bool) {
+func (m *OrgDeptMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case orgdepartment.FieldSort:
+	case orgdept.FieldSort:
 		return m.AddedSort()
-	case orgdepartment.FieldTreeID:
+	case orgdept.FieldTreeID:
 		return m.AddedTreeID()
-	case orgdepartment.FieldTreeLevel:
+	case orgdept.FieldTreeLevel:
 		return m.AddedTreeLevel()
-	case orgdepartment.FieldTreeLeft:
+	case orgdept.FieldTreeLeft:
 		return m.AddedTreeLeft()
-	case orgdepartment.FieldTreeRight:
+	case orgdept.FieldTreeRight:
 		return m.AddedTreeRight()
 	}
 	return nil, false
@@ -1696,37 +1696,37 @@ func (m *OrgDepartmentMutation) AddedField(name string) (ent.Value, bool) {
 // AddField adds the value to the field with the given name. It returns an error if
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
-func (m *OrgDepartmentMutation) AddField(name string, value ent.Value) error {
+func (m *OrgDeptMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case orgdepartment.FieldSort:
+	case orgdept.FieldSort:
 		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddSort(v)
 		return nil
-	case orgdepartment.FieldTreeID:
+	case orgdept.FieldTreeID:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddTreeID(v)
 		return nil
-	case orgdepartment.FieldTreeLevel:
+	case orgdept.FieldTreeLevel:
 		v, ok := value.(int32)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddTreeLevel(v)
 		return nil
-	case orgdepartment.FieldTreeLeft:
+	case orgdept.FieldTreeLeft:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddTreeLeft(v)
 		return nil
-	case orgdepartment.FieldTreeRight:
+	case orgdept.FieldTreeRight:
 		v, ok := value.(int64)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
@@ -1734,222 +1734,222 @@ func (m *OrgDepartmentMutation) AddField(name string, value ent.Value) error {
 		m.AddTreeRight(v)
 		return nil
 	}
-	return fmt.Errorf("unknown OrgDepartment numeric field %s", name)
+	return fmt.Errorf("unknown OrgDept numeric field %s", name)
 }
 
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
-func (m *OrgDepartmentMutation) ClearedFields() []string {
+func (m *OrgDeptMutation) ClearedFields() []string {
 	var fields []string
-	if m.FieldCleared(orgdepartment.FieldCreatedAt) {
-		fields = append(fields, orgdepartment.FieldCreatedAt)
+	if m.FieldCleared(orgdept.FieldCreatedAt) {
+		fields = append(fields, orgdept.FieldCreatedAt)
 	}
-	if m.FieldCleared(orgdepartment.FieldUpdatedAt) {
-		fields = append(fields, orgdepartment.FieldUpdatedAt)
+	if m.FieldCleared(orgdept.FieldUpdatedAt) {
+		fields = append(fields, orgdept.FieldUpdatedAt)
 	}
-	if m.FieldCleared(orgdepartment.FieldDeletedAt) {
-		fields = append(fields, orgdepartment.FieldDeletedAt)
+	if m.FieldCleared(orgdept.FieldDeletedAt) {
+		fields = append(fields, orgdept.FieldDeletedAt)
 	}
-	if m.FieldCleared(orgdepartment.FieldMemo) {
-		fields = append(fields, orgdepartment.FieldMemo)
+	if m.FieldCleared(orgdept.FieldMemo) {
+		fields = append(fields, orgdept.FieldMemo)
 	}
-	if m.FieldCleared(orgdepartment.FieldTreeID) {
-		fields = append(fields, orgdepartment.FieldTreeID)
+	if m.FieldCleared(orgdept.FieldTreeID) {
+		fields = append(fields, orgdept.FieldTreeID)
 	}
-	if m.FieldCleared(orgdepartment.FieldTreeLevel) {
-		fields = append(fields, orgdepartment.FieldTreeLevel)
+	if m.FieldCleared(orgdept.FieldTreeLevel) {
+		fields = append(fields, orgdept.FieldTreeLevel)
 	}
-	if m.FieldCleared(orgdepartment.FieldTreeLeft) {
-		fields = append(fields, orgdepartment.FieldTreeLeft)
+	if m.FieldCleared(orgdept.FieldTreeLeft) {
+		fields = append(fields, orgdept.FieldTreeLeft)
 	}
-	if m.FieldCleared(orgdepartment.FieldTreeRight) {
-		fields = append(fields, orgdepartment.FieldTreeRight)
+	if m.FieldCleared(orgdept.FieldTreeRight) {
+		fields = append(fields, orgdept.FieldTreeRight)
 	}
-	if m.FieldCleared(orgdepartment.FieldIsLeaf) {
-		fields = append(fields, orgdepartment.FieldIsLeaf)
+	if m.FieldCleared(orgdept.FieldIsLeaf) {
+		fields = append(fields, orgdept.FieldIsLeaf)
 	}
-	if m.FieldCleared(orgdepartment.FieldTreePath) {
-		fields = append(fields, orgdepartment.FieldTreePath)
+	if m.FieldCleared(orgdept.FieldTreePath) {
+		fields = append(fields, orgdept.FieldTreePath)
 	}
-	if m.FieldCleared(orgdepartment.FieldName) {
-		fields = append(fields, orgdepartment.FieldName)
+	if m.FieldCleared(orgdept.FieldName) {
+		fields = append(fields, orgdept.FieldName)
 	}
-	if m.FieldCleared(orgdepartment.FieldCode) {
-		fields = append(fields, orgdepartment.FieldCode)
+	if m.FieldCleared(orgdept.FieldCode) {
+		fields = append(fields, orgdept.FieldCode)
 	}
-	if m.FieldCleared(orgdepartment.FieldOrgID) {
-		fields = append(fields, orgdepartment.FieldOrgID)
+	if m.FieldCleared(orgdept.FieldOrgID) {
+		fields = append(fields, orgdept.FieldOrgID)
 	}
-	if m.FieldCleared(orgdepartment.FieldParentID) {
-		fields = append(fields, orgdepartment.FieldParentID)
+	if m.FieldCleared(orgdept.FieldParentID) {
+		fields = append(fields, orgdept.FieldParentID)
 	}
-	if m.FieldCleared(orgdepartment.FieldIsReal) {
-		fields = append(fields, orgdepartment.FieldIsReal)
+	if m.FieldCleared(orgdept.FieldIsReal) {
+		fields = append(fields, orgdept.FieldIsReal)
 	}
-	if m.FieldCleared(orgdepartment.FieldCreator) {
-		fields = append(fields, orgdepartment.FieldCreator)
+	if m.FieldCleared(orgdept.FieldCreator) {
+		fields = append(fields, orgdept.FieldCreator)
 	}
 	return fields
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
 // cleared in this mutation.
-func (m *OrgDepartmentMutation) FieldCleared(name string) bool {
+func (m *OrgDeptMutation) FieldCleared(name string) bool {
 	_, ok := m.clearedFields[name]
 	return ok
 }
 
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
-func (m *OrgDepartmentMutation) ClearField(name string) error {
+func (m *OrgDeptMutation) ClearField(name string) error {
 	switch name {
-	case orgdepartment.FieldCreatedAt:
+	case orgdept.FieldCreatedAt:
 		m.ClearCreatedAt()
 		return nil
-	case orgdepartment.FieldUpdatedAt:
+	case orgdept.FieldUpdatedAt:
 		m.ClearUpdatedAt()
 		return nil
-	case orgdepartment.FieldDeletedAt:
+	case orgdept.FieldDeletedAt:
 		m.ClearDeletedAt()
 		return nil
-	case orgdepartment.FieldMemo:
+	case orgdept.FieldMemo:
 		m.ClearMemo()
 		return nil
-	case orgdepartment.FieldTreeID:
+	case orgdept.FieldTreeID:
 		m.ClearTreeID()
 		return nil
-	case orgdepartment.FieldTreeLevel:
+	case orgdept.FieldTreeLevel:
 		m.ClearTreeLevel()
 		return nil
-	case orgdepartment.FieldTreeLeft:
+	case orgdept.FieldTreeLeft:
 		m.ClearTreeLeft()
 		return nil
-	case orgdepartment.FieldTreeRight:
+	case orgdept.FieldTreeRight:
 		m.ClearTreeRight()
 		return nil
-	case orgdepartment.FieldIsLeaf:
+	case orgdept.FieldIsLeaf:
 		m.ClearIsLeaf()
 		return nil
-	case orgdepartment.FieldTreePath:
+	case orgdept.FieldTreePath:
 		m.ClearTreePath()
 		return nil
-	case orgdepartment.FieldName:
+	case orgdept.FieldName:
 		m.ClearName()
 		return nil
-	case orgdepartment.FieldCode:
+	case orgdept.FieldCode:
 		m.ClearCode()
 		return nil
-	case orgdepartment.FieldOrgID:
+	case orgdept.FieldOrgID:
 		m.ClearOrgID()
 		return nil
-	case orgdepartment.FieldParentID:
+	case orgdept.FieldParentID:
 		m.ClearParentID()
 		return nil
-	case orgdepartment.FieldIsReal:
+	case orgdept.FieldIsReal:
 		m.ClearIsReal()
 		return nil
-	case orgdepartment.FieldCreator:
+	case orgdept.FieldCreator:
 		m.ClearCreator()
 		return nil
 	}
-	return fmt.Errorf("unknown OrgDepartment nullable field %s", name)
+	return fmt.Errorf("unknown OrgDept nullable field %s", name)
 }
 
 // ResetField resets all changes in the mutation for the field with the given name.
 // It returns an error if the field is not defined in the schema.
-func (m *OrgDepartmentMutation) ResetField(name string) error {
+func (m *OrgDeptMutation) ResetField(name string) error {
 	switch name {
-	case orgdepartment.FieldIsDel:
+	case orgdept.FieldIsDel:
 		m.ResetIsDel()
 		return nil
-	case orgdepartment.FieldSort:
+	case orgdept.FieldSort:
 		m.ResetSort()
 		return nil
-	case orgdepartment.FieldCreatedAt:
+	case orgdept.FieldCreatedAt:
 		m.ResetCreatedAt()
 		return nil
-	case orgdepartment.FieldUpdatedAt:
+	case orgdept.FieldUpdatedAt:
 		m.ResetUpdatedAt()
 		return nil
-	case orgdepartment.FieldDeletedAt:
+	case orgdept.FieldDeletedAt:
 		m.ResetDeletedAt()
 		return nil
-	case orgdepartment.FieldIsActive:
+	case orgdept.FieldIsActive:
 		m.ResetIsActive()
 		return nil
-	case orgdepartment.FieldMemo:
+	case orgdept.FieldMemo:
 		m.ResetMemo()
 		return nil
-	case orgdepartment.FieldTreeID:
+	case orgdept.FieldTreeID:
 		m.ResetTreeID()
 		return nil
-	case orgdepartment.FieldTreeLevel:
+	case orgdept.FieldTreeLevel:
 		m.ResetTreeLevel()
 		return nil
-	case orgdepartment.FieldTreeLeft:
+	case orgdept.FieldTreeLeft:
 		m.ResetTreeLeft()
 		return nil
-	case orgdepartment.FieldTreeRight:
+	case orgdept.FieldTreeRight:
 		m.ResetTreeRight()
 		return nil
-	case orgdepartment.FieldIsLeaf:
+	case orgdept.FieldIsLeaf:
 		m.ResetIsLeaf()
 		return nil
-	case orgdepartment.FieldTreePath:
+	case orgdept.FieldTreePath:
 		m.ResetTreePath()
 		return nil
-	case orgdepartment.FieldName:
+	case orgdept.FieldName:
 		m.ResetName()
 		return nil
-	case orgdepartment.FieldCode:
+	case orgdept.FieldCode:
 		m.ResetCode()
 		return nil
-	case orgdepartment.FieldOrgID:
+	case orgdept.FieldOrgID:
 		m.ResetOrgID()
 		return nil
-	case orgdepartment.FieldParentID:
+	case orgdept.FieldParentID:
 		m.ResetParentID()
 		return nil
-	case orgdepartment.FieldIsReal:
+	case orgdept.FieldIsReal:
 		m.ResetIsReal()
 		return nil
-	case orgdepartment.FieldCreator:
+	case orgdept.FieldCreator:
 		m.ResetCreator()
 		return nil
 	}
-	return fmt.Errorf("unknown OrgDepartment field %s", name)
+	return fmt.Errorf("unknown OrgDept field %s", name)
 }
 
 // AddedEdges returns all edge names that were set/added in this mutation.
-func (m *OrgDepartmentMutation) AddedEdges() []string {
+func (m *OrgDeptMutation) AddedEdges() []string {
 	edges := make([]string, 0, 3)
 	if m.parent != nil {
-		edges = append(edges, orgdepartment.EdgeParent)
+		edges = append(edges, orgdept.EdgeParent)
 	}
 	if m.children != nil {
-		edges = append(edges, orgdepartment.EdgeChildren)
+		edges = append(edges, orgdept.EdgeChildren)
 	}
 	if m.organ != nil {
-		edges = append(edges, orgdepartment.EdgeOrgan)
+		edges = append(edges, orgdept.EdgeOrgan)
 	}
 	return edges
 }
 
 // AddedIDs returns all IDs (to other nodes) that were added for the given edge
 // name in this mutation.
-func (m *OrgDepartmentMutation) AddedIDs(name string) []ent.Value {
+func (m *OrgDeptMutation) AddedIDs(name string) []ent.Value {
 	switch name {
-	case orgdepartment.EdgeParent:
+	case orgdept.EdgeParent:
 		if id := m.parent; id != nil {
 			return []ent.Value{*id}
 		}
-	case orgdepartment.EdgeChildren:
+	case orgdept.EdgeChildren:
 		ids := make([]ent.Value, 0, len(m.children))
 		for id := range m.children {
 			ids = append(ids, id)
 		}
 		return ids
-	case orgdepartment.EdgeOrgan:
+	case orgdept.EdgeOrgan:
 		if id := m.organ; id != nil {
 			return []ent.Value{*id}
 		}
@@ -1958,19 +1958,19 @@ func (m *OrgDepartmentMutation) AddedIDs(name string) []ent.Value {
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
-func (m *OrgDepartmentMutation) RemovedEdges() []string {
+func (m *OrgDeptMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 3)
 	if m.removedchildren != nil {
-		edges = append(edges, orgdepartment.EdgeChildren)
+		edges = append(edges, orgdept.EdgeChildren)
 	}
 	return edges
 }
 
 // RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
 // the given name in this mutation.
-func (m *OrgDepartmentMutation) RemovedIDs(name string) []ent.Value {
+func (m *OrgDeptMutation) RemovedIDs(name string) []ent.Value {
 	switch name {
-	case orgdepartment.EdgeChildren:
+	case orgdept.EdgeChildren:
 		ids := make([]ent.Value, 0, len(m.removedchildren))
 		for id := range m.removedchildren {
 			ids = append(ids, id)
@@ -1981,29 +1981,29 @@ func (m *OrgDepartmentMutation) RemovedIDs(name string) []ent.Value {
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
-func (m *OrgDepartmentMutation) ClearedEdges() []string {
+func (m *OrgDeptMutation) ClearedEdges() []string {
 	edges := make([]string, 0, 3)
 	if m.clearedparent {
-		edges = append(edges, orgdepartment.EdgeParent)
+		edges = append(edges, orgdept.EdgeParent)
 	}
 	if m.clearedchildren {
-		edges = append(edges, orgdepartment.EdgeChildren)
+		edges = append(edges, orgdept.EdgeChildren)
 	}
 	if m.clearedorgan {
-		edges = append(edges, orgdepartment.EdgeOrgan)
+		edges = append(edges, orgdept.EdgeOrgan)
 	}
 	return edges
 }
 
 // EdgeCleared returns a boolean which indicates if the edge with the given name
 // was cleared in this mutation.
-func (m *OrgDepartmentMutation) EdgeCleared(name string) bool {
+func (m *OrgDeptMutation) EdgeCleared(name string) bool {
 	switch name {
-	case orgdepartment.EdgeParent:
+	case orgdept.EdgeParent:
 		return m.clearedparent
-	case orgdepartment.EdgeChildren:
+	case orgdept.EdgeChildren:
 		return m.clearedchildren
-	case orgdepartment.EdgeOrgan:
+	case orgdept.EdgeOrgan:
 		return m.clearedorgan
 	}
 	return false
@@ -2011,70 +2011,70 @@ func (m *OrgDepartmentMutation) EdgeCleared(name string) bool {
 
 // ClearEdge clears the value of the edge with the given name. It returns an error
 // if that edge is not defined in the schema.
-func (m *OrgDepartmentMutation) ClearEdge(name string) error {
+func (m *OrgDeptMutation) ClearEdge(name string) error {
 	switch name {
-	case orgdepartment.EdgeParent:
+	case orgdept.EdgeParent:
 		m.ClearParent()
 		return nil
-	case orgdepartment.EdgeOrgan:
+	case orgdept.EdgeOrgan:
 		m.ClearOrgan()
 		return nil
 	}
-	return fmt.Errorf("unknown OrgDepartment unique edge %s", name)
+	return fmt.Errorf("unknown OrgDept unique edge %s", name)
 }
 
 // ResetEdge resets all changes to the edge with the given name in this mutation.
 // It returns an error if the edge is not defined in the schema.
-func (m *OrgDepartmentMutation) ResetEdge(name string) error {
+func (m *OrgDeptMutation) ResetEdge(name string) error {
 	switch name {
-	case orgdepartment.EdgeParent:
+	case orgdept.EdgeParent:
 		m.ResetParent()
 		return nil
-	case orgdepartment.EdgeChildren:
+	case orgdept.EdgeChildren:
 		m.ResetChildren()
 		return nil
-	case orgdepartment.EdgeOrgan:
+	case orgdept.EdgeOrgan:
 		m.ResetOrgan()
 		return nil
 	}
-	return fmt.Errorf("unknown OrgDepartment edge %s", name)
+	return fmt.Errorf("unknown OrgDept edge %s", name)
 }
 
 // OrgOrganMutation represents an operation that mutates the OrgOrgan nodes in the graph.
 type OrgOrganMutation struct {
 	config
-	op                 Op
-	typ                string
-	id                 *string
-	is_del             *bool
-	sort               *int32
-	addsort            *int32
-	created_at         *time.Time
-	updated_at         *time.Time
-	deleted_at         *time.Time
-	is_active          *bool
-	memo               *string
-	name               *string
-	sname              *string
-	code               *string
-	iden_no            *string
-	owner_id           *string
-	creator            *string
-	clearedFields      map[string]struct{}
-	haddr              *string
-	clearedhaddr       bool
-	departments        map[string]struct{}
-	removeddepartments map[string]struct{}
-	cleareddepartments bool
-	staffs             map[string]struct{}
-	removedstaffs      map[string]struct{}
-	clearedstaffs      bool
-	positions          map[string]struct{}
-	removedpositions   map[string]struct{}
-	clearedpositions   bool
-	done               bool
-	oldValue           func(context.Context) (*OrgOrgan, error)
-	predicates         []predicate.OrgOrgan
+	op               Op
+	typ              string
+	id               *string
+	is_del           *bool
+	sort             *int32
+	addsort          *int32
+	created_at       *time.Time
+	updated_at       *time.Time
+	deleted_at       *time.Time
+	is_active        *bool
+	memo             *string
+	name             *string
+	sname            *string
+	code             *string
+	iden_no          *string
+	owner_id         *string
+	creator          *string
+	clearedFields    map[string]struct{}
+	haddr            *string
+	clearedhaddr     bool
+	depts            map[string]struct{}
+	removeddepts     map[string]struct{}
+	cleareddepts     bool
+	staffs           map[string]struct{}
+	removedstaffs    map[string]struct{}
+	clearedstaffs    bool
+	positions        map[string]struct{}
+	removedpositions map[string]struct{}
+	clearedpositions bool
+	done             bool
+	oldValue         func(context.Context) (*OrgOrgan, error)
+	predicates       []predicate.OrgOrgan
 }
 
 var _ ent.Mutation = (*OrgOrganMutation)(nil)
@@ -2874,58 +2874,58 @@ func (m *OrgOrganMutation) ResetHaddr() {
 	m.clearedhaddr = false
 }
 
-// AddDepartmentIDs adds the "departments" edge to the OrgDepartment entity by ids.
-func (m *OrgOrganMutation) AddDepartmentIDs(ids ...string) {
-	if m.departments == nil {
-		m.departments = make(map[string]struct{})
+// AddDeptIDs adds the "depts" edge to the OrgDept entity by ids.
+func (m *OrgOrganMutation) AddDeptIDs(ids ...string) {
+	if m.depts == nil {
+		m.depts = make(map[string]struct{})
 	}
 	for i := range ids {
-		m.departments[ids[i]] = struct{}{}
+		m.depts[ids[i]] = struct{}{}
 	}
 }
 
-// ClearDepartments clears the "departments" edge to the OrgDepartment entity.
-func (m *OrgOrganMutation) ClearDepartments() {
-	m.cleareddepartments = true
+// ClearDepts clears the "depts" edge to the OrgDept entity.
+func (m *OrgOrganMutation) ClearDepts() {
+	m.cleareddepts = true
 }
 
-// DepartmentsCleared reports if the "departments" edge to the OrgDepartment entity was cleared.
-func (m *OrgOrganMutation) DepartmentsCleared() bool {
-	return m.cleareddepartments
+// DeptsCleared reports if the "depts" edge to the OrgDept entity was cleared.
+func (m *OrgOrganMutation) DeptsCleared() bool {
+	return m.cleareddepts
 }
 
-// RemoveDepartmentIDs removes the "departments" edge to the OrgDepartment entity by IDs.
-func (m *OrgOrganMutation) RemoveDepartmentIDs(ids ...string) {
-	if m.removeddepartments == nil {
-		m.removeddepartments = make(map[string]struct{})
+// RemoveDeptIDs removes the "depts" edge to the OrgDept entity by IDs.
+func (m *OrgOrganMutation) RemoveDeptIDs(ids ...string) {
+	if m.removeddepts == nil {
+		m.removeddepts = make(map[string]struct{})
 	}
 	for i := range ids {
-		delete(m.departments, ids[i])
-		m.removeddepartments[ids[i]] = struct{}{}
+		delete(m.depts, ids[i])
+		m.removeddepts[ids[i]] = struct{}{}
 	}
 }
 
-// RemovedDepartments returns the removed IDs of the "departments" edge to the OrgDepartment entity.
-func (m *OrgOrganMutation) RemovedDepartmentsIDs() (ids []string) {
-	for id := range m.removeddepartments {
+// RemovedDepts returns the removed IDs of the "depts" edge to the OrgDept entity.
+func (m *OrgOrganMutation) RemovedDeptsIDs() (ids []string) {
+	for id := range m.removeddepts {
 		ids = append(ids, id)
 	}
 	return
 }
 
-// DepartmentsIDs returns the "departments" edge IDs in the mutation.
-func (m *OrgOrganMutation) DepartmentsIDs() (ids []string) {
-	for id := range m.departments {
+// DeptsIDs returns the "depts" edge IDs in the mutation.
+func (m *OrgOrganMutation) DeptsIDs() (ids []string) {
+	for id := range m.depts {
 		ids = append(ids, id)
 	}
 	return
 }
 
-// ResetDepartments resets all changes to the "departments" edge.
-func (m *OrgOrganMutation) ResetDepartments() {
-	m.departments = nil
-	m.cleareddepartments = false
-	m.removeddepartments = nil
+// ResetDepts resets all changes to the "depts" edge.
+func (m *OrgOrganMutation) ResetDepts() {
+	m.depts = nil
+	m.cleareddepts = false
+	m.removeddepts = nil
 }
 
 // AddStaffIDs adds the "staffs" edge to the OrgStaff entity by ids.
@@ -3478,8 +3478,8 @@ func (m *OrgOrganMutation) AddedEdges() []string {
 	if m.haddr != nil {
 		edges = append(edges, orgorgan.EdgeHaddr)
 	}
-	if m.departments != nil {
-		edges = append(edges, orgorgan.EdgeDepartments)
+	if m.depts != nil {
+		edges = append(edges, orgorgan.EdgeDepts)
 	}
 	if m.staffs != nil {
 		edges = append(edges, orgorgan.EdgeStaffs)
@@ -3498,9 +3498,9 @@ func (m *OrgOrganMutation) AddedIDs(name string) []ent.Value {
 		if id := m.haddr; id != nil {
 			return []ent.Value{*id}
 		}
-	case orgorgan.EdgeDepartments:
-		ids := make([]ent.Value, 0, len(m.departments))
-		for id := range m.departments {
+	case orgorgan.EdgeDepts:
+		ids := make([]ent.Value, 0, len(m.depts))
+		for id := range m.depts {
 			ids = append(ids, id)
 		}
 		return ids
@@ -3523,8 +3523,8 @@ func (m *OrgOrganMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *OrgOrganMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 4)
-	if m.removeddepartments != nil {
-		edges = append(edges, orgorgan.EdgeDepartments)
+	if m.removeddepts != nil {
+		edges = append(edges, orgorgan.EdgeDepts)
 	}
 	if m.removedstaffs != nil {
 		edges = append(edges, orgorgan.EdgeStaffs)
@@ -3539,9 +3539,9 @@ func (m *OrgOrganMutation) RemovedEdges() []string {
 // the given name in this mutation.
 func (m *OrgOrganMutation) RemovedIDs(name string) []ent.Value {
 	switch name {
-	case orgorgan.EdgeDepartments:
-		ids := make([]ent.Value, 0, len(m.removeddepartments))
-		for id := range m.removeddepartments {
+	case orgorgan.EdgeDepts:
+		ids := make([]ent.Value, 0, len(m.removeddepts))
+		for id := range m.removeddepts {
 			ids = append(ids, id)
 		}
 		return ids
@@ -3567,8 +3567,8 @@ func (m *OrgOrganMutation) ClearedEdges() []string {
 	if m.clearedhaddr {
 		edges = append(edges, orgorgan.EdgeHaddr)
 	}
-	if m.cleareddepartments {
-		edges = append(edges, orgorgan.EdgeDepartments)
+	if m.cleareddepts {
+		edges = append(edges, orgorgan.EdgeDepts)
 	}
 	if m.clearedstaffs {
 		edges = append(edges, orgorgan.EdgeStaffs)
@@ -3585,8 +3585,8 @@ func (m *OrgOrganMutation) EdgeCleared(name string) bool {
 	switch name {
 	case orgorgan.EdgeHaddr:
 		return m.clearedhaddr
-	case orgorgan.EdgeDepartments:
-		return m.cleareddepartments
+	case orgorgan.EdgeDepts:
+		return m.cleareddepts
 	case orgorgan.EdgeStaffs:
 		return m.clearedstaffs
 	case orgorgan.EdgePositions:
@@ -3613,8 +3613,8 @@ func (m *OrgOrganMutation) ResetEdge(name string) error {
 	case orgorgan.EdgeHaddr:
 		m.ResetHaddr()
 		return nil
-	case orgorgan.EdgeDepartments:
-		m.ResetDepartments()
+	case orgorgan.EdgeDepts:
+		m.ResetDepts()
 		return nil
 	case orgorgan.EdgeStaffs:
 		m.ResetStaffs()

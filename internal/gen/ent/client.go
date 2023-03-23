@@ -14,7 +14,7 @@ import (
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -41,8 +41,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// OrgDepartment is the client for interacting with the OrgDepartment builders.
-	OrgDepartment *OrgDepartmentClient
+	// OrgDept is the client for interacting with the OrgDept builders.
+	OrgDept *OrgDeptClient
 	// OrgOrgan is the client for interacting with the OrgOrgan builders.
 	OrgOrgan *OrgOrganClient
 	// OrgPosition is the client for interacting with the OrgPosition builders.
@@ -90,7 +90,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.OrgDepartment = NewOrgDepartmentClient(c.config)
+	c.OrgDept = NewOrgDeptClient(c.config)
 	c.OrgOrgan = NewOrgOrganClient(c.config)
 	c.OrgPosition = NewOrgPositionClient(c.config)
 	c.OrgStaff = NewOrgStaffClient(c.config)
@@ -192,7 +192,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	return &Tx{
 		ctx:                   ctx,
 		config:                cfg,
-		OrgDepartment:         NewOrgDepartmentClient(cfg),
+		OrgDept:               NewOrgDeptClient(cfg),
 		OrgOrgan:              NewOrgOrganClient(cfg),
 		OrgPosition:           NewOrgPositionClient(cfg),
 		OrgStaff:              NewOrgStaffClient(cfg),
@@ -229,7 +229,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	return &Tx{
 		ctx:                   ctx,
 		config:                cfg,
-		OrgDepartment:         NewOrgDepartmentClient(cfg),
+		OrgDept:               NewOrgDeptClient(cfg),
 		OrgOrgan:              NewOrgOrganClient(cfg),
 		OrgPosition:           NewOrgPositionClient(cfg),
 		OrgStaff:              NewOrgStaffClient(cfg),
@@ -253,7 +253,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		OrgDepartment.
+//		OrgDept.
 //		Query().
 //		Count(ctx)
 func (c *Client) Debug() *Client {
@@ -276,7 +276,7 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
-		c.OrgDepartment, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict,
+		c.OrgDept, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict,
 		c.SysDictItem, c.SysDistrict, c.SysJwtBlock, c.SysLogging, c.SysMenu,
 		c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysUser,
 		c.SysUserRole, c.XxxDemo,
@@ -289,7 +289,7 @@ func (c *Client) Use(hooks ...Hook) {
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.OrgDepartment, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict,
+		c.OrgDept, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict,
 		c.SysDictItem, c.SysDistrict, c.SysJwtBlock, c.SysLogging, c.SysMenu,
 		c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysUser,
 		c.SysUserRole, c.XxxDemo,
@@ -301,8 +301,8 @@ func (c *Client) Intercept(interceptors ...Interceptor) {
 // Mutate implements the ent.Mutator interface.
 func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
-	case *OrgDepartmentMutation:
-		return c.OrgDepartment.mutate(ctx, m)
+	case *OrgDeptMutation:
+		return c.OrgDept.mutate(ctx, m)
 	case *OrgOrganMutation:
 		return c.OrgOrgan.mutate(ctx, m)
 	case *OrgPositionMutation:
@@ -342,92 +342,92 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	}
 }
 
-// OrgDepartmentClient is a client for the OrgDepartment schema.
-type OrgDepartmentClient struct {
+// OrgDeptClient is a client for the OrgDept schema.
+type OrgDeptClient struct {
 	config
 }
 
-// NewOrgDepartmentClient returns a client for the OrgDepartment from the given config.
-func NewOrgDepartmentClient(c config) *OrgDepartmentClient {
-	return &OrgDepartmentClient{config: c}
+// NewOrgDeptClient returns a client for the OrgDept from the given config.
+func NewOrgDeptClient(c config) *OrgDeptClient {
+	return &OrgDeptClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `orgdepartment.Hooks(f(g(h())))`.
-func (c *OrgDepartmentClient) Use(hooks ...Hook) {
-	c.hooks.OrgDepartment = append(c.hooks.OrgDepartment, hooks...)
+// A call to `Use(f, g, h)` equals to `orgdept.Hooks(f(g(h())))`.
+func (c *OrgDeptClient) Use(hooks ...Hook) {
+	c.hooks.OrgDept = append(c.hooks.OrgDept, hooks...)
 }
 
 // Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `orgdepartment.Intercept(f(g(h())))`.
-func (c *OrgDepartmentClient) Intercept(interceptors ...Interceptor) {
-	c.inters.OrgDepartment = append(c.inters.OrgDepartment, interceptors...)
+// A call to `Intercept(f, g, h)` equals to `orgdept.Intercept(f(g(h())))`.
+func (c *OrgDeptClient) Intercept(interceptors ...Interceptor) {
+	c.inters.OrgDept = append(c.inters.OrgDept, interceptors...)
 }
 
-// Create returns a builder for creating a OrgDepartment entity.
-func (c *OrgDepartmentClient) Create() *OrgDepartmentCreate {
-	mutation := newOrgDepartmentMutation(c.config, OpCreate)
-	return &OrgDepartmentCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a builder for creating a OrgDept entity.
+func (c *OrgDeptClient) Create() *OrgDeptCreate {
+	mutation := newOrgDeptMutation(c.config, OpCreate)
+	return &OrgDeptCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// CreateBulk returns a builder for creating a bulk of OrgDepartment entities.
-func (c *OrgDepartmentClient) CreateBulk(builders ...*OrgDepartmentCreate) *OrgDepartmentCreateBulk {
-	return &OrgDepartmentCreateBulk{config: c.config, builders: builders}
+// CreateBulk returns a builder for creating a bulk of OrgDept entities.
+func (c *OrgDeptClient) CreateBulk(builders ...*OrgDeptCreate) *OrgDeptCreateBulk {
+	return &OrgDeptCreateBulk{config: c.config, builders: builders}
 }
 
-// Update returns an update builder for OrgDepartment.
-func (c *OrgDepartmentClient) Update() *OrgDepartmentUpdate {
-	mutation := newOrgDepartmentMutation(c.config, OpUpdate)
-	return &OrgDepartmentUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for OrgDept.
+func (c *OrgDeptClient) Update() *OrgDeptUpdate {
+	mutation := newOrgDeptMutation(c.config, OpUpdate)
+	return &OrgDeptUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrgDepartmentClient) UpdateOne(od *OrgDepartment) *OrgDepartmentUpdateOne {
-	mutation := newOrgDepartmentMutation(c.config, OpUpdateOne, withOrgDepartment(od))
-	return &OrgDepartmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *OrgDeptClient) UpdateOne(od *OrgDept) *OrgDeptUpdateOne {
+	mutation := newOrgDeptMutation(c.config, OpUpdateOne, withOrgDept(od))
+	return &OrgDeptUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *OrgDepartmentClient) UpdateOneID(id string) *OrgDepartmentUpdateOne {
-	mutation := newOrgDepartmentMutation(c.config, OpUpdateOne, withOrgDepartmentID(id))
-	return &OrgDepartmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *OrgDeptClient) UpdateOneID(id string) *OrgDeptUpdateOne {
+	mutation := newOrgDeptMutation(c.config, OpUpdateOne, withOrgDeptID(id))
+	return &OrgDeptUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for OrgDepartment.
-func (c *OrgDepartmentClient) Delete() *OrgDepartmentDelete {
-	mutation := newOrgDepartmentMutation(c.config, OpDelete)
-	return &OrgDepartmentDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for OrgDept.
+func (c *OrgDeptClient) Delete() *OrgDeptDelete {
+	mutation := newOrgDeptMutation(c.config, OpDelete)
+	return &OrgDeptDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrgDepartmentClient) DeleteOne(od *OrgDepartment) *OrgDepartmentDeleteOne {
+func (c *OrgDeptClient) DeleteOne(od *OrgDept) *OrgDeptDeleteOne {
 	return c.DeleteOneID(od.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *OrgDepartmentClient) DeleteOneID(id string) *OrgDepartmentDeleteOne {
-	builder := c.Delete().Where(orgdepartment.ID(id))
+func (c *OrgDeptClient) DeleteOneID(id string) *OrgDeptDeleteOne {
+	builder := c.Delete().Where(orgdept.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &OrgDepartmentDeleteOne{builder}
+	return &OrgDeptDeleteOne{builder}
 }
 
-// Query returns a query builder for OrgDepartment.
-func (c *OrgDepartmentClient) Query() *OrgDepartmentQuery {
-	return &OrgDepartmentQuery{
+// Query returns a query builder for OrgDept.
+func (c *OrgDeptClient) Query() *OrgDeptQuery {
+	return &OrgDeptQuery{
 		config: c.config,
-		ctx:    &QueryContext{Type: TypeOrgDepartment},
+		ctx:    &QueryContext{Type: TypeOrgDept},
 		inters: c.Interceptors(),
 	}
 }
 
-// Get returns a OrgDepartment entity by its id.
-func (c *OrgDepartmentClient) Get(ctx context.Context, id string) (*OrgDepartment, error) {
-	return c.Query().Where(orgdepartment.ID(id)).Only(ctx)
+// Get returns a OrgDept entity by its id.
+func (c *OrgDeptClient) Get(ctx context.Context, id string) (*OrgDept, error) {
+	return c.Query().Where(orgdept.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *OrgDepartmentClient) GetX(ctx context.Context, id string) *OrgDepartment {
+func (c *OrgDeptClient) GetX(ctx context.Context, id string) *OrgDept {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -435,57 +435,57 @@ func (c *OrgDepartmentClient) GetX(ctx context.Context, id string) *OrgDepartmen
 	return obj
 }
 
-// QueryParent queries the parent edge of a OrgDepartment.
-func (c *OrgDepartmentClient) QueryParent(od *OrgDepartment) *OrgDepartmentQuery {
-	query := (&OrgDepartmentClient{config: c.config}).Query()
+// QueryParent queries the parent edge of a OrgDept.
+func (c *OrgDeptClient) QueryParent(od *OrgDept) *OrgDeptQuery {
+	query := (&OrgDeptClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := od.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, id),
-			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, orgdepartment.ParentTable, orgdepartment.ParentColumn),
+			sqlgraph.From(orgdept.Table, orgdept.FieldID, id),
+			sqlgraph.To(orgdept.Table, orgdept.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.ParentTable, orgdept.ParentColumn),
 		)
 		schemaConfig := od.schemaConfig
-		step.To.Schema = schemaConfig.OrgDepartment
-		step.Edge.Schema = schemaConfig.OrgDepartment
+		step.To.Schema = schemaConfig.OrgDept
+		step.Edge.Schema = schemaConfig.OrgDept
 		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
-// QueryChildren queries the children edge of a OrgDepartment.
-func (c *OrgDepartmentClient) QueryChildren(od *OrgDepartment) *OrgDepartmentQuery {
-	query := (&OrgDepartmentClient{config: c.config}).Query()
+// QueryChildren queries the children edge of a OrgDept.
+func (c *OrgDeptClient) QueryChildren(od *OrgDept) *OrgDeptQuery {
+	query := (&OrgDeptClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := od.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, id),
-			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, orgdepartment.ChildrenTable, orgdepartment.ChildrenColumn),
+			sqlgraph.From(orgdept.Table, orgdept.FieldID, id),
+			sqlgraph.To(orgdept.Table, orgdept.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.ChildrenTable, orgdept.ChildrenColumn),
 		)
 		schemaConfig := od.schemaConfig
-		step.To.Schema = schemaConfig.OrgDepartment
-		step.Edge.Schema = schemaConfig.OrgDepartment
+		step.To.Schema = schemaConfig.OrgDept
+		step.Edge.Schema = schemaConfig.OrgDept
 		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
-// QueryOrgan queries the organ edge of a OrgDepartment.
-func (c *OrgDepartmentClient) QueryOrgan(od *OrgDepartment) *OrgOrganQuery {
+// QueryOrgan queries the organ edge of a OrgDept.
+func (c *OrgDeptClient) QueryOrgan(od *OrgDept) *OrgOrganQuery {
 	query := (&OrgOrganClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := od.ID
 		step := sqlgraph.NewStep(
-			sqlgraph.From(orgdepartment.Table, orgdepartment.FieldID, id),
+			sqlgraph.From(orgdept.Table, orgdept.FieldID, id),
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, orgdepartment.OrganTable, orgdepartment.OrganColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.OrganTable, orgdept.OrganColumn),
 		)
 		schemaConfig := od.schemaConfig
 		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgDepartment
+		step.Edge.Schema = schemaConfig.OrgDept
 		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -493,27 +493,27 @@ func (c *OrgDepartmentClient) QueryOrgan(od *OrgDepartment) *OrgOrganQuery {
 }
 
 // Hooks returns the client hooks.
-func (c *OrgDepartmentClient) Hooks() []Hook {
-	return c.hooks.OrgDepartment
+func (c *OrgDeptClient) Hooks() []Hook {
+	return c.hooks.OrgDept
 }
 
 // Interceptors returns the client interceptors.
-func (c *OrgDepartmentClient) Interceptors() []Interceptor {
-	return c.inters.OrgDepartment
+func (c *OrgDeptClient) Interceptors() []Interceptor {
+	return c.inters.OrgDept
 }
 
-func (c *OrgDepartmentClient) mutate(ctx context.Context, m *OrgDepartmentMutation) (Value, error) {
+func (c *OrgDeptClient) mutate(ctx context.Context, m *OrgDeptMutation) (Value, error) {
 	switch m.Op() {
 	case OpCreate:
-		return (&OrgDepartmentCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&OrgDeptCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdate:
-		return (&OrgDepartmentUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&OrgDeptUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdateOne:
-		return (&OrgDepartmentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&OrgDeptUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpDelete, OpDeleteOne:
-		return (&OrgDepartmentDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+		return (&OrgDeptDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
-		return nil, fmt.Errorf("ent: unknown OrgDepartment mutation op: %q", m.Op())
+		return nil, fmt.Errorf("ent: unknown OrgDept mutation op: %q", m.Op())
 	}
 }
 
@@ -629,19 +629,19 @@ func (c *OrgOrganClient) QueryHaddr(oo *OrgOrgan) *SysAddressQuery {
 	return query
 }
 
-// QueryDepartments queries the departments edge of a OrgOrgan.
-func (c *OrgOrganClient) QueryDepartments(oo *OrgOrgan) *OrgDepartmentQuery {
-	query := (&OrgDepartmentClient{config: c.config}).Query()
+// QueryDepts queries the depts edge of a OrgOrgan.
+func (c *OrgOrganClient) QueryDepts(oo *OrgOrgan) *OrgDeptQuery {
+	query := (&OrgDeptClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
 		id := oo.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
-			sqlgraph.To(orgdepartment.Table, orgdepartment.FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.DepartmentsTable, orgorgan.DepartmentsColumn),
+			sqlgraph.To(orgdept.Table, orgdept.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.DeptsTable, orgorgan.DeptsColumn),
 		)
 		schemaConfig := oo.schemaConfig
-		step.To.Schema = schemaConfig.OrgDepartment
-		step.Edge.Schema = schemaConfig.OrgDepartment
+		step.To.Schema = schemaConfig.OrgDept
+		step.Edge.Schema = schemaConfig.OrgDept
 		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -2812,14 +2812,14 @@ func (c *XxxDemoClient) mutate(ctx context.Context, m *XxxDemoMutation) (Value, 
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		OrgDepartment, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict,
-		SysDictItem, SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
+		OrgDept, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict, SysDictItem,
+		SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
 		SysMenuActionResource, SysRole, SysRoleMenu, SysUser, SysUserRole,
 		XxxDemo []ent.Hook
 	}
 	inters struct {
-		OrgDepartment, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict,
-		SysDictItem, SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
+		OrgDept, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict, SysDictItem,
+		SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
 		SysMenuActionResource, SysRole, SysRoleMenu, SysUser, SysUserRole,
 		XxxDemo []ent.Interceptor
 	}

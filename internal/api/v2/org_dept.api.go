@@ -10,25 +10,25 @@ import (
 	"github.com/heromicro/omgind/internal/app/service"
 )
 
-// OrgDepartmentSet 注入OrgDepartment
-var OrgDepartmentSet = wire.NewSet(wire.Struct(new(OrgDepartment), "*"))
+// OrgDeptSet 注入OrgDept
+var OrgDeptSet = wire.NewSet(wire.Struct(new(OrgDept), "*"))
 
-// OrgDepartment 部门管理
-type OrgDepartment struct {
-	OrgDepartmentSrv *service.OrgDepartment
+// OrgDept 部门管理
+type OrgDept struct {
+	OrgDeptSrv *service.OrgDept
 }
 
 // Query 查询数据
-func (a *OrgDepartment) Query(c *gin.Context) {
+func (a *OrgDept) Query(c *gin.Context) {
 	ctx := c.Request.Context()
-	var params schema.OrgDepartmentQueryParam
+	var params schema.OrgDeptQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
 		ginx.ResError(c, err)
 		return
 	}
 
 	params.Pagination = true
-	result, err := a.OrgDepartmentSrv.Query(ctx, params)
+	result, err := a.OrgDeptSrv.Query(ctx, params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -38,9 +38,9 @@ func (a *OrgDepartment) Query(c *gin.Context) {
 }
 
 // Get 查询指定数据
-func (a *OrgDepartment) Get(c *gin.Context) {
+func (a *OrgDept) Get(c *gin.Context) {
 	ctx := c.Request.Context()
-	item, err := a.OrgDepartmentSrv.Get(ctx, c.Param("id"))
+	item, err := a.OrgDeptSrv.Get(ctx, c.Param("id"))
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -49,9 +49,9 @@ func (a *OrgDepartment) Get(c *gin.Context) {
 }
 
 // View 查询指定数据
-func (a *OrgDepartment) View(c *gin.Context) {
+func (a *OrgDept) View(c *gin.Context) {
 	ctx := c.Request.Context()
-	item, err := a.OrgDepartmentSrv.View(ctx, c.Param("id"))
+	item, err := a.OrgDeptSrv.View(ctx, c.Param("id"))
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -60,9 +60,9 @@ func (a *OrgDepartment) View(c *gin.Context) {
 }
 
 // Get 所有的行政区
-func (a *OrgDepartment) GetAllSubs(c *gin.Context) {
+func (a *OrgDept) GetAllSubs(c *gin.Context) {
 	ctx := c.Request.Context()
-	var params schema.OrgDepartmentQueryParam
+	var params schema.OrgDeptQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
 		ginx.ResError(c, err)
 		return
@@ -74,7 +74,7 @@ func (a *OrgDepartment) GetAllSubs(c *gin.Context) {
 	log.Println(" --- ---- === ==== pid ", pid)
 	log.Println(" ----- -- ==== === URL ", c.Request.URL)
 
-	result, err := a.OrgDepartmentSrv.GetAllSubs(ctx, pid, params)
+	result, err := a.OrgDeptSrv.GetAllSubs(ctx, pid, params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -83,10 +83,10 @@ func (a *OrgDepartment) GetAllSubs(c *gin.Context) {
 }
 
 // QueryTree 查询菜单树
-func (a *OrgDepartment) QueryTree(c *gin.Context) {
+func (a *OrgDept) QueryTree(c *gin.Context) {
 
 	ctx := c.Request.Context()
-	var params schema.OrgDepartmentQueryParam
+	var params schema.OrgDeptQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
 		ginx.ResError(c, err)
 		return
@@ -95,7 +95,7 @@ func (a *OrgDepartment) QueryTree(c *gin.Context) {
 
 	params.PageSize = 200
 
-	result, err := a.OrgDepartmentSrv.GetTree(ctx, pid, params)
+	result, err := a.OrgDeptSrv.GetTree(ctx, pid, params)
 
 	if err != nil {
 		ginx.ResError(c, err)
@@ -106,16 +106,16 @@ func (a *OrgDepartment) QueryTree(c *gin.Context) {
 }
 
 // Create 创建数据
-func (a *OrgDepartment) Create(c *gin.Context) {
+func (a *OrgDept) Create(c *gin.Context) {
 	ctx := c.Request.Context()
-	var item schema.OrgDepartment
+	var item schema.OrgDept
 	if err := ginx.ParseJSON(c, &item); err != nil {
 		ginx.ResError(c, err)
 		return
 	}
 
 	item.Creator = ginx.GetUserID(c)
-	result, err := a.OrgDepartmentSrv.Create(ctx, item)
+	result, err := a.OrgDeptSrv.Create(ctx, item)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -124,15 +124,15 @@ func (a *OrgDepartment) Create(c *gin.Context) {
 }
 
 // Update 更新数据
-func (a *OrgDepartment) Update(c *gin.Context) {
+func (a *OrgDept) Update(c *gin.Context) {
 	ctx := c.Request.Context()
-	var item schema.OrgDepartment
+	var item schema.OrgDept
 	if err := ginx.ParseJSON(c, &item); err != nil {
 		ginx.ResError(c, err)
 		return
 	}
 
-	result, err := a.OrgDepartmentSrv.Update(ctx, c.Param("id"), item)
+	result, err := a.OrgDeptSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -141,9 +141,9 @@ func (a *OrgDepartment) Update(c *gin.Context) {
 }
 
 // Delete 删除数据
-func (a *OrgDepartment) Delete(c *gin.Context) {
+func (a *OrgDept) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.OrgDepartmentSrv.Delete(ctx, c.Param("id"))
+	err := a.OrgDeptSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -152,9 +152,9 @@ func (a *OrgDepartment) Delete(c *gin.Context) {
 }
 
 // Enable 启用数据
-func (a *OrgDepartment) Enable(c *gin.Context) {
+func (a *OrgDept) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.OrgDepartmentSrv.UpdateActive(ctx, c.Param("id"), true)
+	err := a.OrgDeptSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -163,9 +163,9 @@ func (a *OrgDepartment) Enable(c *gin.Context) {
 }
 
 // Disable 禁用数据
-func (a *OrgDepartment) Disable(c *gin.Context) {
+func (a *OrgDept) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.OrgDepartmentSrv.UpdateActive(ctx, c.Param("id"), false)
+	err := a.OrgDeptSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

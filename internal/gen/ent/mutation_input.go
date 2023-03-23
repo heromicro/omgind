@@ -8,8 +8,8 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 )
 
-// CreateOrgDepartmentInput represents a mutation input for creating orgdepartments.
-type CreateOrgDepartmentInput struct {
+// CreateOrgDeptInput represents a mutation input for creating orgdepts.
+type CreateOrgDeptInput struct {
 	IsDel     *bool
 	Sort      *int32
 	CreatedAt *time.Time
@@ -34,8 +34,8 @@ type CreateOrgDepartmentInput struct {
 	Organ     *string
 }
 
-// Mutate applies the CreateOrgDepartmentInput on the OrgDepartmentCreate builder.
-func (i *CreateOrgDepartmentInput) Mutate(m *OrgDepartmentCreate) {
+// Mutate applies the CreateOrgDeptInput on the OrgDeptCreate builder.
+func (i *CreateOrgDeptInput) Mutate(m *OrgDeptCreate) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
 	}
@@ -104,14 +104,14 @@ func (i *CreateOrgDepartmentInput) Mutate(m *OrgDepartmentCreate) {
 	}
 }
 
-// SetInput applies the change-set in the CreateOrgDepartmentInput on the create builder.
-func (c *OrgDepartmentCreate) SetInput(i CreateOrgDepartmentInput) *OrgDepartmentCreate {
+// SetInput applies the change-set in the CreateOrgDeptInput on the create builder.
+func (c *OrgDeptCreate) SetInput(i CreateOrgDeptInput) *OrgDeptCreate {
 	i.Mutate(c)
 	return c
 }
 
-// UpdateOrgDepartmentInput represents a mutation input for updating orgdepartments.
-type UpdateOrgDepartmentInput struct {
+// UpdateOrgDeptInput represents a mutation input for updating orgdepts.
+type UpdateOrgDeptInput struct {
 	IsDel          *bool
 	Sort           *int32
 	UpdatedAt      *time.Time
@@ -153,8 +153,8 @@ type UpdateOrgDepartmentInput struct {
 	ClearOrgan     bool
 }
 
-// Mutate applies the UpdateOrgDepartmentInput on the OrgDepartmentMutation.
-func (i *UpdateOrgDepartmentInput) Mutate(m *OrgDepartmentMutation) {
+// Mutate applies the UpdateOrgDeptInput on the OrgDeptMutation.
+func (i *UpdateOrgDeptInput) Mutate(m *OrgDeptMutation) {
 	if v := i.IsDel; v != nil {
 		m.SetIsDel(*v)
 	}
@@ -274,38 +274,38 @@ func (i *UpdateOrgDepartmentInput) Mutate(m *OrgDepartmentMutation) {
 	}
 }
 
-// SetInput applies the change-set in the UpdateOrgDepartmentInput on the update builder.
-func (u *OrgDepartmentUpdate) SetInput(i UpdateOrgDepartmentInput) *OrgDepartmentUpdate {
+// SetInput applies the change-set in the UpdateOrgDeptInput on the update builder.
+func (u *OrgDeptUpdate) SetInput(i UpdateOrgDeptInput) *OrgDeptUpdate {
 	i.Mutate(u.Mutation())
 	return u
 }
 
-// SetInput applies the change-set in the UpdateOrgDepartmentInput on the update-one builder.
-func (u *OrgDepartmentUpdateOne) SetInput(i UpdateOrgDepartmentInput) *OrgDepartmentUpdateOne {
+// SetInput applies the change-set in the UpdateOrgDeptInput on the update-one builder.
+func (u *OrgDeptUpdateOne) SetInput(i UpdateOrgDeptInput) *OrgDeptUpdateOne {
 	i.Mutate(u.Mutation())
 	return u
 }
 
 // CreateOrgOrganInput represents a mutation input for creating orgorgans.
 type CreateOrgOrganInput struct {
-	IsDel       *bool
-	Sort        *int32
-	CreatedAt   *time.Time
-	UpdatedAt   *time.Time
-	DeletedAt   *time.Time
-	IsActive    *bool
-	Memo        *string
-	Name        *string
-	Sname       *string
-	Code        *string
-	IdenNo      *string
-	OwnerID     *string
-	HaddrID     *string
-	Creator     *string
-	Haddr       *string
-	Departments []string
-	Staffs      []string
-	Positions   []string
+	IsDel     *bool
+	Sort      *int32
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
+	IsActive  *bool
+	Memo      *string
+	Name      *string
+	Sname     *string
+	Code      *string
+	IdenNo    *string
+	OwnerID   *string
+	HaddrID   *string
+	Creator   *string
+	Haddr     *string
+	Depts     []string
+	Staffs    []string
+	Positions []string
 }
 
 // Mutate applies the CreateOrgOrganInput on the OrgOrganCreate builder.
@@ -355,8 +355,8 @@ func (i *CreateOrgOrganInput) Mutate(m *OrgOrganCreate) {
 	if v := i.Haddr; v != nil {
 		m.SetHaddrID(*v)
 	}
-	if ids := i.Departments; len(ids) > 0 {
-		m.AddDepartmentIDs(ids...)
+	if ids := i.Depts; len(ids) > 0 {
+		m.AddDeptIDs(ids...)
 	}
 	if ids := i.Staffs; len(ids) > 0 {
 		m.AddStaffIDs(ids...)
@@ -374,37 +374,37 @@ func (c *OrgOrganCreate) SetInput(i CreateOrgOrganInput) *OrgOrganCreate {
 
 // UpdateOrgOrganInput represents a mutation input for updating orgorgans.
 type UpdateOrgOrganInput struct {
-	IsDel               *bool
-	Sort                *int32
-	UpdatedAt           *time.Time
-	ClearUpdatedAt      bool
-	DeletedAt           *time.Time
-	ClearDeletedAt      bool
-	IsActive            *bool
-	Memo                *string
-	ClearMemo           bool
-	Name                *string
-	ClearName           bool
-	Sname               *string
-	ClearSname          bool
-	Code                *string
-	ClearCode           bool
-	IdenNo              *string
-	ClearIdenNo         bool
-	OwnerID             *string
-	ClearOwnerID        bool
-	HaddrID             *string
-	ClearHaddrID        bool
-	Creator             *string
-	ClearCreator        bool
-	Haddr               *string
-	ClearHaddr          bool
-	AddDepartmentIDs    []string
-	RemoveDepartmentIDs []string
-	AddStaffIDs         []string
-	RemoveStaffIDs      []string
-	AddPositionIDs      []string
-	RemovePositionIDs   []string
+	IsDel             *bool
+	Sort              *int32
+	UpdatedAt         *time.Time
+	ClearUpdatedAt    bool
+	DeletedAt         *time.Time
+	ClearDeletedAt    bool
+	IsActive          *bool
+	Memo              *string
+	ClearMemo         bool
+	Name              *string
+	ClearName         bool
+	Sname             *string
+	ClearSname        bool
+	Code              *string
+	ClearCode         bool
+	IdenNo            *string
+	ClearIdenNo       bool
+	OwnerID           *string
+	ClearOwnerID      bool
+	HaddrID           *string
+	ClearHaddrID      bool
+	Creator           *string
+	ClearCreator      bool
+	Haddr             *string
+	ClearHaddr        bool
+	AddDeptIDs        []string
+	RemoveDeptIDs     []string
+	AddStaffIDs       []string
+	RemoveStaffIDs    []string
+	AddPositionIDs    []string
+	RemovePositionIDs []string
 }
 
 // Mutate applies the UpdateOrgOrganInput on the OrgOrganMutation.
@@ -484,11 +484,11 @@ func (i *UpdateOrgOrganInput) Mutate(m *OrgOrganMutation) {
 	if v := i.Haddr; v != nil {
 		m.SetHaddrID(*v)
 	}
-	if ids := i.AddDepartmentIDs; len(ids) > 0 {
-		m.AddDepartmentIDs(ids...)
+	if ids := i.AddDeptIDs; len(ids) > 0 {
+		m.AddDeptIDs(ids...)
 	}
-	if ids := i.RemoveDepartmentIDs; len(ids) > 0 {
-		m.RemoveDepartmentIDs(ids...)
+	if ids := i.RemoveDeptIDs; len(ids) > 0 {
+		m.RemoveDeptIDs(ids...)
 	}
 	if ids := i.AddStaffIDs; len(ids) > 0 {
 		m.AddStaffIDs(ids...)

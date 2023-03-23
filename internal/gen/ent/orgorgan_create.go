@@ -12,7 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/orgdepartment"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -242,19 +242,19 @@ func (ooc *OrgOrganCreate) SetHaddr(s *SysAddress) *OrgOrganCreate {
 	return ooc.SetHaddrID(s.ID)
 }
 
-// AddDepartmentIDs adds the "departments" edge to the OrgDepartment entity by IDs.
-func (ooc *OrgOrganCreate) AddDepartmentIDs(ids ...string) *OrgOrganCreate {
-	ooc.mutation.AddDepartmentIDs(ids...)
+// AddDeptIDs adds the "depts" edge to the OrgDept entity by IDs.
+func (ooc *OrgOrganCreate) AddDeptIDs(ids ...string) *OrgOrganCreate {
+	ooc.mutation.AddDeptIDs(ids...)
 	return ooc
 }
 
-// AddDepartments adds the "departments" edges to the OrgDepartment entity.
-func (ooc *OrgOrganCreate) AddDepartments(o ...*OrgDepartment) *OrgOrganCreate {
+// AddDepts adds the "depts" edges to the OrgDept entity.
+func (ooc *OrgOrganCreate) AddDepts(o ...*OrgDept) *OrgOrganCreate {
 	ids := make([]string, len(o))
 	for i := range o {
 		ids[i] = o[i].ID
 	}
-	return ooc.AddDepartmentIDs(ids...)
+	return ooc.AddDeptIDs(ids...)
 }
 
 // AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
@@ -510,18 +510,18 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 		_node.HaddrID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := ooc.mutation.DepartmentsIDs(); len(nodes) > 0 {
+	if nodes := ooc.mutation.DeptsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
-			Table:   orgorgan.DepartmentsTable,
-			Columns: []string{orgorgan.DepartmentsColumn},
+			Table:   orgorgan.DeptsTable,
+			Columns: []string{orgorgan.DeptsColumn},
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgdepartment.FieldID, field.TypeString),
+				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = ooc.schemaConfig.OrgDepartment
+		edge.Schema = ooc.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

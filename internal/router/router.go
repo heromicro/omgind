@@ -33,13 +33,13 @@ type Router struct {
 	RoleAPIV2 *api_v2.Role
 	UserAPIV2 *api_v2.User
 
-	SignInAPIV2        *api_v2.SignIn
-	SysDistrictAPIV2   *api_v2.SysDistrict
-	SysAddressAPIV2    *api_v2.SysAddress
-	OrgOrganAPIV2      *api_v2.OrgOrgan
-	OrgStaffAPIV2      *api_v2.OrgStaff
-	OrgPositionAPIV2   *api_v2.OrgPosition
-	OrgDepartmentAPIV2 *api_v2.OrgDepartment
+	SignInAPIV2      *api_v2.SignIn
+	SysDistrictAPIV2 *api_v2.SysDistrict
+	SysAddressAPIV2  *api_v2.SysAddress
+	OrgOrganAPIV2    *api_v2.OrgOrgan
+	OrgStaffAPIV2    *api_v2.OrgStaff
+	OrgPositionAPIV2 *api_v2.OrgPosition
+	OrgDeptAPIV2     *api_v2.OrgDept
 }
 
 // Register 注册路由

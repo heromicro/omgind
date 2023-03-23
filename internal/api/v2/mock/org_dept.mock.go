@@ -5,11 +5,11 @@ import (
 	"github.com/google/wire"
 )
 
-// OrgDepartmentSet 注入OrgDepartment
-var OrgDepartmentSet = wire.NewSet(wire.Struct(new(OrgDepartment), "*"))
+// OrgDeptSet 注入OrgDept
+var OrgDeptSet = wire.NewSet(wire.Struct(new(OrgDept), "*"))
 
-// OrgDepartment 部门管理
-type OrgDepartment struct {
+// OrgDept 部门管理
+type OrgDept struct {
 }
 
 // Query 查询数据
@@ -18,12 +18,12 @@ type OrgDepartment struct {
 //	@Summary	查询数据
 //	@Security	ApiKeyAuth
 //	@Param		Authorization	header		string							false	"Bearer 用户令牌"
-//	@Param		object			query		schema.OrgDepartmentQueryParam	false	"查询参数"	default{}
-//	@Success	200				{array}		schema.ListResult{list=schema.OrgDepartments,pagination=schema.PaginationResult}
+//	@Param		object			query		schema.OrgDeptQueryParam	false	"查询参数"	default{}
+//	@Success	200				{array}		schema.ListResult{list=schema.OrgDepts,pagination=schema.PaginationResult}
 //	@Failure	401				{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500				{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/org-departments [get]
-func (a *OrgDepartment) Query(c *gin.Context) {
+func (a *OrgDept) Query(c *gin.Context) {
 }
 
 // Get 查询指定数据
@@ -33,12 +33,12 @@ func (a *OrgDepartment) Query(c *gin.Context) {
 //	@Security	ApiKeyAuth
 //	@Param		Authorization	header		string	false	"Bearer 用户令牌"
 //	@Param		id				path		string	true	"唯一标识"
-//	@Success	200				{object}	schema.OrgDepartment
+//	@Success	200				{object}	schema.OrgDept
 //	@Failure	401				{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	404				{object}	schema.ErrorResult	"{error:{code:0,message:资源不存在}}"
 //	@Failure	500				{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/org-departments/{id} [get]
-func (a *OrgDepartment) Get(c *gin.Context) {
+func (a *OrgDept) Get(c *gin.Context) {
 }
 
 // View 查询指定数据
@@ -48,12 +48,12 @@ func (a *OrgDepartment) Get(c *gin.Context) {
 //	@Security	ApiKeyAuth
 //	@Param		Authorization	header		string	false	"Bearer 用户令牌"
 //	@Param		id				path		string	true	"唯一标识"
-//	@Success	200				{object}	schema.OrgDepartment
+//	@Success	200				{object}	schema.OrgDept
 //	@Failure	401				{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	404				{object}	schema.ErrorResult	"{error:{code:0,message:资源不存在}}"
 //	@Failure	500				{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/org-departments/{id}/view [get]
-func (a *OrgDepartment) View(c *gin.Context) {
+func (a *OrgDept) View(c *gin.Context) {
 }
 
 // Create 创建数据
@@ -62,13 +62,13 @@ func (a *OrgDepartment) View(c *gin.Context) {
 //	@Summary	创建数据
 //	@Security	ApiKeyAuth
 //	@Param		Authorization	header		string					false	"Bearer 用户令牌"
-//	@Param		body			body		schema.OrgDepartment	true	"创建数据"
+//	@Param		body			body		schema.OrgDept	true	"创建数据"
 //	@Success	200				{object}	schema.IDResult
 //	@Failure	400				{object}	schema.ErrorResult	"{error:{code:0,message:无效的请求参数}}"
 //	@Failure	401				{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500				{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/org-departments [post]
-func (a *OrgDepartment) Create(c *gin.Context) {
+func (a *OrgDept) Create(c *gin.Context) {
 }
 
 // Update 更新数据
@@ -78,13 +78,13 @@ func (a *OrgDepartment) Create(c *gin.Context) {
 //	@Security	ApiKeyAuth
 //	@Param		Authorization	header		string					false	"Bearer 用户令牌"
 //	@Param		id				path		string					true	"唯一标识"
-//	@Param		body			body		schema.OrgDepartment	true	"更新数据"
+//	@Param		body			body		schema.OrgDept	true	"更新数据"
 //	@Success	200				{object}	schema.StatusResult		"{status:OK}"
 //	@Failure	400				{object}	schema.ErrorResult		"{error:{code:0,message:无效的请求参数}}"
 //	@Failure	401				{object}	schema.ErrorResult		"{error:{code:0,message:未授权}}"
 //	@Failure	500				{object}	schema.ErrorResult		"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/org-departments/{id} [put]
-func (a *OrgDepartment) Update(c *gin.Context) {
+func (a *OrgDept) Update(c *gin.Context) {
 }
 
 // Delete 删除数据
@@ -98,7 +98,7 @@ func (a *OrgDepartment) Update(c *gin.Context) {
 //	@Failure	401				{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500				{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/org-departments/{id} [delete]
-func (a *OrgDepartment) Delete(c *gin.Context) {
+func (a *OrgDept) Delete(c *gin.Context) {
 }
 
 // Enable 启用数据
@@ -111,7 +111,7 @@ func (a *OrgDepartment) Delete(c *gin.Context) {
 //	@Failure	401	{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500	{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/org-departments/{id}/enable [patch]
-func (a *OrgDepartment) Enable(c *gin.Context) {
+func (a *OrgDept) Enable(c *gin.Context) {
 }
 
 // Disable 禁用数据
@@ -124,5 +124,5 @@ func (a *OrgDepartment) Enable(c *gin.Context) {
 //	@Failure	401	{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500	{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
 //	@Router		/api/v2/org-departments/{id}/disable [patch]
-func (a *OrgDepartment) Disable(c *gin.Context) {
+func (a *OrgDept) Disable(c *gin.Context) {
 }

@@ -41,8 +41,8 @@ const (
 	FieldCreator = "creator"
 	// EdgeHaddr holds the string denoting the haddr edge name in mutations.
 	EdgeHaddr = "haddr"
-	// EdgeDepartments holds the string denoting the departments edge name in mutations.
-	EdgeDepartments = "departments"
+	// EdgeDepts holds the string denoting the depts edge name in mutations.
+	EdgeDepts = "depts"
 	// EdgeStaffs holds the string denoting the staffs edge name in mutations.
 	EdgeStaffs = "staffs"
 	// EdgePositions holds the string denoting the positions edge name in mutations.
@@ -56,13 +56,13 @@ const (
 	HaddrInverseTable = "sys_addresses"
 	// HaddrColumn is the table column denoting the haddr relation/edge.
 	HaddrColumn = "haddr_id"
-	// DepartmentsTable is the table that holds the departments relation/edge.
-	DepartmentsTable = "org_departments"
-	// DepartmentsInverseTable is the table name for the OrgDepartment entity.
-	// It exists in this package in order to avoid circular dependency with the "orgdepartment" package.
-	DepartmentsInverseTable = "org_departments"
-	// DepartmentsColumn is the table column denoting the departments relation/edge.
-	DepartmentsColumn = "org_id"
+	// DeptsTable is the table that holds the depts relation/edge.
+	DeptsTable = "org_depts"
+	// DeptsInverseTable is the table name for the OrgDept entity.
+	// It exists in this package in order to avoid circular dependency with the "orgdept" package.
+	DeptsInverseTable = "org_depts"
+	// DeptsColumn is the table column denoting the depts relation/edge.
+	DeptsColumn = "org_id"
 	// StaffsTable is the table that holds the staffs relation/edge.
 	StaffsTable = "org_staffs"
 	// StaffsInverseTable is the table name for the OrgStaff entity.

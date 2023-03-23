@@ -54,8 +54,8 @@ type OrgOrgan struct {
 type OrgOrganEdges struct {
 	// Haddr holds the value of the haddr edge.
 	Haddr *SysAddress `json:"haddr,omitempty"`
-	// Departments holds the value of the departments edge.
-	Departments []*OrgDepartment `json:"departments,omitempty"`
+	// Depts holds the value of the depts edge.
+	Depts []*OrgDept `json:"depts,omitempty"`
 	// Staffs holds the value of the staffs edge.
 	Staffs []*OrgStaff `json:"staffs,omitempty"`
 	// Positions holds the value of the positions edge.
@@ -78,13 +78,13 @@ func (e OrgOrganEdges) HaddrOrErr() (*SysAddress, error) {
 	return nil, &NotLoadedError{edge: "haddr"}
 }
 
-// DepartmentsOrErr returns the Departments value or an error if the edge
+// DeptsOrErr returns the Depts value or an error if the edge
 // was not loaded in eager-loading.
-func (e OrgOrganEdges) DepartmentsOrErr() ([]*OrgDepartment, error) {
+func (e OrgOrganEdges) DeptsOrErr() ([]*OrgDept, error) {
 	if e.loadedTypes[1] {
-		return e.Departments, nil
+		return e.Depts, nil
 	}
-	return nil, &NotLoadedError{edge: "departments"}
+	return nil, &NotLoadedError{edge: "depts"}
 }
 
 // StaffsOrErr returns the Staffs value or an error if the edge
@@ -244,9 +244,9 @@ func (oo *OrgOrgan) QueryHaddr() *SysAddressQuery {
 	return NewOrgOrganClient(oo.config).QueryHaddr(oo)
 }
 
-// QueryDepartments queries the "departments" edge of the OrgOrgan entity.
-func (oo *OrgOrgan) QueryDepartments() *OrgDepartmentQuery {
-	return NewOrgOrganClient(oo.config).QueryDepartments(oo)
+// QueryDepts queries the "depts" edge of the OrgOrgan entity.
+func (oo *OrgOrgan) QueryDepts() *OrgDeptQuery {
+	return NewOrgOrganClient(oo.config).QueryDepts(oo)
 }
 
 // QueryStaffs queries the "staffs" edge of the OrgOrgan entity.

@@ -4,9 +4,9 @@ package ent
 
 import "fmt"
 
-func (od *OrgDepartment) GoString() string {
+func (od *OrgDept) GoString() string {
 	if od == nil {
-		return fmt.Sprintf("OrgDepartment(nil)")
+		return fmt.Sprintf("OrgDept(nil)")
 	}
 	return od.String()
 }

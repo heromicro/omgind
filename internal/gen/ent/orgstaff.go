@@ -66,7 +66,7 @@ type OrgStaff struct {
 	EmpyStat int32 `json:"empy_stat,omitempty"`
 	// empst_stat options
 	EmpystDictID *string `json:"empyst_dict_id,omitempty"`
-	// department.id
+	// dept.id
 	DeptID *string `json:"dept_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`

@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	// OrgDepartmentsColumns holds the columns for the "org_departments" table.
-	OrgDepartmentsColumns = []*schema.Column{
+	// OrgDeptsColumns holds the columns for the "org_depts" table.
+	OrgDeptsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
 		{Name: "is_del", Type: field.TypeBool, Default: false},
 		{Name: "sort", Type: field.TypeInt32, Default: 9999},
@@ -31,75 +31,75 @@ var (
 		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 	}
-	// OrgDepartmentsTable holds the schema information for the "org_departments" table.
-	OrgDepartmentsTable = &schema.Table{
-		Name:       "org_departments",
-		Columns:    OrgDepartmentsColumns,
-		PrimaryKey: []*schema.Column{OrgDepartmentsColumns[0]},
+	// OrgDeptsTable holds the schema information for the "org_depts" table.
+	OrgDeptsTable = &schema.Table{
+		Name:       "org_depts",
+		Columns:    OrgDeptsColumns,
+		PrimaryKey: []*schema.Column{OrgDeptsColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:     "org_departments_org_departments_children",
-				Columns:    []*schema.Column{OrgDepartmentsColumns[18]},
-				RefColumns: []*schema.Column{OrgDepartmentsColumns[0]},
+				Symbol:     "org_depts_org_depts_children",
+				Columns:    []*schema.Column{OrgDeptsColumns[18]},
+				RefColumns: []*schema.Column{OrgDeptsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
-				Symbol:     "org_departments_org_organs_departments",
-				Columns:    []*schema.Column{OrgDepartmentsColumns[19]},
+				Symbol:     "org_depts_org_organs_depts",
+				Columns:    []*schema.Column{OrgDeptsColumns[19]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
 		Indexes: []*schema.Index{
 			{
-				Name:    "orgdepartment_id",
+				Name:    "orgdept_id",
 				Unique:  true,
-				Columns: []*schema.Column{OrgDepartmentsColumns[0]},
+				Columns: []*schema.Column{OrgDeptsColumns[0]},
 			},
 			{
-				Name:    "orgdepartment_is_del",
+				Name:    "orgdept_is_del",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[1]},
+				Columns: []*schema.Column{OrgDeptsColumns[1]},
 			},
 			{
-				Name:    "orgdepartment_sort",
+				Name:    "orgdept_sort",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[2]},
+				Columns: []*schema.Column{OrgDeptsColumns[2]},
 			},
 			{
-				Name:    "orgdepartment_crtd_at",
+				Name:    "orgdept_crtd_at",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[3]},
+				Columns: []*schema.Column{OrgDeptsColumns[3]},
 			},
 			{
-				Name:    "orgdepartment_dltd_at",
+				Name:    "orgdept_dltd_at",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[5]},
+				Columns: []*schema.Column{OrgDeptsColumns[5]},
 			},
 			{
-				Name:    "orgdepartment_is_active",
+				Name:    "orgdept_is_active",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[6]},
+				Columns: []*schema.Column{OrgDeptsColumns[6]},
 			},
 			{
-				Name:    "orgdepartment_tree_id",
+				Name:    "orgdept_tree_id",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[8]},
+				Columns: []*schema.Column{OrgDeptsColumns[8]},
 			},
 			{
-				Name:    "orgdepartment_tree_id_tree_left",
+				Name:    "orgdept_tree_id_tree_left",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[8], OrgDepartmentsColumns[10]},
+				Columns: []*schema.Column{OrgDeptsColumns[8], OrgDeptsColumns[10]},
 			},
 			{
-				Name:    "orgdepartment_tree_id_tree_right",
+				Name:    "orgdept_tree_id_tree_right",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[8], OrgDepartmentsColumns[11]},
+				Columns: []*schema.Column{OrgDeptsColumns[8], OrgDeptsColumns[11]},
 			},
 			{
-				Name:    "orgdepartment_tree_id_tree_left_tree_right",
+				Name:    "orgdept_tree_id_tree_left_tree_right",
 				Unique:  false,
-				Columns: []*schema.Column{OrgDepartmentsColumns[8], OrgDepartmentsColumns[10], OrgDepartmentsColumns[11]},
+				Columns: []*schema.Column{OrgDeptsColumns[8], OrgDeptsColumns[10], OrgDeptsColumns[11]},
 			},
 		},
 	}
@@ -1154,7 +1154,7 @@ var (
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		OrgDepartmentsTable,
+		OrgDeptsTable,
 		OrgOrgansTable,
 		OrgPositionsTable,
 		OrgStaffsTable,
@@ -1176,8 +1176,8 @@ var (
 )
 
 func init() {
-	OrgDepartmentsTable.ForeignKeys[0].RefTable = OrgDepartmentsTable
-	OrgDepartmentsTable.ForeignKeys[1].RefTable = OrgOrgansTable
+	OrgDeptsTable.ForeignKeys[0].RefTable = OrgDeptsTable
+	OrgDeptsTable.ForeignKeys[1].RefTable = OrgOrgansTable
 	OrgOrgansTable.ForeignKeys[0].RefTable = SysAddressesTable
 	OrgPositionsTable.ForeignKeys[0].RefTable = OrgOrgansTable
 	OrgStaffsTable.ForeignKeys[0].RefTable = OrgOrgansTable

@@ -2,8 +2,8 @@ package schema
 
 import "time"
 
-// OrgDepartment 部门管理对象
-type OrgDepartment struct {
+// OrgDept 部门管理对象
+type OrgDept struct {
 	ID   string `json:"id"`                      // 唯一标识
 	Name string `json:"name" binding:"required"` // 名称
 	Code string `json:"code"`                    // 助记码
@@ -21,8 +21,8 @@ type OrgDepartment struct {
 
 }
 
-// OrgDepartmentQueryParam 查询条件
-type OrgDepartmentQueryParam struct {
+// OrgDeptQueryParam 查询条件
+type OrgDeptQueryParam struct {
 	PaginationParam
 
 	QueryValue string `form:"queryValue"` // 模糊查询
@@ -70,22 +70,22 @@ type OrgDepartmentQueryParam struct {
 
 }
 
-// OrgDepartmentQueryOptions 查询可选参数项
-type OrgDepartmentQueryOptions struct {
+// OrgDeptQueryOptions 查询可选参数项
+type OrgDeptQueryOptions struct {
 	OrderFields []*OrderField // 排序字段
 }
 
-// OrgDepartmentQueryResult 查询结果
-type OrgDepartmentQueryResult struct {
-	Data       OrgDepartments
+// OrgDeptQueryResult 查询结果
+type OrgDeptQueryResult struct {
+	Data       OrgDepts
 	PageResult *PaginationResult
 }
 
-// OrgDepartmentQueryTreeResult 查询结果
-type OrgDepartmentQueryTreeResult struct {
-	Top  OrgDepartments `json:"top"`
-	Subs OrgDepartments `json:"subs"`
+// OrgDeptQueryTreeResult 查询结果
+type OrgDeptQueryTreeResult struct {
+	Top  OrgDepts `json:"top"`
+	Subs OrgDepts `json:"subs"`
 }
 
-// OrgDepartments 部门管理列表
-type OrgDepartments []*OrgDepartment
+// OrgDepts 部门管理列表
+type OrgDepts []*OrgDept

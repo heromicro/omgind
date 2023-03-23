@@ -979,31 +979,31 @@ func HasHaddrWith(preds ...predicate.SysAddress) predicate.OrgOrgan {
 	})
 }
 
-// HasDepartments applies the HasEdge predicate on the "departments" edge.
-func HasDepartments() predicate.OrgOrgan {
+// HasDepts applies the HasEdge predicate on the "depts" edge.
+func HasDepts() predicate.OrgOrgan {
 	return predicate.OrgOrgan(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, DepartmentsTable, DepartmentsColumn),
+			sqlgraph.Edge(sqlgraph.O2M, false, DeptsTable, DeptsColumn),
 		)
 		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgDepartment
-		step.Edge.Schema = schemaConfig.OrgDepartment
+		step.To.Schema = schemaConfig.OrgDept
+		step.Edge.Schema = schemaConfig.OrgDept
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
 
-// HasDepartmentsWith applies the HasEdge predicate on the "departments" edge with a given conditions (other predicates).
-func HasDepartmentsWith(preds ...predicate.OrgDepartment) predicate.OrgOrgan {
+// HasDeptsWith applies the HasEdge predicate on the "depts" edge with a given conditions (other predicates).
+func HasDeptsWith(preds ...predicate.OrgDept) predicate.OrgOrgan {
 	return predicate.OrgOrgan(func(s *sql.Selector) {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(DepartmentsInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, DepartmentsTable, DepartmentsColumn),
+			sqlgraph.To(DeptsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, DeptsTable, DeptsColumn),
 		)
 		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgDepartment
-		step.Edge.Schema = schemaConfig.OrgDepartment
+		step.To.Schema = schemaConfig.OrgDept
+		step.Edge.Schema = schemaConfig.OrgDept
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
