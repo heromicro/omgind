@@ -23,10 +23,14 @@ func ParseOrder(items []*schema.OrderField) []ent.OrderFunc {
 
 func MakeUpOrderField(field string, order string) *schema.OrderField {
 	switch order {
+	case "a":
+		fallthrough
 	case "asc":
 		fallthrough
 	case "ascend":
 		return schema.NewOrderField(field, schema.OrderByASC)
+	case "d":
+		fallthrough
 	case "desc":
 		fallthrough
 	case "descend":
