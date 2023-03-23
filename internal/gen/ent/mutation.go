@@ -3935,6 +3935,7 @@ type OrgStaffMutation struct {
 	empy_stat        *int32
 	addempy_stat     *int32
 	empyst_dict_id   *string
+	dept_id          *string
 	creator          *string
 	clearedFields    map[string]struct{}
 	organ            *string
@@ -5237,6 +5238,55 @@ func (m *OrgStaffMutation) ResetEmpystDictID() {
 	delete(m.clearedFields, orgstaff.FieldEmpystDictID)
 }
 
+// SetDeptID sets the "dept_id" field.
+func (m *OrgStaffMutation) SetDeptID(s string) {
+	m.dept_id = &s
+}
+
+// DeptID returns the value of the "dept_id" field in the mutation.
+func (m *OrgStaffMutation) DeptID() (r string, exists bool) {
+	v := m.dept_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeptID returns the old "dept_id" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldDeptID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDeptID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDeptID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeptID: %w", err)
+	}
+	return oldValue.DeptID, nil
+}
+
+// ClearDeptID clears the value of the "dept_id" field.
+func (m *OrgStaffMutation) ClearDeptID() {
+	m.dept_id = nil
+	m.clearedFields[orgstaff.FieldDeptID] = struct{}{}
+}
+
+// DeptIDCleared returns if the "dept_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) DeptIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldDeptID]
+	return ok
+}
+
+// ResetDeptID resets all changes to the "dept_id" field.
+func (m *OrgStaffMutation) ResetDeptID() {
+	m.dept_id = nil
+	delete(m.clearedFields, orgstaff.FieldDeptID)
+}
+
 // SetCreator sets the "creator" field.
 func (m *OrgStaffMutation) SetCreator(s string) {
 	m.creator = &s
@@ -5411,7 +5461,7 @@ func (m *OrgStaffMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgStaffMutation) Fields() []string {
-	fields := make([]string, 0, 25)
+	fields := make([]string, 0, 26)
 	if m.is_del != nil {
 		fields = append(fields, orgstaff.FieldIsDel)
 	}
@@ -5484,6 +5534,9 @@ func (m *OrgStaffMutation) Fields() []string {
 	if m.empyst_dict_id != nil {
 		fields = append(fields, orgstaff.FieldEmpystDictID)
 	}
+	if m.dept_id != nil {
+		fields = append(fields, orgstaff.FieldDeptID)
+	}
 	if m.creator != nil {
 		fields = append(fields, orgstaff.FieldCreator)
 	}
@@ -5543,6 +5596,8 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.EmpyStat()
 	case orgstaff.FieldEmpystDictID:
 		return m.EmpystDictID()
+	case orgstaff.FieldDeptID:
+		return m.DeptID()
 	case orgstaff.FieldCreator:
 		return m.Creator()
 	}
@@ -5602,6 +5657,8 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldEmpyStat(ctx)
 	case orgstaff.FieldEmpystDictID:
 		return m.OldEmpystDictID(ctx)
+	case orgstaff.FieldDeptID:
+		return m.OldDeptID(ctx)
 	case orgstaff.FieldCreator:
 		return m.OldCreator(ctx)
 	}
@@ -5781,6 +5838,13 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetEmpystDictID(v)
 		return nil
+	case orgstaff.FieldDeptID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeptID(v)
+		return nil
 	case orgstaff.FieldCreator:
 		v, ok := value.(string)
 		if !ok {
@@ -5917,6 +5981,9 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldEmpystDictID) {
 		fields = append(fields, orgstaff.FieldEmpystDictID)
 	}
+	if m.FieldCleared(orgstaff.FieldDeptID) {
+		fields = append(fields, orgstaff.FieldDeptID)
+	}
 	if m.FieldCleared(orgstaff.FieldCreator) {
 		fields = append(fields, orgstaff.FieldCreator)
 	}
@@ -5993,6 +6060,9 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 		return nil
 	case orgstaff.FieldEmpystDictID:
 		m.ClearEmpystDictID()
+		return nil
+	case orgstaff.FieldDeptID:
+		m.ClearDeptID()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ClearCreator()
@@ -6076,6 +6146,9 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 		return nil
 	case orgstaff.FieldEmpystDictID:
 		m.ResetEmpystDictID()
+		return nil
+	case orgstaff.FieldDeptID:
+		m.ResetDeptID()
 		return nil
 	case orgstaff.FieldCreator:
 		m.ResetCreator()
@@ -8394,31 +8467,27 @@ func (m *SysAddressMutation) ResetEdge(name string) error {
 // SysDictMutation represents an operation that mutates the SysDict nodes in the graph.
 type SysDictMutation struct {
 	config
-	op                  Op
-	typ                 string
-	id                  *string
-	is_del              *bool
-	memo                *string
-	sort                *int32
-	addsort             *int32
-	created_at          *time.Time
-	updated_at          *time.Time
-	deleted_at          *time.Time
-	is_active           *bool
-	name_cn             *string
-	name_en             *string
-	tipe                *sysdict.Tipe
-	clearedFields       map[string]struct{}
-	items               map[string]struct{}
-	removeditems        map[string]struct{}
-	cleareditems        bool
-	staff_gender        *string
-	clearedstaff_gender bool
-	staff_empyst        *string
-	clearedstaff_empyst bool
-	done                bool
-	oldValue            func(context.Context) (*SysDict, error)
-	predicates          []predicate.SysDict
+	op            Op
+	typ           string
+	id            *string
+	is_del        *bool
+	memo          *string
+	sort          *int32
+	addsort       *int32
+	created_at    *time.Time
+	updated_at    *time.Time
+	deleted_at    *time.Time
+	is_active     *bool
+	name_cn       *string
+	name_en       *string
+	tipe          *sysdict.Tipe
+	clearedFields map[string]struct{}
+	items         map[string]struct{}
+	removeditems  map[string]struct{}
+	cleareditems  bool
+	done          bool
+	oldValue      func(context.Context) (*SysDict, error)
+	predicates    []predicate.SysDict
 }
 
 var _ ent.Mutation = (*SysDictMutation)(nil)
@@ -9011,84 +9080,6 @@ func (m *SysDictMutation) ResetItems() {
 	m.removeditems = nil
 }
 
-// SetStaffGenderID sets the "staff_gender" edge to the OrgStaff entity by id.
-func (m *SysDictMutation) SetStaffGenderID(id string) {
-	m.staff_gender = &id
-}
-
-// ClearStaffGender clears the "staff_gender" edge to the OrgStaff entity.
-func (m *SysDictMutation) ClearStaffGender() {
-	m.clearedstaff_gender = true
-}
-
-// StaffGenderCleared reports if the "staff_gender" edge to the OrgStaff entity was cleared.
-func (m *SysDictMutation) StaffGenderCleared() bool {
-	return m.clearedstaff_gender
-}
-
-// StaffGenderID returns the "staff_gender" edge ID in the mutation.
-func (m *SysDictMutation) StaffGenderID() (id string, exists bool) {
-	if m.staff_gender != nil {
-		return *m.staff_gender, true
-	}
-	return
-}
-
-// StaffGenderIDs returns the "staff_gender" edge IDs in the mutation.
-// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
-// StaffGenderID instead. It exists only for internal usage by the builders.
-func (m *SysDictMutation) StaffGenderIDs() (ids []string) {
-	if id := m.staff_gender; id != nil {
-		ids = append(ids, *id)
-	}
-	return
-}
-
-// ResetStaffGender resets all changes to the "staff_gender" edge.
-func (m *SysDictMutation) ResetStaffGender() {
-	m.staff_gender = nil
-	m.clearedstaff_gender = false
-}
-
-// SetStaffEmpystID sets the "staff_empyst" edge to the OrgStaff entity by id.
-func (m *SysDictMutation) SetStaffEmpystID(id string) {
-	m.staff_empyst = &id
-}
-
-// ClearStaffEmpyst clears the "staff_empyst" edge to the OrgStaff entity.
-func (m *SysDictMutation) ClearStaffEmpyst() {
-	m.clearedstaff_empyst = true
-}
-
-// StaffEmpystCleared reports if the "staff_empyst" edge to the OrgStaff entity was cleared.
-func (m *SysDictMutation) StaffEmpystCleared() bool {
-	return m.clearedstaff_empyst
-}
-
-// StaffEmpystID returns the "staff_empyst" edge ID in the mutation.
-func (m *SysDictMutation) StaffEmpystID() (id string, exists bool) {
-	if m.staff_empyst != nil {
-		return *m.staff_empyst, true
-	}
-	return
-}
-
-// StaffEmpystIDs returns the "staff_empyst" edge IDs in the mutation.
-// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
-// StaffEmpystID instead. It exists only for internal usage by the builders.
-func (m *SysDictMutation) StaffEmpystIDs() (ids []string) {
-	if id := m.staff_empyst; id != nil {
-		ids = append(ids, *id)
-	}
-	return
-}
-
-// ResetStaffEmpyst resets all changes to the "staff_empyst" edge.
-func (m *SysDictMutation) ResetStaffEmpyst() {
-	m.staff_empyst = nil
-	m.clearedstaff_empyst = false
-}
-
 // Where appends a list predicates to the SysDictMutation builder.
 func (m *SysDictMutation) Where(ps ...predicate.SysDict) {
 	m.predicates = append(m.predicates, ps...)
@@ -9417,15 +9408,9 @@ func (m *SysDictMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *SysDictMutation) AddedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 1)
 	if m.items != nil {
 		edges = append(edges, sysdict.EdgeItems)
-	}
-	if m.staff_gender != nil {
-		edges = append(edges, sysdict.EdgeStaffGender)
-	}
-	if m.staff_empyst != nil {
-		edges = append(edges, sysdict.EdgeStaffEmpyst)
 	}
 	return edges
 }
@@ -9440,21 +9425,13 @@ func (m *SysDictMutation) AddedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
-	case sysdict.EdgeStaffGender:
-		if id := m.staff_gender; id != nil {
-			return []ent.Value{*id}
-		}
-	case sysdict.EdgeStaffEmpyst:
-		if id := m.staff_empyst; id != nil {
-			return []ent.Value{*id}
-		}
 	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *SysDictMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 1)
 	if m.removeditems != nil {
 		edges = append(edges, sysdict.EdgeItems)
 	}
@@ -9477,15 +9454,9 @@ func (m *SysDictMutation) RemovedIDs(name string) []ent.Value {
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *SysDictMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 1)
 	if m.cleareditems {
 		edges = append(edges, sysdict.EdgeItems)
-	}
-	if m.clearedstaff_gender {
-		edges = append(edges, sysdict.EdgeStaffGender)
-	}
-	if m.clearedstaff_empyst {
-		edges = append(edges, sysdict.EdgeStaffEmpyst)
 	}
 	return edges
 }
@@ -9496,10 +9467,6 @@ func (m *SysDictMutation) EdgeCleared(name string) bool {
 	switch name {
 	case sysdict.EdgeItems:
 		return m.cleareditems
-	case sysdict.EdgeStaffGender:
-		return m.clearedstaff_gender
-	case sysdict.EdgeStaffEmpyst:
-		return m.clearedstaff_empyst
 	}
 	return false
 }
@@ -9508,12 +9475,6 @@ func (m *SysDictMutation) EdgeCleared(name string) bool {
 // if that edge is not defined in the schema.
 func (m *SysDictMutation) ClearEdge(name string) error {
 	switch name {
-	case sysdict.EdgeStaffGender:
-		m.ClearStaffGender()
-		return nil
-	case sysdict.EdgeStaffEmpyst:
-		m.ClearStaffEmpyst()
-		return nil
 	}
 	return fmt.Errorf("unknown SysDict unique edge %s", name)
 }
@@ -9524,12 +9485,6 @@ func (m *SysDictMutation) ResetEdge(name string) error {
 	switch name {
 	case sysdict.EdgeItems:
 		m.ResetItems()
-		return nil
-	case sysdict.EdgeStaffGender:
-		m.ResetStaffGender()
-		return nil
-	case sysdict.EdgeStaffEmpyst:
-		m.ResetStaffEmpyst()
 		return nil
 	}
 	return fmt.Errorf("unknown SysDict edge %s", name)

@@ -361,6 +361,20 @@ func (osc *OrgStaffCreate) SetNillableEmpystDictID(s *string) *OrgStaffCreate {
 	return osc
 }
 
+// SetDeptID sets the "dept_id" field.
+func (osc *OrgStaffCreate) SetDeptID(s string) *OrgStaffCreate {
+	osc.mutation.SetDeptID(s)
+	return osc
+}
+
+// SetNillableDeptID sets the "dept_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableDeptID(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetDeptID(*s)
+	}
+	return osc
+}
+
 // SetCreator sets the "creator" field.
 func (osc *OrgStaffCreate) SetCreator(s string) *OrgStaffCreate {
 	osc.mutation.SetCreator(s)
@@ -556,6 +570,11 @@ func (osc *OrgStaffCreate) check() error {
 			return &ValidationError{Name: "empyst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.empyst_dict_id": %w`, err)}
 		}
 	}
+	if v, ok := osc.mutation.DeptID(); ok {
+		if err := orgstaff.DeptIDValidator(v); err != nil {
+			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.dept_id": %w`, err)}
+		}
+	}
 	if v, ok := osc.mutation.ID(); ok {
 		if err := orgstaff.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.id": %w`, err)}
@@ -681,6 +700,10 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 	if value, ok := osc.mutation.EmpystDictID(); ok {
 		_spec.SetField(orgstaff.FieldEmpystDictID, field.TypeString, value)
 		_node.EmpystDictID = &value
+	}
+	if value, ok := osc.mutation.DeptID(); ok {
+		_spec.SetField(orgstaff.FieldDeptID, field.TypeString, value)
+		_node.DeptID = &value
 	}
 	if value, ok := osc.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -1197,6 +1220,24 @@ func (u *OrgStaffUpsert) UpdateEmpystDictID() *OrgStaffUpsert {
 // ClearEmpystDictID clears the value of the "empyst_dict_id" field.
 func (u *OrgStaffUpsert) ClearEmpystDictID() *OrgStaffUpsert {
 	u.SetNull(orgstaff.FieldEmpystDictID)
+	return u
+}
+
+// SetDeptID sets the "dept_id" field.
+func (u *OrgStaffUpsert) SetDeptID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldDeptID, v)
+	return u
+}
+
+// UpdateDeptID sets the "dept_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateDeptID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldDeptID)
+	return u
+}
+
+// ClearDeptID clears the value of the "dept_id" field.
+func (u *OrgStaffUpsert) ClearDeptID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldDeptID)
 	return u
 }
 
@@ -1742,6 +1783,27 @@ func (u *OrgStaffUpsertOne) UpdateEmpystDictID() *OrgStaffUpsertOne {
 func (u *OrgStaffUpsertOne) ClearEmpystDictID() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearEmpystDictID()
+	})
+}
+
+// SetDeptID sets the "dept_id" field.
+func (u *OrgStaffUpsertOne) SetDeptID(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetDeptID(v)
+	})
+}
+
+// UpdateDeptID sets the "dept_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateDeptID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateDeptID()
+	})
+}
+
+// ClearDeptID clears the value of the "dept_id" field.
+func (u *OrgStaffUpsertOne) ClearDeptID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearDeptID()
 	})
 }
 
@@ -2453,6 +2515,27 @@ func (u *OrgStaffUpsertBulk) UpdateEmpystDictID() *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) ClearEmpystDictID() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearEmpystDictID()
+	})
+}
+
+// SetDeptID sets the "dept_id" field.
+func (u *OrgStaffUpsertBulk) SetDeptID(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetDeptID(v)
+	})
+}
+
+// UpdateDeptID sets the "dept_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateDeptID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateDeptID()
+	})
+}
+
+// ClearDeptID clears the value of the "dept_id" field.
+func (u *OrgStaffUpsertBulk) ClearDeptID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearDeptID()
 	})
 }
 

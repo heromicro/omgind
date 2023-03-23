@@ -354,6 +354,10 @@ func init() {
 	orgstaffDescEmpystDictID := orgstaffFields[16].Descriptor()
 	// orgstaff.EmpystDictIDValidator is a validator for the "empyst_dict_id" field. It is called by the builders before save.
 	orgstaff.EmpystDictIDValidator = orgstaffDescEmpystDictID.Validators[0].(func(string) error)
+	// orgstaffDescDeptID is the schema descriptor for dept_id field.
+	orgstaffDescDeptID := orgstaffFields[17].Descriptor()
+	// orgstaff.DeptIDValidator is a validator for the "dept_id" field. It is called by the builders before save.
+	orgstaff.DeptIDValidator = orgstaffDescDeptID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.
 	orgstaffDescID := orgstaffMixinFields0[0].Descriptor()
 	// orgstaff.DefaultID holds the default value on creation for the id field.

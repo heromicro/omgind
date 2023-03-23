@@ -40,7 +40,7 @@ func (OrgDepartment) Edges() []ent.Edge {
 		// M2O
 		edge.From("organ", OrgOrgan.Type).Ref("departments").Field("org_id").Unique(),
 		// O2M
-		edge.To("staffs", OrgStaff.Type),
+		// edge.To("staffs", OrgStaff.Type),
 	}
 }
 

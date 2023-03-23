@@ -1272,44 +1272,6 @@ func (c *SysDictClient) QueryItems(sd *SysDict) *SysDictItemQuery {
 	return query
 }
 
-// QueryStaffGender queries the staff_gender edge of a SysDict.
-func (c *SysDictClient) QueryStaffGender(sd *SysDict) *OrgStaffQuery {
-	query := (&OrgStaffClient{config: c.config}).Query()
-	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sd.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(sysdict.Table, sysdict.FieldID, id),
-			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, false, sysdict.StaffGenderTable, sysdict.StaffGenderColumn),
-		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.SysDict
-		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryStaffEmpyst queries the staff_empyst edge of a SysDict.
-func (c *SysDictClient) QueryStaffEmpyst(sd *SysDict) *OrgStaffQuery {
-	query := (&OrgStaffClient{config: c.config}).Query()
-	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sd.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(sysdict.Table, sysdict.FieldID, id),
-			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, false, sysdict.StaffEmpystTable, sysdict.StaffEmpystColumn),
-		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.SysDict
-		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
 // Hooks returns the client hooks.
 func (c *SysDictClient) Hooks() []Hook {
 	return c.hooks.SysDict

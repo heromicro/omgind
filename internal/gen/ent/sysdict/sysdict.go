@@ -34,10 +34,6 @@ const (
 	FieldTipe = "tipe"
 	// EdgeItems holds the string denoting the items edge name in mutations.
 	EdgeItems = "items"
-	// EdgeStaffGender holds the string denoting the staff_gender edge name in mutations.
-	EdgeStaffGender = "staff_gender"
-	// EdgeStaffEmpyst holds the string denoting the staff_empyst edge name in mutations.
-	EdgeStaffEmpyst = "staff_empyst"
 	// Table holds the table name of the sysdict in the database.
 	Table = "sys_dicts"
 	// ItemsTable is the table that holds the items relation/edge.
@@ -47,20 +43,6 @@ const (
 	ItemsInverseTable = "sys_dict_items"
 	// ItemsColumn is the table column denoting the items relation/edge.
 	ItemsColumn = "dict_id"
-	// StaffGenderTable is the table that holds the staff_gender relation/edge.
-	StaffGenderTable = "sys_dicts"
-	// StaffGenderInverseTable is the table name for the OrgStaff entity.
-	// It exists in this package in order to avoid circular dependency with the "orgstaff" package.
-	StaffGenderInverseTable = "org_staffs"
-	// StaffGenderColumn is the table column denoting the staff_gender relation/edge.
-	StaffGenderColumn = "sys_dict_staff_gender"
-	// StaffEmpystTable is the table that holds the staff_empyst relation/edge.
-	StaffEmpystTable = "sys_dicts"
-	// StaffEmpystInverseTable is the table name for the OrgStaff entity.
-	// It exists in this package in order to avoid circular dependency with the "orgstaff" package.
-	StaffEmpystInverseTable = "org_staffs"
-	// StaffEmpystColumn is the table column denoting the staff_empyst relation/edge.
-	StaffEmpystColumn = "sys_dict_staff_empyst"
 )
 
 // Columns holds all SQL columns for sysdict fields.
@@ -78,22 +60,10 @@ var Columns = []string{
 	FieldTipe,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "sys_dicts"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"sys_dict_staff_gender",
-	"sys_dict_staff_empyst",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

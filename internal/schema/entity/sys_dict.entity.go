@@ -49,3 +49,10 @@ func (sd SysDict) Edges() []ent.Edge {
 func (SysDict) Indexes() []ent.Index {
 	return []ent.Index{}
 }
+
+func makeupDictFrom(name string, refname string, fieldname string) []ent.Edge {
+
+	return []ent.Edge{
+		edge.From(name, SysDict.Type).Ref(refname).Field(fieldname).Unique(),
+	}
+}

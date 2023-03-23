@@ -66,6 +66,8 @@ type OrgStaff struct {
 	EmpyStat int32 `json:"empy_stat,omitempty"`
 	// empst_stat options
 	EmpystDictID *string `json:"empyst_dict_id,omitempty"`
+	// department.id
+	DeptID *string `json:"dept_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -134,7 +136,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort, orgstaff.FieldGender, orgstaff.FieldEmpyStat:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
@@ -323,6 +325,13 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				os.EmpystDictID = new(string)
 				*os.EmpystDictID = value.String
 			}
+		case orgstaff.FieldDeptID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field dept_id", values[i])
+			} else if value.Valid {
+				os.DeptID = new(string)
+				*os.DeptID = value.String
+			}
 		case orgstaff.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -482,6 +491,11 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	if v := os.EmpystDictID; v != nil {
 		builder.WriteString("empyst_dict_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := os.DeptID; v != nil {
+		builder.WriteString("dept_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

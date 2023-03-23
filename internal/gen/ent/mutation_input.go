@@ -580,6 +580,7 @@ type CreateOrgStaffInput struct {
 	OrgID        *string
 	EmpyStat     *int32
 	EmpystDictID *string
+	DeptID       *string
 	Creator      *string
 	Organ        *string
 	IdenAddr     *string
@@ -660,6 +661,9 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.EmpystDictID; v != nil {
 		m.SetEmpystDictID(*v)
 	}
+	if v := i.DeptID; v != nil {
+		m.SetDeptID(*v)
+	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
 	}
@@ -724,6 +728,8 @@ type UpdateOrgStaffInput struct {
 	EmpyStat          *int32
 	EmpystDictID      *string
 	ClearEmpystDictID bool
+	DeptID            *string
+	ClearDeptID       bool
 	Creator           *string
 	ClearCreator      bool
 	Organ             *string
@@ -861,6 +867,12 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	}
 	if v := i.EmpystDictID; v != nil {
 		m.SetEmpystDictID(*v)
+	}
+	if i.ClearDeptID {
+		m.ClearDeptID()
+	}
+	if v := i.DeptID; v != nil {
+		m.SetDeptID(*v)
 	}
 	if i.ClearCreator {
 		m.ClearCreator()
@@ -1232,19 +1244,17 @@ func (u *SysAddressUpdateOne) SetInput(i UpdateSysAddressInput) *SysAddressUpdat
 
 // CreateSysDictInput represents a mutation input for creating sysdicts.
 type CreateSysDictInput struct {
-	IsDel       *bool
-	Memo        *string
-	Sort        *int32
-	CreatedAt   *time.Time
-	UpdatedAt   *time.Time
-	DeletedAt   *time.Time
-	IsActive    *bool
-	NameCn      string
-	NameEn      string
-	Tipe        *sysdict.Tipe
-	Items       []string
-	StaffGender *string
-	StaffEmpyst *string
+	IsDel     *bool
+	Memo      *string
+	Sort      *int32
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
+	IsActive  *bool
+	NameCn    string
+	NameEn    string
+	Tipe      *sysdict.Tipe
+	Items     []string
 }
 
 // Mutate applies the CreateSysDictInput on the SysDictCreate builder.
@@ -1278,12 +1288,6 @@ func (i *CreateSysDictInput) Mutate(m *SysDictCreate) {
 	if ids := i.Items; len(ids) > 0 {
 		m.AddItemIDs(ids...)
 	}
-	if v := i.StaffGender; v != nil {
-		m.SetStaffGenderID(*v)
-	}
-	if v := i.StaffEmpyst; v != nil {
-		m.SetStaffEmpystID(*v)
-	}
 }
 
 // SetInput applies the change-set in the CreateSysDictInput on the create builder.
@@ -1294,24 +1298,20 @@ func (c *SysDictCreate) SetInput(i CreateSysDictInput) *SysDictCreate {
 
 // UpdateSysDictInput represents a mutation input for updating sysdicts.
 type UpdateSysDictInput struct {
-	IsDel            *bool
-	Memo             *string
-	ClearMemo        bool
-	Sort             *int32
-	UpdatedAt        *time.Time
-	ClearUpdatedAt   bool
-	DeletedAt        *time.Time
-	ClearDeletedAt   bool
-	IsActive         *bool
-	NameCn           *string
-	NameEn           *string
-	Tipe             *sysdict.Tipe
-	AddItemIDs       []string
-	RemoveItemIDs    []string
-	StaffGender      *string
-	ClearStaffGender bool
-	StaffEmpyst      *string
-	ClearStaffEmpyst bool
+	IsDel          *bool
+	Memo           *string
+	ClearMemo      bool
+	Sort           *int32
+	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
+	DeletedAt      *time.Time
+	ClearDeletedAt bool
+	IsActive       *bool
+	NameCn         *string
+	NameEn         *string
+	Tipe           *sysdict.Tipe
+	AddItemIDs     []string
+	RemoveItemIDs  []string
 }
 
 // Mutate applies the UpdateSysDictInput on the SysDictMutation.
@@ -1357,18 +1357,6 @@ func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	}
 	if ids := i.RemoveItemIDs; len(ids) > 0 {
 		m.RemoveItemIDs(ids...)
-	}
-	if i.ClearStaffGender {
-		m.ClearStaffGender()
-	}
-	if v := i.StaffGender; v != nil {
-		m.SetStaffGenderID(*v)
-	}
-	if i.ClearStaffEmpyst {
-		m.ClearStaffEmpyst()
-	}
-	if v := i.StaffEmpyst; v != nil {
-		m.SetStaffEmpystID(*v)
 	}
 }
 

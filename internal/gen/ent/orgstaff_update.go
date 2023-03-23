@@ -481,6 +481,26 @@ func (osu *OrgStaffUpdate) ClearEmpystDictID() *OrgStaffUpdate {
 	return osu
 }
 
+// SetDeptID sets the "dept_id" field.
+func (osu *OrgStaffUpdate) SetDeptID(s string) *OrgStaffUpdate {
+	osu.mutation.SetDeptID(s)
+	return osu
+}
+
+// SetNillableDeptID sets the "dept_id" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableDeptID(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetDeptID(*s)
+	}
+	return osu
+}
+
+// ClearDeptID clears the value of the "dept_id" field.
+func (osu *OrgStaffUpdate) ClearDeptID() *OrgStaffUpdate {
+	osu.mutation.ClearDeptID()
+	return osu
+}
+
 // SetCreator sets the "creator" field.
 func (osu *OrgStaffUpdate) SetCreator(s string) *OrgStaffUpdate {
 	osu.mutation.SetCreator(s)
@@ -646,6 +666,11 @@ func (osu *OrgStaffUpdate) check() error {
 			return &ValidationError{Name: "empyst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.empyst_dict_id": %w`, err)}
 		}
 	}
+	if v, ok := osu.mutation.DeptID(); ok {
+		if err := orgstaff.DeptIDValidator(v); err != nil {
+			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.dept_id": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -786,6 +811,12 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if osu.mutation.EmpystDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldEmpystDictID, field.TypeString)
+	}
+	if value, ok := osu.mutation.DeptID(); ok {
+		_spec.SetField(orgstaff.FieldDeptID, field.TypeString, value)
+	}
+	if osu.mutation.DeptIDCleared() {
+		_spec.ClearField(orgstaff.FieldDeptID, field.TypeString)
 	}
 	if value, ok := osu.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
@@ -1359,6 +1390,26 @@ func (osuo *OrgStaffUpdateOne) ClearEmpystDictID() *OrgStaffUpdateOne {
 	return osuo
 }
 
+// SetDeptID sets the "dept_id" field.
+func (osuo *OrgStaffUpdateOne) SetDeptID(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetDeptID(s)
+	return osuo
+}
+
+// SetNillableDeptID sets the "dept_id" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableDeptID(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetDeptID(*s)
+	}
+	return osuo
+}
+
+// ClearDeptID clears the value of the "dept_id" field.
+func (osuo *OrgStaffUpdateOne) ClearDeptID() *OrgStaffUpdateOne {
+	osuo.mutation.ClearDeptID()
+	return osuo
+}
+
 // SetCreator sets the "creator" field.
 func (osuo *OrgStaffUpdateOne) SetCreator(s string) *OrgStaffUpdateOne {
 	osuo.mutation.SetCreator(s)
@@ -1537,6 +1588,11 @@ func (osuo *OrgStaffUpdateOne) check() error {
 			return &ValidationError{Name: "empyst_dict_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.empyst_dict_id": %w`, err)}
 		}
 	}
+	if v, ok := osuo.mutation.DeptID(); ok {
+		if err := orgstaff.DeptIDValidator(v); err != nil {
+			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.dept_id": %w`, err)}
+		}
+	}
 	return nil
 }
 
@@ -1694,6 +1750,12 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	}
 	if osuo.mutation.EmpystDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldEmpystDictID, field.TypeString)
+	}
+	if value, ok := osuo.mutation.DeptID(); ok {
+		_spec.SetField(orgstaff.FieldDeptID, field.TypeString, value)
+	}
+	if osuo.mutation.DeptIDCleared() {
+		_spec.ClearField(orgstaff.FieldDeptID, field.TypeString)
 	}
 	if value, ok := osuo.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)

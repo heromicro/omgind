@@ -60,7 +60,6 @@ func (OrgStaff) Fields() []ent.Field {
 }
 
 func (OrgStaff) Edges() []ent.Edge {
-
 	return []ent.Edge{
 
 		// M2O
@@ -74,7 +73,7 @@ func (OrgStaff) Edges() []ent.Edge {
 		// edge.From("empyst_dict", SysDict.Type).Ref("staff_empyst").Field("empyst_dict_id").Unique(),
 
 		// M2O
-		edge.From("department", OrgDepartment.Type).Ref("staffs").Field("dept_id"),
+		// edge.From("department", OrgDepartment.Type).Ref("staffs").Field("dept_id").Unique(),
 	}
 }
 

@@ -59,6 +59,8 @@ const (
 	FieldEmpyStat = "empy_stat"
 	// FieldEmpystDictID holds the string denoting the empyst_dict_id field in the database.
 	FieldEmpystDictID = "empyst_dict_id"
+	// FieldDeptID holds the string denoting the dept_id field in the database.
+	FieldDeptID = "dept_id"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
@@ -119,6 +121,7 @@ var Columns = []string{
 	FieldOrgID,
 	FieldEmpyStat,
 	FieldEmpystDictID,
+	FieldDeptID,
 	FieldCreator,
 }
 
@@ -171,6 +174,8 @@ var (
 	DefaultEmpyStat int32
 	// EmpystDictIDValidator is a validator for the "empyst_dict_id" field. It is called by the builders before save.
 	EmpystDictIDValidator func(string) error
+	// DeptIDValidator is a validator for the "dept_id" field. It is called by the builders before save.
+	DeptIDValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

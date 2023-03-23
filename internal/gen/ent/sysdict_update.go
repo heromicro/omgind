@@ -12,7 +12,6 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
-	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -174,44 +173,6 @@ func (sdu *SysDictUpdate) AddItems(s ...*SysDictItem) *SysDictUpdate {
 	return sdu.AddItemIDs(ids...)
 }
 
-// SetStaffGenderID sets the "staff_gender" edge to the OrgStaff entity by ID.
-func (sdu *SysDictUpdate) SetStaffGenderID(id string) *SysDictUpdate {
-	sdu.mutation.SetStaffGenderID(id)
-	return sdu
-}
-
-// SetNillableStaffGenderID sets the "staff_gender" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableStaffGenderID(id *string) *SysDictUpdate {
-	if id != nil {
-		sdu = sdu.SetStaffGenderID(*id)
-	}
-	return sdu
-}
-
-// SetStaffGender sets the "staff_gender" edge to the OrgStaff entity.
-func (sdu *SysDictUpdate) SetStaffGender(o *OrgStaff) *SysDictUpdate {
-	return sdu.SetStaffGenderID(o.ID)
-}
-
-// SetStaffEmpystID sets the "staff_empyst" edge to the OrgStaff entity by ID.
-func (sdu *SysDictUpdate) SetStaffEmpystID(id string) *SysDictUpdate {
-	sdu.mutation.SetStaffEmpystID(id)
-	return sdu
-}
-
-// SetNillableStaffEmpystID sets the "staff_empyst" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableStaffEmpystID(id *string) *SysDictUpdate {
-	if id != nil {
-		sdu = sdu.SetStaffEmpystID(*id)
-	}
-	return sdu
-}
-
-// SetStaffEmpyst sets the "staff_empyst" edge to the OrgStaff entity.
-func (sdu *SysDictUpdate) SetStaffEmpyst(o *OrgStaff) *SysDictUpdate {
-	return sdu.SetStaffEmpystID(o.ID)
-}
-
 // Mutation returns the SysDictMutation object of the builder.
 func (sdu *SysDictUpdate) Mutation() *SysDictMutation {
 	return sdu.mutation
@@ -236,18 +197,6 @@ func (sdu *SysDictUpdate) RemoveItems(s ...*SysDictItem) *SysDictUpdate {
 		ids[i] = s[i].ID
 	}
 	return sdu.RemoveItemIDs(ids...)
-}
-
-// ClearStaffGender clears the "staff_gender" edge to the OrgStaff entity.
-func (sdu *SysDictUpdate) ClearStaffGender() *SysDictUpdate {
-	sdu.mutation.ClearStaffGender()
-	return sdu
-}
-
-// ClearStaffEmpyst clears the "staff_empyst" edge to the OrgStaff entity.
-func (sdu *SysDictUpdate) ClearStaffEmpyst() *SysDictUpdate {
-	sdu.mutation.ClearStaffEmpyst()
-	return sdu
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -419,68 +368,6 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if sdu.mutation.StaffGenderCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   sysdict.StaffGenderTable,
-			Columns: []string{sysdict.StaffGenderColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
-			},
-		}
-		edge.Schema = sdu.schemaConfig.SysDict
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := sdu.mutation.StaffGenderIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   sysdict.StaffGenderTable,
-			Columns: []string{sysdict.StaffGenderColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
-			},
-		}
-		edge.Schema = sdu.schemaConfig.SysDict
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if sdu.mutation.StaffEmpystCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   sysdict.StaffEmpystTable,
-			Columns: []string{sysdict.StaffEmpystColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
-			},
-		}
-		edge.Schema = sdu.schemaConfig.SysDict
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := sdu.mutation.StaffEmpystIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   sysdict.StaffEmpystTable,
-			Columns: []string{sysdict.StaffEmpystColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
-			},
-		}
-		edge.Schema = sdu.schemaConfig.SysDict
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
 	_spec.Node.Schema = sdu.schemaConfig.SysDict
 	ctx = internal.NewSchemaConfigContext(ctx, sdu.schemaConfig)
 	_spec.AddModifiers(sdu.modifiers...)
@@ -647,44 +534,6 @@ func (sduo *SysDictUpdateOne) AddItems(s ...*SysDictItem) *SysDictUpdateOne {
 	return sduo.AddItemIDs(ids...)
 }
 
-// SetStaffGenderID sets the "staff_gender" edge to the OrgStaff entity by ID.
-func (sduo *SysDictUpdateOne) SetStaffGenderID(id string) *SysDictUpdateOne {
-	sduo.mutation.SetStaffGenderID(id)
-	return sduo
-}
-
-// SetNillableStaffGenderID sets the "staff_gender" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableStaffGenderID(id *string) *SysDictUpdateOne {
-	if id != nil {
-		sduo = sduo.SetStaffGenderID(*id)
-	}
-	return sduo
-}
-
-// SetStaffGender sets the "staff_gender" edge to the OrgStaff entity.
-func (sduo *SysDictUpdateOne) SetStaffGender(o *OrgStaff) *SysDictUpdateOne {
-	return sduo.SetStaffGenderID(o.ID)
-}
-
-// SetStaffEmpystID sets the "staff_empyst" edge to the OrgStaff entity by ID.
-func (sduo *SysDictUpdateOne) SetStaffEmpystID(id string) *SysDictUpdateOne {
-	sduo.mutation.SetStaffEmpystID(id)
-	return sduo
-}
-
-// SetNillableStaffEmpystID sets the "staff_empyst" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableStaffEmpystID(id *string) *SysDictUpdateOne {
-	if id != nil {
-		sduo = sduo.SetStaffEmpystID(*id)
-	}
-	return sduo
-}
-
-// SetStaffEmpyst sets the "staff_empyst" edge to the OrgStaff entity.
-func (sduo *SysDictUpdateOne) SetStaffEmpyst(o *OrgStaff) *SysDictUpdateOne {
-	return sduo.SetStaffEmpystID(o.ID)
-}
-
 // Mutation returns the SysDictMutation object of the builder.
 func (sduo *SysDictUpdateOne) Mutation() *SysDictMutation {
 	return sduo.mutation
@@ -709,18 +558,6 @@ func (sduo *SysDictUpdateOne) RemoveItems(s ...*SysDictItem) *SysDictUpdateOne {
 		ids[i] = s[i].ID
 	}
 	return sduo.RemoveItemIDs(ids...)
-}
-
-// ClearStaffGender clears the "staff_gender" edge to the OrgStaff entity.
-func (sduo *SysDictUpdateOne) ClearStaffGender() *SysDictUpdateOne {
-	sduo.mutation.ClearStaffGender()
-	return sduo
-}
-
-// ClearStaffEmpyst clears the "staff_empyst" edge to the OrgStaff entity.
-func (sduo *SysDictUpdateOne) ClearStaffEmpyst() *SysDictUpdateOne {
-	sduo.mutation.ClearStaffEmpyst()
-	return sduo
 }
 
 // Where appends a list predicates to the SysDictUpdate builder.
@@ -917,68 +754,6 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 			},
 		}
 		edge.Schema = sduo.schemaConfig.SysDictItem
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if sduo.mutation.StaffGenderCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   sysdict.StaffGenderTable,
-			Columns: []string{sysdict.StaffGenderColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
-			},
-		}
-		edge.Schema = sduo.schemaConfig.SysDict
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := sduo.mutation.StaffGenderIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   sysdict.StaffGenderTable,
-			Columns: []string{sysdict.StaffGenderColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
-			},
-		}
-		edge.Schema = sduo.schemaConfig.SysDict
-		for _, k := range nodes {
-			edge.Target.Nodes = append(edge.Target.Nodes, k)
-		}
-		_spec.Edges.Add = append(_spec.Edges.Add, edge)
-	}
-	if sduo.mutation.StaffEmpystCleared() {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   sysdict.StaffEmpystTable,
-			Columns: []string{sysdict.StaffEmpystColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
-			},
-		}
-		edge.Schema = sduo.schemaConfig.SysDict
-		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
-	}
-	if nodes := sduo.mutation.StaffEmpystIDs(); len(nodes) > 0 {
-		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.M2O,
-			Inverse: false,
-			Table:   sysdict.StaffEmpystTable,
-			Columns: []string{sysdict.StaffEmpystColumn},
-			Bidi:    false,
-			Target: &sqlgraph.EdgeTarget{
-				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
-			},
-		}
-		edge.Schema = sduo.schemaConfig.SysDict
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

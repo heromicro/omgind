@@ -186,6 +186,11 @@ func EmpystDictID(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldEmpystDictID, v))
 }
 
+// DeptID applies equality check predicate on the "dept_id" field. It's identical to DeptIDEQ.
+func DeptID(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldDeptID, v))
+}
+
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
 func Creator(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldCreator, v))
@@ -1589,6 +1594,81 @@ func EmpystDictIDEqualFold(v string) predicate.OrgStaff {
 // EmpystDictIDContainsFold applies the ContainsFold predicate on the "empyst_dict_id" field.
 func EmpystDictIDContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldEmpystDictID, v))
+}
+
+// DeptIDEQ applies the EQ predicate on the "dept_id" field.
+func DeptIDEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldDeptID, v))
+}
+
+// DeptIDNEQ applies the NEQ predicate on the "dept_id" field.
+func DeptIDNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldDeptID, v))
+}
+
+// DeptIDIn applies the In predicate on the "dept_id" field.
+func DeptIDIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldDeptID, vs...))
+}
+
+// DeptIDNotIn applies the NotIn predicate on the "dept_id" field.
+func DeptIDNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldDeptID, vs...))
+}
+
+// DeptIDGT applies the GT predicate on the "dept_id" field.
+func DeptIDGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldDeptID, v))
+}
+
+// DeptIDGTE applies the GTE predicate on the "dept_id" field.
+func DeptIDGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldDeptID, v))
+}
+
+// DeptIDLT applies the LT predicate on the "dept_id" field.
+func DeptIDLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldDeptID, v))
+}
+
+// DeptIDLTE applies the LTE predicate on the "dept_id" field.
+func DeptIDLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldDeptID, v))
+}
+
+// DeptIDContains applies the Contains predicate on the "dept_id" field.
+func DeptIDContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldDeptID, v))
+}
+
+// DeptIDHasPrefix applies the HasPrefix predicate on the "dept_id" field.
+func DeptIDHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldDeptID, v))
+}
+
+// DeptIDHasSuffix applies the HasSuffix predicate on the "dept_id" field.
+func DeptIDHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldDeptID, v))
+}
+
+// DeptIDIsNil applies the IsNil predicate on the "dept_id" field.
+func DeptIDIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldDeptID))
+}
+
+// DeptIDNotNil applies the NotNil predicate on the "dept_id" field.
+func DeptIDNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldDeptID))
+}
+
+// DeptIDEqualFold applies the EqualFold predicate on the "dept_id" field.
+func DeptIDEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldDeptID, v))
+}
+
+// DeptIDContainsFold applies the ContainsFold predicate on the "dept_id" field.
+func DeptIDContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldDeptID, v))
 }
 
 // CreatorEQ applies the EQ predicate on the "creator" field.
