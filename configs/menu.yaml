@@ -354,39 +354,39 @@
           name: 新增
           resources:
             - method: POST
-              path: "/api/v2/org-departments"
+              path: "/api/v2/org-depts"
         - code: edit
           name: 编辑
           resources: 
             - method: GET
-              path: "/api/v2/org-departments/:id"
+              path: "/api/v2/org-depts/:id"
             - method: PUT
-              path: "/api/v2/org-departments/:id"
+              path: "/api/v2/org-depts/:id"
         - code: del
           name: 删除
           resources:
             - method: DELETE
-              path: "/api/v2/org-departments/:id"
+              path: "/api/v2/org-depts/:id"
         - code: query
           name: 查询
           resources:
             - method: GET
-              path: "/api/v2/org-departments"
+              path: "/api/v2/org-depts"
         - code: disable
           name: 禁用
           resources:
             - method: PATCH
-              path: "/api/v2/org-departments/:id/disable"
+              path: "/api/v2/org-depts/:id/disable"
         - code: enable
           name: 启用
           resources:
             - method: PATCH
-              path: "/api/v2/org-departments/:id/enable"
+              path: "/api/v2/org-depts/:id/enable"
         - code: view
           name: 查看
           resources:
             - method: GET
-              path: "/api/v2/org-departments/:id/view"
+              path: "/api/v2/org-depts/:id/view"
 
     - name: 员工管理
       icon: audit

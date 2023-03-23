@@ -66,7 +66,7 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 
 		a.initOrgPositionRouterV2(v2, a.OrgPositionAPIV2, "org-positions")
 
-		a.initOrgDeptRouterV2(v2, a.OrgDeptAPIV2, "org-departments")
+		a.initOrgDeptRouterV2(v2, a.OrgDeptAPIV2, "org-depts")
 
 	}
 
