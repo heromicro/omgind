@@ -99,6 +99,10 @@ func init() {
 	orgdeptDescIsReal := orgdeptFields[4].Descriptor()
 	// orgdept.DefaultIsReal holds the default value on creation for the is_real field.
 	orgdept.DefaultIsReal = orgdeptDescIsReal.Default.(bool)
+	// orgdeptDescIsShow is the schema descriptor for is_show field.
+	orgdeptDescIsShow := orgdeptFields[5].Descriptor()
+	// orgdept.DefaultIsShow holds the default value on creation for the is_show field.
+	orgdept.DefaultIsShow = orgdeptDescIsShow.Default.(bool)
 	// orgdeptDescID is the schema descriptor for id field.
 	orgdeptDescID := orgdeptMixinFields0[0].Descriptor()
 	// orgdept.DefaultID holds the default value on creation for the id field.

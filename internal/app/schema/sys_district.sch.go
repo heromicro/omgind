@@ -4,29 +4,30 @@ import "time"
 
 // SysDistrict 行政区域对象
 type SysDistrict struct {
-	ID         string         `json:"id"`                                     // 唯一标识
-	ParentID   *string        `json:"pid"`                                    // pid
-	Parent     *SysDistrict   `json:"parent"`                                 // parent
-	Children   []*SysDistrict `json:"children"`                               // children
-	Name       string         `json:"name" binding:"required"`                // 名称
-	NameEn     *string        `json:"name_en,omitempty"`                      // 名称[英语]
-	Sname      *string        `json:"sname,omitempty"`                        // 短名称[英语]
-	SnameEn    *string        `json:"sname_en,omitempty"`                     // 短名称
-	Abbr       *string        `json:"abbr,omitempty"`                         // 简称
-	Suffix     *string        `json:"suffix,omitempty"`                       // 区域后缀,省/市/区/旗/盟/自治区/
-	StCode     *string        `json:"st_code,omitempty"`                      // 统计局区域编码
-	Initials   *string        `json:"initials,omitempty"`                     // 简拼
-	Pinyin     *string        `json:"pinyin,omitempty"`                       // 简拼
-	Longitude  *float64       `json:"longitude,omitempty"`                    // 经度
-	Latitude   *float64       `json:"latitude,omitempty"`                     // 经度
-	AreaCode   *string        `json:"area_code,omitempty"`                    // 电话区号码
-	ZipCode    *string        `json:"zip_code,omitempty"`                     // 邮政编码
-	MergeName  *string        `json:"merge_name,omitempty"`                   // 带前缀全名称
-	MergeSname *string        `json:"merge_sname,omitempty"`                  // 带前缀简名称
-	Extra      *string        `json:"extra,omitempty"`                        // 带前缀简名称
-	IsActive   *bool          `json:"is_active,omitempty" binding:"required"` // 状态
-	Sort       int32          `json:"sort"`
-	IsDel      bool           `json:"is_del"`
+	ID       string       `json:"id"`       // 唯一标识
+	ParentID *string      `json:"pid"`      // pid
+	Parent   *SysDistrict `json:"parent"`   // parent
+	Children SysDistricts `json:"children"` // children
+
+	Name       string   `json:"name" binding:"required"`                // 名称
+	NameEn     *string  `json:"name_en,omitempty"`                      // 名称[英语]
+	Sname      *string  `json:"sname,omitempty"`                        // 短名称[英语]
+	SnameEn    *string  `json:"sname_en,omitempty"`                     // 短名称
+	Abbr       *string  `json:"abbr,omitempty"`                         // 简称
+	Suffix     *string  `json:"suffix,omitempty"`                       // 区域后缀,省/市/区/旗/盟/自治区/
+	StCode     *string  `json:"st_code,omitempty"`                      // 统计局区域编码
+	Initials   *string  `json:"initials,omitempty"`                     // 简拼
+	Pinyin     *string  `json:"pinyin,omitempty"`                       // 简拼
+	Longitude  *float64 `json:"longitude,omitempty"`                    // 经度
+	Latitude   *float64 `json:"latitude,omitempty"`                     // 经度
+	AreaCode   *string  `json:"area_code,omitempty"`                    // 电话区号码
+	ZipCode    *string  `json:"zip_code,omitempty"`                     // 邮政编码
+	MergeName  *string  `json:"merge_name,omitempty"`                   // 带前缀全名称
+	MergeSname *string  `json:"merge_sname,omitempty"`                  // 带前缀简名称
+	Extra      *string  `json:"extra,omitempty"`                        // 带前缀简名称
+	IsActive   *bool    `json:"is_active,omitempty" binding:"required"` // 状态
+	Sort       int32    `json:"sort"`
+	IsDel      bool     `json:"is_del"`
 
 	IsMain   *bool `json:"is_main,omitempty"` // 主要城市
 	IsHot    bool  `json:"is_hot"`            // 热门城市

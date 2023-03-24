@@ -343,8 +343,11 @@ func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.
 		of := MakeUpOrderField(sysdistrict.FieldTreeID, "asc")
 		opt.OrderFields = append(opt.OrderFields, of)
 
-		of2 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
+		of2 := MakeUpOrderField(sysdistrict.FieldTreeLevel, "asc")
 		opt.OrderFields = append(opt.OrderFields, of2)
+
+		of4 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
+		opt.OrderFields = append(opt.OrderFields, of4)
 	}
 
 	query = query.Order(ParseOrder(opt.OrderFields)...)
@@ -1077,7 +1080,7 @@ func (a *SysDistrict) GetLatestTreeID(ctx context.Context) (int64, error) {
 	most, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).Select(sysdistrict.FieldID, sysdistrict.FieldTreeID).First(ctx)
 
 	if err != nil {
-		if !ent.IsNotFound(err) {
+		if ent.IsNotFound(err) {
 			return 1, nil
 		}
 		return -1, err

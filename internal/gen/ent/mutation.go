@@ -88,6 +88,7 @@ type OrgDeptMutation struct {
 	name            *string
 	code            *string
 	is_real         *bool
+	is_show         *bool
 	creator         *string
 	clearedFields   map[string]struct{}
 	parent          *string
@@ -1153,6 +1154,55 @@ func (m *OrgDeptMutation) ResetIsReal() {
 	delete(m.clearedFields, orgdept.FieldIsReal)
 }
 
+// SetIsShow sets the "is_show" field.
+func (m *OrgDeptMutation) SetIsShow(b bool) {
+	m.is_show = &b
+}
+
+// IsShow returns the value of the "is_show" field in the mutation.
+func (m *OrgDeptMutation) IsShow() (r bool, exists bool) {
+	v := m.is_show
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsShow returns the old "is_show" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgDeptMutation) OldIsShow(ctx context.Context) (v *bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsShow is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsShow requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsShow: %w", err)
+	}
+	return oldValue.IsShow, nil
+}
+
+// ClearIsShow clears the value of the "is_show" field.
+func (m *OrgDeptMutation) ClearIsShow() {
+	m.is_show = nil
+	m.clearedFields[orgdept.FieldIsShow] = struct{}{}
+}
+
+// IsShowCleared returns if the "is_show" field was cleared in this mutation.
+func (m *OrgDeptMutation) IsShowCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldIsShow]
+	return ok
+}
+
+// ResetIsShow resets all changes to the "is_show" field.
+func (m *OrgDeptMutation) ResetIsShow() {
+	m.is_show = nil
+	delete(m.clearedFields, orgdept.FieldIsShow)
+}
+
 // SetCreator sets the "creator" field.
 func (m *OrgDeptMutation) SetCreator(s string) {
 	m.creator = &s
@@ -1355,7 +1405,7 @@ func (m *OrgDeptMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgDeptMutation) Fields() []string {
-	fields := make([]string, 0, 19)
+	fields := make([]string, 0, 20)
 	if m.is_del != nil {
 		fields = append(fields, orgdept.FieldIsDel)
 	}
@@ -1410,6 +1460,9 @@ func (m *OrgDeptMutation) Fields() []string {
 	if m.is_real != nil {
 		fields = append(fields, orgdept.FieldIsReal)
 	}
+	if m.is_show != nil {
+		fields = append(fields, orgdept.FieldIsShow)
+	}
 	if m.creator != nil {
 		fields = append(fields, orgdept.FieldCreator)
 	}
@@ -1457,6 +1510,8 @@ func (m *OrgDeptMutation) Field(name string) (ent.Value, bool) {
 		return m.ParentID()
 	case orgdept.FieldIsReal:
 		return m.IsReal()
+	case orgdept.FieldIsShow:
+		return m.IsShow()
 	case orgdept.FieldCreator:
 		return m.Creator()
 	}
@@ -1504,6 +1559,8 @@ func (m *OrgDeptMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldParentID(ctx)
 	case orgdept.FieldIsReal:
 		return m.OldIsReal(ctx)
+	case orgdept.FieldIsShow:
+		return m.OldIsShow(ctx)
 	case orgdept.FieldCreator:
 		return m.OldCreator(ctx)
 	}
@@ -1640,6 +1697,13 @@ func (m *OrgDeptMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetIsReal(v)
+		return nil
+	case orgdept.FieldIsShow:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsShow(v)
 		return nil
 	case orgdept.FieldCreator:
 		v, ok := value.(string)
@@ -1786,6 +1850,9 @@ func (m *OrgDeptMutation) ClearedFields() []string {
 	if m.FieldCleared(orgdept.FieldIsReal) {
 		fields = append(fields, orgdept.FieldIsReal)
 	}
+	if m.FieldCleared(orgdept.FieldIsShow) {
+		fields = append(fields, orgdept.FieldIsShow)
+	}
 	if m.FieldCleared(orgdept.FieldCreator) {
 		fields = append(fields, orgdept.FieldCreator)
 	}
@@ -1847,6 +1914,9 @@ func (m *OrgDeptMutation) ClearField(name string) error {
 		return nil
 	case orgdept.FieldIsReal:
 		m.ClearIsReal()
+		return nil
+	case orgdept.FieldIsShow:
+		m.ClearIsShow()
 		return nil
 	case orgdept.FieldCreator:
 		m.ClearCreator()
@@ -1912,6 +1982,9 @@ func (m *OrgDeptMutation) ResetField(name string) error {
 		return nil
 	case orgdept.FieldIsReal:
 		m.ResetIsReal()
+		return nil
+	case orgdept.FieldIsShow:
+		m.ResetIsShow()
 		return nil
 	case orgdept.FieldCreator:
 		m.ResetCreator()

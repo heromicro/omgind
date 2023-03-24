@@ -28,6 +28,7 @@ type CreateOrgDeptInput struct {
 	OrgID     *string
 	ParentID  *string
 	IsReal    *bool
+	IsShow    *bool
 	Creator   *string
 	Parent    *string
 	Children  []string
@@ -90,6 +91,9 @@ func (i *CreateOrgDeptInput) Mutate(m *OrgDeptCreate) {
 	if v := i.IsReal; v != nil {
 		m.SetIsReal(*v)
 	}
+	if v := i.IsShow; v != nil {
+		m.SetIsShow(*v)
+	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
 	}
@@ -143,6 +147,8 @@ type UpdateOrgDeptInput struct {
 	ClearParentID  bool
 	IsReal         *bool
 	ClearIsReal    bool
+	IsShow         *bool
+	ClearIsShow    bool
 	Creator        *string
 	ClearCreator   bool
 	Parent         *string
@@ -247,6 +253,12 @@ func (i *UpdateOrgDeptInput) Mutate(m *OrgDeptMutation) {
 	}
 	if v := i.IsReal; v != nil {
 		m.SetIsReal(*v)
+	}
+	if i.ClearIsShow {
+		m.ClearIsShow()
+	}
+	if v := i.IsShow; v != nil {
+		m.SetIsShow(*v)
 	}
 	if i.ClearCreator {
 		m.ClearCreator()

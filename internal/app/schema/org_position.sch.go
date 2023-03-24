@@ -12,8 +12,8 @@ type OrgPosition struct {
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`
 
-	OrgID string        `json:"org_id"` // 企业id
-	Org   *OrgOrganShow `json:"org"`    //
+	OrgID string        `json:"org_id" binding:"required"` // 企业id
+	Org   *OrgOrganShow `json:"org"`                       //
 
 	Creator   string     `json:"creator"`    // 创建者
 	CreatedAt *time.Time `json:"created_at"` // 创建时间

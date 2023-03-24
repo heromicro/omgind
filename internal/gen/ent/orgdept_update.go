@@ -380,6 +380,26 @@ func (odu *OrgDeptUpdate) ClearIsReal() *OrgDeptUpdate {
 	return odu
 }
 
+// SetIsShow sets the "is_show" field.
+func (odu *OrgDeptUpdate) SetIsShow(b bool) *OrgDeptUpdate {
+	odu.mutation.SetIsShow(b)
+	return odu
+}
+
+// SetNillableIsShow sets the "is_show" field if the given value is not nil.
+func (odu *OrgDeptUpdate) SetNillableIsShow(b *bool) *OrgDeptUpdate {
+	if b != nil {
+		odu.SetIsShow(*b)
+	}
+	return odu
+}
+
+// ClearIsShow clears the value of the "is_show" field.
+func (odu *OrgDeptUpdate) ClearIsShow() *OrgDeptUpdate {
+	odu.mutation.ClearIsShow()
+	return odu
+}
+
 // SetCreator sets the "creator" field.
 func (odu *OrgDeptUpdate) SetCreator(s string) *OrgDeptUpdate {
 	odu.mutation.SetCreator(s)
@@ -659,6 +679,12 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if odu.mutation.IsRealCleared() {
 		_spec.ClearField(orgdept.FieldIsReal, field.TypeBool)
+	}
+	if value, ok := odu.mutation.IsShow(); ok {
+		_spec.SetField(orgdept.FieldIsShow, field.TypeBool, value)
+	}
+	if odu.mutation.IsShowCleared() {
+		_spec.ClearField(orgdept.FieldIsShow, field.TypeBool)
 	}
 	if value, ok := odu.mutation.Creator(); ok {
 		_spec.SetField(orgdept.FieldCreator, field.TypeString, value)
@@ -1149,6 +1175,26 @@ func (oduo *OrgDeptUpdateOne) ClearIsReal() *OrgDeptUpdateOne {
 	return oduo
 }
 
+// SetIsShow sets the "is_show" field.
+func (oduo *OrgDeptUpdateOne) SetIsShow(b bool) *OrgDeptUpdateOne {
+	oduo.mutation.SetIsShow(b)
+	return oduo
+}
+
+// SetNillableIsShow sets the "is_show" field if the given value is not nil.
+func (oduo *OrgDeptUpdateOne) SetNillableIsShow(b *bool) *OrgDeptUpdateOne {
+	if b != nil {
+		oduo.SetIsShow(*b)
+	}
+	return oduo
+}
+
+// ClearIsShow clears the value of the "is_show" field.
+func (oduo *OrgDeptUpdateOne) ClearIsShow() *OrgDeptUpdateOne {
+	oduo.mutation.ClearIsShow()
+	return oduo
+}
+
 // SetCreator sets the "creator" field.
 func (oduo *OrgDeptUpdateOne) SetCreator(s string) *OrgDeptUpdateOne {
 	oduo.mutation.SetCreator(s)
@@ -1458,6 +1504,12 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 	}
 	if oduo.mutation.IsRealCleared() {
 		_spec.ClearField(orgdept.FieldIsReal, field.TypeBool)
+	}
+	if value, ok := oduo.mutation.IsShow(); ok {
+		_spec.SetField(orgdept.FieldIsShow, field.TypeBool, value)
+	}
+	if oduo.mutation.IsShowCleared() {
+		_spec.ClearField(orgdept.FieldIsShow, field.TypeBool)
 	}
 	if value, ok := oduo.mutation.Creator(); ok {
 		_spec.SetField(orgdept.FieldCreator, field.TypeString, value)

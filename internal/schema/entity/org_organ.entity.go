@@ -34,7 +34,10 @@ func (OrgOrgan) Fields() []ent.Field {
 		field.String("iden_no").MaxLen(20).Nillable().Optional().StorageKey("iden_no").Comment("执照号"),
 
 		field.String("owner_id").MaxLen(36).Nillable().Optional().StorageKey("owner_id").Comment("所有者user.id"),
-		field.String("haddr_id").MaxLen(36).Nillable().Optional().StorageKey("haddr_id").Comment("总部id"),
+
+		field.String("haddr_id").MaxLen(36).Nillable().Optional().StorageKey("haddr_id").Comment("驻地地址id"),
+
+		// field.Bool("is_dept").Comment("是否是部门"),
 
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
@@ -42,6 +45,7 @@ func (OrgOrgan) Fields() []ent.Field {
 
 func (OrgOrgan) Edges() []ent.Edge {
 	return []ent.Edge{
+
 		edge.From("haddr", SysAddress.Type).Ref("organ").Unique().Field("haddr_id"),
 		// edge.From("owner", SysUser.Type).Ref("organ").Unique().Field("owner_id"),
 

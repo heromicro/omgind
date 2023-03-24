@@ -22,6 +22,7 @@ type OrgOrgan struct {
 
 	OrgOrganRepo   *repo.OrgOrgan
 	SysAddressRepo *repo.SysAddress
+	OrgDeptRepo    *repo.OrgDept
 }
 
 // Query 查询数据
@@ -67,17 +68,28 @@ func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.Or
 
 	var rr_orgorgan *ent.OrgOrgan
 
-	err := repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+	la_tree_id, err := a.OrgDeptRepo.GetLatestTreeID(ctx)
+	if err != nil {
+		return nil, err
+	}
 
-		r_addr, err := a.EntCli.SysAddress.Create().SetInput(*addr_iteminput).Save(ctx)
+	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+
+		r_addr, err := tx.SysAddress.Create().SetInput(*addr_iteminput).Save(ctx)
 		if err != nil {
 			return err
 		}
-		rr_orgorgan, err = a.EntCli.OrgOrgan.Create().SetInput(*organ_iteminput).SetHaddrID(r_addr.ID).Save(ctx)
+		rr_orgorgan, err = tx.OrgOrgan.Create().SetInput(*organ_iteminput).SetHaddrID(r_addr.ID).Save(ctx)
 		if err != nil {
 			return err
 		}
 
+		// create an not show dept record
+		_, err = tx.OrgDept.Create().SetOrgID(rr_orgorgan.ID).SetTreeID(la_tree_id).SetName(item.Sname).SetTreeLevel(1).SetTreeLeft(1).SetTreeRight(2).SetSort(0).SetIsShow(false).SetIsLeaf(false).Save(ctx)
+
+		if err != nil {
+			return err
+		}
 		return nil
 	})
 

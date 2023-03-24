@@ -41,7 +41,7 @@ type OrgOrgan struct {
 	IdenNo *string `json:"iden_no,omitempty"`
 	// 所有者user.id
 	OwnerID *string `json:"owner_id,omitempty"`
-	// 总部id
+	// 驻地地址id
 	HaddrID *string `json:"haddr_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`

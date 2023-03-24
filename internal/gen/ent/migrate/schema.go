@@ -26,7 +26,8 @@ var (
 		{Name: "t_path", Type: field.TypeString, Nullable: true, Size: 2147483647},
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
-		{Name: "is_r", Type: field.TypeBool, Nullable: true, Default: true},
+		{Name: "is_rl", Type: field.TypeBool, Nullable: true, Default: true},
+		{Name: "is_sh", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
@@ -39,13 +40,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "org_depts_org_depts_children",
-				Columns:    []*schema.Column{OrgDeptsColumns[18]},
+				Columns:    []*schema.Column{OrgDeptsColumns[19]},
 				RefColumns: []*schema.Column{OrgDeptsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_depts_org_organs_depts",
-				Columns:    []*schema.Column{OrgDeptsColumns[19]},
+				Columns:    []*schema.Column{OrgDeptsColumns[20]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},

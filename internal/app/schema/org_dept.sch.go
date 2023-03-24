@@ -4,7 +4,11 @@ import "time"
 
 // OrgDept 部门管理对象
 type OrgDept struct {
-	ID   string `json:"id"`                      // 唯一标识
+	ID       string   `json:"id"`       // 唯一标识
+	ParentID *string  `json:"pid"`      // pid
+	Parent   *OrgDept `json:"parent"`   // parent
+	Children OrgDepts `json:"children"` // children
+
 	Name string `json:"name" binding:"required"` // 名称
 	Code string `json:"code"`                    // 助记码
 
@@ -12,8 +16,15 @@ type OrgDept struct {
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`
 
-	OrgID string        `json:"org_id"` // 企业id
-	Org   *OrgOrganShow `json:"org"`    //
+	OrgID string        `json:"org_id" binding:"required"` // 企业id
+	Org   *OrgOrganShow `json:"org"`                       //
+
+	IsLeaf    *bool   `json:"is_leaf,omitempty"`    // 是否是子叶
+	TreeID    *int64  `json:"tree_id,omitempty"`    // 树id
+	TreeLevel *int32  `json:"tree_level,omitempty"` // 层级
+	TreeLeft  *int64  `json:"tree_left,omitempty"`  // 层级
+	TreeRight *int64  `json:"tree_right,omitempty"` // 层级
+	TreePath  *string `json:"tree_path,omitempty"`  // 层级
 
 	Creator   string     `json:"creator"`    // 创建者
 	CreatedAt *time.Time `json:"created_at"` // 创建时间
@@ -32,9 +43,10 @@ type OrgDeptQueryParam struct {
 	IsActive *bool  `form:"is_active" json:"is_active"` //
 	OrgID    string `form:"org_id" json:"org_id"`       //
 
-	ParentID *string `form:"pid" json:"pid"`         // pid
-	IsLeaf   *bool   `form:"is_leaf" json:"is_leaf"` // 是否是子叶
-	IsReal   *bool   `form:"is_real" json:"is_real"` // 状态
+	ParentID *string `form:"pid" json:"pid"`                      // pid
+	IsLeaf   *bool   `form:"is_leaf" json:"is_leaf"`              // 是否是子叶
+	IsReal   *bool   `form:"is_real" json:"is_real"`              // 是否真实
+	IsShow   *bool   `form:"is_show,default=true" json:"is_show"` // 是否显示
 
 	TreeID    *int64 `form:"tree_id" json:"tree_id"`       // 树id
 	TreeLevel *int32 `form:"tree_level" json:"tree_level"` // tree_level

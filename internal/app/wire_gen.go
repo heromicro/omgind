@@ -183,10 +183,14 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	orgOrgan := &repo.OrgOrgan{
 		EntCli: client,
 	}
+	orgDept := &repo.OrgDept{
+		EntCli: client,
+	}
 	serviceOrgOrgan := &service.OrgOrgan{
 		EntCli:         client,
 		OrgOrganRepo:   orgOrgan,
 		SysAddressRepo: sysAddress,
+		OrgDeptRepo:    orgDept,
 	}
 	api_v2OrgOrgan := &api_v2.OrgOrgan{
 		OrgOrganSrv: serviceOrgOrgan,
@@ -212,31 +216,28 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2OrgPosition := &api_v2.OrgPosition{
 		OrgPositionSrv: serviceOrgPosition,
 	}
-	orgDept := &repo.OrgDept{
-		EntCli: client,
-	}
 	serviceOrgDept := &service.OrgDept{
-		EntCli:            client,
+		EntCli:      client,
 		OrgDeptRepo: orgDept,
 	}
 	api_v2OrgDept := &api_v2.OrgDept{
 		OrgDeptSrv: serviceOrgDept,
 	}
 	routerRouter := &router.Router{
-		Auth:               auther,
-		CasbinEnforcer:     syncedEnforcer,
-		DictApiV2:          api_v2Dict,
-		DemoAPIV2:          api_v2Demo,
-		MenuAPIV2:          api_v2Menu,
-		RoleAPIV2:          api_v2Role,
-		UserAPIV2:          api_v2User,
-		SignInAPIV2:        api_v2SignIn,
-		SysDistrictAPIV2:   api_v2SysDistrict,
-		SysAddressAPIV2:    api_v2SysAddress,
-		OrgOrganAPIV2:      api_v2OrgOrgan,
-		OrgStaffAPIV2:      api_v2OrgStaff,
-		OrgPositionAPIV2:   api_v2OrgPosition,
-		OrgDeptAPIV2: api_v2OrgDept,
+		Auth:             auther,
+		CasbinEnforcer:   syncedEnforcer,
+		DictApiV2:        api_v2Dict,
+		DemoAPIV2:        api_v2Demo,
+		MenuAPIV2:        api_v2Menu,
+		RoleAPIV2:        api_v2Role,
+		UserAPIV2:        api_v2User,
+		SignInAPIV2:      api_v2SignIn,
+		SysDistrictAPIV2: api_v2SysDistrict,
+		SysAddressAPIV2:  api_v2SysAddress,
+		OrgOrganAPIV2:    api_v2OrgOrgan,
+		OrgStaffAPIV2:    api_v2OrgStaff,
+		OrgPositionAPIV2: api_v2OrgPosition,
+		OrgDeptAPIV2:     api_v2OrgDept,
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{

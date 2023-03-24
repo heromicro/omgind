@@ -276,6 +276,20 @@ func (odc *OrgDeptCreate) SetNillableIsReal(b *bool) *OrgDeptCreate {
 	return odc
 }
 
+// SetIsShow sets the "is_show" field.
+func (odc *OrgDeptCreate) SetIsShow(b bool) *OrgDeptCreate {
+	odc.mutation.SetIsShow(b)
+	return odc
+}
+
+// SetNillableIsShow sets the "is_show" field if the given value is not nil.
+func (odc *OrgDeptCreate) SetNillableIsShow(b *bool) *OrgDeptCreate {
+	if b != nil {
+		odc.SetIsShow(*b)
+	}
+	return odc
+}
+
 // SetCreator sets the "creator" field.
 func (odc *OrgDeptCreate) SetCreator(s string) *OrgDeptCreate {
 	odc.mutation.SetCreator(s)
@@ -409,6 +423,10 @@ func (odc *OrgDeptCreate) defaults() {
 	if _, ok := odc.mutation.IsReal(); !ok {
 		v := orgdept.DefaultIsReal
 		odc.mutation.SetIsReal(v)
+	}
+	if _, ok := odc.mutation.IsShow(); !ok {
+		v := orgdept.DefaultIsShow
+		odc.mutation.SetIsShow(v)
 	}
 	if _, ok := odc.mutation.ID(); !ok {
 		v := orgdept.DefaultID()
@@ -557,6 +575,10 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 	if value, ok := odc.mutation.IsReal(); ok {
 		_spec.SetField(orgdept.FieldIsReal, field.TypeBool, value)
 		_node.IsReal = &value
+	}
+	if value, ok := odc.mutation.IsShow(); ok {
+		_spec.SetField(orgdept.FieldIsShow, field.TypeBool, value)
+		_node.IsShow = &value
 	}
 	if value, ok := odc.mutation.Creator(); ok {
 		_spec.SetField(orgdept.FieldCreator, field.TypeString, value)
@@ -982,6 +1004,24 @@ func (u *OrgDeptUpsert) UpdateIsReal() *OrgDeptUpsert {
 // ClearIsReal clears the value of the "is_real" field.
 func (u *OrgDeptUpsert) ClearIsReal() *OrgDeptUpsert {
 	u.SetNull(orgdept.FieldIsReal)
+	return u
+}
+
+// SetIsShow sets the "is_show" field.
+func (u *OrgDeptUpsert) SetIsShow(v bool) *OrgDeptUpsert {
+	u.Set(orgdept.FieldIsShow, v)
+	return u
+}
+
+// UpdateIsShow sets the "is_show" field to the value that was provided on create.
+func (u *OrgDeptUpsert) UpdateIsShow() *OrgDeptUpsert {
+	u.SetExcluded(orgdept.FieldIsShow)
+	return u
+}
+
+// ClearIsShow clears the value of the "is_show" field.
+func (u *OrgDeptUpsert) ClearIsShow() *OrgDeptUpsert {
+	u.SetNull(orgdept.FieldIsShow)
 	return u
 }
 
@@ -1422,6 +1462,27 @@ func (u *OrgDeptUpsertOne) UpdateIsReal() *OrgDeptUpsertOne {
 func (u *OrgDeptUpsertOne) ClearIsReal() *OrgDeptUpsertOne {
 	return u.Update(func(s *OrgDeptUpsert) {
 		s.ClearIsReal()
+	})
+}
+
+// SetIsShow sets the "is_show" field.
+func (u *OrgDeptUpsertOne) SetIsShow(v bool) *OrgDeptUpsertOne {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.SetIsShow(v)
+	})
+}
+
+// UpdateIsShow sets the "is_show" field to the value that was provided on create.
+func (u *OrgDeptUpsertOne) UpdateIsShow() *OrgDeptUpsertOne {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.UpdateIsShow()
+	})
+}
+
+// ClearIsShow clears the value of the "is_show" field.
+func (u *OrgDeptUpsertOne) ClearIsShow() *OrgDeptUpsertOne {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.ClearIsShow()
 	})
 }
 
@@ -2028,6 +2089,27 @@ func (u *OrgDeptUpsertBulk) UpdateIsReal() *OrgDeptUpsertBulk {
 func (u *OrgDeptUpsertBulk) ClearIsReal() *OrgDeptUpsertBulk {
 	return u.Update(func(s *OrgDeptUpsert) {
 		s.ClearIsReal()
+	})
+}
+
+// SetIsShow sets the "is_show" field.
+func (u *OrgDeptUpsertBulk) SetIsShow(v bool) *OrgDeptUpsertBulk {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.SetIsShow(v)
+	})
+}
+
+// UpdateIsShow sets the "is_show" field to the value that was provided on create.
+func (u *OrgDeptUpsertBulk) UpdateIsShow() *OrgDeptUpsertBulk {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.UpdateIsShow()
+	})
+}
+
+// ClearIsShow clears the value of the "is_show" field.
+func (u *OrgDeptUpsertBulk) ClearIsShow() *OrgDeptUpsertBulk {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.ClearIsShow()
 	})
 }
 

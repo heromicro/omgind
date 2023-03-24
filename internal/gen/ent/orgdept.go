@@ -53,6 +53,8 @@ type OrgDept struct {
 	ParentID *string `json:"parent_id,omitempty"`
 	// 是否虚拟部门
 	IsReal *bool `json:"is_real,omitempty"`
+	// 是否显示
+	IsShow *bool `json:"is_show,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -113,7 +115,7 @@ func (*OrgDept) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case orgdept.FieldIsDel, orgdept.FieldIsActive, orgdept.FieldIsLeaf, orgdept.FieldIsReal:
+		case orgdept.FieldIsDel, orgdept.FieldIsActive, orgdept.FieldIsLeaf, orgdept.FieldIsReal, orgdept.FieldIsShow:
 			values[i] = new(sql.NullBool)
 		case orgdept.FieldSort, orgdept.FieldTreeID, orgdept.FieldTreeLevel, orgdept.FieldTreeLeft, orgdept.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
@@ -265,6 +267,13 @@ func (od *OrgDept) assignValues(columns []string, values []any) error {
 				od.IsReal = new(bool)
 				*od.IsReal = value.Bool
 			}
+		case orgdept.FieldIsShow:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field is_show", values[i])
+			} else if value.Valid {
+				od.IsShow = new(bool)
+				*od.IsShow = value.Bool
+			}
 		case orgdept.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -396,6 +405,11 @@ func (od *OrgDept) String() string {
 	builder.WriteString(", ")
 	if v := od.IsReal; v != nil {
 		builder.WriteString("is_real=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := od.IsShow; v != nil {
+		builder.WriteString("is_show=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")

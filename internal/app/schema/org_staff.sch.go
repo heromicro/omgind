@@ -14,9 +14,9 @@ type OrgStaff0 struct {
 	GenderDict   *Dict      `json:"gender_dict"`                       //
 	IdenNo       string     `json:"iden_no" `                          // 身份证号
 
-	OrgID string        `json:"org_id"` // 企业id
-	Org   *OrgOrganShow `json:"org"`    //
-
+	OrgID string        `json:"org_id" binding:"required"` // 企业id
+	Org   *OrgOrganShow `json:"org"`                       //
+	
 	IdenAddrID *string     `json:"iden_addr_id"` // 身份证地址
 	IdenAddr   *SysAddress `json:"iden_addr"`    // 身份证地址
 	ResiAddrID *string     `json:"resi_addr_id"` // 现居地址

@@ -46,7 +46,9 @@ const (
 	// FieldParentID holds the string denoting the parent_id field in the database.
 	FieldParentID = "pid"
 	// FieldIsReal holds the string denoting the is_real field in the database.
-	FieldIsReal = "is_r"
+	FieldIsReal = "is_rl"
+	// FieldIsShow holds the string denoting the is_show field in the database.
+	FieldIsShow = "is_sh"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// EdgeParent holds the string denoting the parent edge name in mutations.
@@ -95,6 +97,7 @@ var Columns = []string{
 	FieldOrgID,
 	FieldParentID,
 	FieldIsReal,
+	FieldIsShow,
 	FieldCreator,
 }
 
@@ -137,6 +140,8 @@ var (
 	ParentIDValidator func(string) error
 	// DefaultIsReal holds the default value on creation for the "is_real" field.
 	DefaultIsReal bool
+	// DefaultIsShow holds the default value on creation for the "is_show" field.
+	DefaultIsShow bool
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

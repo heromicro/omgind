@@ -156,6 +156,11 @@ func IsReal(v bool) predicate.OrgDept {
 	return predicate.OrgDept(sql.FieldEQ(FieldIsReal, v))
 }
 
+// IsShow applies equality check predicate on the "is_show" field. It's identical to IsShowEQ.
+func IsShow(v bool) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldEQ(FieldIsShow, v))
+}
+
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
 func Creator(v string) predicate.OrgDept {
 	return predicate.OrgDept(sql.FieldEQ(FieldCreator, v))
@@ -1059,6 +1064,26 @@ func IsRealIsNil() predicate.OrgDept {
 // IsRealNotNil applies the NotNil predicate on the "is_real" field.
 func IsRealNotNil() predicate.OrgDept {
 	return predicate.OrgDept(sql.FieldNotNull(FieldIsReal))
+}
+
+// IsShowEQ applies the EQ predicate on the "is_show" field.
+func IsShowEQ(v bool) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldEQ(FieldIsShow, v))
+}
+
+// IsShowNEQ applies the NEQ predicate on the "is_show" field.
+func IsShowNEQ(v bool) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldNEQ(FieldIsShow, v))
+}
+
+// IsShowIsNil applies the IsNil predicate on the "is_show" field.
+func IsShowIsNil() predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldIsNull(FieldIsShow))
+}
+
+// IsShowNotNil applies the NotNil predicate on the "is_show" field.
+func IsShowNotNil() predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldNotNull(FieldIsShow))
 }
 
 // CreatorEQ applies the EQ predicate on the "creator" field.

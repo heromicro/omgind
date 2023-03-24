@@ -73,6 +73,8 @@ func (a *OrgDept) Query(ctx context.Context, params schema.OrgDeptQueryParam, op
 	query = query.Where(orgdept.DeletedAtIsNil())
 	// TODO: 查询条件
 
+	query = query.Where(orgdept.IsShowEQ(*params.IsShow))
+
 	if v := params.Name; v != "" {
 		query = query.Where(orgdept.NameContains(v))
 	}
@@ -110,7 +112,14 @@ func (a *OrgDept) Query(ctx context.Context, params schema.OrgDeptQueryParam, op
 	}
 
 	if len(opt.OrderFields) == 0 {
-		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgdept.FieldID, schema.OrderByDESC))
+		of1 := MakeUpOrderField(orgdept.FieldTreeID, "asc")
+		opt.OrderFields = append(opt.OrderFields, of1)
+
+		of2 := MakeUpOrderField(orgdept.FieldTreeLevel, "asc")
+		opt.OrderFields = append(opt.OrderFields, of2)
+
+		of3 := MakeUpOrderField(orgdept.FieldID, "asc")
+		opt.OrderFields = append(opt.OrderFields, of3)
 	}
 
 	query = query.Order(ParseOrder(opt.OrderFields)...)
@@ -178,8 +187,14 @@ func (a *OrgDept) GetAllSubs(ctx context.Context, pid string, params schema.OrgD
 	query = query.Where(orgdept.DeletedAtIsNil(), orgdept.IsDelEQ(false))
 	// TODO: 查询条件
 
+	if v := params.OrgID; v == "" {
+		return nil, errors.New("no org_id")
+	} else {
+		query = query.Where(orgdept.OrgID(v))
+	}
+
 	if pid == "-" {
-		query = query.Where(orgdept.Or(orgdept.ParentIDEQ(pid), orgdept.ParentIDIsNil()))
+		query = query.Where(orgdept.ParentIDIsNil())
 	} else {
 		query = query.Where(orgdept.ParentIDEQ(pid))
 	}
@@ -272,7 +287,7 @@ func (a *OrgDept) GetAllSubs(ctx context.Context, pid string, params schema.OrgD
 	}
 
 	if len(opt.OrderFields) == 0 {
-		of := MakeUpOrderField(orgdept.FieldTreeID, "asc")
+		of := MakeUpOrderField(orgdept.FieldTreeLevel, "asc")
 		opt.OrderFields = append(opt.OrderFields, of)
 
 		of2 := MakeUpOrderField(orgdept.FieldSort, "asc")
@@ -409,4 +424,20 @@ func (a *OrgDept) UpdateActive(ctx context.Context, id string, active bool) erro
 	_, err1 := a.EntCli.OrgDept.Update().Where(orgdept.IDEQ(id)).SetIsActive(active).Save(ctx)
 
 	return errors.WithStack(err1)
+}
+
+func (a *OrgDept) GetLatestTreeID(ctx context.Context) (int64, error) {
+
+	var opt schema.OrgDeptQueryOptions
+	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgdept.FieldTreeID, schema.OrderByDESC))
+	most, err := a.EntCli.OrgDept.Query().Order(ParseOrder(opt.OrderFields)...).Select(orgdept.FieldID, orgdept.FieldTreeID).First(ctx)
+
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return 1, nil
+		}
+		return -1, err
+	}
+
+	return *most.TreeID + 1, nil
 }
