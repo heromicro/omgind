@@ -414,9 +414,7 @@
           name: 新增
           resources:
             - method: GET
-              path: "/api/v2/sys-district/:id/subs"
-            - method: GET
-              path: "/api/v2/sys-dicts/:id/items"
+              path: "/api/v2/sys-district/:id/subs" 
             - method: GET
               path: "/api/v2/org-organs.select"
             - method: POST
@@ -425,9 +423,7 @@
           name: 编辑
           resources: 
             - method: GET
-              path: "/api/v2/sys-district/:id/subs"
-            - method: GET
-              path: "/api/v2/sys-dicts/:id/items"
+              path: "/api/v2/sys-district/:id/subs" 
             - method: GET
               path: "/api/v2/org-organs.select"
             - method: GET
