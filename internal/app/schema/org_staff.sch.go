@@ -3,6 +3,8 @@ package schema
 import "time"
 
 type OrgStaff0 struct {
+	OrgMixin
+
 	ID        string `json:"id"`                            // 唯一标识
 	FirstName string `json:"first_name" binding:"required"` // 名
 	LastName  string `json:"last_name" binding:"required"`  // 姓
@@ -13,8 +15,6 @@ type OrgStaff0 struct {
 	GenderDictID string     `json:"gender_dict_id" binding:"required"` // 性别dict id
 	GenderDict   *Dict      `json:"gender_dict"`                       //
 	IdenNo       string     `json:"iden_no" `                          // 身份证号
-
-	OrgMixin
 
 	IdenAddrID *string     `json:"iden_addr_id"` // 身份证地址
 	IdenAddr   *SysAddress `json:"iden_addr"`    // 身份证地址
@@ -41,8 +41,8 @@ type OrgStaff struct {
 	OrgStaff0
 	OrgStaff1
 
-	OrgID string        `json:"org_id"` // 企业id
-	Org   *OrgOrganShow `json:"org"`    //
+	DeptID string   `json:"dept_id"` // 部門id
+	Dept   *OrgDept `json:"dept"`    //
 
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`
