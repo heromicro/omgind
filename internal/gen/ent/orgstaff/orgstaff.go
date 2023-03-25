@@ -69,6 +69,8 @@ const (
 	EdgeIdenAddr = "iden_addr"
 	// EdgeResiAddr holds the string denoting the resi_addr edge name in mutations.
 	EdgeResiAddr = "resi_addr"
+	// EdgeDept holds the string denoting the dept edge name in mutations.
+	EdgeDept = "dept"
 	// Table holds the table name of the orgstaff in the database.
 	Table = "org_staffs"
 	// OrganTable is the table that holds the organ relation/edge.
@@ -92,6 +94,13 @@ const (
 	ResiAddrInverseTable = "sys_addresses"
 	// ResiAddrColumn is the table column denoting the resi_addr relation/edge.
 	ResiAddrColumn = "rsaddr_id"
+	// DeptTable is the table that holds the dept relation/edge.
+	DeptTable = "org_staffs"
+	// DeptInverseTable is the table name for the OrgDept entity.
+	// It exists in this package in order to avoid circular dependency with the "orgdept" package.
+	DeptInverseTable = "org_depts"
+	// DeptColumn is the table column denoting the dept relation/edge.
+	DeptColumn = "dept_id"
 )
 
 // Columns holds all SQL columns for orgstaff fields.

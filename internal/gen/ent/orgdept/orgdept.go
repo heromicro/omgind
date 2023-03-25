@@ -41,6 +41,8 @@ const (
 	FieldName = "name"
 	// FieldCode holds the string denoting the code field in the database.
 	FieldCode = "code"
+	// FieldMergeName holds the string denoting the merge_name field in the database.
+	FieldMergeName = "mname"
 	// FieldOrgID holds the string denoting the org_id field in the database.
 	FieldOrgID = "org_id"
 	// FieldParentID holds the string denoting the parent_id field in the database.
@@ -57,6 +59,8 @@ const (
 	EdgeChildren = "children"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
 	EdgeOrgan = "organ"
+	// EdgeStaffs holds the string denoting the staffs edge name in mutations.
+	EdgeStaffs = "staffs"
 	// Table holds the table name of the orgdept in the database.
 	Table = "org_depts"
 	// ParentTable is the table that holds the parent relation/edge.
@@ -74,6 +78,13 @@ const (
 	OrganInverseTable = "org_organs"
 	// OrganColumn is the table column denoting the organ relation/edge.
 	OrganColumn = "org_id"
+	// StaffsTable is the table that holds the staffs relation/edge.
+	StaffsTable = "org_staffs"
+	// StaffsInverseTable is the table name for the OrgStaff entity.
+	// It exists in this package in order to avoid circular dependency with the "orgstaff" package.
+	StaffsInverseTable = "org_staffs"
+	// StaffsColumn is the table column denoting the staffs relation/edge.
+	StaffsColumn = "dept_id"
 )
 
 // Columns holds all SQL columns for orgdept fields.
@@ -94,6 +105,7 @@ var Columns = []string{
 	FieldTreePath,
 	FieldName,
 	FieldCode,
+	FieldMergeName,
 	FieldOrgID,
 	FieldParentID,
 	FieldIsReal,
@@ -134,6 +146,8 @@ var (
 	NameValidator func(string) error
 	// CodeValidator is a validator for the "code" field. It is called by the builders before save.
 	CodeValidator func(string) error
+	// MergeNameValidator is a validator for the "merge_name" field. It is called by the builders before save.
+	MergeNameValidator func(string) error
 	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	OrgIDValidator func(string) error
 	// ParentIDValidator is a validator for the "parent_id" field. It is called by the builders before save.

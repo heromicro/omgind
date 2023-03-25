@@ -9,8 +9,9 @@ type OrgDept struct {
 	Parent   *OrgDept `json:"parent"`   // parent
 	Children OrgDepts `json:"children"` // children
 
-	Name string `json:"name" binding:"required"` // 名称
-	Code string `json:"code"`                    // 助记码
+	Name      string  `json:"name" binding:"required"` // 名称
+	Code      string  `json:"code"`                    // 助记码
+	MergeName *string `json:"merge_name,omitempty"`    // 带前缀全名称
 
 	Memo     *string `json:"memo"`                         //
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态

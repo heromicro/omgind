@@ -6,6 +6,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/pkg/errors"
@@ -35,6 +36,10 @@ func ToSchemaOrgStaff(et *ent.OrgStaff) *schema.OrgStaff {
 	}
 	if et.Edges.ResiAddr != nil {
 		item.ResiAddr = ToSchemaSysAddress(et.Edges.ResiAddr)
+	}
+
+	if et.Edges.Dept != nil {
+		item.Dept = ToSchemaOrgDept(et.Edges.Dept)
 	}
 
 	return item
@@ -77,6 +82,10 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
 	}).WithIdenAddr().WithResiAddr()
+
+	query = query.WithDept(func(odq *ent.OrgDeptQuery) {
+		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
+	})
 
 	query = query.Where(orgstaff.DeletedAtIsNil())
 	// TODO: 查询条件
@@ -174,6 +183,9 @@ func (a *OrgStaff) Get(ctx context.Context, id string, opts ...schema.OrgStaffQu
 	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
 	}).WithIdenAddr().WithResiAddr()
+	query = query.WithDept(func(odq *ent.OrgDeptQuery) {
+		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
+	})
 
 	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {
@@ -192,6 +204,10 @@ func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQ
 	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo).WithHaddr()
 	}).WithIdenAddr().WithResiAddr()
+
+	query = query.WithDept(func(odq *ent.OrgDeptQuery) {
+		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
+	})
 
 	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {

@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
@@ -432,6 +433,11 @@ func (osc *OrgStaffCreate) SetResiAddr(s *SysAddress) *OrgStaffCreate {
 	return osc.SetResiAddrID(s.ID)
 }
 
+// SetDept sets the "dept" edge to the OrgDept entity.
+func (osc *OrgStaffCreate) SetDept(o *OrgDept) *OrgStaffCreate {
+	return osc.SetDeptID(o.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osc *OrgStaffCreate) Mutation() *OrgStaffMutation {
 	return osc.mutation
@@ -701,10 +707,6 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgstaff.FieldEmpystDictID, field.TypeString, value)
 		_node.EmpystDictID = &value
 	}
-	if value, ok := osc.mutation.DeptID(); ok {
-		_spec.SetField(orgstaff.FieldDeptID, field.TypeString, value)
-		_node.DeptID = &value
-	}
 	if value, ok := osc.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
 		_node.Creator = &value
@@ -761,6 +763,24 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.ResiAddrID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := osc.mutation.DeptIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.DeptTable,
+			Columns: []string{orgstaff.DeptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = osc.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.DeptID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

@@ -141,6 +141,11 @@ func Code(v string) predicate.OrgDept {
 	return predicate.OrgDept(sql.FieldEQ(FieldCode, v))
 }
 
+// MergeName applies equality check predicate on the "merge_name" field. It's identical to MergeNameEQ.
+func MergeName(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldEQ(FieldMergeName, v))
+}
+
 // OrgID applies equality check predicate on the "org_id" field. It's identical to OrgIDEQ.
 func OrgID(v string) predicate.OrgDept {
 	return predicate.OrgDept(sql.FieldEQ(FieldOrgID, v))
@@ -896,6 +901,81 @@ func CodeContainsFold(v string) predicate.OrgDept {
 	return predicate.OrgDept(sql.FieldContainsFold(FieldCode, v))
 }
 
+// MergeNameEQ applies the EQ predicate on the "merge_name" field.
+func MergeNameEQ(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldEQ(FieldMergeName, v))
+}
+
+// MergeNameNEQ applies the NEQ predicate on the "merge_name" field.
+func MergeNameNEQ(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldNEQ(FieldMergeName, v))
+}
+
+// MergeNameIn applies the In predicate on the "merge_name" field.
+func MergeNameIn(vs ...string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldIn(FieldMergeName, vs...))
+}
+
+// MergeNameNotIn applies the NotIn predicate on the "merge_name" field.
+func MergeNameNotIn(vs ...string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldNotIn(FieldMergeName, vs...))
+}
+
+// MergeNameGT applies the GT predicate on the "merge_name" field.
+func MergeNameGT(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldGT(FieldMergeName, v))
+}
+
+// MergeNameGTE applies the GTE predicate on the "merge_name" field.
+func MergeNameGTE(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldGTE(FieldMergeName, v))
+}
+
+// MergeNameLT applies the LT predicate on the "merge_name" field.
+func MergeNameLT(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldLT(FieldMergeName, v))
+}
+
+// MergeNameLTE applies the LTE predicate on the "merge_name" field.
+func MergeNameLTE(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldLTE(FieldMergeName, v))
+}
+
+// MergeNameContains applies the Contains predicate on the "merge_name" field.
+func MergeNameContains(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldContains(FieldMergeName, v))
+}
+
+// MergeNameHasPrefix applies the HasPrefix predicate on the "merge_name" field.
+func MergeNameHasPrefix(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldHasPrefix(FieldMergeName, v))
+}
+
+// MergeNameHasSuffix applies the HasSuffix predicate on the "merge_name" field.
+func MergeNameHasSuffix(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldHasSuffix(FieldMergeName, v))
+}
+
+// MergeNameIsNil applies the IsNil predicate on the "merge_name" field.
+func MergeNameIsNil() predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldIsNull(FieldMergeName))
+}
+
+// MergeNameNotNil applies the NotNil predicate on the "merge_name" field.
+func MergeNameNotNil() predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldNotNull(FieldMergeName))
+}
+
+// MergeNameEqualFold applies the EqualFold predicate on the "merge_name" field.
+func MergeNameEqualFold(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldEqualFold(FieldMergeName, v))
+}
+
+// MergeNameContainsFold applies the ContainsFold predicate on the "merge_name" field.
+func MergeNameContainsFold(v string) predicate.OrgDept {
+	return predicate.OrgDept(sql.FieldContainsFold(FieldMergeName, v))
+}
+
 // OrgIDEQ applies the EQ predicate on the "org_id" field.
 func OrgIDEQ(v string) predicate.OrgDept {
 	return predicate.OrgDept(sql.FieldEQ(FieldOrgID, v))
@@ -1252,6 +1332,39 @@ func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgDept {
 		schemaConfig := internal.SchemaConfigFromContext(s.Context())
 		step.To.Schema = schemaConfig.OrgOrgan
 		step.Edge.Schema = schemaConfig.OrgDept
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasStaffs applies the HasEdge predicate on the "staffs" edge.
+func HasStaffs() predicate.OrgDept {
+	return predicate.OrgDept(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStaffsWith applies the HasEdge predicate on the "staffs" edge with a given conditions (other predicates).
+func HasStaffsWith(preds ...predicate.OrgStaff) predicate.OrgDept {
+	return predicate.OrgDept(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StaffsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

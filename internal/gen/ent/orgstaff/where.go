@@ -1845,6 +1845,39 @@ func HasResiAddrWith(preds ...predicate.SysAddress) predicate.OrgStaff {
 	})
 }
 
+// HasDept applies the HasEdge predicate on the "dept" edge.
+func HasDept() predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, DeptTable, DeptColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgDept
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasDeptWith applies the HasEdge predicate on the "dept" edge with a given conditions (other predicates).
+func HasDeptWith(preds ...predicate.OrgDept) predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(DeptInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, DeptTable, DeptColumn),
+		)
+		schemaConfig := internal.SchemaConfigFromContext(s.Context())
+		step.To.Schema = schemaConfig.OrgDept
+		step.Edge.Schema = schemaConfig.OrgStaff
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // And groups predicates with the AND operator between them.
 func And(predicates ...predicate.OrgStaff) predicate.OrgStaff {
 	return predicate.OrgStaff(func(s *sql.Selector) {

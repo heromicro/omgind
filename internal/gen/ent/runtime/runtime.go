@@ -87,20 +87,24 @@ func init() {
 	orgdeptDescCode := orgdeptFields[1].Descriptor()
 	// orgdept.CodeValidator is a validator for the "code" field. It is called by the builders before save.
 	orgdept.CodeValidator = orgdeptDescCode.Validators[0].(func(string) error)
+	// orgdeptDescMergeName is the schema descriptor for merge_name field.
+	orgdeptDescMergeName := orgdeptFields[2].Descriptor()
+	// orgdept.MergeNameValidator is a validator for the "merge_name" field. It is called by the builders before save.
+	orgdept.MergeNameValidator = orgdeptDescMergeName.Validators[0].(func(string) error)
 	// orgdeptDescOrgID is the schema descriptor for org_id field.
-	orgdeptDescOrgID := orgdeptFields[2].Descriptor()
+	orgdeptDescOrgID := orgdeptFields[3].Descriptor()
 	// orgdept.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	orgdept.OrgIDValidator = orgdeptDescOrgID.Validators[0].(func(string) error)
 	// orgdeptDescParentID is the schema descriptor for parent_id field.
-	orgdeptDescParentID := orgdeptFields[3].Descriptor()
+	orgdeptDescParentID := orgdeptFields[4].Descriptor()
 	// orgdept.ParentIDValidator is a validator for the "parent_id" field. It is called by the builders before save.
 	orgdept.ParentIDValidator = orgdeptDescParentID.Validators[0].(func(string) error)
 	// orgdeptDescIsReal is the schema descriptor for is_real field.
-	orgdeptDescIsReal := orgdeptFields[4].Descriptor()
+	orgdeptDescIsReal := orgdeptFields[5].Descriptor()
 	// orgdept.DefaultIsReal holds the default value on creation for the is_real field.
 	orgdept.DefaultIsReal = orgdeptDescIsReal.Default.(bool)
 	// orgdeptDescIsShow is the schema descriptor for is_show field.
-	orgdeptDescIsShow := orgdeptFields[5].Descriptor()
+	orgdeptDescIsShow := orgdeptFields[6].Descriptor()
 	// orgdept.DefaultIsShow holds the default value on creation for the is_show field.
 	orgdept.DefaultIsShow = orgdeptDescIsShow.Default.(bool)
 	// orgdeptDescID is the schema descriptor for id field.

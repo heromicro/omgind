@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
@@ -28,6 +29,7 @@ type OrgStaffQuery struct {
 	withOrgan    *OrgOrganQuery
 	withIdenAddr *SysAddressQuery
 	withResiAddr *SysAddressQuery
+	withDept     *OrgDeptQuery
 	modifiers    []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -133,6 +135,31 @@ func (osq *OrgStaffQuery) QueryResiAddr() *SysAddressQuery {
 		)
 		schemaConfig := osq.schemaConfig
 		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryDept chains the current query on the "dept" edge.
+func (osq *OrgStaffQuery) QueryDept() *OrgDeptQuery {
+	query := (&OrgDeptClient{config: osq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := osq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := osq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, selector),
+			sqlgraph.To(orgdept.Table, orgdept.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.DeptTable, orgstaff.DeptColumn),
+		)
+		schemaConfig := osq.schemaConfig
+		step.To.Schema = schemaConfig.OrgDept
 		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
 		return fromU, nil
@@ -335,6 +362,7 @@ func (osq *OrgStaffQuery) Clone() *OrgStaffQuery {
 		withOrgan:    osq.withOrgan.Clone(),
 		withIdenAddr: osq.withIdenAddr.Clone(),
 		withResiAddr: osq.withResiAddr.Clone(),
+		withDept:     osq.withDept.Clone(),
 		// clone intermediate query.
 		sql:  osq.sql.Clone(),
 		path: osq.path,
@@ -371,6 +399,17 @@ func (osq *OrgStaffQuery) WithResiAddr(opts ...func(*SysAddressQuery)) *OrgStaff
 		opt(query)
 	}
 	osq.withResiAddr = query
+	return osq
+}
+
+// WithDept tells the query-builder to eager-load the nodes that are connected to
+// the "dept" edge. The optional arguments are used to configure the query builder of the edge.
+func (osq *OrgStaffQuery) WithDept(opts ...func(*OrgDeptQuery)) *OrgStaffQuery {
+	query := (&OrgDeptClient{config: osq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	osq.withDept = query
 	return osq
 }
 
@@ -452,10 +491,11 @@ func (osq *OrgStaffQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 	var (
 		nodes       = []*OrgStaff{}
 		_spec       = osq.querySpec()
-		loadedTypes = [3]bool{
+		loadedTypes = [4]bool{
 			osq.withOrgan != nil,
 			osq.withIdenAddr != nil,
 			osq.withResiAddr != nil,
+			osq.withDept != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
@@ -496,6 +536,12 @@ func (osq *OrgStaffQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 	if query := osq.withResiAddr; query != nil {
 		if err := osq.loadResiAddr(ctx, query, nodes, nil,
 			func(n *OrgStaff, e *SysAddress) { n.Edges.ResiAddr = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := osq.withDept; query != nil {
+		if err := osq.loadDept(ctx, query, nodes, nil,
+			func(n *OrgStaff, e *OrgDept) { n.Edges.Dept = e }); err != nil {
 			return nil, err
 		}
 	}
@@ -591,6 +637,38 @@ func (osq *OrgStaffQuery) loadResiAddr(ctx context.Context, query *SysAddressQue
 		nodes, ok := nodeids[n.ID]
 		if !ok {
 			return fmt.Errorf(`unexpected foreign-key "resi_addr_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (osq *OrgStaffQuery) loadDept(ctx context.Context, query *OrgDeptQuery, nodes []*OrgStaff, init func(*OrgStaff), assign func(*OrgStaff, *OrgDept)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*OrgStaff)
+	for i := range nodes {
+		if nodes[i].DeptID == nil {
+			continue
+		}
+		fk := *nodes[i].DeptID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(orgdept.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "dept_id" returned %v`, n.ID)
 		}
 		for i := range nodes {
 			assign(nodes[i], n)

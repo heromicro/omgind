@@ -73,7 +73,7 @@ func (OrgStaff) Edges() []ent.Edge {
 		// edge.From("empyst_dict", SysDict.Type).Ref("staff_empyst").Field("empyst_dict_id").Unique(),
 
 		// M2O
-		// edge.From("dept", OrgDept.Type).Ref("staffs").Field("dept_id").Unique(),
+		edge.From("dept", OrgDept.Type).Ref("staffs").Field("dept_id").Unique(),
 	}
 }
 

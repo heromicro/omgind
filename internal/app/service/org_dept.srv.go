@@ -77,12 +77,24 @@ func (s *OrgDept) ProcessTask(ctx context.Context, t *asynq.Task) error {
 		} else {
 			tree_path = parent.ID
 		}
+
+		var merge_name string
+		if parent.MergeName != nil && *parent.MergeName != "" {
+			merge_name = strings.Join([]string{*parent.MergeName, *child.Name}, "/")
+		} else {
+			merge_name = strings.Join([]string{*parent.Name, *child.Name}, "/")
+		}
+
 		update_dept := s.EntCli.OrgDept.Update().Where(orgdept.IDEQ(child.ID))
 
 		if tree_path != "" {
 			update_dept = update_dept.SetTreePath(tree_path)
 		}
 
+		if merge_name != "" {
+			update_dept = update_dept.SetMergeName(merge_name)
+		}
+		
 		d := *child.TreeRight - *child.TreeLeft
 		if d > 1 {
 			update_dept = update_dept.SetIsLeaf(false)
@@ -210,6 +222,12 @@ func (a *OrgDept) Create(ctx context.Context, item schema.OrgDept) (*schema.OrgD
 		item.TreePath = ptr.String(strings.Join([]string{*parent.TreePath, parent.ID}, "/"))
 	}
 
+	if parent.MergeName != nil && *parent.MergeName != "" {
+		item.MergeName = ptr.String(strings.Join([]string{*parent.MergeName, item.Name}, "/"))
+	} else {
+		item.MergeName = ptr.String(item.Name)
+	}
+
 	dept_create_input := a.OrgDeptRepo.ToEntCreateOrgDeptInput(&item)
 
 	var res_dept *ent.OrgDept
@@ -331,6 +349,12 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 			item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
 		}
 
+		if nparent.MergeName != nil && *nparent.MergeName != "" {
+			item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, "/"))
+		} else {
+			item.MergeName = ptr.String(item.Name)
+		}
+
 		iteminput := a.OrgDeptRepo.ToEntUpdateOrgDeptInput(&item)
 
 		_, err := a.EntCli.OrgDept.Update().Where(orgdept.IDEQ(id)).SetInput(*iteminput).Save(ctx)
@@ -368,6 +392,12 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 			item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
 		} else {
 			item.TreePath = nil
+		}
+
+		if nparent.MergeName != nil && *nparent.MergeName != "" {
+			item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, "/"))
+		} else {
+			item.MergeName = ptr.String(item.Name)
 		}
 
 		iteminput := a.OrgDeptRepo.ToEntUpdateOrgDeptInput(&item)

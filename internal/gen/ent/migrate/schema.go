@@ -26,6 +26,7 @@ var (
 		{Name: "t_path", Type: field.TypeString, Nullable: true, Size: 2147483647},
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
+		{Name: "mname", Type: field.TypeString, Nullable: true, Size: 1024},
 		{Name: "is_rl", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "is_sh", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
@@ -40,13 +41,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "org_depts_org_depts_children",
-				Columns:    []*schema.Column{OrgDeptsColumns[19]},
+				Columns:    []*schema.Column{OrgDeptsColumns[20]},
 				RefColumns: []*schema.Column{OrgDeptsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_depts_org_organs_depts",
-				Columns:    []*schema.Column{OrgDeptsColumns[20]},
+				Columns:    []*schema.Column{OrgDeptsColumns[21]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -258,8 +259,8 @@ var (
 		{Name: "resign_date", Type: field.TypeTime, Nullable: true},
 		{Name: "empy_stat", Type: field.TypeInt32, Default: 1},
 		{Name: "empyst_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
-		{Name: "dept_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "creator", Type: field.TypeString, Nullable: true},
+		{Name: "dept_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "rsaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
 		{Name: "idaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
@@ -270,6 +271,12 @@ var (
 		Columns:    OrgStaffsColumns,
 		PrimaryKey: []*schema.Column{OrgStaffsColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "org_staffs_org_depts_staffs",
+				Columns:    []*schema.Column{OrgStaffsColumns[23]},
+				RefColumns: []*schema.Column{OrgDeptsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
 			{
 				Symbol:     "org_staffs_org_organs_staffs",
 				Columns:    []*schema.Column{OrgStaffsColumns[24]},
@@ -537,8 +544,8 @@ var (
 		{Name: "latitude", Type: field.TypeFloat64, Nullable: true},
 		{Name: "area_code", Type: field.TypeString, Nullable: true, Size: 8},
 		{Name: "zip_code", Type: field.TypeString, Nullable: true, Size: 8},
-		{Name: "mname", Type: field.TypeString, Nullable: true, Size: 256},
-		{Name: "msname", Type: field.TypeString, Nullable: true, Size: 256},
+		{Name: "mname", Type: field.TypeString, Nullable: true, Size: 1024},
+		{Name: "msname", Type: field.TypeString, Nullable: true, Size: 1024},
 		{Name: "extra", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "suffix", Type: field.TypeString, Nullable: true, Size: 32},
 		{Name: "is_hot", Type: field.TypeBool, Nullable: true, Default: false},
@@ -1181,9 +1188,10 @@ func init() {
 	OrgDeptsTable.ForeignKeys[1].RefTable = OrgOrgansTable
 	OrgOrgansTable.ForeignKeys[0].RefTable = SysAddressesTable
 	OrgPositionsTable.ForeignKeys[0].RefTable = OrgOrgansTable
-	OrgStaffsTable.ForeignKeys[0].RefTable = OrgOrgansTable
-	OrgStaffsTable.ForeignKeys[1].RefTable = SysAddressesTable
+	OrgStaffsTable.ForeignKeys[0].RefTable = OrgDeptsTable
+	OrgStaffsTable.ForeignKeys[1].RefTable = OrgOrgansTable
 	OrgStaffsTable.ForeignKeys[2].RefTable = SysAddressesTable
+	OrgStaffsTable.ForeignKeys[3].RefTable = SysAddressesTable
 	SysDictItemsTable.ForeignKeys[0].RefTable = SysDictsTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 }

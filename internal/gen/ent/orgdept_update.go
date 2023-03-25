@@ -14,6 +14,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -320,6 +321,26 @@ func (odu *OrgDeptUpdate) ClearCode() *OrgDeptUpdate {
 	return odu
 }
 
+// SetMergeName sets the "merge_name" field.
+func (odu *OrgDeptUpdate) SetMergeName(s string) *OrgDeptUpdate {
+	odu.mutation.SetMergeName(s)
+	return odu
+}
+
+// SetNillableMergeName sets the "merge_name" field if the given value is not nil.
+func (odu *OrgDeptUpdate) SetNillableMergeName(s *string) *OrgDeptUpdate {
+	if s != nil {
+		odu.SetMergeName(*s)
+	}
+	return odu
+}
+
+// ClearMergeName clears the value of the "merge_name" field.
+func (odu *OrgDeptUpdate) ClearMergeName() *OrgDeptUpdate {
+	odu.mutation.ClearMergeName()
+	return odu
+}
+
 // SetOrgID sets the "org_id" field.
 func (odu *OrgDeptUpdate) SetOrgID(s string) *OrgDeptUpdate {
 	odu.mutation.SetOrgID(s)
@@ -459,6 +480,21 @@ func (odu *OrgDeptUpdate) SetOrgan(o *OrgOrgan) *OrgDeptUpdate {
 	return odu.SetOrganID(o.ID)
 }
 
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (odu *OrgDeptUpdate) AddStaffIDs(ids ...string) *OrgDeptUpdate {
+	odu.mutation.AddStaffIDs(ids...)
+	return odu
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (odu *OrgDeptUpdate) AddStaffs(o ...*OrgStaff) *OrgDeptUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return odu.AddStaffIDs(ids...)
+}
+
 // Mutation returns the OrgDeptMutation object of the builder.
 func (odu *OrgDeptUpdate) Mutation() *OrgDeptMutation {
 	return odu.mutation
@@ -495,6 +531,27 @@ func (odu *OrgDeptUpdate) RemoveChildren(o ...*OrgDept) *OrgDeptUpdate {
 func (odu *OrgDeptUpdate) ClearOrgan() *OrgDeptUpdate {
 	odu.mutation.ClearOrgan()
 	return odu
+}
+
+// ClearStaffs clears all "staffs" edges to the OrgStaff entity.
+func (odu *OrgDeptUpdate) ClearStaffs() *OrgDeptUpdate {
+	odu.mutation.ClearStaffs()
+	return odu
+}
+
+// RemoveStaffIDs removes the "staffs" edge to OrgStaff entities by IDs.
+func (odu *OrgDeptUpdate) RemoveStaffIDs(ids ...string) *OrgDeptUpdate {
+	odu.mutation.RemoveStaffIDs(ids...)
+	return odu
+}
+
+// RemoveStaffs removes "staffs" edges to OrgStaff entities.
+func (odu *OrgDeptUpdate) RemoveStaffs(o ...*OrgStaff) *OrgDeptUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return odu.RemoveStaffIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -548,6 +605,11 @@ func (odu *OrgDeptUpdate) check() error {
 	if v, ok := odu.mutation.Code(); ok {
 		if err := orgdept.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgDept.code": %w`, err)}
+		}
+	}
+	if v, ok := odu.mutation.MergeName(); ok {
+		if err := orgdept.MergeNameValidator(v); err != nil {
+			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`ent: validator failed for field "OrgDept.merge_name": %w`, err)}
 		}
 	}
 	if v, ok := odu.mutation.OrgID(); ok {
@@ -674,6 +736,12 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if odu.mutation.CodeCleared() {
 		_spec.ClearField(orgdept.FieldCode, field.TypeString)
 	}
+	if value, ok := odu.mutation.MergeName(); ok {
+		_spec.SetField(orgdept.FieldMergeName, field.TypeString, value)
+	}
+	if odu.mutation.MergeNameCleared() {
+		_spec.ClearField(orgdept.FieldMergeName, field.TypeString)
+	}
 	if value, ok := odu.mutation.IsReal(); ok {
 		_spec.SetField(orgdept.FieldIsReal, field.TypeBool, value)
 	}
@@ -797,6 +865,54 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			},
 		}
 		edge.Schema = odu.schemaConfig.OrgDept
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if odu.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdept.StaffsTable,
+			Columns: []string{orgdept.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := odu.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !odu.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdept.StaffsTable,
+			Columns: []string{orgdept.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := odu.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdept.StaffsTable,
+			Columns: []string{orgdept.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odu.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1115,6 +1231,26 @@ func (oduo *OrgDeptUpdateOne) ClearCode() *OrgDeptUpdateOne {
 	return oduo
 }
 
+// SetMergeName sets the "merge_name" field.
+func (oduo *OrgDeptUpdateOne) SetMergeName(s string) *OrgDeptUpdateOne {
+	oduo.mutation.SetMergeName(s)
+	return oduo
+}
+
+// SetNillableMergeName sets the "merge_name" field if the given value is not nil.
+func (oduo *OrgDeptUpdateOne) SetNillableMergeName(s *string) *OrgDeptUpdateOne {
+	if s != nil {
+		oduo.SetMergeName(*s)
+	}
+	return oduo
+}
+
+// ClearMergeName clears the value of the "merge_name" field.
+func (oduo *OrgDeptUpdateOne) ClearMergeName() *OrgDeptUpdateOne {
+	oduo.mutation.ClearMergeName()
+	return oduo
+}
+
 // SetOrgID sets the "org_id" field.
 func (oduo *OrgDeptUpdateOne) SetOrgID(s string) *OrgDeptUpdateOne {
 	oduo.mutation.SetOrgID(s)
@@ -1254,6 +1390,21 @@ func (oduo *OrgDeptUpdateOne) SetOrgan(o *OrgOrgan) *OrgDeptUpdateOne {
 	return oduo.SetOrganID(o.ID)
 }
 
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (oduo *OrgDeptUpdateOne) AddStaffIDs(ids ...string) *OrgDeptUpdateOne {
+	oduo.mutation.AddStaffIDs(ids...)
+	return oduo
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (oduo *OrgDeptUpdateOne) AddStaffs(o ...*OrgStaff) *OrgDeptUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oduo.AddStaffIDs(ids...)
+}
+
 // Mutation returns the OrgDeptMutation object of the builder.
 func (oduo *OrgDeptUpdateOne) Mutation() *OrgDeptMutation {
 	return oduo.mutation
@@ -1290,6 +1441,27 @@ func (oduo *OrgDeptUpdateOne) RemoveChildren(o ...*OrgDept) *OrgDeptUpdateOne {
 func (oduo *OrgDeptUpdateOne) ClearOrgan() *OrgDeptUpdateOne {
 	oduo.mutation.ClearOrgan()
 	return oduo
+}
+
+// ClearStaffs clears all "staffs" edges to the OrgStaff entity.
+func (oduo *OrgDeptUpdateOne) ClearStaffs() *OrgDeptUpdateOne {
+	oduo.mutation.ClearStaffs()
+	return oduo
+}
+
+// RemoveStaffIDs removes the "staffs" edge to OrgStaff entities by IDs.
+func (oduo *OrgDeptUpdateOne) RemoveStaffIDs(ids ...string) *OrgDeptUpdateOne {
+	oduo.mutation.RemoveStaffIDs(ids...)
+	return oduo
+}
+
+// RemoveStaffs removes "staffs" edges to OrgStaff entities.
+func (oduo *OrgDeptUpdateOne) RemoveStaffs(o ...*OrgStaff) *OrgDeptUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return oduo.RemoveStaffIDs(ids...)
 }
 
 // Where appends a list predicates to the OrgDeptUpdate builder.
@@ -1356,6 +1528,11 @@ func (oduo *OrgDeptUpdateOne) check() error {
 	if v, ok := oduo.mutation.Code(); ok {
 		if err := orgdept.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgDept.code": %w`, err)}
+		}
+	}
+	if v, ok := oduo.mutation.MergeName(); ok {
+		if err := orgdept.MergeNameValidator(v); err != nil {
+			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`ent: validator failed for field "OrgDept.merge_name": %w`, err)}
 		}
 	}
 	if v, ok := oduo.mutation.OrgID(); ok {
@@ -1499,6 +1676,12 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 	if oduo.mutation.CodeCleared() {
 		_spec.ClearField(orgdept.FieldCode, field.TypeString)
 	}
+	if value, ok := oduo.mutation.MergeName(); ok {
+		_spec.SetField(orgdept.FieldMergeName, field.TypeString, value)
+	}
+	if oduo.mutation.MergeNameCleared() {
+		_spec.ClearField(orgdept.FieldMergeName, field.TypeString)
+	}
 	if value, ok := oduo.mutation.IsReal(); ok {
 		_spec.SetField(orgdept.FieldIsReal, field.TypeBool, value)
 	}
@@ -1622,6 +1805,54 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 			},
 		}
 		edge.Schema = oduo.schemaConfig.OrgDept
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if oduo.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdept.StaffsTable,
+			Columns: []string{orgdept.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oduo.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !oduo.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdept.StaffsTable,
+			Columns: []string{orgdept.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := oduo.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdept.StaffsTable,
+			Columns: []string{orgdept.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = oduo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

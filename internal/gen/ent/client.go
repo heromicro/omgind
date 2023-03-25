@@ -492,6 +492,25 @@ func (c *OrgDeptClient) QueryOrgan(od *OrgDept) *OrgOrganQuery {
 	return query
 }
 
+// QueryStaffs queries the staffs edge of a OrgDept.
+func (c *OrgDeptClient) QueryStaffs(od *OrgDept) *OrgStaffQuery {
+	query := (&OrgStaffClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := od.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgdept.Table, orgdept.FieldID, id),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.StaffsTable, orgdept.StaffsColumn),
+		)
+		schemaConfig := od.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *OrgDeptClient) Hooks() []Hook {
 	return c.hooks.OrgDept
@@ -991,6 +1010,25 @@ func (c *OrgStaffClient) QueryResiAddr(os *OrgStaff) *SysAddressQuery {
 		)
 		schemaConfig := os.schemaConfig
 		step.To.Schema = schemaConfig.SysAddress
+		step.Edge.Schema = schemaConfig.OrgStaff
+		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDept queries the dept edge of a OrgStaff.
+func (c *OrgStaffClient) QueryDept(os *OrgStaff) *OrgDeptQuery {
+	query := (&OrgDeptClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := os.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
+			sqlgraph.To(orgdept.Table, orgdept.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.DeptTable, orgstaff.DeptColumn),
+		)
+		schemaConfig := os.schemaConfig
+		step.To.Schema = schemaConfig.OrgDept
 		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
 		return fromV, nil

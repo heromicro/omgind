@@ -29,6 +29,9 @@ func ToSchemaOrgDept(et *ent.OrgDept) *schema.OrgDept {
 	if et.Edges.Organ != nil {
 		item.Org = ToSchemaOrgOrganShow(et.Edges.Organ)
 	}
+	if et.Edges.Parent != nil {
+		item.Parent = ToSchemaOrgDept(et.Edges.Parent)
+	}
 	return item
 }
 
@@ -149,6 +152,8 @@ func (a *OrgDept) Get(ctx context.Context, id string, opts ...schema.OrgDeptQuer
 
 	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo)
+	}).WithParent(func(odq *ent.OrgDeptQuery) {
+		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreeID, orgdept.FieldTreePath)
 	})
 	r_orgdept, err := query.Where(orgdept.IDEQ(id)).Only(ctx)
 	if err != nil {
@@ -166,6 +171,8 @@ func (a *OrgDept) View(ctx context.Context, id string, opts ...schema.OrgDeptQue
 
 	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo).WithHaddr()
+	}).WithParent(func(odq *ent.OrgDeptQuery) {
+		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName)
 	})
 	r_orgdept, err := query.Where(orgdept.IDEQ(id)).Only(ctx)
 	if err != nil {

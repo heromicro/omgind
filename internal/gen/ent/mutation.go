@@ -87,6 +87,7 @@ type OrgDeptMutation struct {
 	tree_path       *string
 	name            *string
 	code            *string
+	merge_name      *string
 	is_real         *bool
 	is_show         *bool
 	creator         *string
@@ -98,6 +99,9 @@ type OrgDeptMutation struct {
 	clearedchildren bool
 	organ           *string
 	clearedorgan    bool
+	staffs          map[string]struct{}
+	removedstaffs   map[string]struct{}
+	clearedstaffs   bool
 	done            bool
 	oldValue        func(context.Context) (*OrgDept, error)
 	predicates      []predicate.OrgDept
@@ -1007,6 +1011,55 @@ func (m *OrgDeptMutation) ResetCode() {
 	delete(m.clearedFields, orgdept.FieldCode)
 }
 
+// SetMergeName sets the "merge_name" field.
+func (m *OrgDeptMutation) SetMergeName(s string) {
+	m.merge_name = &s
+}
+
+// MergeName returns the value of the "merge_name" field in the mutation.
+func (m *OrgDeptMutation) MergeName() (r string, exists bool) {
+	v := m.merge_name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMergeName returns the old "merge_name" field's value of the OrgDept entity.
+// If the OrgDept object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgDeptMutation) OldMergeName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMergeName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMergeName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMergeName: %w", err)
+	}
+	return oldValue.MergeName, nil
+}
+
+// ClearMergeName clears the value of the "merge_name" field.
+func (m *OrgDeptMutation) ClearMergeName() {
+	m.merge_name = nil
+	m.clearedFields[orgdept.FieldMergeName] = struct{}{}
+}
+
+// MergeNameCleared returns if the "merge_name" field was cleared in this mutation.
+func (m *OrgDeptMutation) MergeNameCleared() bool {
+	_, ok := m.clearedFields[orgdept.FieldMergeName]
+	return ok
+}
+
+// ResetMergeName resets all changes to the "merge_name" field.
+func (m *OrgDeptMutation) ResetMergeName() {
+	m.merge_name = nil
+	delete(m.clearedFields, orgdept.FieldMergeName)
+}
+
 // SetOrgID sets the "org_id" field.
 func (m *OrgDeptMutation) SetOrgID(s string) {
 	m.organ = &s
@@ -1371,6 +1424,60 @@ func (m *OrgDeptMutation) ResetOrgan() {
 	m.clearedorgan = false
 }
 
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by ids.
+func (m *OrgDeptMutation) AddStaffIDs(ids ...string) {
+	if m.staffs == nil {
+		m.staffs = make(map[string]struct{})
+	}
+	for i := range ids {
+		m.staffs[ids[i]] = struct{}{}
+	}
+}
+
+// ClearStaffs clears the "staffs" edge to the OrgStaff entity.
+func (m *OrgDeptMutation) ClearStaffs() {
+	m.clearedstaffs = true
+}
+
+// StaffsCleared reports if the "staffs" edge to the OrgStaff entity was cleared.
+func (m *OrgDeptMutation) StaffsCleared() bool {
+	return m.clearedstaffs
+}
+
+// RemoveStaffIDs removes the "staffs" edge to the OrgStaff entity by IDs.
+func (m *OrgDeptMutation) RemoveStaffIDs(ids ...string) {
+	if m.removedstaffs == nil {
+		m.removedstaffs = make(map[string]struct{})
+	}
+	for i := range ids {
+		delete(m.staffs, ids[i])
+		m.removedstaffs[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedStaffs returns the removed IDs of the "staffs" edge to the OrgStaff entity.
+func (m *OrgDeptMutation) RemovedStaffsIDs() (ids []string) {
+	for id := range m.removedstaffs {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// StaffsIDs returns the "staffs" edge IDs in the mutation.
+func (m *OrgDeptMutation) StaffsIDs() (ids []string) {
+	for id := range m.staffs {
+		ids = append(ids, id)
+	}
+	return
+}
+
+// ResetStaffs resets all changes to the "staffs" edge.
+func (m *OrgDeptMutation) ResetStaffs() {
+	m.staffs = nil
+	m.clearedstaffs = false
+	m.removedstaffs = nil
+}
+
 // Where appends a list predicates to the OrgDeptMutation builder.
 func (m *OrgDeptMutation) Where(ps ...predicate.OrgDept) {
 	m.predicates = append(m.predicates, ps...)
@@ -1405,7 +1512,7 @@ func (m *OrgDeptMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgDeptMutation) Fields() []string {
-	fields := make([]string, 0, 20)
+	fields := make([]string, 0, 21)
 	if m.is_del != nil {
 		fields = append(fields, orgdept.FieldIsDel)
 	}
@@ -1450,6 +1557,9 @@ func (m *OrgDeptMutation) Fields() []string {
 	}
 	if m.code != nil {
 		fields = append(fields, orgdept.FieldCode)
+	}
+	if m.merge_name != nil {
+		fields = append(fields, orgdept.FieldMergeName)
 	}
 	if m.organ != nil {
 		fields = append(fields, orgdept.FieldOrgID)
@@ -1504,6 +1614,8 @@ func (m *OrgDeptMutation) Field(name string) (ent.Value, bool) {
 		return m.Name()
 	case orgdept.FieldCode:
 		return m.Code()
+	case orgdept.FieldMergeName:
+		return m.MergeName()
 	case orgdept.FieldOrgID:
 		return m.OrgID()
 	case orgdept.FieldParentID:
@@ -1553,6 +1665,8 @@ func (m *OrgDeptMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldName(ctx)
 	case orgdept.FieldCode:
 		return m.OldCode(ctx)
+	case orgdept.FieldMergeName:
+		return m.OldMergeName(ctx)
 	case orgdept.FieldOrgID:
 		return m.OldOrgID(ctx)
 	case orgdept.FieldParentID:
@@ -1676,6 +1790,13 @@ func (m *OrgDeptMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCode(v)
+		return nil
+	case orgdept.FieldMergeName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMergeName(v)
 		return nil
 	case orgdept.FieldOrgID:
 		v, ok := value.(string)
@@ -1841,6 +1962,9 @@ func (m *OrgDeptMutation) ClearedFields() []string {
 	if m.FieldCleared(orgdept.FieldCode) {
 		fields = append(fields, orgdept.FieldCode)
 	}
+	if m.FieldCleared(orgdept.FieldMergeName) {
+		fields = append(fields, orgdept.FieldMergeName)
+	}
 	if m.FieldCleared(orgdept.FieldOrgID) {
 		fields = append(fields, orgdept.FieldOrgID)
 	}
@@ -1905,6 +2029,9 @@ func (m *OrgDeptMutation) ClearField(name string) error {
 		return nil
 	case orgdept.FieldCode:
 		m.ClearCode()
+		return nil
+	case orgdept.FieldMergeName:
+		m.ClearMergeName()
 		return nil
 	case orgdept.FieldOrgID:
 		m.ClearOrgID()
@@ -1974,6 +2101,9 @@ func (m *OrgDeptMutation) ResetField(name string) error {
 	case orgdept.FieldCode:
 		m.ResetCode()
 		return nil
+	case orgdept.FieldMergeName:
+		m.ResetMergeName()
+		return nil
 	case orgdept.FieldOrgID:
 		m.ResetOrgID()
 		return nil
@@ -1995,7 +2125,7 @@ func (m *OrgDeptMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *OrgDeptMutation) AddedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	if m.parent != nil {
 		edges = append(edges, orgdept.EdgeParent)
 	}
@@ -2004,6 +2134,9 @@ func (m *OrgDeptMutation) AddedEdges() []string {
 	}
 	if m.organ != nil {
 		edges = append(edges, orgdept.EdgeOrgan)
+	}
+	if m.staffs != nil {
+		edges = append(edges, orgdept.EdgeStaffs)
 	}
 	return edges
 }
@@ -2026,15 +2159,24 @@ func (m *OrgDeptMutation) AddedIDs(name string) []ent.Value {
 		if id := m.organ; id != nil {
 			return []ent.Value{*id}
 		}
+	case orgdept.EdgeStaffs:
+		ids := make([]ent.Value, 0, len(m.staffs))
+		for id := range m.staffs {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *OrgDeptMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	if m.removedchildren != nil {
 		edges = append(edges, orgdept.EdgeChildren)
+	}
+	if m.removedstaffs != nil {
+		edges = append(edges, orgdept.EdgeStaffs)
 	}
 	return edges
 }
@@ -2049,13 +2191,19 @@ func (m *OrgDeptMutation) RemovedIDs(name string) []ent.Value {
 			ids = append(ids, id)
 		}
 		return ids
+	case orgdept.EdgeStaffs:
+		ids := make([]ent.Value, 0, len(m.removedstaffs))
+		for id := range m.removedstaffs {
+			ids = append(ids, id)
+		}
+		return ids
 	}
 	return nil
 }
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *OrgDeptMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	if m.clearedparent {
 		edges = append(edges, orgdept.EdgeParent)
 	}
@@ -2064,6 +2212,9 @@ func (m *OrgDeptMutation) ClearedEdges() []string {
 	}
 	if m.clearedorgan {
 		edges = append(edges, orgdept.EdgeOrgan)
+	}
+	if m.clearedstaffs {
+		edges = append(edges, orgdept.EdgeStaffs)
 	}
 	return edges
 }
@@ -2078,6 +2229,8 @@ func (m *OrgDeptMutation) EdgeCleared(name string) bool {
 		return m.clearedchildren
 	case orgdept.EdgeOrgan:
 		return m.clearedorgan
+	case orgdept.EdgeStaffs:
+		return m.clearedstaffs
 	}
 	return false
 }
@@ -2108,6 +2261,9 @@ func (m *OrgDeptMutation) ResetEdge(name string) error {
 		return nil
 	case orgdept.EdgeOrgan:
 		m.ResetOrgan()
+		return nil
+	case orgdept.EdgeStaffs:
+		m.ResetStaffs()
 		return nil
 	}
 	return fmt.Errorf("unknown OrgDept edge %s", name)
@@ -4858,7 +5014,6 @@ type OrgStaffMutation struct {
 	empy_stat        *int32
 	addempy_stat     *int32
 	empyst_dict_id   *string
-	dept_id          *string
 	creator          *string
 	clearedFields    map[string]struct{}
 	organ            *string
@@ -4867,6 +5022,8 @@ type OrgStaffMutation struct {
 	clearediden_addr bool
 	resi_addr        *string
 	clearedresi_addr bool
+	dept             *string
+	cleareddept      bool
 	done             bool
 	oldValue         func(context.Context) (*OrgStaff, error)
 	predicates       []predicate.OrgStaff
@@ -6163,12 +6320,12 @@ func (m *OrgStaffMutation) ResetEmpystDictID() {
 
 // SetDeptID sets the "dept_id" field.
 func (m *OrgStaffMutation) SetDeptID(s string) {
-	m.dept_id = &s
+	m.dept = &s
 }
 
 // DeptID returns the value of the "dept_id" field in the mutation.
 func (m *OrgStaffMutation) DeptID() (r string, exists bool) {
-	v := m.dept_id
+	v := m.dept
 	if v == nil {
 		return
 	}
@@ -6194,7 +6351,7 @@ func (m *OrgStaffMutation) OldDeptID(ctx context.Context) (v *string, err error)
 
 // ClearDeptID clears the value of the "dept_id" field.
 func (m *OrgStaffMutation) ClearDeptID() {
-	m.dept_id = nil
+	m.dept = nil
 	m.clearedFields[orgstaff.FieldDeptID] = struct{}{}
 }
 
@@ -6206,7 +6363,7 @@ func (m *OrgStaffMutation) DeptIDCleared() bool {
 
 // ResetDeptID resets all changes to the "dept_id" field.
 func (m *OrgStaffMutation) ResetDeptID() {
-	m.dept_id = nil
+	m.dept = nil
 	delete(m.clearedFields, orgstaff.FieldDeptID)
 }
 
@@ -6350,6 +6507,32 @@ func (m *OrgStaffMutation) ResetResiAddr() {
 	m.clearedresi_addr = false
 }
 
+// ClearDept clears the "dept" edge to the OrgDept entity.
+func (m *OrgStaffMutation) ClearDept() {
+	m.cleareddept = true
+}
+
+// DeptCleared reports if the "dept" edge to the OrgDept entity was cleared.
+func (m *OrgStaffMutation) DeptCleared() bool {
+	return m.DeptIDCleared() || m.cleareddept
+}
+
+// DeptIDs returns the "dept" edge IDs in the mutation.
+// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
+// DeptID instead. It exists only for internal usage by the builders.
+func (m *OrgStaffMutation) DeptIDs() (ids []string) {
+	if id := m.dept; id != nil {
+		ids = append(ids, *id)
+	}
+	return
+}
+
+// ResetDept resets all changes to the "dept" edge.
+func (m *OrgStaffMutation) ResetDept() {
+	m.dept = nil
+	m.cleareddept = false
+}
+
 // Where appends a list predicates to the OrgStaffMutation builder.
 func (m *OrgStaffMutation) Where(ps ...predicate.OrgStaff) {
 	m.predicates = append(m.predicates, ps...)
@@ -6457,7 +6640,7 @@ func (m *OrgStaffMutation) Fields() []string {
 	if m.empyst_dict_id != nil {
 		fields = append(fields, orgstaff.FieldEmpystDictID)
 	}
-	if m.dept_id != nil {
+	if m.dept != nil {
 		fields = append(fields, orgstaff.FieldDeptID)
 	}
 	if m.creator != nil {
@@ -7082,7 +7265,7 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 
 // AddedEdges returns all edge names that were set/added in this mutation.
 func (m *OrgStaffMutation) AddedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	if m.organ != nil {
 		edges = append(edges, orgstaff.EdgeOrgan)
 	}
@@ -7091,6 +7274,9 @@ func (m *OrgStaffMutation) AddedEdges() []string {
 	}
 	if m.resi_addr != nil {
 		edges = append(edges, orgstaff.EdgeResiAddr)
+	}
+	if m.dept != nil {
+		edges = append(edges, orgstaff.EdgeDept)
 	}
 	return edges
 }
@@ -7111,13 +7297,17 @@ func (m *OrgStaffMutation) AddedIDs(name string) []ent.Value {
 		if id := m.resi_addr; id != nil {
 			return []ent.Value{*id}
 		}
+	case orgstaff.EdgeDept:
+		if id := m.dept; id != nil {
+			return []ent.Value{*id}
+		}
 	}
 	return nil
 }
 
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *OrgStaffMutation) RemovedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	return edges
 }
 
@@ -7129,7 +7319,7 @@ func (m *OrgStaffMutation) RemovedIDs(name string) []ent.Value {
 
 // ClearedEdges returns all edge names that were cleared in this mutation.
 func (m *OrgStaffMutation) ClearedEdges() []string {
-	edges := make([]string, 0, 3)
+	edges := make([]string, 0, 4)
 	if m.clearedorgan {
 		edges = append(edges, orgstaff.EdgeOrgan)
 	}
@@ -7138,6 +7328,9 @@ func (m *OrgStaffMutation) ClearedEdges() []string {
 	}
 	if m.clearedresi_addr {
 		edges = append(edges, orgstaff.EdgeResiAddr)
+	}
+	if m.cleareddept {
+		edges = append(edges, orgstaff.EdgeDept)
 	}
 	return edges
 }
@@ -7152,6 +7345,8 @@ func (m *OrgStaffMutation) EdgeCleared(name string) bool {
 		return m.clearediden_addr
 	case orgstaff.EdgeResiAddr:
 		return m.clearedresi_addr
+	case orgstaff.EdgeDept:
+		return m.cleareddept
 	}
 	return false
 }
@@ -7169,6 +7364,9 @@ func (m *OrgStaffMutation) ClearEdge(name string) error {
 	case orgstaff.EdgeResiAddr:
 		m.ClearResiAddr()
 		return nil
+	case orgstaff.EdgeDept:
+		m.ClearDept()
+		return nil
 	}
 	return fmt.Errorf("unknown OrgStaff unique edge %s", name)
 }
@@ -7185,6 +7383,9 @@ func (m *OrgStaffMutation) ResetEdge(name string) error {
 		return nil
 	case orgstaff.EdgeResiAddr:
 		m.ResetResiAddr()
+		return nil
+	case orgstaff.EdgeDept:
+		m.ResetDept()
 		return nil
 	}
 	return fmt.Errorf("unknown OrgStaff edge %s", name)

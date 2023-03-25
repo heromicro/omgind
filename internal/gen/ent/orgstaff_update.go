@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
@@ -550,6 +551,11 @@ func (osu *OrgStaffUpdate) SetResiAddr(s *SysAddress) *OrgStaffUpdate {
 	return osu.SetResiAddrID(s.ID)
 }
 
+// SetDept sets the "dept" edge to the OrgDept entity.
+func (osu *OrgStaffUpdate) SetDept(o *OrgDept) *OrgStaffUpdate {
+	return osu.SetDeptID(o.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osu *OrgStaffUpdate) Mutation() *OrgStaffMutation {
 	return osu.mutation
@@ -570,6 +576,12 @@ func (osu *OrgStaffUpdate) ClearIdenAddr() *OrgStaffUpdate {
 // ClearResiAddr clears the "resi_addr" edge to the SysAddress entity.
 func (osu *OrgStaffUpdate) ClearResiAddr() *OrgStaffUpdate {
 	osu.mutation.ClearResiAddr()
+	return osu
+}
+
+// ClearDept clears the "dept" edge to the OrgDept entity.
+func (osu *OrgStaffUpdate) ClearDept() *OrgStaffUpdate {
+	osu.mutation.ClearDept()
 	return osu
 }
 
@@ -812,12 +824,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if osu.mutation.EmpystDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldEmpystDictID, field.TypeString)
 	}
-	if value, ok := osu.mutation.DeptID(); ok {
-		_spec.SetField(orgstaff.FieldDeptID, field.TypeString, value)
-	}
-	if osu.mutation.DeptIDCleared() {
-		_spec.ClearField(orgstaff.FieldDeptID, field.TypeString)
-	}
 	if value, ok := osu.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
 	}
@@ -909,6 +915,37 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = osu.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if osu.mutation.DeptCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.DeptTable,
+			Columns: []string{orgstaff.DeptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = osu.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osu.mutation.DeptIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.DeptTable,
+			Columns: []string{orgstaff.DeptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osu.schemaConfig.OrgStaff
@@ -1459,6 +1496,11 @@ func (osuo *OrgStaffUpdateOne) SetResiAddr(s *SysAddress) *OrgStaffUpdateOne {
 	return osuo.SetResiAddrID(s.ID)
 }
 
+// SetDept sets the "dept" edge to the OrgDept entity.
+func (osuo *OrgStaffUpdateOne) SetDept(o *OrgDept) *OrgStaffUpdateOne {
+	return osuo.SetDeptID(o.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osuo *OrgStaffUpdateOne) Mutation() *OrgStaffMutation {
 	return osuo.mutation
@@ -1479,6 +1521,12 @@ func (osuo *OrgStaffUpdateOne) ClearIdenAddr() *OrgStaffUpdateOne {
 // ClearResiAddr clears the "resi_addr" edge to the SysAddress entity.
 func (osuo *OrgStaffUpdateOne) ClearResiAddr() *OrgStaffUpdateOne {
 	osuo.mutation.ClearResiAddr()
+	return osuo
+}
+
+// ClearDept clears the "dept" edge to the OrgDept entity.
+func (osuo *OrgStaffUpdateOne) ClearDept() *OrgStaffUpdateOne {
+	osuo.mutation.ClearDept()
 	return osuo
 }
 
@@ -1751,12 +1799,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	if osuo.mutation.EmpystDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldEmpystDictID, field.TypeString)
 	}
-	if value, ok := osuo.mutation.DeptID(); ok {
-		_spec.SetField(orgstaff.FieldDeptID, field.TypeString, value)
-	}
-	if osuo.mutation.DeptIDCleared() {
-		_spec.ClearField(orgstaff.FieldDeptID, field.TypeString)
-	}
 	if value, ok := osuo.mutation.Creator(); ok {
 		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
 	}
@@ -1848,6 +1890,37 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = osuo.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if osuo.mutation.DeptCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.DeptTable,
+			Columns: []string{orgstaff.DeptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = osuo.schemaConfig.OrgStaff
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osuo.mutation.DeptIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.DeptTable,
+			Columns: []string{orgstaff.DeptColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
 		edge.Schema = osuo.schemaConfig.OrgStaff

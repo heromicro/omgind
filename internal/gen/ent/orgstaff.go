@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
@@ -83,9 +84,11 @@ type OrgStaffEdges struct {
 	IdenAddr *SysAddress `json:"iden_addr,omitempty"`
 	// ResiAddr holds the value of the resi_addr edge.
 	ResiAddr *SysAddress `json:"resi_addr,omitempty"`
+	// Dept holds the value of the dept edge.
+	Dept *OrgDept `json:"dept,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [3]bool
+	loadedTypes [4]bool
 }
 
 // OrganOrErr returns the Organ value or an error if the edge
@@ -125,6 +128,19 @@ func (e OrgStaffEdges) ResiAddrOrErr() (*SysAddress, error) {
 		return e.ResiAddr, nil
 	}
 	return nil, &NotLoadedError{edge: "resi_addr"}
+}
+
+// DeptOrErr returns the Dept value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e OrgStaffEdges) DeptOrErr() (*OrgDept, error) {
+	if e.loadedTypes[3] {
+		if e.Dept == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgdept.Label}
+		}
+		return e.Dept, nil
+	}
+	return nil, &NotLoadedError{edge: "dept"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -357,6 +373,11 @@ func (os *OrgStaff) QueryIdenAddr() *SysAddressQuery {
 // QueryResiAddr queries the "resi_addr" edge of the OrgStaff entity.
 func (os *OrgStaff) QueryResiAddr() *SysAddressQuery {
 	return NewOrgStaffClient(os.config).QueryResiAddr(os)
+}
+
+// QueryDept queries the "dept" edge of the OrgStaff entity.
+func (os *OrgStaff) QueryDept() *OrgDeptQuery {
+	return NewOrgStaffClient(os.config).QueryDept(os)
 }
 
 // Update returns a builder for updating this OrgStaff.

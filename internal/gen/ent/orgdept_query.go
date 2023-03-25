@@ -15,6 +15,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -28,6 +29,7 @@ type OrgDeptQuery struct {
 	withParent   *OrgDeptQuery
 	withChildren *OrgDeptQuery
 	withOrgan    *OrgOrganQuery
+	withStaffs   *OrgStaffQuery
 	modifiers    []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -134,6 +136,31 @@ func (odq *OrgDeptQuery) QueryOrgan() *OrgOrganQuery {
 		schemaConfig := odq.schemaConfig
 		step.To.Schema = schemaConfig.OrgOrgan
 		step.Edge.Schema = schemaConfig.OrgDept
+		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryStaffs chains the current query on the "staffs" edge.
+func (odq *OrgDeptQuery) QueryStaffs() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: odq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := odq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := odq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgdept.Table, orgdept.FieldID, selector),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.StaffsTable, orgdept.StaffsColumn),
+		)
+		schemaConfig := odq.schemaConfig
+		step.To.Schema = schemaConfig.OrgStaff
+		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -335,6 +362,7 @@ func (odq *OrgDeptQuery) Clone() *OrgDeptQuery {
 		withParent:   odq.withParent.Clone(),
 		withChildren: odq.withChildren.Clone(),
 		withOrgan:    odq.withOrgan.Clone(),
+		withStaffs:   odq.withStaffs.Clone(),
 		// clone intermediate query.
 		sql:  odq.sql.Clone(),
 		path: odq.path,
@@ -371,6 +399,17 @@ func (odq *OrgDeptQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *OrgDeptQuery {
 		opt(query)
 	}
 	odq.withOrgan = query
+	return odq
+}
+
+// WithStaffs tells the query-builder to eager-load the nodes that are connected to
+// the "staffs" edge. The optional arguments are used to configure the query builder of the edge.
+func (odq *OrgDeptQuery) WithStaffs(opts ...func(*OrgStaffQuery)) *OrgDeptQuery {
+	query := (&OrgStaffClient{config: odq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	odq.withStaffs = query
 	return odq
 }
 
@@ -452,10 +491,11 @@ func (odq *OrgDeptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Org
 	var (
 		nodes       = []*OrgDept{}
 		_spec       = odq.querySpec()
-		loadedTypes = [3]bool{
+		loadedTypes = [4]bool{
 			odq.withParent != nil,
 			odq.withChildren != nil,
 			odq.withOrgan != nil,
+			odq.withStaffs != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
@@ -497,6 +537,13 @@ func (odq *OrgDeptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Org
 	if query := odq.withOrgan; query != nil {
 		if err := odq.loadOrgan(ctx, query, nodes, nil,
 			func(n *OrgDept, e *OrgOrgan) { n.Edges.Organ = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := odq.withStaffs; query != nil {
+		if err := odq.loadStaffs(ctx, query, nodes,
+			func(n *OrgDept) { n.Edges.Staffs = []*OrgStaff{} },
+			func(n *OrgDept, e *OrgStaff) { n.Edges.Staffs = append(n.Edges.Staffs, e) }); err != nil {
 			return nil, err
 		}
 	}
@@ -594,6 +641,36 @@ func (odq *OrgDeptQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, no
 		for i := range nodes {
 			assign(nodes[i], n)
 		}
+	}
+	return nil
+}
+func (odq *OrgDeptQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgStaff)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*OrgDept)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.OrgStaff(func(s *sql.Selector) {
+		s.Where(sql.InValues(orgdept.StaffsColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.DeptID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "dept_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "dept_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
 	}
 	return nil
 }

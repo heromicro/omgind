@@ -47,6 +47,8 @@ type OrgDept struct {
 	Name *string `json:"name,omitempty"`
 	// 助记码
 	Code *string `json:"code,omitempty"`
+	// 全名称
+	MergeName *string `json:"merge_name,omitempty"`
 	// 企业id
 	OrgID *string `json:"org_id,omitempty"`
 	// 父级id
@@ -70,9 +72,11 @@ type OrgDeptEdges struct {
 	Children []*OrgDept `json:"children,omitempty"`
 	// Organ holds the value of the organ edge.
 	Organ *OrgOrgan `json:"organ,omitempty"`
+	// Staffs holds the value of the staffs edge.
+	Staffs []*OrgStaff `json:"staffs,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [3]bool
+	loadedTypes [4]bool
 }
 
 // ParentOrErr returns the Parent value or an error if the edge
@@ -110,6 +114,15 @@ func (e OrgDeptEdges) OrganOrErr() (*OrgOrgan, error) {
 	return nil, &NotLoadedError{edge: "organ"}
 }
 
+// StaffsOrErr returns the Staffs value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrgDeptEdges) StaffsOrErr() ([]*OrgStaff, error) {
+	if e.loadedTypes[3] {
+		return e.Staffs, nil
+	}
+	return nil, &NotLoadedError{edge: "staffs"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*OrgDept) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
@@ -119,7 +132,7 @@ func (*OrgDept) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgdept.FieldSort, orgdept.FieldTreeID, orgdept.FieldTreeLevel, orgdept.FieldTreeLeft, orgdept.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
-		case orgdept.FieldID, orgdept.FieldMemo, orgdept.FieldTreePath, orgdept.FieldName, orgdept.FieldCode, orgdept.FieldOrgID, orgdept.FieldParentID, orgdept.FieldCreator:
+		case orgdept.FieldID, orgdept.FieldMemo, orgdept.FieldTreePath, orgdept.FieldName, orgdept.FieldCode, orgdept.FieldMergeName, orgdept.FieldOrgID, orgdept.FieldParentID, orgdept.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgdept.FieldCreatedAt, orgdept.FieldUpdatedAt, orgdept.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -246,6 +259,13 @@ func (od *OrgDept) assignValues(columns []string, values []any) error {
 				od.Code = new(string)
 				*od.Code = value.String
 			}
+		case orgdept.FieldMergeName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field merge_name", values[i])
+			} else if value.Valid {
+				od.MergeName = new(string)
+				*od.MergeName = value.String
+			}
 		case orgdept.FieldOrgID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field org_id", values[i])
@@ -299,6 +319,11 @@ func (od *OrgDept) QueryChildren() *OrgDeptQuery {
 // QueryOrgan queries the "organ" edge of the OrgDept entity.
 func (od *OrgDept) QueryOrgan() *OrgOrganQuery {
 	return NewOrgDeptClient(od.config).QueryOrgan(od)
+}
+
+// QueryStaffs queries the "staffs" edge of the OrgDept entity.
+func (od *OrgDept) QueryStaffs() *OrgStaffQuery {
+	return NewOrgDeptClient(od.config).QueryStaffs(od)
 }
 
 // Update returns a builder for updating this OrgDept.
@@ -390,6 +415,11 @@ func (od *OrgDept) String() string {
 	builder.WriteString(", ")
 	if v := od.Code; v != nil {
 		builder.WriteString("code=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := od.MergeName; v != nil {
+		builder.WriteString("merge_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

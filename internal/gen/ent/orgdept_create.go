@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 )
 
 // OrgDeptCreate is the builder for creating a OrgDept entity.
@@ -234,6 +235,20 @@ func (odc *OrgDeptCreate) SetNillableCode(s *string) *OrgDeptCreate {
 	return odc
 }
 
+// SetMergeName sets the "merge_name" field.
+func (odc *OrgDeptCreate) SetMergeName(s string) *OrgDeptCreate {
+	odc.mutation.SetMergeName(s)
+	return odc
+}
+
+// SetNillableMergeName sets the "merge_name" field if the given value is not nil.
+func (odc *OrgDeptCreate) SetNillableMergeName(s *string) *OrgDeptCreate {
+	if s != nil {
+		odc.SetMergeName(*s)
+	}
+	return odc
+}
+
 // SetOrgID sets the "org_id" field.
 func (odc *OrgDeptCreate) SetOrgID(s string) *OrgDeptCreate {
 	odc.mutation.SetOrgID(s)
@@ -357,6 +372,21 @@ func (odc *OrgDeptCreate) SetOrgan(o *OrgOrgan) *OrgDeptCreate {
 	return odc.SetOrganID(o.ID)
 }
 
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (odc *OrgDeptCreate) AddStaffIDs(ids ...string) *OrgDeptCreate {
+	odc.mutation.AddStaffIDs(ids...)
+	return odc
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (odc *OrgDeptCreate) AddStaffs(o ...*OrgStaff) *OrgDeptCreate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return odc.AddStaffIDs(ids...)
+}
+
 // Mutation returns the OrgDeptMutation object of the builder.
 func (odc *OrgDeptCreate) Mutation() *OrgDeptMutation {
 	return odc.mutation
@@ -458,6 +488,11 @@ func (odc *OrgDeptCreate) check() error {
 	if v, ok := odc.mutation.Code(); ok {
 		if err := orgdept.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`ent: validator failed for field "OrgDept.code": %w`, err)}
+		}
+	}
+	if v, ok := odc.mutation.MergeName(); ok {
+		if err := orgdept.MergeNameValidator(v); err != nil {
+			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`ent: validator failed for field "OrgDept.merge_name": %w`, err)}
 		}
 	}
 	if v, ok := odc.mutation.OrgID(); ok {
@@ -572,6 +607,10 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 		_spec.SetField(orgdept.FieldCode, field.TypeString, value)
 		_node.Code = &value
 	}
+	if value, ok := odc.mutation.MergeName(); ok {
+		_spec.SetField(orgdept.FieldMergeName, field.TypeString, value)
+		_node.MergeName = &value
+	}
 	if value, ok := odc.mutation.IsReal(); ok {
 		_spec.SetField(orgdept.FieldIsReal, field.TypeBool, value)
 		_node.IsReal = &value
@@ -635,6 +674,23 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.OrgID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := odc.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgdept.StaffsTable,
+			Columns: []string{orgdept.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		edge.Schema = odc.schemaConfig.OrgStaff
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
@@ -950,6 +1006,24 @@ func (u *OrgDeptUpsert) UpdateCode() *OrgDeptUpsert {
 // ClearCode clears the value of the "code" field.
 func (u *OrgDeptUpsert) ClearCode() *OrgDeptUpsert {
 	u.SetNull(orgdept.FieldCode)
+	return u
+}
+
+// SetMergeName sets the "merge_name" field.
+func (u *OrgDeptUpsert) SetMergeName(v string) *OrgDeptUpsert {
+	u.Set(orgdept.FieldMergeName, v)
+	return u
+}
+
+// UpdateMergeName sets the "merge_name" field to the value that was provided on create.
+func (u *OrgDeptUpsert) UpdateMergeName() *OrgDeptUpsert {
+	u.SetExcluded(orgdept.FieldMergeName)
+	return u
+}
+
+// ClearMergeName clears the value of the "merge_name" field.
+func (u *OrgDeptUpsert) ClearMergeName() *OrgDeptUpsert {
+	u.SetNull(orgdept.FieldMergeName)
 	return u
 }
 
@@ -1399,6 +1473,27 @@ func (u *OrgDeptUpsertOne) UpdateCode() *OrgDeptUpsertOne {
 func (u *OrgDeptUpsertOne) ClearCode() *OrgDeptUpsertOne {
 	return u.Update(func(s *OrgDeptUpsert) {
 		s.ClearCode()
+	})
+}
+
+// SetMergeName sets the "merge_name" field.
+func (u *OrgDeptUpsertOne) SetMergeName(v string) *OrgDeptUpsertOne {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.SetMergeName(v)
+	})
+}
+
+// UpdateMergeName sets the "merge_name" field to the value that was provided on create.
+func (u *OrgDeptUpsertOne) UpdateMergeName() *OrgDeptUpsertOne {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.UpdateMergeName()
+	})
+}
+
+// ClearMergeName clears the value of the "merge_name" field.
+func (u *OrgDeptUpsertOne) ClearMergeName() *OrgDeptUpsertOne {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.ClearMergeName()
 	})
 }
 
@@ -2026,6 +2121,27 @@ func (u *OrgDeptUpsertBulk) UpdateCode() *OrgDeptUpsertBulk {
 func (u *OrgDeptUpsertBulk) ClearCode() *OrgDeptUpsertBulk {
 	return u.Update(func(s *OrgDeptUpsert) {
 		s.ClearCode()
+	})
+}
+
+// SetMergeName sets the "merge_name" field.
+func (u *OrgDeptUpsertBulk) SetMergeName(v string) *OrgDeptUpsertBulk {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.SetMergeName(v)
+	})
+}
+
+// UpdateMergeName sets the "merge_name" field to the value that was provided on create.
+func (u *OrgDeptUpsertBulk) UpdateMergeName() *OrgDeptUpsertBulk {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.UpdateMergeName()
+	})
+}
+
+// ClearMergeName clears the value of the "merge_name" field.
+func (u *OrgDeptUpsertBulk) ClearMergeName() *OrgDeptUpsertBulk {
+	return u.Update(func(s *OrgDeptUpsert) {
+		s.ClearMergeName()
 	})
 }
 
