@@ -172,7 +172,7 @@ func (a *OrgDept) View(ctx context.Context, id string, opts ...schema.OrgDeptQue
 	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo).WithHaddr()
 	}).WithParent(func(odq *ent.OrgDeptQuery) {
-		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName)
+		odq.Select(orgdept.FieldID, orgdept.FieldName)
 	})
 	r_orgdept, err := query.Where(orgdept.IDEQ(id)).Only(ctx)
 	if err != nil {
