@@ -287,8 +287,14 @@ func (a *OrgDept) GetAllSubs(ctx context.Context, pid string, params schema.OrgD
 	}
 
 	if len(opt.OrderFields) == 0 {
-		of := MakeUpOrderField(orgdept.FieldTreeLevel, "asc")
+		of := MakeUpOrderField(orgdept.FieldTreeID, "asc")
 		opt.OrderFields = append(opt.OrderFields, of)
+
+		of1 := MakeUpOrderField(orgdept.FieldTreeLevel, "asc")
+		opt.OrderFields = append(opt.OrderFields, of1)
+
+		of3 := MakeUpOrderField(orgdept.FieldTreeLeft, "asc")
+		opt.OrderFields = append(opt.OrderFields, of3)
 
 		of2 := MakeUpOrderField(orgdept.FieldSort, "asc")
 		opt.OrderFields = append(opt.OrderFields, of2)
@@ -342,6 +348,10 @@ func (a *OrgDept) GetTree(ctx context.Context, tpid string, params schema.OrgDep
 
 	of1 := MakeUpOrderField(orgdept.FieldTreeLevel, "asc")
 	opt.OrderFields = append(opt.OrderFields, of1)
+
+	of3 := MakeUpOrderField(orgdept.FieldTreeLeft, "asc")
+	opt.OrderFields = append(opt.OrderFields, of3)
+
 	of2 := MakeUpOrderField(orgdept.FieldSort, "asc")
 	opt.OrderFields = append(opt.OrderFields, of2)
 	tree_query = tree_query.Order(ParseOrder(opt.OrderFields)...)
@@ -368,40 +378,6 @@ func (a *OrgDept) GetTree(ctx context.Context, tpid string, params schema.OrgDep
 	}
 
 	return data, nil
-}
-
-// Create 创建数据
-func (a *OrgDept) Create(ctx context.Context, item schema.OrgDept) (*schema.OrgDept, error) {
-
-	// TODO: check org_id
-
-	iteminput := a.ToEntCreateOrgDeptInput(&item)
-
-	r_orgdept, err := a.EntCli.OrgDept.Create().SetInput(*iteminput).Save(ctx)
-
-	if err != nil {
-		return nil, err
-	}
-	sch_orgdept := ToSchemaOrgDept(r_orgdept)
-	return sch_orgdept, nil
-}
-
-// Update 更新数据
-func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*schema.OrgDept, error) {
-
-	// TODO: check org_id
-
-	oitem, err := a.EntCli.OrgDept.Query().Where(orgdept.IDEQ(id)).Only(ctx)
-	if err != nil {
-		return nil, err
-	}
-
-	iteminput := a.ToEntUpdateOrgDeptInput(&item)
-
-	r_orgdept, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-	sch_orgdept := ToSchemaOrgDept(r_orgdept)
-
-	return sch_orgdept, nil
 }
 
 // Delete 删除数据

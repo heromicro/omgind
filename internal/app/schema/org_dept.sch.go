@@ -16,7 +16,7 @@ type OrgDept struct {
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`
 
-	OrgID string        `json:"org_id" binding:"required"` // 企业id
+	OrgID *string       `json:"org_id" binding:"required"` // 企业id
 	Org   *OrgOrganShow `json:"org"`                       //
 
 	IsLeaf    *bool   `json:"is_leaf,omitempty"`    // 是否是子叶

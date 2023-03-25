@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"log"
 	"strings"
 	"time"
 
@@ -23,7 +22,7 @@ import (
 
 // SysDistrictSet 注入SysDistrict
 // var SysDistrictSet = wire.NewSet(wire.Struct(new(SysDistrict), "*"))
-var SysDistrictSet = wire.NewSet(New)
+var SysDistrictSet = wire.NewSet(NewSysDistrictSrv)
 
 // SysDistrict 行政区域
 type SysDistrict struct {
@@ -34,7 +33,7 @@ type SysDistrict struct {
 	consumer        *worker.Consumer
 }
 
-func New(entCli *ent.Client, districtRepo *repo.SysDistrict, q queue.Queuer, c *worker.Consumer) *SysDistrict {
+func NewSysDistrictSrv(entCli *ent.Client, districtRepo *repo.SysDistrict, q queue.Queuer, c *worker.Consumer) *SysDistrict {
 
 	districtSrv := &SysDistrict{
 		EntCli:          entCli,
@@ -116,9 +115,7 @@ func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
 
 		_, err := update_district.Save(ctx)
 
-		if err != nil {
-			log.Println(" --------- ===== ------ ", err)
-		} else {
+		if err == nil {
 			// ids = append(ids, child.ID)
 
 			if d > 1 {
@@ -129,7 +126,7 @@ func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
 					Delay:   200 * time.Millisecond,
 				}
 
-				s.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.DistrictQueue, job)
+				s.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.RepaireTreeQueue, job)
 			}
 		}
 	}

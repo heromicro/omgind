@@ -166,7 +166,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	serviceSysDistrict := service.New(client, sysDistrict, queuer, consumer)
+	serviceSysDistrict := service.NewSysDistrictSrv(client, sysDistrict, queuer, consumer)
 	api_v2SysDistrict := &api_v2.SysDistrict{
 		SysDistrictSrv: serviceSysDistrict,
 	}
@@ -216,10 +216,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2OrgPosition := &api_v2.OrgPosition{
 		OrgPositionSrv: serviceOrgPosition,
 	}
-	serviceOrgDept := &service.OrgDept{
-		EntCli:      client,
-		OrgDeptRepo: orgDept,
-	}
+	serviceOrgDept := service.NewOrgDeptSrv(client, orgDept, queuer, consumer)
 	api_v2OrgDept := &api_v2.OrgDept{
 		OrgDeptSrv: serviceOrgDept,
 	}

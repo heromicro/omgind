@@ -12,9 +12,9 @@ import (
 func InitQueue(conf *config.AppConfig, rdb *rdb.Redis) (queue.Queuer, func(), error) {
 
 	queueNames := map[string]int{
-		string(types.DistrictQueue): 1,
-		string(types.ScheduleQueue): 1,
-		string(types.DefaultQueue):  1,
+		string(types.RepaireTreeQueue): 1,
+		string(types.ScheduleQueue):    1,
+		string(types.DefaultQueue):     1,
 	}
 
 	opts := &queue.QueueOptions{
