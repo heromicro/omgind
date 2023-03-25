@@ -56,6 +56,8 @@ func (s *OrgDept) ProcessTask(ctx context.Context, t *asynq.Task) error {
 
 	id := string(t.Payload())
 
+	log.Println(" -------- ==== id : ", id)
+
 	parent, err := s.EntCli.OrgDept.Query().Where(orgdept.IDEQ(id)).WithChildren(func(sdq *ent.OrgDeptQuery) {
 		sdq.Where(orgdept.IsDel(false)).Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldIsLeaf, orgdept.FieldTreeLeft, orgdept.FieldTreeRight, orgdept.FieldParentID)
 
@@ -203,7 +205,7 @@ func (a *OrgDept) Create(ctx context.Context, item schema.OrgDept) (*schema.OrgD
 	item.TreeLevel = ptr.Int32(*parent.TreeLevel + 1)
 
 	if parent.TreePath == nil || *parent.TreePath == "" {
-		item.TreePath = ptr.String(item.ID)
+		item.TreePath = ptr.String(parent.ID)
 	} else {
 		item.TreePath = ptr.String(strings.Join([]string{*parent.TreePath, parent.ID}, "/"))
 	}
@@ -323,10 +325,10 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 			item.IsLeaf = ptr.Bool(true)
 		}
 
-		if nparent.TreePath != nil && *nparent.TreePath != "" {
-			item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
+		if nparent.TreePath == nil || *nparent.TreePath == "" {
+			item.TreePath = &nparent.ID
 		} else {
-			item.TreePath = nil
+			item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
 		}
 
 		iteminput := a.OrgDeptRepo.ToEntUpdateOrgDeptInput(&item)
@@ -335,6 +337,9 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 		if err != nil {
 			return nil, err
 		}
+
+		_ = a.Queue.Write(types.TaskName_REPAIR_DEPT_TREE_PATH, types.RepaireTreeQueue, job)
+
 	} else {
 
 		ids, err := a.EntCli.OrgDept.Query().Where(orgdept.TreeIDEQ(*oitem.TreeID), orgdept.And(orgdept.TreeLeftGTE(*oitem.TreeLeft), orgdept.TreeRightLTE(*oitem.TreeRight))).IDs(ctx)

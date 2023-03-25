@@ -108,8 +108,8 @@ var CmdLoad = &cobra.Command{
 				// total += 1
 
 				district := schema.SysDistrict{
-					TreeID: &item.TreeID,
-					// TreeLeft:   &item.TreeLeft,
+					// TreeID: &item.TreeID,
+					// TreeLeft: &item.TreeLeft,
 					// TreeRight:  &item.TreeRight,
 					// TreeLevel:  &item.TreeLevel,
 					Name:       item.Name,
@@ -135,6 +135,7 @@ var CmdLoad = &cobra.Command{
 					IsReal:     item.IsReal,
 					ParentID:   item.ParentID,
 				}
+				district.TreeID = &item.TreeID
 
 				if item.Status == 1 {
 					district.IsActive = ptr.Bool(true)

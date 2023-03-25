@@ -53,15 +53,11 @@ func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
 
 	// log.Println(" --- ---- === = ", t.Type())
 	id := string(t.Payload())
-	// log.Println(" -- ----- ==== ", id)
 
 	parent, err := s.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).WithChildren(func(sdq *ent.SysDistrictQuery) {
-
 		sdq.Where(sysdistrict.IsDel(false)).Select(sysdistrict.FieldID, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldIsLeaf, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight, sysdistrict.FieldParentID)
 
 	}).First(ctx)
-
-	// log.Println(" -- ----- ==== err ", err)
 
 	if err != nil {
 		if !ent.IsNotFound(err) {
@@ -123,7 +119,7 @@ func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
 				job := &queue.Job{
 					ID:      jobid,
 					Payload: json.RawMessage(child.ID),
-					Delay:   200 * time.Millisecond,
+					Delay:   100 * time.Millisecond,
 				}
 
 				s.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.RepaireTreeQueue, job)

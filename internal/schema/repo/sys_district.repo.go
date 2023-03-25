@@ -346,6 +346,9 @@ func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.
 		of2 := MakeUpOrderField(sysdistrict.FieldTreeLevel, "asc")
 		opt.OrderFields = append(opt.OrderFields, of2)
 
+		of3 := MakeUpOrderField(sysdistrict.FieldTreeLeft, "asc")
+		opt.OrderFields = append(opt.OrderFields, of3)
+
 		of4 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
 		opt.OrderFields = append(opt.OrderFields, of4)
 	}
@@ -398,6 +401,10 @@ func (a *SysDistrict) GetTree(ctx context.Context, tpid string, params schema.Sy
 
 	of1 := MakeUpOrderField(sysdistrict.FieldTreeLevel, "asc")
 	opt.OrderFields = append(opt.OrderFields, of1)
+
+	of3 := MakeUpOrderField(sysdistrict.FieldTreeLeft, "asc")
+	opt.OrderFields = append(opt.OrderFields, of3)
+
 	of2 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
 	opt.OrderFields = append(opt.OrderFields, of2)
 	tree_query = tree_query.Order(ParseOrder(opt.OrderFields)...)
@@ -658,7 +665,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				item.TreePath = ptr.String(strings.Join([]string{*nparent.TreePath, nparent.ID}, "/"))
 			}
 
-			if item.MergeName == nil || *item.MergeName == "" {
+			if nparent.MergeName != nil && *nparent.MergeName != "" {
 				if nparent.MergeName != nil && *nparent.MergeName != "" {
 					item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, ","))
 				} else {
@@ -666,12 +673,10 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				}
 			}
 
-			if item.MergeSname == nil || *item.MergeSname == "" {
-				if nparent.MergeSname != nil && *nparent.MergeSname != "" {
-					item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
-				} else {
-					item.MergeSname = item.Sname
-				}
+			if nparent.MergeSname != nil && *nparent.MergeSname != "" {
+				item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
+			} else {
+				item.MergeSname = item.Sname
 			}
 
 			iteminput := a.ToEntUpdateSysDistrictInput(&item)
@@ -872,21 +877,17 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					item.TreePath = nil
 				}
 
-				if item.MergeName == nil || *item.MergeName == "" {
-					if nparent.MergeName != nil && *nparent.MergeName != "" {
-						item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, ","))
-					} else {
-						item.MergeName = ptr.String(item.Name)
-					}
+				if nparent.MergeName != nil && *nparent.MergeName != "" {
+					item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, ","))
+				} else {
+					item.MergeName = ptr.String(item.Name)
 				}
 
-				if item.MergeSname == nil || *item.MergeSname == "" {
-					if nparent.MergeSname != nil && *nparent.MergeSname != "" {
-						item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
-					} else {
-						item.MergeSname = item.Sname
+				if nparent.MergeSname != nil && *nparent.MergeSname != "" {
+					item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
+				} else {
+					item.MergeSname = item.Sname
 
-					}
 				}
 
 				iteminput := a.ToEntUpdateSysDistrictInput(&item)
@@ -917,21 +918,17 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					item.TreePath = ptr.String(*&nparent.ID)
 				}
 
-				if item.MergeName == nil || *item.MergeName == "" {
-					if nparent.MergeName != nil && *nparent.MergeName != "" {
-						item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, ","))
-					} else {
-						item.MergeName = ptr.String(item.Name)
-					}
+				if nparent.MergeName != nil && *nparent.MergeName != "" {
+					item.MergeName = ptr.String(strings.Join([]string{*nparent.MergeName, item.Name}, ","))
+				} else {
+					item.MergeName = ptr.String(item.Name)
 				}
 
-				if item.MergeSname == nil || *item.MergeSname == "" {
-					if item.Sname != nil && *item.Sname != "" {
-						if nparent.MergeSname != nil && *nparent.MergeSname != "" {
-							item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
-						} else {
-							item.MergeSname = item.Sname
-						}
+				if item.Sname != nil && *item.Sname != "" {
+					if nparent.MergeSname != nil && *nparent.MergeSname != "" {
+						item.MergeSname = ptr.String(strings.Join([]string{*nparent.MergeSname, *item.Sname}, ","))
+					} else {
+						item.MergeSname = item.Sname
 					}
 				}
 

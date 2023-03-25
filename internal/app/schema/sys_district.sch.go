@@ -34,12 +34,7 @@ type SysDistrict struct {
 	IsReal   bool  `json:"is_real"`           // 是否虚拟区域
 	IsDirect bool  `json:"is_direct"`         // 是否是直辖
 
-	IsLeaf    *bool   `json:"is_leaf,omitempty"`    // 是否是子叶
-	TreeID    *int64  `json:"tree_id,omitempty"`    // 树id
-	TreeLevel *int32  `json:"tree_level,omitempty"` // 层级
-	TreeLeft  *int64  `json:"tree_left,omitempty"`  // 层级
-	TreeRight *int64  `json:"tree_right,omitempty"` // 层级
-	TreePath  *string `json:"tree_path,omitempty"`  // 层级
+	TreeMixin
 
 	Creator   string     `json:"creator"`    // 创建者
 	CreatedAt *time.Time `json:"created_at"` // 创建时间
