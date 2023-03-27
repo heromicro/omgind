@@ -380,6 +380,10 @@ func init() {
 	orgstaffDescDeptID := orgstaffFields[17].Descriptor()
 	// orgstaff.DeptIDValidator is a validator for the "dept_id" field. It is called by the builders before save.
 	orgstaff.DeptIDValidator = orgstaffDescDeptID.Validators[0].(func(string) error)
+	// orgstaffDescPosiID is the schema descriptor for posi_id field.
+	orgstaffDescPosiID := orgstaffFields[18].Descriptor()
+	// orgstaff.PosiIDValidator is a validator for the "posi_id" field. It is called by the builders before save.
+	orgstaff.PosiIDValidator = orgstaffDescPosiID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.
 	orgstaffDescID := orgstaffMixinFields0[0].Descriptor()
 	// orgstaff.DefaultID holds the default value on creation for the id field.

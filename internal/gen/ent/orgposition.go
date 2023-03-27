@@ -48,9 +48,11 @@ type OrgPosition struct {
 type OrgPositionEdges struct {
 	// Organ holds the value of the organ edge.
 	Organ *OrgOrgan `json:"organ,omitempty"`
+	// Staffs holds the value of the staffs edge.
+	Staffs []*OrgStaff `json:"staffs,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [2]bool
 }
 
 // OrganOrErr returns the Organ value or an error if the edge
@@ -64,6 +66,15 @@ func (e OrgPositionEdges) OrganOrErr() (*OrgOrgan, error) {
 		return e.Organ, nil
 	}
 	return nil, &NotLoadedError{edge: "organ"}
+}
+
+// StaffsOrErr returns the Staffs value or an error if the edge
+// was not loaded in eager-loading.
+func (e OrgPositionEdges) StaffsOrErr() ([]*OrgStaff, error) {
+	if e.loadedTypes[1] {
+		return e.Staffs, nil
+	}
+	return nil, &NotLoadedError{edge: "staffs"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -182,6 +193,11 @@ func (op *OrgPosition) assignValues(columns []string, values []any) error {
 // QueryOrgan queries the "organ" edge of the OrgPosition entity.
 func (op *OrgPosition) QueryOrgan() *OrgOrganQuery {
 	return NewOrgPositionClient(op.config).QueryOrgan(op)
+}
+
+// QueryStaffs queries the "staffs" edge of the OrgPosition entity.
+func (op *OrgPosition) QueryStaffs() *OrgStaffQuery {
+	return NewOrgPositionClient(op.config).QueryStaffs(op)
 }
 
 // Update returns a builder for updating this OrgPosition.

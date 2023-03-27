@@ -262,6 +262,7 @@ var (
 		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "dept_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
+		{Name: "posi_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "rsaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
 		{Name: "idaddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
 	}
@@ -284,14 +285,20 @@ var (
 				OnDelete:   schema.SetNull,
 			},
 			{
-				Symbol:     "org_staffs_sys_addresses_staff_resi",
+				Symbol:     "org_staffs_org_positions_staffs",
 				Columns:    []*schema.Column{OrgStaffsColumns[25]},
+				RefColumns: []*schema.Column{OrgPositionsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "org_staffs_sys_addresses_staff_resi",
+				Columns:    []*schema.Column{OrgStaffsColumns[26]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_sys_addresses_staff_iden",
-				Columns:    []*schema.Column{OrgStaffsColumns[26]},
+				Columns:    []*schema.Column{OrgStaffsColumns[27]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -1190,8 +1197,9 @@ func init() {
 	OrgPositionsTable.ForeignKeys[0].RefTable = OrgOrgansTable
 	OrgStaffsTable.ForeignKeys[0].RefTable = OrgDeptsTable
 	OrgStaffsTable.ForeignKeys[1].RefTable = OrgOrgansTable
-	OrgStaffsTable.ForeignKeys[2].RefTable = SysAddressesTable
+	OrgStaffsTable.ForeignKeys[2].RefTable = OrgPositionsTable
 	OrgStaffsTable.ForeignKeys[3].RefTable = SysAddressesTable
+	OrgStaffsTable.ForeignKeys[4].RefTable = SysAddressesTable
 	SysDictItemsTable.ForeignKeys[0].RefTable = SysDictsTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 }

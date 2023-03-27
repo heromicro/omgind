@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
@@ -376,6 +377,20 @@ func (osc *OrgStaffCreate) SetNillableDeptID(s *string) *OrgStaffCreate {
 	return osc
 }
 
+// SetPosiID sets the "posi_id" field.
+func (osc *OrgStaffCreate) SetPosiID(s string) *OrgStaffCreate {
+	osc.mutation.SetPosiID(s)
+	return osc
+}
+
+// SetNillablePosiID sets the "posi_id" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillablePosiID(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetPosiID(*s)
+	}
+	return osc
+}
+
 // SetCreator sets the "creator" field.
 func (osc *OrgStaffCreate) SetCreator(s string) *OrgStaffCreate {
 	osc.mutation.SetCreator(s)
@@ -436,6 +451,11 @@ func (osc *OrgStaffCreate) SetResiAddr(s *SysAddress) *OrgStaffCreate {
 // SetDept sets the "dept" edge to the OrgDept entity.
 func (osc *OrgStaffCreate) SetDept(o *OrgDept) *OrgStaffCreate {
 	return osc.SetDeptID(o.ID)
+}
+
+// SetPosi sets the "posi" edge to the OrgPosition entity.
+func (osc *OrgStaffCreate) SetPosi(o *OrgPosition) *OrgStaffCreate {
+	return osc.SetPosiID(o.ID)
 }
 
 // Mutation returns the OrgStaffMutation object of the builder.
@@ -579,6 +599,11 @@ func (osc *OrgStaffCreate) check() error {
 	if v, ok := osc.mutation.DeptID(); ok {
 		if err := orgstaff.DeptIDValidator(v); err != nil {
 			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.dept_id": %w`, err)}
+		}
+	}
+	if v, ok := osc.mutation.PosiID(); ok {
+		if err := orgstaff.PosiIDValidator(v); err != nil {
+			return &ValidationError{Name: "posi_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.posi_id": %w`, err)}
 		}
 	}
 	if v, ok := osc.mutation.ID(); ok {
@@ -776,6 +801,23 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.DeptID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := osc.mutation.PosiIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.PosiTable,
+			Columns: []string{orgstaff.PosiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.PosiID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
@@ -1253,6 +1295,24 @@ func (u *OrgStaffUpsert) UpdateDeptID() *OrgStaffUpsert {
 // ClearDeptID clears the value of the "dept_id" field.
 func (u *OrgStaffUpsert) ClearDeptID() *OrgStaffUpsert {
 	u.SetNull(orgstaff.FieldDeptID)
+	return u
+}
+
+// SetPosiID sets the "posi_id" field.
+func (u *OrgStaffUpsert) SetPosiID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldPosiID, v)
+	return u
+}
+
+// UpdatePosiID sets the "posi_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdatePosiID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldPosiID)
+	return u
+}
+
+// ClearPosiID clears the value of the "posi_id" field.
+func (u *OrgStaffUpsert) ClearPosiID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldPosiID)
 	return u
 }
 
@@ -1819,6 +1879,27 @@ func (u *OrgStaffUpsertOne) UpdateDeptID() *OrgStaffUpsertOne {
 func (u *OrgStaffUpsertOne) ClearDeptID() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearDeptID()
+	})
+}
+
+// SetPosiID sets the "posi_id" field.
+func (u *OrgStaffUpsertOne) SetPosiID(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetPosiID(v)
+	})
+}
+
+// UpdatePosiID sets the "posi_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdatePosiID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdatePosiID()
+	})
+}
+
+// ClearPosiID clears the value of the "posi_id" field.
+func (u *OrgStaffUpsertOne) ClearPosiID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearPosiID()
 	})
 }
 
@@ -2551,6 +2632,27 @@ func (u *OrgStaffUpsertBulk) UpdateDeptID() *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) ClearDeptID() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearDeptID()
+	})
+}
+
+// SetPosiID sets the "posi_id" field.
+func (u *OrgStaffUpsertBulk) SetPosiID(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetPosiID(v)
+	})
+}
+
+// UpdatePosiID sets the "posi_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdatePosiID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdatePosiID()
+	})
+}
+
+// ClearPosiID clears the value of the "posi_id" field.
+func (u *OrgStaffUpsertBulk) ClearPosiID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearPosiID()
 	})
 }
 

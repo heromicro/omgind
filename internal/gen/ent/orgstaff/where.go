@@ -190,6 +190,11 @@ func DeptID(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldDeptID, v))
 }
 
+// PosiID applies equality check predicate on the "posi_id" field. It's identical to PosiIDEQ.
+func PosiID(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldPosiID, v))
+}
+
 // Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
 func Creator(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldCreator, v))
@@ -1670,6 +1675,81 @@ func DeptIDContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldDeptID, v))
 }
 
+// PosiIDEQ applies the EQ predicate on the "posi_id" field.
+func PosiIDEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldPosiID, v))
+}
+
+// PosiIDNEQ applies the NEQ predicate on the "posi_id" field.
+func PosiIDNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldPosiID, v))
+}
+
+// PosiIDIn applies the In predicate on the "posi_id" field.
+func PosiIDIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldPosiID, vs...))
+}
+
+// PosiIDNotIn applies the NotIn predicate on the "posi_id" field.
+func PosiIDNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldPosiID, vs...))
+}
+
+// PosiIDGT applies the GT predicate on the "posi_id" field.
+func PosiIDGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldPosiID, v))
+}
+
+// PosiIDGTE applies the GTE predicate on the "posi_id" field.
+func PosiIDGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldPosiID, v))
+}
+
+// PosiIDLT applies the LT predicate on the "posi_id" field.
+func PosiIDLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldPosiID, v))
+}
+
+// PosiIDLTE applies the LTE predicate on the "posi_id" field.
+func PosiIDLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldPosiID, v))
+}
+
+// PosiIDContains applies the Contains predicate on the "posi_id" field.
+func PosiIDContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldPosiID, v))
+}
+
+// PosiIDHasPrefix applies the HasPrefix predicate on the "posi_id" field.
+func PosiIDHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldPosiID, v))
+}
+
+// PosiIDHasSuffix applies the HasSuffix predicate on the "posi_id" field.
+func PosiIDHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldPosiID, v))
+}
+
+// PosiIDIsNil applies the IsNil predicate on the "posi_id" field.
+func PosiIDIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldPosiID))
+}
+
+// PosiIDNotNil applies the NotNil predicate on the "posi_id" field.
+func PosiIDNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldPosiID))
+}
+
+// PosiIDEqualFold applies the EqualFold predicate on the "posi_id" field.
+func PosiIDEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldPosiID, v))
+}
+
+// PosiIDContainsFold applies the ContainsFold predicate on the "posi_id" field.
+func PosiIDContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldPosiID, v))
+}
+
 // CreatorEQ applies the EQ predicate on the "creator" field.
 func CreatorEQ(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldCreator, v))
@@ -1844,6 +1924,33 @@ func HasDeptWith(preds ...predicate.OrgDept) predicate.OrgStaff {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(DeptInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, DeptTable, DeptColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasPosi applies the HasEdge predicate on the "posi" edge.
+func HasPosi() predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, PosiTable, PosiColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasPosiWith applies the HasEdge predicate on the "posi" edge with a given conditions (other predicates).
+func HasPosiWith(preds ...predicate.OrgPosition) predicate.OrgStaff {
+	return predicate.OrgStaff(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(PosiInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, PosiTable, PosiColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

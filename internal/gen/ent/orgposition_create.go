@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 )
 
 // OrgPositionCreate is the builder for creating a OrgPosition entity.
@@ -211,6 +212,21 @@ func (opc *OrgPositionCreate) SetOrgan(o *OrgOrgan) *OrgPositionCreate {
 	return opc.SetOrganID(o.ID)
 }
 
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (opc *OrgPositionCreate) AddStaffIDs(ids ...string) *OrgPositionCreate {
+	opc.mutation.AddStaffIDs(ids...)
+	return opc
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (opc *OrgPositionCreate) AddStaffs(o ...*OrgStaff) *OrgPositionCreate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return opc.AddStaffIDs(ids...)
+}
+
 // Mutation returns the OrgPositionMutation object of the builder.
 func (opc *OrgPositionCreate) Mutation() *OrgPositionMutation {
 	return opc.mutation
@@ -403,6 +419,22 @@ func (opc *OrgPositionCreate) createSpec() (*OrgPosition, *sqlgraph.CreateSpec) 
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.OrgID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := opc.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgposition.StaffsTable,
+			Columns: []string{orgposition.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

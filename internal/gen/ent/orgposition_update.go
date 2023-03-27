@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -230,6 +231,21 @@ func (opu *OrgPositionUpdate) SetOrgan(o *OrgOrgan) *OrgPositionUpdate {
 	return opu.SetOrganID(o.ID)
 }
 
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (opu *OrgPositionUpdate) AddStaffIDs(ids ...string) *OrgPositionUpdate {
+	opu.mutation.AddStaffIDs(ids...)
+	return opu
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (opu *OrgPositionUpdate) AddStaffs(o ...*OrgStaff) *OrgPositionUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return opu.AddStaffIDs(ids...)
+}
+
 // Mutation returns the OrgPositionMutation object of the builder.
 func (opu *OrgPositionUpdate) Mutation() *OrgPositionMutation {
 	return opu.mutation
@@ -239,6 +255,27 @@ func (opu *OrgPositionUpdate) Mutation() *OrgPositionMutation {
 func (opu *OrgPositionUpdate) ClearOrgan() *OrgPositionUpdate {
 	opu.mutation.ClearOrgan()
 	return opu
+}
+
+// ClearStaffs clears all "staffs" edges to the OrgStaff entity.
+func (opu *OrgPositionUpdate) ClearStaffs() *OrgPositionUpdate {
+	opu.mutation.ClearStaffs()
+	return opu
+}
+
+// RemoveStaffIDs removes the "staffs" edge to OrgStaff entities by IDs.
+func (opu *OrgPositionUpdate) RemoveStaffIDs(ids ...string) *OrgPositionUpdate {
+	opu.mutation.RemoveStaffIDs(ids...)
+	return opu
+}
+
+// RemoveStaffs removes "staffs" edges to OrgStaff entities.
+func (opu *OrgPositionUpdate) RemoveStaffs(o ...*OrgStaff) *OrgPositionUpdate {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return opu.RemoveStaffIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -393,6 +430,51 @@ func (opu *OrgPositionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if opu.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgposition.StaffsTable,
+			Columns: []string{orgposition.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := opu.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !opu.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgposition.StaffsTable,
+			Columns: []string{orgposition.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := opu.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgposition.StaffsTable,
+			Columns: []string{orgposition.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		for _, k := range nodes {
@@ -622,6 +704,21 @@ func (opuo *OrgPositionUpdateOne) SetOrgan(o *OrgOrgan) *OrgPositionUpdateOne {
 	return opuo.SetOrganID(o.ID)
 }
 
+// AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
+func (opuo *OrgPositionUpdateOne) AddStaffIDs(ids ...string) *OrgPositionUpdateOne {
+	opuo.mutation.AddStaffIDs(ids...)
+	return opuo
+}
+
+// AddStaffs adds the "staffs" edges to the OrgStaff entity.
+func (opuo *OrgPositionUpdateOne) AddStaffs(o ...*OrgStaff) *OrgPositionUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return opuo.AddStaffIDs(ids...)
+}
+
 // Mutation returns the OrgPositionMutation object of the builder.
 func (opuo *OrgPositionUpdateOne) Mutation() *OrgPositionMutation {
 	return opuo.mutation
@@ -631,6 +728,27 @@ func (opuo *OrgPositionUpdateOne) Mutation() *OrgPositionMutation {
 func (opuo *OrgPositionUpdateOne) ClearOrgan() *OrgPositionUpdateOne {
 	opuo.mutation.ClearOrgan()
 	return opuo
+}
+
+// ClearStaffs clears all "staffs" edges to the OrgStaff entity.
+func (opuo *OrgPositionUpdateOne) ClearStaffs() *OrgPositionUpdateOne {
+	opuo.mutation.ClearStaffs()
+	return opuo
+}
+
+// RemoveStaffIDs removes the "staffs" edge to OrgStaff entities by IDs.
+func (opuo *OrgPositionUpdateOne) RemoveStaffIDs(ids ...string) *OrgPositionUpdateOne {
+	opuo.mutation.RemoveStaffIDs(ids...)
+	return opuo
+}
+
+// RemoveStaffs removes "staffs" edges to OrgStaff entities.
+func (opuo *OrgPositionUpdateOne) RemoveStaffs(o ...*OrgStaff) *OrgPositionUpdateOne {
+	ids := make([]string, len(o))
+	for i := range o {
+		ids[i] = o[i].ID
+	}
+	return opuo.RemoveStaffIDs(ids...)
 }
 
 // Where appends a list predicates to the OrgPositionUpdate builder.
@@ -815,6 +933,51 @@ func (opuo *OrgPositionUpdateOne) sqlSave(ctx context.Context) (_node *OrgPositi
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if opuo.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgposition.StaffsTable,
+			Columns: []string{orgposition.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := opuo.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !opuo.mutation.StaffsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgposition.StaffsTable,
+			Columns: []string{orgposition.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := opuo.mutation.StaffsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   orgposition.StaffsTable,
+			Columns: []string{orgposition.StaffsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
 		for _, k := range nodes {

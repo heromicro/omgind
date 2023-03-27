@@ -35,6 +35,8 @@ const (
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
 	EdgeOrgan = "organ"
+	// EdgeStaffs holds the string denoting the staffs edge name in mutations.
+	EdgeStaffs = "staffs"
 	// Table holds the table name of the orgposition in the database.
 	Table = "org_positions"
 	// OrganTable is the table that holds the organ relation/edge.
@@ -44,6 +46,13 @@ const (
 	OrganInverseTable = "org_organs"
 	// OrganColumn is the table column denoting the organ relation/edge.
 	OrganColumn = "org_id"
+	// StaffsTable is the table that holds the staffs relation/edge.
+	StaffsTable = "org_staffs"
+	// StaffsInverseTable is the table name for the OrgStaff entity.
+	// It exists in this package in order to avoid circular dependency with the "orgstaff" package.
+	StaffsInverseTable = "org_staffs"
+	// StaffsColumn is the table column denoting the staffs relation/edge.
+	StaffsColumn = "posi_id"
 )
 
 // Columns holds all SQL columns for orgposition fields.

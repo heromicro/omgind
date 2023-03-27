@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
@@ -13,6 +14,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -24,6 +26,7 @@ type OrgPositionQuery struct {
 	inters     []Interceptor
 	predicates []predicate.OrgPosition
 	withOrgan  *OrgOrganQuery
+	withStaffs *OrgStaffQuery
 	modifiers  []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -76,6 +79,28 @@ func (opq *OrgPositionQuery) QueryOrgan() *OrgOrganQuery {
 			sqlgraph.From(orgposition.Table, orgposition.FieldID, selector),
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgposition.OrganTable, orgposition.OrganColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(opq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryStaffs chains the current query on the "staffs" edge.
+func (opq *OrgPositionQuery) QueryStaffs() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: opq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := opq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := opq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgposition.Table, orgposition.FieldID, selector),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgposition.StaffsTable, orgposition.StaffsColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(opq.driver.Dialect(), step)
 		return fromU, nil
@@ -276,6 +301,7 @@ func (opq *OrgPositionQuery) Clone() *OrgPositionQuery {
 		inters:     append([]Interceptor{}, opq.inters...),
 		predicates: append([]predicate.OrgPosition{}, opq.predicates...),
 		withOrgan:  opq.withOrgan.Clone(),
+		withStaffs: opq.withStaffs.Clone(),
 		// clone intermediate query.
 		sql:  opq.sql.Clone(),
 		path: opq.path,
@@ -290,6 +316,17 @@ func (opq *OrgPositionQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *OrgPositio
 		opt(query)
 	}
 	opq.withOrgan = query
+	return opq
+}
+
+// WithStaffs tells the query-builder to eager-load the nodes that are connected to
+// the "staffs" edge. The optional arguments are used to configure the query builder of the edge.
+func (opq *OrgPositionQuery) WithStaffs(opts ...func(*OrgStaffQuery)) *OrgPositionQuery {
+	query := (&OrgStaffClient{config: opq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	opq.withStaffs = query
 	return opq
 }
 
@@ -371,8 +408,9 @@ func (opq *OrgPositionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 	var (
 		nodes       = []*OrgPosition{}
 		_spec       = opq.querySpec()
-		loadedTypes = [1]bool{
+		loadedTypes = [2]bool{
 			opq.withOrgan != nil,
+			opq.withStaffs != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
@@ -399,6 +437,13 @@ func (opq *OrgPositionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 	if query := opq.withOrgan; query != nil {
 		if err := opq.loadOrgan(ctx, query, nodes, nil,
 			func(n *OrgPosition, e *OrgOrgan) { n.Edges.Organ = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := opq.withStaffs; query != nil {
+		if err := opq.loadStaffs(ctx, query, nodes,
+			func(n *OrgPosition) { n.Edges.Staffs = []*OrgStaff{} },
+			func(n *OrgPosition, e *OrgStaff) { n.Edges.Staffs = append(n.Edges.Staffs, e) }); err != nil {
 			return nil, err
 		}
 	}
@@ -434,6 +479,36 @@ func (opq *OrgPositionQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery
 		for i := range nodes {
 			assign(nodes[i], n)
 		}
+	}
+	return nil
+}
+func (opq *OrgPositionQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, nodes []*OrgPosition, init func(*OrgPosition), assign func(*OrgPosition, *OrgStaff)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*OrgPosition)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	query.Where(predicate.OrgStaff(func(s *sql.Selector) {
+		s.Where(sql.InValues(orgposition.StaffsColumn, fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.PosiID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "posi_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "posi_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
 	}
 	return nil
 }

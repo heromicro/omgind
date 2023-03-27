@@ -61,6 +61,8 @@ const (
 	FieldEmpystDictID = "empyst_dict_id"
 	// FieldDeptID holds the string denoting the dept_id field in the database.
 	FieldDeptID = "dept_id"
+	// FieldPosiID holds the string denoting the posi_id field in the database.
+	FieldPosiID = "posi_id"
 	// FieldCreator holds the string denoting the creator field in the database.
 	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
@@ -71,6 +73,8 @@ const (
 	EdgeResiAddr = "resi_addr"
 	// EdgeDept holds the string denoting the dept edge name in mutations.
 	EdgeDept = "dept"
+	// EdgePosi holds the string denoting the posi edge name in mutations.
+	EdgePosi = "posi"
 	// Table holds the table name of the orgstaff in the database.
 	Table = "org_staffs"
 	// OrganTable is the table that holds the organ relation/edge.
@@ -101,6 +105,13 @@ const (
 	DeptInverseTable = "org_depts"
 	// DeptColumn is the table column denoting the dept relation/edge.
 	DeptColumn = "dept_id"
+	// PosiTable is the table that holds the posi relation/edge.
+	PosiTable = "org_staffs"
+	// PosiInverseTable is the table name for the OrgPosition entity.
+	// It exists in this package in order to avoid circular dependency with the "orgposition" package.
+	PosiInverseTable = "org_positions"
+	// PosiColumn is the table column denoting the posi relation/edge.
+	PosiColumn = "posi_id"
 )
 
 // Columns holds all SQL columns for orgstaff fields.
@@ -131,6 +142,7 @@ var Columns = []string{
 	FieldEmpyStat,
 	FieldEmpystDictID,
 	FieldDeptID,
+	FieldPosiID,
 	FieldCreator,
 }
 
@@ -185,6 +197,8 @@ var (
 	EmpystDictIDValidator func(string) error
 	// DeptIDValidator is a validator for the "dept_id" field. It is called by the builders before save.
 	DeptIDValidator func(string) error
+	// PosiIDValidator is a validator for the "posi_id" field. It is called by the builders before save.
+	PosiIDValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.

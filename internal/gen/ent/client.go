@@ -811,6 +811,22 @@ func (c *OrgPositionClient) QueryOrgan(op *OrgPosition) *OrgOrganQuery {
 	return query
 }
 
+// QueryStaffs queries the staffs edge of a OrgPosition.
+func (c *OrgPositionClient) QueryStaffs(op *OrgPosition) *OrgStaffQuery {
+	query := (&OrgStaffClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := op.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgposition.Table, orgposition.FieldID, id),
+			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, orgposition.StaffsTable, orgposition.StaffsColumn),
+		)
+		fromV = sqlgraph.Neighbors(op.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *OrgPositionClient) Hooks() []Hook {
 	return c.hooks.OrgPosition
@@ -986,6 +1002,22 @@ func (c *OrgStaffClient) QueryDept(os *OrgStaff) *OrgDeptQuery {
 			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.DeptTable, orgstaff.DeptColumn),
+		)
+		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPosi queries the posi edge of a OrgStaff.
+func (c *OrgStaffClient) QueryPosi(os *OrgStaff) *OrgPositionQuery {
+	query := (&OrgPositionClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := os.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
+			sqlgraph.To(orgposition.Table, orgposition.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.PosiTable, orgstaff.PosiColumn),
 		)
 		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
 		return fromV, nil

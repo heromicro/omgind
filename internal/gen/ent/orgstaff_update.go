@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
@@ -501,6 +502,26 @@ func (osu *OrgStaffUpdate) ClearDeptID() *OrgStaffUpdate {
 	return osu
 }
 
+// SetPosiID sets the "posi_id" field.
+func (osu *OrgStaffUpdate) SetPosiID(s string) *OrgStaffUpdate {
+	osu.mutation.SetPosiID(s)
+	return osu
+}
+
+// SetNillablePosiID sets the "posi_id" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillablePosiID(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetPosiID(*s)
+	}
+	return osu
+}
+
+// ClearPosiID clears the value of the "posi_id" field.
+func (osu *OrgStaffUpdate) ClearPosiID() *OrgStaffUpdate {
+	osu.mutation.ClearPosiID()
+	return osu
+}
+
 // SetCreator sets the "creator" field.
 func (osu *OrgStaffUpdate) SetCreator(s string) *OrgStaffUpdate {
 	osu.mutation.SetCreator(s)
@@ -555,6 +576,11 @@ func (osu *OrgStaffUpdate) SetDept(o *OrgDept) *OrgStaffUpdate {
 	return osu.SetDeptID(o.ID)
 }
 
+// SetPosi sets the "posi" edge to the OrgPosition entity.
+func (osu *OrgStaffUpdate) SetPosi(o *OrgPosition) *OrgStaffUpdate {
+	return osu.SetPosiID(o.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osu *OrgStaffUpdate) Mutation() *OrgStaffMutation {
 	return osu.mutation
@@ -581,6 +607,12 @@ func (osu *OrgStaffUpdate) ClearResiAddr() *OrgStaffUpdate {
 // ClearDept clears the "dept" edge to the OrgDept entity.
 func (osu *OrgStaffUpdate) ClearDept() *OrgStaffUpdate {
 	osu.mutation.ClearDept()
+	return osu
+}
+
+// ClearPosi clears the "posi" edge to the OrgPosition entity.
+func (osu *OrgStaffUpdate) ClearPosi() *OrgStaffUpdate {
+	osu.mutation.ClearPosi()
 	return osu
 }
 
@@ -680,6 +712,11 @@ func (osu *OrgStaffUpdate) check() error {
 	if v, ok := osu.mutation.DeptID(); ok {
 		if err := orgstaff.DeptIDValidator(v); err != nil {
 			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.dept_id": %w`, err)}
+		}
+	}
+	if v, ok := osu.mutation.PosiID(); ok {
+		if err := orgstaff.PosiIDValidator(v); err != nil {
+			return &ValidationError{Name: "posi_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.posi_id": %w`, err)}
 		}
 	}
 	return nil
@@ -938,6 +975,35 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if osu.mutation.PosiCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.PosiTable,
+			Columns: []string{orgstaff.PosiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osu.mutation.PosiIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.PosiTable,
+			Columns: []string{orgstaff.PosiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		for _, k := range nodes {
@@ -1436,6 +1502,26 @@ func (osuo *OrgStaffUpdateOne) ClearDeptID() *OrgStaffUpdateOne {
 	return osuo
 }
 
+// SetPosiID sets the "posi_id" field.
+func (osuo *OrgStaffUpdateOne) SetPosiID(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetPosiID(s)
+	return osuo
+}
+
+// SetNillablePosiID sets the "posi_id" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillablePosiID(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetPosiID(*s)
+	}
+	return osuo
+}
+
+// ClearPosiID clears the value of the "posi_id" field.
+func (osuo *OrgStaffUpdateOne) ClearPosiID() *OrgStaffUpdateOne {
+	osuo.mutation.ClearPosiID()
+	return osuo
+}
+
 // SetCreator sets the "creator" field.
 func (osuo *OrgStaffUpdateOne) SetCreator(s string) *OrgStaffUpdateOne {
 	osuo.mutation.SetCreator(s)
@@ -1490,6 +1576,11 @@ func (osuo *OrgStaffUpdateOne) SetDept(o *OrgDept) *OrgStaffUpdateOne {
 	return osuo.SetDeptID(o.ID)
 }
 
+// SetPosi sets the "posi" edge to the OrgPosition entity.
+func (osuo *OrgStaffUpdateOne) SetPosi(o *OrgPosition) *OrgStaffUpdateOne {
+	return osuo.SetPosiID(o.ID)
+}
+
 // Mutation returns the OrgStaffMutation object of the builder.
 func (osuo *OrgStaffUpdateOne) Mutation() *OrgStaffMutation {
 	return osuo.mutation
@@ -1516,6 +1607,12 @@ func (osuo *OrgStaffUpdateOne) ClearResiAddr() *OrgStaffUpdateOne {
 // ClearDept clears the "dept" edge to the OrgDept entity.
 func (osuo *OrgStaffUpdateOne) ClearDept() *OrgStaffUpdateOne {
 	osuo.mutation.ClearDept()
+	return osuo
+}
+
+// ClearPosi clears the "posi" edge to the OrgPosition entity.
+func (osuo *OrgStaffUpdateOne) ClearPosi() *OrgStaffUpdateOne {
+	osuo.mutation.ClearPosi()
 	return osuo
 }
 
@@ -1628,6 +1725,11 @@ func (osuo *OrgStaffUpdateOne) check() error {
 	if v, ok := osuo.mutation.DeptID(); ok {
 		if err := orgstaff.DeptIDValidator(v); err != nil {
 			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.dept_id": %w`, err)}
+		}
+	}
+	if v, ok := osuo.mutation.PosiID(); ok {
+		if err := orgstaff.PosiIDValidator(v); err != nil {
+			return &ValidationError{Name: "posi_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.posi_id": %w`, err)}
 		}
 	}
 	return nil
@@ -1903,6 +2005,35 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			Bidi:    false,
 			Target: &sqlgraph.EdgeTarget{
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if osuo.mutation.PosiCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.PosiTable,
+			Columns: []string{orgstaff.PosiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := osuo.mutation.PosiIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   orgstaff.PosiTable,
+			Columns: []string{orgstaff.PosiColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString),
 			},
 		}
 		for _, k := range nodes {

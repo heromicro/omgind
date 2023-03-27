@@ -42,6 +42,10 @@ func ToSchemaOrgStaff(et *ent.OrgStaff) *schema.OrgStaff {
 		item.Dept = ToSchemaOrgDept(et.Edges.Dept)
 	}
 
+	if et.Edges.Posi != nil {
+		item.Posi = ToSchemaOrgPosition(et.Edges.Posi)
+	}
+
 	return item
 }
 

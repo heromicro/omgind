@@ -566,6 +566,7 @@ type CreateOrgPositionInput struct {
 	OrgID     *string
 	Creator   *string
 	Organ     *string
+	Staffs    []string
 }
 
 // Mutate applies the CreateOrgPositionInput on the OrgPositionCreate builder.
@@ -606,6 +607,9 @@ func (i *CreateOrgPositionInput) Mutate(m *OrgPositionCreate) {
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
 	}
+	if ids := i.Staffs; len(ids) > 0 {
+		m.AddStaffIDs(ids...)
+	}
 }
 
 // SetInput applies the change-set in the CreateOrgPositionInput on the create builder.
@@ -635,6 +639,8 @@ type UpdateOrgPositionInput struct {
 	ClearCreator   bool
 	Organ          *string
 	ClearOrgan     bool
+	AddStaffIDs    []string
+	RemoveStaffIDs []string
 }
 
 // Mutate applies the UpdateOrgPositionInput on the OrgPositionMutation.
@@ -696,6 +702,12 @@ func (i *UpdateOrgPositionInput) Mutate(m *OrgPositionMutation) {
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
 	}
+	if ids := i.AddStaffIDs; len(ids) > 0 {
+		m.AddStaffIDs(ids...)
+	}
+	if ids := i.RemoveStaffIDs; len(ids) > 0 {
+		m.RemoveStaffIDs(ids...)
+	}
 }
 
 // SetInput applies the change-set in the UpdateOrgPositionInput on the update builder.
@@ -737,11 +749,13 @@ type CreateOrgStaffInput struct {
 	EmpyStat     *int32
 	EmpystDictID *string
 	DeptID       *string
+	PosiID       *string
 	Creator      *string
 	Organ        *string
 	IdenAddr     *string
 	ResiAddr     *string
 	Dept         *string
+	Posi         *string
 }
 
 // Mutate applies the CreateOrgStaffInput on the OrgStaffCreate builder.
@@ -821,6 +835,9 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.DeptID; v != nil {
 		m.SetDeptID(*v)
 	}
+	if v := i.PosiID; v != nil {
+		m.SetPosiID(*v)
+	}
 	if v := i.Creator; v != nil {
 		m.SetCreator(*v)
 	}
@@ -835,6 +852,9 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	}
 	if v := i.Dept; v != nil {
 		m.SetDeptID(*v)
+	}
+	if v := i.Posi; v != nil {
+		m.SetPosiID(*v)
 	}
 }
 
@@ -890,6 +910,8 @@ type UpdateOrgStaffInput struct {
 	ClearEmpystDictID bool
 	DeptID            *string
 	ClearDeptID       bool
+	PosiID            *string
+	ClearPosiID       bool
 	Creator           *string
 	ClearCreator      bool
 	Organ             *string
@@ -900,6 +922,8 @@ type UpdateOrgStaffInput struct {
 	ClearResiAddr     bool
 	Dept              *string
 	ClearDept         bool
+	Posi              *string
+	ClearPosi         bool
 }
 
 // Mutate applies the UpdateOrgStaffInput on the OrgStaffMutation.
@@ -1036,6 +1060,12 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.DeptID; v != nil {
 		m.SetDeptID(*v)
 	}
+	if i.ClearPosiID {
+		m.ClearPosiID()
+	}
+	if v := i.PosiID; v != nil {
+		m.SetPosiID(*v)
+	}
 	if i.ClearCreator {
 		m.ClearCreator()
 	}
@@ -1065,6 +1095,12 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	}
 	if v := i.Dept; v != nil {
 		m.SetDeptID(*v)
+	}
+	if i.ClearPosi {
+		m.ClearPosi()
+	}
+	if v := i.Posi; v != nil {
+		m.SetPosiID(*v)
 	}
 }
 

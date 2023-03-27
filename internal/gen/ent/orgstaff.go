@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
 )
@@ -69,6 +70,8 @@ type OrgStaff struct {
 	EmpystDictID *string `json:"empyst_dict_id,omitempty"`
 	// dept.id
 	DeptID *string `json:"dept_id,omitempty"`
+	// position.id
+	PosiID *string `json:"posi_id,omitempty"`
 	// 创建者
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -86,9 +89,11 @@ type OrgStaffEdges struct {
 	ResiAddr *SysAddress `json:"resi_addr,omitempty"`
 	// Dept holds the value of the dept edge.
 	Dept *OrgDept `json:"dept,omitempty"`
+	// Posi holds the value of the posi edge.
+	Posi *OrgPosition `json:"posi,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [4]bool
+	loadedTypes [5]bool
 }
 
 // OrganOrErr returns the Organ value or an error if the edge
@@ -143,6 +148,19 @@ func (e OrgStaffEdges) DeptOrErr() (*OrgDept, error) {
 	return nil, &NotLoadedError{edge: "dept"}
 }
 
+// PosiOrErr returns the Posi value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e OrgStaffEdges) PosiOrErr() (*OrgPosition, error) {
+	if e.loadedTypes[4] {
+		if e.Posi == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: orgposition.Label}
+		}
+		return e.Posi, nil
+	}
+	return nil, &NotLoadedError{edge: "posi"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
@@ -152,7 +170,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort, orgstaff.FieldGender, orgstaff.FieldEmpyStat:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldPosiID, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
@@ -348,6 +366,13 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				os.DeptID = new(string)
 				*os.DeptID = value.String
 			}
+		case orgstaff.FieldPosiID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field posi_id", values[i])
+			} else if value.Valid {
+				os.PosiID = new(string)
+				*os.PosiID = value.String
+			}
 		case orgstaff.FieldCreator:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field creator", values[i])
@@ -378,6 +403,11 @@ func (os *OrgStaff) QueryResiAddr() *SysAddressQuery {
 // QueryDept queries the "dept" edge of the OrgStaff entity.
 func (os *OrgStaff) QueryDept() *OrgDeptQuery {
 	return NewOrgStaffClient(os.config).QueryDept(os)
+}
+
+// QueryPosi queries the "posi" edge of the OrgStaff entity.
+func (os *OrgStaff) QueryPosi() *OrgPositionQuery {
+	return NewOrgStaffClient(os.config).QueryPosi(os)
 }
 
 // Update returns a builder for updating this OrgStaff.
@@ -517,6 +547,11 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	if v := os.DeptID; v != nil {
 		builder.WriteString("dept_id=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := os.PosiID; v != nil {
+		builder.WriteString("posi_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

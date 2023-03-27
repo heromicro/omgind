@@ -41,8 +41,10 @@ type OrgStaff struct {
 	OrgStaff0
 	OrgStaff1
 
-	DeptID string   `json:"dept_id"` // 部門id
-	Dept   *OrgDept `json:"dept"`    //
+	DeptID string       `json:"dept_id"`  // 部門id
+	Dept   *OrgDept     `json:"dept"`     // 部门
+	PosiID *string      `json:"posi_id"`  // 岗位id
+	Posi   *OrgPosition `json:"position"` // 岗位
 
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 	Sort     int     `json:"sort,omitempty"`

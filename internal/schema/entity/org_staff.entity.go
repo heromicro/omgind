@@ -55,6 +55,9 @@ func (OrgStaff) Fields() []ent.Field {
 
 		field.String("dept_id").MaxLen(36).Nillable().Optional().StorageKey("dept_id").Comment("dept.id"),
 
+		//
+		field.String("posi_id").MaxLen(36).Nillable().Optional().StorageKey("posi_id").Comment("position.id"),
+
 		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
 }
@@ -74,6 +77,8 @@ func (OrgStaff) Edges() []ent.Edge {
 
 		// M2O
 		edge.From("dept", OrgDept.Type).Ref("staffs").Field("dept_id").Unique(),
+		// M2O
+		edge.From("posi", OrgPosition.Type).Ref("staffs").Field("posi_id").Unique(),
 	}
 }
 

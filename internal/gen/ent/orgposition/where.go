@@ -732,6 +732,33 @@ func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgPosition {
 	})
 }
 
+// HasStaffs applies the HasEdge predicate on the "staffs" edge.
+func HasStaffs() predicate.OrgPosition {
+	return predicate.OrgPosition(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStaffsWith applies the HasEdge predicate on the "staffs" edge with a given conditions (other predicates).
+func HasStaffsWith(preds ...predicate.OrgStaff) predicate.OrgPosition {
+	return predicate.OrgPosition(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StaffsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // And groups predicates with the AND operator between them.
 func And(predicates ...predicate.OrgPosition) predicate.OrgPosition {
 	return predicate.OrgPosition(func(s *sql.Selector) {
