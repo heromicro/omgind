@@ -8,6 +8,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
@@ -89,6 +90,10 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 
 	query = query.WithDept(func(odq *ent.OrgDeptQuery) {
 		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
+	})
+
+	query = query.WithPosi(func(opq *ent.OrgPositionQuery) {
+		opq.Select(orgposition.FieldID, orgposition.FieldName)
 	})
 
 	query = query.Where(orgstaff.DeletedAtIsNil())
@@ -187,8 +192,13 @@ func (a *OrgStaff) Get(ctx context.Context, id string, opts ...schema.OrgStaffQu
 	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
 	}).WithIdenAddr().WithResiAddr()
+
 	query = query.WithDept(func(odq *ent.OrgDeptQuery) {
 		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
+	})
+
+	query = query.WithPosi(func(opq *ent.OrgPositionQuery) {
+		opq.Select(orgposition.FieldID, orgposition.FieldName)
 	})
 
 	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
@@ -211,6 +221,10 @@ func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQ
 
 	query = query.WithDept(func(odq *ent.OrgDeptQuery) {
 		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
+	})
+
+	query = query.WithPosi(func(opq *ent.OrgPositionQuery) {
+		opq.Select(orgposition.FieldID, orgposition.FieldName)
 	})
 
 	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
