@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
@@ -78,9 +77,6 @@ func (opq *OrgPositionQuery) QueryOrgan() *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgposition.OrganTable, orgposition.OrganColumn),
 		)
-		schemaConfig := opq.schemaConfig
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgPosition
 		fromU = sqlgraph.SetNeighbors(opq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -388,8 +384,6 @@ func (opq *OrgPositionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = opq.schemaConfig.OrgPosition
-	ctx = internal.NewSchemaConfigContext(ctx, opq.schemaConfig)
 	if len(opq.modifiers) > 0 {
 		_spec.Modifiers = opq.modifiers
 	}
@@ -446,8 +440,6 @@ func (opq *OrgPositionQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery
 
 func (opq *OrgPositionQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := opq.querySpec()
-	_spec.Node.Schema = opq.schemaConfig.OrgPosition
-	ctx = internal.NewSchemaConfigContext(ctx, opq.schemaConfig)
 	if len(opq.modifiers) > 0 {
 		_spec.Modifiers = opq.modifiers
 	}
@@ -513,9 +505,6 @@ func (opq *OrgPositionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if opq.ctx.Unique != nil && *opq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(opq.schemaConfig.OrgPosition)
-	ctx = internal.NewSchemaConfigContext(ctx, opq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range opq.modifiers {
 		m(selector)
 	}

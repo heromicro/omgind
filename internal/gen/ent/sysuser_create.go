@@ -363,7 +363,6 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		_node = &SysUser{config: suc.config}
 		_spec = sqlgraph.NewCreateSpec(sysuser.Table, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
 	)
-	_spec.Schema = suc.schemaConfig.SysUser
 	_spec.OnConflict = suc.conflict
 	if id, ok := suc.mutation.ID(); ok {
 		_node.ID = id

@@ -8,7 +8,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 )
@@ -42,8 +41,6 @@ func (smard *SysMenuActionResourceDelete) ExecX(ctx context.Context) int {
 
 func (smard *SysMenuActionResourceDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysmenuactionresource.Table, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
-	_spec.Node.Schema = smard.schemaConfig.SysMenuActionResource
-	ctx = internal.NewSchemaConfigContext(ctx, smard.schemaConfig)
 	if ps := smard.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
 )
@@ -345,8 +344,6 @@ func (xdq *XxxDemoQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Xxx
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = xdq.schemaConfig.XxxDemo
-	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
 	if len(xdq.modifiers) > 0 {
 		_spec.Modifiers = xdq.modifiers
 	}
@@ -364,8 +361,6 @@ func (xdq *XxxDemoQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Xxx
 
 func (xdq *XxxDemoQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := xdq.querySpec()
-	_spec.Node.Schema = xdq.schemaConfig.XxxDemo
-	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
 	if len(xdq.modifiers) > 0 {
 		_spec.Modifiers = xdq.modifiers
 	}
@@ -431,9 +426,6 @@ func (xdq *XxxDemoQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if xdq.ctx.Unique != nil && *xdq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(xdq.schemaConfig.XxxDemo)
-	ctx = internal.NewSchemaConfigContext(ctx, xdq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range xdq.modifiers {
 		m(selector)
 	}

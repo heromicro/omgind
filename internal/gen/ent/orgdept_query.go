@@ -12,7 +12,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -83,9 +82,6 @@ func (odq *OrgDeptQuery) QueryParent() *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.ParentTable, orgdept.ParentColumn),
 		)
-		schemaConfig := odq.schemaConfig
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -108,9 +104,6 @@ func (odq *OrgDeptQuery) QueryChildren() *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.ChildrenTable, orgdept.ChildrenColumn),
 		)
-		schemaConfig := odq.schemaConfig
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -133,9 +126,6 @@ func (odq *OrgDeptQuery) QueryOrgan() *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.OrganTable, orgdept.OrganColumn),
 		)
-		schemaConfig := odq.schemaConfig
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgDept
 		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -158,9 +148,6 @@ func (odq *OrgDeptQuery) QueryStaffs() *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.StaffsTable, orgdept.StaffsColumn),
 		)
-		schemaConfig := odq.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -507,8 +494,6 @@ func (odq *OrgDeptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Org
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = odq.schemaConfig.OrgDept
-	ctx = internal.NewSchemaConfigContext(ctx, odq.schemaConfig)
 	if len(odq.modifiers) > 0 {
 		_spec.Modifiers = odq.modifiers
 	}
@@ -677,8 +662,6 @@ func (odq *OrgDeptQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, n
 
 func (odq *OrgDeptQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := odq.querySpec()
-	_spec.Node.Schema = odq.schemaConfig.OrgDept
-	ctx = internal.NewSchemaConfigContext(ctx, odq.schemaConfig)
 	if len(odq.modifiers) > 0 {
 		_spec.Modifiers = odq.modifiers
 	}
@@ -744,9 +727,6 @@ func (odq *OrgDeptQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if odq.ctx.Unique != nil && *odq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(odq.schemaConfig.OrgDept)
-	ctx = internal.NewSchemaConfigContext(ctx, odq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range odq.modifiers {
 		m(selector)
 	}

@@ -245,7 +245,6 @@ func (sjbc *SysJwtBlockCreate) createSpec() (*SysJwtBlock, *sqlgraph.CreateSpec)
 		_node = &SysJwtBlock{config: sjbc.config}
 		_spec = sqlgraph.NewCreateSpec(sysjwtblock.Table, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
 	)
-	_spec.Schema = sjbc.schemaConfig.SysJwtBlock
 	_spec.OnConflict = sjbc.conflict
 	if id, ok := sjbc.mutation.ID(); ok {
 		_node.ID = id

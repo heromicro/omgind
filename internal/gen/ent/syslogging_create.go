@@ -364,7 +364,6 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 		_node = &SysLogging{config: slc.config}
 		_spec = sqlgraph.NewCreateSpec(syslogging.Table, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
 	)
-	_spec.Schema = slc.schemaConfig.SysLogging
 	_spec.OnConflict = slc.conflict
 	if id, ok := slc.mutation.ID(); ok {
 		_node.ID = id

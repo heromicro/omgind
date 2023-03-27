@@ -13,8 +13,8 @@ func main() {
 	err := entc.Generate("./internal/schema/entity", &gen.Config{
 		Features: []gen.Feature{
 			//gen.FeatureEntQL,
-			gen.FeatureSnapshot,
-			gen.FeatureSchemaConfig,
+			// gen.FeatureSnapshot,
+			// gen.FeatureSchemaConfig,
 			gen.FeatureLock,
 			gen.FeatureModifier,
 			gen.FeatureUpsert,

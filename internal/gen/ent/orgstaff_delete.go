@@ -8,7 +8,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
@@ -42,8 +41,6 @@ func (osd *OrgStaffDelete) ExecX(ctx context.Context) int {
 
 func (osd *OrgStaffDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(orgstaff.Table, sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString))
-	_spec.Node.Schema = osd.schemaConfig.OrgStaff
-	ctx = internal.NewSchemaConfigContext(ctx, osd.schemaConfig)
 	if ps := osd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

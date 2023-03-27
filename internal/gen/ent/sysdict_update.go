@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -331,7 +330,6 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sdu.schemaConfig.SysDictItem
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdu.mutation.RemovedItemsIDs(); len(nodes) > 0 && !sdu.mutation.ItemsCleared() {
@@ -345,7 +343,6 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sdu.schemaConfig.SysDictItem
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -362,14 +359,11 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sdu.schemaConfig.SysDictItem
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = sdu.schemaConfig.SysDict
-	ctx = internal.NewSchemaConfigContext(ctx, sdu.schemaConfig)
 	_spec.AddModifiers(sdu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -722,7 +716,6 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 				IDSpec: sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sduo.schemaConfig.SysDictItem
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sduo.mutation.RemovedItemsIDs(); len(nodes) > 0 && !sduo.mutation.ItemsCleared() {
@@ -736,7 +729,6 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 				IDSpec: sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sduo.schemaConfig.SysDictItem
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -753,14 +745,11 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 				IDSpec: sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sduo.schemaConfig.SysDictItem
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = sduo.schemaConfig.SysDict
-	ctx = internal.NewSchemaConfigContext(ctx, sduo.schemaConfig)
 	_spec.AddModifiers(sduo.modifiers...)
 	_node = &SysDict{config: sduo.config}
 	_spec.Assign = _node.assignValues

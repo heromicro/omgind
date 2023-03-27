@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
@@ -800,7 +799,6 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sau.schemaConfig.OrgOrgan
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sau.mutation.OrganIDs(); len(nodes) > 0 {
@@ -814,7 +812,6 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sau.schemaConfig.OrgOrgan
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -831,7 +828,6 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sau.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sau.mutation.StaffResiIDs(); len(nodes) > 0 {
@@ -845,7 +841,6 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sau.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -862,7 +857,6 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sau.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sau.mutation.StaffIdenIDs(); len(nodes) > 0 {
@@ -876,14 +870,11 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sau.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = sau.schemaConfig.SysAddress
-	ctx = internal.NewSchemaConfigContext(ctx, sau.schemaConfig)
 	_spec.AddModifiers(sau.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -1704,7 +1695,6 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sauo.schemaConfig.OrgOrgan
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sauo.mutation.OrganIDs(); len(nodes) > 0 {
@@ -1718,7 +1708,6 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sauo.schemaConfig.OrgOrgan
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1735,7 +1724,6 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sauo.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sauo.mutation.StaffResiIDs(); len(nodes) > 0 {
@@ -1749,7 +1737,6 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sauo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1766,7 +1753,6 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sauo.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sauo.mutation.StaffIdenIDs(); len(nodes) > 0 {
@@ -1780,14 +1766,11 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sauo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = sauo.schemaConfig.SysAddress
-	ctx = internal.NewSchemaConfigContext(ctx, sauo.schemaConfig)
 	_spec.AddModifiers(sauo.modifiers...)
 	_node = &SysAddress{config: sauo.config}
 	_spec.Assign = _node.assignValues

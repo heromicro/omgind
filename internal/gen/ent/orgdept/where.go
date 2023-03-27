@@ -7,7 +7,6 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -1248,9 +1247,6 @@ func HasParent() predicate.OrgDept {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, ParentTable, ParentColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1263,9 +1259,6 @@ func HasParentWith(preds ...predicate.OrgDept) predicate.OrgDept {
 			sqlgraph.To(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, ParentTable, ParentColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1281,9 +1274,6 @@ func HasChildren() predicate.OrgDept {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1296,9 +1286,6 @@ func HasChildrenWith(preds ...predicate.OrgDept) predicate.OrgDept {
 			sqlgraph.To(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1314,9 +1301,6 @@ func HasOrgan() predicate.OrgDept {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgDept
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1329,9 +1313,6 @@ func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgDept {
 			sqlgraph.To(OrganInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgDept
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1347,9 +1328,6 @@ func HasStaffs() predicate.OrgDept {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1362,9 +1340,6 @@ func HasStaffsWith(preds ...predicate.OrgStaff) predicate.OrgDept {
 			sqlgraph.To(StaffsInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

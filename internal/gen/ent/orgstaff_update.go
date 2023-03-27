@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -841,7 +840,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osu.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := osu.mutation.OrganIDs(); len(nodes) > 0 {
@@ -855,7 +853,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osu.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -872,7 +869,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osu.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := osu.mutation.IdenAddrIDs(); len(nodes) > 0 {
@@ -886,7 +882,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osu.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -903,7 +898,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osu.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := osu.mutation.ResiAddrIDs(); len(nodes) > 0 {
@@ -917,7 +911,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osu.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -934,7 +927,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osu.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := osu.mutation.DeptIDs(); len(nodes) > 0 {
@@ -948,14 +940,11 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osu.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = osu.schemaConfig.OrgStaff
-	ctx = internal.NewSchemaConfigContext(ctx, osu.schemaConfig)
 	_spec.AddModifiers(osu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, osu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -1816,7 +1805,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osuo.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := osuo.mutation.OrganIDs(); len(nodes) > 0 {
@@ -1830,7 +1818,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osuo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1847,7 +1834,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osuo.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := osuo.mutation.IdenAddrIDs(); len(nodes) > 0 {
@@ -1861,7 +1847,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osuo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1878,7 +1863,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osuo.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := osuo.mutation.ResiAddrIDs(); len(nodes) > 0 {
@@ -1892,7 +1876,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osuo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1909,7 +1892,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osuo.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := osuo.mutation.DeptIDs(); len(nodes) > 0 {
@@ -1923,14 +1905,11 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = osuo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = osuo.schemaConfig.OrgStaff
-	ctx = internal.NewSchemaConfigContext(ctx, osuo.schemaConfig)
 	_spec.AddModifiers(osuo.modifiers...)
 	_node = &OrgStaff{config: osuo.config}
 	_spec.Assign = _node.assignValues

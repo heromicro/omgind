@@ -12,7 +12,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
@@ -82,9 +81,6 @@ func (saq *SysAddressQuery) QueryOrgan() *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.OrganTable, sysaddress.OrganColumn),
 		)
-		schemaConfig := saq.schemaConfig
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgOrgan
 		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -107,9 +103,6 @@ func (saq *SysAddressQuery) QueryStaffResi() *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffResiTable, sysaddress.StaffResiColumn),
 		)
-		schemaConfig := saq.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -132,9 +125,6 @@ func (saq *SysAddressQuery) QueryStaffIden() *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffIdenTable, sysaddress.StaffIdenColumn),
 		)
-		schemaConfig := saq.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -468,8 +458,6 @@ func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = saq.schemaConfig.SysAddress
-	ctx = internal.NewSchemaConfigContext(ctx, saq.schemaConfig)
 	if len(saq.modifiers) > 0 {
 		_spec.Modifiers = saq.modifiers
 	}
@@ -587,8 +575,6 @@ func (saq *SysAddressQuery) loadStaffIden(ctx context.Context, query *OrgStaffQu
 
 func (saq *SysAddressQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := saq.querySpec()
-	_spec.Node.Schema = saq.schemaConfig.SysAddress
-	ctx = internal.NewSchemaConfigContext(ctx, saq.schemaConfig)
 	if len(saq.modifiers) > 0 {
 		_spec.Modifiers = saq.modifiers
 	}
@@ -654,9 +640,6 @@ func (saq *SysAddressQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if saq.ctx.Unique != nil && *saq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(saq.schemaConfig.SysAddress)
-	ctx = internal.NewSchemaConfigContext(ctx, saq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range saq.modifiers {
 		m(selector)
 	}

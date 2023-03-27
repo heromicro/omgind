@@ -12,7 +12,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
@@ -85,9 +84,6 @@ func (ooq *OrgOrganQuery) QueryHaddr() *SysAddressQuery {
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgorgan.HaddrTable, orgorgan.HaddrColumn),
 		)
-		schemaConfig := ooq.schemaConfig
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgOrgan
 		fromU = sqlgraph.SetNeighbors(ooq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -110,9 +106,6 @@ func (ooq *OrgOrganQuery) QueryDepts() *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.DeptsTable, orgorgan.DeptsColumn),
 		)
-		schemaConfig := ooq.schemaConfig
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		fromU = sqlgraph.SetNeighbors(ooq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -135,9 +128,6 @@ func (ooq *OrgOrganQuery) QueryStaffs() *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.StaffsTable, orgorgan.StaffsColumn),
 		)
-		schemaConfig := ooq.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(ooq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -160,9 +150,6 @@ func (ooq *OrgOrganQuery) QueryPositions() *OrgPositionQuery {
 			sqlgraph.To(orgposition.Table, orgposition.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.PositionsTable, orgorgan.PositionsColumn),
 		)
-		schemaConfig := ooq.schemaConfig
-		step.To.Schema = schemaConfig.OrgPosition
-		step.Edge.Schema = schemaConfig.OrgPosition
 		fromU = sqlgraph.SetNeighbors(ooq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -509,8 +496,6 @@ func (ooq *OrgOrganQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = ooq.schemaConfig.OrgOrgan
-	ctx = internal.NewSchemaConfigContext(ctx, ooq.schemaConfig)
 	if len(ooq.modifiers) > 0 {
 		_spec.Modifiers = ooq.modifiers
 	}
@@ -678,8 +663,6 @@ func (ooq *OrgOrganQuery) loadPositions(ctx context.Context, query *OrgPositionQ
 
 func (ooq *OrgOrganQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := ooq.querySpec()
-	_spec.Node.Schema = ooq.schemaConfig.OrgOrgan
-	ctx = internal.NewSchemaConfigContext(ctx, ooq.schemaConfig)
 	if len(ooq.modifiers) > 0 {
 		_spec.Modifiers = ooq.modifiers
 	}
@@ -745,9 +728,6 @@ func (ooq *OrgOrganQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if ooq.ctx.Unique != nil && *ooq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(ooq.schemaConfig.OrgOrgan)
-	ctx = internal.NewSchemaConfigContext(ctx, ooq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range ooq.modifiers {
 		m(selector)
 	}

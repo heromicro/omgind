@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
 )
@@ -261,8 +260,6 @@ func (xdu *XxxDemoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := xdu.mutation.Name(); ok {
 		_spec.SetField(xxxdemo.FieldName, field.TypeString, value)
 	}
-	_spec.Node.Schema = xdu.schemaConfig.XxxDemo
-	ctx = internal.NewSchemaConfigContext(ctx, xdu.schemaConfig)
 	_spec.AddModifiers(xdu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, xdu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -546,8 +543,6 @@ func (xduo *XxxDemoUpdateOne) sqlSave(ctx context.Context) (_node *XxxDemo, err 
 	if value, ok := xduo.mutation.Name(); ok {
 		_spec.SetField(xxxdemo.FieldName, field.TypeString, value)
 	}
-	_spec.Node.Schema = xduo.schemaConfig.XxxDemo
-	ctx = internal.NewSchemaConfigContext(ctx, xduo.schemaConfig)
 	_spec.AddModifiers(xduo.modifiers...)
 	_node = &XxxDemo{config: xduo.config}
 	_spec.Assign = _node.assignValues

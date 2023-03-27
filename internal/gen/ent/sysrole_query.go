@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
 )
@@ -345,8 +344,6 @@ func (srq *SysRoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = srq.schemaConfig.SysRole
-	ctx = internal.NewSchemaConfigContext(ctx, srq.schemaConfig)
 	if len(srq.modifiers) > 0 {
 		_spec.Modifiers = srq.modifiers
 	}
@@ -364,8 +361,6 @@ func (srq *SysRoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 
 func (srq *SysRoleQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := srq.querySpec()
-	_spec.Node.Schema = srq.schemaConfig.SysRole
-	ctx = internal.NewSchemaConfigContext(ctx, srq.schemaConfig)
 	if len(srq.modifiers) > 0 {
 		_spec.Modifiers = srq.modifiers
 	}
@@ -431,9 +426,6 @@ func (srq *SysRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if srq.ctx.Unique != nil && *srq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(srq.schemaConfig.SysRole)
-	ctx = internal.NewSchemaConfigContext(ctx, srq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range srq.modifiers {
 		m(selector)
 	}

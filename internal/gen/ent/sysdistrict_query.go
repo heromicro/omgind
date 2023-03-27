@@ -12,7 +12,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 )
@@ -79,9 +78,6 @@ func (sdq *SysDistrictQuery) QueryParent() *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
 		)
-		schemaConfig := sdq.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -104,9 +100,6 @@ func (sdq *SysDistrictQuery) QueryChildren() *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
 		)
-		schemaConfig := sdq.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -427,8 +420,6 @@ func (sdq *SysDistrictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = sdq.schemaConfig.SysDistrict
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
 	if len(sdq.modifiers) > 0 {
 		_spec.Modifiers = sdq.modifiers
 	}
@@ -522,8 +513,6 @@ func (sdq *SysDistrictQuery) loadChildren(ctx context.Context, query *SysDistric
 
 func (sdq *SysDistrictQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdq.querySpec()
-	_spec.Node.Schema = sdq.schemaConfig.SysDistrict
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
 	if len(sdq.modifiers) > 0 {
 		_spec.Modifiers = sdq.modifiers
 	}
@@ -589,9 +578,6 @@ func (sdq *SysDistrictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sdq.ctx.Unique != nil && *sdq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(sdq.schemaConfig.SysDistrict)
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range sdq.modifiers {
 		m(selector)
 	}

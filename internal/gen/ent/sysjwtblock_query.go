@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 )
@@ -345,8 +344,6 @@ func (sjbq *SysJwtBlockQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = sjbq.schemaConfig.SysJwtBlock
-	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
 	if len(sjbq.modifiers) > 0 {
 		_spec.Modifiers = sjbq.modifiers
 	}
@@ -364,8 +361,6 @@ func (sjbq *SysJwtBlockQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 
 func (sjbq *SysJwtBlockQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sjbq.querySpec()
-	_spec.Node.Schema = sjbq.schemaConfig.SysJwtBlock
-	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
 	if len(sjbq.modifiers) > 0 {
 		_spec.Modifiers = sjbq.modifiers
 	}
@@ -431,9 +426,6 @@ func (sjbq *SysJwtBlockQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sjbq.ctx.Unique != nil && *sjbq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(sjbq.schemaConfig.SysJwtBlock)
-	ctx = internal.NewSchemaConfigContext(ctx, sjbq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range sjbq.modifiers {
 		m(selector)
 	}

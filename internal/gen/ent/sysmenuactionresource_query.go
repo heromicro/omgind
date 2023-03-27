@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 )
@@ -345,8 +344,6 @@ func (smarq *SysMenuActionResourceQuery) sqlAll(ctx context.Context, hooks ...qu
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = smarq.schemaConfig.SysMenuActionResource
-	ctx = internal.NewSchemaConfigContext(ctx, smarq.schemaConfig)
 	if len(smarq.modifiers) > 0 {
 		_spec.Modifiers = smarq.modifiers
 	}
@@ -364,8 +361,6 @@ func (smarq *SysMenuActionResourceQuery) sqlAll(ctx context.Context, hooks ...qu
 
 func (smarq *SysMenuActionResourceQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := smarq.querySpec()
-	_spec.Node.Schema = smarq.schemaConfig.SysMenuActionResource
-	ctx = internal.NewSchemaConfigContext(ctx, smarq.schemaConfig)
 	if len(smarq.modifiers) > 0 {
 		_spec.Modifiers = smarq.modifiers
 	}
@@ -431,9 +426,6 @@ func (smarq *SysMenuActionResourceQuery) sqlQuery(ctx context.Context) *sql.Sele
 	if smarq.ctx.Unique != nil && *smarq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(smarq.schemaConfig.SysMenuActionResource)
-	ctx = internal.NewSchemaConfigContext(ctx, smarq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range smarq.modifiers {
 		m(selector)
 	}

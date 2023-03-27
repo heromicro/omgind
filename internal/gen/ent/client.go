@@ -32,8 +32,6 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
-
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 )
 
 // Client is the client that holds all ent builders.
@@ -123,8 +121,6 @@ type (
 		hooks *hooks
 		// interceptors to execute on queries.
 		inters *inters
-		// schemaConfig contains alternative names for all tables.
-		schemaConfig SchemaConfig
 	}
 	// Option function to configure the client.
 	Option func(*config)
@@ -445,9 +441,6 @@ func (c *OrgDeptClient) QueryParent(od *OrgDept) *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.ParentTable, orgdept.ParentColumn),
 		)
-		schemaConfig := od.schemaConfig
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -464,9 +457,6 @@ func (c *OrgDeptClient) QueryChildren(od *OrgDept) *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.ChildrenTable, orgdept.ChildrenColumn),
 		)
-		schemaConfig := od.schemaConfig
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -483,9 +473,6 @@ func (c *OrgDeptClient) QueryOrgan(od *OrgDept) *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.OrganTable, orgdept.OrganColumn),
 		)
-		schemaConfig := od.schemaConfig
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgDept
 		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -502,9 +489,6 @@ func (c *OrgDeptClient) QueryStaffs(od *OrgDept) *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.StaffsTable, orgdept.StaffsColumn),
 		)
-		schemaConfig := od.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -639,9 +623,6 @@ func (c *OrgOrganClient) QueryHaddr(oo *OrgOrgan) *SysAddressQuery {
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgorgan.HaddrTable, orgorgan.HaddrColumn),
 		)
-		schemaConfig := oo.schemaConfig
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgOrgan
 		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -658,9 +639,6 @@ func (c *OrgOrganClient) QueryDepts(oo *OrgOrgan) *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.DeptsTable, orgorgan.DeptsColumn),
 		)
-		schemaConfig := oo.schemaConfig
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgDept
 		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -677,9 +655,6 @@ func (c *OrgOrganClient) QueryStaffs(oo *OrgOrgan) *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.StaffsTable, orgorgan.StaffsColumn),
 		)
-		schemaConfig := oo.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -696,9 +671,6 @@ func (c *OrgOrganClient) QueryPositions(oo *OrgOrgan) *OrgPositionQuery {
 			sqlgraph.To(orgposition.Table, orgposition.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.PositionsTable, orgorgan.PositionsColumn),
 		)
-		schemaConfig := oo.schemaConfig
-		step.To.Schema = schemaConfig.OrgPosition
-		step.Edge.Schema = schemaConfig.OrgPosition
 		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -833,9 +805,6 @@ func (c *OrgPositionClient) QueryOrgan(op *OrgPosition) *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgposition.OrganTable, orgposition.OrganColumn),
 		)
-		schemaConfig := op.schemaConfig
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgPosition
 		fromV = sqlgraph.Neighbors(op.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -970,9 +939,6 @@ func (c *OrgStaffClient) QueryOrgan(os *OrgStaff) *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.OrganTable, orgstaff.OrganColumn),
 		)
-		schemaConfig := os.schemaConfig
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -989,9 +955,6 @@ func (c *OrgStaffClient) QueryIdenAddr(os *OrgStaff) *SysAddressQuery {
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.IdenAddrTable, orgstaff.IdenAddrColumn),
 		)
-		schemaConfig := os.schemaConfig
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1008,9 +971,6 @@ func (c *OrgStaffClient) QueryResiAddr(os *OrgStaff) *SysAddressQuery {
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.ResiAddrTable, orgstaff.ResiAddrColumn),
 		)
-		schemaConfig := os.schemaConfig
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1027,9 +987,6 @@ func (c *OrgStaffClient) QueryDept(os *OrgStaff) *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.DeptTable, orgstaff.DeptColumn),
 		)
-		schemaConfig := os.schemaConfig
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1164,9 +1121,6 @@ func (c *SysAddressClient) QueryOrgan(sa *SysAddress) *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.OrganTable, sysaddress.OrganColumn),
 		)
-		schemaConfig := sa.schemaConfig
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgOrgan
 		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1183,9 +1137,6 @@ func (c *SysAddressClient) QueryStaffResi(sa *SysAddress) *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffResiTable, sysaddress.StaffResiColumn),
 		)
-		schemaConfig := sa.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1202,9 +1153,6 @@ func (c *SysAddressClient) QueryStaffIden(sa *SysAddress) *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffIdenTable, sysaddress.StaffIdenColumn),
 		)
-		schemaConfig := sa.schemaConfig
-		step.To.Schema = schemaConfig.OrgStaff
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1339,9 +1287,6 @@ func (c *SysDictClient) QueryItems(sd *SysDict) *SysDictItemQuery {
 			sqlgraph.To(sysdictitem.Table, sysdictitem.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdict.ItemsTable, sysdict.ItemsColumn),
 		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.SysDictItem
-		step.Edge.Schema = schemaConfig.SysDictItem
 		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1476,9 +1421,6 @@ func (c *SysDictItemClient) QueryDict(sdi *SysDictItem) *SysDictQuery {
 			sqlgraph.To(sysdict.Table, sysdict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdictitem.DictTable, sysdictitem.DictColumn),
 		)
-		schemaConfig := sdi.schemaConfig
-		step.To.Schema = schemaConfig.SysDict
-		step.Edge.Schema = schemaConfig.SysDictItem
 		fromV = sqlgraph.Neighbors(sdi.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1613,9 +1555,6 @@ func (c *SysDistrictClient) QueryParent(sd *SysDistrict) *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
 		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -1632,9 +1571,6 @@ func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
 		)
-		schemaConfig := sd.schemaConfig
-		step.To.Schema = schemaConfig.SysDistrict
-		step.Edge.Schema = schemaConfig.SysDistrict
 		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
 		return fromV, nil
 	}
@@ -2862,15 +2798,3 @@ type (
 		XxxDemo []ent.Interceptor
 	}
 )
-
-// SchemaConfig represents alternative schema names for all tables
-// that can be passed at runtime.
-type SchemaConfig = internal.SchemaConfig
-
-// AlternateSchemas allows alternate schema names to be
-// passed into ent operations.
-func AlternateSchema(schemaConfig SchemaConfig) Option {
-	return func(c *config) {
-		c.schemaConfig = schemaConfig
-	}
-}

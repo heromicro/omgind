@@ -322,7 +322,6 @@ func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 		_node = &SysDict{config: sdc.config}
 		_spec = sqlgraph.NewCreateSpec(sysdict.Table, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
 	)
-	_spec.Schema = sdc.schemaConfig.SysDict
 	_spec.OnConflict = sdc.conflict
 	if id, ok := sdc.mutation.ID(); ok {
 		_node.ID = id
@@ -379,7 +378,6 @@ func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 				IDSpec: sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sdc.schemaConfig.SysDictItem
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

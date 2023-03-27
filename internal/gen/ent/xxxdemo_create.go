@@ -280,7 +280,6 @@ func (xdc *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
 		_node = &XxxDemo{config: xdc.config}
 		_spec = sqlgraph.NewCreateSpec(xxxdemo.Table, sqlgraph.NewFieldSpec(xxxdemo.FieldID, field.TypeString))
 	)
-	_spec.Schema = xdc.schemaConfig.XxxDemo
 	_spec.OnConflict = xdc.conflict
 	if id, ok := xdc.mutation.ID(); ok {
 		_node.ID = id

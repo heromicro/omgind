@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 )
@@ -186,8 +185,6 @@ func (suru *SysUserRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := suru.mutation.RoleID(); ok {
 		_spec.SetField(sysuserrole.FieldRoleID, field.TypeString, value)
 	}
-	_spec.Node.Schema = suru.schemaConfig.SysUserRole
-	ctx = internal.NewSchemaConfigContext(ctx, suru.schemaConfig)
 	_spec.AddModifiers(suru.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, suru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -396,8 +393,6 @@ func (suruo *SysUserRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysUserR
 	if value, ok := suruo.mutation.RoleID(); ok {
 		_spec.SetField(sysuserrole.FieldRoleID, field.TypeString, value)
 	}
-	_spec.Node.Schema = suruo.schemaConfig.SysUserRole
-	ctx = internal.NewSchemaConfigContext(ctx, suruo.schemaConfig)
 	_spec.AddModifiers(suruo.modifiers...)
 	_node = &SysUserRole{config: suruo.config}
 	_spec.Assign = _node.assignValues

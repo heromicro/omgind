@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 )
@@ -410,8 +409,6 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if slu.mutation.ErrorStackCleared() {
 		_spec.ClearField(syslogging.FieldErrorStack, field.TypeString)
 	}
-	_spec.Node.Schema = slu.schemaConfig.SysLogging
-	ctx = internal.NewSchemaConfigContext(ctx, slu.schemaConfig)
 	_spec.AddModifiers(slu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, slu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -844,8 +841,6 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 	if sluo.mutation.ErrorStackCleared() {
 		_spec.ClearField(syslogging.FieldErrorStack, field.TypeString)
 	}
-	_spec.Node.Schema = sluo.schemaConfig.SysLogging
-	ctx = internal.NewSchemaConfigContext(ctx, sluo.schemaConfig)
 	_spec.AddModifiers(sluo.modifiers...)
 	_node = &SysLogging{config: sluo.config}
 	_spec.Assign = _node.assignValues

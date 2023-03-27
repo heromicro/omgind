@@ -12,7 +12,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -79,9 +78,6 @@ func (sdq *SysDictQuery) QueryItems() *SysDictItemQuery {
 			sqlgraph.To(sysdictitem.Table, sysdictitem.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdict.ItemsTable, sysdict.ItemsColumn),
 		)
-		schemaConfig := sdq.schemaConfig
-		step.To.Schema = schemaConfig.SysDictItem
-		step.Edge.Schema = schemaConfig.SysDictItem
 		fromU = sqlgraph.SetNeighbors(sdq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -389,8 +385,6 @@ func (sdq *SysDictQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = sdq.schemaConfig.SysDict
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
 	if len(sdq.modifiers) > 0 {
 		_spec.Modifiers = sdq.modifiers
 	}
@@ -446,8 +440,6 @@ func (sdq *SysDictQuery) loadItems(ctx context.Context, query *SysDictItemQuery,
 
 func (sdq *SysDictQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := sdq.querySpec()
-	_spec.Node.Schema = sdq.schemaConfig.SysDict
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
 	if len(sdq.modifiers) > 0 {
 		_spec.Modifiers = sdq.modifiers
 	}
@@ -513,9 +505,6 @@ func (sdq *SysDictQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if sdq.ctx.Unique != nil && *sdq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(sdq.schemaConfig.SysDict)
-	ctx = internal.NewSchemaConfigContext(ctx, sdq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range sdq.modifiers {
 		m(selector)
 	}

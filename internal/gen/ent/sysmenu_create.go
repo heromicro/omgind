@@ -385,7 +385,6 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 		_node = &SysMenu{config: smc.config}
 		_spec = sqlgraph.NewCreateSpec(sysmenu.Table, sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString))
 	)
-	_spec.Schema = smc.schemaConfig.SysMenu
 	_spec.OnConflict = smc.conflict
 	if id, ok := smc.mutation.ID(); ok {
 		_node.ID = id

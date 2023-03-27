@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 )
@@ -275,8 +274,6 @@ func (smau *SysMenuActionUpdate) sqlSave(ctx context.Context) (n int, err error)
 	if value, ok := smau.mutation.Name(); ok {
 		_spec.SetField(sysmenuaction.FieldName, field.TypeString, value)
 	}
-	_spec.Node.Schema = smau.schemaConfig.SysMenuAction
-	ctx = internal.NewSchemaConfigContext(ctx, smau.schemaConfig)
 	_spec.AddModifiers(smau.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, smau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -574,8 +571,6 @@ func (smauo *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMen
 	if value, ok := smauo.mutation.Name(); ok {
 		_spec.SetField(sysmenuaction.FieldName, field.TypeString, value)
 	}
-	_spec.Node.Schema = smauo.schemaConfig.SysMenuAction
-	ctx = internal.NewSchemaConfigContext(ctx, smauo.schemaConfig)
 	_spec.AddModifiers(smauo.modifiers...)
 	_node = &SysMenuAction{config: smauo.config}
 	_spec.Assign = _node.assignValues

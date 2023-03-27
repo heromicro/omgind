@@ -541,7 +541,6 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 		_node = &OrgDept{config: odc.config}
 		_spec = sqlgraph.NewCreateSpec(orgdept.Table, sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString))
 	)
-	_spec.Schema = odc.schemaConfig.OrgDept
 	_spec.OnConflict = odc.conflict
 	if id, ok := odc.mutation.ID(); ok {
 		_node.ID = id
@@ -634,7 +633,6 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odc.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -652,7 +650,6 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odc.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -669,7 +666,6 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odc.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -687,7 +683,6 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odc.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

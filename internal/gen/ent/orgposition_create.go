@@ -343,7 +343,6 @@ func (opc *OrgPositionCreate) createSpec() (*OrgPosition, *sqlgraph.CreateSpec) 
 		_node = &OrgPosition{config: opc.config}
 		_spec = sqlgraph.NewCreateSpec(orgposition.Table, sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString))
 	)
-	_spec.Schema = opc.schemaConfig.OrgPosition
 	_spec.OnConflict = opc.conflict
 	if id, ok := opc.mutation.ID(); ok {
 		_node.ID = id
@@ -400,7 +399,6 @@ func (opc *OrgPositionCreate) createSpec() (*OrgPosition, *sqlgraph.CreateSpec) 
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = opc.schemaConfig.OrgPosition
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}

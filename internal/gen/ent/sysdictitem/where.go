@@ -7,7 +7,6 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -583,9 +582,6 @@ func HasDict() predicate.SysDictItem {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, DictTable, DictColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.SysDict
-		step.Edge.Schema = schemaConfig.SysDictItem
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -598,9 +594,6 @@ func HasDictWith(preds ...predicate.SysDict) predicate.SysDictItem {
 			sqlgraph.To(DictInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, DictTable, DictColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.SysDict
-		step.Edge.Schema = schemaConfig.SysDictItem
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

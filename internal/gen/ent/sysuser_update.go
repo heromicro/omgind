@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 )
@@ -354,8 +353,6 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := suu.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 	}
-	_spec.Node.Schema = suu.schemaConfig.SysUser
-	ctx = internal.NewSchemaConfigContext(ctx, suu.schemaConfig)
 	_spec.AddModifiers(suu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, suu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -732,8 +729,6 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 	if value, ok := suuo.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 	}
-	_spec.Node.Schema = suuo.schemaConfig.SysUser
-	ctx = internal.NewSchemaConfigContext(ctx, suuo.schemaConfig)
 	_spec.AddModifiers(suuo.modifiers...)
 	_node = &SysUser{config: suuo.config}
 	_spec.Assign = _node.assignValues

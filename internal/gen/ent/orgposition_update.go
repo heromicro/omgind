@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
@@ -383,7 +382,6 @@ func (opu *OrgPositionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = opu.schemaConfig.OrgPosition
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := opu.mutation.OrganIDs(); len(nodes) > 0 {
@@ -397,14 +395,11 @@ func (opu *OrgPositionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = opu.schemaConfig.OrgPosition
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = opu.schemaConfig.OrgPosition
-	ctx = internal.NewSchemaConfigContext(ctx, opu.schemaConfig)
 	_spec.AddModifiers(opu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, opu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -809,7 +804,6 @@ func (opuo *OrgPositionUpdateOne) sqlSave(ctx context.Context) (_node *OrgPositi
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = opuo.schemaConfig.OrgPosition
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := opuo.mutation.OrganIDs(); len(nodes) > 0 {
@@ -823,14 +817,11 @@ func (opuo *OrgPositionUpdateOne) sqlSave(ctx context.Context) (_node *OrgPositi
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = opuo.schemaConfig.OrgPosition
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = opuo.schemaConfig.OrgPosition
-	ctx = internal.NewSchemaConfigContext(ctx, opuo.schemaConfig)
 	_spec.AddModifiers(opuo.modifiers...)
 	_node = &OrgPosition{config: opuo.config}
 	_spec.Assign = _node.assignValues

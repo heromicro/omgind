@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -314,7 +313,6 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sdiu.schemaConfig.SysDictItem
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdiu.mutation.DictIDs(); len(nodes) > 0 {
@@ -328,14 +326,11 @@ func (sdiu *SysDictItemUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sdiu.schemaConfig.SysDictItem
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = sdiu.schemaConfig.SysDictItem
-	ctx = internal.NewSchemaConfigContext(ctx, sdiu.schemaConfig)
 	_spec.AddModifiers(sdiu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sdiu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -671,7 +666,6 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sdiuo.schemaConfig.SysDictItem
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := sdiuo.mutation.DictIDs(); len(nodes) > 0 {
@@ -685,14 +679,11 @@ func (sdiuo *SysDictItemUpdateOne) sqlSave(ctx context.Context) (_node *SysDictI
 				IDSpec: sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = sdiuo.schemaConfig.SysDictItem
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = sdiuo.schemaConfig.SysDictItem
-	ctx = internal.NewSchemaConfigContext(ctx, sdiuo.schemaConfig)
 	_spec.AddModifiers(sdiuo.modifiers...)
 	_node = &SysDictItem{config: sdiuo.config}
 	_spec.Assign = _node.assignValues

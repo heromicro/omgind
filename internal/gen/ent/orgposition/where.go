@@ -7,7 +7,6 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -713,9 +712,6 @@ func HasOrgan() predicate.OrgPosition {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgPosition
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -728,9 +724,6 @@ func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgPosition {
 			sqlgraph.To(OrganInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgPosition
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

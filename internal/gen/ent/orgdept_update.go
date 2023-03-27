@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -771,7 +770,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgDept
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := odu.mutation.ParentIDs(); len(nodes) > 0 {
@@ -785,7 +783,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -802,7 +799,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgDept
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := odu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !odu.mutation.ChildrenCleared() {
@@ -816,7 +812,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -833,7 +828,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -850,7 +844,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgDept
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := odu.mutation.OrganIDs(); len(nodes) > 0 {
@@ -864,7 +857,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -881,7 +873,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := odu.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !odu.mutation.StaffsCleared() {
@@ -895,7 +886,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -912,14 +902,11 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = odu.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = odu.schemaConfig.OrgDept
-	ctx = internal.NewSchemaConfigContext(ctx, odu.schemaConfig)
 	_spec.AddModifiers(odu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, odu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -1711,7 +1698,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgDept
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := oduo.mutation.ParentIDs(); len(nodes) > 0 {
@@ -1725,7 +1711,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1742,7 +1727,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgDept
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := oduo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !oduo.mutation.ChildrenCleared() {
@@ -1756,7 +1740,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1773,7 +1756,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1790,7 +1772,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgDept
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := oduo.mutation.OrganIDs(); len(nodes) > 0 {
@@ -1804,7 +1785,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgDept
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1821,7 +1801,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgStaff
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
 	if nodes := oduo.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !oduo.mutation.StaffsCleared() {
@@ -1835,7 +1814,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
@@ -1852,14 +1830,11 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 				IDSpec: sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString),
 			},
 		}
-		edge.Schema = oduo.schemaConfig.OrgStaff
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.Node.Schema = oduo.schemaConfig.OrgDept
-	ctx = internal.NewSchemaConfigContext(ctx, oduo.schemaConfig)
 	_spec.AddModifiers(oduo.modifiers...)
 	_node = &OrgDept{config: oduo.config}
 	_spec.Assign = _node.assignValues

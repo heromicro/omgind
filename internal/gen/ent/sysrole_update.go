@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
 )
@@ -247,8 +246,6 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sru.mutation.Name(); ok {
 		_spec.SetField(sysrole.FieldName, field.TypeString, value)
 	}
-	_spec.Node.Schema = sru.schemaConfig.SysRole
-	ctx = internal.NewSchemaConfigContext(ctx, sru.schemaConfig)
 	_spec.AddModifiers(sru.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, sru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -518,8 +515,6 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 	if value, ok := sruo.mutation.Name(); ok {
 		_spec.SetField(sysrole.FieldName, field.TypeString, value)
 	}
-	_spec.Node.Schema = sruo.schemaConfig.SysRole
-	ctx = internal.NewSchemaConfigContext(ctx, sruo.schemaConfig)
 	_spec.AddModifiers(sruo.modifiers...)
 	_node = &SysRole{config: sruo.config}
 	_spec.Assign = _node.assignValues

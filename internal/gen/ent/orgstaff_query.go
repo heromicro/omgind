@@ -11,7 +11,6 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -83,9 +82,6 @@ func (osq *OrgStaffQuery) QueryOrgan() *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.OrganTable, orgstaff.OrganColumn),
 		)
-		schemaConfig := osq.schemaConfig
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -108,9 +104,6 @@ func (osq *OrgStaffQuery) QueryIdenAddr() *SysAddressQuery {
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.IdenAddrTable, orgstaff.IdenAddrColumn),
 		)
-		schemaConfig := osq.schemaConfig
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -133,9 +126,6 @@ func (osq *OrgStaffQuery) QueryResiAddr() *SysAddressQuery {
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.ResiAddrTable, orgstaff.ResiAddrColumn),
 		)
-		schemaConfig := osq.schemaConfig
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -158,9 +148,6 @@ func (osq *OrgStaffQuery) QueryDept() *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.DeptTable, orgstaff.DeptColumn),
 		)
-		schemaConfig := osq.schemaConfig
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgStaff
 		fromU = sqlgraph.SetNeighbors(osq.driver.Dialect(), step)
 		return fromU, nil
 	}
@@ -507,8 +494,6 @@ func (osq *OrgStaffQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Or
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	_spec.Node.Schema = osq.schemaConfig.OrgStaff
-	ctx = internal.NewSchemaConfigContext(ctx, osq.schemaConfig)
 	if len(osq.modifiers) > 0 {
 		_spec.Modifiers = osq.modifiers
 	}
@@ -679,8 +664,6 @@ func (osq *OrgStaffQuery) loadDept(ctx context.Context, query *OrgDeptQuery, nod
 
 func (osq *OrgStaffQuery) sqlCount(ctx context.Context) (int, error) {
 	_spec := osq.querySpec()
-	_spec.Node.Schema = osq.schemaConfig.OrgStaff
-	ctx = internal.NewSchemaConfigContext(ctx, osq.schemaConfig)
 	if len(osq.modifiers) > 0 {
 		_spec.Modifiers = osq.modifiers
 	}
@@ -746,9 +729,6 @@ func (osq *OrgStaffQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	if osq.ctx.Unique != nil && *osq.ctx.Unique {
 		selector.Distinct()
 	}
-	t1.Schema(osq.schemaConfig.OrgStaff)
-	ctx = internal.NewSchemaConfigContext(ctx, osq.schemaConfig)
-	selector.WithContext(ctx)
 	for _, m := range osq.modifiers {
 		m(selector)
 	}

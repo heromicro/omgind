@@ -7,7 +7,6 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/heromicro/omgind/internal/gen/ent/internal"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
 )
 
@@ -1753,9 +1752,6 @@ func HasOrgan() predicate.OrgStaff {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1768,9 +1764,6 @@ func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgStaff {
 			sqlgraph.To(OrganInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgOrgan
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1786,9 +1779,6 @@ func HasIdenAddr() predicate.OrgStaff {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, IdenAddrTable, IdenAddrColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1801,9 +1791,6 @@ func HasIdenAddrWith(preds ...predicate.SysAddress) predicate.OrgStaff {
 			sqlgraph.To(IdenAddrInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, IdenAddrTable, IdenAddrColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1819,9 +1806,6 @@ func HasResiAddr() predicate.OrgStaff {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, ResiAddrTable, ResiAddrColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1834,9 +1818,6 @@ func HasResiAddrWith(preds ...predicate.SysAddress) predicate.OrgStaff {
 			sqlgraph.To(ResiAddrInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, ResiAddrTable, ResiAddrColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.SysAddress
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1852,9 +1833,6 @@ func HasDept() predicate.OrgStaff {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, DeptTable, DeptColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighbors(s, step)
 	})
 }
@@ -1867,9 +1845,6 @@ func HasDeptWith(preds ...predicate.OrgDept) predicate.OrgStaff {
 			sqlgraph.To(DeptInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, DeptTable, DeptColumn),
 		)
-		schemaConfig := internal.SchemaConfigFromContext(s.Context())
-		step.To.Schema = schemaConfig.OrgDept
-		step.Edge.Schema = schemaConfig.OrgStaff
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
