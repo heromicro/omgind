@@ -292,6 +292,10 @@ definitions:
     type: object
   schema.OrgDept:
     properties:
+      children:
+        allOf:
+        - $ref: '#/definitions/schema.OrgDepts'
+        description: children
       code:
         description: 助记码
         type: string
@@ -307,7 +311,13 @@ definitions:
       is_active:
         description: 状态
         type: boolean
+      is_leaf:
+        description: 是否是子叶
+        type: boolean
       memo:
+        type: string
+      merge_name:
+        description: 带前缀全名称
         type: string
       name:
         description: 名称
@@ -317,7 +327,29 @@ definitions:
       org_id:
         description: 企业id
         type: string
+      parent:
+        allOf:
+        - $ref: '#/definitions/schema.OrgDept'
+        description: parent
+      pid:
+        description: pid
+        type: string
       sort:
+        type: integer
+      tree_id:
+        description: 树id
+        type: integer
+      tree_left:
+        description: 层级
+        type: integer
+      tree_level:
+        description: 层级
+        type: integer
+      tree_path:
+        description: 层级
+        type: string
+      tree_right:
+        description: 层级
         type: integer
       updated_at:
         description: 更新时间
@@ -325,7 +357,12 @@ definitions:
     required:
     - is_active
     - name
+    - org_id
     type: object
+  schema.OrgDepts:
+    items:
+      $ref: '#/definitions/schema.OrgDept'
+    type: array
   schema.OrgOrgan:
     properties:
       code:
@@ -428,6 +465,7 @@ definitions:
     required:
     - is_active
     - name
+    - org_id
     type: object
   schema.OrgStaff:
     properties:
@@ -442,6 +480,11 @@ definitions:
         type: string
       cubicle:
         description: 工位
+        type: string
+      dept:
+        $ref: '#/definitions/schema.OrgDept'
+      dept_id:
+        description: 部門id
         type: string
       empy_stat:
         description: 在职状态
@@ -526,6 +569,7 @@ definitions:
     - is_active
     - last_name
     - mobile
+    - org_id
     type: object
   schema.PaginationResult:
     properties:
@@ -715,10 +759,9 @@ definitions:
         description: 电话区号码
         type: string
       children:
+        allOf:
+        - $ref: '#/definitions/schema.SysDistricts'
         description: children
-        items:
-          $ref: '#/definitions/schema.SysDistrict'
-        type: array
       created_at:
         description: 创建时间
         type: string
@@ -821,6 +864,10 @@ definitions:
     - is_active
     - name
     type: object
+  schema.SysDistricts:
+    items:
+      $ref: '#/definitions/schema.SysDistrict'
+    type: array
   schema.UpdatePasswordParam:
     properties:
       new_password:
@@ -1280,9 +1327,13 @@ paths:
         in: query
         name: is_leaf
         type: boolean
-      - description: 状态
+      - description: 是否真实
         in: query
         name: is_real
+        type: boolean
+      - description: 是否显示
+        in: query
+        name: is_show
         type: boolean
       - in: query
         name: name

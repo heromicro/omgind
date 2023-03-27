@@ -518,8 +518,14 @@ const docTemplate = `{
                     },
                     {
                         "type": "boolean",
-                        "description": "状态",
+                        "description": "是否真实",
                         "name": "is_real",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否显示",
+                        "name": "is_show",
                         "in": "query"
                     },
                     {
@@ -6219,9 +6225,18 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "is_active",
-                "name"
+                "name",
+                "org_id"
             ],
             "properties": {
+                "children": {
+                    "description": "children",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.OrgDepts"
+                        }
+                    ]
+                },
                 "code": {
                     "description": "助记码",
                     "type": "string"
@@ -6242,7 +6257,15 @@ const docTemplate = `{
                     "description": "状态",
                     "type": "boolean"
                 },
+                "is_leaf": {
+                    "description": "是否是子叶",
+                    "type": "boolean"
+                },
                 "memo": {
+                    "type": "string"
+                },
+                "merge_name": {
+                    "description": "带前缀全名称",
                     "type": "string"
                 },
                 "name": {
@@ -6256,13 +6279,51 @@ const docTemplate = `{
                     "description": "企业id",
                     "type": "string"
                 },
+                "parent": {
+                    "description": "parent",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.OrgDept"
+                        }
+                    ]
+                },
+                "pid": {
+                    "description": "pid",
+                    "type": "string"
+                },
                 "sort": {
+                    "type": "integer"
+                },
+                "tree_id": {
+                    "description": "树id",
+                    "type": "integer"
+                },
+                "tree_left": {
+                    "description": "层级",
+                    "type": "integer"
+                },
+                "tree_level": {
+                    "description": "层级",
+                    "type": "integer"
+                },
+                "tree_path": {
+                    "description": "层级",
+                    "type": "string"
+                },
+                "tree_right": {
+                    "description": "层级",
                     "type": "integer"
                 },
                 "updated_at": {
                     "description": "更新时间",
                     "type": "string"
                 }
+            }
+        },
+        "schema.OrgDepts": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/schema.OrgDept"
             }
         },
         "schema.OrgOrgan": {
@@ -6366,7 +6427,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "is_active",
-                "name"
+                "name",
+                "org_id"
             ],
             "properties": {
                 "code": {
@@ -6424,7 +6486,8 @@ const docTemplate = `{
                 "gender_dict_id",
                 "is_active",
                 "last_name",
-                "mobile"
+                "mobile",
+                "org_id"
             ],
             "properties": {
                 "birth_date": {
@@ -6441,6 +6504,13 @@ const docTemplate = `{
                 },
                 "cubicle": {
                     "description": "工位",
+                    "type": "string"
+                },
+                "dept": {
+                    "$ref": "#/definitions/schema.OrgDept"
+                },
+                "dept_id": {
+                    "description": "部門id",
                     "type": "string"
                 },
                 "empy_stat": {
@@ -6813,10 +6883,11 @@ const docTemplate = `{
                 },
                 "children": {
                     "description": "children",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/schema.SysDistrict"
-                    }
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.SysDistricts"
+                        }
+                    ]
                 },
                 "created_at": {
                     "description": "创建时间",
@@ -6952,6 +7023,12 @@ const docTemplate = `{
                     "description": "邮政编码",
                     "type": "string"
                 }
+            }
+        },
+        "schema.SysDistricts": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/schema.SysDistrict"
             }
         },
         "schema.UpdatePasswordParam": {
