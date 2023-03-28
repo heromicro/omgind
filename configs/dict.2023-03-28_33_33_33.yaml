@@ -1,0 +1,91 @@
+- id: 01GTZJ3H0AF1TDPXMCBZ88JJ3R
+  name_cn: 性別
+  name_en: gender
+  is_active: true
+  memo: 性別
+  sort: 99
+  items:
+  - id: 01GTZJ3H15C4XDWR2HYBR3YXF3
+    label: 男
+    value: 1
+    is_active: false
+    dict_id: 01GTZJ3H0AF1TDPXMCBZ88JJ3R
+    memo: '性別: 男'
+    sort: 9999
+  - id: 01GTZJ3H1ZQQ6TBCYZE1WWXWCX
+    label: 女
+    value: 2
+    is_active: false
+    dict_id: 01GTZJ3H0AF1TDPXMCBZ88JJ3R
+    memo: 性別:女
+    sort: 9999
+- id: 01GW1MJS3G918JNZJN7WNKNGPB
+  name_cn: 在职状态
+  name_en: employemnt stat
+  is_active: true
+  memo: 某员工的在职状态
+  sort: 995
+  items:
+  - id: 01GW1MJS3RTQMGJHJ32QYQJ61K
+    label: 在职
+    value: 1
+    is_active: false
+    dict_id: 01GW1MJS3G918JNZJN7WNKNGPB
+    memo: 在职
+    sort: 9999
+  - id: 01GW1MJS43V1WTSBNY7PY0EHBP
+    label: 停职
+    value: 2
+    is_active: false
+    dict_id: 01GW1MJS3G918JNZJN7WNKNGPB
+    memo: 停职但未解雇
+    sort: 9999
+  - id: 01GW1MJS44972YKM8QQ5CRXC64
+    label: 离职
+    value: 3
+    is_active: false
+    dict_id: 01GW1MJS3G918JNZJN7WNKNGPB
+    memo: 自己辞职
+    sort: 9999
+  - id: 01GW1MJS44PFASFR4S9ZBXJA9X
+    label: 解雇
+    value: 4
+    is_active: false
+    dict_id: 01GW1MJS3G918JNZJN7WNKNGPB
+    memo: 被解雇了
+    sort: 9999
+- id: 01GWJZWPPE50QF5194GZ96GJ38
+  name_cn: 婚姻状况
+  name_en: marital stat
+  is_active: true
+  memo: marital stat
+  sort: 9999
+  items:
+  - id: 01GWJZWPPKAJ0GE77Y4D41TD06
+    label: 未婚
+    value: 1
+    is_active: false
+    dict_id: 01GWJZWPPE50QF5194GZ96GJ38
+    memo: 未婚
+    sort: 9999
+  - id: 01GWJZWPPPCRD9X06SGTTM11AY
+    label: 已婚
+    value: 2
+    is_active: false
+    dict_id: 01GWJZWPPE50QF5194GZ96GJ38
+    memo: 已婚
+    sort: 9999
+  - id: 01GWJZWPPQ2044HEV6AM1H20FX
+    label: 离异
+    value: 3
+    is_active: false
+    dict_id: 01GWJZWPPE50QF5194GZ96GJ38
+    memo: 离异
+    sort: 9999
+  - id: 01GWJZWPPQW4WTJPAZAS268R9F
+    label: 丧偶
+    value: 4
+    is_active: false
+    dict_id: 01GWJZWPPE50QF5194GZ96GJ38
+    memo: 丧偶
+    sort: 9999
