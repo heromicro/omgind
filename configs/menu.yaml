@@ -205,6 +205,8 @@
         - code: add
           name: 新增
           resources:
+            - method: GET
+              path: "/api/v2/sys-district/:id/subs"
             - method: POST
               path: "/api/v2/sys-district"
         - code: edit
@@ -212,6 +214,8 @@
           resources:
             - method: GET
               path: "/api/v2/sys-district/:id"
+            - method: GET
+              path: "/api/v2/sys-district/:id/tree"
             - method: PUT
               path: "/api/v2/sys-district/:id"
         - code: del
