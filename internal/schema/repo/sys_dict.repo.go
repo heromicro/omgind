@@ -236,21 +236,6 @@ func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptio
 	return ToSchemaSysDict(dict), nil
 }
 
-// Create 创建数据
-func (a *Dict) Create(ctx context.Context, item schema.Dict) (*schema.Dict, error) {
-	item.CreatedAt = time.Now()
-	item.UpdatedAt = time.Now()
-	
-	iteminput := a.ToEntCreateSysDictInput(&item)
-	sysdict, err := a.EntCli.SysDict.Create().SetInput(*iteminput).Save(ctx)
-
-	if err != nil {
-		return nil, err
-	}
-	sch_dict := ToSchemaSysDict(sysdict)
-	return sch_dict, nil
-}
-
 // Update 更新数据
 func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) (*schema.Dict, error) {
 	oitem, err := a.EntCli.SysDict.Query().Where(sysdict.IDEQ(id)).Only(ctx)
