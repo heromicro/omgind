@@ -17,6 +17,8 @@ func main() {
 			gen.FeatureLock,
 			gen.FeatureModifier,
 			gen.FeatureUpsert,
+			gen.FeatureIntercept,
+			// entc.FeatureNames("intercept"),
 		},
 		Package: "github.com/heromicro/omgind/internal/gen/ent",
 		Target:  "./internal/gen/ent",
