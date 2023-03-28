@@ -11,7 +11,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/heromicro/omgind/pkg/errors"
-	uid "github.com/heromicro/omgind/pkg/helper/uid/ulid"
+	"github.com/heromicro/omgind/pkg/helper/str"
 )
 
 var DictSet = wire.NewSet(wire.Struct(new(Dict), "*"))
@@ -83,7 +83,9 @@ func (a *Dict) Create(ctx context.Context, item schema.Dict) (*schema.IDResult, 
 	if err := a.checkName(ctx, item); err != nil {
 		return nil, err
 	}
-	item.ID = uid.MustString()
+
+	item.NameEn = str.RemoveDuplicateBlank(item.NameEn)
+	item.NameCn = str.RemoveDuplicateBlank(item.NameCn)
 
 	err := repo.WithTx(ctx, a.DictRepo.EntCli, func(tx *ent.Tx) error {
 
