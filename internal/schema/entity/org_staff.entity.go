@@ -85,7 +85,3 @@ func (OrgStaff) Edges() []ent.Edge {
 func (OrgStaff) Indexes() []ent.Index {
 	return []ent.Index{}
 }
-
-func (OrgStaff) Hooks() []ent.Hook {
-	return []ent.Hook{}
-}

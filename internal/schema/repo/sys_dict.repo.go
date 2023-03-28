@@ -226,7 +226,7 @@ func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptio
 
 	query := a.EntCli.SysDict.Query()
 	query = query.WithItems(func(sdiq *ent.SysDictItemQuery) {
-		sdiq.Order(ent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo)
+		sdiq.Order(ent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID)
 	})
 
 	dict, err := query.Where(sysdict.IDEQ(id)).Only(ctx)
@@ -240,7 +240,7 @@ func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptio
 func (a *Dict) Create(ctx context.Context, item schema.Dict) (*schema.Dict, error) {
 	item.CreatedAt = time.Now()
 	item.UpdatedAt = time.Now()
-
+	
 	iteminput := a.ToEntCreateSysDictInput(&item)
 	sysdict, err := a.EntCli.SysDict.Create().SetInput(*iteminput).Save(ctx)
 

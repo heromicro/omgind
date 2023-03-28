@@ -36,19 +36,13 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 
 // Get 查询指定数据
 func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptions) (*schema.Dict, error) {
+
 	item, err := a.DictRepo.Get(ctx, id, opts...)
 	if err != nil {
 		return nil, err
 	} else if item == nil {
 		return nil, errors.ErrNotFound
 	}
-	ditems, err := a.DictItemRepo.Query(ctx, schema.DictItemQueryParam{
-		DictID: id,
-	})
-	if err != nil {
-		return nil, err
-	}
-	item.Items = ditems.Data
 
 	return item, nil
 }
