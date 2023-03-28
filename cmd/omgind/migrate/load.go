@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/gotidy/ptr"
@@ -45,6 +46,11 @@ var CmdLoad = &cobra.Command{
 		if err != nil {
 			log.Println(redOnWhite, " ----- === === ", err, chalk.Reset)
 			return err
+		}
+
+		_, err = os.Stat(datafile)
+		if err != nil && os.IsNotExist(err) {
+			return fmt.Errorf("%s not exist", datafile)
 		}
 
 		format, err := cmd.Flags().GetString("format")
@@ -282,14 +288,9 @@ var CmdLoad = &cobra.Command{
 func init() {
 
 	// PersistentFlags() for all flags only in current cmd
-	Cmd.PersistentFlags().String("format", "", "format")
-	Cmd.MarkPersistentFlagRequired("format")
 
-	Cmd.PersistentFlags().String("datafile", "", "data file path")
-	Cmd.MarkPersistentFlagRequired("datafile")
-
-	Cmd.PersistentFlags().String("tablename", "", "table name")
-	Cmd.MarkPersistentFlagRequired("tablename")
+	CmdLoad.PersistentFlags().String("datafile", "", "data file path")
+	CmdLoad.MarkPersistentFlagRequired("datafile")
 
 }
 

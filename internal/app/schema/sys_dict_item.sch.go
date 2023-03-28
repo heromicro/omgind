@@ -6,17 +6,17 @@ import (
 
 // DictItem 字典项对象
 type DictItem struct {
-	ID       string `json:"id"`                           // 唯一标识
-	Label    string `json:"label" binding:"required"`     // 显示值
-	Value    int    `json:"value" binding:"required"`     // 字典值
-	IsActive *bool  `json:"is_active" binding:"required"` // 状态
-	DictID   string `json:"dict_id" binding:"required"`   // dict.id
-	Memo     string `json:"memo"`                         // 备注
-	Sort     int    `json:"sort"`                         // 排序
+	ID       string `json:"id" yaml:"id"`                                   // 唯一标识
+	Label    string `json:"label" binding:"required"  yaml:"label"`         // 显示值
+	Value    int    `json:"value" binding:"required" yaml:"value"`          // 字典值
+	IsActive *bool  `json:"is_active" binding:"required"  yaml:"is_active"` // 状态
+	DictID   string `json:"dict_id" binding:"required" yaml:"dict_id"`      // dict.id
+	Memo     string `json:"memo" yaml:"memo"`                               // 备注
+	Sort     int    `json:"sort" yaml:"sort"`                               // 排序
 
-	Creator   string    `json:"creator"`    // 创建者
-	CreatedAt time.Time `json:"created_at"` // 创建时间
-	UpdatedAt time.Time `json:"updated_at"` // 更新时间
+	Creator   string    `json:"creator" yaml:"-"`    // 创建者
+	CreatedAt time.Time `json:"created_at" yaml:"-"` // 创建时间
+	UpdatedAt time.Time `json:"updated_at" yaml:"-"` // 更新时间
 
 }
 
