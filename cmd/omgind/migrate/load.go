@@ -21,6 +21,15 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
+func init() {
+
+	// PersistentFlags() for all flags only in current cmd
+
+	CmdLoad.PersistentFlags().String("datafile", "", "data file path")
+	CmdLoad.MarkPersistentFlagRequired("datafile")
+
+}
+
 var CmdLoad = &cobra.Command{
 	Use:   "load",
 	Short: "load file to db data",
@@ -59,6 +68,12 @@ var CmdLoad = &cobra.Command{
 			return err
 		}
 
+		tablename, err := cmd.Flags().GetString("tablename")
+		if err != nil {
+			log.Println(redOnWhite, " tablename err: ", err, chalk.Reset)
+			return err
+		}
+
 		switch strings.ToLower(format) {
 		case "xlsx":
 			excf, err := excelize.OpenFile(datafile)
@@ -69,7 +84,13 @@ var CmdLoad = &cobra.Command{
 			defer excf.Close()
 
 			// excf.GetRows()
+		case "yml":
+			fallthrough
+		case "yaml":
+			switch tablename {
+			case "dict":
 
+			}
 		case "csv":
 
 			bytes, err := ioutil.ReadFile(datafile)
@@ -87,7 +108,7 @@ var CmdLoad = &cobra.Command{
 			// Pids        int64   `csv:"pids,omitempty"`
 			// NeedCustoms bool    `csv:"need_customs"`     // 需要通关
 			// TreePath    string  `csv:"t_path,omitempty"` // 树形父级id拼接
-			serviceSysDistrict := repo.SysDistrict{
+			repoSysDistrict := repo.SysDistrict{
 				EntCli: eclient,
 			}
 			ctx := context.Background()
@@ -156,7 +177,7 @@ var CmdLoad = &cobra.Command{
 
 					if item.ParentID != nil && *item.ParentID != "" {
 
-						query_district := serviceSysDistrict.EntCli.SysDistrict.Query()
+						query_district := repoSysDistrict.EntCli.SysDistrict.Query()
 						query_district = query_district.Where(sysdistrict.IDEQ(*item.ParentID))
 						pdistrict, _ = query_district.First(ctx)
 						if pdistrict != nil {
@@ -171,9 +192,9 @@ var CmdLoad = &cobra.Command{
 					}
 				}
 
-				create_district := serviceSysDistrict.EntCli.SysDistrict.Create()
+				create_district := repoSysDistrict.EntCli.SysDistrict.Create()
 
-				create_district_input := serviceSysDistrict.ToEntCreateSysDistrictInput(&district)
+				create_district_input := repoSysDistrict.ToEntCreateSysDistrictInput(&district)
 
 				// log.Println(" ----- ===== --- create_district_input : [", create_district_input, "] ")
 				// log.Println(" ----- ===== --- create_district_input.ParentID : [", create_district_input.ParentID, "] ")
@@ -248,7 +269,7 @@ var CmdLoad = &cobra.Command{
 					// // 修复被破坏平衡的其他节点的左值。大于 parent_id 右值的所有节点的左值加 2。
 
 					log.Println(whiteOnGreen, " ======  sch_district.ID  ====== ", sch_district.ID)
-					update_district_l := serviceSysDistrict.EntCli.SysDistrict.Update()
+					update_district_l := repoSysDistrict.EntCli.SysDistrict.Update()
 					update_district_l = update_district_l.Where(sysdistrict.IDNEQ(sch_district.ID))
 					update_district_l = update_district_l.Where(sysdistrict.TreeIDEQ(*pdistrict.TreeID))
 					update_district_l = update_district_l.Where(sysdistrict.TreeLeftGT(*pdistrict.TreeRight))
@@ -259,7 +280,7 @@ var CmdLoad = &cobra.Command{
 					log.Println(whiteOnGreen, " ====== err ====== ", err)
 
 					// // 修复被破坏平衡的其他节点的右值。大于等于 parent_id 右值的所有节点的右值加 2
-					update_district_r := serviceSysDistrict.EntCli.SysDistrict.Update()
+					update_district_r := repoSysDistrict.EntCli.SysDistrict.Update()
 					update_district_r = update_district_r.Where(sysdistrict.IDNEQ(sch_district.ID))
 					update_district_r = update_district_r.Where(sysdistrict.TreeIDEQ(*pdistrict.TreeID))
 					update_district_r = update_district_r.Where(sysdistrict.TreeRightGTE(*pdistrict.TreeRight))
@@ -285,12 +306,7 @@ var CmdLoad = &cobra.Command{
 	},
 }
 
-func init() {
-
-	// PersistentFlags() for all flags only in current cmd
-
-	CmdLoad.PersistentFlags().String("datafile", "", "data file path")
-	CmdLoad.MarkPersistentFlagRequired("datafile")
+func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) {
 
 }
 

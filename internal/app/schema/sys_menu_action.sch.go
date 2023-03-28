@@ -4,11 +4,11 @@ package schema
 
 // MenuAction 菜单动作对象
 type MenuAction struct {
-	ID        string              `yaml:"-" json:"id" `                         // 唯一标识
-	MenuID    string              `yaml:"-" binding:"required" json:"menu_id"`  // 菜单ID
-	Code      string              `yaml:"code" binding:"required" json:"code"`  // 动作编号
-	Name      string              `yaml:"name" binding:"required" json:"name"`  // 动作名称
-	Resources MenuActionResources `yaml:"resources,omitempty" json:"resources"` // 资源列表
+	ID        string              `yaml:"id" json:"id" `                             // 唯一标识
+	MenuID    string              `yaml:"menu_id" json:"menu_id" binding:"required"` // 菜单ID
+	Code      string              `yaml:"code" binding:"required" json:"code"`       // 动作编号
+	Name      string              `yaml:"name" binding:"required" json:"name"`       // 动作名称
+	Resources MenuActionResources `yaml:"resources,omitempty" json:"resources"`      // 资源列表
 }
 
 // MenuActionQueryParam 查询条件

@@ -15,11 +15,11 @@ require (
 	github.com/go-saas/lazy v1.0.0
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/golang-jwt/jwt/v4 v4.4.3
+	github.com/golang-module/carbon/v2 v2.2.3
 	github.com/google/gops v0.3.26
 	github.com/google/uuid v1.3.0
 	github.com/google/wire v0.5.0
 	github.com/gotidy/ptr v1.4.0
-	github.com/hedwigz/entviz v0.0.0-20221011080911-9d47f6f1d818
 	github.com/hibiken/asynq v0.24.0
 	github.com/hibiken/asynqmon v0.7.1
 	github.com/influxdata/influxdb-client-go/v2 v2.12.2
@@ -82,6 +82,7 @@ require (
 	github.com/go-playground/validator/v10 v10.12.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
@@ -135,7 +136,6 @@ require (
 	github.com/zclconf/go-cty v1.8.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.7.0 // indirect
-	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
 	golang.org/x/image v0.5.0 // indirect
 	golang.org/x/mod v0.8.0 // indirect
 	golang.org/x/net v0.8.0 // indirect
