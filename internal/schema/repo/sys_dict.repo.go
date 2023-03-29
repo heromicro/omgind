@@ -244,7 +244,6 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) (*schema
 		return nil, err
 	}
 
-	item.UpdatedAt = time.Now()
 	iteminput := a.ToEntUpdateSysDictInput(&item)
 	iteminput.UpdatedAt = nil
 

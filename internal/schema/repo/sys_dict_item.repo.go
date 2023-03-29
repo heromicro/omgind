@@ -120,8 +120,7 @@ func (a *DictItem) Get(ctx context.Context, id string, opts ...schema.DictItemQu
 
 // Create 创建数据
 func (a *DictItem) Create(ctx context.Context, item schema.DictItem) (*schema.DictItem, error) {
-	item.CreatedAt = time.Now()
-	item.UpdatedAt = time.Now()
+
 	itemInput := a.ToEntCreateSysDictItemInput(&item)
 
 	dictitem, err := a.EntCli.SysDictItem.Create().SetInput(*itemInput).Save(ctx)
@@ -140,7 +139,7 @@ func (a *DictItem) Update(ctx context.Context, id string, item schema.DictItem) 
 	if err != nil {
 		return nil, err
 	}
-	item.UpdatedAt = time.Now()
+
 	itemInput := a.ToEntUpdateSysDictItemInput(&item)
 
 	dictitem, err := oitem.Update().SetInput(*itemInput).Save(ctx)

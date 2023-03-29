@@ -1,9 +1,11 @@
 package schema
 
-import "time"
+import "encoding/json"
 
 // Dict 字典对象
 type Dict struct {
+	TreeMixin
+
 	ID string `json:"id" yaml:"id"` // 唯一标识
 
 	NameCn   string `json:"name_cn" binding:"required" yaml:"name_cn"`     // 字典名（中）
@@ -12,12 +14,20 @@ type Dict struct {
 	Memo     string `json:"memo" yaml:"memo"`                              // 备注
 	Sort     int    `json:"sort" yaml:"sort"`                              // 排序
 
-	Creator   string    `json:"creator" yaml:"-"`    // 创建者
-	CreatedAt time.Time `json:"created_at" yaml:"-"` // 创建时间
-	UpdatedAt time.Time `json:"updated_at" yaml:"-"` // 更新时间
+	Creator string `json:"creator" yaml:"-"` // 创建者
+	// CreatedAt time.Time `json:"created_at" yaml:"-"` // 创建时间
+	// UpdatedAt time.Time `json:"updated_at" yaml:"-"` // 更新时间
 
 	Items DictItems `json:"items" binding:"required,gt=0" yaml:"items"` // 字典项列表
 
+}
+
+func (s *Dict) JSONString() string {
+	js, err := json.Marshal(s)
+	if err != nil {
+		return ""
+	}
+	return string(js)
 }
 
 // DictQueryParam 查询条件
