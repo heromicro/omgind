@@ -113,7 +113,7 @@ func (a Menus) ToTree() MenuTrees {
 			Name:       item.Name,
 			Icon:       item.Icon,
 			Router:     item.Router,
-			ParentID:   *item.ParentID,
+			ParentID:   item.ParentID,
 			ParentPath: item.ParentPath,
 			Sort:       item.Sort,
 			IsShow:     item.IsShow,
@@ -148,7 +148,7 @@ type MenuTree struct {
 	Name       string      `yaml:"name" json:"name"`               // 菜单名称
 	Icon       string      `yaml:"icon" json:"icon"`               // 菜单图标
 	Router     string      `yaml:"router,omitempty" json:"router"` // 访问路由
-	ParentID   string      `yaml:"parent_id" json:"parent_id"`     // 父级ID
+	ParentID   *string     `yaml:"parent_id" json:"parent_id"`     // 父级ID
 	ParentPath string      `yaml:"-" json:"parent_path"`           // 父级路径
 	Sort       int         `yaml:"sort" json:"sort"`               // 排序值
 	IsShow     *bool       `json:"is_show"`
@@ -171,11 +171,11 @@ func (a MenuTrees) ToTree() MenuTrees {
 
 	var list MenuTrees
 	for _, item := range a {
-		if item.ParentID == "" {
+		if item.ParentID == nil || *item.ParentID == "" {
 			list = append(list, item)
 			continue
 		}
-		if pitem, ok := mi[item.ParentID]; ok {
+		if pitem, ok := mi[*item.ParentID]; ok {
 			if pitem.Children == nil {
 				children := MenuTrees{item}
 				pitem.Children = &children
