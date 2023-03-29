@@ -2,29 +2,32 @@ package schema
 
 import (
 	"strings"
-	"time"
 
 	"github.com/heromicro/omgind/pkg/helper/json"
 )
 
 // Menu 菜单对象
 type Menu struct {
-	ID         string      `json:"id" yaml:"id"`                                  // 唯一标识
-	Name       string      `json:"name" binding:"required" yaml:"name"`           // 菜单名称
-	Sort       int         `json:"sort" yaml:"sort"`                              // 排序值
-	Icon       string      `json:"icon" yaml:"icon"`                              // 菜单图标
-	Router     string      `json:"router" yaml:"router"`                          // 访问路由
-	ParentID   string      `json:"parent_id" yaml:"parent_id"`                    // 父级ID
-	ParentPath string      `json:"parent_path" yaml:"parent_path"`                // 父级路径
-	IsActive   *bool       `json:"is_active" binding:"required" yaml:"is_active"` // 状态
-	Memo       string      `json:"memo" yaml:"memo"`                              // 备注
-	IsShow     *bool       `json:"is_show" yaml:"is_show"`                        // 是否显示
-	Level      int32       `json:"level" yaml:"level"`                            // 层级
-	IsLeaf     bool        `json:"is_leaf" yaml:"is_leaf"`                        // 是否子叶
-	Creator    string      `json:"creator" yaml:"-"`                              // 创建者
-	CreatedAt  *time.Time  `json:"created_at" yaml:"-"`                           // 创建时间
-	UpdatedAt  *time.Time  `json:"updated_at" yaml:"-"`                           // 更新时间
-	Actions    MenuActions `json:"actions" yaml:"actions"`                        // 动作列表
+	TreeMixin
+	TimeMixin
+
+	ID         string  `json:"id" yaml:"id"`                                  // 唯一标识
+	Name       string  `json:"name" binding:"required" yaml:"name"`           // 菜单名称
+	Sort       int     `json:"sort" yaml:"sort"`                              // 排序值
+	Icon       string  `json:"icon" yaml:"icon"`                              // 菜单图标
+	Router     string  `json:"router" yaml:"router"`                          // 访问路由
+	ParentID   *string `json:"parent_id" yaml:"parent_id"`                    // 父级ID
+	ParentPath string  `json:"parent_path" yaml:"parent_path"`                // 父级路径
+	IsActive   *bool   `json:"is_active" binding:"required" yaml:"is_active"` // 状态
+	Memo       string  `json:"memo" yaml:"memo"`                              // 备注
+	IsShow     *bool   `json:"is_show" yaml:"is_show"`                        // 是否显示
+	Level      int32   `json:"level" yaml:"level"`                            // 层级
+	IsLeaf     bool    `json:"is_leaf" yaml:"is_leaf"`                        // 是否子叶
+
+	Creator string `json:"creator" yaml:"-"` // 创建者
+	// CreatedAt  *time.Time  `json:"created_at" yaml:"-"`                           // 创建时间
+	// UpdatedAt  *time.Time  `json:"updated_at" yaml:"-"`                           // 更新时间
+	Actions MenuActions `json:"actions" yaml:"actions"` // 动作列表
 }
 
 func (a *Menu) String() string {
@@ -110,7 +113,7 @@ func (a Menus) ToTree() MenuTrees {
 			Name:       item.Name,
 			Icon:       item.Icon,
 			Router:     item.Router,
-			ParentID:   item.ParentID,
+			ParentID:   *item.ParentID,
 			ParentPath: item.ParentPath,
 			Sort:       item.Sort,
 			IsShow:     item.IsShow,

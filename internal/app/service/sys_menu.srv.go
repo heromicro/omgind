@@ -81,7 +81,7 @@ func (a *Menu) createMenus(ctx context.Context, parentID string, list schema.Men
 			Level:    tritem.Level,
 			Icon:     tritem.Icon,
 			Router:   tritem.Router,
-			ParentID: parentID,
+			ParentID: &parentID,
 			IsActive: ptr.Bool(true),
 			IsShow:   tritem.IsShow,
 			Actions:  tritem.Actions,
@@ -91,7 +91,7 @@ func (a *Menu) createMenus(ctx context.Context, parentID string, list schema.Men
 			return err
 		}
 
-		parentPath, err := a.getParentPath(ctx, sitem.ParentID)
+		parentPath, err := a.getParentPath(ctx, *sitem.ParentID)
 		if err != nil {
 			return err
 		}
@@ -213,7 +213,7 @@ func (a *Menu) checkName(ctx context.Context, item schema.Menu) error {
 		PaginationParam: schema.PaginationParam{
 			OnlyCount: true,
 		},
-		ParentID: &item.ParentID,
+		ParentID: item.ParentID,
 		Name:     item.Name,
 	})
 	if err != nil {
@@ -231,11 +231,11 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, 
 		return nil, err
 	}
 
-	pitem, err := a.getParent(ctx, item.ParentID)
+	pitem, err := a.getParent(ctx, *item.ParentID)
 	if err != nil {
 		return nil, err
 	}
-	item.ParentPath = a.getParentPathNet(pitem, item.ParentID)
+	item.ParentPath = a.getParentPathNet(pitem, *item.ParentID)
 	item.Level = 1
 	if pitem != nil {
 		item.Level = pitem.Level + 1
@@ -348,7 +348,7 @@ func (a *Menu) joinParentPath(parent, id string) string {
 
 // Update 更新数据
 func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema.Menu, error) {
-	if id == item.ParentID {
+	if id == *item.ParentID {
 		return nil, errors.ErrInvalidParent
 	}
 
@@ -367,14 +367,14 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 	item.Creator = oldItem.Creator
 	item.CreatedAt = oldItem.CreatedAt
 
-	pitem, err := a.getParent(ctx, item.ParentID)
+	pitem, err := a.getParent(ctx, *item.ParentID)
 
 	if oldItem.ParentID != item.ParentID {
 		// parentPath, err := a.getParentPath(ctx, item.ParentID)
 		if err != nil {
 			return nil, err
 		}
-		item.ParentPath = a.getParentPathNet(pitem, item.ParentID)
+		item.ParentPath = a.getParentPathNet(pitem, *item.ParentID)
 		item.Level = 1
 		if pitem == nil {
 			item.Level = pitem.Level + 1

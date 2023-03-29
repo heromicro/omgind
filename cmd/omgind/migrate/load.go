@@ -9,11 +9,17 @@ import (
 	"os"
 	"strings"
 
+	"entgo.io/ent/dialect/sql"
 	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/cmd/omgind/common"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
+	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
+	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
+	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/schema/repo"
 	"github.com/jszwec/csvutil"
 	"github.com/spf13/cobra"
@@ -336,10 +342,11 @@ func load_district_data(ctx context.Context, eclient *ent.Client, datafile strin
 
 func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) error {
 
-	greenOnWhite := chalk.Green.NewStyle().WithBackground(chalk.White)
+	greenOnWhite := chalk.Blue.NewStyle().WithBackground(chalk.White)
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
 	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
 	whiteOnGreen := chalk.Cyan.NewStyle().WithBackground(chalk.Green)
+	cyanOnYellow := chalk.White.NewStyle().WithBackground(chalk.Magenta)
 
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -368,25 +375,38 @@ func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) e
 
 		for _, d := range dicts {
 			for _, di := range d.Items {
+				log.Println(cyanOnYellow, " di :: ", di.JSONString(), chalk.Reset)
 				dictItemInput := repoDictItem.ToEntCreateSysDictItemInput(di)
-				create_dictitem := tx.SysDictItem.Create().SetInput(*dictItemInput)
+				log.Println(greenOnWhite, " di :: ", dictItemInput.DictID, chalk.Reset)
+
+				create_dictitem := tx.SysDictItem.Create().SetID(di.ID).SetInput(*dictItemInput)
+
+				log.Println(greenOnWhite, " di :: ", create_dictitem, chalk.Reset)
+
 				dictItemBulk = append(dictItemBulk, create_dictitem)
 			}
+
+			log.Println(cyanOnYellow, " di :: ", d.JSONString(), chalk.Reset)
 
 			d.Items = nil
 			dictInput := repoDict.ToEntCreateSysDictInput(d)
 
-			create_dict := tx.SysDict.Create().SetInput(*dictInput)
+			create_dict := tx.SysDict.Create().SetID(d.ID).SetInput(*dictInput)
 			dictBulk = append(dictBulk, create_dict)
 		}
 
-		err = tx.SysDict.CreateBulk(dictBulk...).OnConflict().UpdateNewValues().Exec(ctx)
+		err = tx.SysDict.CreateBulk(dictBulk...).OnConflict(
+			sql.ConflictColumns(sysdict.FieldID),
+		).UpdateNewValues().Exec(ctx)
 		if err != nil {
 			log.Println(greenOnWhite, " creatbulk dict ", err, chalk.Reset)
 			return err
 		}
+		log.Println(greenOnWhite, " finish creatbulk dict ", chalk.Reset)
 
-		err = tx.SysDictItem.CreateBulk(dictItemBulk...).OnConflict().UpdateNewValues().Exec(ctx)
+		err = tx.SysDictItem.CreateBulk(dictItemBulk...).OnConflict(
+			sql.ConflictColumns(sysdictitem.FieldID),
+		).UpdateNewValues().Exec(ctx)
 		if err != nil {
 			log.Println(cyanOnBlue, " creatbulk dict item ", err, chalk.Reset)
 
@@ -447,39 +467,51 @@ func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) e
 
 				for _, r := range a.Resources {
 					resourceInput := repoResource.ToEntCreateSysMenuActionResourceInput(r)
-					create_resoure := tx.SysMenuActionResource.Create().SetInput(*resourceInput)
+					create_resoure := tx.SysMenuActionResource.Create().SetID(r.ID).SetInput(*resourceInput)
 					resourceBulk = append(resourceBulk, create_resoure)
 				}
 				a.Resources = nil
 
 				actionInput := repoAction.ToEntCreateSysMenuActionInput(a)
-				create_action := tx.SysMenuAction.Create().SetInput(*actionInput)
+				create_action := tx.SysMenuAction.Create().SetID(a.ID).SetInput(*actionInput)
 				actionBulk = append(actionBulk, create_action)
 			}
 			m.Actions = nil
+			if m.ParentID != nil && *m.ParentID == "" {
+				m.ParentID = nil
+			}
 
 			menuInput := repoMenu.ToEntCreateSysMenuInput(m)
-			create_menu := tx.SysMenu.Create().SetInput(*menuInput)
+			create_menu := tx.SysMenu.Create().SetID(m.ID).SetInput(*menuInput)
 			menuBulk = append(menuBulk, create_menu)
 		}
 
-		err = tx.SysMenu.CreateBulk(menuBulk...).OnConflict().UpdateNewValues().Exec(ctx)
+		err = tx.SysMenu.CreateBulk(menuBulk...).OnConflict(
+			sql.ConflictColumns(sysmenu.FieldID),
+		).UpdateNewValues().Exec(ctx)
 		if err != nil {
 			log.Println(cyanOnBlue, " creatbulk menu ", err, chalk.Reset)
 			return err
 		}
+		log.Println(greenOnWhite, " finish creatbulk menu ")
 
-		err = tx.SysMenuAction.CreateBulk(actionBulk...).OnConflict().UpdateNewValues().Exec(ctx)
+		err = tx.SysMenuAction.CreateBulk(actionBulk...).OnConflict(
+			sql.ConflictColumns(sysmenuaction.FieldID),
+		).UpdateNewValues().Exec(ctx)
 		if err != nil {
 			log.Println(greenOnWhite, " creatbulk menu action ", err, chalk.Reset)
 			return err
 		}
+		log.Println(greenOnWhite, " finish creatbulk action ")
 
-		err = tx.SysMenuActionResource.CreateBulk(resourceBulk...).OnConflict().UpdateNewValues().Exec(ctx)
+		err = tx.SysMenuActionResource.CreateBulk(resourceBulk...).OnConflict(
+			sql.ConflictColumns(sysmenuactionresource.FieldID),
+		).UpdateNewValues().Exec(ctx)
 		if err != nil {
 			log.Println(cyanOnBlue, " creatbulk menu action resource ", err, chalk.Reset)
 			return err
 		}
+		log.Println(greenOnWhite, " finish creatbulk action resource ")
 
 		return nil
 	})
@@ -493,3 +525,4 @@ func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) e
 }
 
 // go run cmd/omgind/main.go migrate load --conf configs/config.toml --format=csv --tablename=districts --datafile=./scripts/sql/district_full.csv
+// go run cmd/omgind/main.go migrate load --conf configs/config.toml --format=yaml --tablename=menu --datafile=./configs/menu.2023-03-28_64619.yaml

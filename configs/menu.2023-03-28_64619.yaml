@@ -1,0 +1,1046 @@
+- id: 01GWKRR6V68B061WYFT8QK9NYS
+  name: 首页
+  sort: 1
+  icon: dashboard
+  router: /dashboard
+  parent_id: ""
+  parent_path: ""
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 1
+  is_leaf: false
+  actions: []
+- id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
+  name: DEMO
+  sort: 8
+  icon: tag
+  router: /example/demo
+  parent_id: ""
+  parent_path: ""
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 1
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6V9816YH01BA6PA6PW3
+    menu_id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6VA8PSZGTZGVK03VPY1
+      action_id: 01GWKRR6V9816YH01BA6PA6PW3
+      method: POST
+      path: /api/v2/demos
+  - id: 01GWKRR6VC1NE6NTRXKS1DD444
+    menu_id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6VDA9RWDPGFD1H6VAX1
+      action_id: 01GWKRR6VC1NE6NTRXKS1DD444
+      method: PUT
+      path: /api/v2/demos/:id
+    - id: 01GWKRR6VDAPWGHDR2MP9EM891
+      action_id: 01GWKRR6VC1NE6NTRXKS1DD444
+      method: GET
+      path: /api/v2/demos/:id
+  - id: 01GWKRR6VEDDY1BWJE0588V7D1
+    menu_id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6VFVMB5H9834DZ5Y0NH
+      action_id: 01GWKRR6VEDDY1BWJE0588V7D1
+      method: DELETE
+      path: /api/v2/demos/:id
+  - id: 01GWKRR6VFRZXVKXR1HY025AWN
+    menu_id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6VGV4Y8P5DKMVSPEEJY
+      action_id: 01GWKRR6VFRZXVKXR1HY025AWN
+      method: GET
+      path: /api/v2/demos
+  - id: 01GWKRR6VHF3NPV2K4N9MVSEHM
+    menu_id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6VH2D88CKBG4RK1K28A
+      action_id: 01GWKRR6VHF3NPV2K4N9MVSEHM
+      method: PATCH
+      path: /api/v2/demos/:id/disable
+  - id: 01GWKRR6VJBY4W02CQ5F7KAF7S
+    menu_id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6VJX3Y4D1GKYAP97BF8
+      action_id: 01GWKRR6VJBY4W02CQ5F7KAF7S
+      method: PATCH
+      path: /api/v2/demos/:id/enable
+  - id: 01GWKRR6VKMPP4XERVB0W2ETGH
+    menu_id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR6VM12ZD9HRKQHBY56W1
+      action_id: 01GWKRR6VKMPP4XERVB0W2ETGH
+      method: GET
+      path: /api/v2/demos/:id/view
+- id: 01GWKRR6VNVTPT04H42YS3YMGS
+  name: 系统管理
+  sort: 39
+  icon: setting
+  router: ""
+  parent_id: ""
+  parent_path: ""
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 1
+  is_leaf: false
+  actions: []
+- id: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  name: 企业管理
+  sort: 59
+  icon: setting
+  router: ""
+  parent_id: ""
+  parent_path: ""
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 1
+  is_leaf: false
+  actions: []
+- id: 01GWKRR70D8XY7206ZH3VPJ2AE
+  name: 开发状态
+  sort: 999
+  icon: setting
+  router: ""
+  parent_id: ""
+  parent_path: ""
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 1
+  is_leaf: false
+  actions: []
+- id: 01GWKRR6YKZZFNC7CRRQ68VS8T
+  name: 企业信息
+  sort: 29
+  icon: audit
+  router: /organ/organ
+  parent_id: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  parent_path: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6YMX6V39RMHHN3JY8XT
+    menu_id: 01GWKRR6YKZZFNC7CRRQ68VS8T
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6YNQATPR446Z5M3D8DX
+      action_id: 01GWKRR6YMX6V39RMHHN3JY8XT
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+    - id: 01GWKRR6YPCR7XN4FPQX11NPVM
+      action_id: 01GWKRR6YMX6V39RMHHN3JY8XT
+      method: POST
+      path: /api/v2/org-organs
+  - id: 01GWKRR6YPZY53G526CBMZQX4P
+    menu_id: 01GWKRR6YKZZFNC7CRRQ68VS8T
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6YQAM5631ESHMS176ZZ
+      action_id: 01GWKRR6YPZY53G526CBMZQX4P
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+    - id: 01GWKRR6YR34ZVCXMSPP7PB04T
+      action_id: 01GWKRR6YPZY53G526CBMZQX4P
+      method: PUT
+      path: /api/v2/org-organs/:id
+    - id: 01GWKRR6YREW58AVCTBHFVFP6H
+      action_id: 01GWKRR6YPZY53G526CBMZQX4P
+      method: GET
+      path: /api/v2/org-organs/:id
+  - id: 01GWKRR6YS3VAEXCZJN9B4MSPQ
+    menu_id: 01GWKRR6YKZZFNC7CRRQ68VS8T
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6YTN868TGEXSVKXVBE4
+      action_id: 01GWKRR6YS3VAEXCZJN9B4MSPQ
+      method: DELETE
+      path: /api/v2/org-organs/:id
+  - id: 01GWKRR6YYSH5J9Y586JQ7VMY5
+    menu_id: 01GWKRR6YKZZFNC7CRRQ68VS8T
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6Z0FN0KH6QASXMYN4DJ
+      action_id: 01GWKRR6YYSH5J9Y586JQ7VMY5
+      method: GET
+      path: /api/v2/org-organs
+  - id: 01GWKRR6Z0XM1Y2NKHVW3HSC4N
+    menu_id: 01GWKRR6YKZZFNC7CRRQ68VS8T
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6Z1E9TKW9N2CRBNWKKF
+      action_id: 01GWKRR6Z0XM1Y2NKHVW3HSC4N
+      method: PATCH
+      path: /api/v2/org-organs/:id/disable
+  - id: 01GWKRR6Z2QXR0CCS478DQTTX3
+    menu_id: 01GWKRR6YKZZFNC7CRRQ68VS8T
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6Z31G508EXDGTA7TKST
+      action_id: 01GWKRR6Z2QXR0CCS478DQTTX3
+      method: PATCH
+      path: /api/v2/org-organs/:id/enable
+  - id: 01GWKRR6Z3NW3F87EHW170JAWK
+    menu_id: 01GWKRR6YKZZFNC7CRRQ68VS8T
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR6Z4VR6T45TF6XJFJMVE
+      action_id: 01GWKRR6Z3NW3F87EHW170JAWK
+      method: GET
+      path: /api/v2/org-organs/:id/view
+- id: 01GWKRR6Z6MMAG5TVGDZYX2V06
+  name: 部门管理
+  sort: 49
+  icon: audit
+  router: /organ/dept
+  parent_id: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  parent_path: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6Z79ASWDX6PW2W5267T
+    menu_id: 01GWKRR6Z6MMAG5TVGDZYX2V06
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6Z8414JB7GZVXJTCRN0
+      action_id: 01GWKRR6Z79ASWDX6PW2W5267T
+      method: POST
+      path: /api/v2/org-depts
+    - id: 01GWKRR6Z8TNJZGQ4KKAWK5B95
+      action_id: 01GWKRR6Z79ASWDX6PW2W5267T
+      method: GET
+      path: /api/v2/org-organs.select
+  - id: 01GWKRR6Z9QV9B2VMCGK96W3NX
+    menu_id: 01GWKRR6Z6MMAG5TVGDZYX2V06
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6ZATHA5ZQ108ETN64RK
+      action_id: 01GWKRR6Z9QV9B2VMCGK96W3NX
+      method: GET
+      path: /api/v2/org-organs.select
+    - id: 01GWKRR6ZBP3BRK4HS808RZT83
+      action_id: 01GWKRR6Z9QV9B2VMCGK96W3NX
+      method: GET
+      path: /api/v2/org-depts/:id
+    - id: 01GWKRR6ZCCRD7B9KRHVK1CR84
+      action_id: 01GWKRR6Z9QV9B2VMCGK96W3NX
+      method: PUT
+      path: /api/v2/org-depts/:id
+  - id: 01GWKRR6ZDQHRKXG0PSCXZRQH3
+    menu_id: 01GWKRR6Z6MMAG5TVGDZYX2V06
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6ZDJ7F762PDND0YNY31
+      action_id: 01GWKRR6ZDQHRKXG0PSCXZRQH3
+      method: DELETE
+      path: /api/v2/org-depts/:id
+  - id: 01GWKRR6ZECTFMWH3C37T4MN48
+    menu_id: 01GWKRR6Z6MMAG5TVGDZYX2V06
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6ZF1FF9WZ40NEKHYNKR
+      action_id: 01GWKRR6ZECTFMWH3C37T4MN48
+      method: GET
+      path: /api/v2/org-depts
+  - id: 01GWKRR6ZF6CB5DPDGCSB06FNX
+    menu_id: 01GWKRR6Z6MMAG5TVGDZYX2V06
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6ZGDBKQBZW1KF21HZYV
+      action_id: 01GWKRR6ZF6CB5DPDGCSB06FNX
+      method: PATCH
+      path: /api/v2/org-depts/:id/disable
+  - id: 01GWKRR6ZHRS9EFNZ9825B1V64
+    menu_id: 01GWKRR6Z6MMAG5TVGDZYX2V06
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6ZHYG5CXXMNQ4X4SN47
+      action_id: 01GWKRR6ZHRS9EFNZ9825B1V64
+      method: PATCH
+      path: /api/v2/org-depts/:id/enable
+  - id: 01GWKRR6ZJ6YFV3S7Q76C3HBPE
+    menu_id: 01GWKRR6Z6MMAG5TVGDZYX2V06
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR6ZJGR6KYFHG8YH6GZH6
+      action_id: 01GWKRR6ZJ6YFV3S7Q76C3HBPE
+      method: GET
+      path: /api/v2/org-depts/:id/view
+- id: 01GWKRR6VSDZXG30DQA2BT7GW8
+  name: 角色管理
+  sort: 49
+  icon: audit
+  router: /system/role
+  parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
+  parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6VTRWTTKQFK5XAB4TVW
+    menu_id: 01GWKRR6VSDZXG30DQA2BT7GW8
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6VVKCYJ1WK198RK7GPM
+      action_id: 01GWKRR6VTRWTTKQFK5XAB4TVW
+      method: GET
+      path: /api/v2/sys-menus.tree
+    - id: 01GWKRR6VW0HTGWPYJSGT7A9E7
+      action_id: 01GWKRR6VTRWTTKQFK5XAB4TVW
+      method: POST
+      path: /api/v2/sys-roles
+  - id: 01GWKRR6VWMPMGXKHTWXD25GTE
+    menu_id: 01GWKRR6VSDZXG30DQA2BT7GW8
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6VX4780WWPPTBYS904E
+      action_id: 01GWKRR6VWMPMGXKHTWXD25GTE
+      method: GET
+      path: /api/v2/sys-menus.tree
+    - id: 01GWKRR6VYNNCQNJ5S7CPH7BJC
+      action_id: 01GWKRR6VWMPMGXKHTWXD25GTE
+      method: PUT
+      path: /api/v2/sys-roles/:id
+    - id: 01GWKRR6VYZE36HFYJ3XHZZBAJ
+      action_id: 01GWKRR6VWMPMGXKHTWXD25GTE
+      method: GET
+      path: /api/v2/sys-roles/:id
+  - id: 01GWKRR6VZMTM4941T13E54TPH
+    menu_id: 01GWKRR6VSDZXG30DQA2BT7GW8
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6W0VTBT30MY3Y5WXAE1
+      action_id: 01GWKRR6VZMTM4941T13E54TPH
+      method: DELETE
+      path: /api/v2/sys-roles/:id
+  - id: 01GWKRR6W0JQ4CS4KKV1ZYPD8T
+    menu_id: 01GWKRR6VSDZXG30DQA2BT7GW8
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6W16FXD81564EKP2AHK
+      action_id: 01GWKRR6W0JQ4CS4KKV1ZYPD8T
+      method: GET
+      path: /api/v2/sys-roles
+  - id: 01GWKRR6W1JRJ9RJRYHN69ZJ11
+    menu_id: 01GWKRR6VSDZXG30DQA2BT7GW8
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6W2H71SXRXT3DG0DV4H
+      action_id: 01GWKRR6W1JRJ9RJRYHN69ZJ11
+      method: PATCH
+      path: /api/v2/sys-roles/:id/disable
+  - id: 01GWKRR6W2H203X7NK610W9GRT
+    menu_id: 01GWKRR6VSDZXG30DQA2BT7GW8
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6W39SEV589V55QBHDXC
+      action_id: 01GWKRR6W2H203X7NK610W9GRT
+      method: PATCH
+      path: /api/v2/sys-roles/:id/enable
+  - id: 01GWKRR6W4S1HGT7ZZYRVNMRR7
+    menu_id: 01GWKRR6VSDZXG30DQA2BT7GW8
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR6W4DYNYP1X4SE15Y8YQ
+      action_id: 01GWKRR6W4S1HGT7ZZYRVNMRR7
+      method: GET
+      path: /api/v2/sys-roles/:id/view
+- id: 01GWKRR6ZMZX7X80ZR67RPYQ14
+  name: 员工管理
+  sort: 49
+  icon: audit
+  router: /organ/staff
+  parent_id: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  parent_path: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6ZMAWXTDJ1BZCS0YAMH
+    menu_id: 01GWKRR6ZMZX7X80ZR67RPYQ14
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6ZN0FXTR8XY7QYT6CF9
+      action_id: 01GWKRR6ZMAWXTDJ1BZCS0YAMH
+      method: GET
+      path: /api/v2/sys-dicts/:id/items
+    - id: 01GWKRR6ZNKY1BXHGS19X7V684
+      action_id: 01GWKRR6ZMAWXTDJ1BZCS0YAMH
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+    - id: 01GWKRR6ZP47BAY219YQRB4MR1
+      action_id: 01GWKRR6ZMAWXTDJ1BZCS0YAMH
+      method: POST
+      path: /api/v2/org-staffs
+    - id: 01GWKRR6ZPG360WDCQKGP8TFRX
+      action_id: 01GWKRR6ZMAWXTDJ1BZCS0YAMH
+      method: GET
+      path: /api/v2/org-organs.select
+  - id: 01GWKRR6ZQYVHBX9MNB9Q0ENC8
+    menu_id: 01GWKRR6ZMZX7X80ZR67RPYQ14
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6ZQRT6830F2WKWFQQD5
+      action_id: 01GWKRR6ZQYVHBX9MNB9Q0ENC8
+      method: GET
+      path: /api/v2/sys-dicts/:id/items
+    - id: 01GWKRR6ZRGKB5N8DW4E0TF9SP
+      action_id: 01GWKRR6ZQYVHBX9MNB9Q0ENC8
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+    - id: 01GWKRR6ZRJXWHERFXPYRTV03W
+      action_id: 01GWKRR6ZQYVHBX9MNB9Q0ENC8
+      method: GET
+      path: /api/v2/org-organs.select
+    - id: 01GWKRR6ZRPEADNQKM19DQZJK6
+      action_id: 01GWKRR6ZQYVHBX9MNB9Q0ENC8
+      method: GET
+      path: /api/v2/org-staffs/:id
+    - id: 01GWKRR6ZS8J3Q4Q6JG5NR552Y
+      action_id: 01GWKRR6ZQYVHBX9MNB9Q0ENC8
+      method: PUT
+      path: /api/v2/org-staffs/:id
+  - id: 01GWKRR6ZS16YX5PY7EFYSXZMZ
+    menu_id: 01GWKRR6ZMZX7X80ZR67RPYQ14
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6ZTAQ0JBBCZ3105BPKW
+      action_id: 01GWKRR6ZS16YX5PY7EFYSXZMZ
+      method: DELETE
+      path: /api/v2/org-staffs/:id
+  - id: 01GWKRR6ZVT4WVMHNK3358SRBX
+    menu_id: 01GWKRR6ZMZX7X80ZR67RPYQ14
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6ZVBQHW81GWTAJXVSPT
+      action_id: 01GWKRR6ZVT4WVMHNK3358SRBX
+      method: GET
+      path: /api/v2/org-staffs
+  - id: 01GWKRR6ZWSKNFQ4G4MPSKR6V0
+    menu_id: 01GWKRR6ZMZX7X80ZR67RPYQ14
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6ZXHQ07DWQ4E49HPZ3G
+      action_id: 01GWKRR6ZWSKNFQ4G4MPSKR6V0
+      method: PATCH
+      path: /api/v2/org-staffs/:id/disable
+  - id: 01GWKRR6ZX9CJV1B7J4B4KS070
+    menu_id: 01GWKRR6ZMZX7X80ZR67RPYQ14
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6ZYFXS1V4J6NFA7QH0R
+      action_id: 01GWKRR6ZX9CJV1B7J4B4KS070
+      method: PATCH
+      path: /api/v2/org-staffs/:id/enable
+  - id: 01GWKRR6ZZJBPYX7FJ2YVDKVY0
+    menu_id: 01GWKRR6ZMZX7X80ZR67RPYQ14
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR6ZZDPTAHZCV5EM2SSPF
+      action_id: 01GWKRR6ZZJBPYX7FJ2YVDKVY0
+      method: GET
+      path: /api/v2/org-staffs/:id/view
+- id: 01GWKRR7019DT23PQ8GH66608X
+  name: 职位管理
+  sort: 59
+  icon: audit
+  router: /organ/position
+  parent_id: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  parent_path: 01GWKRR6YGE0JS4ND3VJPWXDN3
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR7025S44C5T41XXFD35R
+    menu_id: 01GWKRR7019DT23PQ8GH66608X
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR7034N6F5KEDVHGWS7V4
+      action_id: 01GWKRR7025S44C5T41XXFD35R
+      method: GET
+      path: /api/v2/org-organs.select
+    - id: 01GWKRR703E5WVSMVFNYG6GWM3
+      action_id: 01GWKRR7025S44C5T41XXFD35R
+      method: POST
+      path: /api/v2/org-positions
+  - id: 01GWKRR704417WSG2HXFT3RD4X
+    menu_id: 01GWKRR7019DT23PQ8GH66608X
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR704SY362D5J52V4K764
+      action_id: 01GWKRR704417WSG2HXFT3RD4X
+      method: GET
+      path: /api/v2/org-organs.select
+    - id: 01GWKRR705SKNHQDR89MCVYCJV
+      action_id: 01GWKRR704417WSG2HXFT3RD4X
+      method: GET
+      path: /api/v2/org-positions/:id
+    - id: 01GWKRR706GCEK79G2NYMA9DBJ
+      action_id: 01GWKRR704417WSG2HXFT3RD4X
+      method: PUT
+      path: /api/v2/org-positions/:id
+  - id: 01GWKRR706H2DK532K16BRN4B1
+    menu_id: 01GWKRR7019DT23PQ8GH66608X
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR707S3K6MX7805QS5Y78
+      action_id: 01GWKRR706H2DK532K16BRN4B1
+      method: DELETE
+      path: /api/v2/org-positions/:id
+  - id: 01GWKRR707AM5QXRKMA8086DVW
+    menu_id: 01GWKRR7019DT23PQ8GH66608X
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR708V4AB1PHV5N4CAQ5H
+      action_id: 01GWKRR707AM5QXRKMA8086DVW
+      method: GET
+      path: /api/v2/org-positions
+  - id: 01GWKRR708XJ6KHHJJ3MB3GGM4
+    menu_id: 01GWKRR7019DT23PQ8GH66608X
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR7090SNG8MDKT5Z1B6DV
+      action_id: 01GWKRR708XJ6KHHJJ3MB3GGM4
+      method: PATCH
+      path: /api/v2/org-positions/:id/disable
+  - id: 01GWKRR709FGEAFRP7B7TY1KGB
+    menu_id: 01GWKRR7019DT23PQ8GH66608X
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR70A7ANVNF0M6ZP5VKMM
+      action_id: 01GWKRR709FGEAFRP7B7TY1KGB
+      method: PATCH
+      path: /api/v2/org-positions/:id/enable
+  - id: 01GWKRR70BV0T5JYA184BB8EP0
+    menu_id: 01GWKRR7019DT23PQ8GH66608X
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR70BGW4JSETDZ2PTKQWP
+      action_id: 01GWKRR70BV0T5JYA184BB8EP0
+      method: GET
+      path: /api/v2/org-positions/:id/view
+- id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
+  name: 用户管理
+  sort: 59
+  icon: user
+  router: /system/user
+  parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
+  parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6W7KEWFQD5TXZ5G2WTP
+    menu_id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6W8YPSY09KPKEXWY015
+      action_id: 01GWKRR6W7KEWFQD5TXZ5G2WTP
+      method: GET
+      path: /api/v2/sys-roles.select
+    - id: 01GWKRR6W9YTZ59WZSJ67XRRTV
+      action_id: 01GWKRR6W7KEWFQD5TXZ5G2WTP
+      method: POST
+      path: /api/v2/sys-users
+  - id: 01GWKRR6WA9RBGMYN82V07QT59
+    menu_id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6WARV8FMSC9XEB6DDW3
+      action_id: 01GWKRR6WA9RBGMYN82V07QT59
+      method: GET
+      path: /api/v2/sys-roles.select
+    - id: 01GWKRR6WB4TTST8TBC0W3HAFS
+      action_id: 01GWKRR6WA9RBGMYN82V07QT59
+      method: PUT
+      path: /api/v2/sys-users/:id
+    - id: 01GWKRR6WBVJVV9S8H5PDYG5RJ
+      action_id: 01GWKRR6WA9RBGMYN82V07QT59
+      method: GET
+      path: /api/v2/sys-users/:id
+  - id: 01GWKRR6WCYCD2W3NM8TS8P0KA
+    menu_id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6WCFY41HX705H70VT78
+      action_id: 01GWKRR6WCYCD2W3NM8TS8P0KA
+      method: DELETE
+      path: /api/v2/sys-users/:id
+  - id: 01GWKRR6WDHZJCB1D7ZTCVYKHR
+    menu_id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6WD66NJNBPE6ZNM3A7S
+      action_id: 01GWKRR6WDHZJCB1D7ZTCVYKHR
+      method: GET
+      path: /api/v2/sys-users
+  - id: 01GWKRR6WEJ13Y4XF59V6Q0N2B
+    menu_id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6WFS7754N1YGD1X38KV
+      action_id: 01GWKRR6WEJ13Y4XF59V6Q0N2B
+      method: PATCH
+      path: /api/v2/sys-users/:id/disable
+  - id: 01GWKRR6WF92HKVQJJH0M6QTSH
+    menu_id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6WG382HZ0JQ2JKEYGM2
+      action_id: 01GWKRR6WF92HKVQJJH0M6QTSH
+      method: PATCH
+      path: /api/v2/sys-users/:id/enable
+  - id: 01GWKRR6WG1BX733PP616TWAT3
+    menu_id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR6WHPSFQ766APHVBMXM4
+      action_id: 01GWKRR6WG1BX733PP616TWAT3
+      method: GET
+      path: /api/v2/sys-users/:id/view
+- id: 01GWKRR6XK83C5ZH6NDA9FNGAH
+  name: 地址管理
+  sort: 88
+  icon: key
+  router: /system/address
+  parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
+  parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6XMG1884R6TXK76N9TT
+    menu_id: 01GWKRR6XK83C5ZH6NDA9FNGAH
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6XN9BXHKC78M0APRVHJ
+      action_id: 01GWKRR6XMG1884R6TXK76N9TT
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+    - id: 01GWKRR6XP7G85XRVGEAA535Z3
+      action_id: 01GWKRR6XMG1884R6TXK76N9TT
+      method: POST
+      path: /api/v2/sys-address
+    - id: 01GWKRR6XP88KBMXWWNPK1PAM1
+      action_id: 01GWKRR6XMG1884R6TXK76N9TT
+      method: GET
+      path: /api/v2/sys-district/:id/tree
+  - id: 01GWKRR6XQZ0VCFT2FBW2DBSRV
+    menu_id: 01GWKRR6XK83C5ZH6NDA9FNGAH
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6XR96KH3WHJNTZJPJR0
+      action_id: 01GWKRR6XQZ0VCFT2FBW2DBSRV
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+    - id: 01GWKRR6XT5PSD5QZH1MDMCPZQ
+      action_id: 01GWKRR6XQZ0VCFT2FBW2DBSRV
+      method: GET
+      path: /api/v2/sys-district/:id/tree
+    - id: 01GWKRR6XZDKJEH367V1NV1B8J
+      action_id: 01GWKRR6XQZ0VCFT2FBW2DBSRV
+      method: GET
+      path: /api/v2/sys-address/:id
+    - id: 01GWKRR6Y1ZTTVDMF60CJVD79E
+      action_id: 01GWKRR6XQZ0VCFT2FBW2DBSRV
+      method: PUT
+      path: /api/v2/sys-address/:id
+  - id: 01GWKRR6Y2XA07YFRY45AQHRSN
+    menu_id: 01GWKRR6XK83C5ZH6NDA9FNGAH
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6Y3WZQHSTNHF8JJMQ91
+      action_id: 01GWKRR6Y2XA07YFRY45AQHRSN
+      method: DELETE
+      path: /api/v2/sys-address/:id
+  - id: 01GWKRR6Y3S6ZR4F0DEZX382MK
+    menu_id: 01GWKRR6XK83C5ZH6NDA9FNGAH
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6Y4T75356EGB7FKCGJN
+      action_id: 01GWKRR6Y3S6ZR4F0DEZX382MK
+      method: GET
+      path: /api/v2/sys-address
+  - id: 01GWKRR6Y5AGGXF1RS8AYR7KY9
+    menu_id: 01GWKRR6XK83C5ZH6NDA9FNGAH
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6Y5E5NS2RPSZJYYDTNZ
+      action_id: 01GWKRR6Y5AGGXF1RS8AYR7KY9
+      method: PATCH
+      path: /api/v2/sys-address/:id/disable
+  - id: 01GWKRR6Y69HFRYAYD2T4K0644
+    menu_id: 01GWKRR6XK83C5ZH6NDA9FNGAH
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6Y7YZZXDHN874319KED
+      action_id: 01GWKRR6Y69HFRYAYD2T4K0644
+      method: PATCH
+      path: /api/v2/sys-address/:id/enable
+  - id: 01GWKRR6Y8W5WJVP1TNCQEZ32B
+    menu_id: 01GWKRR6XK83C5ZH6NDA9FNGAH
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR6YA95CRBQKXV9SAQRGM
+      action_id: 01GWKRR6Y8W5WJVP1TNCQEZ32B
+      method: GET
+      path: /api/v2/sys-address/:id/view
+- id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+  name: 行政区域
+  sort: 88
+  icon: key
+  router: /system/district
+  parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
+  parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6WYJSMNY2YEEEWED7YY
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6WZG399NQR8S6Y3Q8K2
+      action_id: 01GWKRR6WYJSMNY2YEEEWED7YY
+      method: POST
+      path: /api/v2/sys-district
+    - id: 01GWKRR6WZRSTETSZDTSGEESYM
+      action_id: 01GWKRR6WYJSMNY2YEEEWED7YY
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+  - id: 01GWKRR6X0P76S7P1C5DZM6680
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6X0YEE9G3SY7HTXEDV1
+      action_id: 01GWKRR6X0P76S7P1C5DZM6680
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+    - id: 01GWKRR6X1S0GS01XB1CBR7MD5
+      action_id: 01GWKRR6X0P76S7P1C5DZM6680
+      method: GET
+      path: /api/v2/sys-district/:id
+    - id: 01GWKRR6X23BCDJCGZP96P2AAQ
+      action_id: 01GWKRR6X0P76S7P1C5DZM6680
+      method: PUT
+      path: /api/v2/sys-district/:id
+    - id: 01GWKRR6X2SMNTZVG6RXRWAVM8
+      action_id: 01GWKRR6X0P76S7P1C5DZM6680
+      method: GET
+      path: /api/v2/sys-district/:id/tree
+  - id: 01GWKRR6X3RN7SYQWG7BHMB21T
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6X3KQ1ZZ178BT9YJF2P
+      action_id: 01GWKRR6X3RN7SYQWG7BHMB21T
+      method: DELETE
+      path: /api/v2/sys-district/:id
+  - id: 01GWKRR6X4D84A85FM9SESJW9Q
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6X532N27APDY9WCACG3
+      action_id: 01GWKRR6X4D84A85FM9SESJW9Q
+      method: GET
+      path: /api/v2/sys-district
+  - id: 01GWKRR6X5XZQYHK6A3RAVGRYK
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6X6J3CB1BSRWPC2JE5T
+      action_id: 01GWKRR6X5XZQYHK6A3RAVGRYK
+      method: PATCH
+      path: /api/v2/sys-district/:id/disable
+  - id: 01GWKRR6X7YW9BR2FXJG94G458
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6X7BJYWHXT0MC6YZ9AY
+      action_id: 01GWKRR6X7YW9BR2FXJG94G458
+      method: PATCH
+      path: /api/v2/sys-district/:id/enable
+  - id: 01GWKRR6XAY51MZM83RBDXKK0Y
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: subdistrict
+    name: 查询
+    resources:
+    - id: 01GWKRR6XEXQWGJ3ZF66S8X46E
+      action_id: 01GWKRR6XAY51MZM83RBDXKK0Y
+      method: GET
+      path: /api/v2/sys-district/:id/subs
+  - id: 01GWKRR6XFQMYJKB6XHAH99F8P
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR6XGX0Z08KXWRQRY8PBY
+      action_id: 01GWKRR6XFQMYJKB6XHAH99F8P
+      method: GET
+      path: /api/v2/sys-district/:id/view
+  - id: 01GWKRR6XGCAD36DPF83P0PVRR
+    menu_id: 01GWKRR6WXTGBBX1K4YYNXN9RM
+    code: tree
+    name: 查树
+    resources:
+    - id: 01GWKRR6XHG1KN1X62MSD66EP3
+      action_id: 01GWKRR6XGCAD36DPF83P0PVRR
+      method: GET
+      path: /api/v2/sys-district/:id/tree
+- id: 01GWKRR6WJ3C2D8H84XPYVFGHW
+  name: 数据字典
+  sort: 199
+  icon: key
+  router: /system/dict
+  parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
+  parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR6WJQB6M9VMKY6BWBQ90
+    menu_id: 01GWKRR6WJ3C2D8H84XPYVFGHW
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR6WKNXZCPYRCV54ZHVDN
+      action_id: 01GWKRR6WJQB6M9VMKY6BWBQ90
+      method: POST
+      path: /api/v2/sys-dicts
+  - id: 01GWKRR6WKB5S37WY7KT87TQ4G
+    menu_id: 01GWKRR6WJ3C2D8H84XPYVFGHW
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR6WM90356PSXM8NKP1W1
+      action_id: 01GWKRR6WKB5S37WY7KT87TQ4G
+      method: PUT
+      path: /api/v2/sys-dicts/:id
+    - id: 01GWKRR6WMVNN3JVEWQSDYEJRQ
+      action_id: 01GWKRR6WKB5S37WY7KT87TQ4G
+      method: GET
+      path: /api/v2/sys-dicts/:id
+  - id: 01GWKRR6WN1YN38KGQPJQTFHC1
+    menu_id: 01GWKRR6WJ3C2D8H84XPYVFGHW
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR6WNWZHFFFWBMHB6XBD4
+      action_id: 01GWKRR6WN1YN38KGQPJQTFHC1
+      method: DELETE
+      path: /api/v2/sys-dicts/:id
+  - id: 01GWKRR6WP0S7Q16BGCV3K99EX
+    menu_id: 01GWKRR6WJ3C2D8H84XPYVFGHW
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR6WP1EQ4MQNWWC7W5R26
+      action_id: 01GWKRR6WP0S7Q16BGCV3K99EX
+      method: GET
+      path: /api/v2/sys-dicts
+  - id: 01GWKRR6WQX07FQRQS612K4E81
+    menu_id: 01GWKRR6WJ3C2D8H84XPYVFGHW
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR6WRZ5VJFH89K77Z56C6
+      action_id: 01GWKRR6WQX07FQRQS612K4E81
+      method: PATCH
+      path: /api/v2/sys-dicts/:id/disable
+  - id: 01GWKRR6WS6D9M5BR1CPW0TSTN
+    menu_id: 01GWKRR6WJ3C2D8H84XPYVFGHW
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR6WTNZ85DXH3QVHB6W41
+      action_id: 01GWKRR6WS6D9M5BR1CPW0TSTN
+      method: PATCH
+      path: /api/v2/sys-dicts/:id/enable
+  - id: 01GWKRR6WVCW4DGBXQ8FXJ5VAZ
+    menu_id: 01GWKRR6WJ3C2D8H84XPYVFGHW
+    code: items
+    name: 启用
+    resources:
+    - id: 01GWKRR6WVGQ0FV08KVWSFFN24
+      action_id: 01GWKRR6WVCW4DGBXQ8FXJ5VAZ
+      method: GET
+      path: /api/v2/sys-dicts/:id/items
+- id: 01GWKRR70FGJCHGARE0FS8A24J
+  name: 菜单管理
+  sort: 999
+  icon: solution
+  router: /dev/menu
+  parent_id: 01GWKRR70D8XY7206ZH3VPJ2AE
+  parent_path: 01GWKRR70D8XY7206ZH3VPJ2AE
+  is_active: true
+  memo: ""
+  is_show: true
+  level: 2
+  is_leaf: false
+  actions:
+  - id: 01GWKRR70GVM13RW8JVARR7E9S
+    menu_id: 01GWKRR70FGJCHGARE0FS8A24J
+    code: add
+    name: 新增
+    resources:
+    - id: 01GWKRR70HA7H5ZGJY83HNC5E2
+      action_id: 01GWKRR70GVM13RW8JVARR7E9S
+      method: POST
+      path: /api/v2/sys-menus
+  - id: 01GWKRR70J4925PTR07G04TXQ0
+    menu_id: 01GWKRR70FGJCHGARE0FS8A24J
+    code: edit
+    name: 编辑
+    resources:
+    - id: 01GWKRR70J430FM4MQEBGED5VA
+      action_id: 01GWKRR70J4925PTR07G04TXQ0
+      method: GET
+      path: /api/v2/sys-menus/:id
+    - id: 01GWKRR70KRN13Q377139HQ6AC
+      action_id: 01GWKRR70J4925PTR07G04TXQ0
+      method: PUT
+      path: /api/v2/sys-menus/:id
+  - id: 01GWKRR70MV4RPKRY1QDY30Q45
+    menu_id: 01GWKRR70FGJCHGARE0FS8A24J
+    code: del
+    name: 删除
+    resources:
+    - id: 01GWKRR70NM6ZVR24XCMWCEQ5P
+      action_id: 01GWKRR70MV4RPKRY1QDY30Q45
+      method: DELETE
+      path: /api/v2/sys-menus/:id
+  - id: 01GWKRR70NSQRKY1AS9PRCH9GJ
+    menu_id: 01GWKRR70FGJCHGARE0FS8A24J
+    code: query
+    name: 查询
+    resources:
+    - id: 01GWKRR70PQAQHVKSH27QP4BHS
+      action_id: 01GWKRR70NSQRKY1AS9PRCH9GJ
+      method: GET
+      path: /api/v2/sys-menus
+    - id: 01GWKRR70QD5TFZJQX7C1DZ4DF
+      action_id: 01GWKRR70NSQRKY1AS9PRCH9GJ
+      method: GET
+      path: /api/v2/sys-menus.tree
+  - id: 01GWKRR70QFTM3F79B7690AAXE
+    menu_id: 01GWKRR70FGJCHGARE0FS8A24J
+    code: disable
+    name: 禁用
+    resources:
+    - id: 01GWKRR70RDG48TPBKHBHT68S4
+      action_id: 01GWKRR70QFTM3F79B7690AAXE
+      method: PATCH
+      path: /api/v2/sys-menus/:id/disable
+  - id: 01GWKRR70R1NMSK1HVP1GK8EJG
+    menu_id: 01GWKRR70FGJCHGARE0FS8A24J
+    code: enable
+    name: 启用
+    resources:
+    - id: 01GWKRR70SN3SYACX4AK0HXZCR
+      action_id: 01GWKRR70R1NMSK1HVP1GK8EJG
+      method: PATCH
+      path: /api/v2/sys-menus/:id/enable
+  - id: 01GWKRR70T4GMV0X6HZSTV1GRD
+    menu_id: 01GWKRR70FGJCHGARE0FS8A24J
+    code: view
+    name: 查看
+    resources:
+    - id: 01GWKRR70TM7H02SYXY9RQPY94
+      action_id: 01GWKRR70T4GMV0X6HZSTV1GRD
+      method: GET
+      path: /api/v2/sys-menus/:id/view

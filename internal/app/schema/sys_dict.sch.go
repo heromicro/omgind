@@ -5,6 +5,7 @@ import "encoding/json"
 // Dict 字典对象
 type Dict struct {
 	TreeMixin
+	TimeMixin
 
 	ID string `json:"id" yaml:"id"` // 唯一标识
 
