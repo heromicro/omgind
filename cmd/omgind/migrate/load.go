@@ -11,6 +11,12 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/gotidy/ptr"
+	"github.com/jszwec/csvutil"
+	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
+	"github.com/xuri/excelize/v2"
+	"gopkg.in/yaml.v2"
+
 	"github.com/heromicro/omgind/cmd/omgind/common"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
@@ -21,11 +27,6 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/schema/repo"
-	"github.com/jszwec/csvutil"
-	"github.com/spf13/cobra"
-	"github.com/ttacon/chalk"
-	"github.com/xuri/excelize/v2"
-	"gopkg.in/yaml.v2"
 )
 
 func init() {
