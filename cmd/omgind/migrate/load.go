@@ -379,7 +379,7 @@ func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) e
 
 		for _, d := range dicts {
 			for _, di := range d.Items {
-				log.Println(cyanOnYellow, " di :: ", di.JSONString(), chalk.Reset)
+				log.Println(cyanOnYellow, " di :: ", di.String(), chalk.Reset)
 				dictItemInput := repoDictItem.ToEntCreateSysDictItemInput(di)
 				log.Println(greenOnWhite, " di :: ", dictItemInput.DictID, chalk.Reset)
 
@@ -390,7 +390,7 @@ func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) e
 				dictItemBulk = append(dictItemBulk, create_dictitem)
 			}
 
-			log.Println(cyanOnYellow, " di :: ", d.JSONString(), chalk.Reset)
+			log.Println(cyanOnYellow, " di :: ", d.String(), chalk.Reset)
 
 			d.Items = nil
 			dictInput := repoDict.ToEntCreateSysDictInput(d)

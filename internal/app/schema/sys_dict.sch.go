@@ -1,6 +1,8 @@
 package schema
 
-import "encoding/json"
+import (
+	"github.com/heromicro/omgind/pkg/helper/json"
+)
 
 // Dict 字典对象
 type Dict struct {
@@ -23,12 +25,8 @@ type Dict struct {
 
 }
 
-func (s *Dict) JSONString() string {
-	js, err := json.Marshal(s)
-	if err != nil {
-		return ""
-	}
-	return string(js)
+func (a *Dict) String() string {
+	return json.MarshalToString(a)
 }
 
 // DictQueryParam 查询条件

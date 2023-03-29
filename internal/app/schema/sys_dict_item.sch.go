@@ -1,6 +1,8 @@
 package schema
 
-import "encoding/json"
+import (
+	"github.com/heromicro/omgind/pkg/helper/json"
+)
 
 // DictItem 字典项对象
 type DictItem struct {
@@ -20,12 +22,8 @@ type DictItem struct {
 
 }
 
-func (s *DictItem) JSONString() string {
-	js, err := json.Marshal(s)
-	if err != nil {
-		return ""
-	}
-	return string(js)
+func (a *DictItem) String() string {
+	return json.MarshalToString(a)
 }
 
 // is queal
