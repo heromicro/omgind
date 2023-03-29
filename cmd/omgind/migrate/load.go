@@ -38,6 +38,9 @@ func init() {
 
 }
 
+// go run cmd/omgind/main.go migrate load --conf configs/config.toml --format=csv --tablename=districts --datafile=./scripts/sql/district_full.csv
+// go run cmd/omgind/main.go migrate load --conf configs/config.toml --format=yaml --tablename=menu --datafile=./configs/menu.2023-03-28_64619.yaml
+
 var CmdLoad = &cobra.Command{
 	Use:   "load",
 	Short: "load file to db data",
@@ -524,6 +527,3 @@ func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) e
 
 	return nil
 }
-
-// go run cmd/omgind/main.go migrate load --conf configs/config.toml --format=csv --tablename=districts --datafile=./scripts/sql/district_full.csv
-// go run cmd/omgind/main.go migrate load --conf configs/config.toml --format=yaml --tablename=menu --datafile=./configs/menu.2023-03-28_64619.yaml
