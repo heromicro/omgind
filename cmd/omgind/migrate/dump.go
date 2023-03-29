@@ -31,6 +31,7 @@ import (
 // \copy district_full TO 'Path/file_name.csv' delimiter ',' CSV HEADER;
 
 // go run cmd/omgind/main.go migrate dump --conf=./configs/config.dev.toml --format=yml --tablename=dict --datadir=./configs/
+// go run cmd/omgind/main.go migrate dump --conf=./configs/config.dev.toml --format=yml --tablename=menu --datadir=./configs/
 
 func init() {
 
