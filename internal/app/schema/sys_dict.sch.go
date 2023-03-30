@@ -17,8 +17,6 @@ type Dict struct {
 	Sort     int    `json:"sort" yaml:"sort"`                              // 排序
 
 	Creator string `json:"creator" yaml:"-"` // 创建者
-	// CreatedAt time.Time `json:"created_at" yaml:"-"` // 创建时间
-	// UpdatedAt time.Time `json:"updated_at" yaml:"-"` // 更新时间
 
 	Items DictItems `json:"items" binding:"required,gt=0" yaml:"items"` // 字典项列表
 

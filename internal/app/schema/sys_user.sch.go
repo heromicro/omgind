@@ -31,6 +31,8 @@ func CheckIsRootUser(ctx context.Context, userID string) bool {
 
 // User 用户对象
 type User struct {
+	TimeMixin `yaml:"-"`
+
 	ID        string `json:"id" `                           // 唯一标识
 	UserName  string `json:"user_name" binding:"required"`  // 用户名
 	RealName  string `json:"real_name"`                     // 真实姓名
@@ -42,9 +44,8 @@ type User struct {
 	IsActive  *bool  `json:"is_active" binding:"required"`  // 状态
 	Gender    int    `json:"gender" binding:"max=3,min=1"`  // 性别(1:男,2:女)
 
-	Creator   string    `json:"creator" `                           // 创建者
-	CreatedAt time.Time `json:"created_at" `                        // 创建时间
-	UpdatedAt time.Time `json:"updated_at" `                        // 创建时间
+	Creator string `json:"creator" ` // 创建者
+
 	UserRoles UserRoles `json:"user_roles" binding:"required,gt=0"` // 角色授权
 }
 

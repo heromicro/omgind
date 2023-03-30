@@ -1,9 +1,9 @@
 package schema
 
-import "time"
-
 // OrgPosition 职位管理对象
 type OrgPosition struct {
+	TimeMixin `yaml:"-"`
+
 	ID   string `json:"id"`                      // 唯一标识
 	Name string `json:"name" binding:"required"` // 名称
 	Code string `json:"code"`                    // 助记码
@@ -14,10 +14,8 @@ type OrgPosition struct {
 
 	OrgMixin
 
-	Creator   string     `json:"creator"`    // 创建者
-	CreatedAt *time.Time `json:"created_at"` // 创建时间
-	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
-
+	Creator string `json:"creator"` // 创建者
+	
 }
 
 // OrgPositionQueryParam 查询条件

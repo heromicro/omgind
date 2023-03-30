@@ -1,7 +1,5 @@
 package schema
 
-import "time"
-
 // OrgOrgan 组织管理对象
 
 type OrgOrganShow struct {
@@ -14,6 +12,7 @@ type OrgOrganShow struct {
 }
 
 type OrgOrgan struct {
+	TimeMixin `yaml:"-"`
 	OrgOrganShow
 	Code string `json:"code"` // 助记码
 
@@ -24,9 +23,7 @@ type OrgOrgan struct {
 
 	Sort int `json:"sort,omitempty"`
 
-	Creator   string     `json:"creator"`    // 创建者
-	CreatedAt *time.Time `json:"created_at"` // 创建时间
-	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
+	Creator string `json:"creator"` // 创建者
 
 }
 

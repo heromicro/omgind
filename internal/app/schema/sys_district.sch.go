@@ -1,9 +1,9 @@
 package schema
 
-import "time"
-
 // SysDistrict 行政区域对象
 type SysDistrict struct {
+	TimeMixin `yaml:"-"`
+
 	ID       string       `json:"id"`       // 唯一标识
 	ParentID *string      `json:"pid"`      // pid
 	Parent   *SysDistrict `json:"parent"`   // parent
@@ -36,9 +36,8 @@ type SysDistrict struct {
 
 	TreeMixin
 
-	Creator   string     `json:"creator"`    // 创建者
-	CreatedAt *time.Time `json:"created_at"` // 创建时间
-	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
+	Creator string `json:"creator"` // 创建者
+
 	// Ids       *int       `json:"ids"`        //
 	// Pids      *int       `json:"pids"`       //
 }

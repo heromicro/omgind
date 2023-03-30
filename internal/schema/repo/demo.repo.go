@@ -182,6 +182,9 @@ func (a *Demo) Update(ctx context.Context, id string, item schema.Demo) (*schema
 	iteminput.UpdatedAt = nil
 
 	xxxdemo, err := oitem.Update().SetInput(*iteminput).Save(ctx)
+	if err != nil {
+		return nil, err
+	}
 	sch_demo := ToSchemaDemo(xxxdemo)
 
 	return sch_demo, nil

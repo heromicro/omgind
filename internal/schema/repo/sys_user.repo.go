@@ -142,12 +142,10 @@ func (a *User) Get(ctx context.Context, id string, opts ...schema.UserQueryOptio
 // Create 创建数据
 func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, error) {
 
-	item.CreatedAt = time.Now()
-	item.UpdatedAt = time.Now()
+	item.CreatedAt = nil // ptr.Time(time.Now())
+	item.UpdatedAt = nil // ptr.Time(time.Now())
 
 	iteminput := ToEntCreateSysUserInput(&item)
-	iteminput.CreatedAt = nil
-	iteminput.UpdatedAt = nil
 
 	sysuser, err := a.EntCli.SysUser.Create().SetInput(*iteminput).Save(ctx)
 
@@ -166,9 +164,12 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 		return nil, err
 	}
 
-	item.UpdatedAt = time.Now()
+	item.UpdatedAt = nil // time.Now()
 	iteminput := ToEntUpdateSysUserInput(&item)
 	user, err := oitem.Update().SetInput(*iteminput).Save(ctx)
+	if err != nil {
+		return nil, err
+	}
 	sch_user := ToSchemaSysUser(user)
 	return sch_user, nil
 }

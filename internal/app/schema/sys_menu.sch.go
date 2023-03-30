@@ -8,7 +8,6 @@ import (
 
 // Menu 菜单对象
 type Menu struct {
-	TreeMixin `yaml:"-"`
 	TimeMixin `yaml:"-"`
 
 	ID         string  `json:"id" yaml:"id"`                                  // 唯一标识

@@ -1,9 +1,9 @@
 package schema
 
-import "time"
-
 // SysAddress 地址管理对象
 type SysAddress struct {
+	TimeMixin `yaml:"-"`
+
 	ID string `json:"id"` // 唯一标识
 
 	Country  string `json:"country"`  // 国
@@ -23,11 +23,9 @@ type SysAddress struct {
 	AreaCode  *string `json:"area_code,omitempty"`  // 电话区号码
 	Mobile    string  `json:"mobile,omitempty"`     // 电话
 
-	IsActive  *bool      `json:"is_active,omitempty"` // 状态
-	Sort      int        `json:"sort,omitempty"`
-	Creator   string     `json:"creator,omitempty"`    // 创建者
-	CreatedAt *time.Time `json:"created_at,omitempty"` // 创建时间
-	UpdatedAt *time.Time `json:"updated_at,omitempty"` // 更新时间
+	IsActive *bool  `json:"is_active,omitempty"` // 状态
+	Sort     int    `json:"sort,omitempty"`
+	Creator  string `json:"creator,omitempty"` // 创建者
 
 }
 

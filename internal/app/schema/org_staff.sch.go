@@ -3,6 +3,7 @@ package schema
 import "time"
 
 type OrgStaff0 struct {
+	TimeMixin `yaml:"-"`
 	OrgMixin
 
 	ID        string `json:"id"`                            // 唯一标识
@@ -50,9 +51,7 @@ type OrgStaff struct {
 	Sort     int     `json:"sort,omitempty"`
 	Memo     *string `json:"memo"` //
 
-	Creator   string     `json:"creator"`    // 创建者
-	CreatedAt *time.Time `json:"created_at"` // 创建时间
-	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
+	Creator string `json:"creator"` // 创建者
 
 }
 

@@ -202,7 +202,9 @@ func (a *OrgPosition) Update(ctx context.Context, id string, item schema.OrgPosi
 	iteminput := ToEntUpdateOrgPositionInput(&item)
 
 	r_orgposition, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-
+	if err != nil {
+		return nil, err
+	}
 	sch_orgposition := ToSchemaOrgPosition(r_orgposition)
 
 	return sch_orgposition, nil
