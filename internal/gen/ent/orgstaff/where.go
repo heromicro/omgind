@@ -155,6 +155,11 @@ func Cubicle(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldCubicle, v))
 }
 
+// Rank applies equality check predicate on the "rank" field. It's identical to RankEQ.
+func Rank(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldRank, v))
+}
+
 // EntryDate applies equality check predicate on the "entry_date" field. It's identical to EntryDateEQ.
 func EntryDate(v time.Time) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldEQ(FieldEntryDate, v))
@@ -1258,6 +1263,81 @@ func CubicleEqualFold(v string) predicate.OrgStaff {
 // CubicleContainsFold applies the ContainsFold predicate on the "cubicle" field.
 func CubicleContainsFold(v string) predicate.OrgStaff {
 	return predicate.OrgStaff(sql.FieldContainsFold(FieldCubicle, v))
+}
+
+// RankEQ applies the EQ predicate on the "rank" field.
+func RankEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEQ(FieldRank, v))
+}
+
+// RankNEQ applies the NEQ predicate on the "rank" field.
+func RankNEQ(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNEQ(FieldRank, v))
+}
+
+// RankIn applies the In predicate on the "rank" field.
+func RankIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIn(FieldRank, vs...))
+}
+
+// RankNotIn applies the NotIn predicate on the "rank" field.
+func RankNotIn(vs ...string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotIn(FieldRank, vs...))
+}
+
+// RankGT applies the GT predicate on the "rank" field.
+func RankGT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGT(FieldRank, v))
+}
+
+// RankGTE applies the GTE predicate on the "rank" field.
+func RankGTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldGTE(FieldRank, v))
+}
+
+// RankLT applies the LT predicate on the "rank" field.
+func RankLT(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLT(FieldRank, v))
+}
+
+// RankLTE applies the LTE predicate on the "rank" field.
+func RankLTE(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldLTE(FieldRank, v))
+}
+
+// RankContains applies the Contains predicate on the "rank" field.
+func RankContains(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContains(FieldRank, v))
+}
+
+// RankHasPrefix applies the HasPrefix predicate on the "rank" field.
+func RankHasPrefix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasPrefix(FieldRank, v))
+}
+
+// RankHasSuffix applies the HasSuffix predicate on the "rank" field.
+func RankHasSuffix(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldHasSuffix(FieldRank, v))
+}
+
+// RankIsNil applies the IsNil predicate on the "rank" field.
+func RankIsNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldIsNull(FieldRank))
+}
+
+// RankNotNil applies the NotNil predicate on the "rank" field.
+func RankNotNil() predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldNotNull(FieldRank))
+}
+
+// RankEqualFold applies the EqualFold predicate on the "rank" field.
+func RankEqualFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldEqualFold(FieldRank, v))
+}
+
+// RankContainsFold applies the ContainsFold predicate on the "rank" field.
+func RankContainsFold(v string) predicate.OrgStaff {
+	return predicate.OrgStaff(sql.FieldContainsFold(FieldRank, v))
 }
 
 // EntryDateEQ applies the EQ predicate on the "entry_date" field.

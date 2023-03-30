@@ -27,6 +27,7 @@ type OrgStaff0 struct {
 type OrgStaff1 struct {
 	WorkerNo     string `json:"worker_no"`                         // 工号
 	Cubicle      string `json:"cubicle"`                           // 工位
+	Rank         string `json:"rank"`                              // 职级
 	EmpyStat     *int32 `json:"empy_stat" binding:"required"`      // 在职状态
 	EmpystDictID string `json:"empyst_dict_id" binding:"required"` // 在职状态
 	EmpystDict   string `json:"empyst_dict"`                       //
@@ -78,6 +79,10 @@ type OrgStaffQueryParam struct {
 	EntryDate_Order   string `form:"entry_date__order" json:"entry_date__order"`     // asc/desc
 	RegularDate_Order string `form:"regular_date__order" json:"regular_date__order"` // asc/desc
 	ResignDate_Order  string `form:"resign_date__order" json:"resign_date__order"`   // asc/desc
+
+	Rank_Order string `form:"rank__order" json:"rank__order"` // asc, desc
+	Rank_Start string `form:"rank__st" json:"rank__st"`       //
+	Rank_End   string `form:"rank__ed" json:"rank__ed"`       //
 
 }
 

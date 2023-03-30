@@ -364,24 +364,28 @@ func init() {
 	orgstaffDescCubicle := orgstaffFields[10].Descriptor()
 	// orgstaff.CubicleValidator is a validator for the "cubicle" field. It is called by the builders before save.
 	orgstaff.CubicleValidator = orgstaffDescCubicle.Validators[0].(func(string) error)
+	// orgstaffDescRank is the schema descriptor for rank field.
+	orgstaffDescRank := orgstaffFields[11].Descriptor()
+	// orgstaff.RankValidator is a validator for the "rank" field. It is called by the builders before save.
+	orgstaff.RankValidator = orgstaffDescRank.Validators[0].(func(string) error)
 	// orgstaffDescOrgID is the schema descriptor for org_id field.
-	orgstaffDescOrgID := orgstaffFields[14].Descriptor()
+	orgstaffDescOrgID := orgstaffFields[15].Descriptor()
 	// orgstaff.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	orgstaff.OrgIDValidator = orgstaffDescOrgID.Validators[0].(func(string) error)
 	// orgstaffDescEmpyStat is the schema descriptor for empy_stat field.
-	orgstaffDescEmpyStat := orgstaffFields[15].Descriptor()
+	orgstaffDescEmpyStat := orgstaffFields[16].Descriptor()
 	// orgstaff.DefaultEmpyStat holds the default value on creation for the empy_stat field.
 	orgstaff.DefaultEmpyStat = orgstaffDescEmpyStat.Default.(int32)
 	// orgstaffDescEmpystDictID is the schema descriptor for empyst_dict_id field.
-	orgstaffDescEmpystDictID := orgstaffFields[16].Descriptor()
+	orgstaffDescEmpystDictID := orgstaffFields[17].Descriptor()
 	// orgstaff.EmpystDictIDValidator is a validator for the "empyst_dict_id" field. It is called by the builders before save.
 	orgstaff.EmpystDictIDValidator = orgstaffDescEmpystDictID.Validators[0].(func(string) error)
 	// orgstaffDescDeptID is the schema descriptor for dept_id field.
-	orgstaffDescDeptID := orgstaffFields[17].Descriptor()
+	orgstaffDescDeptID := orgstaffFields[18].Descriptor()
 	// orgstaff.DeptIDValidator is a validator for the "dept_id" field. It is called by the builders before save.
 	orgstaff.DeptIDValidator = orgstaffDescDeptID.Validators[0].(func(string) error)
 	// orgstaffDescPosiID is the schema descriptor for posi_id field.
-	orgstaffDescPosiID := orgstaffFields[18].Descriptor()
+	orgstaffDescPosiID := orgstaffFields[19].Descriptor()
 	// orgstaff.PosiIDValidator is a validator for the "posi_id" field. It is called by the builders before save.
 	orgstaff.PosiIDValidator = orgstaffDescPosiID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.

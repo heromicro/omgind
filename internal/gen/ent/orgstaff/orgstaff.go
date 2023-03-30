@@ -47,6 +47,8 @@ const (
 	FieldWorkerNo = "worker_no"
 	// FieldCubicle holds the string denoting the cubicle field in the database.
 	FieldCubicle = "cubicle"
+	// FieldRank holds the string denoting the rank field in the database.
+	FieldRank = "rank"
 	// FieldEntryDate holds the string denoting the entry_date field in the database.
 	FieldEntryDate = "entry_date"
 	// FieldRegularDate holds the string denoting the regular_date field in the database.
@@ -135,6 +137,7 @@ var Columns = []string{
 	FieldResiAddrID,
 	FieldWorkerNo,
 	FieldCubicle,
+	FieldRank,
 	FieldEntryDate,
 	FieldRegularDate,
 	FieldResignDate,
@@ -189,6 +192,8 @@ var (
 	WorkerNoValidator func(string) error
 	// CubicleValidator is a validator for the "cubicle" field. It is called by the builders before save.
 	CubicleValidator func(string) error
+	// RankValidator is a validator for the "rank" field. It is called by the builders before save.
+	RankValidator func(string) error
 	// OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	OrgIDValidator func(string) error
 	// DefaultEmpyStat holds the default value on creation for the "empy_stat" field.

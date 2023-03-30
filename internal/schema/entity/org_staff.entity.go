@@ -32,7 +32,7 @@ func (OrgStaff) Fields() []ent.Field {
 
 		field.Int32("gender").StorageKey("gender").Nillable().Optional().Comment("性别"),
 		field.String("gender_dict_id").MaxLen(36).Nillable().Optional().StorageKey("gender_dict_id").Comment("gender options"),
-
+		
 		field.Time("birth_date").Nillable().Optional().StorageKey("birth_date").Comment("出生日期"),
 
 		field.String("iden_no").Nillable().Optional().StorageKey("iden_no").Comment("身份证号码"),
@@ -42,6 +42,8 @@ func (OrgStaff) Fields() []ent.Field {
 
 		field.String("worker_no").MaxLen(16).Nillable().Optional().StorageKey("worker_no").Comment("工号"),
 		field.String("cubicle").MaxLen(32).Nillable().Optional().StorageKey("cubicle").Comment("工位"),
+
+		field.String("rank").MaxLen(32).Nillable().Optional().StorageKey("rank").Comment("职级"),
 
 		field.Time("entry_date").Nillable().Optional().StorageKey("entry_date").Comment("入职日期"),
 		field.Time("regular_date").Nillable().Optional().StorageKey("regu_date").Comment("转正日期"),

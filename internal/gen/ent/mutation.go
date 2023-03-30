@@ -5093,6 +5093,7 @@ type OrgStaffMutation struct {
 	iden_no          *string
 	worker_no        *string
 	cubicle          *string
+	rank             *string
 	entry_date       *time.Time
 	regular_date     *time.Time
 	resign_date      *time.Time
@@ -6104,6 +6105,55 @@ func (m *OrgStaffMutation) ResetCubicle() {
 	delete(m.clearedFields, orgstaff.FieldCubicle)
 }
 
+// SetRank sets the "rank" field.
+func (m *OrgStaffMutation) SetRank(s string) {
+	m.rank = &s
+}
+
+// Rank returns the value of the "rank" field in the mutation.
+func (m *OrgStaffMutation) Rank() (r string, exists bool) {
+	v := m.rank
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRank returns the old "rank" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldRank(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldRank is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldRank requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRank: %w", err)
+	}
+	return oldValue.Rank, nil
+}
+
+// ClearRank clears the value of the "rank" field.
+func (m *OrgStaffMutation) ClearRank() {
+	m.rank = nil
+	m.clearedFields[orgstaff.FieldRank] = struct{}{}
+}
+
+// RankCleared returns if the "rank" field was cleared in this mutation.
+func (m *OrgStaffMutation) RankCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldRank]
+	return ok
+}
+
+// ResetRank resets all changes to the "rank" field.
+func (m *OrgStaffMutation) ResetRank() {
+	m.rank = nil
+	delete(m.clearedFields, orgstaff.FieldRank)
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (m *OrgStaffMutation) SetEntryDate(t time.Time) {
 	m.entry_date = &t
@@ -6729,7 +6779,7 @@ func (m *OrgStaffMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgStaffMutation) Fields() []string {
-	fields := make([]string, 0, 27)
+	fields := make([]string, 0, 28)
 	if m.is_del != nil {
 		fields = append(fields, orgstaff.FieldIsDel)
 	}
@@ -6783,6 +6833,9 @@ func (m *OrgStaffMutation) Fields() []string {
 	}
 	if m.cubicle != nil {
 		fields = append(fields, orgstaff.FieldCubicle)
+	}
+	if m.rank != nil {
+		fields = append(fields, orgstaff.FieldRank)
 	}
 	if m.entry_date != nil {
 		fields = append(fields, orgstaff.FieldEntryDate)
@@ -6855,6 +6908,8 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.WorkerNo()
 	case orgstaff.FieldCubicle:
 		return m.Cubicle()
+	case orgstaff.FieldRank:
+		return m.Rank()
 	case orgstaff.FieldEntryDate:
 		return m.EntryDate()
 	case orgstaff.FieldRegularDate:
@@ -6918,6 +6973,8 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldWorkerNo(ctx)
 	case orgstaff.FieldCubicle:
 		return m.OldCubicle(ctx)
+	case orgstaff.FieldRank:
+		return m.OldRank(ctx)
 	case orgstaff.FieldEntryDate:
 		return m.OldEntryDate(ctx)
 	case orgstaff.FieldRegularDate:
@@ -7070,6 +7127,13 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetCubicle(v)
+		return nil
+	case orgstaff.FieldRank:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRank(v)
 		return nil
 	case orgstaff.FieldEntryDate:
 		v, ok := value.(time.Time)
@@ -7248,6 +7312,9 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldCubicle) {
 		fields = append(fields, orgstaff.FieldCubicle)
 	}
+	if m.FieldCleared(orgstaff.FieldRank) {
+		fields = append(fields, orgstaff.FieldRank)
+	}
 	if m.FieldCleared(orgstaff.FieldEntryDate) {
 		fields = append(fields, orgstaff.FieldEntryDate)
 	}
@@ -7330,6 +7397,9 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 		return nil
 	case orgstaff.FieldCubicle:
 		m.ClearCubicle()
+		return nil
+	case orgstaff.FieldRank:
+		m.ClearRank()
 		return nil
 	case orgstaff.FieldEntryDate:
 		m.ClearEntryDate()
@@ -7416,6 +7486,9 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 		return nil
 	case orgstaff.FieldCubicle:
 		m.ResetCubicle()
+		return nil
+	case orgstaff.FieldRank:
+		m.ResetRank()
 		return nil
 	case orgstaff.FieldEntryDate:
 		m.ResetEntryDate()

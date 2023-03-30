@@ -361,6 +361,26 @@ func (osu *OrgStaffUpdate) ClearCubicle() *OrgStaffUpdate {
 	return osu
 }
 
+// SetRank sets the "rank" field.
+func (osu *OrgStaffUpdate) SetRank(s string) *OrgStaffUpdate {
+	osu.mutation.SetRank(s)
+	return osu
+}
+
+// SetNillableRank sets the "rank" field if the given value is not nil.
+func (osu *OrgStaffUpdate) SetNillableRank(s *string) *OrgStaffUpdate {
+	if s != nil {
+		osu.SetRank(*s)
+	}
+	return osu
+}
+
+// ClearRank clears the value of the "rank" field.
+func (osu *OrgStaffUpdate) ClearRank() *OrgStaffUpdate {
+	osu.mutation.ClearRank()
+	return osu
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (osu *OrgStaffUpdate) SetEntryDate(t time.Time) *OrgStaffUpdate {
 	osu.mutation.SetEntryDate(t)
@@ -699,6 +719,11 @@ func (osu *OrgStaffUpdate) check() error {
 			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.cubicle": %w`, err)}
 		}
 	}
+	if v, ok := osu.mutation.Rank(); ok {
+		if err := orgstaff.RankValidator(v); err != nil {
+			return &ValidationError{Name: "rank", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.rank": %w`, err)}
+		}
+	}
 	if v, ok := osu.mutation.OrgID(); ok {
 		if err := orgstaff.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
@@ -829,6 +854,12 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if osu.mutation.CubicleCleared() {
 		_spec.ClearField(orgstaff.FieldCubicle, field.TypeString)
+	}
+	if value, ok := osu.mutation.Rank(); ok {
+		_spec.SetField(orgstaff.FieldRank, field.TypeString, value)
+	}
+	if osu.mutation.RankCleared() {
+		_spec.ClearField(orgstaff.FieldRank, field.TypeString)
 	}
 	if value, ok := osu.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)
@@ -1361,6 +1392,26 @@ func (osuo *OrgStaffUpdateOne) ClearCubicle() *OrgStaffUpdateOne {
 	return osuo
 }
 
+// SetRank sets the "rank" field.
+func (osuo *OrgStaffUpdateOne) SetRank(s string) *OrgStaffUpdateOne {
+	osuo.mutation.SetRank(s)
+	return osuo
+}
+
+// SetNillableRank sets the "rank" field if the given value is not nil.
+func (osuo *OrgStaffUpdateOne) SetNillableRank(s *string) *OrgStaffUpdateOne {
+	if s != nil {
+		osuo.SetRank(*s)
+	}
+	return osuo
+}
+
+// ClearRank clears the value of the "rank" field.
+func (osuo *OrgStaffUpdateOne) ClearRank() *OrgStaffUpdateOne {
+	osuo.mutation.ClearRank()
+	return osuo
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (osuo *OrgStaffUpdateOne) SetEntryDate(t time.Time) *OrgStaffUpdateOne {
 	osuo.mutation.SetEntryDate(t)
@@ -1712,6 +1763,11 @@ func (osuo *OrgStaffUpdateOne) check() error {
 			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.cubicle": %w`, err)}
 		}
 	}
+	if v, ok := osuo.mutation.Rank(); ok {
+		if err := orgstaff.RankValidator(v); err != nil {
+			return &ValidationError{Name: "rank", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.rank": %w`, err)}
+		}
+	}
 	if v, ok := osuo.mutation.OrgID(); ok {
 		if err := orgstaff.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
@@ -1859,6 +1915,12 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	}
 	if osuo.mutation.CubicleCleared() {
 		_spec.ClearField(orgstaff.FieldCubicle, field.TypeString)
+	}
+	if value, ok := osuo.mutation.Rank(); ok {
+		_spec.SetField(orgstaff.FieldRank, field.TypeString, value)
+	}
+	if osuo.mutation.RankCleared() {
+		_spec.ClearField(orgstaff.FieldRank, field.TypeString)
 	}
 	if value, ok := osuo.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)

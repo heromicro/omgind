@@ -56,6 +56,8 @@ type OrgStaff struct {
 	WorkerNo *string `json:"worker_no,omitempty"`
 	// 工位
 	Cubicle *string `json:"cubicle,omitempty"`
+	// 职级
+	Rank *string `json:"rank,omitempty"`
 	// 入职日期
 	EntryDate *time.Time `json:"entry_date,omitempty"`
 	// 转正日期
@@ -170,7 +172,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort, orgstaff.FieldGender, orgstaff.FieldEmpyStat:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldPosiID, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldRank, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldPosiID, orgstaff.FieldCreator:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
@@ -317,6 +319,13 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				os.Cubicle = new(string)
 				*os.Cubicle = value.String
+			}
+		case orgstaff.FieldRank:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field rank", values[i])
+			} else if value.Valid {
+				os.Rank = new(string)
+				*os.Rank = value.String
 			}
 		case orgstaff.FieldEntryDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -514,6 +523,11 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	if v := os.Cubicle; v != nil {
 		builder.WriteString("cubicle=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := os.Rank; v != nil {
+		builder.WriteString("rank=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

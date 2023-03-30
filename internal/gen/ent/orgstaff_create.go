@@ -279,6 +279,20 @@ func (osc *OrgStaffCreate) SetNillableCubicle(s *string) *OrgStaffCreate {
 	return osc
 }
 
+// SetRank sets the "rank" field.
+func (osc *OrgStaffCreate) SetRank(s string) *OrgStaffCreate {
+	osc.mutation.SetRank(s)
+	return osc
+}
+
+// SetNillableRank sets the "rank" field if the given value is not nil.
+func (osc *OrgStaffCreate) SetNillableRank(s *string) *OrgStaffCreate {
+	if s != nil {
+		osc.SetRank(*s)
+	}
+	return osc
+}
+
 // SetEntryDate sets the "entry_date" field.
 func (osc *OrgStaffCreate) SetEntryDate(t time.Time) *OrgStaffCreate {
 	osc.mutation.SetEntryDate(t)
@@ -583,6 +597,11 @@ func (osc *OrgStaffCreate) check() error {
 			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.cubicle": %w`, err)}
 		}
 	}
+	if v, ok := osc.mutation.Rank(); ok {
+		if err := orgstaff.RankValidator(v); err != nil {
+			return &ValidationError{Name: "rank", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.rank": %w`, err)}
+		}
+	}
 	if v, ok := osc.mutation.OrgID(); ok {
 		if err := orgstaff.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`ent: validator failed for field "OrgStaff.org_id": %w`, err)}
@@ -710,6 +729,10 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 	if value, ok := osc.mutation.Cubicle(); ok {
 		_spec.SetField(orgstaff.FieldCubicle, field.TypeString, value)
 		_node.Cubicle = &value
+	}
+	if value, ok := osc.mutation.Rank(); ok {
+		_spec.SetField(orgstaff.FieldRank, field.TypeString, value)
+		_node.Rank = &value
 	}
 	if value, ok := osc.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)
@@ -1169,6 +1192,24 @@ func (u *OrgStaffUpsert) UpdateCubicle() *OrgStaffUpsert {
 // ClearCubicle clears the value of the "cubicle" field.
 func (u *OrgStaffUpsert) ClearCubicle() *OrgStaffUpsert {
 	u.SetNull(orgstaff.FieldCubicle)
+	return u
+}
+
+// SetRank sets the "rank" field.
+func (u *OrgStaffUpsert) SetRank(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldRank, v)
+	return u
+}
+
+// UpdateRank sets the "rank" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateRank() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldRank)
+	return u
+}
+
+// ClearRank clears the value of the "rank" field.
+func (u *OrgStaffUpsert) ClearRank() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldRank)
 	return u
 }
 
@@ -1732,6 +1773,27 @@ func (u *OrgStaffUpsertOne) UpdateCubicle() *OrgStaffUpsertOne {
 func (u *OrgStaffUpsertOne) ClearCubicle() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearCubicle()
+	})
+}
+
+// SetRank sets the "rank" field.
+func (u *OrgStaffUpsertOne) SetRank(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetRank(v)
+	})
+}
+
+// UpdateRank sets the "rank" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateRank() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateRank()
+	})
+}
+
+// ClearRank clears the value of the "rank" field.
+func (u *OrgStaffUpsertOne) ClearRank() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearRank()
 	})
 }
 
@@ -2485,6 +2547,27 @@ func (u *OrgStaffUpsertBulk) UpdateCubicle() *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) ClearCubicle() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearCubicle()
+	})
+}
+
+// SetRank sets the "rank" field.
+func (u *OrgStaffUpsertBulk) SetRank(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetRank(v)
+	})
+}
+
+// UpdateRank sets the "rank" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateRank() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateRank()
+	})
+}
+
+// ClearRank clears the value of the "rank" field.
+func (u *OrgStaffUpsertBulk) ClearRank() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearRank()
 	})
 }
 

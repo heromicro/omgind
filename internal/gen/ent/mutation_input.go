@@ -742,6 +742,7 @@ type CreateOrgStaffInput struct {
 	ResiAddrID   *string
 	WorkerNo     *string
 	Cubicle      *string
+	Rank         *string
 	EntryDate    *time.Time
 	RegularDate  *time.Time
 	ResignDate   *time.Time
@@ -813,6 +814,9 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	}
 	if v := i.Cubicle; v != nil {
 		m.SetCubicle(*v)
+	}
+	if v := i.Rank; v != nil {
+		m.SetRank(*v)
 	}
 	if v := i.EntryDate; v != nil {
 		m.SetEntryDate(*v)
@@ -897,6 +901,8 @@ type UpdateOrgStaffInput struct {
 	ClearWorkerNo     bool
 	Cubicle           *string
 	ClearCubicle      bool
+	Rank              *string
+	ClearRank         bool
 	EntryDate         *time.Time
 	ClearEntryDate    bool
 	RegularDate       *time.Time
@@ -1020,6 +1026,12 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	}
 	if v := i.Cubicle; v != nil {
 		m.SetCubicle(*v)
+	}
+	if i.ClearRank {
+		m.ClearRank()
+	}
+	if v := i.Rank; v != nil {
+		m.SetRank(*v)
 	}
 	if i.ClearEntryDate {
 		m.ClearEntryDate()
