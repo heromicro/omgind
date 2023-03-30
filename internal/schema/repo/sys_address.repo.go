@@ -196,6 +196,9 @@ func (a *SysAddress) Update(ctx context.Context, id string, item schema.SysAddre
 	iteminput := ToEntUpdateSysAddressInput(&item)
 
 	r_sysaddress, err := oitem.Update().SetInput(*iteminput).Save(ctx)
+	if err != nil {
+		return nil, err
+	}
 	sch_sysaddress := ToSchemaSysAddress(r_sysaddress)
 
 	return sch_sysaddress, nil

@@ -122,6 +122,9 @@ func (a *UserRole) Update(ctx context.Context, id string, item schema.UserRole) 
 		return nil, err
 	}
 	userrole, err := oitem.Update().SetUserID(item.UserID).SetRoleID(item.RoleID).Save(ctx)
+	if err != nil {
+		return nil, err
+	}
 	sch_userrole := ToSchemaSysUserRole(userrole)
 	return sch_userrole, nil
 }

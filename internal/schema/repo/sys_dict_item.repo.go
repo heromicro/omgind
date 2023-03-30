@@ -143,6 +143,9 @@ func (a *DictItem) Update(ctx context.Context, id string, item schema.DictItem) 
 	itemInput := ToEntUpdateSysDictItemInput(&item)
 
 	dictitem, err := oitem.Update().SetInput(*itemInput).Save(ctx)
+	if err != nil {
+		return nil, err
+	}
 	sch_dictitem := ToSchemaDictItem(dictitem)
 
 	return sch_dictitem, nil
