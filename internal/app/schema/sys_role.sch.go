@@ -4,6 +4,9 @@ import "time"
 
 // Role 角色对象
 type Role struct {
+	TreeMixin `yaml:"-"`
+	TimeMixin `yaml:"-"`
+
 	ID        string     `json:"id" `                                // 唯一标识
 	Name      string     `json:"name" binding:"required"`            // 角色名称
 	Sort      int        `json:"sort"`                               // 排序值

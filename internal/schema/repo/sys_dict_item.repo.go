@@ -35,14 +35,14 @@ func ToSchemaDictItems(dits ent.SysDictItems) []*schema.DictItem {
 	return list
 }
 
-func (a *DictItem) ToEntCreateSysDictItemInput(sdi *schema.DictItem) *ent.CreateSysDictItemInput {
+func ToEntCreateSysDictItemInput(sdi *schema.DictItem) *ent.CreateSysDictItemInput {
 	createinput := new(ent.CreateSysDictItemInput)
 	structure.Copy(sdi, &createinput)
 
 	return createinput
 }
 
-func (a *DictItem) ToEntUpdateSysDictItemInput(sdi *schema.DictItem) *ent.UpdateSysDictItemInput {
+func ToEntUpdateSysDictItemInput(sdi *schema.DictItem) *ent.UpdateSysDictItemInput {
 	updateinput := new(ent.UpdateSysDictItemInput)
 	structure.Copy(sdi, &updateinput)
 
@@ -121,7 +121,7 @@ func (a *DictItem) Get(ctx context.Context, id string, opts ...schema.DictItemQu
 // Create 创建数据
 func (a *DictItem) Create(ctx context.Context, item schema.DictItem) (*schema.DictItem, error) {
 
-	itemInput := a.ToEntCreateSysDictItemInput(&item)
+	itemInput := ToEntCreateSysDictItemInput(&item)
 
 	dictitem, err := a.EntCli.SysDictItem.Create().SetInput(*itemInput).Save(ctx)
 
@@ -140,7 +140,7 @@ func (a *DictItem) Update(ctx context.Context, id string, item schema.DictItem) 
 		return nil, err
 	}
 
-	itemInput := a.ToEntUpdateSysDictItemInput(&item)
+	itemInput := ToEntUpdateSysDictItemInput(&item)
 
 	dictitem, err := oitem.Update().SetInput(*itemInput).Save(ctx)
 	sch_dictitem := ToSchemaDictItem(dictitem)

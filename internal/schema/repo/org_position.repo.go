@@ -43,14 +43,14 @@ func ToSchemaOrgPositions(ets ent.OrgPositions) []*schema.OrgPosition {
 	return list
 }
 
-func (a *OrgPosition) ToEntCreateOrgPositionInput(sch *schema.OrgPosition) *ent.CreateOrgPositionInput {
+func ToEntCreateOrgPositionInput(sch *schema.OrgPosition) *ent.CreateOrgPositionInput {
 	createinput := new(ent.CreateOrgPositionInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func (a *OrgPosition) ToEntUpdateOrgPositionInput(sch *schema.OrgPosition) *ent.UpdateOrgPositionInput {
+func ToEntUpdateOrgPositionInput(sch *schema.OrgPosition) *ent.UpdateOrgPositionInput {
 	updateinput := new(ent.UpdateOrgPositionInput)
 	structure.Copy(sch, &updateinput)
 
@@ -177,7 +177,7 @@ func (a *OrgPosition) Create(ctx context.Context, item schema.OrgPosition) (*sch
 
 	// TODO: check org_id
 
-	iteminput := a.ToEntCreateOrgPositionInput(&item)
+	iteminput := ToEntCreateOrgPositionInput(&item)
 	r_orgposition, err := a.EntCli.OrgPosition.Create().SetInput(*iteminput).Save(ctx)
 
 	if err != nil {
@@ -199,7 +199,7 @@ func (a *OrgPosition) Update(ctx context.Context, id string, item schema.OrgPosi
 		return nil, err
 	}
 
-	iteminput := a.ToEntUpdateOrgPositionInput(&item)
+	iteminput := ToEntUpdateOrgPositionInput(&item)
 
 	r_orgposition, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 

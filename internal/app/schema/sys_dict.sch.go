@@ -6,8 +6,7 @@ import (
 
 // Dict 字典对象
 type Dict struct {
-	TreeMixin
-	TimeMixin
+	TimeMixin `yaml:"-"`
 
 	ID string `json:"id" yaml:"id"` // 唯一标识
 

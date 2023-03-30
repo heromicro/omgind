@@ -35,14 +35,14 @@ func ToSchemaSysRoleMenus(roles ent.SysRoleMenus) []*schema.RoleMenu {
 	return list
 }
 
-func (a *RoleMenu) ToEntCreateSysRoleMenuInput(schrole *schema.RoleMenu) *ent.CreateSysRoleMenuInput {
+func ToEntCreateSysRoleMenuInput(schrole *schema.RoleMenu) *ent.CreateSysRoleMenuInput {
 	createinput := new(ent.CreateSysRoleMenuInput)
 	structure.Copy(schrole, &createinput)
 
 	return createinput
 }
 
-func (a *RoleMenu) ToEntUpdateSysRoleMenuInput(schrole *schema.RoleMenu) *ent.UpdateSysRoleMenuInput {
+func ToEntUpdateSysRoleMenuInput(schrole *schema.RoleMenu) *ent.UpdateSysRoleMenuInput {
 	updateinput := new(ent.UpdateSysRoleMenuInput)
 	structure.Copy(schrole, &updateinput)
 
@@ -120,7 +120,7 @@ func (a *RoleMenu) Get(ctx context.Context, id string, opts ...schema.RoleMenuQu
 // Create 创建数据
 func (a *RoleMenu) Create(ctx context.Context, item schema.RoleMenu) (*schema.RoleMenu, error) {
 
-	iteminput := a.ToEntCreateSysRoleMenuInput(&item)
+	iteminput := ToEntCreateSysRoleMenuInput(&item)
 	iteminput.CreatedAt = nil
 	iteminput.UpdatedAt = nil
 
@@ -138,7 +138,7 @@ func (a *RoleMenu) Update(ctx context.Context, id string, item schema.RoleMenu) 
 	if err != nil {
 		return nil, errors.ErrNotFound
 	}
-	iteminput := a.ToEntUpdateSysRoleMenuInput(&item)
+	iteminput := ToEntUpdateSysRoleMenuInput(&item)
 	iteminput.UpdatedAt = nil
 	rolemenu, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 	if err != nil {

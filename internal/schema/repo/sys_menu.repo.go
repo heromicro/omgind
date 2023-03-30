@@ -35,14 +35,14 @@ func ToSchemaSysMenus(dits ent.SysMenus) []*schema.Menu {
 	return list
 }
 
-func (a *Menu) ToEntCreateSysMenuInput(m *schema.Menu) *ent.CreateSysMenuInput {
+func ToEntCreateSysMenuInput(m *schema.Menu) *ent.CreateSysMenuInput {
 	createinput := new(ent.CreateSysMenuInput)
 	structure.Copy(m, &createinput)
 
 	return createinput
 }
 
-func (a *Menu) ToEntUpdateSysMenuInput(m *schema.Menu) *ent.UpdateSysMenuInput {
+func ToEntUpdateSysMenuInput(m *schema.Menu) *ent.UpdateSysMenuInput {
 	updateinput := new(ent.UpdateSysMenuInput)
 	structure.Copy(m, &updateinput)
 
@@ -140,7 +140,7 @@ func (a *Menu) Get(ctx context.Context, id string, opts ...schema.MenuQueryOptio
 // Create 创建数据
 func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.Menu, error) {
 
-	iteminput := a.ToEntCreateSysMenuInput(&item)
+	iteminput := ToEntCreateSysMenuInput(&item)
 	iteminput.CreatedAt = nil
 	iteminput.UpdatedAt = nil
 	sys_menu, err := a.EntCli.SysMenu.Create().SetInput(*iteminput).Save(ctx)
@@ -160,7 +160,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 		return nil, err
 	}
 
-	iteminput := a.ToEntUpdateSysMenuInput(&item)
+	iteminput := ToEntUpdateSysMenuInput(&item)
 	sys_menu, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 	if err != nil {
 		return nil, err

@@ -37,14 +37,14 @@ func ToSchemaRoles(roles ent.SysRoles) []*schema.Role {
 	return list
 }
 
-func (a *Role) ToEntCreateSysRoleInput(schrole *schema.Role) *ent.CreateSysRoleInput {
+func ToEntCreateSysRoleInput(schrole *schema.Role) *ent.CreateSysRoleInput {
 	createinput := new(ent.CreateSysRoleInput)
 	structure.Copy(schrole, &createinput)
 
 	return createinput
 }
 
-func (a *Role) ToEntUpdateSysRoleInput(schrole *schema.Role) *ent.UpdateSysRoleInput {
+func ToEntUpdateSysRoleInput(schrole *schema.Role) *ent.UpdateSysRoleInput {
 	updateinput := new(ent.UpdateSysRoleInput)
 	structure.Copy(schrole, &updateinput)
 
@@ -141,7 +141,7 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, erro
 	//item.CreatedAt = time.Now()
 	//item.UpdatedAt = time.Now()
 
-	iteminput := a.ToEntCreateSysRoleInput(&item)
+	iteminput := ToEntCreateSysRoleInput(&item)
 	iteminput.CreatedAt = nil
 	iteminput.UpdatedAt = nil
 
@@ -165,7 +165,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 	}
 
 	//item.UpdatedAt = time.Now()
-	itemInput := a.ToEntUpdateSysRoleInput(&item)
+	itemInput := ToEntUpdateSysRoleInput(&item)
 	itemInput.UpdatedAt = nil
 	role, err := oitem.Update().SetInput(*itemInput).Save(ctx)
 	if err != nil {

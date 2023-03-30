@@ -22,6 +22,8 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
+	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
+	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
 	"github.com/heromicro/omgind/internal/schema/repo"
 )
 
@@ -104,6 +106,12 @@ var CmdDump = &cobra.Command{
 			case "menu":
 				dump_menu(ctx, eclient, datafile)
 
+			case "role":
+				dump_role(ctx, eclient, datafile)
+
+			case "role_menu":
+				dump_role_menu(ctx, eclient, datafile)
+
 			default:
 				log.Println(whiteOnGreen, " missing on tablename: ", tablename, chalk.Reset)
 
@@ -119,6 +127,128 @@ var CmdDump = &cobra.Command{
 
 		return nil
 	},
+}
+
+func dump_role_menu(ctx context.Context, eclient *ent.Client, datafile string) error {
+
+	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
+	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
+
+	fp, err := os.OpenFile(datafile, os.O_RDWR|os.O_CREATE, 0777)
+	if err != nil {
+		log.Println(redOnWhite, " can not open file: ", err, chalk.Reset)
+		return err
+	}
+	defer fp.Close()
+
+	query := eclient.SysRoleMenu.Query()
+	total, err := query.Count(ctx)
+	if err != nil {
+		return err
+	}
+
+	log.Println(cyanOnBlue, " total: ", total, chalk.Reset)
+
+	pageSize := 10
+	page := int(math.Ceil(float64(total) / float64(pageSize)))
+	log.Println(cyanOnBlue, " page: ", page, chalk.Reset)
+
+	for i := 0; i < page; i++ {
+		offset := i * pageSize
+		if offset > total {
+			log.Println(" ------ ======= ", offset, " ======= ", total)
+			break
+		}
+
+		query := eclient.SysRoleMenu.Query()
+
+		query = query.Order(ent.Asc(sysrolemenu.FieldID), ent.Asc(sysrolemenu.FieldIsDel))
+
+		r_rolemenus, err := query.Limit(pageSize).Offset(offset).All(ctx)
+		if err != nil {
+			return err
+		}
+
+		var sch_rolemenus []*schema.RoleMenu = repo.ToSchemaSysRoleMenus(r_rolemenus)
+
+		// log.Println(" -------- ====== ", sch_dicts[0])
+		data, err := yaml.Marshal(sch_rolemenus)
+		if err != nil {
+			return err
+		}
+
+		wc, err := fp.Write(data)
+		if err != nil {
+			log.Println(redOnWhite, " faild to write ", err, chalk.Reset)
+			return err
+		}
+
+		log.Println(cyanOnBlue, "write : ", wc, chalk.Reset)
+
+	}
+
+	return nil
+}
+
+func dump_role(ctx context.Context, eclient *ent.Client, datafile string) error {
+
+	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
+	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
+
+	fp, err := os.OpenFile(datafile, os.O_RDWR|os.O_CREATE, 0777)
+	if err != nil {
+		log.Println(redOnWhite, " can not open file: ", err, chalk.Reset)
+		return err
+	}
+	defer fp.Close()
+
+	query := eclient.SysRole.Query()
+	total, err := query.Count(ctx)
+	if err != nil {
+		return err
+	}
+
+	log.Println(cyanOnBlue, " total: ", total, chalk.Reset)
+
+	pageSize := 10
+	page := int(math.Ceil(float64(total) / float64(pageSize)))
+	log.Println(cyanOnBlue, " page: ", page, chalk.Reset)
+
+	for i := 0; i < page; i++ {
+		offset := i * pageSize
+		if offset > total {
+			log.Println(" ------ ======= ", offset, " ======= ", total)
+			break
+		}
+
+		query := eclient.SysRole.Query()
+
+		query = query.Order(ent.Asc(sysrole.FieldID), ent.Asc(sysrole.FieldSort))
+
+		r_roles, err := query.Limit(pageSize).Offset(offset).All(ctx)
+		if err != nil {
+			return err
+		}
+
+		var sch_roles []*schema.Role = repo.ToSchemaRoles(r_roles)
+
+		// log.Println(" -------- ====== ", sch_dicts[0])
+		data, err := yaml.Marshal(sch_roles)
+		if err != nil {
+			return err
+		}
+
+		wc, err := fp.Write(data)
+		if err != nil {
+			log.Println(redOnWhite, " faild to write ", err, chalk.Reset)
+			return err
+		}
+
+		log.Println(cyanOnBlue, "write : ", wc, chalk.Reset)
+
+	}
+
+	return nil
 }
 
 func dump_menu(ctx context.Context, eclient *ent.Client, datafile string) error {
@@ -137,6 +267,10 @@ func dump_menu(ctx context.Context, eclient *ent.Client, datafile string) error 
 
 	query := eclient.SysMenu.Query()
 	total, err := query.Count(ctx)
+	if err != nil {
+		return err
+	}
+
 	log.Println(cyanOnBlue, " total: ", total, chalk.Reset)
 
 	pageSize := 10
@@ -221,6 +355,9 @@ func dump_dict(ctx context.Context, eclient *ent.Client, datafile string) error 
 
 	query := eclient.SysDict.Query()
 	total, err := query.Count(ctx)
+	if err != nil {
+		return err
+	}
 
 	log.Println(cyanOnBlue, " total: ", total, chalk.Reset)
 

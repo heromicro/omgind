@@ -40,14 +40,14 @@ func ToSchemaSysDicts(dits ent.SysDicts) []*schema.Dict {
 	return list
 }
 
-func (a *Dict) ToEntCreateSysDictInput(sdi *schema.Dict) *ent.CreateSysDictInput {
+func   ToEntCreateSysDictInput(sdi *schema.Dict) *ent.CreateSysDictInput {
 	createinput := new(ent.CreateSysDictInput)
 	structure.Copy(sdi, &createinput)
 
 	return createinput
 }
 
-func (a *Dict) ToEntUpdateSysDictInput(sdi *schema.Dict) *ent.UpdateSysDictInput {
+func   ToEntUpdateSysDictInput(sdi *schema.Dict) *ent.UpdateSysDictInput {
 	updateinput := new(ent.UpdateSysDictInput)
 	structure.Copy(sdi, &updateinput)
 
@@ -244,7 +244,7 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) (*schema
 		return nil, err
 	}
 
-	iteminput := a.ToEntUpdateSysDictInput(&item)
+	iteminput := ToEntUpdateSysDictInput(&item)
 	iteminput.UpdatedAt = nil
 
 	dict, err := oitem.Update().SetInput(*iteminput).Save(ctx)

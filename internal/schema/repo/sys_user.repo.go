@@ -38,14 +38,14 @@ func ToSchemaSysUsers(us ent.SysUsers) []*schema.User {
 	return list
 }
 
-func (a *User) ToEntCreateSysUserInput(user *schema.User) *ent.CreateSysUserInput {
+func ToEntCreateSysUserInput(user *schema.User) *ent.CreateSysUserInput {
 	createinput := new(ent.CreateSysUserInput)
 	structure.Copy(user, &createinput)
 
 	return createinput
 }
 
-func (a *User) ToEntUpdateSysUserInput(user *schema.User) *ent.UpdateSysUserInput {
+func ToEntUpdateSysUserInput(user *schema.User) *ent.UpdateSysUserInput {
 	updateinput := new(ent.UpdateSysUserInput)
 	structure.Copy(user, &updateinput)
 
@@ -145,7 +145,7 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, erro
 	item.CreatedAt = time.Now()
 	item.UpdatedAt = time.Now()
 
-	iteminput := a.ToEntCreateSysUserInput(&item)
+	iteminput := ToEntCreateSysUserInput(&item)
 	iteminput.CreatedAt = nil
 	iteminput.UpdatedAt = nil
 
@@ -167,7 +167,7 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 	}
 
 	item.UpdatedAt = time.Now()
-	iteminput := a.ToEntUpdateSysUserInput(&item)
+	iteminput := ToEntUpdateSysUserInput(&item)
 	user, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 	sch_user := ToSchemaSysUser(user)
 	return sch_user, nil

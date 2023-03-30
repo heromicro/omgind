@@ -72,14 +72,14 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, erro
 	}
 
 	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *ent.Tx) error {
-		role_input := a.RoleRepo.ToEntCreateSysRoleInput(&item)
+		role_input := repo.ToEntCreateSysRoleInput(&item)
 
 		arole, err := tx.SysRole.Create().SetInput(*role_input).Save(ctx)
 		if err != nil {
 			return err
 		}
 		for _, rmitem := range item.RoleMenus {
-			rminput := a.RoleMenuRepo.ToEntCreateSysRoleMenuInput(rmitem)
+			rminput := repo.ToEntCreateSysRoleMenuInput(rmitem)
 			rminput.CreatedAt = nil
 			rminput.UpdatedAt = nil
 			rminput.RoleID = arole.ID
@@ -134,7 +134,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 		addRoleMenus, delRoleMenus := a.compareRoleMenus(ctx, oldItem.RoleMenus, item.RoleMenus)
 		for _, rmitem := range addRoleMenus {
 			rmitem.RoleID = id
-			rolemenu := a.RoleMenuRepo.ToEntCreateSysRoleMenuInput(rmitem)
+			rolemenu := repo.ToEntCreateSysRoleMenuInput(rmitem)
 
 			_, err := tx.SysRoleMenu.Create().SetInput(*rolemenu).Save(ctx)
 			if err != nil {
@@ -150,7 +150,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 			}
 		}
 
-		rminput := a.RoleRepo.ToEntUpdateSysRoleInput(&item)
+		rminput := repo.ToEntUpdateSysRoleInput(&item)
 		_, err := tx.SysRole.UpdateOneID(id).SetInput(*rminput).Save(ctx)
 		if err != nil {
 			return err

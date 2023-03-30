@@ -94,7 +94,7 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, erro
 
 	err = repo.WithTx(ctx, a.UserRepo.EntCli, func(tx *ent.Tx) error {
 
-		userInput := a.UserRepo.ToEntCreateSysUserInput(&item)
+		userInput := repo.ToEntCreateSysUserInput(&item)
 		userInput.CreatedAt = nil
 		userInput.UpdatedAt = nil
 
@@ -188,7 +188,7 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 			}
 		}
 
-		user_input := a.UserRepo.ToEntUpdateSysUserInput(&item)
+		user_input := repo.ToEntUpdateSysUserInput(&item)
 		user_input.UpdatedAt = nil
 		_, err := tx.SysUser.UpdateOneID(id).SetInput(*user_input).Save(ctx)
 		if err != nil {

@@ -6,7 +6,7 @@ import (
 
 // DictItem 字典项对象
 type DictItem struct {
-	TreeMixin
+	TimeMixin `yaml:"-"`
 
 	ID       string `json:"id" yaml:"id"`                                   // 唯一标识
 	Label    string `json:"label" binding:"required"  yaml:"label"`         // 显示值

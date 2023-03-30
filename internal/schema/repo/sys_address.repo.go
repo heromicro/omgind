@@ -36,14 +36,14 @@ func ToSchemaSysAddresses(ets ent.SysAddresses) []*schema.SysAddress {
 	return list
 }
 
-func (a *SysAddress) ToEntCreateSysAddressInput(sch *schema.SysAddress) *ent.CreateSysAddressInput {
+func ToEntCreateSysAddressInput(sch *schema.SysAddress) *ent.CreateSysAddressInput {
 	createinput := new(ent.CreateSysAddressInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func (a *SysAddress) ToEntUpdateSysAddressInput(sch *schema.SysAddress) *ent.UpdateSysAddressInput {
+func ToEntUpdateSysAddressInput(sch *schema.SysAddress) *ent.UpdateSysAddressInput {
 	updateinput := new(ent.UpdateSysAddressInput)
 	structure.Copy(sch, &updateinput)
 
@@ -175,7 +175,7 @@ func (a *SysAddress) View(ctx context.Context, id string, opts ...schema.SysAddr
 // Create 创建数据
 func (a *SysAddress) Create(ctx context.Context, item schema.SysAddress) (*schema.SysAddress, error) {
 
-	iteminput := a.ToEntCreateSysAddressInput(&item)
+	iteminput := ToEntCreateSysAddressInput(&item)
 	r_sysaddress, err := a.EntCli.SysAddress.Create().SetInput(*iteminput).Save(ctx)
 
 	if err != nil {
@@ -193,7 +193,7 @@ func (a *SysAddress) Update(ctx context.Context, id string, item schema.SysAddre
 		return nil, err
 	}
 
-	iteminput := a.ToEntUpdateSysAddressInput(&item)
+	iteminput := ToEntUpdateSysAddressInput(&item)
 
 	r_sysaddress, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 	sch_sysaddress := ToSchemaSysAddress(r_sysaddress)

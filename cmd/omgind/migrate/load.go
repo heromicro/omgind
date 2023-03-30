@@ -107,6 +107,12 @@ var CmdLoad = &cobra.Command{
 			case "menu":
 				load_menu_data(ctx, eclient, datafile)
 
+			case "role":
+				load_role_data(ctx, eclient, datafile)
+
+			case "role_menu":
+				load_role_menu_data(ctx, eclient, datafile)
+
 			default:
 				log.Println(whiteOnGreen, " missing on tablename: ", tablename, chalk.Reset)
 			}
@@ -238,7 +244,7 @@ func load_district_data(ctx context.Context, eclient *ent.Client, datafile strin
 
 		create_district := repoSysDistrict.EntCli.SysDistrict.Create()
 
-		create_district_input := repoSysDistrict.ToEntCreateSysDistrictInput(&district)
+		create_district_input := repo.ToEntCreateSysDistrictInput(&district)
 
 		// log.Println(" ----- ===== --- create_district_input : [", create_district_input, "] ")
 		// log.Println(" ----- ===== --- create_district_input.ParentID : [", create_district_input.ParentID, "] ")
@@ -364,14 +370,6 @@ func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) e
 		return err
 	}
 
-	repoDict := repo.Dict{
-		EntCli: eclient,
-	}
-
-	repoDictItem := repo.DictItem{
-		EntCli: eclient,
-	}
-
 	var dictBulk []*ent.SysDictCreate
 	var dictItemBulk []*ent.SysDictItemCreate
 
@@ -380,7 +378,7 @@ func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) e
 		for _, d := range dicts {
 			for _, di := range d.Items {
 				log.Println(cyanOnYellow, " di :: ", di.String(), chalk.Reset)
-				dictItemInput := repoDictItem.ToEntCreateSysDictItemInput(di)
+				dictItemInput := repo.ToEntCreateSysDictItemInput(di)
 				log.Println(greenOnWhite, " di :: ", dictItemInput.DictID, chalk.Reset)
 
 				create_dictitem := tx.SysDictItem.Create().SetID(di.ID).SetInput(*dictItemInput)
@@ -393,7 +391,7 @@ func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) e
 			log.Println(cyanOnYellow, " di :: ", d.String(), chalk.Reset)
 
 			d.Items = nil
-			dictInput := repoDict.ToEntCreateSysDictInput(d)
+			dictInput := repo.ToEntCreateSysDictInput(d)
 
 			create_dict := tx.SysDict.Create().SetID(d.ID).SetInput(*dictInput)
 			dictBulk = append(dictBulk, create_dict)
@@ -428,7 +426,7 @@ func load_dict_data(ctx context.Context, eclient *ent.Client, filename string) e
 	return nil
 }
 
-func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) error {
+func load_role_data(ctx context.Context, eclient *ent.Client, filename string) error {
 
 	greenOnWhite := chalk.Green.NewStyle().WithBackground(chalk.White)
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
@@ -447,18 +445,6 @@ func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) e
 		return err
 	}
 
-	repoMenu := &repo.Menu{
-		EntCli: eclient,
-	}
-
-	repoAction := &repo.MenuAction{
-		EntCli: eclient,
-	}
-
-	repoResource := &repo.MenuActionResource{
-		EntCli: eclient,
-	}
-
 	var menuBulk []*ent.SysMenuCreate
 	var actionBulk []*ent.SysMenuActionCreate
 	var resourceBulk []*ent.SysMenuActionResourceCreate
@@ -470,13 +456,13 @@ func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) e
 			for _, a := range m.Actions {
 
 				for _, r := range a.Resources {
-					resourceInput := repoResource.ToEntCreateSysMenuActionResourceInput(r)
+					resourceInput := repo.ToEntCreateSysMenuActionResourceInput(r)
 					create_resoure := tx.SysMenuActionResource.Create().SetID(r.ID).SetInput(*resourceInput)
 					resourceBulk = append(resourceBulk, create_resoure)
 				}
 				a.Resources = nil
 
-				actionInput := repoAction.ToEntCreateSysMenuActionInput(a)
+				actionInput := repo.ToEntCreateSysMenuActionInput(a)
 				create_action := tx.SysMenuAction.Create().SetID(a.ID).SetInput(*actionInput)
 				actionBulk = append(actionBulk, create_action)
 			}
@@ -485,7 +471,7 @@ func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) e
 				m.ParentID = nil
 			}
 
-			menuInput := repoMenu.ToEntCreateSysMenuInput(m)
+			menuInput := repo.ToEntCreateSysMenuInput(m)
 			create_menu := tx.SysMenu.Create().SetID(m.ID).SetInput(*menuInput)
 			menuBulk = append(menuBulk, create_menu)
 		}
@@ -524,6 +510,96 @@ func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) e
 		log.Println(whiteOnGreen, " creatbulk ", err, chalk.Reset)
 		return err
 	}
+
+	return nil
+}
+
+func load_menu_data(ctx context.Context, eclient *ent.Client, filename string) error {
+
+	greenOnWhite := chalk.Green.NewStyle().WithBackground(chalk.White)
+	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
+	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
+	whiteOnGreen := chalk.Cyan.NewStyle().WithBackground(chalk.Green)
+
+	bytes, err := ioutil.ReadFile(filename)
+	if err != nil {
+		log.Println(redOnWhite, " ----- === === ", err)
+		return err
+	}
+	var menus []*schema.Menu
+
+	err = yaml.Unmarshal(bytes, &menus)
+	if err != nil {
+		return err
+	}
+
+	var menuBulk []*ent.SysMenuCreate
+	var actionBulk []*ent.SysMenuActionCreate
+	var resourceBulk []*ent.SysMenuActionResourceCreate
+
+	err = repo.WithTx(ctx, eclient, func(tx *ent.Tx) error {
+
+		for _, m := range menus {
+
+			for _, a := range m.Actions {
+
+				for _, r := range a.Resources {
+					resourceInput := repo.ToEntCreateSysMenuActionResourceInput(r)
+					create_resoure := tx.SysMenuActionResource.Create().SetID(r.ID).SetInput(*resourceInput)
+					resourceBulk = append(resourceBulk, create_resoure)
+				}
+				a.Resources = nil
+
+				actionInput := repo.ToEntCreateSysMenuActionInput(a)
+				create_action := tx.SysMenuAction.Create().SetID(a.ID).SetInput(*actionInput)
+				actionBulk = append(actionBulk, create_action)
+			}
+			m.Actions = nil
+
+			if m.ParentID != nil && *m.ParentID == "" {
+				m.ParentID = nil
+			}
+			menuInput := repo.ToEntCreateSysMenuInput(m)
+			create_menu := tx.SysMenu.Create().SetID(m.ID).SetInput(*menuInput)
+			menuBulk = append(menuBulk, create_menu)
+		}
+
+		err = tx.SysMenu.CreateBulk(menuBulk...).OnConflict(
+			sql.ConflictColumns(sysmenu.FieldID),
+		).UpdateNewValues().Exec(ctx)
+		if err != nil {
+			log.Println(cyanOnBlue, " creatbulk menu ", err, chalk.Reset)
+			return err
+		}
+
+		err = tx.SysMenuAction.CreateBulk(actionBulk...).OnConflict(
+			sql.ConflictColumns(sysmenuaction.FieldID),
+		).UpdateNewValues().Exec(ctx)
+		if err != nil {
+			log.Println(greenOnWhite, " creatbulk menu action ", err, chalk.Reset)
+			return err
+		}
+
+		err = tx.SysMenuActionResource.CreateBulk(resourceBulk...).OnConflict(
+			sql.ConflictColumns(sysmenuactionresource.FieldID),
+		).UpdateNewValues().Exec(ctx)
+		if err != nil {
+			log.Println(cyanOnBlue, " creatbulk menu action resource ", err, chalk.Reset)
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		log.Println(whiteOnGreen, " creatbulk ", err, chalk.Reset)
+		return err
+	}
+
+	return nil
+}
+
+func load_role_menu_data(ctx context.Context, eclient *ent.Client, filename string) error {
 
 	return nil
 }

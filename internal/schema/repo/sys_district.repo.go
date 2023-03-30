@@ -44,14 +44,14 @@ func ToSchemaSysDistricts(ets ent.SysDistricts) []*schema.SysDistrict {
 	return list
 }
 
-func (a *SysDistrict) ToEntCreateSysDistrictInput(sch *schema.SysDistrict) *ent.CreateSysDistrictInput {
+func ToEntCreateSysDistrictInput(sch *schema.SysDistrict) *ent.CreateSysDistrictInput {
 	createinput := new(ent.CreateSysDistrictInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func (a *SysDistrict) ToEntUpdateSysDistrictInput(sch *schema.SysDistrict) *ent.UpdateSysDistrictInput {
+func ToEntUpdateSysDistrictInput(sch *schema.SysDistrict) *ent.UpdateSysDistrictInput {
 	updateinput := new(ent.UpdateSysDistrictInput)
 	structure.Copy(sch, &updateinput)
 
@@ -494,7 +494,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 			}
 		}
 
-		iteminput := a.ToEntCreateSysDistrictInput(&item)
+		iteminput := ToEntCreateSysDistrictInput(&item)
 
 		res_sysdistrict, err = a.EntCli.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
 		if err != nil {
@@ -540,7 +540,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 			}
 		}
 
-		iteminput := a.ToEntCreateSysDistrictInput(&item)
+		iteminput := ToEntCreateSysDistrictInput(&item)
 
 		err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 
@@ -589,7 +589,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 	if err != nil {
 		return nil, err
 	}
-	// iteminput := a.ToEntUpdateSysDistrictInput(&item)
+	// iteminput := ToEntUpdateSysDistrictInput(&item)
 
 	jobid := format.String(`{id}-{ml}`, format.Items{"id": id, "ml": time.Now().UnixMilli()})
 	job := &queue.Job{
@@ -632,7 +632,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				item.MergeSname = item.Sname
 			}
 
-			iteminput := a.ToEntUpdateSysDistrictInput(&item)
+			iteminput := ToEntUpdateSysDistrictInput(&item)
 			log.Println(" ------ ====== name ", iteminput.Name)
 
 			_, err := a.EntCli.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
@@ -679,7 +679,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				item.MergeSname = item.Sname
 			}
 
-			iteminput := a.ToEntUpdateSysDistrictInput(&item)
+			iteminput := ToEntUpdateSysDistrictInput(&item)
 
 			err = WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 				// step 1: update old item's and it's sub's tree_left and tree_right
@@ -779,7 +779,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 			item.MergeName = &item.Name
 			item.MergeSname = item.Sname
 
-			iteminput := a.ToEntUpdateSysDistrictInput(&item)
+			iteminput := ToEntUpdateSysDistrictInput(&item)
 			iteminput.ClearTreePath = true
 			iteminput.ClearParentID = true
 
@@ -890,7 +890,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 				}
 
-				iteminput := a.ToEntUpdateSysDistrictInput(&item)
+				iteminput := ToEntUpdateSysDistrictInput(&item)
 
 				_, err := a.EntCli.SysDistrict.Update().Where(sysdistrict.IDEQ(id)).SetInput(*iteminput).Save(ctx)
 				if err != nil {
@@ -932,7 +932,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 					}
 				}
 
-				iteminput := a.ToEntUpdateSysDistrictInput(&item)
+				iteminput := ToEntUpdateSysDistrictInput(&item)
 				// old parent need to minus d1, new parent need to add d1
 				d1 := *oitem.TreeRight - *oitem.TreeLeft + 1
 				// oitem and subs need to add d2

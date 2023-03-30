@@ -28,7 +28,7 @@ func ToSchemaSysMenuAction(ma *ent.SysMenuAction) *schema.MenuAction {
 	return item
 }
 
-func  ToSchemaSysMenuActions(mas ent.SysMenuActions) []*schema.MenuAction {
+func ToSchemaSysMenuActions(mas ent.SysMenuActions) []*schema.MenuAction {
 	list := make([]*schema.MenuAction, len(mas))
 	for i, item := range mas {
 		list[i] = ToSchemaSysMenuAction(item)
@@ -36,14 +36,14 @@ func  ToSchemaSysMenuActions(mas ent.SysMenuActions) []*schema.MenuAction {
 	return list
 }
 
-func (a *MenuAction) ToEntCreateSysMenuActionInput(ma *schema.MenuAction) *ent.CreateSysMenuActionInput {
+func ToEntCreateSysMenuActionInput(ma *schema.MenuAction) *ent.CreateSysMenuActionInput {
 	createinput := new(ent.CreateSysMenuActionInput)
 	structure.Copy(ma, &createinput)
 
 	return createinput
 }
 
-func (a *MenuAction) ToEntUpdateSysMenuActionInput(ma *schema.MenuAction) *ent.UpdateSysMenuActionInput {
+func ToEntUpdateSysMenuActionInput(ma *schema.MenuAction) *ent.UpdateSysMenuActionInput {
 	updateinput := new(ent.UpdateSysMenuActionInput)
 	structure.Copy(ma, &updateinput)
 
@@ -121,7 +121,7 @@ func (a *MenuAction) Get(ctx context.Context, id string, opts ...schema.MenuActi
 // Create 创建数据
 func (a *MenuAction) Create(ctx context.Context, item schema.MenuAction) (*schema.MenuAction, error) {
 
-	iteminput := a.ToEntCreateSysMenuActionInput(&item)
+	iteminput := ToEntCreateSysMenuActionInput(&item)
 
 	sys_ma, err := a.EntCli.SysMenuAction.Create().SetInput(*iteminput).Save(ctx)
 
@@ -140,7 +140,7 @@ func (a *MenuAction) Update(ctx context.Context, id string, item schema.MenuActi
 		return nil, err
 	}
 
-	iteminput := a.ToEntUpdateSysMenuActionInput(&item)
+	iteminput := ToEntUpdateSysMenuActionInput(&item)
 	sys_ma, err := oitem.Update().SetInput(*iteminput).Save(ctx)
 	if err != nil {
 		return nil, err

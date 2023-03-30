@@ -56,10 +56,10 @@ func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQ
 // Create 创建数据
 func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.OrgStaff, error) {
 
-	iden_addr_iteminput := a.SysAddressRepo.ToEntCreateSysAddressInput(item.IdenAddr)
+	iden_addr_iteminput := repo.ToEntCreateSysAddressInput(item.IdenAddr)
 	item.IdenAddr = nil
 
-	resi_addr_iteminput := a.SysAddressRepo.ToEntCreateSysAddressInput(item.ResiAddr)
+	resi_addr_iteminput := repo.ToEntCreateSysAddressInput(item.ResiAddr)
 	item.ResiAddr = nil
 
 	staff_input := a.OrgStaffRepo.ToEntCreateOrgStaffInput(&item)
@@ -109,12 +109,12 @@ func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) 
 		return nil, errors.ErrNotFound
 	}
 
-	iden_addr_create_input := a.SysAddressRepo.ToEntCreateSysAddressInput(item.IdenAddr)
-	iden_addr_update_input := a.SysAddressRepo.ToEntUpdateSysAddressInput(item.IdenAddr)
+	iden_addr_create_input := repo.ToEntCreateSysAddressInput(item.IdenAddr)
+	iden_addr_update_input := repo.ToEntUpdateSysAddressInput(item.IdenAddr)
 	item.IdenAddr = nil
 
-	resi_addr_create_input := a.SysAddressRepo.ToEntCreateSysAddressInput(item.ResiAddr)
-	resi_addr_update_input := a.SysAddressRepo.ToEntUpdateSysAddressInput(item.ResiAddr)
+	resi_addr_create_input := repo.ToEntCreateSysAddressInput(item.ResiAddr)
+	resi_addr_update_input := repo.ToEntUpdateSysAddressInput(item.ResiAddr)
 	item.ResiAddr = nil
 
 	staff_input := a.OrgStaffRepo.ToEntUpdateOrgStaffInput(&item)
