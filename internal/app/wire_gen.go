@@ -183,10 +183,9 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceOrgOrgan := &service.OrgOrgan{
-		EntCli:         client,
-		OrgOrganRepo:   orgOrgan,
-		SysAddressRepo: sysAddress,
-		OrgDeptRepo:    orgDept,
+		EntCli:       client,
+		OrgOrganRepo: orgOrgan,
+		OrgDeptRepo:  orgDept,
 	}
 	api_v2OrgOrgan := &api_v2.OrgOrgan{
 		OrgOrganSrv: serviceOrgOrgan,
