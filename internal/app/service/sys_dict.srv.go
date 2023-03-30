@@ -20,8 +20,7 @@ var DictSet = wire.NewSet(wire.Struct(new(Dict), "*"))
 type Dict struct {
 	EntCli *ent.Client
 
-	DictRepo     *repo.Dict
-	DictItemRepo *repo.DictItem
+	DictRepo *repo.Dict
 }
 
 // Query 查询数据

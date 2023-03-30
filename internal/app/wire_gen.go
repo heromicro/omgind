@@ -72,13 +72,9 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	dict := &repo.Dict{
 		EntCli: client,
 	}
-	dictItem := &repo.DictItem{
-		EntCli: client,
-	}
 	serviceDict := &service.Dict{
-		EntCli:       client,
-		DictRepo:     dict,
-		DictItemRepo: dictItem,
+		EntCli:   client,
+		DictRepo: dict,
 	}
 	api_v2Dict := &api_v2.Dict{
 		DictSrv: serviceDict,
@@ -199,9 +195,8 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceOrgStaff := &service.OrgStaff{
-		EntCli:         client,
-		OrgStaffRepo:   orgStaff,
-		SysAddressRepo: sysAddress,
+		EntCli:       client,
+		OrgStaffRepo: orgStaff,
 	}
 	api_v2OrgStaff := &api_v2.OrgStaff{
 		OrgStaffSrv: serviceOrgStaff,

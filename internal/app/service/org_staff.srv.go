@@ -20,8 +20,7 @@ var OrgStaffSet = wire.NewSet(wire.Struct(new(OrgStaff), "*"))
 type OrgStaff struct {
 	EntCli *ent.Client
 
-	OrgStaffRepo   *repo.OrgStaff
-	SysAddressRepo *repo.SysAddress
+	OrgStaffRepo *repo.OrgStaff
 }
 
 // Query 查询数据

@@ -20,9 +20,9 @@ var OrgOrganSet = wire.NewSet(wire.Struct(new(OrgOrgan), "*"))
 type OrgOrgan struct {
 	EntCli *ent.Client
 
-	OrgOrganRepo   *repo.OrgOrgan
-	SysAddressRepo *repo.SysAddress
-	OrgDeptRepo    *repo.OrgDept
+	OrgOrganRepo *repo.OrgOrgan
+
+	OrgDeptRepo *repo.OrgDept
 }
 
 // Query 查询数据
