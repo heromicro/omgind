@@ -32,8 +32,8 @@ import (
 // \copy (select * from district_full order by tree_id asc, ids asc) to 'omgind/scripts/sql/district_full.csv' delimiter ',' CSV HEADER;
 // \copy district_full TO 'Path/file_name.csv' delimiter ',' CSV HEADER;
 
-// go run cmd/omgind/main.go migrate dump --conf=./configs/config.dev.toml --format=yml --tablename=dict --datadir=./configs/
-// go run cmd/omgind/main.go migrate dump --conf=./configs/config.dev.toml --format=yml --tablename=menu --datadir=./configs/
+// go run cmd/omgind/main.go migrate dump --conf=./configs/config.dev.toml --format=yml --tablename=dict --datadir=./configs/data
+// go run cmd/omgind/main.go migrate dump --conf=./configs/config.dev.toml --format=yml --tablename=menu --datadir=./configs/data
 
 func init() {
 
