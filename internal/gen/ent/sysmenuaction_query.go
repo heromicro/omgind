@@ -19,7 +19,7 @@ import (
 type SysMenuActionQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []sysmenuaction.Order
 	inters     []Interceptor
 	predicates []predicate.SysMenuAction
 	modifiers  []func(*sql.Selector)
@@ -54,7 +54,7 @@ func (smaq *SysMenuActionQuery) Unique(unique bool) *SysMenuActionQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (smaq *SysMenuActionQuery) Order(o ...OrderFunc) *SysMenuActionQuery {
+func (smaq *SysMenuActionQuery) Order(o ...sysmenuaction.Order) *SysMenuActionQuery {
 	smaq.order = append(smaq.order, o...)
 	return smaq
 }
@@ -248,7 +248,7 @@ func (smaq *SysMenuActionQuery) Clone() *SysMenuActionQuery {
 	return &SysMenuActionQuery{
 		config:     smaq.config,
 		ctx:        smaq.ctx.Clone(),
-		order:      append([]OrderFunc{}, smaq.order...),
+		order:      append([]sysmenuaction.Order{}, smaq.order...),
 		inters:     append([]Interceptor{}, smaq.inters...),
 		predicates: append([]predicate.SysMenuAction{}, smaq.predicates...),
 		// clone intermediate query.

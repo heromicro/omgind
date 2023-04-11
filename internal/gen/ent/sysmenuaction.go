@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 )
@@ -35,7 +36,8 @@ type SysMenuAction struct {
 	// 动作编号
 	Code string `json:"code,omitempty"`
 	// 动作名称
-	Name string `json:"name,omitempty"`
+	Name         string `json:"name,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -52,7 +54,7 @@ func (*SysMenuAction) scanValues(columns []string) ([]any, error) {
 		case sysmenuaction.FieldCreatedAt, sysmenuaction.FieldUpdatedAt, sysmenuaction.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysMenuAction", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -136,9 +138,17 @@ func (sma *SysMenuAction) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				sma.Name = value.String
 			}
+		default:
+			sma.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysMenuAction.
+// This includes values selected through modifiers, order, etc.
+func (sma *SysMenuAction) Value(name string) (ent.Value, error) {
+	return sma.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysMenuAction.

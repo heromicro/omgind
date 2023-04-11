@@ -959,11 +959,7 @@ func HasHaddr() predicate.OrgOrgan {
 // HasHaddrWith applies the HasEdge predicate on the "haddr" edge with a given conditions (other predicates).
 func HasHaddrWith(preds ...predicate.SysAddress) predicate.OrgOrgan {
 	return predicate.OrgOrgan(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(HaddrInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, true, HaddrTable, HaddrColumn),
-		)
+		step := newHaddrStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -986,11 +982,7 @@ func HasDepts() predicate.OrgOrgan {
 // HasDeptsWith applies the HasEdge predicate on the "depts" edge with a given conditions (other predicates).
 func HasDeptsWith(preds ...predicate.OrgDept) predicate.OrgOrgan {
 	return predicate.OrgOrgan(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(DeptsInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, DeptsTable, DeptsColumn),
-		)
+		step := newDeptsStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1013,11 +1005,7 @@ func HasStaffs() predicate.OrgOrgan {
 // HasStaffsWith applies the HasEdge predicate on the "staffs" edge with a given conditions (other predicates).
 func HasStaffsWith(preds ...predicate.OrgStaff) predicate.OrgOrgan {
 	return predicate.OrgOrgan(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(StaffsInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
-		)
+		step := newStaffsStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1040,11 +1028,7 @@ func HasPositions() predicate.OrgOrgan {
 // HasPositionsWith applies the HasEdge predicate on the "positions" edge with a given conditions (other predicates).
 func HasPositionsWith(preds ...predicate.OrgPosition) predicate.OrgOrgan {
 	return predicate.OrgOrgan(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(PositionsInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, PositionsTable, PositionsColumn),
-		)
+		step := newPositionsStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

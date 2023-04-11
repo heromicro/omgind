@@ -719,11 +719,7 @@ func HasOrgan() predicate.OrgPosition {
 // HasOrganWith applies the HasEdge predicate on the "organ" edge with a given conditions (other predicates).
 func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgPosition {
 	return predicate.OrgPosition(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(OrganInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
-		)
+		step := newOrganStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -746,11 +742,7 @@ func HasStaffs() predicate.OrgPosition {
 // HasStaffsWith applies the HasEdge predicate on the "staffs" edge with a given conditions (other predicates).
 func HasStaffsWith(preds ...predicate.OrgStaff) predicate.OrgPosition {
 	return predicate.OrgPosition(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(StaffsInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
-		)
+		step := newStaffsStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

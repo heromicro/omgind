@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
@@ -68,7 +69,8 @@ type SysAddress struct {
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysAddressQuery when eager-loading is set.
-	Edges SysAddressEdges `json:"edges"`
+	Edges        SysAddressEdges `json:"edges"`
+	selectValues sql.SelectValues
 }
 
 // SysAddressEdges holds the relations/edges for other nodes in the graph.
@@ -137,7 +139,7 @@ func (*SysAddress) scanValues(columns []string) ([]any, error) {
 		case sysaddress.FieldCreatedAt, sysaddress.FieldUpdatedAt, sysaddress.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysAddress", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -322,9 +324,17 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 				sa.Creator = new(string)
 				*sa.Creator = value.String
 			}
+		default:
+			sa.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysAddress.
+// This includes values selected through modifiers, order, etc.
+func (sa *SysAddress) Value(name string) (ent.Value, error) {
+	return sa.selectValues.Get(name)
 }
 
 // QueryOrgan queries the "organ" edge of the SysAddress entity.

@@ -19,7 +19,7 @@ import (
 type SysUserRoleQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []sysuserrole.Order
 	inters     []Interceptor
 	predicates []predicate.SysUserRole
 	modifiers  []func(*sql.Selector)
@@ -54,7 +54,7 @@ func (surq *SysUserRoleQuery) Unique(unique bool) *SysUserRoleQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (surq *SysUserRoleQuery) Order(o ...OrderFunc) *SysUserRoleQuery {
+func (surq *SysUserRoleQuery) Order(o ...sysuserrole.Order) *SysUserRoleQuery {
 	surq.order = append(surq.order, o...)
 	return surq
 }
@@ -248,7 +248,7 @@ func (surq *SysUserRoleQuery) Clone() *SysUserRoleQuery {
 	return &SysUserRoleQuery{
 		config:     surq.config,
 		ctx:        surq.ctx.Clone(),
-		order:      append([]OrderFunc{}, surq.order...),
+		order:      append([]sysuserrole.Order{}, surq.order...),
 		inters:     append([]Interceptor{}, surq.inters...),
 		predicates: append([]predicate.SysUserRole{}, surq.predicates...),
 		// clone intermediate query.

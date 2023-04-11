@@ -22,7 +22,7 @@ import (
 type SysAddressQuery struct {
 	config
 	ctx           *QueryContext
-	order         []OrderFunc
+	order         []sysaddress.Order
 	inters        []Interceptor
 	predicates    []predicate.SysAddress
 	withOrgan     *OrgOrganQuery
@@ -60,7 +60,7 @@ func (saq *SysAddressQuery) Unique(unique bool) *SysAddressQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (saq *SysAddressQuery) Order(o ...OrderFunc) *SysAddressQuery {
+func (saq *SysAddressQuery) Order(o ...sysaddress.Order) *SysAddressQuery {
 	saq.order = append(saq.order, o...)
 	return saq
 }
@@ -320,7 +320,7 @@ func (saq *SysAddressQuery) Clone() *SysAddressQuery {
 	return &SysAddressQuery{
 		config:        saq.config,
 		ctx:           saq.ctx.Clone(),
-		order:         append([]OrderFunc{}, saq.order...),
+		order:         append([]sysaddress.Order{}, saq.order...),
 		inters:        append([]Interceptor{}, saq.inters...),
 		predicates:    append([]predicate.SysAddress{}, saq.predicates...),
 		withOrgan:     saq.withOrgan.Clone(),

@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
@@ -78,7 +79,8 @@ type OrgStaff struct {
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrgStaffQuery when eager-loading is set.
-	Edges OrgStaffEdges `json:"edges"`
+	Edges        OrgStaffEdges `json:"edges"`
+	selectValues sql.SelectValues
 }
 
 // OrgStaffEdges holds the relations/edges for other nodes in the graph.
@@ -177,7 +179,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type OrgStaff", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -389,9 +391,17 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				os.Creator = new(string)
 				*os.Creator = value.String
 			}
+		default:
+			os.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the OrgStaff.
+// This includes values selected through modifiers, order, etc.
+func (os *OrgStaff) Value(name string) (ent.Value, error) {
+	return os.selectValues.Get(name)
 }
 
 // QueryOrgan queries the "organ" edge of the OrgStaff entity.

@@ -19,7 +19,7 @@ import (
 type SysRoleMenuQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []sysrolemenu.Order
 	inters     []Interceptor
 	predicates []predicate.SysRoleMenu
 	modifiers  []func(*sql.Selector)
@@ -54,7 +54,7 @@ func (srmq *SysRoleMenuQuery) Unique(unique bool) *SysRoleMenuQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (srmq *SysRoleMenuQuery) Order(o ...OrderFunc) *SysRoleMenuQuery {
+func (srmq *SysRoleMenuQuery) Order(o ...sysrolemenu.Order) *SysRoleMenuQuery {
 	srmq.order = append(srmq.order, o...)
 	return srmq
 }
@@ -248,7 +248,7 @@ func (srmq *SysRoleMenuQuery) Clone() *SysRoleMenuQuery {
 	return &SysRoleMenuQuery{
 		config:     srmq.config,
 		ctx:        srmq.ctx.Clone(),
-		order:      append([]OrderFunc{}, srmq.order...),
+		order:      append([]sysrolemenu.Order{}, srmq.order...),
 		inters:     append([]Interceptor{}, srmq.inters...),
 		predicates: append([]predicate.SysRoleMenu{}, srmq.predicates...),
 		// clone intermediate query.

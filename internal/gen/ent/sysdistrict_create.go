@@ -2398,8 +2398,8 @@ func (sdcb *SysDistrictCreateBulk) Save(ctx context.Context) ([]*SysDistrict, er
 					return nil, err
 				}
 				builder.mutation = mutation
-				nodes[i], specs[i] = builder.createSpec()
 				var err error
+				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
 					_, err = mutators[i+1].Mutate(root, sdcb.builders[i+1].mutation)
 				} else {

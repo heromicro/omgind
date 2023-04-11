@@ -1759,11 +1759,7 @@ func HasOrgan() predicate.SysAddress {
 // HasOrganWith applies the HasEdge predicate on the "organ" edge with a given conditions (other predicates).
 func HasOrganWith(preds ...predicate.OrgOrgan) predicate.SysAddress {
 	return predicate.SysAddress(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(OrganInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, false, OrganTable, OrganColumn),
-		)
+		step := newOrganStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1786,11 +1782,7 @@ func HasStaffResi() predicate.SysAddress {
 // HasStaffResiWith applies the HasEdge predicate on the "staff_resi" edge with a given conditions (other predicates).
 func HasStaffResiWith(preds ...predicate.OrgStaff) predicate.SysAddress {
 	return predicate.SysAddress(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(StaffResiInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, false, StaffResiTable, StaffResiColumn),
-		)
+		step := newStaffResiStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1813,11 +1805,7 @@ func HasStaffIden() predicate.SysAddress {
 // HasStaffIdenWith applies the HasEdge predicate on the "staff_iden" edge with a given conditions (other predicates).
 func HasStaffIdenWith(preds ...predicate.OrgStaff) predicate.SysAddress {
 	return predicate.SysAddress(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(StaffIdenInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, false, StaffIdenTable, StaffIdenColumn),
-		)
+		step := newStaffIdenStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

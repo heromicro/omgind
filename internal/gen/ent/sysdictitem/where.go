@@ -589,11 +589,7 @@ func HasDict() predicate.SysDictItem {
 // HasDictWith applies the HasEdge predicate on the "dict" edge with a given conditions (other predicates).
 func HasDictWith(preds ...predicate.SysDict) predicate.SysDictItem {
 	return predicate.SysDictItem(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(DictInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, DictTable, DictColumn),
-		)
+		step := newDictStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)

@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
 )
@@ -33,7 +34,8 @@ type XxxDemo struct {
 	// 编号
 	Code string `json:"code,omitempty"`
 	// 名称
-	Name string `json:"name,omitempty"`
+	Name         string `json:"name,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -50,7 +52,7 @@ func (*XxxDemo) scanValues(columns []string) ([]any, error) {
 		case xxxdemo.FieldCreatedAt, xxxdemo.FieldUpdatedAt, xxxdemo.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type XxxDemo", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -128,9 +130,17 @@ func (xd *XxxDemo) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				xd.Name = value.String
 			}
+		default:
+			xd.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the XxxDemo.
+// This includes values selected through modifiers, order, etc.
+func (xd *XxxDemo) Value(name string) (ent.Value, error) {
+	return xd.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this XxxDemo.

@@ -4,6 +4,8 @@ package sysmenuactionresource
 
 import (
 	"time"
+
+	"entgo.io/ent/dialect/sql"
 )
 
 const (
@@ -88,3 +90,61 @@ var (
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(string) error
 )
+
+// Order defines the ordering method for the SysMenuActionResource queries.
+type Order func(*sql.Selector)
+
+// ByID orders the results by the id field.
+func ByID(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByIsDel orders the results by the is_del field.
+func ByIsDel(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldIsDel, opts...).ToFunc()
+}
+
+// BySort orders the results by the sort field.
+func BySort(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldSort, opts...).ToFunc()
+}
+
+// ByMemo orders the results by the memo field.
+func ByMemo(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldMemo, opts...).ToFunc()
+}
+
+// ByCreatedAt orders the results by the created_at field.
+func ByCreatedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
+}
+
+// ByUpdatedAt orders the results by the updated_at field.
+func ByUpdatedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
+}
+
+// ByDeletedAt orders the results by the deleted_at field.
+func ByDeletedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
+}
+
+// ByIsActive orders the results by the is_active field.
+func ByIsActive(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldIsActive, opts...).ToFunc()
+}
+
+// ByMethod orders the results by the method field.
+func ByMethod(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldMethod, opts...).ToFunc()
+}
+
+// ByPath orders the results by the path field.
+func ByPath(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldPath, opts...).ToFunc()
+}
+
+// ByActionID orders the results by the action_id field.
+func ByActionID(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldActionID, opts...).ToFunc()
+}

@@ -23,7 +23,7 @@ import (
 type OrgStaffQuery struct {
 	config
 	ctx          *QueryContext
-	order        []OrderFunc
+	order        []orgstaff.Order
 	inters       []Interceptor
 	predicates   []predicate.OrgStaff
 	withOrgan    *OrgOrganQuery
@@ -63,7 +63,7 @@ func (osq *OrgStaffQuery) Unique(unique bool) *OrgStaffQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (osq *OrgStaffQuery) Order(o ...OrderFunc) *OrgStaffQuery {
+func (osq *OrgStaffQuery) Order(o ...orgstaff.Order) *OrgStaffQuery {
 	osq.order = append(osq.order, o...)
 	return osq
 }
@@ -367,7 +367,7 @@ func (osq *OrgStaffQuery) Clone() *OrgStaffQuery {
 	return &OrgStaffQuery{
 		config:       osq.config,
 		ctx:          osq.ctx.Clone(),
-		order:        append([]OrderFunc{}, osq.order...),
+		order:        append([]orgstaff.Order{}, osq.order...),
 		inters:       append([]Interceptor{}, osq.inters...),
 		predicates:   append([]predicate.OrgStaff{}, osq.predicates...),
 		withOrgan:    osq.withOrgan.Clone(),
@@ -764,6 +764,21 @@ func (osq *OrgStaffQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != orgstaff.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if osq.withOrgan != nil {
+			_spec.Node.AddColumnOnce(orgstaff.FieldOrgID)
+		}
+		if osq.withIdenAddr != nil {
+			_spec.Node.AddColumnOnce(orgstaff.FieldIdenAddrID)
+		}
+		if osq.withResiAddr != nil {
+			_spec.Node.AddColumnOnce(orgstaff.FieldResiAddrID)
+		}
+		if osq.withDept != nil {
+			_spec.Node.AddColumnOnce(orgstaff.FieldDeptID)
+		}
+		if osq.withPosi != nil {
+			_spec.Node.AddColumnOnce(orgstaff.FieldPosiID)
 		}
 	}
 	if ps := osq.predicates; len(ps) > 0 {

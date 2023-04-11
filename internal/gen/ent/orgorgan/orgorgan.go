@@ -4,6 +4,9 @@ package orgorgan
 
 import (
 	"time"
+
+	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -142,3 +145,158 @@ var (
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(string) error
 )
+
+// Order defines the ordering method for the OrgOrgan queries.
+type Order func(*sql.Selector)
+
+// ByID orders the results by the id field.
+func ByID(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByIsDel orders the results by the is_del field.
+func ByIsDel(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldIsDel, opts...).ToFunc()
+}
+
+// BySort orders the results by the sort field.
+func BySort(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldSort, opts...).ToFunc()
+}
+
+// ByCreatedAt orders the results by the created_at field.
+func ByCreatedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
+}
+
+// ByUpdatedAt orders the results by the updated_at field.
+func ByUpdatedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
+}
+
+// ByDeletedAt orders the results by the deleted_at field.
+func ByDeletedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
+}
+
+// ByIsActive orders the results by the is_active field.
+func ByIsActive(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldIsActive, opts...).ToFunc()
+}
+
+// ByMemo orders the results by the memo field.
+func ByMemo(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldMemo, opts...).ToFunc()
+}
+
+// ByName orders the results by the name field.
+func ByName(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldName, opts...).ToFunc()
+}
+
+// BySname orders the results by the sname field.
+func BySname(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldSname, opts...).ToFunc()
+}
+
+// ByCode orders the results by the code field.
+func ByCode(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldCode, opts...).ToFunc()
+}
+
+// ByIdenNo orders the results by the iden_no field.
+func ByIdenNo(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldIdenNo, opts...).ToFunc()
+}
+
+// ByOwnerID orders the results by the owner_id field.
+func ByOwnerID(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldOwnerID, opts...).ToFunc()
+}
+
+// ByHaddrID orders the results by the haddr_id field.
+func ByHaddrID(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldHaddrID, opts...).ToFunc()
+}
+
+// ByCreator orders the results by the creator field.
+func ByCreator(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldCreator, opts...).ToFunc()
+}
+
+// ByHaddrField orders the results by haddr field.
+func ByHaddrField(field string, opts ...sql.OrderTermOption) Order {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newHaddrStep(), sql.OrderByField(field, opts...))
+	}
+}
+
+// ByDeptsCount orders the results by depts count.
+func ByDeptsCount(opts ...sql.OrderTermOption) Order {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newDeptsStep(), opts...)
+	}
+}
+
+// ByDepts orders the results by depts terms.
+func ByDepts(term sql.OrderTerm, terms ...sql.OrderTerm) Order {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newDeptsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+
+// ByStaffsCount orders the results by staffs count.
+func ByStaffsCount(opts ...sql.OrderTermOption) Order {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newStaffsStep(), opts...)
+	}
+}
+
+// ByStaffs orders the results by staffs terms.
+func ByStaffs(term sql.OrderTerm, terms ...sql.OrderTerm) Order {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newStaffsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+
+// ByPositionsCount orders the results by positions count.
+func ByPositionsCount(opts ...sql.OrderTermOption) Order {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newPositionsStep(), opts...)
+	}
+}
+
+// ByPositions orders the results by positions terms.
+func ByPositions(term sql.OrderTerm, terms ...sql.OrderTerm) Order {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newPositionsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+func newHaddrStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(HaddrInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2O, true, HaddrTable, HaddrColumn),
+	)
+}
+func newDeptsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(DeptsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, DeptsTable, DeptsColumn),
+	)
+}
+func newStaffsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(StaffsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, StaffsTable, StaffsColumn),
+	)
+}
+func newPositionsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(PositionsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, PositionsTable, PositionsColumn),
+	)
+}

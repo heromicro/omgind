@@ -20,7 +20,7 @@ import (
 type SysDistrictQuery struct {
 	config
 	ctx          *QueryContext
-	order        []OrderFunc
+	order        []sysdistrict.Order
 	inters       []Interceptor
 	predicates   []predicate.SysDistrict
 	withParent   *SysDistrictQuery
@@ -57,7 +57,7 @@ func (sdq *SysDistrictQuery) Unique(unique bool) *SysDistrictQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (sdq *SysDistrictQuery) Order(o ...OrderFunc) *SysDistrictQuery {
+func (sdq *SysDistrictQuery) Order(o ...sysdistrict.Order) *SysDistrictQuery {
 	sdq.order = append(sdq.order, o...)
 	return sdq
 }
@@ -295,7 +295,7 @@ func (sdq *SysDistrictQuery) Clone() *SysDistrictQuery {
 	return &SysDistrictQuery{
 		config:       sdq.config,
 		ctx:          sdq.ctx.Clone(),
-		order:        append([]OrderFunc{}, sdq.order...),
+		order:        append([]sysdistrict.Order{}, sdq.order...),
 		inters:       append([]Interceptor{}, sdq.inters...),
 		predicates:   append([]predicate.SysDistrict{}, sdq.predicates...),
 		withParent:   sdq.withParent.Clone(),
@@ -538,6 +538,9 @@ func (sdq *SysDistrictQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != sysdistrict.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if sdq.withParent != nil {
+			_spec.Node.AddColumnOnce(sysdistrict.FieldParentID)
 		}
 	}
 	if ps := sdq.predicates; len(ps) > 0 {

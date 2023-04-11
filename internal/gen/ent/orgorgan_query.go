@@ -24,7 +24,7 @@ import (
 type OrgOrganQuery struct {
 	config
 	ctx           *QueryContext
-	order         []OrderFunc
+	order         []orgorgan.Order
 	inters        []Interceptor
 	predicates    []predicate.OrgOrgan
 	withHaddr     *SysAddressQuery
@@ -63,7 +63,7 @@ func (ooq *OrgOrganQuery) Unique(unique bool) *OrgOrganQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (ooq *OrgOrganQuery) Order(o ...OrderFunc) *OrgOrganQuery {
+func (ooq *OrgOrganQuery) Order(o ...orgorgan.Order) *OrgOrganQuery {
 	ooq.order = append(ooq.order, o...)
 	return ooq
 }
@@ -345,7 +345,7 @@ func (ooq *OrgOrganQuery) Clone() *OrgOrganQuery {
 	return &OrgOrganQuery{
 		config:        ooq.config,
 		ctx:           ooq.ctx.Clone(),
-		order:         append([]OrderFunc{}, ooq.order...),
+		order:         append([]orgorgan.Order{}, ooq.order...),
 		inters:        append([]Interceptor{}, ooq.inters...),
 		predicates:    append([]predicate.OrgOrgan{}, ooq.predicates...),
 		withHaddr:     ooq.withHaddr.Clone(),
@@ -688,6 +688,9 @@ func (ooq *OrgOrganQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != orgorgan.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if ooq.withHaddr != nil {
+			_spec.Node.AddColumnOnce(orgorgan.FieldHaddrID)
 		}
 	}
 	if ps := ooq.predicates; len(ps) > 0 {

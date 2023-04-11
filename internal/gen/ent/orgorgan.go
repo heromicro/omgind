@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
 	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
@@ -47,7 +48,8 @@ type OrgOrgan struct {
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrgOrganQuery when eager-loading is set.
-	Edges OrgOrganEdges `json:"edges"`
+	Edges        OrgOrganEdges `json:"edges"`
+	selectValues sql.SelectValues
 }
 
 // OrgOrganEdges holds the relations/edges for other nodes in the graph.
@@ -119,7 +121,7 @@ func (*OrgOrgan) scanValues(columns []string) ([]any, error) {
 		case orgorgan.FieldCreatedAt, orgorgan.FieldUpdatedAt, orgorgan.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type OrgOrgan", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -234,9 +236,17 @@ func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
 				oo.Creator = new(string)
 				*oo.Creator = value.String
 			}
+		default:
+			oo.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the OrgOrgan.
+// This includes values selected through modifiers, order, etc.
+func (oo *OrgOrgan) Value(name string) (ent.Value, error) {
+	return oo.selectValues.Get(name)
 }
 
 // QueryHaddr queries the "haddr" edge of the OrgOrgan entity.

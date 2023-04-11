@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
 )
@@ -29,7 +30,8 @@ type SysRoleMenu struct {
 	// 菜单ID
 	MenuID string `json:"menu_id,omitempty"`
 	// 菜单ID, sys_menu_action.id
-	ActionID *string `json:"action_id,omitempty"`
+	ActionID     *string `json:"action_id,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -44,7 +46,7 @@ func (*SysRoleMenu) scanValues(columns []string) ([]any, error) {
 		case sysrolemenu.FieldCreatedAt, sysrolemenu.FieldUpdatedAt, sysrolemenu.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysRoleMenu", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -110,9 +112,17 @@ func (srm *SysRoleMenu) assignValues(columns []string, values []any) error {
 				srm.ActionID = new(string)
 				*srm.ActionID = value.String
 			}
+		default:
+			srm.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysRoleMenu.
+// This includes values selected through modifiers, order, etc.
+func (srm *SysRoleMenu) Value(name string) (ent.Value, error) {
+	return srm.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysRoleMenu.

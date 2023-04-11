@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
@@ -61,7 +62,8 @@ type OrgDept struct {
 	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrgDeptQuery when eager-loading is set.
-	Edges OrgDeptEdges `json:"edges"`
+	Edges        OrgDeptEdges `json:"edges"`
+	selectValues sql.SelectValues
 }
 
 // OrgDeptEdges holds the relations/edges for other nodes in the graph.
@@ -137,7 +139,7 @@ func (*OrgDept) scanValues(columns []string) ([]any, error) {
 		case orgdept.FieldCreatedAt, orgdept.FieldUpdatedAt, orgdept.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type OrgDept", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -301,9 +303,17 @@ func (od *OrgDept) assignValues(columns []string, values []any) error {
 				od.Creator = new(string)
 				*od.Creator = value.String
 			}
+		default:
+			od.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the OrgDept.
+// This includes values selected through modifiers, order, etc.
+func (od *OrgDept) Value(name string) (ent.Value, error) {
+	return od.selectValues.Get(name)
 }
 
 // QueryParent queries the "parent" edge of the OrgDept entity.

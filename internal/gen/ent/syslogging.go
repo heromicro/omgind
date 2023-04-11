@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
 )
@@ -41,7 +42,8 @@ type SysLogging struct {
 	// 日志数据(json string)
 	Data *string `json:"data,omitempty"`
 	// 日志数据(json string)
-	ErrorStack *string `json:"error_stack,omitempty"`
+	ErrorStack   *string `json:"error_stack,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -56,7 +58,7 @@ func (*SysLogging) scanValues(columns []string) ([]any, error) {
 		case syslogging.FieldCreatedAt, syslogging.FieldUpdatedAt, syslogging.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysLogging", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -166,9 +168,17 @@ func (sl *SysLogging) assignValues(columns []string, values []any) error {
 				sl.ErrorStack = new(string)
 				*sl.ErrorStack = value.String
 			}
+		default:
+			sl.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysLogging.
+// This includes values selected through modifiers, order, etc.
+func (sl *SysLogging) Value(name string) (ent.Value, error) {
+	return sl.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysLogging.

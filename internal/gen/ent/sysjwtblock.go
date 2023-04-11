@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
 )
@@ -29,7 +30,8 @@ type SysJwtBlock struct {
 	// 是否活跃
 	IsActive bool `json:"is_active,omitempty"`
 	// jwt
-	Jwt string `json:"jwt,omitempty"`
+	Jwt          string `json:"jwt,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -44,7 +46,7 @@ func (*SysJwtBlock) scanValues(columns []string) ([]any, error) {
 		case sysjwtblock.FieldCreatedAt, sysjwtblock.FieldUpdatedAt, sysjwtblock.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysJwtBlock", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -110,9 +112,17 @@ func (sjb *SysJwtBlock) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				sjb.Jwt = value.String
 			}
+		default:
+			sjb.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysJwtBlock.
+// This includes values selected through modifiers, order, etc.
+func (sjb *SysJwtBlock) Value(name string) (ent.Value, error) {
+	return sjb.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysJwtBlock.

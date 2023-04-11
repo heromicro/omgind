@@ -21,7 +21,7 @@ import (
 type SysDictQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []sysdict.Order
 	inters     []Interceptor
 	predicates []predicate.SysDict
 	withItems  *SysDictItemQuery
@@ -57,7 +57,7 @@ func (sdq *SysDictQuery) Unique(unique bool) *SysDictQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (sdq *SysDictQuery) Order(o ...OrderFunc) *SysDictQuery {
+func (sdq *SysDictQuery) Order(o ...sysdict.Order) *SysDictQuery {
 	sdq.order = append(sdq.order, o...)
 	return sdq
 }
@@ -273,7 +273,7 @@ func (sdq *SysDictQuery) Clone() *SysDictQuery {
 	return &SysDictQuery{
 		config:     sdq.config,
 		ctx:        sdq.ctx.Clone(),
-		order:      append([]OrderFunc{}, sdq.order...),
+		order:      append([]sysdict.Order{}, sdq.order...),
 		inters:     append([]Interceptor{}, sdq.inters...),
 		predicates: append([]predicate.SysDict{}, sdq.predicates...),
 		withItems:  sdq.withItems.Clone(),

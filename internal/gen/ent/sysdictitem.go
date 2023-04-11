@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
@@ -39,7 +40,8 @@ type SysDictItem struct {
 	DictID *string `json:"dict_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysDictItemQuery when eager-loading is set.
-	Edges SysDictItemEdges `json:"edges"`
+	Edges        SysDictItemEdges `json:"edges"`
+	selectValues sql.SelectValues
 }
 
 // SysDictItemEdges holds the relations/edges for other nodes in the graph.
@@ -78,7 +80,7 @@ func (*SysDictItem) scanValues(columns []string) ([]any, error) {
 		case sysdictitem.FieldCreatedAt, sysdictitem.FieldUpdatedAt, sysdictitem.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysDictItem", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -163,9 +165,17 @@ func (sdi *SysDictItem) assignValues(columns []string, values []any) error {
 				sdi.DictID = new(string)
 				*sdi.DictID = value.String
 			}
+		default:
+			sdi.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// GetValue returns the ent.Value that was dynamically selected and assigned to the SysDictItem.
+// This includes values selected through modifiers, order, etc.
+func (sdi *SysDictItem) GetValue(name string) (ent.Value, error) {
+	return sdi.selectValues.Get(name)
 }
 
 // QueryDict queries the "dict" edge of the SysDictItem entity.

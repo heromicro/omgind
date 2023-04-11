@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 )
@@ -27,7 +28,8 @@ type SysUserRole struct {
 	// 用户ID, sys_user.id
 	UserID string `json:"user_id,omitempty"`
 	// 角色ID, sys_role.id
-	RoleID string `json:"role_id,omitempty"`
+	RoleID       string `json:"role_id,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -42,7 +44,7 @@ func (*SysUserRole) scanValues(columns []string) ([]any, error) {
 		case sysuserrole.FieldCreatedAt, sysuserrole.FieldUpdatedAt, sysuserrole.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysUserRole", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -101,9 +103,17 @@ func (sur *SysUserRole) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				sur.RoleID = value.String
 			}
+		default:
+			sur.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysUserRole.
+// This includes values selected through modifiers, order, etc.
+func (sur *SysUserRole) Value(name string) (ent.Value, error) {
+	return sur.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysUserRole.

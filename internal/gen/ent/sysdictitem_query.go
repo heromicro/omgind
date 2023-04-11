@@ -20,7 +20,7 @@ import (
 type SysDictItemQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []sysdictitem.Order
 	inters     []Interceptor
 	predicates []predicate.SysDictItem
 	withDict   *SysDictQuery
@@ -56,7 +56,7 @@ func (sdiq *SysDictItemQuery) Unique(unique bool) *SysDictItemQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (sdiq *SysDictItemQuery) Order(o ...OrderFunc) *SysDictItemQuery {
+func (sdiq *SysDictItemQuery) Order(o ...sysdictitem.Order) *SysDictItemQuery {
 	sdiq.order = append(sdiq.order, o...)
 	return sdiq
 }
@@ -272,7 +272,7 @@ func (sdiq *SysDictItemQuery) Clone() *SysDictItemQuery {
 	return &SysDictItemQuery{
 		config:     sdiq.config,
 		ctx:        sdiq.ctx.Clone(),
-		order:      append([]OrderFunc{}, sdiq.order...),
+		order:      append([]sysdictitem.Order{}, sdiq.order...),
 		inters:     append([]Interceptor{}, sdiq.inters...),
 		predicates: append([]predicate.SysDictItem{}, sdiq.predicates...),
 		withDict:   sdiq.withDict.Clone(),
@@ -465,6 +465,9 @@ func (sdiq *SysDictItemQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != sysdictitem.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if sdiq.withDict != nil {
+			_spec.Node.AddColumnOnce(sysdictitem.FieldDictID)
 		}
 	}
 	if ps := sdiq.predicates; len(ps) > 0 {

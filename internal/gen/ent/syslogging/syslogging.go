@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"entgo.io/ent"
+	"entgo.io/ent/dialect/sql"
 )
 
 const (
@@ -107,3 +108,76 @@ var (
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
 	IDValidator func(string) error
 )
+
+// Order defines the ordering method for the SysLogging queries.
+type Order func(*sql.Selector)
+
+// ByID orders the results by the id field.
+func ByID(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByCreatedAt orders the results by the created_at field.
+func ByCreatedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
+}
+
+// ByUpdatedAt orders the results by the updated_at field.
+func ByUpdatedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
+}
+
+// ByDeletedAt orders the results by the deleted_at field.
+func ByDeletedAt(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
+}
+
+// ByIsDel orders the results by the is_del field.
+func ByIsDel(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldIsDel, opts...).ToFunc()
+}
+
+// ByMemo orders the results by the memo field.
+func ByMemo(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldMemo, opts...).ToFunc()
+}
+
+// ByLevel orders the results by the level field.
+func ByLevel(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldLevel, opts...).ToFunc()
+}
+
+// ByTraceID orders the results by the trace_id field.
+func ByTraceID(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldTraceID, opts...).ToFunc()
+}
+
+// ByUserID orders the results by the user_id field.
+func ByUserID(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldUserID, opts...).ToFunc()
+}
+
+// ByTag orders the results by the tag field.
+func ByTag(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldTag, opts...).ToFunc()
+}
+
+// ByVersion orders the results by the version field.
+func ByVersion(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldVersion, opts...).ToFunc()
+}
+
+// ByMessage orders the results by the message field.
+func ByMessage(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldMessage, opts...).ToFunc()
+}
+
+// ByData orders the results by the data field.
+func ByData(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldData, opts...).ToFunc()
+}
+
+// ByErrorStack orders the results by the error_stack field.
+func ByErrorStack(opts ...sql.OrderTermOption) Order {
+	return sql.OrderByField(FieldErrorStack, opts...).ToFunc()
+}

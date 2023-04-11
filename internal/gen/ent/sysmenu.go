@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 )
@@ -45,7 +46,8 @@ type SysMenu struct {
 	// 层级
 	Level int32 `json:"level"`
 	// 是否是子叶
-	IsLeaf *bool `json:"is_leaf"`
+	IsLeaf       *bool `json:"is_leaf"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -62,7 +64,7 @@ func (*SysMenu) scanValues(columns []string) ([]any, error) {
 		case sysmenu.FieldCreatedAt, sysmenu.FieldUpdatedAt, sysmenu.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysMenu", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -179,9 +181,17 @@ func (sm *SysMenu) assignValues(columns []string, values []any) error {
 				sm.IsLeaf = new(bool)
 				*sm.IsLeaf = value.Bool
 			}
+		default:
+			sm.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysMenu.
+// This includes values selected through modifiers, order, etc.
+func (sm *SysMenu) Value(name string) (ent.Value, error) {
+	return sm.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysMenu.

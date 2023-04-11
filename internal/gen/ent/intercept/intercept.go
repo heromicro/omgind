@@ -8,7 +8,25 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
+	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
+	"github.com/heromicro/omgind/internal/gen/ent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/ent/predicate"
+	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
+	"github.com/heromicro/omgind/internal/gen/ent/sysjwtblock"
+	"github.com/heromicro/omgind/internal/gen/ent/syslogging"
+	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
+	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
+	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
+	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
+	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
+	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
+	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
+	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
 )
 
 // The Query interface represents an operation that queries a graph.
@@ -24,7 +42,7 @@ type Query interface {
 	// Unique configures the query builder to filter duplicate records.
 	Unique(bool)
 	// Order specifies how the records should be ordered.
-	Order(...ent.OrderFunc)
+	Order(...func(*sql.Selector))
 	// WhereP appends storage-level predicates to the query builder. Using this method, users
 	// can use type-assertion to append predicates that do not depend on any generated package.
 	WhereP(...func(*sql.Selector))
@@ -557,78 +575,82 @@ func (f TraverseXxxDemo) Traverse(ctx context.Context, q ent.Query) error {
 func NewQuery(q ent.Query) (Query, error) {
 	switch q := q.(type) {
 	case *ent.OrgDeptQuery:
-		return &query[*ent.OrgDeptQuery, predicate.OrgDept]{typ: ent.TypeOrgDept, tq: q}, nil
+		return &query[*ent.OrgDeptQuery, predicate.OrgDept, orgdept.Order]{typ: ent.TypeOrgDept, tq: q}, nil
 	case *ent.OrgOrganQuery:
-		return &query[*ent.OrgOrganQuery, predicate.OrgOrgan]{typ: ent.TypeOrgOrgan, tq: q}, nil
+		return &query[*ent.OrgOrganQuery, predicate.OrgOrgan, orgorgan.Order]{typ: ent.TypeOrgOrgan, tq: q}, nil
 	case *ent.OrgPositionQuery:
-		return &query[*ent.OrgPositionQuery, predicate.OrgPosition]{typ: ent.TypeOrgPosition, tq: q}, nil
+		return &query[*ent.OrgPositionQuery, predicate.OrgPosition, orgposition.Order]{typ: ent.TypeOrgPosition, tq: q}, nil
 	case *ent.OrgStaffQuery:
-		return &query[*ent.OrgStaffQuery, predicate.OrgStaff]{typ: ent.TypeOrgStaff, tq: q}, nil
+		return &query[*ent.OrgStaffQuery, predicate.OrgStaff, orgstaff.Order]{typ: ent.TypeOrgStaff, tq: q}, nil
 	case *ent.SysAddressQuery:
-		return &query[*ent.SysAddressQuery, predicate.SysAddress]{typ: ent.TypeSysAddress, tq: q}, nil
+		return &query[*ent.SysAddressQuery, predicate.SysAddress, sysaddress.Order]{typ: ent.TypeSysAddress, tq: q}, nil
 	case *ent.SysDictQuery:
-		return &query[*ent.SysDictQuery, predicate.SysDict]{typ: ent.TypeSysDict, tq: q}, nil
+		return &query[*ent.SysDictQuery, predicate.SysDict, sysdict.Order]{typ: ent.TypeSysDict, tq: q}, nil
 	case *ent.SysDictItemQuery:
-		return &query[*ent.SysDictItemQuery, predicate.SysDictItem]{typ: ent.TypeSysDictItem, tq: q}, nil
+		return &query[*ent.SysDictItemQuery, predicate.SysDictItem, sysdictitem.Order]{typ: ent.TypeSysDictItem, tq: q}, nil
 	case *ent.SysDistrictQuery:
-		return &query[*ent.SysDistrictQuery, predicate.SysDistrict]{typ: ent.TypeSysDistrict, tq: q}, nil
+		return &query[*ent.SysDistrictQuery, predicate.SysDistrict, sysdistrict.Order]{typ: ent.TypeSysDistrict, tq: q}, nil
 	case *ent.SysJwtBlockQuery:
-		return &query[*ent.SysJwtBlockQuery, predicate.SysJwtBlock]{typ: ent.TypeSysJwtBlock, tq: q}, nil
+		return &query[*ent.SysJwtBlockQuery, predicate.SysJwtBlock, sysjwtblock.Order]{typ: ent.TypeSysJwtBlock, tq: q}, nil
 	case *ent.SysLoggingQuery:
-		return &query[*ent.SysLoggingQuery, predicate.SysLogging]{typ: ent.TypeSysLogging, tq: q}, nil
+		return &query[*ent.SysLoggingQuery, predicate.SysLogging, syslogging.Order]{typ: ent.TypeSysLogging, tq: q}, nil
 	case *ent.SysMenuQuery:
-		return &query[*ent.SysMenuQuery, predicate.SysMenu]{typ: ent.TypeSysMenu, tq: q}, nil
+		return &query[*ent.SysMenuQuery, predicate.SysMenu, sysmenu.Order]{typ: ent.TypeSysMenu, tq: q}, nil
 	case *ent.SysMenuActionQuery:
-		return &query[*ent.SysMenuActionQuery, predicate.SysMenuAction]{typ: ent.TypeSysMenuAction, tq: q}, nil
+		return &query[*ent.SysMenuActionQuery, predicate.SysMenuAction, sysmenuaction.Order]{typ: ent.TypeSysMenuAction, tq: q}, nil
 	case *ent.SysMenuActionResourceQuery:
-		return &query[*ent.SysMenuActionResourceQuery, predicate.SysMenuActionResource]{typ: ent.TypeSysMenuActionResource, tq: q}, nil
+		return &query[*ent.SysMenuActionResourceQuery, predicate.SysMenuActionResource, sysmenuactionresource.Order]{typ: ent.TypeSysMenuActionResource, tq: q}, nil
 	case *ent.SysRoleQuery:
-		return &query[*ent.SysRoleQuery, predicate.SysRole]{typ: ent.TypeSysRole, tq: q}, nil
+		return &query[*ent.SysRoleQuery, predicate.SysRole, sysrole.Order]{typ: ent.TypeSysRole, tq: q}, nil
 	case *ent.SysRoleMenuQuery:
-		return &query[*ent.SysRoleMenuQuery, predicate.SysRoleMenu]{typ: ent.TypeSysRoleMenu, tq: q}, nil
+		return &query[*ent.SysRoleMenuQuery, predicate.SysRoleMenu, sysrolemenu.Order]{typ: ent.TypeSysRoleMenu, tq: q}, nil
 	case *ent.SysUserQuery:
-		return &query[*ent.SysUserQuery, predicate.SysUser]{typ: ent.TypeSysUser, tq: q}, nil
+		return &query[*ent.SysUserQuery, predicate.SysUser, sysuser.Order]{typ: ent.TypeSysUser, tq: q}, nil
 	case *ent.SysUserRoleQuery:
-		return &query[*ent.SysUserRoleQuery, predicate.SysUserRole]{typ: ent.TypeSysUserRole, tq: q}, nil
+		return &query[*ent.SysUserRoleQuery, predicate.SysUserRole, sysuserrole.Order]{typ: ent.TypeSysUserRole, tq: q}, nil
 	case *ent.XxxDemoQuery:
-		return &query[*ent.XxxDemoQuery, predicate.XxxDemo]{typ: ent.TypeXxxDemo, tq: q}, nil
+		return &query[*ent.XxxDemoQuery, predicate.XxxDemo, xxxdemo.Order]{typ: ent.TypeXxxDemo, tq: q}, nil
 	default:
 		return nil, fmt.Errorf("unknown query type %T", q)
 	}
 }
 
-type query[T any, P ~func(*sql.Selector)] struct {
+type query[T any, P ~func(*sql.Selector), R ~func(*sql.Selector)] struct {
 	typ string
 	tq  interface {
 		Limit(int) T
 		Offset(int) T
 		Unique(bool) T
-		Order(...ent.OrderFunc) T
+		Order(...R) T
 		Where(...P) T
 	}
 }
 
-func (q query[T, P]) Type() string {
+func (q query[T, P, R]) Type() string {
 	return q.typ
 }
 
-func (q query[T, P]) Limit(limit int) {
+func (q query[T, P, R]) Limit(limit int) {
 	q.tq.Limit(limit)
 }
 
-func (q query[T, P]) Offset(offset int) {
+func (q query[T, P, R]) Offset(offset int) {
 	q.tq.Offset(offset)
 }
 
-func (q query[T, P]) Unique(unique bool) {
+func (q query[T, P, R]) Unique(unique bool) {
 	q.tq.Unique(unique)
 }
 
-func (q query[T, P]) Order(orders ...ent.OrderFunc) {
-	q.tq.Order(orders...)
+func (q query[T, P, R]) Order(orders ...func(*sql.Selector)) {
+	rs := make([]R, len(orders))
+	for i := range orders {
+		rs[i] = orders[i]
+	}
+	q.tq.Order(rs...)
 }
 
-func (q query[T, P]) WhereP(ps ...func(*sql.Selector)) {
+func (q query[T, P, R]) WhereP(ps ...func(*sql.Selector)) {
 	p := make([]P, len(ps))
 	for i := range ps {
 		p[i] = ps[i]

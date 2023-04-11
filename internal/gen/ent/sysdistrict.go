@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
 )
@@ -86,7 +87,8 @@ type SysDistrict struct {
 	Creator string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysDistrictQuery when eager-loading is set.
-	Edges SysDistrictEdges `json:"edges"`
+	Edges        SysDistrictEdges `json:"edges"`
+	selectValues sql.SelectValues
 }
 
 // SysDistrictEdges holds the relations/edges for other nodes in the graph.
@@ -138,7 +140,7 @@ func (*SysDistrict) scanValues(columns []string) ([]any, error) {
 		case sysdistrict.FieldCreatedAt, sysdistrict.FieldUpdatedAt, sysdistrict.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysDistrict", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -392,9 +394,17 @@ func (sd *SysDistrict) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				sd.Creator = value.String
 			}
+		default:
+			sd.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysDistrict.
+// This includes values selected through modifiers, order, etc.
+func (sd *SysDistrict) Value(name string) (ent.Value, error) {
+	return sd.selectValues.Get(name)
 }
 
 // QueryParent queries the "parent" edge of the SysDistrict entity.

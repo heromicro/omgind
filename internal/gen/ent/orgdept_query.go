@@ -22,7 +22,7 @@ import (
 type OrgDeptQuery struct {
 	config
 	ctx          *QueryContext
-	order        []OrderFunc
+	order        []orgdept.Order
 	inters       []Interceptor
 	predicates   []predicate.OrgDept
 	withParent   *OrgDeptQuery
@@ -61,7 +61,7 @@ func (odq *OrgDeptQuery) Unique(unique bool) *OrgDeptQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (odq *OrgDeptQuery) Order(o ...OrderFunc) *OrgDeptQuery {
+func (odq *OrgDeptQuery) Order(o ...orgdept.Order) *OrgDeptQuery {
 	odq.order = append(odq.order, o...)
 	return odq
 }
@@ -343,7 +343,7 @@ func (odq *OrgDeptQuery) Clone() *OrgDeptQuery {
 	return &OrgDeptQuery{
 		config:       odq.config,
 		ctx:          odq.ctx.Clone(),
-		order:        append([]OrderFunc{}, odq.order...),
+		order:        append([]orgdept.Order{}, odq.order...),
 		inters:       append([]Interceptor{}, odq.inters...),
 		predicates:   append([]predicate.OrgDept{}, odq.predicates...),
 		withParent:   odq.withParent.Clone(),
@@ -687,6 +687,12 @@ func (odq *OrgDeptQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != orgdept.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if odq.withParent != nil {
+			_spec.Node.AddColumnOnce(orgdept.FieldParentID)
+		}
+		if odq.withOrgan != nil {
+			_spec.Node.AddColumnOnce(orgdept.FieldOrgID)
 		}
 	}
 	if ps := odq.predicates; len(ps) > 0 {

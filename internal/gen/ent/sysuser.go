@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 )
@@ -43,7 +44,8 @@ type SysUser struct {
 	// 电话号码
 	Mobile string `json:"mobile,omitempty"`
 	// 盐
-	Salt string `json:"salt,omitempty"`
+	Salt         string `json:"salt,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -60,7 +62,7 @@ func (*SysUser) scanValues(columns []string) ([]any, error) {
 		case sysuser.FieldCreatedAt, sysuser.FieldUpdatedAt, sysuser.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type SysUser", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -170,9 +172,17 @@ func (su *SysUser) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				su.Salt = value.String
 			}
+		default:
+			su.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the SysUser.
+// This includes values selected through modifiers, order, etc.
+func (su *SysUser) Value(name string) (ent.Value, error) {
+	return su.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysUser.

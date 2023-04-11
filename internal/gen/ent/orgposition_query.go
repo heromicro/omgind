@@ -22,7 +22,7 @@ import (
 type OrgPositionQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []orgposition.Order
 	inters     []Interceptor
 	predicates []predicate.OrgPosition
 	withOrgan  *OrgOrganQuery
@@ -59,7 +59,7 @@ func (opq *OrgPositionQuery) Unique(unique bool) *OrgPositionQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (opq *OrgPositionQuery) Order(o ...OrderFunc) *OrgPositionQuery {
+func (opq *OrgPositionQuery) Order(o ...orgposition.Order) *OrgPositionQuery {
 	opq.order = append(opq.order, o...)
 	return opq
 }
@@ -297,7 +297,7 @@ func (opq *OrgPositionQuery) Clone() *OrgPositionQuery {
 	return &OrgPositionQuery{
 		config:     opq.config,
 		ctx:        opq.ctx.Clone(),
-		order:      append([]OrderFunc{}, opq.order...),
+		order:      append([]orgposition.Order{}, opq.order...),
 		inters:     append([]Interceptor{}, opq.inters...),
 		predicates: append([]predicate.OrgPosition{}, opq.predicates...),
 		withOrgan:  opq.withOrgan.Clone(),
@@ -540,6 +540,9 @@ func (opq *OrgPositionQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != orgposition.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if opq.withOrgan != nil {
+			_spec.Node.AddColumnOnce(orgposition.FieldOrgID)
 		}
 	}
 	if ps := opq.predicates; len(ps) > 0 {

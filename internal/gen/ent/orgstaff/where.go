@@ -1919,11 +1919,7 @@ func HasOrgan() predicate.OrgStaff {
 // HasOrganWith applies the HasEdge predicate on the "organ" edge with a given conditions (other predicates).
 func HasOrganWith(preds ...predicate.OrgOrgan) predicate.OrgStaff {
 	return predicate.OrgStaff(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(OrganInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, OrganTable, OrganColumn),
-		)
+		step := newOrganStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1946,11 +1942,7 @@ func HasIdenAddr() predicate.OrgStaff {
 // HasIdenAddrWith applies the HasEdge predicate on the "iden_addr" edge with a given conditions (other predicates).
 func HasIdenAddrWith(preds ...predicate.SysAddress) predicate.OrgStaff {
 	return predicate.OrgStaff(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(IdenAddrInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, true, IdenAddrTable, IdenAddrColumn),
-		)
+		step := newIdenAddrStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -1973,11 +1965,7 @@ func HasResiAddr() predicate.OrgStaff {
 // HasResiAddrWith applies the HasEdge predicate on the "resi_addr" edge with a given conditions (other predicates).
 func HasResiAddrWith(preds ...predicate.SysAddress) predicate.OrgStaff {
 	return predicate.OrgStaff(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(ResiAddrInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, true, ResiAddrTable, ResiAddrColumn),
-		)
+		step := newResiAddrStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -2000,11 +1988,7 @@ func HasDept() predicate.OrgStaff {
 // HasDeptWith applies the HasEdge predicate on the "dept" edge with a given conditions (other predicates).
 func HasDeptWith(preds ...predicate.OrgDept) predicate.OrgStaff {
 	return predicate.OrgStaff(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(DeptInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, DeptTable, DeptColumn),
-		)
+		step := newDeptStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
@@ -2027,11 +2011,7 @@ func HasPosi() predicate.OrgStaff {
 // HasPosiWith applies the HasEdge predicate on the "posi" edge with a given conditions (other predicates).
 func HasPosiWith(preds ...predicate.OrgPosition) predicate.OrgStaff {
 	return predicate.OrgStaff(func(s *sql.Selector) {
-		step := sqlgraph.NewStep(
-			sqlgraph.From(Table, FieldID),
-			sqlgraph.To(PosiInverseTable, FieldID),
-			sqlgraph.Edge(sqlgraph.M2O, true, PosiTable, PosiColumn),
-		)
+		step := newPosiStep()
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
 				p(s)
