@@ -103,13 +103,13 @@ func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryP
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		query = query.Order(orgposition.ByIsActive(OrderBy(v)))
+		query = query.Order(orgposition.ByIsActive(OrderDirection(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		query = query.Order(orgposition.BySort(OrderBy(v)))
+		query = query.Order(orgposition.BySort(OrderDirection(v)))
 	}
-	query = query.Order(orgposition.ByID(OrderBy("desc")))
+	query = query.Order(orgposition.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

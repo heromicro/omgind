@@ -107,7 +107,7 @@ func (a *MenuActionResource) Query(ctx context.Context, params schema.MenuAction
 		return &schema.MenuActionResourceQueryResult{PageResult: pr}, nil
 	}
 
-	query = query.Order(sysmenuactionresource.ByID(OrderBy("asc")))
+	query = query.Order(sysmenuactionresource.ByID(OrderDirection("asc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

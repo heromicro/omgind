@@ -106,15 +106,15 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 
 	// order field
 	if v := params.Sort_Order; v != "" {
-		query = query.Order(xxxdemo.BySort(OrderBy(v)))
+		query = query.Order(xxxdemo.BySort(OrderDirection(v)))
 	}
 
 	if v := params.Code_Order; v != "" {
-		query = query.Order(xxxdemo.ByCode(OrderBy(v)))
+		query = query.Order(xxxdemo.ByCode(OrderDirection(v)))
 	}
 
 	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(xxxdemo.ByCreatedAt(OrderBy(v)))
+		query = query.Order(xxxdemo.ByCreatedAt(OrderDirection(v)))
 	}
 
 	pr.Current = params.PaginationParam.GetCurrent()

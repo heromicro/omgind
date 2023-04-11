@@ -4,7 +4,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
-func OrderBy(v string) sql.OrderTermOption {
+func OrderDirection(v string) sql.OrderTermOption {
 	switch v {
 	case "a":
 		fallthrough

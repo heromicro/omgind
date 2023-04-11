@@ -111,13 +111,13 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		query = query.Order(orgorgan.ByIsActive(OrderBy(v)))
+		query = query.Order(orgorgan.ByIsActive(OrderDirection(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		query = query.Order(orgorgan.BySort(OrderBy(v)))
+		query = query.Order(orgorgan.BySort(OrderDirection(v)))
 	}
-	query = query.Order(orgorgan.ByID(OrderBy("desc")))
+	query = query.Order(orgorgan.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -186,13 +186,13 @@ func (a *OrgOrgan) QuerySelect(ctx context.Context, params schema.OrgOrganQueryP
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		query = query.Order(orgorgan.ByIsActive(OrderBy(v)))
+		query = query.Order(orgorgan.ByIsActive(OrderDirection(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		query = query.Order(orgorgan.BySort(OrderBy(v)))
+		query = query.Order(orgorgan.BySort(OrderDirection(v)))
 	}
-	query = query.Order(orgorgan.ByID(OrderBy("desc")))
+	query = query.Order(orgorgan.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

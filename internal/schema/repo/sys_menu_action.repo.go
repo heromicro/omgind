@@ -82,7 +82,7 @@ func (a *MenuAction) Query(ctx context.Context, params schema.MenuActionQueryPar
 		return &schema.MenuActionQueryResult{PageResult: pr}, nil
 	}
 
-	query = query.Order(sysmenuaction.ByID(OrderBy("asc")))
+	query = query.Order(sysmenuaction.ByID(OrderDirection("asc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

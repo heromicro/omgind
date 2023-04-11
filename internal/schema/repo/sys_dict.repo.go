@@ -105,22 +105,22 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 	}
 
 	if v := params.Sort_Order; v != "" {
-		query = query.Order(sysdict.BySort(OrderBy(v)))
+		query = query.Order(sysdict.BySort(OrderDirection(v)))
 	}
 
 	if v := params.NameCn_Order; v != "" {
-		query = query.Order(sysdict.ByNameCn(OrderBy(v)))
+		query = query.Order(sysdict.ByNameCn(OrderDirection(v)))
 	}
 
 	if v := params.NameEn_Order; v != "" {
-		query = query.Order(sysdict.ByNameEn(OrderBy(v)))
+		query = query.Order(sysdict.ByNameEn(OrderDirection(v)))
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		query = query.Order(sysdict.ByIsActive(OrderBy(v)))
+		query = query.Order(sysdict.ByIsActive(OrderDirection(v)))
 	}
 
-	query = query.Order(sysdict.ByID(OrderBy("desc")))
+	query = query.Order(sysdict.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -171,7 +171,7 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 		}
 	}
 
-	query = query.Order(sysdict.ByID(OrderBy("desc")))
+	query = query.Order(sysdict.ByID(OrderDirection("desc")))
 
 	count, err := query.Count(ctx)
 	if err != nil {

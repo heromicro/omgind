@@ -104,17 +104,22 @@ func (a *OrgDept) Query(ctx context.Context, params schema.OrgDeptQueryParam, op
 		return &schema.OrgDeptQueryResult{PageResult: pr}, nil
 	}
 
+	default_order := true
 	if v := params.IsActive_Order; v != "" {
-		query = query.Order(orgdept.ByIsActive(OrderBy(v)))
+		query = query.Order(orgdept.ByIsActive(OrderDirection(v)))
+		default_order = false
 	}
 
 	if v := params.Sort_Order; v != "" {
-		query = query.Order(orgdept.BySort(OrderBy(v)))
+		query = query.Order(orgdept.BySort(OrderDirection(v)))
+		default_order = false
 	}
 
-	query = query.Order(orgdept.ByTreeID(OrderBy("asc")))
-	query = query.Order(orgdept.ByTreeLevel(OrderBy("asc")))
-	query = query.Order(orgdept.ByID(OrderBy("asc")))
+	if default_order {
+		query = query.Order(orgdept.ByTreeID(OrderDirection("asc")))
+		query = query.Order(orgdept.ByTreeLevel(OrderDirection("asc")))
+		query = query.Order(orgdept.ByID(OrderDirection("asc")))
+	}
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -257,37 +262,36 @@ func (a *OrgDept) GetAllSubs(ctx context.Context, pid string, params schema.OrgD
 
 	has_order := false
 	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(orgdept.ByCreatedAt(OrderBy(v)))
+		query = query.Order(orgdept.ByCreatedAt(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.Name_Order; v != "" {
-		query = query.Order(orgdept.ByName(OrderBy(v)))
+		query = query.Order(orgdept.ByName(OrderDirection(v)))
 		has_order = true
-
 	}
 
 	if v := params.TreeID_Order; v != "" {
-		query = query.Order(orgdept.ByTreeID(OrderBy(v)))
+		query = query.Order(orgdept.ByTreeID(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.TreeLevel_Order; v != "" {
-		query = query.Order(orgdept.ByTreeLevel(OrderBy(v)))
+		query = query.Order(orgdept.ByTreeLevel(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.TreeLeft_Order; v != "" {
-		query = query.Order(orgdept.ByTreeLeft(OrderBy(v)))
+		query = query.Order(orgdept.ByTreeLeft(OrderDirection(v)))
 		has_order = true
 	}
 
 	if !has_order {
-		query = query.Order(orgdept.ByTreeID(OrderBy("asc")))
-		query = query.Order(orgdept.ByTreeLevel(OrderBy("asc")))
-		query = query.Order(orgdept.ByTreeLeft(OrderBy("asc")))
-		query = query.Order(orgdept.BySort(OrderBy("asc")))
-		query = query.Order(orgdept.ByID(OrderBy("asc")))
+		query = query.Order(orgdept.ByTreeID(OrderDirection("asc")))
+		query = query.Order(orgdept.ByTreeLevel(OrderDirection("asc")))
+		query = query.Order(orgdept.ByTreeLeft(OrderDirection("asc")))
+		query = query.Order(orgdept.BySort(OrderDirection("asc")))
+		query = query.Order(orgdept.ByID(OrderDirection("asc")))
 	}
 
 	pr.Current = params.PaginationParam.GetCurrent()
@@ -334,9 +338,9 @@ func (a *OrgDept) GetTree(ctx context.Context, tpid string, params schema.OrgDep
 
 	tree_query := a.EntCli.OrgDept.Query().Where(orgdept.IsDelEQ(false), orgdept.TreeIDEQ(*parent.TreeID)).Where(orgdept.IDNEQ(parent.ID))
 
-	tree_query = tree_query.Order(orgdept.ByTreeLevel(OrderBy("asc")))
-	tree_query = tree_query.Order(orgdept.ByTreeLeft(OrderBy("asc")))
-	tree_query = tree_query.Order(orgdept.BySort(OrderBy("asc")))
+	tree_query = tree_query.Order(orgdept.ByTreeLevel(OrderDirection("asc")))
+	tree_query = tree_query.Order(orgdept.ByTreeLeft(OrderDirection("asc")))
+	tree_query = tree_query.Order(orgdept.BySort(OrderDirection("asc")))
 
 	select_tree := tree_query.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldParentID, orgdept.FieldIsLeaf, orgdept.FieldTreeID, orgdept.FieldTreeLeft, orgdept.FieldTreeRight)
 
@@ -386,7 +390,7 @@ func (a *OrgDept) UpdateActive(ctx context.Context, id string, active bool) erro
 
 func (a *OrgDept) GetLatestTreeID(ctx context.Context) (int64, error) {
 
-	most, err := a.EntCli.OrgDept.Query().Order(orgdept.ByTreeID(OrderBy("desc"))).Select(orgdept.FieldID, orgdept.FieldTreeID).First(ctx)
+	most, err := a.EntCli.OrgDept.Query().Order(orgdept.ByTreeID(OrderDirection("desc"))).Select(orgdept.FieldID, orgdept.FieldTreeID).First(ctx)
 
 	if err != nil {
 		if ent.IsNotFound(err) {

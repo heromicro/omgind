@@ -101,7 +101,7 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 		return &schema.MenuQueryResult{PageResult: pr}, nil
 	}
 
-	query = query.Order(sysmenu.ByID(OrderBy("desc")))
+	query = query.Order(sysmenu.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

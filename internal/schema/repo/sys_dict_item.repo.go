@@ -84,7 +84,7 @@ func (a *DictItem) Query(ctx context.Context, params schema.DictItemQueryParam, 
 
 	// order field
 
-	query = query.Order(sysdictitem.ByID(OrderBy("desc")))
+	query = query.Order(sysdictitem.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

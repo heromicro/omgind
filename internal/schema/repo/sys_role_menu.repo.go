@@ -81,7 +81,7 @@ func (a *RoleMenu) Query(ctx context.Context, params schema.RoleMenuQueryParam, 
 		return &schema.RoleMenuQueryResult{PageResult: pr}, nil
 	}
 
-	query = query.Order(sysrolemenu.ByID(OrderBy("desc")))
+	query = query.Order(sysrolemenu.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

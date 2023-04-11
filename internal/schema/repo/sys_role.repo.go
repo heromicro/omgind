@@ -98,7 +98,7 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 		return &schema.RoleQueryResult{PageResult: pr}, nil
 	}
 
-	query = query.Order(sysrole.ByID(OrderBy("desc")))
+	query = query.Order(sysrole.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

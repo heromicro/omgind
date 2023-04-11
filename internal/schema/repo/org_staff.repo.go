@@ -126,34 +126,34 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		query = query.Order(orgstaff.ByIsActive(OrderBy(v)))
+		query = query.Order(orgstaff.ByIsActive(OrderDirection(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		query = query.Order(orgstaff.BySort(OrderBy(v)))
+		query = query.Order(orgstaff.BySort(OrderDirection(v)))
 	}
 
 	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(orgstaff.ByCreatedAt(OrderBy(v)))
+		query = query.Order(orgstaff.ByCreatedAt(OrderDirection(v)))
 	}
 
 	if v := params.BirthDate_Order; v != "" {
-		query = query.Order(orgstaff.ByBirthDate(OrderBy(v)))
+		query = query.Order(orgstaff.ByBirthDate(OrderDirection(v)))
 	}
 
 	if v := params.EntryDate_Order; v != "" {
-		query = query.Order(orgstaff.ByEntryDate(OrderBy(v)))
+		query = query.Order(orgstaff.ByEntryDate(OrderDirection(v)))
 	}
 
 	if v := params.RegularDate_Order; v != "" {
-		query = query.Order(orgstaff.ByRegularDate(OrderBy(v)))
+		query = query.Order(orgstaff.ByRegularDate(OrderDirection(v)))
 	}
 
 	if v := params.ResignDate_Order; v != "" {
-		query = query.Order(orgstaff.ByResignDate(OrderBy(v)))
+		query = query.Order(orgstaff.ByResignDate(OrderDirection(v)))
 	}
 
-	query = query.Order(orgstaff.ByID(OrderBy("desc")))
+	query = query.Order(orgstaff.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

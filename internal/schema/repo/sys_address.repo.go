@@ -98,23 +98,23 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 	}
 
 	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(sysaddress.ByCreatedAt(OrderBy(v)))
+		query = query.Order(sysaddress.ByCreatedAt(OrderDirection(v)))
 	}
 	if v := params.CountryID_Order; v != "" {
-		query = query.Order(sysaddress.ByCountryID(OrderBy(v)))
+		query = query.Order(sysaddress.ByCountryID(OrderDirection(v)))
 	}
 	if v := params.ProvinceID_Order; v != "" {
-		query = query.Order(sysaddress.ByProvinceID(OrderBy(v)))
+		query = query.Order(sysaddress.ByProvinceID(OrderDirection(v)))
 
 	}
 	if v := params.CityID_Order; v != "" {
-		query = query.Order(sysaddress.ByCityID(OrderBy(v)))
+		query = query.Order(sysaddress.ByCityID(OrderDirection(v)))
 	}
 	if v := params.CountyID_Order; v != "" {
-		query = query.Order(sysaddress.ByCountyID(OrderBy(v)))
+		query = query.Order(sysaddress.ByCountyID(OrderDirection(v)))
 	}
 
-	query = query.Order(sysaddress.ByID(OrderBy("desc")))
+	query = query.Order(sysaddress.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

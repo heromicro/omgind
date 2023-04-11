@@ -159,33 +159,33 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 
 	has_order := false
 	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(sysdistrict.ByCreatedAt(OrderBy(v)))
+		query = query.Order(sysdistrict.ByCreatedAt(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.Name_Order; v != "" {
-		query = query.Order(sysdistrict.ByName(OrderBy(v)))
+		query = query.Order(sysdistrict.ByName(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.TreeID_Order; v != "" {
-		query = query.Order(sysdistrict.ByTreeID(OrderBy(v)))
+		query = query.Order(sysdistrict.ByTreeID(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.TreeLevel_Order; v != "" {
-		query = query.Order(sysdistrict.ByTreeLevel(OrderBy(v)))
+		query = query.Order(sysdistrict.ByTreeLevel(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.TreeLeft_Order; v != "" {
-		query = query.Order(sysdistrict.ByTreeLeft(OrderBy(v)))
+		query = query.Order(sysdistrict.ByTreeLeft(OrderDirection(v)))
 		has_order = true
 	}
 
 	if !has_order {
-		query = query.Order(sysdistrict.ByTreeID(OrderBy("asc")))
-		query = query.Order(sysdistrict.BySort(OrderBy("asc")))
+		query = query.Order(sysdistrict.ByTreeID(OrderDirection("asc")))
+		query = query.Order(sysdistrict.BySort(OrderDirection("asc")))
 	}
 
 	pr.Current = params.PaginationParam.GetCurrent()
@@ -308,35 +308,35 @@ func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.
 
 	has_order := false
 	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(sysdistrict.ByCreatedAt(OrderBy(v)))
+		query = query.Order(sysdistrict.ByCreatedAt(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.Name_Order; v != "" {
-		query = query.Order(sysdistrict.ByName(OrderBy(v)))
+		query = query.Order(sysdistrict.ByName(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.TreeID_Order; v != "" {
-		query = query.Order(sysdistrict.ByTreeID(OrderBy(v)))
+		query = query.Order(sysdistrict.ByTreeID(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.TreeLevel_Order; v != "" {
-		query = query.Order(sysdistrict.ByTreeLevel(OrderBy(v)))
+		query = query.Order(sysdistrict.ByTreeLevel(OrderDirection(v)))
 		has_order = true
 	}
 
 	if v := params.TreeLeft_Order; v != "" {
-		query = query.Order(sysdistrict.ByTreeLeft(OrderBy(v)))
+		query = query.Order(sysdistrict.ByTreeLeft(OrderDirection(v)))
 		has_order = true
 	}
 
 	if !has_order {
-		query = query.Order(sysdistrict.ByTreeID(OrderBy("asc")))
-		query = query.Order(sysdistrict.ByTreeLevel(OrderBy("asc")))
-		query = query.Order(sysdistrict.ByTreeLeft(OrderBy("asc")))
-		query = query.Order(sysdistrict.BySort(OrderBy("asc")))
+		query = query.Order(sysdistrict.ByTreeID(OrderDirection("asc")))
+		query = query.Order(sysdistrict.ByTreeLevel(OrderDirection("asc")))
+		query = query.Order(sysdistrict.ByTreeLeft(OrderDirection("asc")))
+		query = query.Order(sysdistrict.BySort(OrderDirection("asc")))
 	}
 
 	pr.Current = params.PaginationParam.GetCurrent()
@@ -383,9 +383,9 @@ func (a *SysDistrict) GetTree(ctx context.Context, tpid string, params schema.Sy
 
 	tree_query := a.EntCli.SysDistrict.Query().Where(sysdistrict.IsDelEQ(false), sysdistrict.TreeIDEQ(*parent.TreeID)).Where(sysdistrict.IDNEQ(parent.ID))
 
-	tree_query = tree_query.Order(sysdistrict.ByTreeLevel(OrderBy("asc")))
-	tree_query = tree_query.Order(sysdistrict.ByTreeLeft(OrderBy("asc")))
-	tree_query = tree_query.Order(sysdistrict.BySort(OrderBy("asc")))
+	tree_query = tree_query.Order(sysdistrict.ByTreeLevel(OrderDirection("asc")))
+	tree_query = tree_query.Order(sysdistrict.ByTreeLeft(OrderDirection("asc")))
+	tree_query = tree_query.Order(sysdistrict.BySort(OrderDirection("asc")))
 
 	select_tree := tree_query.Select(sysdistrict.FieldID, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldIsLeaf, sysdistrict.FieldTreeID, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight)
 
@@ -1059,7 +1059,7 @@ func (a *SysDistrict) GetLatestTreeID(ctx context.Context) (int64, error) {
 	var opt schema.SysDistrictQueryOptions
 	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
 
-	most, err := a.EntCli.SysDistrict.Query().Order(sysdistrict.ByTreeID(OrderBy("desc"))).Select(sysdistrict.FieldID, sysdistrict.FieldTreeID).First(ctx)
+	most, err := a.EntCli.SysDistrict.Query().Order(sysdistrict.ByTreeID(OrderDirection("desc"))).Select(sysdistrict.FieldID, sysdistrict.FieldTreeID).First(ctx)
 
 	if err != nil {
 		if ent.IsNotFound(err) {
