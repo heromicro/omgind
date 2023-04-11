@@ -67,7 +67,7 @@ func (a *OrgDept) getQueryOption(opts ...schema.OrgDeptQueryOptions) schema.OrgD
 
 // Query 查询数据
 func (a *OrgDept) Query(ctx context.Context, params schema.OrgDeptQueryParam, opts ...schema.OrgDeptQueryOptions) (*schema.OrgDeptQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
@@ -105,27 +105,16 @@ func (a *OrgDept) Query(ctx context.Context, params schema.OrgDeptQueryParam, op
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		of := MakeUpOrderField(orgdept.FieldIsActive, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgdept.ByIsActive(OrderBy(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		of := MakeUpOrderField(orgdept.FieldSort, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgdept.BySort(OrderBy(v)))
 	}
 
-	if len(opt.OrderFields) == 0 {
-		of1 := MakeUpOrderField(orgdept.FieldTreeID, "asc")
-		opt.OrderFields = append(opt.OrderFields, of1)
-
-		of2 := MakeUpOrderField(orgdept.FieldTreeLevel, "asc")
-		opt.OrderFields = append(opt.OrderFields, of2)
-
-		of3 := MakeUpOrderField(orgdept.FieldID, "asc")
-		opt.OrderFields = append(opt.OrderFields, of3)
-	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(orgdept.ByTreeID(OrderBy("asc")))
+	query = query.Order(orgdept.ByTreeLevel(OrderBy("asc")))
+	query = query.Order(orgdept.ByID(OrderBy("asc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -187,7 +176,7 @@ func (a *OrgDept) View(ctx context.Context, id string, opts ...schema.OrgDeptQue
 
 func (a *OrgDept) GetAllSubs(ctx context.Context, pid string, params schema.OrgDeptQueryParam, opts ...schema.OrgDeptQueryOptions) (*schema.OrgDeptQueryResult, error) {
 
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.OrgDept.Query()
 
@@ -266,48 +255,40 @@ func (a *OrgDept) GetAllSubs(ctx context.Context, pid string, params schema.OrgD
 		return &schema.OrgDeptQueryResult{PageResult: pr}, nil
 	}
 
-	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-
+	has_order := false
 	if v := params.CreatedAt_Order; v != "" {
-		of := MakeUpOrderField(orgdept.FieldCreatedAt, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgdept.ByCreatedAt(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.Name_Order; v != "" {
-		of := MakeUpOrderField(orgdept.FieldName, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgdept.ByName(OrderBy(v)))
+		has_order = true
+
 	}
 
 	if v := params.TreeID_Order; v != "" {
-		of := MakeUpOrderField(orgdept.FieldTreeID, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgdept.ByTreeID(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.TreeLevel_Order; v != "" {
-		of := MakeUpOrderField(orgdept.FieldTreeLevel, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgdept.ByTreeLevel(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.TreeLeft_Order; v != "" {
-		of := MakeUpOrderField(orgdept.FieldTreeLeft, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgdept.ByTreeLeft(OrderBy(v)))
+		has_order = true
 	}
 
-	if len(opt.OrderFields) == 0 {
-		of := MakeUpOrderField(orgdept.FieldTreeID, "asc")
-		opt.OrderFields = append(opt.OrderFields, of)
-
-		of1 := MakeUpOrderField(orgdept.FieldTreeLevel, "asc")
-		opt.OrderFields = append(opt.OrderFields, of1)
-
-		of3 := MakeUpOrderField(orgdept.FieldTreeLeft, "asc")
-		opt.OrderFields = append(opt.OrderFields, of3)
-
-		of2 := MakeUpOrderField(orgdept.FieldSort, "asc")
-		opt.OrderFields = append(opt.OrderFields, of2)
+	if !has_order {
+		query = query.Order(orgdept.ByTreeID(OrderBy("asc")))
+		query = query.Order(orgdept.ByTreeLevel(OrderBy("asc")))
+		query = query.Order(orgdept.ByTreeLeft(OrderBy("asc")))
+		query = query.Order(orgdept.BySort(OrderBy("asc")))
+		query = query.Order(orgdept.ByID(OrderBy("asc")))
 	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -340,7 +321,7 @@ func (a *OrgDept) GetAllSubs(ctx context.Context, pid string, params schema.OrgD
 }
 
 func (a *OrgDept) GetTree(ctx context.Context, tpid string, params schema.OrgDeptQueryParam, opts ...schema.OrgDeptQueryOptions) (*schema.OrgDeptQueryTreeResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	parent_query := a.EntCli.OrgDept.Query().Where(orgdept.DeletedAtIsNil())
 
@@ -353,15 +334,9 @@ func (a *OrgDept) GetTree(ctx context.Context, tpid string, params schema.OrgDep
 
 	tree_query := a.EntCli.OrgDept.Query().Where(orgdept.IsDelEQ(false), orgdept.TreeIDEQ(*parent.TreeID)).Where(orgdept.IDNEQ(parent.ID))
 
-	of1 := MakeUpOrderField(orgdept.FieldTreeLevel, "asc")
-	opt.OrderFields = append(opt.OrderFields, of1)
-
-	of3 := MakeUpOrderField(orgdept.FieldTreeLeft, "asc")
-	opt.OrderFields = append(opt.OrderFields, of3)
-
-	of2 := MakeUpOrderField(orgdept.FieldSort, "asc")
-	opt.OrderFields = append(opt.OrderFields, of2)
-	tree_query = tree_query.Order(ParseOrder(opt.OrderFields)...)
+	tree_query = tree_query.Order(orgdept.ByTreeLevel(OrderBy("asc")))
+	tree_query = tree_query.Order(orgdept.ByTreeLeft(OrderBy("asc")))
+	tree_query = tree_query.Order(orgdept.BySort(OrderBy("asc")))
 
 	select_tree := tree_query.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldParentID, orgdept.FieldIsLeaf, orgdept.FieldTreeID, orgdept.FieldTreeLeft, orgdept.FieldTreeRight)
 
@@ -411,9 +386,7 @@ func (a *OrgDept) UpdateActive(ctx context.Context, id string, active bool) erro
 
 func (a *OrgDept) GetLatestTreeID(ctx context.Context) (int64, error) {
 
-	var opt schema.OrgDeptQueryOptions
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgdept.FieldTreeID, schema.OrderByDESC))
-	most, err := a.EntCli.OrgDept.Query().Order(ParseOrder(opt.OrderFields)...).Select(orgdept.FieldID, orgdept.FieldTreeID).First(ctx)
+	most, err := a.EntCli.OrgDept.Query().Order(orgdept.ByTreeID(OrderBy("desc"))).Select(orgdept.FieldID, orgdept.FieldTreeID).First(ctx)
 
 	if err != nil {
 		if ent.IsNotFound(err) {

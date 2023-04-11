@@ -59,7 +59,7 @@ func (a *Demo) getQueryOption(opts ...schema.DemoQueryOptions) schema.DemoQueryO
 // Query 查询数据
 func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...schema.DemoQueryOptions) (*schema.DemoQueryResult, error) {
 
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.XxxDemo.Query().Where(xxxdemo.DeletedAtIsNil())
 
@@ -105,23 +105,17 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 	}
 
 	// order field
-	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
 	if v := params.Sort_Order; v != "" {
-		of := MakeUpOrderField(xxxdemo.FieldSort, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(xxxdemo.BySort(OrderBy(v)))
 	}
 
 	if v := params.Code_Order; v != "" {
-		of := MakeUpOrderField(xxxdemo.FieldCode, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(xxxdemo.ByCode(OrderBy(v)))
 	}
 
 	if v := params.CreatedAt_Order; v != "" {
-		of := MakeUpOrderField(xxxdemo.FieldCreatedAt, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(xxxdemo.ByCreatedAt(OrderBy(v)))
 	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

@@ -111,20 +111,13 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		of := MakeUpOrderField(orgorgan.FieldIsActive, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgorgan.ByIsActive(OrderBy(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		of := MakeUpOrderField(orgorgan.FieldSort, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgorgan.BySort(OrderBy(v)))
 	}
-
-	if len(opt.OrderFields) == 0 {
-		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgorgan.FieldID, schema.OrderByDESC))
-	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(orgorgan.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -137,6 +130,7 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 	if len(opt.FieldsIncludes) > 0 {
 		query_select = query.Select(opt.FieldsIncludes...)
 	}
+
 	var list []*ent.OrgOrgan
 	if query_select != nil {
 		list, err = query_select.All(ctx)
@@ -192,20 +186,13 @@ func (a *OrgOrgan) QuerySelect(ctx context.Context, params schema.OrgOrganQueryP
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		of := MakeUpOrderField(orgorgan.FieldIsActive, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgorgan.ByIsActive(OrderBy(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		of := MakeUpOrderField(orgorgan.FieldSort, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgorgan.BySort(OrderBy(v)))
 	}
-
-	if len(opt.OrderFields) == 0 {
-		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgorgan.FieldID, schema.OrderByDESC))
-	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(orgorgan.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

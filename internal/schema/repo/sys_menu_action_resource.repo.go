@@ -64,7 +64,7 @@ func (a *MenuActionResource) getQueryOption(opts ...schema.MenuActionResourceQue
 
 // Query 查询数据
 func (a *MenuActionResource) Query(ctx context.Context, params schema.MenuActionResourceQueryParam, opts ...schema.MenuActionResourceQueryOptions) (*schema.MenuActionResourceQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysMenuActionResource.Query().Where(sysmenuactionresource.DeletedAtIsNil())
 
@@ -107,8 +107,7 @@ func (a *MenuActionResource) Query(ctx context.Context, params schema.MenuAction
 		return &schema.MenuActionResourceQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByASC))
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysmenuactionresource.ByID(OrderBy("asc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

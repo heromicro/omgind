@@ -59,7 +59,7 @@ func (a *RoleMenu) getQueryOption(opts ...schema.RoleMenuQueryOptions) schema.Ro
 
 // Query 查询数据
 func (a *RoleMenu) Query(ctx context.Context, params schema.RoleMenuQueryParam, opts ...schema.RoleMenuQueryOptions) (*schema.RoleMenuQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysRoleMenu.Query().Where(sysrolemenu.DeletedAtIsNil())
 
@@ -81,8 +81,7 @@ func (a *RoleMenu) Query(ctx context.Context, params schema.RoleMenuQueryParam, 
 		return &schema.RoleMenuQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysrolemenu.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

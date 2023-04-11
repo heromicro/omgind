@@ -68,7 +68,7 @@ func (a *SysDistrict) getQueryOption(opts ...schema.SysDistrictQueryOptions) sch
 
 // Query 查询数据
 func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysDistrict.Query()
 
@@ -157,42 +157,36 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 		return &schema.SysDistrictQueryResult{PageResult: pr}, nil
 	}
 
-	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-
+	has_order := false
 	if v := params.CreatedAt_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldCreatedAt, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByCreatedAt(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.Name_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldName, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByName(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.TreeID_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldTreeID, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByTreeID(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.TreeLevel_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldTreeLevel, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByTreeLevel(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.TreeLeft_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldTreeLeft, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByTreeLeft(OrderBy(v)))
+		has_order = true
 	}
 
-	if len(opt.OrderFields) == 0 {
-		of := MakeUpOrderField(sysdistrict.FieldTreeID, "asc")
-		opt.OrderFields = append(opt.OrderFields, of)
-
-		of2 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
-		opt.OrderFields = append(opt.OrderFields, of2)
+	if !has_order {
+		query = query.Order(sysdistrict.ByTreeID(OrderBy("asc")))
+		query = query.Order(sysdistrict.BySort(OrderBy("asc")))
 	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -223,7 +217,7 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 
 func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryResult, error) {
 
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysDistrict.Query()
 
@@ -312,48 +306,38 @@ func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.
 		return &schema.SysDistrictQueryResult{PageResult: pr}, nil
 	}
 
-	// opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-
+	has_order := false
 	if v := params.CreatedAt_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldCreatedAt, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByCreatedAt(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.Name_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldName, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByName(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.TreeID_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldTreeID, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByTreeID(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.TreeLevel_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldTreeLevel, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByTreeLevel(OrderBy(v)))
+		has_order = true
 	}
 
 	if v := params.TreeLeft_Order; v != "" {
-		of := MakeUpOrderField(sysdistrict.FieldTreeLeft, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdistrict.ByTreeLeft(OrderBy(v)))
+		has_order = true
 	}
 
-	if len(opt.OrderFields) == 0 {
-		of := MakeUpOrderField(sysdistrict.FieldTreeID, "asc")
-		opt.OrderFields = append(opt.OrderFields, of)
-
-		of2 := MakeUpOrderField(sysdistrict.FieldTreeLevel, "asc")
-		opt.OrderFields = append(opt.OrderFields, of2)
-
-		of3 := MakeUpOrderField(sysdistrict.FieldTreeLeft, "asc")
-		opt.OrderFields = append(opt.OrderFields, of3)
-
-		of4 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
-		opt.OrderFields = append(opt.OrderFields, of4)
+	if !has_order {
+		query = query.Order(sysdistrict.ByTreeID(OrderBy("asc")))
+		query = query.Order(sysdistrict.ByTreeLevel(OrderBy("asc")))
+		query = query.Order(sysdistrict.ByTreeLeft(OrderBy("asc")))
+		query = query.Order(sysdistrict.BySort(OrderBy("asc")))
 	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -386,7 +370,7 @@ func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.
 }
 
 func (a *SysDistrict) GetTree(ctx context.Context, tpid string, params schema.SysDistrictQueryParam, opts ...schema.SysDistrictQueryOptions) (*schema.SysDistrictQueryTreeResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	parent_query := a.EntCli.SysDistrict.Query().Where(sysdistrict.DeletedAtIsNil())
 
@@ -399,15 +383,9 @@ func (a *SysDistrict) GetTree(ctx context.Context, tpid string, params schema.Sy
 
 	tree_query := a.EntCli.SysDistrict.Query().Where(sysdistrict.IsDelEQ(false), sysdistrict.TreeIDEQ(*parent.TreeID)).Where(sysdistrict.IDNEQ(parent.ID))
 
-	of1 := MakeUpOrderField(sysdistrict.FieldTreeLevel, "asc")
-	opt.OrderFields = append(opt.OrderFields, of1)
-
-	of3 := MakeUpOrderField(sysdistrict.FieldTreeLeft, "asc")
-	opt.OrderFields = append(opt.OrderFields, of3)
-
-	of2 := MakeUpOrderField(sysdistrict.FieldSort, "asc")
-	opt.OrderFields = append(opt.OrderFields, of2)
-	tree_query = tree_query.Order(ParseOrder(opt.OrderFields)...)
+	tree_query = tree_query.Order(sysdistrict.ByTreeLevel(OrderBy("asc")))
+	tree_query = tree_query.Order(sysdistrict.ByTreeLeft(OrderBy("asc")))
+	tree_query = tree_query.Order(sysdistrict.BySort(OrderBy("asc")))
 
 	select_tree := tree_query.Select(sysdistrict.FieldID, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldIsLeaf, sysdistrict.FieldTreeID, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight)
 
@@ -1080,7 +1058,8 @@ func (a *SysDistrict) GetLatestTreeID(ctx context.Context) (int64, error) {
 
 	var opt schema.SysDistrictQueryOptions
 	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdistrict.FieldTreeID, schema.OrderByDESC))
-	most, err := a.EntCli.SysDistrict.Query().Order(ParseOrder(opt.OrderFields)...).Select(sysdistrict.FieldID, sysdistrict.FieldTreeID).First(ctx)
+
+	most, err := a.EntCli.SysDistrict.Query().Order(sysdistrict.ByTreeID(OrderBy("desc"))).Select(sysdistrict.FieldID, sysdistrict.FieldTreeID).First(ctx)
 
 	if err != nil {
 		if ent.IsNotFound(err) {

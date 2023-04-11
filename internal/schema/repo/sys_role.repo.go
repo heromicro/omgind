@@ -62,8 +62,6 @@ func (a *Role) getQueryOption(opts ...schema.RoleQueryOptions) schema.RoleQueryO
 // Query 查询数据
 func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...schema.RoleQueryOptions) (*schema.RoleQueryResult, error) {
 
-	opt := a.getQueryOption(opts...)
-
 	query := a.EntCli.SysRole.Query().Where(sysrole.DeletedAtIsNil())
 
 	if v := params.IDs; len(v) > 0 {
@@ -100,8 +98,7 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 		return &schema.RoleQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysrole.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

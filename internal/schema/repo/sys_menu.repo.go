@@ -59,7 +59,7 @@ func (a *Menu) getQueryOption(opts ...schema.MenuQueryOptions) schema.MenuQueryO
 
 // Query 查询数据
 func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...schema.MenuQueryOptions) (*schema.MenuQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysMenu.Query().Where(sysmenu.DeletedAtIsNil())
 
@@ -101,8 +101,7 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 		return &schema.MenuQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysmenu.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

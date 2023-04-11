@@ -67,7 +67,7 @@ func (a *OrgPosition) getQueryOption(opts ...schema.OrgPositionQueryOptions) sch
 
 // Query 查询数据
 func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryParam, opts ...schema.OrgPositionQueryOptions) (*schema.OrgPositionQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
@@ -103,20 +103,13 @@ func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryP
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		of := MakeUpOrderField(orgposition.FieldIsActive, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgposition.ByIsActive(OrderBy(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		of := MakeUpOrderField(orgposition.FieldSort, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgposition.BySort(OrderBy(v)))
 	}
-
-	if len(opt.OrderFields) == 0 {
-		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgposition.FieldID, schema.OrderByDESC))
-	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(orgposition.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

@@ -1,41 +1,24 @@
 package repo
 
 import (
-	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
+	"entgo.io/ent/dialect/sql"
 )
 
-// ParseOrder 解析排序字段
-func ParseOrder(items []*schema.OrderField) []ent.OrderFunc {
-	orders := make([]ent.OrderFunc, len(items))
-
-	for i, item := range items {
-		key := item.Key
-		if item.Direction == schema.OrderByDESC {
-			orders[i] = ent.Desc(key)
-		} else {
-			orders[i] = ent.Asc(key)
-		}
-	}
-
-	return orders
-}
-
-func MakeUpOrderField(field string, order string) *schema.OrderField {
-	switch order {
+func OrderBy(v string) sql.OrderTermOption {
+	switch v {
 	case "a":
 		fallthrough
 	case "asc":
 		fallthrough
 	case "ascend":
-		return schema.NewOrderField(field, schema.OrderByASC)
+		return sql.OrderAsc()
 	case "d":
 		fallthrough
 	case "desc":
 		fallthrough
 	case "descend":
-		return schema.NewOrderField(field, schema.OrderByDESC)
+		return sql.OrderDesc()
 	default:
-		return schema.NewOrderField(field, schema.OrderByASC)
+		return sql.OrderDesc()
 	}
 }

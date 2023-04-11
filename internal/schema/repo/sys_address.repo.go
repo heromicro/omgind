@@ -60,7 +60,7 @@ func (a *SysAddress) getQueryOption(opts ...schema.SysAddressQueryOptions) schem
 
 // Query 查询数据
 func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryParam, opts ...schema.SysAddressQueryOptions) (*schema.SysAddressQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysAddress.Query()
 
@@ -98,31 +98,23 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 	}
 
 	if v := params.CreatedAt_Order; v != "" {
-		of := MakeUpOrderField(sysaddress.FieldCreatedAt, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysaddress.ByCreatedAt(OrderBy(v)))
 	}
 	if v := params.CountryID_Order; v != "" {
-		of := MakeUpOrderField(sysaddress.FieldCountryID, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysaddress.ByCountryID(OrderBy(v)))
 	}
 	if v := params.ProvinceID_Order; v != "" {
-		of := MakeUpOrderField(sysaddress.FieldProvinceID, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysaddress.ByProvinceID(OrderBy(v)))
+
 	}
 	if v := params.CityID_Order; v != "" {
-		of := MakeUpOrderField(sysaddress.FieldCityID, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysaddress.ByCityID(OrderBy(v)))
 	}
 	if v := params.CountyID_Order; v != "" {
-		of := MakeUpOrderField(sysaddress.FieldCountyID, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysaddress.ByCountyID(OrderBy(v)))
 	}
 
-	if len(opt.OrderFields) == 0 {
-		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysaddress.FieldID, schema.OrderByDESC))
-	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysaddress.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

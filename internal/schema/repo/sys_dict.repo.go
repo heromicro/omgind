@@ -40,14 +40,14 @@ func ToSchemaSysDicts(dits ent.SysDicts) []*schema.Dict {
 	return list
 }
 
-func   ToEntCreateSysDictInput(sdi *schema.Dict) *ent.CreateSysDictInput {
+func ToEntCreateSysDictInput(sdi *schema.Dict) *ent.CreateSysDictInput {
 	createinput := new(ent.CreateSysDictInput)
 	structure.Copy(sdi, &createinput)
 
 	return createinput
 }
 
-func   ToEntUpdateSysDictInput(sdi *schema.Dict) *ent.UpdateSysDictInput {
+func ToEntUpdateSysDictInput(sdi *schema.Dict) *ent.UpdateSysDictInput {
 	updateinput := new(ent.UpdateSysDictInput)
 	structure.Copy(sdi, &updateinput)
 
@@ -65,7 +65,7 @@ func (a *Dict) getQueryOption(opts ...schema.DictQueryOptions) schema.DictQueryO
 // Query 查询数据
 func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...schema.DictQueryOptions) (*schema.DictQueryResult, error) {
 
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysDict.Query().Where(sysdict.DeletedAtIsNil(), sysdict.IsDelEQ(false))
 	if v := params.WithItem; v != nil && *v {
@@ -105,30 +105,22 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 	}
 
 	if v := params.Sort_Order; v != "" {
-		of := MakeUpOrderField(sysdict.FieldSort, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdict.BySort(OrderBy(v)))
 	}
 
 	if v := params.NameCn_Order; v != "" {
-		of := MakeUpOrderField(sysdict.FieldNameCn, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdict.ByNameCn(OrderBy(v)))
 	}
 
 	if v := params.NameEn_Order; v != "" {
-		of := MakeUpOrderField(sysdict.FieldNameEn, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdict.ByNameEn(OrderBy(v)))
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		of := MakeUpOrderField(sysdict.FieldIsActive, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(sysdict.ByIsActive(OrderBy(v)))
 	}
 
-	if len(opt.OrderFields) == 0 {
-		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdict.FieldID, schema.OrderByDESC))
-	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysdict.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -159,7 +151,7 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 	// log.Println(" ------ ======= --- id ", id)
 	// log.Println(" ------ ======= -- -params  ", params)
 
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysDict.Query()
 
@@ -179,11 +171,7 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 		}
 	}
 
-	if len(opt.OrderFields) == 0 {
-		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(sysdict.FieldID, schema.OrderByDESC))
-	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysdict.ByID(OrderBy("desc")))
 
 	count, err := query.Count(ctx)
 	if err != nil {

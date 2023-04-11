@@ -59,7 +59,7 @@ func (a *DictItem) getQueryOption(opts ...schema.DictItemQueryOptions) schema.Di
 
 // Query 查询数据
 func (a *DictItem) Query(ctx context.Context, params schema.DictItemQueryParam, opts ...schema.DictItemQueryOptions) (*schema.DictItemQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysDictItem.Query().Where(sysdictitem.DeletedAtIsNil())
 
@@ -83,8 +83,8 @@ func (a *DictItem) Query(ctx context.Context, params schema.DictItemQueryParam, 
 	}
 
 	// order field
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+
+	query = query.Order(sysdictitem.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

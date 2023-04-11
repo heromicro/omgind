@@ -44,7 +44,7 @@ func (a *UserRole) getQueryOption(opts ...schema.UserRoleQueryOptions) schema.Us
 
 // Query 查询数据
 func (a *UserRole) Query(ctx context.Context, params schema.UserRoleQueryParam, opts ...schema.UserRoleQueryOptions) (*schema.UserRoleQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysUserRole.Query().Where(sysuserrole.DeletedAtIsNil())
 
@@ -66,8 +66,7 @@ func (a *UserRole) Query(ctx context.Context, params schema.UserRoleQueryParam, 
 		return &schema.UserRoleQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysuserrole.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

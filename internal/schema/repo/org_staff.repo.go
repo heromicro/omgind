@@ -82,7 +82,7 @@ func (a *OrgStaff) getQueryOption(opts ...schema.OrgStaffQueryOptions) schema.Or
 
 // Query 查询数据
 func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, opts ...schema.OrgStaffQueryOptions) (*schema.OrgStaffQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
@@ -126,45 +126,34 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 	}
 
 	if v := params.IsActive_Order; v != "" {
-		of := MakeUpOrderField(orgstaff.FieldIsActive, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgstaff.ByIsActive(OrderBy(v)))
 	}
 
 	if v := params.Sort_Order; v != "" {
-		of := MakeUpOrderField(orgstaff.FieldSort, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgstaff.BySort(OrderBy(v)))
 	}
 
 	if v := params.CreatedAt_Order; v != "" {
-		of := MakeUpOrderField(orgstaff.FieldCreatedAt, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgstaff.ByCreatedAt(OrderBy(v)))
 	}
 
 	if v := params.BirthDate_Order; v != "" {
-		of := MakeUpOrderField(orgstaff.FieldBirthDate, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgstaff.ByBirthDate(OrderBy(v)))
 	}
 
 	if v := params.EntryDate_Order; v != "" {
-		of := MakeUpOrderField(orgstaff.FieldEntryDate, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgstaff.ByEntryDate(OrderBy(v)))
 	}
 
 	if v := params.RegularDate_Order; v != "" {
-		of := MakeUpOrderField(orgstaff.FieldRegularDate, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgstaff.ByRegularDate(OrderBy(v)))
 	}
 
 	if v := params.ResignDate_Order; v != "" {
-		of := MakeUpOrderField(orgstaff.FieldRegularDate, v)
-		opt.OrderFields = append(opt.OrderFields, of)
+		query = query.Order(orgstaff.ByResignDate(OrderBy(v)))
 	}
 
-	if len(opt.OrderFields) == 0 {
-		opt.OrderFields = append(opt.OrderFields, schema.NewOrderField(orgstaff.FieldID, schema.OrderByDESC))
-	}
-
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(orgstaff.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

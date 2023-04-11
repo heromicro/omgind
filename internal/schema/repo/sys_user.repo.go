@@ -62,7 +62,7 @@ func (a *User) getQueryOption(opts ...schema.UserQueryOptions) schema.UserQueryO
 
 // Query 查询数据
 func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...schema.UserQueryOptions) (*schema.UserQueryResult, error) {
-	opt := a.getQueryOption(opts...)
+	// opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.SysUser.Query().Where(sysuser.DeletedAtIsNil())
 
@@ -105,8 +105,7 @@ func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...
 		return &schema.UserQueryResult{PageResult: pr}, nil
 	}
 
-	opt.OrderFields = append(opt.OrderFields, schema.NewOrderField("id", schema.OrderByDESC))
-	query = query.Order(ParseOrder(opt.OrderFields)...)
+	query = query.Order(sysuser.ByID(OrderBy("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
