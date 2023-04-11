@@ -13,14 +13,11 @@ type User struct {
 }
 
 // Query 查询数据
+//
 //	@Tags		用户管理
 //	@Summary	查询数据
 //	@Security	ApiKeyAuth
-//	@Param		current		query		int		true	"分页索引"	default(1)
-//	@Param		pageSize	query		int		true	"分页大小"	default(10)
-//	@Param		queryValue	query		string	false	"查询值"
-//	@Param		roleIDs		query		string	false	"角色ID(多个以英文逗号分隔)"
-//	@Param		is_active	query		bool	false	"是否有效"
+//	@Param		""			query		schema.UserQueryParam	false	"查询参数"	default{}
 //	@Success	200			{object}	schema.ListResult{list=schema.UserShows,pagination=schema.PaginationResult}"
 //	@Failure	401			{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
 //	@Failure	500			{object}	schema.ErrorResult	"{error:{code:0,message:服务器错误}}"
@@ -30,6 +27,7 @@ func (a *User) Query(c *gin.Context) {
 
 // Get 查询指定数据
 // Get 查询指定数据
+//
 //	@Tags		用户管理
 //	@Summary	查询指定数据
 //	@Security	ApiKeyAuth
@@ -43,6 +41,7 @@ func (a *User) Get(c *gin.Context) {
 }
 
 // Create 创建数据
+//
 //	@Tags		用户管理
 //	@Summary	创建数据
 //	@Security	ApiKeyAuth
@@ -56,6 +55,7 @@ func (a *User) Create(c *gin.Context) {
 }
 
 // Update 更新数据
+//
 //	@Tags		用户管理
 //	@Summary	更新数据
 //	@Security	ApiKeyAuth
@@ -70,6 +70,7 @@ func (a *User) Update(c *gin.Context) {
 }
 
 // Delete 删除数据
+//
 //	@Tags		用户管理
 //	@Summary	删除数据
 //	@Security	ApiKeyAuth
@@ -82,6 +83,7 @@ func (a *User) Delete(c *gin.Context) {
 }
 
 // Enable 启用数据
+//
 //	@Tags		用户管理
 //	@Summary	启用数据
 //	@Security	ApiKeyAuth
@@ -94,6 +96,7 @@ func (a *User) Enable(c *gin.Context) {
 }
 
 // Disable 禁用数据
+//
 //	@Tags		用户管理
 //	@Summary	禁用数据
 //	@Security	ApiKeyAuth

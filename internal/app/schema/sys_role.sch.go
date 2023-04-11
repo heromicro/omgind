@@ -73,8 +73,8 @@ type RoleMenu struct {
 // RoleMenuQueryParam 查询条件
 type RoleMenuQueryParam struct {
 	PaginationParam
-	RoleID  string   // 角色ID
-	RoleIDs []string // 角色ID列表
+	RoleID  string   `form:"role_id" json:"role_id"`   // 角色ID
+	RoleIDs []string `form:"role_ids" json:"role_ids"` // 角色ID列表
 }
 
 // RoleMenuQueryOptions 查询可选参数项
