@@ -23,7 +23,7 @@ import (
 type OrgStaffQuery struct {
 	config
 	ctx          *QueryContext
-	order        []orgstaff.Order
+	order        []orgstaff.OrderOption
 	inters       []Interceptor
 	predicates   []predicate.OrgStaff
 	withOrgan    *OrgOrganQuery
@@ -63,7 +63,7 @@ func (osq *OrgStaffQuery) Unique(unique bool) *OrgStaffQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (osq *OrgStaffQuery) Order(o ...orgstaff.Order) *OrgStaffQuery {
+func (osq *OrgStaffQuery) Order(o ...orgstaff.OrderOption) *OrgStaffQuery {
 	osq.order = append(osq.order, o...)
 	return osq
 }
@@ -367,7 +367,7 @@ func (osq *OrgStaffQuery) Clone() *OrgStaffQuery {
 	return &OrgStaffQuery{
 		config:       osq.config,
 		ctx:          osq.ctx.Clone(),
-		order:        append([]orgstaff.Order{}, osq.order...),
+		order:        append([]orgstaff.OrderOption{}, osq.order...),
 		inters:       append([]Interceptor{}, osq.inters...),
 		predicates:   append([]predicate.OrgStaff{}, osq.predicates...),
 		withOrgan:    osq.withOrgan.Clone(),

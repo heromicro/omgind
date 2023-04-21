@@ -19,7 +19,7 @@ import (
 type XxxDemoQuery struct {
 	config
 	ctx        *QueryContext
-	order      []xxxdemo.Order
+	order      []xxxdemo.OrderOption
 	inters     []Interceptor
 	predicates []predicate.XxxDemo
 	modifiers  []func(*sql.Selector)
@@ -54,7 +54,7 @@ func (xdq *XxxDemoQuery) Unique(unique bool) *XxxDemoQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (xdq *XxxDemoQuery) Order(o ...xxxdemo.Order) *XxxDemoQuery {
+func (xdq *XxxDemoQuery) Order(o ...xxxdemo.OrderOption) *XxxDemoQuery {
 	xdq.order = append(xdq.order, o...)
 	return xdq
 }
@@ -248,7 +248,7 @@ func (xdq *XxxDemoQuery) Clone() *XxxDemoQuery {
 	return &XxxDemoQuery{
 		config:     xdq.config,
 		ctx:        xdq.ctx.Clone(),
-		order:      append([]xxxdemo.Order{}, xdq.order...),
+		order:      append([]xxxdemo.OrderOption{}, xdq.order...),
 		inters:     append([]Interceptor{}, xdq.inters...),
 		predicates: append([]predicate.XxxDemo{}, xdq.predicates...),
 		// clone intermediate query.

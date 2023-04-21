@@ -20,7 +20,7 @@ import (
 type SysDistrictQuery struct {
 	config
 	ctx          *QueryContext
-	order        []sysdistrict.Order
+	order        []sysdistrict.OrderOption
 	inters       []Interceptor
 	predicates   []predicate.SysDistrict
 	withParent   *SysDistrictQuery
@@ -57,7 +57,7 @@ func (sdq *SysDistrictQuery) Unique(unique bool) *SysDistrictQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (sdq *SysDistrictQuery) Order(o ...sysdistrict.Order) *SysDistrictQuery {
+func (sdq *SysDistrictQuery) Order(o ...sysdistrict.OrderOption) *SysDistrictQuery {
 	sdq.order = append(sdq.order, o...)
 	return sdq
 }
@@ -295,7 +295,7 @@ func (sdq *SysDistrictQuery) Clone() *SysDistrictQuery {
 	return &SysDistrictQuery{
 		config:       sdq.config,
 		ctx:          sdq.ctx.Clone(),
-		order:        append([]sysdistrict.Order{}, sdq.order...),
+		order:        append([]sysdistrict.OrderOption{}, sdq.order...),
 		inters:       append([]Interceptor{}, sdq.inters...),
 		predicates:   append([]predicate.SysDistrict{}, sdq.predicates...),
 		withParent:   sdq.withParent.Clone(),
@@ -490,8 +490,11 @@ func (sdq *SysDistrictQuery) loadChildren(ctx context.Context, query *SysDistric
 			init(nodes[i])
 		}
 	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(sysdistrict.FieldParentID)
+	}
 	query.Where(predicate.SysDistrict(func(s *sql.Selector) {
-		s.Where(sql.InValues(sysdistrict.ChildrenColumn, fks...))
+		s.Where(sql.InValues(s.C(sysdistrict.ChildrenColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {
@@ -504,7 +507,7 @@ func (sdq *SysDistrictQuery) loadChildren(ctx context.Context, query *SysDistric
 		}
 		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
+			return fmt.Errorf(`unexpected referenced foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}

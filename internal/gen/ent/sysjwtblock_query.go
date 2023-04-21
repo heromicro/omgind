@@ -19,7 +19,7 @@ import (
 type SysJwtBlockQuery struct {
 	config
 	ctx        *QueryContext
-	order      []sysjwtblock.Order
+	order      []sysjwtblock.OrderOption
 	inters     []Interceptor
 	predicates []predicate.SysJwtBlock
 	modifiers  []func(*sql.Selector)
@@ -54,7 +54,7 @@ func (sjbq *SysJwtBlockQuery) Unique(unique bool) *SysJwtBlockQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (sjbq *SysJwtBlockQuery) Order(o ...sysjwtblock.Order) *SysJwtBlockQuery {
+func (sjbq *SysJwtBlockQuery) Order(o ...sysjwtblock.OrderOption) *SysJwtBlockQuery {
 	sjbq.order = append(sjbq.order, o...)
 	return sjbq
 }
@@ -248,7 +248,7 @@ func (sjbq *SysJwtBlockQuery) Clone() *SysJwtBlockQuery {
 	return &SysJwtBlockQuery{
 		config:     sjbq.config,
 		ctx:        sjbq.ctx.Clone(),
-		order:      append([]sysjwtblock.Order{}, sjbq.order...),
+		order:      append([]sysjwtblock.OrderOption{}, sjbq.order...),
 		inters:     append([]Interceptor{}, sjbq.inters...),
 		predicates: append([]predicate.SysJwtBlock{}, sjbq.predicates...),
 		// clone intermediate query.

@@ -22,7 +22,7 @@ import (
 type OrgDeptQuery struct {
 	config
 	ctx          *QueryContext
-	order        []orgdept.Order
+	order        []orgdept.OrderOption
 	inters       []Interceptor
 	predicates   []predicate.OrgDept
 	withParent   *OrgDeptQuery
@@ -61,7 +61,7 @@ func (odq *OrgDeptQuery) Unique(unique bool) *OrgDeptQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (odq *OrgDeptQuery) Order(o ...orgdept.Order) *OrgDeptQuery {
+func (odq *OrgDeptQuery) Order(o ...orgdept.OrderOption) *OrgDeptQuery {
 	odq.order = append(odq.order, o...)
 	return odq
 }
@@ -343,7 +343,7 @@ func (odq *OrgDeptQuery) Clone() *OrgDeptQuery {
 	return &OrgDeptQuery{
 		config:       odq.config,
 		ctx:          odq.ctx.Clone(),
-		order:        append([]orgdept.Order{}, odq.order...),
+		order:        append([]orgdept.OrderOption{}, odq.order...),
 		inters:       append([]Interceptor{}, odq.inters...),
 		predicates:   append([]predicate.OrgDept{}, odq.predicates...),
 		withParent:   odq.withParent.Clone(),
@@ -577,8 +577,11 @@ func (odq *OrgDeptQuery) loadChildren(ctx context.Context, query *OrgDeptQuery, 
 			init(nodes[i])
 		}
 	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orgdept.FieldParentID)
+	}
 	query.Where(predicate.OrgDept(func(s *sql.Selector) {
-		s.Where(sql.InValues(orgdept.ChildrenColumn, fks...))
+		s.Where(sql.InValues(s.C(orgdept.ChildrenColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {
@@ -591,7 +594,7 @@ func (odq *OrgDeptQuery) loadChildren(ctx context.Context, query *OrgDeptQuery, 
 		}
 		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
+			return fmt.Errorf(`unexpected referenced foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}
@@ -639,8 +642,11 @@ func (odq *OrgDeptQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, n
 			init(nodes[i])
 		}
 	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orgstaff.FieldDeptID)
+	}
 	query.Where(predicate.OrgStaff(func(s *sql.Selector) {
-		s.Where(sql.InValues(orgdept.StaffsColumn, fks...))
+		s.Where(sql.InValues(s.C(orgdept.StaffsColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {
@@ -653,7 +659,7 @@ func (odq *OrgDeptQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, n
 		}
 		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "dept_id" returned %v for node %v`, *fk, n.ID)
+			return fmt.Errorf(`unexpected referenced foreign-key "dept_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}

@@ -109,80 +109,80 @@ var (
 	IDValidator func(string) error
 )
 
-// Order defines the ordering method for the SysUser queries.
-type Order func(*sql.Selector)
+// OrderOption defines the ordering options for the SysUser queries.
+type OrderOption func(*sql.Selector)
 
 // ByID orders the results by the id field.
-func ByID(opts ...sql.OrderTermOption) Order {
+func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
 }
 
 // ByIsDel orders the results by the is_del field.
-func ByIsDel(opts ...sql.OrderTermOption) Order {
+func ByIsDel(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsDel, opts...).ToFunc()
 }
 
 // BySort orders the results by the sort field.
-func BySort(opts ...sql.OrderTermOption) Order {
+func BySort(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSort, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.
-func ByCreatedAt(opts ...sql.OrderTermOption) Order {
+func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
 }
 
 // ByUpdatedAt orders the results by the updated_at field.
-func ByUpdatedAt(opts ...sql.OrderTermOption) Order {
+func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
 }
 
 // ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) Order {
+func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
 // ByIsActive orders the results by the is_active field.
-func ByIsActive(opts ...sql.OrderTermOption) Order {
+func ByIsActive(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsActive, opts...).ToFunc()
 }
 
 // ByUserName orders the results by the user_name field.
-func ByUserName(opts ...sql.OrderTermOption) Order {
+func ByUserName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUserName, opts...).ToFunc()
 }
 
 // ByRealName orders the results by the real_name field.
-func ByRealName(opts ...sql.OrderTermOption) Order {
+func ByRealName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRealName, opts...).ToFunc()
 }
 
 // ByFirstName orders the results by the first_name field.
-func ByFirstName(opts ...sql.OrderTermOption) Order {
+func ByFirstName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldFirstName, opts...).ToFunc()
 }
 
 // ByLastName orders the results by the last_name field.
-func ByLastName(opts ...sql.OrderTermOption) Order {
+func ByLastName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLastName, opts...).ToFunc()
 }
 
 // ByPassword orders the results by the password field.
-func ByPassword(opts ...sql.OrderTermOption) Order {
+func ByPassword(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPassword, opts...).ToFunc()
 }
 
 // ByEmail orders the results by the email field.
-func ByEmail(opts ...sql.OrderTermOption) Order {
+func ByEmail(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldEmail, opts...).ToFunc()
 }
 
 // ByMobile orders the results by the mobile field.
-func ByMobile(opts ...sql.OrderTermOption) Order {
+func ByMobile(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMobile, opts...).ToFunc()
 }
 
 // BySalt orders the results by the salt field.
-func BySalt(opts ...sql.OrderTermOption) Order {
+func BySalt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSalt, opts...).ToFunc()
 }

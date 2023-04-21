@@ -19,7 +19,7 @@ import (
 type SysLoggingQuery struct {
 	config
 	ctx        *QueryContext
-	order      []syslogging.Order
+	order      []syslogging.OrderOption
 	inters     []Interceptor
 	predicates []predicate.SysLogging
 	modifiers  []func(*sql.Selector)
@@ -54,7 +54,7 @@ func (slq *SysLoggingQuery) Unique(unique bool) *SysLoggingQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (slq *SysLoggingQuery) Order(o ...syslogging.Order) *SysLoggingQuery {
+func (slq *SysLoggingQuery) Order(o ...syslogging.OrderOption) *SysLoggingQuery {
 	slq.order = append(slq.order, o...)
 	return slq
 }
@@ -248,7 +248,7 @@ func (slq *SysLoggingQuery) Clone() *SysLoggingQuery {
 	return &SysLoggingQuery{
 		config:     slq.config,
 		ctx:        slq.ctx.Clone(),
-		order:      append([]syslogging.Order{}, slq.order...),
+		order:      append([]syslogging.OrderOption{}, slq.order...),
 		inters:     append([]Interceptor{}, slq.inters...),
 		predicates: append([]predicate.SysLogging{}, slq.predicates...),
 		// clone intermediate query.

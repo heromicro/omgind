@@ -21,7 +21,7 @@ import (
 type SysDictQuery struct {
 	config
 	ctx        *QueryContext
-	order      []sysdict.Order
+	order      []sysdict.OrderOption
 	inters     []Interceptor
 	predicates []predicate.SysDict
 	withItems  *SysDictItemQuery
@@ -57,7 +57,7 @@ func (sdq *SysDictQuery) Unique(unique bool) *SysDictQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (sdq *SysDictQuery) Order(o ...sysdict.Order) *SysDictQuery {
+func (sdq *SysDictQuery) Order(o ...sysdict.OrderOption) *SysDictQuery {
 	sdq.order = append(sdq.order, o...)
 	return sdq
 }
@@ -273,7 +273,7 @@ func (sdq *SysDictQuery) Clone() *SysDictQuery {
 	return &SysDictQuery{
 		config:     sdq.config,
 		ctx:        sdq.ctx.Clone(),
-		order:      append([]sysdict.Order{}, sdq.order...),
+		order:      append([]sysdict.OrderOption{}, sdq.order...),
 		inters:     append([]Interceptor{}, sdq.inters...),
 		predicates: append([]predicate.SysDict{}, sdq.predicates...),
 		withItems:  sdq.withItems.Clone(),
@@ -417,8 +417,11 @@ func (sdq *SysDictQuery) loadItems(ctx context.Context, query *SysDictItemQuery,
 			init(nodes[i])
 		}
 	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(sysdictitem.FieldDictID)
+	}
 	query.Where(predicate.SysDictItem(func(s *sql.Selector) {
-		s.Where(sql.InValues(sysdict.ItemsColumn, fks...))
+		s.Where(sql.InValues(s.C(sysdict.ItemsColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {
@@ -431,7 +434,7 @@ func (sdq *SysDictQuery) loadItems(ctx context.Context, query *SysDictItemQuery,
 		}
 		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "dict_id" returned %v for node %v`, *fk, n.ID)
+			return fmt.Errorf(`unexpected referenced foreign-key "dict_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}

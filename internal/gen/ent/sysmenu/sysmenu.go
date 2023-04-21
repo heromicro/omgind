@@ -116,85 +116,85 @@ var (
 	IDValidator func(string) error
 )
 
-// Order defines the ordering method for the SysMenu queries.
-type Order func(*sql.Selector)
+// OrderOption defines the ordering options for the SysMenu queries.
+type OrderOption func(*sql.Selector)
 
 // ByID orders the results by the id field.
-func ByID(opts ...sql.OrderTermOption) Order {
+func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
 }
 
 // ByIsDel orders the results by the is_del field.
-func ByIsDel(opts ...sql.OrderTermOption) Order {
+func ByIsDel(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsDel, opts...).ToFunc()
 }
 
 // ByMemo orders the results by the memo field.
-func ByMemo(opts ...sql.OrderTermOption) Order {
+func ByMemo(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMemo, opts...).ToFunc()
 }
 
 // BySort orders the results by the sort field.
-func BySort(opts ...sql.OrderTermOption) Order {
+func BySort(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSort, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.
-func ByCreatedAt(opts ...sql.OrderTermOption) Order {
+func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
 }
 
 // ByUpdatedAt orders the results by the updated_at field.
-func ByUpdatedAt(opts ...sql.OrderTermOption) Order {
+func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
 }
 
 // ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) Order {
+func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
 // ByIsActive orders the results by the is_active field.
-func ByIsActive(opts ...sql.OrderTermOption) Order {
+func ByIsActive(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsActive, opts...).ToFunc()
 }
 
 // ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) Order {
+func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
 // ByIcon orders the results by the icon field.
-func ByIcon(opts ...sql.OrderTermOption) Order {
+func ByIcon(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIcon, opts...).ToFunc()
 }
 
 // ByRouter orders the results by the router field.
-func ByRouter(opts ...sql.OrderTermOption) Order {
+func ByRouter(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldRouter, opts...).ToFunc()
 }
 
 // ByIsShow orders the results by the is_show field.
-func ByIsShow(opts ...sql.OrderTermOption) Order {
+func ByIsShow(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsShow, opts...).ToFunc()
 }
 
 // ByParentID orders the results by the parent_id field.
-func ByParentID(opts ...sql.OrderTermOption) Order {
+func ByParentID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldParentID, opts...).ToFunc()
 }
 
 // ByParentPath orders the results by the parent_path field.
-func ByParentPath(opts ...sql.OrderTermOption) Order {
+func ByParentPath(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldParentPath, opts...).ToFunc()
 }
 
 // ByLevel orders the results by the level field.
-func ByLevel(opts ...sql.OrderTermOption) Order {
+func ByLevel(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLevel, opts...).ToFunc()
 }
 
 // ByIsLeaf orders the results by the is_leaf field.
-func ByIsLeaf(opts ...sql.OrderTermOption) Order {
+func ByIsLeaf(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsLeaf, opts...).ToFunc()
 }

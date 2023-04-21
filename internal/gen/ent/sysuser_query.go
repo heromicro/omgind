@@ -19,7 +19,7 @@ import (
 type SysUserQuery struct {
 	config
 	ctx        *QueryContext
-	order      []sysuser.Order
+	order      []sysuser.OrderOption
 	inters     []Interceptor
 	predicates []predicate.SysUser
 	modifiers  []func(*sql.Selector)
@@ -54,7 +54,7 @@ func (suq *SysUserQuery) Unique(unique bool) *SysUserQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (suq *SysUserQuery) Order(o ...sysuser.Order) *SysUserQuery {
+func (suq *SysUserQuery) Order(o ...sysuser.OrderOption) *SysUserQuery {
 	suq.order = append(suq.order, o...)
 	return suq
 }
@@ -248,7 +248,7 @@ func (suq *SysUserQuery) Clone() *SysUserQuery {
 	return &SysUserQuery{
 		config:     suq.config,
 		ctx:        suq.ctx.Clone(),
-		order:      append([]sysuser.Order{}, suq.order...),
+		order:      append([]sysuser.OrderOption{}, suq.order...),
 		inters:     append([]Interceptor{}, suq.inters...),
 		predicates: append([]predicate.SysUser{}, suq.predicates...),
 		// clone intermediate query.

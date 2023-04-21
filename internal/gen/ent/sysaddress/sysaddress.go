@@ -181,150 +181,150 @@ var (
 	IDValidator func(string) error
 )
 
-// Order defines the ordering method for the SysAddress queries.
-type Order func(*sql.Selector)
+// OrderOption defines the ordering options for the SysAddress queries.
+type OrderOption func(*sql.Selector)
 
 // ByID orders the results by the id field.
-func ByID(opts ...sql.OrderTermOption) Order {
+func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
 }
 
 // ByIsDel orders the results by the is_del field.
-func ByIsDel(opts ...sql.OrderTermOption) Order {
+func ByIsDel(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsDel, opts...).ToFunc()
 }
 
 // ByUserID orders the results by the user_id field.
-func ByUserID(opts ...sql.OrderTermOption) Order {
+func ByUserID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUserID, opts...).ToFunc()
 }
 
 // ByOrgID orders the results by the org_id field.
-func ByOrgID(opts ...sql.OrderTermOption) Order {
+func ByOrgID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOrgID, opts...).ToFunc()
 }
 
 // BySort orders the results by the sort field.
-func BySort(opts ...sql.OrderTermOption) Order {
+func BySort(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSort, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.
-func ByCreatedAt(opts ...sql.OrderTermOption) Order {
+func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
 }
 
 // ByUpdatedAt orders the results by the updated_at field.
-func ByUpdatedAt(opts ...sql.OrderTermOption) Order {
+func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
 }
 
 // ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) Order {
+func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
 // ByIsActive orders the results by the is_active field.
-func ByIsActive(opts ...sql.OrderTermOption) Order {
+func ByIsActive(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsActive, opts...).ToFunc()
 }
 
 // ByMemo orders the results by the memo field.
-func ByMemo(opts ...sql.OrderTermOption) Order {
+func ByMemo(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMemo, opts...).ToFunc()
 }
 
 // ByCountry orders the results by the country field.
-func ByCountry(opts ...sql.OrderTermOption) Order {
+func ByCountry(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCountry, opts...).ToFunc()
 }
 
 // ByProvince orders the results by the province field.
-func ByProvince(opts ...sql.OrderTermOption) Order {
+func ByProvince(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldProvince, opts...).ToFunc()
 }
 
 // ByCity orders the results by the city field.
-func ByCity(opts ...sql.OrderTermOption) Order {
+func ByCity(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCity, opts...).ToFunc()
 }
 
 // ByCounty orders the results by the county field.
-func ByCounty(opts ...sql.OrderTermOption) Order {
+func ByCounty(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCounty, opts...).ToFunc()
 }
 
 // ByCountryID orders the results by the country_id field.
-func ByCountryID(opts ...sql.OrderTermOption) Order {
+func ByCountryID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCountryID, opts...).ToFunc()
 }
 
 // ByProvinceID orders the results by the province_id field.
-func ByProvinceID(opts ...sql.OrderTermOption) Order {
+func ByProvinceID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldProvinceID, opts...).ToFunc()
 }
 
 // ByCityID orders the results by the city_id field.
-func ByCityID(opts ...sql.OrderTermOption) Order {
+func ByCityID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCityID, opts...).ToFunc()
 }
 
 // ByCountyID orders the results by the county_id field.
-func ByCountyID(opts ...sql.OrderTermOption) Order {
+func ByCountyID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCountyID, opts...).ToFunc()
 }
 
 // ByZipCode orders the results by the zip_code field.
-func ByZipCode(opts ...sql.OrderTermOption) Order {
+func ByZipCode(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldZipCode, opts...).ToFunc()
 }
 
 // ByDaddr orders the results by the daddr field.
-func ByDaddr(opts ...sql.OrderTermOption) Order {
+func ByDaddr(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDaddr, opts...).ToFunc()
 }
 
 // ByFirstName orders the results by the first_name field.
-func ByFirstName(opts ...sql.OrderTermOption) Order {
+func ByFirstName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldFirstName, opts...).ToFunc()
 }
 
 // ByLastName orders the results by the last_name field.
-func ByLastName(opts ...sql.OrderTermOption) Order {
+func ByLastName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLastName, opts...).ToFunc()
 }
 
 // ByAreaCode orders the results by the area_code field.
-func ByAreaCode(opts ...sql.OrderTermOption) Order {
+func ByAreaCode(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldAreaCode, opts...).ToFunc()
 }
 
 // ByMobile orders the results by the mobile field.
-func ByMobile(opts ...sql.OrderTermOption) Order {
+func ByMobile(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMobile, opts...).ToFunc()
 }
 
 // ByCreator orders the results by the creator field.
-func ByCreator(opts ...sql.OrderTermOption) Order {
+func ByCreator(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreator, opts...).ToFunc()
 }
 
 // ByOrganField orders the results by organ field.
-func ByOrganField(field string, opts ...sql.OrderTermOption) Order {
+func ByOrganField(field string, opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
 		sqlgraph.OrderByNeighborTerms(s, newOrganStep(), sql.OrderByField(field, opts...))
 	}
 }
 
 // ByStaffResiField orders the results by staff_resi field.
-func ByStaffResiField(field string, opts ...sql.OrderTermOption) Order {
+func ByStaffResiField(field string, opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
 		sqlgraph.OrderByNeighborTerms(s, newStaffResiStep(), sql.OrderByField(field, opts...))
 	}
 }
 
 // ByStaffIdenField orders the results by staff_iden field.
-func ByStaffIdenField(field string, opts ...sql.OrderTermOption) Order {
+func ByStaffIdenField(field string, opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
 		sqlgraph.OrderByNeighborTerms(s, newStaffIdenStep(), sql.OrderByField(field, opts...))
 	}

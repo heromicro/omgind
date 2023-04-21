@@ -113,85 +113,85 @@ var (
 	IDValidator func(string) error
 )
 
-// Order defines the ordering method for the OrgPosition queries.
-type Order func(*sql.Selector)
+// OrderOption defines the ordering options for the OrgPosition queries.
+type OrderOption func(*sql.Selector)
 
 // ByID orders the results by the id field.
-func ByID(opts ...sql.OrderTermOption) Order {
+func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
 }
 
 // ByIsDel orders the results by the is_del field.
-func ByIsDel(opts ...sql.OrderTermOption) Order {
+func ByIsDel(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsDel, opts...).ToFunc()
 }
 
 // BySort orders the results by the sort field.
-func BySort(opts ...sql.OrderTermOption) Order {
+func BySort(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldSort, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.
-func ByCreatedAt(opts ...sql.OrderTermOption) Order {
+func ByCreatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreatedAt, opts...).ToFunc()
 }
 
 // ByUpdatedAt orders the results by the updated_at field.
-func ByUpdatedAt(opts ...sql.OrderTermOption) Order {
+func ByUpdatedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldUpdatedAt, opts...).ToFunc()
 }
 
 // ByDeletedAt orders the results by the deleted_at field.
-func ByDeletedAt(opts ...sql.OrderTermOption) Order {
+func ByDeletedAt(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDeletedAt, opts...).ToFunc()
 }
 
 // ByIsActive orders the results by the is_active field.
-func ByIsActive(opts ...sql.OrderTermOption) Order {
+func ByIsActive(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsActive, opts...).ToFunc()
 }
 
 // ByMemo orders the results by the memo field.
-func ByMemo(opts ...sql.OrderTermOption) Order {
+func ByMemo(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMemo, opts...).ToFunc()
 }
 
 // ByName orders the results by the name field.
-func ByName(opts ...sql.OrderTermOption) Order {
+func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
 }
 
 // ByCode orders the results by the code field.
-func ByCode(opts ...sql.OrderTermOption) Order {
+func ByCode(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCode, opts...).ToFunc()
 }
 
 // ByOrgID orders the results by the org_id field.
-func ByOrgID(opts ...sql.OrderTermOption) Order {
+func ByOrgID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOrgID, opts...).ToFunc()
 }
 
 // ByCreator orders the results by the creator field.
-func ByCreator(opts ...sql.OrderTermOption) Order {
+func ByCreator(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldCreator, opts...).ToFunc()
 }
 
 // ByOrganField orders the results by organ field.
-func ByOrganField(field string, opts ...sql.OrderTermOption) Order {
+func ByOrganField(field string, opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
 		sqlgraph.OrderByNeighborTerms(s, newOrganStep(), sql.OrderByField(field, opts...))
 	}
 }
 
 // ByStaffsCount orders the results by staffs count.
-func ByStaffsCount(opts ...sql.OrderTermOption) Order {
+func ByStaffsCount(opts ...sql.OrderTermOption) OrderOption {
 	return func(s *sql.Selector) {
 		sqlgraph.OrderByNeighborsCount(s, newStaffsStep(), opts...)
 	}
 }
 
 // ByStaffs orders the results by staffs terms.
-func ByStaffs(term sql.OrderTerm, terms ...sql.OrderTerm) Order {
+func ByStaffs(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
 	return func(s *sql.Selector) {
 		sqlgraph.OrderByNeighborTerms(s, newStaffsStep(), append([]sql.OrderTerm{term}, terms...)...)
 	}

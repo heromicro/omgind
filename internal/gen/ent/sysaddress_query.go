@@ -22,7 +22,7 @@ import (
 type SysAddressQuery struct {
 	config
 	ctx           *QueryContext
-	order         []sysaddress.Order
+	order         []sysaddress.OrderOption
 	inters        []Interceptor
 	predicates    []predicate.SysAddress
 	withOrgan     *OrgOrganQuery
@@ -60,7 +60,7 @@ func (saq *SysAddressQuery) Unique(unique bool) *SysAddressQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (saq *SysAddressQuery) Order(o ...sysaddress.Order) *SysAddressQuery {
+func (saq *SysAddressQuery) Order(o ...sysaddress.OrderOption) *SysAddressQuery {
 	saq.order = append(saq.order, o...)
 	return saq
 }
@@ -320,7 +320,7 @@ func (saq *SysAddressQuery) Clone() *SysAddressQuery {
 	return &SysAddressQuery{
 		config:        saq.config,
 		ctx:           saq.ctx.Clone(),
-		order:         append([]sysaddress.Order{}, saq.order...),
+		order:         append([]sysaddress.OrderOption{}, saq.order...),
 		inters:        append([]Interceptor{}, saq.inters...),
 		predicates:    append([]predicate.SysAddress{}, saq.predicates...),
 		withOrgan:     saq.withOrgan.Clone(),
@@ -498,8 +498,11 @@ func (saq *SysAddressQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery,
 		fks = append(fks, nodes[i].ID)
 		nodeids[nodes[i].ID] = nodes[i]
 	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orgorgan.FieldHaddrID)
+	}
 	query.Where(predicate.OrgOrgan(func(s *sql.Selector) {
-		s.Where(sql.InValues(sysaddress.OrganColumn, fks...))
+		s.Where(sql.InValues(s.C(sysaddress.OrganColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {
@@ -512,7 +515,7 @@ func (saq *SysAddressQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery,
 		}
 		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "haddr_id" returned %v for node %v`, *fk, n.ID)
+			return fmt.Errorf(`unexpected referenced foreign-key "haddr_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}
@@ -525,8 +528,11 @@ func (saq *SysAddressQuery) loadStaffResi(ctx context.Context, query *OrgStaffQu
 		fks = append(fks, nodes[i].ID)
 		nodeids[nodes[i].ID] = nodes[i]
 	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orgstaff.FieldResiAddrID)
+	}
 	query.Where(predicate.OrgStaff(func(s *sql.Selector) {
-		s.Where(sql.InValues(sysaddress.StaffResiColumn, fks...))
+		s.Where(sql.InValues(s.C(sysaddress.StaffResiColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {
@@ -539,7 +545,7 @@ func (saq *SysAddressQuery) loadStaffResi(ctx context.Context, query *OrgStaffQu
 		}
 		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "resi_addr_id" returned %v for node %v`, *fk, n.ID)
+			return fmt.Errorf(`unexpected referenced foreign-key "resi_addr_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}
@@ -552,8 +558,11 @@ func (saq *SysAddressQuery) loadStaffIden(ctx context.Context, query *OrgStaffQu
 		fks = append(fks, nodes[i].ID)
 		nodeids[nodes[i].ID] = nodes[i]
 	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orgstaff.FieldIdenAddrID)
+	}
 	query.Where(predicate.OrgStaff(func(s *sql.Selector) {
-		s.Where(sql.InValues(sysaddress.StaffIdenColumn, fks...))
+		s.Where(sql.InValues(s.C(sysaddress.StaffIdenColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {
@@ -566,7 +575,7 @@ func (saq *SysAddressQuery) loadStaffIden(ctx context.Context, query *OrgStaffQu
 		}
 		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "iden_addr_id" returned %v for node %v`, *fk, n.ID)
+			return fmt.Errorf(`unexpected referenced foreign-key "iden_addr_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}

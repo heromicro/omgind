@@ -575,41 +575,41 @@ func (f TraverseXxxDemo) Traverse(ctx context.Context, q ent.Query) error {
 func NewQuery(q ent.Query) (Query, error) {
 	switch q := q.(type) {
 	case *ent.OrgDeptQuery:
-		return &query[*ent.OrgDeptQuery, predicate.OrgDept, orgdept.Order]{typ: ent.TypeOrgDept, tq: q}, nil
+		return &query[*ent.OrgDeptQuery, predicate.OrgDept, orgdept.OrderOption]{typ: ent.TypeOrgDept, tq: q}, nil
 	case *ent.OrgOrganQuery:
-		return &query[*ent.OrgOrganQuery, predicate.OrgOrgan, orgorgan.Order]{typ: ent.TypeOrgOrgan, tq: q}, nil
+		return &query[*ent.OrgOrganQuery, predicate.OrgOrgan, orgorgan.OrderOption]{typ: ent.TypeOrgOrgan, tq: q}, nil
 	case *ent.OrgPositionQuery:
-		return &query[*ent.OrgPositionQuery, predicate.OrgPosition, orgposition.Order]{typ: ent.TypeOrgPosition, tq: q}, nil
+		return &query[*ent.OrgPositionQuery, predicate.OrgPosition, orgposition.OrderOption]{typ: ent.TypeOrgPosition, tq: q}, nil
 	case *ent.OrgStaffQuery:
-		return &query[*ent.OrgStaffQuery, predicate.OrgStaff, orgstaff.Order]{typ: ent.TypeOrgStaff, tq: q}, nil
+		return &query[*ent.OrgStaffQuery, predicate.OrgStaff, orgstaff.OrderOption]{typ: ent.TypeOrgStaff, tq: q}, nil
 	case *ent.SysAddressQuery:
-		return &query[*ent.SysAddressQuery, predicate.SysAddress, sysaddress.Order]{typ: ent.TypeSysAddress, tq: q}, nil
+		return &query[*ent.SysAddressQuery, predicate.SysAddress, sysaddress.OrderOption]{typ: ent.TypeSysAddress, tq: q}, nil
 	case *ent.SysDictQuery:
-		return &query[*ent.SysDictQuery, predicate.SysDict, sysdict.Order]{typ: ent.TypeSysDict, tq: q}, nil
+		return &query[*ent.SysDictQuery, predicate.SysDict, sysdict.OrderOption]{typ: ent.TypeSysDict, tq: q}, nil
 	case *ent.SysDictItemQuery:
-		return &query[*ent.SysDictItemQuery, predicate.SysDictItem, sysdictitem.Order]{typ: ent.TypeSysDictItem, tq: q}, nil
+		return &query[*ent.SysDictItemQuery, predicate.SysDictItem, sysdictitem.OrderOption]{typ: ent.TypeSysDictItem, tq: q}, nil
 	case *ent.SysDistrictQuery:
-		return &query[*ent.SysDistrictQuery, predicate.SysDistrict, sysdistrict.Order]{typ: ent.TypeSysDistrict, tq: q}, nil
+		return &query[*ent.SysDistrictQuery, predicate.SysDistrict, sysdistrict.OrderOption]{typ: ent.TypeSysDistrict, tq: q}, nil
 	case *ent.SysJwtBlockQuery:
-		return &query[*ent.SysJwtBlockQuery, predicate.SysJwtBlock, sysjwtblock.Order]{typ: ent.TypeSysJwtBlock, tq: q}, nil
+		return &query[*ent.SysJwtBlockQuery, predicate.SysJwtBlock, sysjwtblock.OrderOption]{typ: ent.TypeSysJwtBlock, tq: q}, nil
 	case *ent.SysLoggingQuery:
-		return &query[*ent.SysLoggingQuery, predicate.SysLogging, syslogging.Order]{typ: ent.TypeSysLogging, tq: q}, nil
+		return &query[*ent.SysLoggingQuery, predicate.SysLogging, syslogging.OrderOption]{typ: ent.TypeSysLogging, tq: q}, nil
 	case *ent.SysMenuQuery:
-		return &query[*ent.SysMenuQuery, predicate.SysMenu, sysmenu.Order]{typ: ent.TypeSysMenu, tq: q}, nil
+		return &query[*ent.SysMenuQuery, predicate.SysMenu, sysmenu.OrderOption]{typ: ent.TypeSysMenu, tq: q}, nil
 	case *ent.SysMenuActionQuery:
-		return &query[*ent.SysMenuActionQuery, predicate.SysMenuAction, sysmenuaction.Order]{typ: ent.TypeSysMenuAction, tq: q}, nil
+		return &query[*ent.SysMenuActionQuery, predicate.SysMenuAction, sysmenuaction.OrderOption]{typ: ent.TypeSysMenuAction, tq: q}, nil
 	case *ent.SysMenuActionResourceQuery:
-		return &query[*ent.SysMenuActionResourceQuery, predicate.SysMenuActionResource, sysmenuactionresource.Order]{typ: ent.TypeSysMenuActionResource, tq: q}, nil
+		return &query[*ent.SysMenuActionResourceQuery, predicate.SysMenuActionResource, sysmenuactionresource.OrderOption]{typ: ent.TypeSysMenuActionResource, tq: q}, nil
 	case *ent.SysRoleQuery:
-		return &query[*ent.SysRoleQuery, predicate.SysRole, sysrole.Order]{typ: ent.TypeSysRole, tq: q}, nil
+		return &query[*ent.SysRoleQuery, predicate.SysRole, sysrole.OrderOption]{typ: ent.TypeSysRole, tq: q}, nil
 	case *ent.SysRoleMenuQuery:
-		return &query[*ent.SysRoleMenuQuery, predicate.SysRoleMenu, sysrolemenu.Order]{typ: ent.TypeSysRoleMenu, tq: q}, nil
+		return &query[*ent.SysRoleMenuQuery, predicate.SysRoleMenu, sysrolemenu.OrderOption]{typ: ent.TypeSysRoleMenu, tq: q}, nil
 	case *ent.SysUserQuery:
-		return &query[*ent.SysUserQuery, predicate.SysUser, sysuser.Order]{typ: ent.TypeSysUser, tq: q}, nil
+		return &query[*ent.SysUserQuery, predicate.SysUser, sysuser.OrderOption]{typ: ent.TypeSysUser, tq: q}, nil
 	case *ent.SysUserRoleQuery:
-		return &query[*ent.SysUserRoleQuery, predicate.SysUserRole, sysuserrole.Order]{typ: ent.TypeSysUserRole, tq: q}, nil
+		return &query[*ent.SysUserRoleQuery, predicate.SysUserRole, sysuserrole.OrderOption]{typ: ent.TypeSysUserRole, tq: q}, nil
 	case *ent.XxxDemoQuery:
-		return &query[*ent.XxxDemoQuery, predicate.XxxDemo, xxxdemo.Order]{typ: ent.TypeXxxDemo, tq: q}, nil
+		return &query[*ent.XxxDemoQuery, predicate.XxxDemo, xxxdemo.OrderOption]{typ: ent.TypeXxxDemo, tq: q}, nil
 	default:
 		return nil, fmt.Errorf("unknown query type %T", q)
 	}

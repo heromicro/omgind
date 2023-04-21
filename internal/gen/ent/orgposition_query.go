@@ -22,7 +22,7 @@ import (
 type OrgPositionQuery struct {
 	config
 	ctx        *QueryContext
-	order      []orgposition.Order
+	order      []orgposition.OrderOption
 	inters     []Interceptor
 	predicates []predicate.OrgPosition
 	withOrgan  *OrgOrganQuery
@@ -59,7 +59,7 @@ func (opq *OrgPositionQuery) Unique(unique bool) *OrgPositionQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (opq *OrgPositionQuery) Order(o ...orgposition.Order) *OrgPositionQuery {
+func (opq *OrgPositionQuery) Order(o ...orgposition.OrderOption) *OrgPositionQuery {
 	opq.order = append(opq.order, o...)
 	return opq
 }
@@ -297,7 +297,7 @@ func (opq *OrgPositionQuery) Clone() *OrgPositionQuery {
 	return &OrgPositionQuery{
 		config:     opq.config,
 		ctx:        opq.ctx.Clone(),
-		order:      append([]orgposition.Order{}, opq.order...),
+		order:      append([]orgposition.OrderOption{}, opq.order...),
 		inters:     append([]Interceptor{}, opq.inters...),
 		predicates: append([]predicate.OrgPosition{}, opq.predicates...),
 		withOrgan:  opq.withOrgan.Clone(),
@@ -492,8 +492,11 @@ func (opq *OrgPositionQuery) loadStaffs(ctx context.Context, query *OrgStaffQuer
 			init(nodes[i])
 		}
 	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(orgstaff.FieldPosiID)
+	}
 	query.Where(predicate.OrgStaff(func(s *sql.Selector) {
-		s.Where(sql.InValues(orgposition.StaffsColumn, fks...))
+		s.Where(sql.InValues(s.C(orgposition.StaffsColumn), fks...))
 	}))
 	neighbors, err := query.All(ctx)
 	if err != nil {
@@ -506,7 +509,7 @@ func (opq *OrgPositionQuery) loadStaffs(ctx context.Context, query *OrgStaffQuer
 		}
 		node, ok := nodeids[*fk]
 		if !ok {
-			return fmt.Errorf(`unexpected foreign-key "posi_id" returned %v for node %v`, *fk, n.ID)
+			return fmt.Errorf(`unexpected referenced foreign-key "posi_id" returned %v for node %v`, *fk, n.ID)
 		}
 		assign(node, n)
 	}

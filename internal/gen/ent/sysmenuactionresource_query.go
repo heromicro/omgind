@@ -19,7 +19,7 @@ import (
 type SysMenuActionResourceQuery struct {
 	config
 	ctx        *QueryContext
-	order      []sysmenuactionresource.Order
+	order      []sysmenuactionresource.OrderOption
 	inters     []Interceptor
 	predicates []predicate.SysMenuActionResource
 	modifiers  []func(*sql.Selector)
@@ -54,7 +54,7 @@ func (smarq *SysMenuActionResourceQuery) Unique(unique bool) *SysMenuActionResou
 }
 
 // Order specifies how the records should be ordered.
-func (smarq *SysMenuActionResourceQuery) Order(o ...sysmenuactionresource.Order) *SysMenuActionResourceQuery {
+func (smarq *SysMenuActionResourceQuery) Order(o ...sysmenuactionresource.OrderOption) *SysMenuActionResourceQuery {
 	smarq.order = append(smarq.order, o...)
 	return smarq
 }
@@ -248,7 +248,7 @@ func (smarq *SysMenuActionResourceQuery) Clone() *SysMenuActionResourceQuery {
 	return &SysMenuActionResourceQuery{
 		config:     smarq.config,
 		ctx:        smarq.ctx.Clone(),
-		order:      append([]sysmenuactionresource.Order{}, smarq.order...),
+		order:      append([]sysmenuactionresource.OrderOption{}, smarq.order...),
 		inters:     append([]Interceptor{}, smarq.inters...),
 		predicates: append([]predicate.SysMenuActionResource{}, smarq.predicates...),
 		// clone intermediate query.
