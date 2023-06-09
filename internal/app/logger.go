@@ -86,7 +86,7 @@ func InitLogger(acfg *config.AppConfig) (func(), error) {
 			hook = h
 
 		case c.Hook.IsEntgo():
-			hc := acfg.LogGormHook
+			hc := acfg.LogEntHook
 
 			var dsn string
 			switch hc.DBType {
