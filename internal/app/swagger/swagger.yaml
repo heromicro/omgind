@@ -150,7 +150,9 @@ definitions:
   schema.Menu:
     properties:
       actions:
-        description: 动作列表
+        description: |-
+          CreatedAt  *time.Time  `json:"created_at" yaml:"-"`                           // 创建时间
+          UpdatedAt  *time.Time  `json:"updated_at" yaml:"-"`                           // 更新时间
         items:
           $ref: '#/definitions/schema.MenuAction'
         type: array
@@ -482,7 +484,9 @@ definitions:
         description: 工位
         type: string
       dept:
-        $ref: '#/definitions/schema.OrgDept'
+        allOf:
+        - $ref: '#/definitions/schema.OrgDept'
+        description: 部门
       dept_id:
         description: 部門id
         type: string
@@ -536,6 +540,16 @@ definitions:
         $ref: '#/definitions/schema.OrgOrganShow'
       org_id:
         description: 企业id
+        type: string
+      posi_id:
+        description: 岗位id
+        type: string
+      position:
+        allOf:
+        - $ref: '#/definitions/schema.OrgPosition'
+        description: 岗位
+      rank:
+        description: 职级
         type: string
       regular_date:
         description: 转正日期
@@ -918,7 +932,7 @@ definitions:
         description: 真实姓名
         type: string
       updated_at:
-        description: 创建时间
+        description: 更新时间
         type: string
       user_name:
         description: 用户名
@@ -2383,6 +2397,16 @@ paths:
       - description: 模糊查询
         in: query
         name: queryValue
+        type: string
+      - in: query
+        name: rank__ed
+        type: string
+      - description: asc, desc
+        in: query
+        name: rank__order
+        type: string
+      - in: query
+        name: rank__st
         type: string
       - description: asc/desc
         in: query
@@ -4463,30 +4487,48 @@ paths:
   /api/v2/sys-users:
     get:
       parameters:
-      - default: 1
-        description: 分页索引
+      - description: id之后的
+        in: query
+        name: after
+        type: string
+      - description: id之前的
+        in: query
+        name: before
+        type: string
+      - description: 当前页
         in: query
         name: current
-        required: true
         type: integer
-      - default: 10
-        description: 分页大小
+      - in: query
+        name: isActive
+        type: boolean
+      - description: 是否仅查询count
         in: query
+        name: onlyCount
+        type: boolean
+      - description: 页大小
+        in: query
+        maximum: 100
         name: pageSize
-        required: true
         type: integer
-      - description: 查询值
+      - description: 是否使用分页查询
+        in: query
+        name: pagination
+        type: boolean
+      - description: 模糊查询
         in: query
         name: queryValue
         type: string
-      - description: 角色ID(多个以英文逗号分隔)
+      - description: 角色ID列表
         in: query
+        items:
+          type: string
         name: roleIDs
-        type: string
-      - description: 是否有效
+        type: array
+      - description: 用户名
         in: query
-        name: is_active
-        type: boolean
+        name: userName
+        type: string
       responses:
         "200":
           description: OK

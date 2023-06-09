@@ -2176,6 +2176,22 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "name": "rank__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc, desc",
+                        "name": "rank__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "rank__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "asc/desc",
                         "name": "regular_date__order",
                         "in": "query"
@@ -5468,37 +5484,66 @@ const docTemplate = `{
                 "summary": "查询数据",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "分页索引",
-                        "name": "current",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "default": 10,
-                        "description": "分页大小",
-                        "name": "pageSize",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
                         "type": "string",
-                        "description": "查询值",
-                        "name": "queryValue",
+                        "description": "id之后的",
+                        "name": "after",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "角色ID(多个以英文逗号分隔)",
-                        "name": "roleIDs",
+                        "description": "id之前的",
+                        "name": "before",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页",
+                        "name": "current",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
-                        "description": "是否有效",
-                        "name": "is_active",
+                        "name": "isActive",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "onlyCount",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否使用分页查询",
+                        "name": "pagination",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模糊查询",
+                        "name": "queryValue",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "角色ID列表",
+                        "name": "roleIDs",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户名",
+                        "name": "userName",
                         "in": "query"
                     }
                 ],
@@ -6033,7 +6078,7 @@ const docTemplate = `{
             ],
             "properties": {
                 "actions": {
-                    "description": "动作列表",
+                    "description": "CreatedAt  *time.Time  ` + "`" + `json:\"created_at\" yaml:\"-\"` + "`" + `                           // 创建时间\nUpdatedAt  *time.Time  ` + "`" + `json:\"updated_at\" yaml:\"-\"` + "`" + `                           // 更新时间",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/schema.MenuAction"
@@ -6507,7 +6552,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "dept": {
-                    "$ref": "#/definitions/schema.OrgDept"
+                    "description": "部门",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.OrgDept"
+                        }
+                    ]
                 },
                 "dept_id": {
                     "description": "部門id",
@@ -6583,6 +6633,22 @@ const docTemplate = `{
                 },
                 "org_id": {
                     "description": "企业id",
+                    "type": "string"
+                },
+                "posi_id": {
+                    "description": "岗位id",
+                    "type": "string"
+                },
+                "position": {
+                    "description": "岗位",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.OrgPosition"
+                        }
+                    ]
+                },
+                "rank": {
+                    "description": "职级",
                     "type": "string"
                 },
                 "regular_date": {
@@ -7105,7 +7171,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "updated_at": {
-                    "description": "创建时间",
+                    "description": "更新时间",
                     "type": "string"
                 },
                 "user_name": {
