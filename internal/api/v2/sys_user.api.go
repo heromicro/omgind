@@ -27,7 +27,7 @@ func (a *User) Query(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	if v := c.Query("roleIDs"); v != "" {
+	if v := c.Query("role_ids"); v != "" {
 		params.RoleIDs = strings.Split(v, ",")
 	}
 

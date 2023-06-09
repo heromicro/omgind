@@ -48,3 +48,9 @@ func OrderDirection(v string) sql.OrderTermOption {
 		return sql.OrderDesc()
 	}
 }
+
+func OrderDirections() []sql.OrderTermOption {
+	ods := []sql.OrderTermOption{}
+
+	return ods
+}
