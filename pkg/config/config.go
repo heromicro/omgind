@@ -41,6 +41,7 @@ type AppConfig struct {
 	Casbin       option.CasbinConfig `mapstructure:"Casbin" json:"casbin"`
 	Log          option.LogConfig    `mapstructure:"Log" json:"log"`
 	LogGormHook  option.LogGormHook
+	LogEntHook   option.LogEntHook
 	LogMongoHook option.LogMongoHook
 	Root         option.RootConfig        `mapstructure:"Root" json:"root"`
 	JWTAuth      option.JWTAuthConfig     `mapstructure:"JWTAuth" json:"jwtAuth"`
