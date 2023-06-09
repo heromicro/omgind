@@ -40,6 +40,15 @@ type LogGormHook struct {
 	Table        string
 }
 
+// LogEntHook 日志ent钩子配置
+type LogEntHook struct {
+	DBType       string
+	MaxLifetime  int
+	MaxOpenConns int
+	MaxIdleConns int
+	Table        string
+}
+
 // LogMongoHook 日志mongo钩子配置
 type LogMongoHook struct {
 	Collection string
