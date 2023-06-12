@@ -50,6 +50,9 @@ func (a *Menu) QueryTree(c *gin.Context) {
 		// params.ParentID = ptr.String("")
 	}
 	params.PageSize = 100
+	params.Level_Order = "asc"
+	params.Sort_Order = "asc"
+	params.IsActive_Order = "asc"
 
 	result, err := a.MenuSrv.Query(ctx, params, schema.MenuQueryOptions{
 		OrderFields: schema.NewOrderFields(schema.NewOrderField("level", schema.OrderByASC), schema.NewOrderField("sort", schema.OrderByASC)),

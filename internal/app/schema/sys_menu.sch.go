@@ -44,6 +44,7 @@ type MenuQueryParam struct {
 	IsShow           *bool    `form:"isShow"`
 	IsActive         *bool    `form:"is_active"` // 状态
 
+	Level_Order string `form:"level__order" json:"level__order"` // asc/desc
 	BasicOrderParam
 }
 

@@ -101,8 +101,12 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 		return &schema.MenuQueryResult{PageResult: pr}, nil
 	}
 
+	if v := params.Level_Order; v != "" {
+		query = query.Order(sysmenu.ByLevel(OrderDirection(v)))
+	}
+
 	if v := params.Sort_Order; v != "" {
-		query = query.Order(sysmenu.ByIsActive(OrderDirection(v)))
+		query = query.Order(sysmenu.BySort(OrderDirection(v)))
 	}
 
 	if v := params.IsActive_Order; v != "" {

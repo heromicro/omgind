@@ -177,12 +177,15 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 
 	isRoot := schema.CheckIsRootUser(ctx, userID)
 	// 如果是root用户，则查询所有显示的菜单树
+	params := schema.MenuQueryParam{
+		IsActive:    ptr.Bool(true),
+		Level_Order: "asc",
+	}
+	params.Sort_Order = "asc"
+
 	if isRoot {
-		result, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
-			IsActive: ptr.Bool(true),
-		}, schema.MenuQueryOptions{
-			OrderFields: schema.NewOrderFields(schema.NewOrderField("sort", schema.OrderByASC)),
-		})
+
+		result, err := a.MenuRepo.Query(ctx, params)
 
 		if err != nil {
 			return nil, err
@@ -214,10 +217,8 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 		return nil, errors.ErrNoPerm
 	}
 
-	menuResult, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
-		IDs:      roleMenuResult.Data.ToMenuIDs(),
-		IsActive: ptr.Bool(true),
-	})
+	params.IDs = roleMenuResult.Data.ToMenuIDs()
+	menuResult, err := a.MenuRepo.Query(ctx, params)
 	if err != nil {
 		return nil, err
 	} else if len(menuResult.Data) == 0 {
