@@ -20,9 +20,9 @@ var SysRoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 
 // Role 角色管理
 type Role struct {
-	EntCli *ent.Client
-
 	Enforcer *casbin.SyncedEnforcer
+
+	EntCli *ent.Client
 
 	RoleRepo               *repo.Role
 	RoleMenuRepo           *repo.RoleMenu
@@ -94,9 +94,21 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, erro
 	if err != nil {
 		return nil, err
 	}
-	// FIXME::
-	// LoadCasbinPolicy(ctx, a.Enforcer)
+
+	resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
+		MenuIDs: item.RoleMenus.ToMenuIDs(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	for _, ritem := range resources.Data.ToMap() {
+		a.Enforcer.AddPermissionForUser(item.ID, ritem.Path, ritem.Method)
+	}
+
 	nitem, err := a.Get(ctx, item.ID)
+	if err != nil {
+		return nil, err
+	}
 	return nitem, nil
 }
 
@@ -156,35 +168,8 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 			return err
 		}
 
-		// a.Enforcer.DeletePermissionsForUser(item.ID)
-		// for _, ritem := range resources.Data.ToMap() {
-		// 	a.Enforcer.AddPermissionForUser(item.ID, ritem.Path, ritem.Method)
-		// }
-
 		return nil
 	})
-
-	/*
-		err = a.TransModel.Exec(ctx, func(ctx context.Context) error {
-			addRoleMenus, delRoleMenus := a.compareRoleMenus(ctx, oldItem.RoleMenus, item.RoleMenus)
-			for _, rmitem := range addRoleMenus {
-				rmitem.ID = uid.MustString()
-				rmitem.RoleID = id
-				err := a.RoleMenuRepo.Create(ctx, *rmitem)
-				if err != nil {
-					return err
-				}
-			}
-
-			for _, rmitem := range delRoleMenus {
-				err := a.RoleMenuRepo.Delete(ctx, rmitem.ID)
-				if err != nil {
-					return err
-				}
-			}
-
-			return a.RoleRepo.Update(ctx, id, item)
-		})*/
 
 	log.Println(" ------- ====== ", err)
 
@@ -192,9 +177,30 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 		return nil, err
 	}
 
-	// FIXME::
-	// LoadCasbinPolicy(ctx, a.Enforcer)
+	roleMenus, err := a.RoleMenuRepo.Query(ctx, schema.RoleMenuQueryParam{
+		RoleID: id,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
+		MenuIDs: roleMenus.Data.ToMenuIDs(),
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	a.Enforcer.DeletePermissionsForUser(item.ID)
+	for _, ritem := range resources.Data.ToMap() {
+		a.Enforcer.AddPermissionForUser(item.ID, ritem.Path, ritem.Method)
+	}
+
 	nitem, err := a.Get(ctx, item.ID)
+	if err != nil {
+		return nil, err
+	}
 	return nitem, nil
 }
 
@@ -236,8 +242,7 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 	}
 
 	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *ent.Tx) error {
-		_, err := tx.SysRoleMenu.Update().Where(sysrolemenu.RoleIDEQ(id)).SetDeletedAt(time.Now()).SetIsDel(true).Save(
-			ctx)
+		_, err := tx.SysRoleMenu.Update().Where(sysrolemenu.RoleIDEQ(id)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 		if err != nil {
 			return err
 		}
@@ -247,8 +252,9 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 	if err != nil {
 		return err
 	}
-	// FIXME::
-	// LoadCasbinPolicy(ctx, a.Enforcer)
+
+	a.Enforcer.DeleteRole(id)
+
 	return nil
 }
 
@@ -265,7 +271,27 @@ func (a *Role) UpdateStatus(ctx context.Context, id string, isActive bool) error
 	if err != nil {
 		return err
 	}
-	// FIXME::
-	// LoadCasbinPolicy(ctx, a.Enforcer)
+
+	if isActive {
+		roleMenus, err := a.RoleMenuRepo.Query(ctx, schema.RoleMenuQueryParam{
+			RoleID: id,
+		})
+		if err != nil {
+			return err
+		}
+		resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
+			MenuIDs: roleMenus.Data.ToMenuIDs(),
+		})
+		if err != nil {
+			return err
+		}
+
+		for _, ritem := range resources.Data.ToMap() {
+			a.Enforcer.AddPermissionForUser(id, ritem.Path, ritem.Method)
+		}
+	} else {
+		a.Enforcer.DeleteRole(id)
+	}
+
 	return nil
 }

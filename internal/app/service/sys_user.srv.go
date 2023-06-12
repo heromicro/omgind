@@ -20,9 +20,9 @@ var SysUserSet = wire.NewSet(wire.Struct(new(User), "*"))
 
 // User 用户管理
 type User struct {
-	EntCli *ent.Client
-
 	Enforcer *casbin.SyncedEnforcer
+
+	EntCli *ent.Client
 
 	UserRepo     *repo.User
 	UserRoleRepo *repo.UserRole
@@ -118,9 +118,14 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, erro
 		return nil, err
 	}
 
-	// FIXME::
-	// LoadCasbinPolicy(ctx, a.Enforcer)
+	for _, urItem := range item.UserRoles {
+		a.Enforcer.AddRoleForUser(urItem.UserID, urItem.RoleID)
+	}
+
 	nitem, err := a.UserRepo.Get(ctx, item.ID)
+	if err != nil {
+		return nil, err
+	}
 	return nitem, err
 }
 
@@ -194,6 +199,15 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 		if err != nil {
 			return err
 		}
+
+		for _, aitem := range addUserRoles {
+			a.Enforcer.AddRoleForUser(id, aitem.ID)
+		}
+
+		for _, ritem := range delUserRoles {
+			a.Enforcer.DeleteRoleForUser(id, ritem.ID)
+		}
+
 		return nil
 	})
 
@@ -201,10 +215,11 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 		return nil, err
 	}
 
-	// FIXME::
-	// LoadCasbinPolicy(ctx, a.Enforcer)
 	nitem, err := a.UserRepo.Get(ctx, item.ID)
 
+	if err != nil {
+		return nil, err
+	}
 	return nitem, nil
 }
 
@@ -243,14 +258,15 @@ func (a *User) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	// FIXME::
-	// LoadCasbinPolicy(ctx, a.Enforcer)
+	a.Enforcer.DeleteUser(id)
 	return nil
 }
 
 // UpdateStatus 更新状态
 func (a *User) UpdateStatus(ctx context.Context, id string, isActive bool) error {
-	oldItem, err := a.UserRepo.Get(ctx, id)
+	oldItem, err := a.UserRepo.Get(ctx, id, schema.UserQueryOptions{
+		UserRoles: ptr.Bool(true),
+	})
 	if err != nil {
 		return err
 	} else if oldItem == nil {
@@ -263,7 +279,12 @@ func (a *User) UpdateStatus(ctx context.Context, id string, isActive bool) error
 		return err
 	}
 
-	// FIXME::
-	// LoadCasbinPolicy(ctx, a.Enforcer)
+	if isActive {
+		for _, uritem := range oldItem.UserRoles {
+			a.Enforcer.AddRoleForUser(id, uritem.RoleID)
+		}
+	} else {
+		a.Enforcer.DeleteUser(id)
+	}
 	return nil
 }

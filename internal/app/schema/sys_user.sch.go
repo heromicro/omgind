@@ -73,6 +73,7 @@ type UserQueryParam struct {
 // UserQueryOptions 查询可选参数项
 type UserQueryOptions struct {
 	OrderFields []*OrderField // 排序字段
+	UserRoles   *bool         // query user roles
 }
 
 // UserQueryResult 查询结果

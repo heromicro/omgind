@@ -139,11 +139,28 @@ func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...
 
 // Get 查询指定数据
 func (a *User) Get(ctx context.Context, id string, opts ...schema.UserQueryOptions) (*schema.User, error) {
-	user, err := a.EntCli.SysUser.Query().Where(sysuser.IDEQ(id)).Only(ctx)
+	opt := a.getQueryOption(opts...)
+	query := a.EntCli.SysUser.Query()
+
+	user, err := query.Where(sysuser.IDEQ(id)).Only(ctx)
 	if err != nil {
 		return nil, err
 	}
-	return ToSchemaSysUser(user), nil
+	sch_user := ToSchemaSysUser(user)
+	if v := opt.UserRoles; v != nil {
+		if *v {
+			ent_userroles, err := a.EntCli.SysUserRole.Query().Where(sysuserrole.UserIDEQ(id)).Where(sysuserrole.IsDel(false)).All(ctx)
+			if err != nil {
+				if !ent.IsNotFound(err) {
+					return nil, err
+				}
+			}
+
+			sch_user.UserRoles = ToSchemaSysUserRoles(ent_userroles)
+		}
+	}
+
+	return sch_user, nil
 }
 
 // Create 创建数据

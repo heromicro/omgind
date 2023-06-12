@@ -28,12 +28,12 @@ func (SysRole) Fields() []ent.Field {
 		field.String("name").MaxLen(64).MinLen(2).NotEmpty().Comment("角色名称")}
 }
 
-//// Edges of the SysRole.
-//func (SysRole) Edges() []ent.Edge {
-//	return []ent.Edge{
-//		//edge.To("userRoles", SysUserRole.Type).Comment("userroles"),
-//	}
-//}
+// Edges of the SysRole.
+func (SysRole) Edges() []ent.Edge {
+	return []ent.Edge{
+		// edge.To("userRoles", SysUserRole.Type).Comment("userroles"),
+	}
+}
 
 func (SysRole) Indexes() []ent.Index {
 	return []ent.Index{}

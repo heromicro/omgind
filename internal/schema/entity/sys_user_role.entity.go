@@ -35,10 +35,10 @@ func (SysUserRole) Indexes() []ent.Index {
 	}
 }
 
-//// Edges of the SysUserRole.
-//func (SysUserRole) Edges() []ent.Edge {
-//	return []ent.Edge{
-//		//edge.From("user", SysUser.Type).Field("user_id").Ref("userRoles").Unique().Comment("用户ID: sys_user.id").Required(),
-//		//edge.From("role", SysRole.Type).Field("role_id").Ref("userRoles").Unique().Comment("角色ID: sys_role.id").Required(),
-//	}
-//}
+// Edges of the SysUserRole.
+func (SysUserRole) Edges() []ent.Edge {
+	return []ent.Edge{
+		// edge.From("user", SysUser.Type).Field("user_id").Ref("userRoles").Unique().Comment("用户ID: sys_user.id").Required(),
+		// edge.From("role", SysRole.Type).Field("role_id").Ref("userRoles").Unique().Comment("角色ID: sys_role.id").Required(),
+	}
+}
