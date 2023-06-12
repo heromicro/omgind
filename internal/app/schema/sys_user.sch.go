@@ -66,6 +66,8 @@ type UserQueryParam struct {
 	QueryValue string   `form:"queryValue"` // 模糊查询
 	IsActive   *bool    `form:"is_active"`
 	RoleIDs    []string `form:"role_ids"` // 角色ID列表
+
+	BasicOrderParam
 }
 
 // UserQueryOptions 查询可选参数项

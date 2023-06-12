@@ -101,6 +101,14 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 		return &schema.MenuQueryResult{PageResult: pr}, nil
 	}
 
+	if v := params.Sort_Order; v != "" {
+		query = query.Order(sysmenu.ByIsActive(OrderDirection(v)))
+	}
+
+	if v := params.IsActive_Order; v != "" {
+		query = query.Order(sysmenu.ByIsActive(OrderDirection(v)))
+	}
+
 	query = query.Order(sysmenu.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()

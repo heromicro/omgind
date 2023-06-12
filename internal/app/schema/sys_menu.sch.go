@@ -43,6 +43,8 @@ type MenuQueryParam struct {
 	ParentID         *string  `form:"parentID"`   // 父级内码
 	IsShow           *bool    `form:"isShow"`
 	IsActive         *bool    `form:"is_active"` // 状态
+
+	BasicOrderParam
 }
 
 // MenuQueryOptions 查询可选参数项

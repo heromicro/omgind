@@ -26,6 +26,8 @@ type RoleQueryParam struct {
 	QueryValue string   `form:"queryValue"` // 模糊查询
 	UserID     string   `form:"-"`          // 用户ID
 	IsActive   *bool    `form:"is_active"`
+
+	BasicOrderParam
 }
 
 // RoleQueryOptions 查询可选参数项

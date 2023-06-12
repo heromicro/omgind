@@ -24,3 +24,10 @@ type TimeMixin struct {
 	UpdatedAt *time.Time `json:"updated_at" yaml:"-"` // 更新时间
 
 }
+
+type BasicOrderParam struct {
+	// example: asc
+	// example: desc
+	IsActive_Order string `form:"is_active__order" json:"is_active__order"` // asc/desc
+	Sort_Order     string `form:"sort__order" json:"sort__order"`           // asc/desc
+}

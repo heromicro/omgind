@@ -98,6 +98,14 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 		return &schema.RoleQueryResult{PageResult: pr}, nil
 	}
 
+	if v := params.IsActive_Order; v != "" {
+		query = query.Order(sysrole.ByIsActive(OrderDirection(v)))
+	}
+
+	if v := params.Sort_Order; v != "" {
+		query = query.Order(sysrole.BySort(OrderDirection(v)))
+	}
+
 	query = query.Order(sysrole.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()

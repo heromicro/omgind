@@ -105,6 +105,14 @@ func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...
 		return &schema.UserQueryResult{PageResult: pr}, nil
 	}
 
+	if v := params.IsActive_Order; v != "" {
+		query = query.Order(sysuser.ByIsActive(OrderDirection(v)))
+	}
+
+	if v := params.Sort_Order; v != "" {
+		query = query.Order(sysuser.BySort(OrderDirection(v)))
+	}
+
 	query = query.Order(sysuser.ByID(OrderDirection("desc")))
 
 	pr.Current = params.PaginationParam.GetCurrent()
