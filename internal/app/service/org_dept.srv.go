@@ -94,7 +94,7 @@ func (s *OrgDept) ProcessTask(ctx context.Context, t *asynq.Task) error {
 		if merge_name != "" {
 			update_dept = update_dept.SetMergeName(merge_name)
 		}
-		
+
 		d := *child.TreeRight - *child.TreeLeft
 		if d > 1 {
 			update_dept = update_dept.SetIsLeaf(false)
@@ -228,7 +228,7 @@ func (a *OrgDept) Create(ctx context.Context, item schema.OrgDept) (*schema.OrgD
 		item.MergeName = ptr.String(item.Name)
 	}
 
-	dept_create_input := a.OrgDeptRepo.ToEntCreateOrgDeptInput(&item)
+	dept_create_input := repo.ToEntCreateOrgDeptInput(&item)
 
 	var res_dept *ent.OrgDept
 	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
@@ -355,7 +355,7 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 			item.MergeName = ptr.String(item.Name)
 		}
 
-		iteminput := a.OrgDeptRepo.ToEntUpdateOrgDeptInput(&item)
+		iteminput := repo.ToEntUpdateOrgDeptInput(&item)
 
 		_, err := a.EntCli.OrgDept.Update().Where(orgdept.IDEQ(id)).SetInput(*iteminput).Save(ctx)
 		if err != nil {
@@ -400,7 +400,7 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 			item.MergeName = ptr.String(item.Name)
 		}
 
-		iteminput := a.OrgDeptRepo.ToEntUpdateOrgDeptInput(&item)
+		iteminput := repo.ToEntUpdateOrgDeptInput(&item)
 
 		err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 

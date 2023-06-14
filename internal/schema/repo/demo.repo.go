@@ -34,14 +34,14 @@ func ToSchemaDemos(xds ent.XxxDemos) []*schema.Demo {
 	return list
 }
 
-func (a *Demo) toEntCreateDemoInput(sch *schema.Demo) *ent.CreateXxxDemoInput {
+func ToEntCreateDemoInput(sch *schema.Demo) *ent.CreateXxxDemoInput {
 	createinput := new(ent.CreateXxxDemoInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func (a *Demo) toEntUpdateDemoInput(sch *schema.Demo) *ent.UpdateXxxDemoInput {
+func ToEntUpdateDemoInput(sch *schema.Demo) *ent.UpdateXxxDemoInput {
 	updateinput := new(ent.UpdateXxxDemoInput)
 	structure.Copy(sch, &updateinput)
 
@@ -152,7 +152,7 @@ func (a *Demo) Get(ctx context.Context, id string, opts ...schema.DemoQueryOptio
 // Create 创建数据
 func (a *Demo) Create(ctx context.Context, item schema.Demo) (*schema.Demo, error) {
 
-	iteminput := a.toEntCreateDemoInput(&item)
+	iteminput := ToEntCreateDemoInput(&item)
 	iteminput.CreatedAt = nil
 	iteminput.UpdatedAt = nil
 	xxxdemo, err := a.EntCli.XxxDemo.Create().SetInput(*iteminput).Save(ctx)
@@ -172,7 +172,7 @@ func (a *Demo) Update(ctx context.Context, id string, item schema.Demo) (*schema
 		return nil, err
 	}
 
-	iteminput := a.toEntUpdateDemoInput(&item)
+	iteminput := ToEntUpdateDemoInput(&item)
 	iteminput.UpdatedAt = nil
 
 	xxxdemo, err := oitem.Update().SetInput(*iteminput).Save(ctx)

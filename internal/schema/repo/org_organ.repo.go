@@ -51,14 +51,14 @@ func ToSchemaOrgOrgans(ets ent.OrgOrgans) []*schema.OrgOrgan {
 	return list
 }
 
-func (a *OrgOrgan) ToEntCreateOrgOrganInput(sch *schema.OrgOrgan) *ent.CreateOrgOrganInput {
+func ToEntCreateOrgOrganInput(sch *schema.OrgOrgan) *ent.CreateOrgOrganInput {
 	createinput := new(ent.CreateOrgOrganInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func (a *OrgOrgan) ToEntUpdateOrgOrganInput(sch *schema.OrgOrgan) *ent.UpdateOrgOrganInput {
+func ToEntUpdateOrgOrganInput(sch *schema.OrgOrgan) *ent.UpdateOrgOrganInput {
 	updateinput := new(ent.UpdateOrgOrganInput)
 	structure.Copy(sch, &updateinput)
 

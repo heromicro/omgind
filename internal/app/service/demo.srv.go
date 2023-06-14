@@ -23,21 +23,21 @@ type Demo struct {
 }
 
 // ToSchemaDemo 转换为
-func toSchemaDemo(a *ent.XxxDemo) *schema.Demo {
+func ToSchemaDemo(a *ent.XxxDemo) *schema.Demo {
 	item := new(schema.Demo)
 	structure.Copy(a, item)
 	return item
 }
 
-func toSchemaDemos(us ent.XxxDemos) []*schema.Demo {
+func ToSchemaDemos(us ent.XxxDemos) []*schema.Demo {
 	list := make([]*schema.Demo, len(us))
 	for i, item := range us {
-		list[i] = toSchemaDemo(item)
+		list[i] = ToSchemaDemo(item)
 	}
 	return list
 }
 
-func toEntCreateDemoInput(a *schema.Demo) *ent.CreateXxxDemoInput {
+func ToEntCreateDemoInput(a *schema.Demo) *ent.CreateXxxDemoInput {
 	createinput := new(ent.CreateXxxDemoInput)
 	structure.Copy(a, &createinput)
 
@@ -54,7 +54,7 @@ func toEntUpdateDemoInput(a *schema.Demo) *ent.UpdateXxxDemoInput {
 func toEntCreateDemoInputs(dms schema.Demos) []*ent.CreateXxxDemoInput {
 	list := make([]*ent.CreateXxxDemoInput, len(dms))
 	for i, item := range dms {
-		list[i] = toEntCreateDemoInput(item)
+		list[i] = ToEntCreateDemoInput(item)
 	}
 	return list
 }

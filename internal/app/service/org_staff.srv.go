@@ -61,7 +61,7 @@ func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.Or
 	resi_addr_iteminput := repo.ToEntCreateSysAddressInput(item.ResiAddr)
 	item.ResiAddr = nil
 
-	staff_input := a.OrgStaffRepo.ToEntCreateOrgStaffInput(&item)
+	staff_input := repo.ToEntCreateOrgStaffInput(&item)
 
 	var rr_orgstaff *ent.OrgStaff
 
@@ -116,7 +116,7 @@ func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) 
 	resi_addr_update_input := repo.ToEntUpdateSysAddressInput(item.ResiAddr)
 	item.ResiAddr = nil
 
-	staff_input := a.OrgStaffRepo.ToEntUpdateOrgStaffInput(&item)
+	staff_input := repo.ToEntUpdateOrgStaffInput(&item)
 
 	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 

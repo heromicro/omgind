@@ -64,7 +64,7 @@ func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.Or
 
 	addr_iteminput := repo.ToEntCreateSysAddressInput(item.Haddr)
 	item.Haddr = nil
-	organ_iteminput := a.OrgOrganRepo.ToEntCreateOrgOrganInput(&item)
+	organ_iteminput := repo.ToEntCreateOrgOrganInput(&item)
 
 	var rr_orgorgan *ent.OrgOrgan
 
@@ -121,7 +121,7 @@ func (a *OrgOrgan) Update(ctx context.Context, id string, item schema.OrgOrgan) 
 	addr_create_input := repo.ToEntCreateSysAddressInput(item.Haddr)
 	addr_update_input := repo.ToEntUpdateSysAddressInput(item.Haddr)
 	item.Haddr = nil
-	organ_iteminput := a.OrgOrganRepo.ToEntUpdateOrgOrganInput(&item)
+	organ_iteminput := repo.ToEntUpdateOrgOrganInput(&item)
 
 	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
 		var haddr *ent.SysAddress
