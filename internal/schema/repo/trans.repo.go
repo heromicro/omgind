@@ -5,17 +5,16 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/google/wire"
 	"github.com/heromicro/omgind/internal/gen/ent"
 )
 
 // TransSet 注入Trans
-var TransSet = wire.NewSet(wire.Struct(new(Trans), "*"))
+// var TransSet = wire.NewSet(wire.Struct(new(Trans), "*"))
 
 // Trans 事务管理
-type Trans struct {
-	EntCli *ent.Client
-}
+// type Trans struct {
+// 	EntCli *ent.Client
+// }
 
 //
 //// Exec 执行事务
