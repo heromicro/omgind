@@ -11,7 +11,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
 
@@ -258,8 +258,8 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-// UpdateStatus 更新状态
-func (a *Role) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+// UpdateActive 更新状态
+func (a *Role) UpdateActive(ctx context.Context, id string, isActive bool) error {
 	oldItem, err := a.RoleRepo.Get(ctx, id)
 	if err != nil {
 		return err
@@ -267,7 +267,7 @@ func (a *Role) UpdateStatus(ctx context.Context, id string, isActive bool) error
 		return errors.ErrNotFound
 	}
 
-	err = a.RoleRepo.UpdateStatus(ctx, id, isActive)
+	err = a.RoleRepo.UpdateActive(ctx, id, isActive)
 	if err != nil {
 		return err
 	}

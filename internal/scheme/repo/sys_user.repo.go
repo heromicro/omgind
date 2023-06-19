@@ -209,8 +209,8 @@ func (a *User) Delete(ctx context.Context, id string) error {
 	return errors.WithStack(err1)
 }
 
-// UpdateStatus 更新状态
-func (a *User) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+// UpdateActive 更新状态
+func (a *User) UpdateActive(ctx context.Context, id string, isActive bool) error {
 	_, err := a.EntCli.SysUser.UpdateOneID(id).SetIsActive(isActive).Save(ctx)
 	return errors.WithStack(err)
 }

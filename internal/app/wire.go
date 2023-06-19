@@ -9,8 +9,8 @@ import (
 	"github.com/heromicro/omgind/internal/api/v2"
 	"github.com/heromicro/omgind/internal/app/service"
 
-	"github.com/heromicro/omgind/internal/schema"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/config"
 	// "github.com/heromicro/omgind/pkg/mw/asyncq"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
@@ -28,7 +28,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	wire.Build(
 		// mock.MockSet,
 		// config.ProviderSet,
-		schema.ProviderSet,
+		scheme.ProviderSet,
 		rdb.ProviderSet,
 
 		InitQueue,

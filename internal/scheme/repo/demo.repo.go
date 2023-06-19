@@ -198,8 +198,8 @@ func (a *Demo) Delete(ctx context.Context, id string) error {
 	return errors.WithStack(err1)
 }
 
-// UpdateStatus 更新状态
-func (a *Demo) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+// UpdateActive 更新状态
+func (a *Demo) UpdateActive(ctx context.Context, id string, isActive bool) error {
 
 	_, err1 := a.EntCli.XxxDemo.Update().Where(xxxdemo.IDEQ(id)).SetIsActive(isActive).Save(ctx)
 

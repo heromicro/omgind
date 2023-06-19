@@ -192,8 +192,8 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 
 }
 
-// UpdateStatus 更新状态
-func (a *Role) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+// UpdateActive 更新状态
+func (a *Role) UpdateActive(ctx context.Context, id string, isActive bool) error {
 	_, err1 := a.EntCli.SysRole.UpdateOneID(id).SetIsActive(isActive).Save(ctx)
 	return errors.WithStack(err1)
 }

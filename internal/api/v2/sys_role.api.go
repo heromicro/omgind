@@ -127,7 +127,7 @@ func (a *Role) Delete(c *gin.Context) {
 // Enable 启用数据
 func (a *Role) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.RoleSrv.UpdateStatus(ctx, c.Param("id"), true)
+	err := a.RoleSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -138,7 +138,7 @@ func (a *Role) Enable(c *gin.Context) {
 // Disable 禁用数据
 func (a *Role) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
-	err := a.RoleSrv.UpdateStatus(ctx, c.Param("id"), false)
+	err := a.RoleSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

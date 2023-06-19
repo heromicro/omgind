@@ -11,8 +11,8 @@ import (
 	"github.com/heromicro/omgind/internal/app/module/adapter"
 	"github.com/heromicro/omgind/internal/app/service"
 	"github.com/heromicro/omgind/internal/router"
-	"github.com/heromicro/omgind/internal/schema"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/config"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
 )
@@ -34,7 +34,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	client, cleanup3, err := schema.New(cfg)
+	client, cleanup3, err := scheme.New(cfg)
 	if err != nil {
 		cleanup2()
 		cleanup()
@@ -105,8 +105,8 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		MenuSrv: serviceMenu,
 	}
 	serviceRole := &service.Role{
-		EntCli:                 client,
 		Enforcer:               syncedEnforcer,
+		EntCli:                 client,
 		RoleRepo:               role,
 		RoleMenuRepo:           roleMenu,
 		UserRepo:               user,
@@ -116,8 +116,8 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		RoleSrv: serviceRole,
 	}
 	serviceUser := &service.User{
-		EntCli:       client,
 		Enforcer:     syncedEnforcer,
+		EntCli:       client,
 		UserRepo:     user,
 		UserRoleRepo: userRole,
 		RoleRepo:     role,

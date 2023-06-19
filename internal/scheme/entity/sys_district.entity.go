@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/heromicro/omgind/internal/schema/mixin"
+	"github.com/heromicro/omgind/internal/scheme/mixin"
 
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"

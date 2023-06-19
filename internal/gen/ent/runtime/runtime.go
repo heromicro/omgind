@@ -23,7 +23,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysuser"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/ent/xxxdemo"
-	"github.com/heromicro/omgind/internal/schema/entity"
+	"github.com/heromicro/omgind/internal/scheme/entity"
 )
 
 // The init function reads all schema descriptors with runtime code

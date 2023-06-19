@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	err := entc.Generate("./internal/schema/entity", &gen.Config{
+	err := entc.Generate("./internal/scheme/entity", &gen.Config{
 		Features: []gen.Feature{
 			//gen.FeatureEntQL,
 			// gen.FeatureSnapshot,
@@ -23,9 +23,9 @@ func main() {
 		Package: "github.com/heromicro/omgind/internal/gen/ent",
 		Target:  "./internal/gen/ent",
 		Templates: []*gen.Template{
-			gen.MustParse(gen.NewTemplate("mutation_input").ParseDir("./internal/schema/template")),
-			gen.MustParse(gen.NewTemplate("stringer").ParseDir("./internal/schema/template")),
-			gen.MustParse(gen.NewTemplate("debug").ParseDir("./internal/schema/template")),
+			gen.MustParse(gen.NewTemplate("mutation_input").ParseDir("./internal/scheme/template")),
+			gen.MustParse(gen.NewTemplate("stringer").ParseDir("./internal/scheme/template")),
+			gen.MustParse(gen.NewTemplate("debug").ParseDir("./internal/scheme/template")),
 		},
 	},
 	//  entc.Extensions(entviz.Extension{})

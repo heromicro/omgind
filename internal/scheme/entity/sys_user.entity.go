@@ -4,7 +4,8 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
-	"github.com/heromicro/omgind/internal/schema/mixin"
+
+	"github.com/heromicro/omgind/internal/scheme/mixin"
 	"github.com/heromicro/omgind/pkg/helper/str"
 )
 

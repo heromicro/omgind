@@ -16,7 +16,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
 	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
 	"github.com/heromicro/omgind/pkg/mw/queue"

@@ -3,7 +3,8 @@ package entity
 import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/schema/mixin"
+
+	"github.com/heromicro/omgind/internal/scheme/mixin"
 )
 
 // SysRoleMenu holds the schema definition for the SysRoleMenu entity.

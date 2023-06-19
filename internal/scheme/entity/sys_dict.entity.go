@@ -4,7 +4,8 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
-	"github.com/heromicro/omgind/internal/schema/mixin"
+
+	"github.com/heromicro/omgind/internal/scheme/mixin"
 )
 
 type SysDict struct {

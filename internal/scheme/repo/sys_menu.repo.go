@@ -199,8 +199,8 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 	return errors.WithStack(err1)
 }
 
-// UpdateStatus 更新状态
-func (a *Menu) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+// UpdateActive 更新状态
+func (a *Menu) UpdateActive(ctx context.Context, id string, isActive bool) error {
 	_, err := a.EntCli.SysMenu.UpdateOneID(id).SetIsActive(isActive).Save(ctx)
 	return errors.WithStack(err)
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/hash"
 )
@@ -262,8 +262,8 @@ func (a *User) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-// UpdateStatus 更新状态
-func (a *User) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+// UpdateActive 更新状态
+func (a *User) UpdateActive(ctx context.Context, id string, isActive bool) error {
 	oldItem, err := a.UserRepo.Get(ctx, id, schema.UserQueryOptions{
 		UserRoles: ptr.Bool(true),
 	})
@@ -274,7 +274,7 @@ func (a *User) UpdateStatus(ctx context.Context, id string, isActive bool) error
 	}
 	oldItem.IsActive = ptr.Bool(isActive)
 
-	err = a.UserRepo.UpdateStatus(ctx, id, isActive)
+	err = a.UserRepo.UpdateActive(ctx, id, isActive)
 	if err != nil {
 		return err
 	}

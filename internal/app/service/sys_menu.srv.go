@@ -12,7 +12,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/yaml"
 )
@@ -605,8 +605,8 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 		})*/
 }
 
-// UpdateStatus 更新状态
-func (a *Menu) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+// UpdateActive 更新状态
+func (a *Menu) UpdateActive(ctx context.Context, id string, isActive bool) error {
 	oldItem, err := a.MenuRepo.Get(ctx, id)
 	if err != nil {
 		return err
@@ -614,5 +614,5 @@ func (a *Menu) UpdateStatus(ctx context.Context, id string, isActive bool) error
 		return errors.ErrNotFound
 	}
 
-	return a.MenuRepo.UpdateStatus(ctx, id, isActive)
+	return a.MenuRepo.UpdateActive(ctx, id, isActive)
 }

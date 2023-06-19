@@ -26,7 +26,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 )
 
 func init() {

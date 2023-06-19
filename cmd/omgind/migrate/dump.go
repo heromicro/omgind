@@ -24,7 +24,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
 	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 )
 
 // postgres

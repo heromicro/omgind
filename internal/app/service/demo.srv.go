@@ -7,7 +7,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -139,8 +139,8 @@ func (a *Demo) Delete(ctx context.Context, id string) error {
 	return a.DemoRepo.Delete(ctx, id)
 }
 
-// UpdateStatus 更新状态
-func (a *Demo) UpdateStatus(ctx context.Context, id string, isActive bool) error {
+// UpdateActive 更新状态
+func (a *Demo) UpdateActive(ctx context.Context, id string, isActive bool) error {
 	oldItem, err := a.DemoRepo.Get(ctx, id)
 	if err != nil {
 		return err
@@ -148,5 +148,5 @@ func (a *Demo) UpdateStatus(ctx context.Context, id string, isActive bool) error
 		return errors.ErrNotFound
 	}
 
-	return a.DemoRepo.UpdateStatus(ctx, id, isActive)
+	return a.DemoRepo.UpdateActive(ctx, id, isActive)
 }

@@ -6,7 +6,7 @@ import (
 
 	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/schema/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/logger"
 
 	casbinModel "github.com/casbin/casbin/v2/model"

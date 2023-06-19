@@ -2,7 +2,7 @@ package common
 
 import (
 	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/schema"
+	"github.com/heromicro/omgind/internal/scheme"
 	"github.com/heromicro/omgind/pkg/config"
 )
 
@@ -14,7 +14,7 @@ func MakeEntClient(cf string) (*ent.Client, func(), error) {
 	}
 	appconfig := config.NewConfig(vip)
 
-	entClient, cleanup, err := schema.New(appconfig)
+	entClient, cleanup, err := scheme.New(appconfig)
 
 	if err != nil {
 		return nil, nil, err
