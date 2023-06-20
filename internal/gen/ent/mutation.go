@@ -16962,6 +16962,7 @@ type SysMenuMutation struct {
 	level         *int32
 	addlevel      *int32
 	is_leaf       *bool
+	open_blank    *bool
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*SysMenu, error)
@@ -17743,6 +17744,55 @@ func (m *SysMenuMutation) ResetIsLeaf() {
 	delete(m.clearedFields, sysmenu.FieldIsLeaf)
 }
 
+// SetOpenBlank sets the "open_blank" field.
+func (m *SysMenuMutation) SetOpenBlank(b bool) {
+	m.open_blank = &b
+}
+
+// OpenBlank returns the value of the "open_blank" field in the mutation.
+func (m *SysMenuMutation) OpenBlank() (r bool, exists bool) {
+	v := m.open_blank
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOpenBlank returns the old "open_blank" field's value of the SysMenu entity.
+// If the SysMenu object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysMenuMutation) OldOpenBlank(ctx context.Context) (v *bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldOpenBlank is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldOpenBlank requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOpenBlank: %w", err)
+	}
+	return oldValue.OpenBlank, nil
+}
+
+// ClearOpenBlank clears the value of the "open_blank" field.
+func (m *SysMenuMutation) ClearOpenBlank() {
+	m.open_blank = nil
+	m.clearedFields[sysmenu.FieldOpenBlank] = struct{}{}
+}
+
+// OpenBlankCleared returns if the "open_blank" field was cleared in this mutation.
+func (m *SysMenuMutation) OpenBlankCleared() bool {
+	_, ok := m.clearedFields[sysmenu.FieldOpenBlank]
+	return ok
+}
+
+// ResetOpenBlank resets all changes to the "open_blank" field.
+func (m *SysMenuMutation) ResetOpenBlank() {
+	m.open_blank = nil
+	delete(m.clearedFields, sysmenu.FieldOpenBlank)
+}
+
 // Where appends a list predicates to the SysMenuMutation builder.
 func (m *SysMenuMutation) Where(ps ...predicate.SysMenu) {
 	m.predicates = append(m.predicates, ps...)
@@ -17777,7 +17827,7 @@ func (m *SysMenuMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysMenuMutation) Fields() []string {
-	fields := make([]string, 0, 15)
+	fields := make([]string, 0, 16)
 	if m.is_del != nil {
 		fields = append(fields, sysmenu.FieldIsDel)
 	}
@@ -17823,6 +17873,9 @@ func (m *SysMenuMutation) Fields() []string {
 	if m.is_leaf != nil {
 		fields = append(fields, sysmenu.FieldIsLeaf)
 	}
+	if m.open_blank != nil {
+		fields = append(fields, sysmenu.FieldOpenBlank)
+	}
 	return fields
 }
 
@@ -17861,6 +17914,8 @@ func (m *SysMenuMutation) Field(name string) (ent.Value, bool) {
 		return m.Level()
 	case sysmenu.FieldIsLeaf:
 		return m.IsLeaf()
+	case sysmenu.FieldOpenBlank:
+		return m.OpenBlank()
 	}
 	return nil, false
 }
@@ -17900,6 +17955,8 @@ func (m *SysMenuMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldLevel(ctx)
 	case sysmenu.FieldIsLeaf:
 		return m.OldIsLeaf(ctx)
+	case sysmenu.FieldOpenBlank:
+		return m.OldOpenBlank(ctx)
 	}
 	return nil, fmt.Errorf("unknown SysMenu field %s", name)
 }
@@ -18014,6 +18071,13 @@ func (m *SysMenuMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetIsLeaf(v)
 		return nil
+	case sysmenu.FieldOpenBlank:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOpenBlank(v)
+		return nil
 	}
 	return fmt.Errorf("unknown SysMenu field %s", name)
 }
@@ -18092,6 +18156,9 @@ func (m *SysMenuMutation) ClearedFields() []string {
 	if m.FieldCleared(sysmenu.FieldIsLeaf) {
 		fields = append(fields, sysmenu.FieldIsLeaf)
 	}
+	if m.FieldCleared(sysmenu.FieldOpenBlank) {
+		fields = append(fields, sysmenu.FieldOpenBlank)
+	}
 	return fields
 }
 
@@ -18126,6 +18193,9 @@ func (m *SysMenuMutation) ClearField(name string) error {
 		return nil
 	case sysmenu.FieldIsLeaf:
 		m.ClearIsLeaf()
+		return nil
+	case sysmenu.FieldOpenBlank:
+		m.ClearOpenBlank()
 		return nil
 	}
 	return fmt.Errorf("unknown SysMenu nullable field %s", name)
@@ -18179,6 +18249,9 @@ func (m *SysMenuMutation) ResetField(name string) error {
 		return nil
 	case sysmenu.FieldIsLeaf:
 		m.ResetIsLeaf()
+		return nil
+	case sysmenu.FieldOpenBlank:
+		m.ResetOpenBlank()
 		return nil
 	}
 	return fmt.Errorf("unknown SysMenu field %s", name)

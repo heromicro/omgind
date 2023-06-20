@@ -235,6 +235,26 @@ func (smu *SysMenuUpdate) ClearIsLeaf() *SysMenuUpdate {
 	return smu
 }
 
+// SetOpenBlank sets the "open_blank" field.
+func (smu *SysMenuUpdate) SetOpenBlank(b bool) *SysMenuUpdate {
+	smu.mutation.SetOpenBlank(b)
+	return smu
+}
+
+// SetNillableOpenBlank sets the "open_blank" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableOpenBlank(b *bool) *SysMenuUpdate {
+	if b != nil {
+		smu.SetOpenBlank(*b)
+	}
+	return smu
+}
+
+// ClearOpenBlank clears the value of the "open_blank" field.
+func (smu *SysMenuUpdate) ClearOpenBlank() *SysMenuUpdate {
+	smu.mutation.ClearOpenBlank()
+	return smu
+}
+
 // Mutation returns the SysMenuMutation object of the builder.
 func (smu *SysMenuUpdate) Mutation() *SysMenuMutation {
 	return smu.mutation
@@ -402,6 +422,12 @@ func (smu *SysMenuUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if smu.mutation.IsLeafCleared() {
 		_spec.ClearField(sysmenu.FieldIsLeaf, field.TypeBool)
+	}
+	if value, ok := smu.mutation.OpenBlank(); ok {
+		_spec.SetField(sysmenu.FieldOpenBlank, field.TypeBool, value)
+	}
+	if smu.mutation.OpenBlankCleared() {
+		_spec.ClearField(sysmenu.FieldOpenBlank, field.TypeBool)
 	}
 	_spec.AddModifiers(smu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, smu.driver, _spec); err != nil {
@@ -631,6 +657,26 @@ func (smuo *SysMenuUpdateOne) ClearIsLeaf() *SysMenuUpdateOne {
 	return smuo
 }
 
+// SetOpenBlank sets the "open_blank" field.
+func (smuo *SysMenuUpdateOne) SetOpenBlank(b bool) *SysMenuUpdateOne {
+	smuo.mutation.SetOpenBlank(b)
+	return smuo
+}
+
+// SetNillableOpenBlank sets the "open_blank" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableOpenBlank(b *bool) *SysMenuUpdateOne {
+	if b != nil {
+		smuo.SetOpenBlank(*b)
+	}
+	return smuo
+}
+
+// ClearOpenBlank clears the value of the "open_blank" field.
+func (smuo *SysMenuUpdateOne) ClearOpenBlank() *SysMenuUpdateOne {
+	smuo.mutation.ClearOpenBlank()
+	return smuo
+}
+
 // Mutation returns the SysMenuMutation object of the builder.
 func (smuo *SysMenuUpdateOne) Mutation() *SysMenuMutation {
 	return smuo.mutation
@@ -828,6 +874,12 @@ func (smuo *SysMenuUpdateOne) sqlSave(ctx context.Context) (_node *SysMenu, err 
 	}
 	if smuo.mutation.IsLeafCleared() {
 		_spec.ClearField(sysmenu.FieldIsLeaf, field.TypeBool)
+	}
+	if value, ok := smuo.mutation.OpenBlank(); ok {
+		_spec.SetField(sysmenu.FieldOpenBlank, field.TypeBool, value)
+	}
+	if smuo.mutation.OpenBlankCleared() {
+		_spec.ClearField(sysmenu.FieldOpenBlank, field.TypeBool)
 	}
 	_spec.AddModifiers(smuo.modifiers...)
 	_node = &SysMenu{config: smuo.config}

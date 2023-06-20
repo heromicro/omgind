@@ -39,6 +39,8 @@ func (SysMenu) Fields() []ent.Field {
 		//
 		field.Int32("level").Min(1).StorageKey("level").StructTag(`json:"level"`).Comment("层级"),
 		field.Bool("is_leaf").Default(true).Nillable().Optional().StorageKey("is_leaf").StructTag(`json:"is_leaf"`).Comment("是否是子叶"),
+
+		field.Bool("open_blank").Default(false).Nillable().Optional().Comment("打开新标签"),
 	}
 }
 

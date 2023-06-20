@@ -20,8 +20,10 @@ type Menu struct {
 	IsActive   *bool   `json:"is_active" binding:"required" yaml:"is_active"` // 状态
 	Memo       string  `json:"memo" yaml:"memo"`                              // 备注
 	IsShow     *bool   `json:"is_show" yaml:"is_show"`                        // 是否显示
-	Level      int32   `json:"level" yaml:"level"`                            // 层级
-	IsLeaf     bool    `json:"is_leaf" yaml:"is_leaf"`                        // 是否子叶
+	OpenBlank  *bool   `json:"open_blank" yaml:"open_blank"`                  // 是否打开新标签
+
+	Level  int32 `json:"level" yaml:"level"`     // 层级
+	IsLeaf bool  `json:"is_leaf" yaml:"is_leaf"` // 是否子叶
 
 	Creator string `json:"creator" yaml:"-"` // 创建者
 	// CreatedAt  *time.Time  `json:"created_at" yaml:"-"`                           // 创建时间
@@ -146,19 +148,25 @@ func (a Menus) FillMenuAction(mActions map[string]MenuActions) Menus {
 
 // MenuTree 菜单树
 type MenuTree struct {
-	ID         string      `yaml:"id" json:"id"`                   // 唯一标识
-	Name       string      `yaml:"name" json:"name"`               // 菜单名称
-	Icon       string      `yaml:"icon" json:"icon"`               // 菜单图标
-	Router     string      `yaml:"router,omitempty" json:"router"` // 访问路由
-	ParentID   *string     `yaml:"parent_id" json:"parent_id"`     // 父级ID
-	ParentPath string      `yaml:"-" json:"parent_path"`           // 父级路径
-	Sort       int         `yaml:"sort" json:"sort"`               // 排序值
-	IsShow     *bool       `json:"is_show"`
-	IsActive   *bool       `yaml:"-" json:"is_active"`                           // 状态
-	Level      int32       `json:"level"`                                        // 层级
-	IsLeaf     bool        `json:"is_leaf"`                                      // 是否子叶
-	Actions    MenuActions `yaml:"actions,omitempty" json:"actions"`             // 动作列表
-	Children   *MenuTrees  `yaml:"children,omitempty" json:"children,omitempty"` // 子级树
+	ID         string  `yaml:"id" json:"id"`                   // 唯一标识
+	Name       string  `yaml:"name" json:"name"`               // 菜单名称
+	Icon       string  `yaml:"icon" json:"icon"`               // 菜单图标
+	Router     string  `yaml:"router,omitempty" json:"router"` // 访问路由
+	ParentID   *string `yaml:"parent_id" json:"parent_id"`     // 父级ID
+	ParentPath string  `yaml:"-" json:"parent_path"`           // 父级路径
+
+	Sort      int   `yaml:"sort" json:"sort"` // 排序值
+	IsShow    *bool `json:"is_show"`
+	IsActive  *bool `yaml:"-" json:"is_active"`           // 状态
+	OpenBlank *bool `json:"open_blank" yaml:"open_blank"` // 是否打开新标签
+
+	Level    int32       `json:"level"`                                        // 层级
+	IsLeaf   bool        `json:"is_leaf"`                                      // 是否子叶
+	Actions  MenuActions `yaml:"actions,omitempty" json:"actions"`             // 动作列表
+	Children *MenuTrees  `yaml:"children,omitempty" json:"children,omitempty"` // 子级树
+
+	Memo string `json:"-" yaml:"memo"` // 备注
+
 }
 
 // MenuTrees 菜单树列表

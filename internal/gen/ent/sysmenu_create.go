@@ -201,6 +201,20 @@ func (smc *SysMenuCreate) SetNillableIsLeaf(b *bool) *SysMenuCreate {
 	return smc
 }
 
+// SetOpenBlank sets the "open_blank" field.
+func (smc *SysMenuCreate) SetOpenBlank(b bool) *SysMenuCreate {
+	smc.mutation.SetOpenBlank(b)
+	return smc
+}
+
+// SetNillableOpenBlank sets the "open_blank" field if the given value is not nil.
+func (smc *SysMenuCreate) SetNillableOpenBlank(b *bool) *SysMenuCreate {
+	if b != nil {
+		smc.SetOpenBlank(*b)
+	}
+	return smc
+}
+
 // SetID sets the "id" field.
 func (smc *SysMenuCreate) SetID(s string) *SysMenuCreate {
 	smc.mutation.SetID(s)
@@ -281,6 +295,10 @@ func (smc *SysMenuCreate) defaults() {
 	if _, ok := smc.mutation.IsLeaf(); !ok {
 		v := sysmenu.DefaultIsLeaf
 		smc.mutation.SetIsLeaf(v)
+	}
+	if _, ok := smc.mutation.OpenBlank(); !ok {
+		v := sysmenu.DefaultOpenBlank
+		smc.mutation.SetOpenBlank(v)
 	}
 	if _, ok := smc.mutation.ID(); !ok {
 		v := sysmenu.DefaultID()
@@ -449,6 +467,10 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 	if value, ok := smc.mutation.IsLeaf(); ok {
 		_spec.SetField(sysmenu.FieldIsLeaf, field.TypeBool, value)
 		_node.IsLeaf = &value
+	}
+	if value, ok := smc.mutation.OpenBlank(); ok {
+		_spec.SetField(sysmenu.FieldOpenBlank, field.TypeBool, value)
+		_node.OpenBlank = &value
 	}
 	return _node, _spec
 }
@@ -715,6 +737,24 @@ func (u *SysMenuUpsert) UpdateIsLeaf() *SysMenuUpsert {
 // ClearIsLeaf clears the value of the "is_leaf" field.
 func (u *SysMenuUpsert) ClearIsLeaf() *SysMenuUpsert {
 	u.SetNull(sysmenu.FieldIsLeaf)
+	return u
+}
+
+// SetOpenBlank sets the "open_blank" field.
+func (u *SysMenuUpsert) SetOpenBlank(v bool) *SysMenuUpsert {
+	u.Set(sysmenu.FieldOpenBlank, v)
+	return u
+}
+
+// UpdateOpenBlank sets the "open_blank" field to the value that was provided on create.
+func (u *SysMenuUpsert) UpdateOpenBlank() *SysMenuUpsert {
+	u.SetExcluded(sysmenu.FieldOpenBlank)
+	return u
+}
+
+// ClearOpenBlank clears the value of the "open_blank" field.
+func (u *SysMenuUpsert) ClearOpenBlank() *SysMenuUpsert {
+	u.SetNull(sysmenu.FieldOpenBlank)
 	return u
 }
 
@@ -1018,6 +1058,27 @@ func (u *SysMenuUpsertOne) UpdateIsLeaf() *SysMenuUpsertOne {
 func (u *SysMenuUpsertOne) ClearIsLeaf() *SysMenuUpsertOne {
 	return u.Update(func(s *SysMenuUpsert) {
 		s.ClearIsLeaf()
+	})
+}
+
+// SetOpenBlank sets the "open_blank" field.
+func (u *SysMenuUpsertOne) SetOpenBlank(v bool) *SysMenuUpsertOne {
+	return u.Update(func(s *SysMenuUpsert) {
+		s.SetOpenBlank(v)
+	})
+}
+
+// UpdateOpenBlank sets the "open_blank" field to the value that was provided on create.
+func (u *SysMenuUpsertOne) UpdateOpenBlank() *SysMenuUpsertOne {
+	return u.Update(func(s *SysMenuUpsert) {
+		s.UpdateOpenBlank()
+	})
+}
+
+// ClearOpenBlank clears the value of the "open_blank" field.
+func (u *SysMenuUpsertOne) ClearOpenBlank() *SysMenuUpsertOne {
+	return u.Update(func(s *SysMenuUpsert) {
+		s.ClearOpenBlank()
 	})
 }
 
@@ -1484,6 +1545,27 @@ func (u *SysMenuUpsertBulk) UpdateIsLeaf() *SysMenuUpsertBulk {
 func (u *SysMenuUpsertBulk) ClearIsLeaf() *SysMenuUpsertBulk {
 	return u.Update(func(s *SysMenuUpsert) {
 		s.ClearIsLeaf()
+	})
+}
+
+// SetOpenBlank sets the "open_blank" field.
+func (u *SysMenuUpsertBulk) SetOpenBlank(v bool) *SysMenuUpsertBulk {
+	return u.Update(func(s *SysMenuUpsert) {
+		s.SetOpenBlank(v)
+	})
+}
+
+// UpdateOpenBlank sets the "open_blank" field to the value that was provided on create.
+func (u *SysMenuUpsertBulk) UpdateOpenBlank() *SysMenuUpsertBulk {
+	return u.Update(func(s *SysMenuUpsert) {
+		s.UpdateOpenBlank()
+	})
+}
+
+// ClearOpenBlank clears the value of the "open_blank" field.
+func (u *SysMenuUpsertBulk) ClearOpenBlank() *SysMenuUpsertBulk {
+	return u.Update(func(s *SysMenuUpsert) {
+		s.ClearOpenBlank()
 	})
 }
 

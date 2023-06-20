@@ -43,6 +43,8 @@ const (
 	FieldLevel = "level"
 	// FieldIsLeaf holds the string denoting the is_leaf field in the database.
 	FieldIsLeaf = "is_leaf"
+	// FieldOpenBlank holds the string denoting the open_blank field in the database.
+	FieldOpenBlank = "open_blank"
 	// Table holds the table name of the sysmenu in the database.
 	Table = "sys_menus"
 )
@@ -65,6 +67,7 @@ var Columns = []string{
 	FieldParentPath,
 	FieldLevel,
 	FieldIsLeaf,
+	FieldOpenBlank,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -110,6 +113,8 @@ var (
 	LevelValidator func(int32) error
 	// DefaultIsLeaf holds the default value on creation for the "is_leaf" field.
 	DefaultIsLeaf bool
+	// DefaultOpenBlank holds the default value on creation for the "open_blank" field.
+	DefaultOpenBlank bool
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
@@ -197,4 +202,9 @@ func ByLevel(opts ...sql.OrderTermOption) OrderOption {
 // ByIsLeaf orders the results by the is_leaf field.
 func ByIsLeaf(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsLeaf, opts...).ToFunc()
+}
+
+// ByOpenBlank orders the results by the open_blank field.
+func ByOpenBlank(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldOpenBlank, opts...).ToFunc()
 }

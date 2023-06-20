@@ -1037,6 +1037,10 @@ func init() {
 	sysmenuDescIsLeaf := sysmenuFields[7].Descriptor()
 	// sysmenu.DefaultIsLeaf holds the default value on creation for the is_leaf field.
 	sysmenu.DefaultIsLeaf = sysmenuDescIsLeaf.Default.(bool)
+	// sysmenuDescOpenBlank is the schema descriptor for open_blank field.
+	sysmenuDescOpenBlank := sysmenuFields[8].Descriptor()
+	// sysmenu.DefaultOpenBlank holds the default value on creation for the open_blank field.
+	sysmenu.DefaultOpenBlank = sysmenuDescOpenBlank.Default.(bool)
 	// sysmenuDescID is the schema descriptor for id field.
 	sysmenuDescID := sysmenuMixinFields0[0].Descriptor()
 	// sysmenu.DefaultID holds the default value on creation for the id field.

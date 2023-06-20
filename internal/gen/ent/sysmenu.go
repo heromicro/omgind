@@ -46,7 +46,9 @@ type SysMenu struct {
 	// 层级
 	Level int32 `json:"level"`
 	// 是否是子叶
-	IsLeaf       *bool `json:"is_leaf"`
+	IsLeaf *bool `json:"is_leaf"`
+	// 打开新标签
+	OpenBlank    *bool `json:"open_blank,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -55,7 +57,7 @@ func (*SysMenu) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case sysmenu.FieldIsDel, sysmenu.FieldIsActive, sysmenu.FieldIsShow, sysmenu.FieldIsLeaf:
+		case sysmenu.FieldIsDel, sysmenu.FieldIsActive, sysmenu.FieldIsShow, sysmenu.FieldIsLeaf, sysmenu.FieldOpenBlank:
 			values[i] = new(sql.NullBool)
 		case sysmenu.FieldSort, sysmenu.FieldLevel:
 			values[i] = new(sql.NullInt64)
@@ -181,6 +183,13 @@ func (sm *SysMenu) assignValues(columns []string, values []any) error {
 				sm.IsLeaf = new(bool)
 				*sm.IsLeaf = value.Bool
 			}
+		case sysmenu.FieldOpenBlank:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field open_blank", values[i])
+			} else if value.Valid {
+				sm.OpenBlank = new(bool)
+				*sm.OpenBlank = value.Bool
+			}
 		default:
 			sm.selectValues.Set(columns[i], values[i])
 		}
@@ -273,6 +282,11 @@ func (sm *SysMenu) String() string {
 	builder.WriteString(", ")
 	if v := sm.IsLeaf; v != nil {
 		builder.WriteString("is_leaf=")
+		builder.WriteString(fmt.Sprintf("%v", *v))
+	}
+	builder.WriteString(", ")
+	if v := sm.OpenBlank; v != nil {
+		builder.WriteString("open_blank=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteByte(')')

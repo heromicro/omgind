@@ -139,6 +139,11 @@ func IsLeaf(v bool) predicate.SysMenu {
 	return predicate.SysMenu(sql.FieldEQ(FieldIsLeaf, v))
 }
 
+// OpenBlank applies equality check predicate on the "open_blank" field. It's identical to OpenBlankEQ.
+func OpenBlank(v bool) predicate.SysMenu {
+	return predicate.SysMenu(sql.FieldEQ(FieldOpenBlank, v))
+}
+
 // IsDelEQ applies the EQ predicate on the "is_del" field.
 func IsDelEQ(v bool) predicate.SysMenu {
 	return predicate.SysMenu(sql.FieldEQ(FieldIsDel, v))
@@ -837,6 +842,26 @@ func IsLeafIsNil() predicate.SysMenu {
 // IsLeafNotNil applies the NotNil predicate on the "is_leaf" field.
 func IsLeafNotNil() predicate.SysMenu {
 	return predicate.SysMenu(sql.FieldNotNull(FieldIsLeaf))
+}
+
+// OpenBlankEQ applies the EQ predicate on the "open_blank" field.
+func OpenBlankEQ(v bool) predicate.SysMenu {
+	return predicate.SysMenu(sql.FieldEQ(FieldOpenBlank, v))
+}
+
+// OpenBlankNEQ applies the NEQ predicate on the "open_blank" field.
+func OpenBlankNEQ(v bool) predicate.SysMenu {
+	return predicate.SysMenu(sql.FieldNEQ(FieldOpenBlank, v))
+}
+
+// OpenBlankIsNil applies the IsNil predicate on the "open_blank" field.
+func OpenBlankIsNil() predicate.SysMenu {
+	return predicate.SysMenu(sql.FieldIsNull(FieldOpenBlank))
+}
+
+// OpenBlankNotNil applies the NotNil predicate on the "open_blank" field.
+func OpenBlankNotNil() predicate.SysMenu {
+	return predicate.SysMenu(sql.FieldNotNull(FieldOpenBlank))
 }
 
 // And groups predicates with the AND operator between them.
