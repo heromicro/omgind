@@ -83,6 +83,10 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 		query = query.Where(sysmenu.IsShowEQ(*v))
 	}
 
+	if v := params.Level; v != nil {
+		query = query.Where(sysmenu.LevelEQ(*v))
+	}
+
 	if v := params.QueryValue; v != "" {
 		query = query.Where(sysmenu.Or(
 			sysmenu.NameContains(v),

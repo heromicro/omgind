@@ -42,12 +42,17 @@ type MenuQueryParam struct {
 	Name             string   `form:"-"`          // 菜单名称
 	PrefixParentPath string   `form:"-"`          // 父级路径(前缀模糊查询)
 	QueryValue       string   `form:"queryValue"` // 模糊查询
-	ParentID         *string  `form:"parentID"`   // 父级内码
+	ParentID         *string  `form:"pid"`        // 父级内码
 	IsShow           *bool    `form:"isShow"`
 	IsActive         *bool    `form:"is_active"` // 状态
+	Level            *int32   `form:"level"`     //
 
 	Level_Order string `form:"level__order" json:"level__order"` // asc/desc
 	BasicOrderParam
+}
+
+func (a *MenuQueryParam) String() string {
+	return json.MarshalToString(a)
 }
 
 // MenuQueryOptions 查询可选参数项
