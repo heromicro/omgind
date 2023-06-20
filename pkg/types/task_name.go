@@ -21,4 +21,5 @@ func (t TaskName) SetPrefix(prefix string) TaskName {
 const (
 	TaskName_REPAIR_DISTRICT_TREE_PATH TaskName = "TaskName_REPAIR_DISTRICT_TREE_PATH"
 	TaskName_REPAIR_DEPT_TREE_PATH     TaskName = "TaskName_REPAIR_DEPT_TREE_PATH"
+	TaskName_REPAIR_MENU_TREE_PATH     TaskName = "TaskName_REPAIR_MENU_TREE_PATH"
 )

@@ -95,12 +95,24 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	menuAction := &repo.MenuAction{
 		EntCli: client,
 	}
-	serviceMenu := &service.Menu{
-		EntCli:                 client,
-		MenuRepo:               menu,
-		MenuActionRepo:         menuAction,
-		MenuActionResourceRepo: menuActionResource,
+	queuer, cleanup5, err := InitQueue(cfg, redis)
+	if err != nil {
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
 	}
+	consumer, cleanup6, err := InitAsynq(cfg, queuer)
+	if err != nil {
+		cleanup5()
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	serviceMenu := service.NewMenuSrv(client, menu, menuAction, menuActionResource, queuer, consumer)
 	api_v2Menu := &api_v2.Menu{
 		MenuSrv: serviceMenu,
 	}
@@ -141,26 +153,9 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		SigninSrv: signIn,
 		Vcode:     vcode,
 	}
-	queuer, cleanup5, err := InitQueue(cfg, redis)
-	if err != nil {
-		cleanup4()
-		cleanup3()
-		cleanup2()
-		cleanup()
-		return nil, nil, err
-	}
 	sysDistrict := &repo.SysDistrict{
 		EntCli: client,
 		Queue:  queuer,
-	}
-	consumer, cleanup6, err := InitAsynq(cfg, queuer)
-	if err != nil {
-		cleanup5()
-		cleanup4()
-		cleanup3()
-		cleanup2()
-		cleanup()
-		return nil, nil, err
 	}
 	serviceSysDistrict := service.NewSysDistrictSrv(client, sysDistrict, queuer, consumer)
 	api_v2SysDistrict := &api_v2.SysDistrict{

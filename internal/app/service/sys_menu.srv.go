@@ -2,11 +2,15 @@ package service
 
 import (
 	"context"
+	"encoding/json"
+	"log"
 	"os"
 	"time"
 
 	"github.com/google/wire"
 	"github.com/gotidy/ptr"
+	"github.com/hibiken/asynq"
+	"github.com/jossef/format"
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/ent"
@@ -15,20 +19,156 @@ import (
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/yaml"
+	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
+	"github.com/heromicro/omgind/pkg/mw/queue"
+	"github.com/heromicro/omgind/pkg/types"
 )
 
 // MenuSet 注入Menu
-var SysMenuSet = wire.NewSet(wire.Struct(new(Menu), "*"))
+// var SysMenuSet = wire.NewSet(wire.Struct(new(Menu), "*"))
+var SysMenuSet = wire.NewSet(NewMenuSrv)
 
 // Menu 菜单管理
 type Menu struct {
 	EntCli *ent.Client
 
-	//TransModel              *repo.Trans
-
 	MenuRepo               *repo.Menu
 	MenuActionRepo         *repo.MenuAction
 	MenuActionResourceRepo *repo.MenuActionResource
+
+	Queue    queue.Queuer
+	consumer *worker.Consumer
+}
+
+func NewMenuSrv(entCli *ent.Client, menuRepo *repo.Menu, menuActionRepo *repo.MenuAction, menuActionResourceRepo *repo.MenuActionResource, q queue.Queuer, c *worker.Consumer) *Menu {
+
+	menuSrv := &Menu{
+		EntCli:                 entCli,
+		MenuRepo:               menuRepo,
+		MenuActionRepo:         menuActionRepo,
+		MenuActionResourceRepo: menuActionResourceRepo,
+		Queue:                  q,
+		consumer:               c,
+	}
+
+	// TODO: register tasks
+	menuSrv.consumer.RegisterHandlers(types.TaskName_REPAIR_MENU_TREE_PATH, menuSrv)
+
+	return menuSrv
+}
+
+// repair parent_path, is_leaf, level
+func (s *Menu) ProcessTask(ctx context.Context, t *asynq.Task) error {
+
+	log.Println(" --- ---- === = ", t.Type())
+	id := string(t.Payload())
+	if id == "" {
+		return nil
+	}
+
+	log.Println(" --- ---- === = id: ", id)
+
+	zmenu, err := s.EntCli.SysMenu.Query().Where(sysmenu.IDEQ(id)).First(ctx)
+	if err != nil {
+		if !ent.IsNotFound(err) {
+			return err
+		}
+	}
+
+	var parent *ent.SysMenu = nil
+	if zmenu.ParentID != nil && *zmenu.ParentID != "" {
+		parent, err = s.EntCli.SysMenu.Query().Where(sysmenu.IDEQ(*zmenu.ParentID)).First(ctx)
+		if err != nil {
+
+			if !ent.IsNotFound(err) {
+
+				return err
+			}
+		}
+	}
+
+	if zmenu.IsDel {
+
+		s.EntCli.SysMenu.Update().Where(sysmenu.ParentIDEQ(id)).SetIsDel(true).Save(ctx)
+		// if err != nil {
+		// 	return err
+		// }
+		if zmenu.ParentID != nil && *zmenu.ParentID != "" {
+			mcount, err := s.EntCli.SysMenu.Query().Where(sysmenu.ParentIDEQ(*zmenu.ParentID), sysmenu.IsDelEQ(false)).Count(ctx)
+
+			if err != nil {
+				return err
+			}
+
+			if mcount == 0 {
+				s.EntCli.SysMenu.Update().Where(sysmenu.IDEQ(*zmenu.ParentID)).SetIsLeaf(true).Save(ctx)
+			}
+
+		}
+
+	} else {
+
+		submenus, err := s.EntCli.SysMenu.Query().Where(sysmenu.ParentIDEQ(id)).Where(sysmenu.IsDelEQ(false)).All(ctx)
+		if err != nil {
+			log.Println(" ----- ==== --- err - ", err)
+			if !ent.IsNotFound(err) {
+				return err
+			}
+		}
+
+		if len(submenus) > 0 {
+
+			ppath := s.joinParentPath(*zmenu.ParentPath, zmenu.ID)
+			err := repo.WithTx(ctx, s.EntCli, func(tx *ent.Tx) error {
+
+				_, err := tx.SysMenu.Update().Where(sysmenu.ParentIDEQ(zmenu.ID)).SetParentPath(ppath).SetLevel(zmenu.Level + 1).Save(ctx)
+				if err != nil {
+					if !ent.IsNotFound(err) {
+						return err
+					}
+				}
+				_, err = tx.SysMenu.UpdateOneID(zmenu.ID).SetIsLeaf(false).Save(ctx)
+				if err != nil {
+					return err
+				}
+
+				return err
+			})
+
+			if err != nil {
+				return err
+			}
+
+			for _, submenu := range submenus {
+				jobid := format.String(`{id}-{ml}`, format.Items{"id": submenu.ID, "ml": time.Now().UnixMilli()})
+
+				job := &queue.Job{
+					ID:      jobid,
+					Payload: json.RawMessage(submenu.ID),
+					Delay:   100 * time.Millisecond,
+				}
+
+				s.Queue.Write(types.TaskName_REPAIR_MENU_TREE_PATH, types.RepaireTreeQueue, job)
+			}
+
+			return nil
+		} else {
+
+			if parent != nil {
+				_, err = s.EntCli.SysMenu.UpdateOneID(zmenu.ID).SetLevel(parent.Level + 1).SetIsLeaf(true).Save(ctx)
+			} else {
+				_, err = s.EntCli.SysMenu.UpdateOneID(zmenu.ID).SetLevel(1).SetIsLeaf(true).Save(ctx)
+			}
+
+			if err != nil {
+				return err
+			}
+
+		}
+
+	}
+
+	return nil
 }
 
 // InitData 初始化菜单数据
@@ -231,7 +371,7 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, 
 		return nil, err
 	}
 
-	pitem, err := a.getParent(ctx, *item.ParentID)
+	pitem, err := a.getParent(ctx, item.ParentID)
 	if err != nil {
 		return nil, err
 	}
@@ -298,12 +438,12 @@ func (a *Menu) createActionsTx(ctx context.Context, tx *ent.Tx, menuID string, i
 }
 
 // 获取父级
-func (a *Menu) getParent(ctx context.Context, parentID string) (*schema.Menu, error) {
-	if parentID == "" {
+func (a *Menu) getParent(ctx context.Context, parentID *string) (*schema.Menu, error) {
+	if parentID == nil || *parentID == "" {
 		return nil, nil
 	}
 
-	pitem, err := a.MenuRepo.Get(ctx, parentID)
+	pitem, err := a.MenuRepo.Get(ctx, *parentID)
 	if err != nil {
 		return nil, err
 	} else if pitem == nil {
@@ -324,8 +464,9 @@ func (a *Menu) getParentPathNet(pitem *schema.Menu, parentID string) string {
 }
 
 // 获取父级路径
-func (a *Menu) getParentPath(ctx context.Context, parentID string) (string, error) {
-	if parentID == "" {
+func (a *Menu) getParentPath(ctx context.Context, parentID *string) (string, error) {
+
+	if parentID == nil || *parentID == "" {
 		return "", nil
 	}
 
@@ -348,7 +489,8 @@ func (a *Menu) joinParentPath(parent, id string) string {
 
 // Update 更新数据
 func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema.Menu, error) {
-	if id == *item.ParentID {
+
+	if item.ParentID != nil && id == *item.ParentID {
 		return nil, errors.ErrInvalidParent
 	}
 
@@ -367,49 +509,128 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 	item.Creator = oldItem.Creator
 	item.CreatedAt = oldItem.CreatedAt
 
-	pitem, err := a.getParent(ctx, *item.ParentID)
-
-	if oldItem.ParentID != item.ParentID {
-		// parentPath, err := a.getParentPath(ctx, item.ParentID)
+	if item.ParentID != nil && *item.ParentID != "" {
+		nparent, err := a.getParent(ctx, item.ParentID)
 		if err != nil {
 			return nil, err
 		}
-		item.ParentPath = a.getParentPathNet(pitem, *item.ParentID)
-		item.Level = 1
-		if pitem == nil {
-			item.Level = pitem.Level + 1
+		if nparent == nil {
+			return nil, errors.ErrInvalidParent
 		}
-	} else {
-		item.ParentPath = oldItem.ParentPath
-		item.Level = oldItem.Level
-	}
-	item.IsLeaf = oldItem.IsLeaf
 
-	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
+		item.Level = nparent.Level + 1
+		item.ParentPath = a.getParentPathNet(nparent, *item.ParentID)
+		item.IsLeaf = oldItem.IsLeaf
 
 		menuinput := repo.ToEntUpdateSysMenuInput(&item)
-		_, err = tx.SysMenu.UpdateOneID(id).SetInput(*menuinput).Save(ctx)
+		err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
+
+			_, err = tx.SysMenu.UpdateOneID(id).SetInput(*menuinput).Save(ctx)
+			if err != nil {
+				return err
+			}
+
+			tx.SysMenu.UpdateOneID(*item.ParentID).SetIsLeaf(false).Save(ctx)
+
+			if oldItem.ParentID != nil {
+				// update old item's parent leaf
+				cchildren, err := tx.SysMenu.Query().Where(sysmenu.IsDelEQ(false), sysmenu.ParentIDEQ(*oldItem.ParentID)).Count(ctx)
+				if err != nil {
+					return err
+				}
+
+				if cchildren == 0 {
+					_, err = tx.SysMenu.UpdateOneID(*oldItem.ParentID).SetIsLeaf(true).Save(ctx)
+					if err != nil {
+						return err
+					}
+				}
+			}
+
+			err := a.updateActions(ctx, tx, id, oldItem.Actions, item.Actions)
+			if err != nil {
+				return err
+			}
+			err = a.updateChildParentPath(ctx, tx, *oldItem, item)
+			if err != nil {
+				return err
+			}
+
+			return nil
+		})
 		if err != nil {
-			return err
+			return nil, err
 		}
 
-		if pitem != nil {
-			tx.SysMenu.UpdateOneID(pitem.ID).SetIsLeaf(false).Save(ctx)
+		jobid := format.String(`{id}-{ml}`, format.Items{"id": id, "ml": time.Now().UnixMilli()})
+
+		job := &queue.Job{
+			ID:      jobid,
+			Payload: json.RawMessage(id),
+			Delay:   100 * time.Millisecond,
 		}
 
-		err := a.updateActions(ctx, tx, id, oldItem.Actions, item.Actions)
+		log.Println(" ------ === jobid ==== ", jobid)
+		log.Println(" ------ === jobid ==== ", jobid)
+
+		a.Queue.Write(types.TaskName_REPAIR_MENU_TREE_PATH, types.RepaireTreeQueue, job)
+
+	} else {
+
+		item.Level = 1
+		item.ParentID = nil
+		item.ParentPath = ""
+		menuinput := repo.ToEntUpdateSysMenuInput(&item)
+		menuinput.ClearParentID = true
+
+		err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
+
+			_, err = tx.SysMenu.UpdateOneID(id).SetInput(*menuinput).Save(ctx)
+			if err != nil {
+				return err
+			}
+			log.Println(" ------ ===== oldItem.ParentID ", oldItem.ParentID)
+
+			if oldItem.ParentID != nil {
+				// update old item's parent leaf
+				cchildren, err := tx.SysMenu.Query().Where(sysmenu.IsDelEQ(false), sysmenu.ParentIDEQ(*oldItem.ParentID)).Count(ctx)
+
+				if err != nil {
+					return err
+				}
+				if cchildren == 0 {
+					_, err = tx.SysMenu.UpdateOneID(*oldItem.ParentID).SetIsLeaf(true).Save(ctx)
+					if err != nil {
+						return err
+					}
+				}
+			}
+
+			err := a.updateActions(ctx, tx, id, oldItem.Actions, item.Actions)
+			if err != nil {
+				return err
+			}
+			err = a.updateChildParentPath(ctx, tx, *oldItem, item)
+			if err != nil {
+				return err
+			}
+
+			return nil
+		})
 		if err != nil {
-			return err
-		}
-		err = a.updateChildParentPath(ctx, tx, *oldItem, item)
-		if err != nil {
-			return err
+			return nil, err
 		}
 
-		return nil
-	})
-	if err != nil {
-		return nil, err
+		jobid := format.String(`{id}-{ml}`, format.Items{"id": id, "ml": time.Now().UnixMilli()})
+
+		job := &queue.Job{
+			ID:      jobid,
+			Payload: json.RawMessage(id),
+			Delay:   100 * time.Millisecond,
+		}
+
+		a.Queue.Write(types.TaskName_REPAIR_MENU_TREE_PATH, types.RepaireTreeQueue, job)
+
 	}
 
 	nitem, err := a.Get(ctx, id)
@@ -560,14 +781,18 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 	} else if result.PageResult.Total > 0 {
 		return errors.ErrNotAllowDeleteWithChild
 	}
-	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
 
-		ma_result, err := a.MenuActionRepo.Query(ctx, schema.MenuActionQueryParam{
-			MenuID: id,
-		})
-		if err != nil {
+	ma_result, err := a.MenuActionRepo.Query(ctx, schema.MenuActionQueryParam{
+		MenuID: id,
+	})
+	if err != nil {
+		if !ent.IsNotFound(err) {
 			return err
 		}
+	}
+
+	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
+
 		ma_ids := make([]string, len(ma_result.Data))
 		for i, nit := range ma_result.Data {
 			ma_ids[i] = nit.ID
@@ -581,28 +806,31 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 		if err != nil {
 			return err
 		}
-		err = tx.SysMenu.DeleteOneID(id).Exec(ctx)
+		// err = tx.SysMenu.DeleteOneID(id).Exec(ctx)
+		_, err = tx.SysMenu.Update().Where(sysmenu.IDEQ(id)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 		if err != nil {
 			return err
 		}
+
 		return nil
 	})
+
+	if err != nil {
+		return err
+	}
+
+	jobid := format.String(`{id}-{ml}`, format.Items{"id": id, "ml": time.Now().UnixMilli()})
+
+	job := &queue.Job{
+		ID:      jobid,
+		Payload: json.RawMessage(id),
+		Delay:   100 * time.Millisecond,
+	}
+
+	a.Queue.Write(types.TaskName_REPAIR_MENU_TREE_PATH, types.RepaireTreeQueue, job)
+
 	return err
 
-	/*
-		return a.TransModel.Exec(ctx, func(ctx context.Context) error {
-			err = a.MenuActionResourceRepo.DeleteByMenuID(ctx, id)
-			if err != nil {
-				return err
-			}
-
-			err := a.MenuActionRepo.DeleteByMenuID(ctx, id)
-			if err != nil {
-				return err
-			}
-
-			return a.MenuRepo.Delete(ctx, id)
-		})*/
 }
 
 // UpdateActive 更新状态
