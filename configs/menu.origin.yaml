@@ -189,6 +189,11 @@
           resources:
             - method: PATCH
               path: "/api/v2/sys-dicts/:id/enable"
+        - code: view
+          name: 查看
+          resources:
+            - method: GET
+              path: "/api/v2/sys-dicts/:id/view"
         - code: items
           name: 启用
           resources:
