@@ -325,6 +325,27 @@ func (a *Menu) Get(ctx context.Context, id string, opts ...schema.MenuQueryOptio
 	return item, nil
 }
 
+// Get 查询指定数据
+func (a *Menu) View(ctx context.Context, id string, opts ...schema.MenuQueryOptions) (*schema.Menu, error) {
+	item, err := a.MenuRepo.Get(ctx, id, opts...)
+	if err != nil {
+		log.Println(" ----- =1111= err == ", err)
+		return nil, err
+	} else if item == nil {
+		return nil, errors.ErrNotFound
+	}
+
+	actions, err := a.QueryActions(ctx, id)
+	if err != nil {
+		log.Println(" ----- =2222= err == ", err)
+		return nil, err
+	}
+
+	item.Actions = actions
+
+	return item, nil
+}
+
 // QueryActions 查询动作数据
 func (a *Menu) QueryActions(ctx context.Context, id string) (schema.MenuActions, error) {
 	result, err := a.MenuActionRepo.Query(ctx, schema.MenuActionQueryParam{
