@@ -192,24 +192,6 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.Menu, erro
 	return sch_menu, nil
 }
 
-// // Update 更新数据
-// func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema.Menu, error) {
-
-// 	oitem, err := a.EntCli.SysMenu.Query().Where(sysmenu.IDEQ(id)).Only(ctx)
-
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	iteminput := ToEntUpdateSysMenuInput(&item)
-// 	sys_menu, err := oitem.Update().SetInput(*iteminput).Save(ctx)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	sch_menu := ToSchemaSysMenu(sys_menu)
-// 	return sch_menu, nil
-// }
-
 // UpdateParentPath 更新父级路径
 func (a *Menu) UpdateParentPath(ctx context.Context, id, parentPath string) error {
 	_, err := a.EntCli.SysMenu.UpdateOneID(id).SetParentPath(parentPath).Save(ctx)
@@ -218,16 +200,6 @@ func (a *Menu) UpdateParentPath(ctx context.Context, id, parentPath string) erro
 	}
 	return nil
 }
-
-// Delete 删除数据
-// func (a *Menu) Delete(ctx context.Context, id string) error {
-// 	sys_menu, err := a.EntCli.SysMenu.Query().Where(sysmenu.IDEQ(id)).Only(ctx)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	_, err1 := sys_menu.Update().SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
-// 	return errors.WithStack(err1)
-// }
 
 // UpdateActive 更新状态
 func (a *Menu) UpdateActive(ctx context.Context, id string, isActive bool) error {
