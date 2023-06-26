@@ -281,7 +281,7 @@ func (opu *OrgPositionUpdate) RemoveStaffs(o ...*OrgStaff) *OrgPositionUpdate {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (opu *OrgPositionUpdate) Save(ctx context.Context) (int, error) {
 	opu.defaults()
-	return withHooks[int, OrgPositionMutation](ctx, opu.sqlSave, opu.mutation, opu.hooks)
+	return withHooks(ctx, opu.sqlSave, opu.mutation, opu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -767,7 +767,7 @@ func (opuo *OrgPositionUpdateOne) Select(field string, fields ...string) *OrgPos
 // Save executes the query and returns the updated OrgPosition entity.
 func (opuo *OrgPositionUpdateOne) Save(ctx context.Context) (*OrgPosition, error) {
 	opuo.defaults()
-	return withHooks[*OrgPosition, OrgPositionMutation](ctx, opuo.sqlSave, opuo.mutation, opuo.hooks)
+	return withHooks(ctx, opuo.sqlSave, opuo.mutation, opuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

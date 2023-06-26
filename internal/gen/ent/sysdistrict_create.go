@@ -533,7 +533,7 @@ func (sdc *SysDistrictCreate) Mutation() *SysDistrictMutation {
 // Save creates the SysDistrict in the database.
 func (sdc *SysDistrictCreate) Save(ctx context.Context) (*SysDistrict, error) {
 	sdc.defaults()
-	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
+	return withHooks(ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

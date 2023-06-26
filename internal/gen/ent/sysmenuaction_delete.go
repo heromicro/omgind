@@ -27,7 +27,7 @@ func (smad *SysMenuActionDelete) Where(ps ...predicate.SysMenuAction) *SysMenuAc
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (smad *SysMenuActionDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysMenuActionMutation](ctx, smad.sqlExec, smad.mutation, smad.hooks)
+	return withHooks(ctx, smad.sqlExec, smad.mutation, smad.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

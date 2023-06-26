@@ -295,7 +295,7 @@ func (ooc *OrgOrganCreate) Mutation() *OrgOrganMutation {
 // Save creates the OrgOrgan in the database.
 func (ooc *OrgOrganCreate) Save(ctx context.Context) (*OrgOrgan, error) {
 	ooc.defaults()
-	return withHooks[*OrgOrgan, OrgOrganMutation](ctx, ooc.sqlSave, ooc.mutation, ooc.hooks)
+	return withHooks(ctx, ooc.sqlSave, ooc.mutation, ooc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

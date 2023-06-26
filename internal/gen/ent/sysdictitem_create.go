@@ -175,7 +175,7 @@ func (sdic *SysDictItemCreate) Mutation() *SysDictItemMutation {
 // Save creates the SysDictItem in the database.
 func (sdic *SysDictItemCreate) Save(ctx context.Context) (*SysDictItem, error) {
 	sdic.defaults()
-	return withHooks[*SysDictItem, SysDictItemMutation](ctx, sdic.sqlSave, sdic.mutation, sdic.hooks)
+	return withHooks(ctx, sdic.sqlSave, sdic.mutation, sdic.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

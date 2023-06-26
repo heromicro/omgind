@@ -210,7 +210,7 @@ func (suu *SysUserUpdate) Mutation() *SysUserMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (suu *SysUserUpdate) Save(ctx context.Context) (int, error) {
 	suu.defaults()
-	return withHooks[int, SysUserMutation](ctx, suu.sqlSave, suu.mutation, suu.hooks)
+	return withHooks(ctx, suu.sqlSave, suu.mutation, suu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -569,7 +569,7 @@ func (suuo *SysUserUpdateOne) Select(field string, fields ...string) *SysUserUpd
 // Save executes the query and returns the updated SysUser entity.
 func (suuo *SysUserUpdateOne) Save(ctx context.Context) (*SysUser, error) {
 	suuo.defaults()
-	return withHooks[*SysUser, SysUserMutation](ctx, suuo.sqlSave, suuo.mutation, suuo.hooks)
+	return withHooks(ctx, suuo.sqlSave, suuo.mutation, suuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

@@ -150,7 +150,7 @@ func (xdu *XxxDemoUpdate) Mutation() *XxxDemoMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (xdu *XxxDemoUpdate) Save(ctx context.Context) (int, error) {
 	xdu.defaults()
-	return withHooks[int, XxxDemoMutation](ctx, xdu.sqlSave, xdu.mutation, xdu.hooks)
+	return withHooks(ctx, xdu.sqlSave, xdu.mutation, xdu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -416,7 +416,7 @@ func (xduo *XxxDemoUpdateOne) Select(field string, fields ...string) *XxxDemoUpd
 // Save executes the query and returns the updated XxxDemo entity.
 func (xduo *XxxDemoUpdateOne) Save(ctx context.Context) (*XxxDemo, error) {
 	xduo.defaults()
-	return withHooks[*XxxDemo, XxxDemoMutation](ctx, xduo.sqlSave, xduo.mutation, xduo.hooks)
+	return withHooks(ctx, xduo.sqlSave, xduo.mutation, xduo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

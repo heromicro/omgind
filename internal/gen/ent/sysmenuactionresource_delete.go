@@ -27,7 +27,7 @@ func (smard *SysMenuActionResourceDelete) Where(ps ...predicate.SysMenuActionRes
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (smard *SysMenuActionResourceDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysMenuActionResourceMutation](ctx, smard.sqlExec, smard.mutation, smard.hooks)
+	return withHooks(ctx, smard.sqlExec, smard.mutation, smard.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

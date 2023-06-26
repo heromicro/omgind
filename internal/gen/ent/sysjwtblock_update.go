@@ -123,7 +123,7 @@ func (sjbu *SysJwtBlockUpdate) Mutation() *SysJwtBlockMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sjbu *SysJwtBlockUpdate) Save(ctx context.Context) (int, error) {
 	sjbu.defaults()
-	return withHooks[int, SysJwtBlockMutation](ctx, sjbu.sqlSave, sjbu.mutation, sjbu.hooks)
+	return withHooks(ctx, sjbu.sqlSave, sjbu.mutation, sjbu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -348,7 +348,7 @@ func (sjbuo *SysJwtBlockUpdateOne) Select(field string, fields ...string) *SysJw
 // Save executes the query and returns the updated SysJwtBlock entity.
 func (sjbuo *SysJwtBlockUpdateOne) Save(ctx context.Context) (*SysJwtBlock, error) {
 	sjbuo.defaults()
-	return withHooks[*SysJwtBlock, SysJwtBlockMutation](ctx, sjbuo.sqlSave, sjbuo.mutation, sjbuo.hooks)
+	return withHooks(ctx, sjbuo.sqlSave, sjbuo.mutation, sjbuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

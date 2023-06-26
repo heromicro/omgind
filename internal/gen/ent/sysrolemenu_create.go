@@ -127,7 +127,7 @@ func (srmc *SysRoleMenuCreate) Mutation() *SysRoleMenuMutation {
 // Save creates the SysRoleMenu in the database.
 func (srmc *SysRoleMenuCreate) Save(ctx context.Context) (*SysRoleMenu, error) {
 	srmc.defaults()
-	return withHooks[*SysRoleMenu, SysRoleMenuMutation](ctx, srmc.sqlSave, srmc.mutation, srmc.hooks)
+	return withHooks(ctx, srmc.sqlSave, srmc.mutation, srmc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

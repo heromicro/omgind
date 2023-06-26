@@ -245,7 +245,7 @@ func (slu *SysLoggingUpdate) Save(ctx context.Context) (int, error) {
 	if err := slu.defaults(); err != nil {
 		return 0, err
 	}
-	return withHooks[int, SysLoggingMutation](ctx, slu.sqlSave, slu.mutation, slu.hooks)
+	return withHooks(ctx, slu.sqlSave, slu.mutation, slu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -660,7 +660,7 @@ func (sluo *SysLoggingUpdateOne) Save(ctx context.Context) (*SysLogging, error) 
 	if err := sluo.defaults(); err != nil {
 		return nil, err
 	}
-	return withHooks[*SysLogging, SysLoggingMutation](ctx, sluo.sqlSave, sluo.mutation, sluo.hooks)
+	return withHooks(ctx, sluo.sqlSave, sluo.mutation, sluo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

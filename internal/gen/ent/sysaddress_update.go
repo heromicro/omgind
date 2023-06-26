@@ -535,7 +535,7 @@ func (sau *SysAddressUpdate) ClearStaffIden() *SysAddressUpdate {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sau *SysAddressUpdate) Save(ctx context.Context) (int, error) {
 	sau.defaults()
-	return withHooks[int, SysAddressMutation](ctx, sau.sqlSave, sau.mutation, sau.hooks)
+	return withHooks(ctx, sau.sqlSave, sau.mutation, sau.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -1414,7 +1414,7 @@ func (sauo *SysAddressUpdateOne) Select(field string, fields ...string) *SysAddr
 // Save executes the query and returns the updated SysAddress entity.
 func (sauo *SysAddressUpdateOne) Save(ctx context.Context) (*SysAddress, error) {
 	sauo.defaults()
-	return withHooks[*SysAddress, SysAddressMutation](ctx, sauo.sqlSave, sauo.mutation, sauo.hooks)
+	return withHooks(ctx, sauo.sqlSave, sauo.mutation, sauo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

@@ -156,7 +156,7 @@ func (smau *SysMenuActionUpdate) Mutation() *SysMenuActionMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (smau *SysMenuActionUpdate) Save(ctx context.Context) (int, error) {
 	smau.defaults()
-	return withHooks[int, SysMenuActionMutation](ctx, smau.sqlSave, smau.mutation, smau.hooks)
+	return withHooks(ctx, smau.sqlSave, smau.mutation, smau.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -436,7 +436,7 @@ func (smauo *SysMenuActionUpdateOne) Select(field string, fields ...string) *Sys
 // Save executes the query and returns the updated SysMenuAction entity.
 func (smauo *SysMenuActionUpdateOne) Save(ctx context.Context) (*SysMenuAction, error) {
 	smauo.defaults()
-	return withHooks[*SysMenuAction, SysMenuActionMutation](ctx, smauo.sqlSave, smauo.mutation, smauo.hooks)
+	return withHooks(ctx, smauo.sqlSave, smauo.mutation, smauo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

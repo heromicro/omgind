@@ -480,7 +480,7 @@ func (osc *OrgStaffCreate) Mutation() *OrgStaffMutation {
 // Save creates the OrgStaff in the database.
 func (osc *OrgStaffCreate) Save(ctx context.Context) (*OrgStaff, error) {
 	osc.defaults()
-	return withHooks[*OrgStaff, OrgStaffMutation](ctx, osc.sqlSave, osc.mutation, osc.hooks)
+	return withHooks(ctx, osc.sqlSave, osc.mutation, osc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

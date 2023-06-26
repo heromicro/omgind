@@ -135,7 +135,7 @@ func (sjbc *SysJwtBlockCreate) Mutation() *SysJwtBlockMutation {
 // Save creates the SysJwtBlock in the database.
 func (sjbc *SysJwtBlockCreate) Save(ctx context.Context) (*SysJwtBlock, error) {
 	sjbc.defaults()
-	return withHooks[*SysJwtBlock, SysJwtBlockMutation](ctx, sjbc.sqlSave, sjbc.mutation, sjbc.hooks)
+	return withHooks(ctx, sjbc.sqlSave, sjbc.mutation, sjbc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

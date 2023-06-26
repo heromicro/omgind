@@ -440,7 +440,7 @@ func (sac *SysAddressCreate) Mutation() *SysAddressMutation {
 // Save creates the SysAddress in the database.
 func (sac *SysAddressCreate) Save(ctx context.Context) (*SysAddress, error) {
 	sac.defaults()
-	return withHooks[*SysAddress, SysAddressMutation](ctx, sac.sqlSave, sac.mutation, sac.hooks)
+	return withHooks(ctx, sac.sqlSave, sac.mutation, sac.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

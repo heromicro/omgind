@@ -27,7 +27,7 @@ func (surd *SysUserRoleDelete) Where(ps ...predicate.SysUserRole) *SysUserRoleDe
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (surd *SysUserRoleDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysUserRoleMutation](ctx, surd.sqlExec, surd.mutation, surd.hooks)
+	return withHooks(ctx, surd.sqlExec, surd.mutation, surd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

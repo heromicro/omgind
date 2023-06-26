@@ -144,7 +144,7 @@ func (sru *SysRoleUpdate) Mutation() *SysRoleMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sru *SysRoleUpdate) Save(ctx context.Context) (int, error) {
 	sru.defaults()
-	return withHooks[int, SysRoleMutation](ctx, sru.sqlSave, sru.mutation, sru.hooks)
+	return withHooks(ctx, sru.sqlSave, sru.mutation, sru.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -396,7 +396,7 @@ func (sruo *SysRoleUpdateOne) Select(field string, fields ...string) *SysRoleUpd
 // Save executes the query and returns the updated SysRole entity.
 func (sruo *SysRoleUpdateOne) Save(ctx context.Context) (*SysRole, error) {
 	sruo.defaults()
-	return withHooks[*SysRole, SysRoleMutation](ctx, sruo.sqlSave, sruo.mutation, sruo.hooks)
+	return withHooks(ctx, sruo.sqlSave, sruo.mutation, sruo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

@@ -237,7 +237,7 @@ func (smc *SysMenuCreate) Mutation() *SysMenuMutation {
 // Save creates the SysMenu in the database.
 func (smc *SysMenuCreate) Save(ctx context.Context) (*SysMenu, error) {
 	smc.defaults()
-	return withHooks[*SysMenu, SysMenuMutation](ctx, smc.sqlSave, smc.mutation, smc.hooks)
+	return withHooks(ctx, smc.sqlSave, smc.mutation, smc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

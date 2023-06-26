@@ -115,7 +115,7 @@ func (srmu *SysRoleMenuUpdate) Mutation() *SysRoleMenuMutation {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (srmu *SysRoleMenuUpdate) Save(ctx context.Context) (int, error) {
 	srmu.defaults()
-	return withHooks[int, SysRoleMenuMutation](ctx, srmu.sqlSave, srmu.mutation, srmu.hooks)
+	return withHooks(ctx, srmu.sqlSave, srmu.mutation, srmu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -337,7 +337,7 @@ func (srmuo *SysRoleMenuUpdateOne) Select(field string, fields ...string) *SysRo
 // Save executes the query and returns the updated SysRoleMenu entity.
 func (srmuo *SysRoleMenuUpdateOne) Save(ctx context.Context) (*SysRoleMenu, error) {
 	srmuo.defaults()
-	return withHooks[*SysRoleMenu, SysRoleMenuMutation](ctx, srmuo.sqlSave, srmuo.mutation, srmuo.hooks)
+	return withHooks(ctx, srmuo.sqlSave, srmuo.mutation, srmuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

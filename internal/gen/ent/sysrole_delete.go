@@ -27,7 +27,7 @@ func (srd *SysRoleDelete) Where(ps ...predicate.SysRole) *SysRoleDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (srd *SysRoleDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysRoleMutation](ctx, srd.sqlExec, srd.mutation, srd.hooks)
+	return withHooks(ctx, srd.sqlExec, srd.mutation, srd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

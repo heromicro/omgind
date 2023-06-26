@@ -161,7 +161,7 @@ func (smarc *SysMenuActionResourceCreate) Mutation() *SysMenuActionResourceMutat
 // Save creates the SysMenuActionResource in the database.
 func (smarc *SysMenuActionResourceCreate) Save(ctx context.Context) (*SysMenuActionResource, error) {
 	smarc.defaults()
-	return withHooks[*SysMenuActionResource, SysMenuActionResourceMutation](ctx, smarc.sqlSave, smarc.mutation, smarc.hooks)
+	return withHooks(ctx, smarc.sqlSave, smarc.mutation, smarc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

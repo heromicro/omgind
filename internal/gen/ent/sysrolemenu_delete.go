@@ -27,7 +27,7 @@ func (srmd *SysRoleMenuDelete) Where(ps ...predicate.SysRoleMenu) *SysRoleMenuDe
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (srmd *SysRoleMenuDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysRoleMenuMutation](ctx, srmd.sqlExec, srmd.mutation, srmd.hooks)
+	return withHooks(ctx, srmd.sqlExec, srmd.mutation, srmd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

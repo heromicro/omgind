@@ -209,7 +209,7 @@ func (suc *SysUserCreate) Mutation() *SysUserMutation {
 // Save creates the SysUser in the database.
 func (suc *SysUserCreate) Save(ctx context.Context) (*SysUser, error) {
 	suc.defaults()
-	return withHooks[*SysUser, SysUserMutation](ctx, suc.sqlSave, suc.mutation, suc.hooks)
+	return withHooks(ctx, suc.sqlSave, suc.mutation, suc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

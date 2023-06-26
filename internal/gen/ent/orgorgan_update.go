@@ -401,7 +401,7 @@ func (oou *OrgOrganUpdate) RemovePositions(o ...*OrgPosition) *OrgOrganUpdate {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (oou *OrgOrganUpdate) Save(ctx context.Context) (int, error) {
 	oou.defaults()
-	return withHooks[int, OrgOrganMutation](ctx, oou.sqlSave, oou.mutation, oou.hooks)
+	return withHooks(ctx, oou.sqlSave, oou.mutation, oou.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -1128,7 +1128,7 @@ func (oouo *OrgOrganUpdateOne) Select(field string, fields ...string) *OrgOrganU
 // Save executes the query and returns the updated OrgOrgan entity.
 func (oouo *OrgOrganUpdateOne) Save(ctx context.Context) (*OrgOrgan, error) {
 	oouo.defaults()
-	return withHooks[*OrgOrgan, OrgOrganMutation](ctx, oouo.sqlSave, oouo.mutation, oouo.hooks)
+	return withHooks(ctx, oouo.sqlSave, oouo.mutation, oouo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

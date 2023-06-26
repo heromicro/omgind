@@ -753,7 +753,7 @@ func (sdu *SysDistrictUpdate) RemoveChildren(s ...*SysDistrict) *SysDistrictUpda
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sdu *SysDistrictUpdate) Save(ctx context.Context) (int, error) {
 	sdu.defaults()
-	return withHooks[int, SysDistrictMutation](ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
+	return withHooks(ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -1926,7 +1926,7 @@ func (sduo *SysDistrictUpdateOne) Select(field string, fields ...string) *SysDis
 // Save executes the query and returns the updated SysDistrict entity.
 func (sduo *SysDistrictUpdateOne) Save(ctx context.Context) (*SysDistrict, error) {
 	sduo.defaults()
-	return withHooks[*SysDistrict, SysDistrictMutation](ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
+	return withHooks(ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

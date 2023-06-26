@@ -27,7 +27,7 @@ func (sud *SysUserDelete) Where(ps ...predicate.SysUser) *SysUserDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sud *SysUserDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysUserMutation](ctx, sud.sqlExec, sud.mutation, sud.hooks)
+	return withHooks(ctx, sud.sqlExec, sud.mutation, sud.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

@@ -27,7 +27,7 @@ func (sad *SysAddressDelete) Where(ps ...predicate.SysAddress) *SysAddressDelete
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sad *SysAddressDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysAddressMutation](ctx, sad.sqlExec, sad.mutation, sad.hooks)
+	return withHooks(ctx, sad.sqlExec, sad.mutation, sad.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

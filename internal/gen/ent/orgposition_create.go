@@ -235,7 +235,7 @@ func (opc *OrgPositionCreate) Mutation() *OrgPositionMutation {
 // Save creates the OrgPosition in the database.
 func (opc *OrgPositionCreate) Save(ctx context.Context) (*OrgPosition, error) {
 	opc.defaults()
-	return withHooks[*OrgPosition, OrgPositionMutation](ctx, opc.sqlSave, opc.mutation, opc.hooks)
+	return withHooks(ctx, opc.sqlSave, opc.mutation, opc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

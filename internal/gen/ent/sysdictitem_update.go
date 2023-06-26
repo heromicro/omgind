@@ -189,7 +189,7 @@ func (sdiu *SysDictItemUpdate) ClearDict() *SysDictItemUpdate {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sdiu *SysDictItemUpdate) Save(ctx context.Context) (int, error) {
 	sdiu.defaults()
-	return withHooks[int, SysDictItemMutation](ctx, sdiu.sqlSave, sdiu.mutation, sdiu.hooks)
+	return withHooks(ctx, sdiu.sqlSave, sdiu.mutation, sdiu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -525,7 +525,7 @@ func (sdiuo *SysDictItemUpdateOne) Select(field string, fields ...string) *SysDi
 // Save executes the query and returns the updated SysDictItem entity.
 func (sdiuo *SysDictItemUpdateOne) Save(ctx context.Context) (*SysDictItem, error) {
 	sdiuo.defaults()
-	return withHooks[*SysDictItem, SysDictItemMutation](ctx, sdiuo.sqlSave, sdiuo.mutation, sdiuo.hooks)
+	return withHooks(ctx, sdiuo.sqlSave, sdiuo.mutation, sdiuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

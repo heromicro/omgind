@@ -27,7 +27,7 @@ func (sld *SysLoggingDelete) Where(ps ...predicate.SysLogging) *SysLoggingDelete
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sld *SysLoggingDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysLoggingMutation](ctx, sld.sqlExec, sld.mutation, sld.hooks)
+	return withHooks(ctx, sld.sqlExec, sld.mutation, sld.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

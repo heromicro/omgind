@@ -27,7 +27,7 @@ func (sjbd *SysJwtBlockDelete) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockDe
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sjbd *SysJwtBlockDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysJwtBlockMutation](ctx, sjbd.sqlExec, sjbd.mutation, sjbd.hooks)
+	return withHooks(ctx, sjbd.sqlExec, sjbd.mutation, sjbd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

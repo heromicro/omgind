@@ -156,7 +156,7 @@ func (smaru *SysMenuActionResourceUpdate) Mutation() *SysMenuActionResourceMutat
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (smaru *SysMenuActionResourceUpdate) Save(ctx context.Context) (int, error) {
 	smaru.defaults()
-	return withHooks[int, SysMenuActionResourceMutation](ctx, smaru.sqlSave, smaru.mutation, smaru.hooks)
+	return withHooks(ctx, smaru.sqlSave, smaru.mutation, smaru.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -436,7 +436,7 @@ func (smaruo *SysMenuActionResourceUpdateOne) Select(field string, fields ...str
 // Save executes the query and returns the updated SysMenuActionResource entity.
 func (smaruo *SysMenuActionResourceUpdateOne) Save(ctx context.Context) (*SysMenuActionResource, error) {
 	smaruo.defaults()
-	return withHooks[*SysMenuActionResource, SysMenuActionResourceMutation](ctx, smaruo.sqlSave, smaruo.mutation, smaruo.hooks)
+	return withHooks(ctx, smaruo.sqlSave, smaruo.mutation, smaruo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

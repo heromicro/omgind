@@ -639,7 +639,7 @@ func (osu *OrgStaffUpdate) ClearPosi() *OrgStaffUpdate {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (osu *OrgStaffUpdate) Save(ctx context.Context) (int, error) {
 	osu.defaults()
-	return withHooks[int, OrgStaffMutation](ctx, osu.sqlSave, osu.mutation, osu.hooks)
+	return withHooks(ctx, osu.sqlSave, osu.mutation, osu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -1683,7 +1683,7 @@ func (osuo *OrgStaffUpdateOne) Select(field string, fields ...string) *OrgStaffU
 // Save executes the query and returns the updated OrgStaff entity.
 func (osuo *OrgStaffUpdateOne) Save(ctx context.Context) (*OrgStaff, error) {
 	osuo.defaults()
-	return withHooks[*OrgStaff, OrgStaffMutation](ctx, osuo.sqlSave, osuo.mutation, osuo.hooks)
+	return withHooks(ctx, osuo.sqlSave, osuo.mutation, osuo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

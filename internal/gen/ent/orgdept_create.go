@@ -395,7 +395,7 @@ func (odc *OrgDeptCreate) Mutation() *OrgDeptMutation {
 // Save creates the OrgDept in the database.
 func (odc *OrgDeptCreate) Save(ctx context.Context) (*OrgDept, error) {
 	odc.defaults()
-	return withHooks[*OrgDept, OrgDeptMutation](ctx, odc.sqlSave, odc.mutation, odc.hooks)
+	return withHooks(ctx, odc.sqlSave, odc.mutation, odc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

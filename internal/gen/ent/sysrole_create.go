@@ -149,7 +149,7 @@ func (src *SysRoleCreate) Mutation() *SysRoleMutation {
 // Save creates the SysRole in the database.
 func (src *SysRoleCreate) Save(ctx context.Context) (*SysRole, error) {
 	src.defaults()
-	return withHooks[*SysRole, SysRoleMutation](ctx, src.sqlSave, src.mutation, src.hooks)
+	return withHooks(ctx, src.sqlSave, src.mutation, src.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

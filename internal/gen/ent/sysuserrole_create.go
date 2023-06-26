@@ -113,7 +113,7 @@ func (surc *SysUserRoleCreate) Mutation() *SysUserRoleMutation {
 // Save creates the SysUserRole in the database.
 func (surc *SysUserRoleCreate) Save(ctx context.Context) (*SysUserRole, error) {
 	surc.defaults()
-	return withHooks[*SysUserRole, SysUserRoleMutation](ctx, surc.sqlSave, surc.mutation, surc.hooks)
+	return withHooks(ctx, surc.sqlSave, surc.mutation, surc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

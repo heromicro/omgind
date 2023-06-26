@@ -161,7 +161,7 @@ func (smac *SysMenuActionCreate) Mutation() *SysMenuActionMutation {
 // Save creates the SysMenuAction in the database.
 func (smac *SysMenuActionCreate) Save(ctx context.Context) (*SysMenuAction, error) {
 	smac.defaults()
-	return withHooks[*SysMenuAction, SysMenuActionMutation](ctx, smac.sqlSave, smac.mutation, smac.hooks)
+	return withHooks(ctx, smac.sqlSave, smac.mutation, smac.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

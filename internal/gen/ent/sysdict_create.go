@@ -185,7 +185,7 @@ func (sdc *SysDictCreate) Mutation() *SysDictMutation {
 // Save creates the SysDict in the database.
 func (sdc *SysDictCreate) Save(ctx context.Context) (*SysDict, error) {
 	sdc.defaults()
-	return withHooks[*SysDict, SysDictMutation](ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
+	return withHooks(ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

@@ -229,7 +229,7 @@ func (slc *SysLoggingCreate) Save(ctx context.Context) (*SysLogging, error) {
 	if err := slc.defaults(); err != nil {
 		return nil, err
 	}
-	return withHooks[*SysLogging, SysLoggingMutation](ctx, slc.sqlSave, slc.mutation, slc.hooks)
+	return withHooks(ctx, slc.sqlSave, slc.mutation, slc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

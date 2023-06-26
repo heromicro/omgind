@@ -556,7 +556,7 @@ func (odu *OrgDeptUpdate) RemoveStaffs(o ...*OrgStaff) *OrgDeptUpdate {
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (odu *OrgDeptUpdate) Save(ctx context.Context) (int, error) {
 	odu.defaults()
-	return withHooks[int, OrgDeptMutation](ctx, odu.sqlSave, odu.mutation, odu.hooks)
+	return withHooks(ctx, odu.sqlSave, odu.mutation, odu.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -1467,7 +1467,7 @@ func (oduo *OrgDeptUpdateOne) Select(field string, fields ...string) *OrgDeptUpd
 // Save executes the query and returns the updated OrgDept entity.
 func (oduo *OrgDeptUpdateOne) Save(ctx context.Context) (*OrgDept, error) {
 	oduo.defaults()
-	return withHooks[*OrgDept, OrgDeptMutation](ctx, oduo.sqlSave, oduo.mutation, oduo.hooks)
+	return withHooks(ctx, oduo.sqlSave, oduo.mutation, oduo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.

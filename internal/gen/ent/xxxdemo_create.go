@@ -155,7 +155,7 @@ func (xdc *XxxDemoCreate) Mutation() *XxxDemoMutation {
 // Save creates the XxxDemo in the database.
 func (xdc *XxxDemoCreate) Save(ctx context.Context) (*XxxDemo, error) {
 	xdc.defaults()
-	return withHooks[*XxxDemo, XxxDemoMutation](ctx, xdc.sqlSave, xdc.mutation, xdc.hooks)
+	return withHooks(ctx, xdc.sqlSave, xdc.mutation, xdc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.

@@ -27,7 +27,7 @@ func (sdd *SysDictDelete) Where(ps ...predicate.SysDict) *SysDictDelete {
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (sdd *SysDictDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, SysDictMutation](ctx, sdd.sqlExec, sdd.mutation, sdd.hooks)
+	return withHooks(ctx, sdd.sqlExec, sdd.mutation, sdd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
