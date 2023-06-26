@@ -2,6 +2,7 @@ package entity
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 
@@ -44,12 +45,14 @@ func (SysMenu) Fields() []ent.Field {
 	}
 }
 
-//// Edges of the SysMenu.
-//func (SysMenu) Edges() []ent.Edge {
-//	return []ent.Edge{
-//		//edge.To("actions", SysMenuAction.Type),
-//	}
-//}
+// Edges of the SysMenu.
+func (SysMenu) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", SysMenu.Type).From("parent").Field("parent_id").Unique(),
+
+		// edge.To("actions", SysMenuAction.Type),
+	}
+}
 
 func (sm SysMenu) Indexes() []ent.Index {
 	return []ent.Index{

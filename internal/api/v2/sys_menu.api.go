@@ -3,6 +3,7 @@ package api_v2
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
+	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/app/service"
@@ -26,9 +27,11 @@ func (a *Menu) Query(c *gin.Context) {
 	}
 
 	params.Pagination = true
-	result, err := a.MenuSrv.Query(ctx, params, schema.MenuQueryOptions{
-		OrderFields: schema.NewOrderFields(schema.NewOrderField("level", schema.OrderByASC), schema.NewOrderField("sort", schema.OrderByDESC)),
-	})
+	params.IsActive_Order = "desc"
+	params.Sort_Order = "asc"
+	params.Level_Order = "asc"
+
+	result, err := a.MenuSrv.Query(ctx, params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -54,9 +57,7 @@ func (a *Menu) QueryTree(c *gin.Context) {
 	params.Sort_Order = "asc"
 	params.IsActive_Order = "asc"
 
-	result, err := a.MenuSrv.Query(ctx, params, schema.MenuQueryOptions{
-		OrderFields: schema.NewOrderFields(schema.NewOrderField("level", schema.OrderByASC), schema.NewOrderField("sort", schema.OrderByASC)),
-	})
+	result, err := a.MenuSrv.Query(ctx, params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return
@@ -78,7 +79,12 @@ func (a *Menu) Get(c *gin.Context) {
 // View 查询指定数据
 func (a *Menu) View(c *gin.Context) {
 	ctx := c.Request.Context()
-	item, err := a.MenuSrv.View(ctx, c.Param("id"))
+
+	var params schema.MenuQueryParam
+	params.WithParent = ptr.Bool(true)
+	params.WithChildren = ptr.Bool(true)
+
+	item, err := a.MenuSrv.View(ctx, c.Param("id"), params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

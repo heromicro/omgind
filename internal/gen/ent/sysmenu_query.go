@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"database/sql/driver"
 	"fmt"
 	"math"
 
@@ -18,11 +19,13 @@ import (
 // SysMenuQuery is the builder for querying SysMenu entities.
 type SysMenuQuery struct {
 	config
-	ctx        *QueryContext
-	order      []sysmenu.OrderOption
-	inters     []Interceptor
-	predicates []predicate.SysMenu
-	modifiers  []func(*sql.Selector)
+	ctx          *QueryContext
+	order        []sysmenu.OrderOption
+	inters       []Interceptor
+	predicates   []predicate.SysMenu
+	withParent   *SysMenuQuery
+	withChildren *SysMenuQuery
+	modifiers    []func(*sql.Selector)
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -57,6 +60,50 @@ func (smq *SysMenuQuery) Unique(unique bool) *SysMenuQuery {
 func (smq *SysMenuQuery) Order(o ...sysmenu.OrderOption) *SysMenuQuery {
 	smq.order = append(smq.order, o...)
 	return smq
+}
+
+// QueryParent chains the current query on the "parent" edge.
+func (smq *SysMenuQuery) QueryParent() *SysMenuQuery {
+	query := (&SysMenuClient{config: smq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := smq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := smq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysmenu.Table, sysmenu.FieldID, selector),
+			sqlgraph.To(sysmenu.Table, sysmenu.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, sysmenu.ParentTable, sysmenu.ParentColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(smq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryChildren chains the current query on the "children" edge.
+func (smq *SysMenuQuery) QueryChildren() *SysMenuQuery {
+	query := (&SysMenuClient{config: smq.config}).Query()
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := smq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := smq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysmenu.Table, sysmenu.FieldID, selector),
+			sqlgraph.To(sysmenu.Table, sysmenu.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, sysmenu.ChildrenTable, sysmenu.ChildrenColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(smq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // First returns the first SysMenu entity from the query.
@@ -246,15 +293,39 @@ func (smq *SysMenuQuery) Clone() *SysMenuQuery {
 		return nil
 	}
 	return &SysMenuQuery{
-		config:     smq.config,
-		ctx:        smq.ctx.Clone(),
-		order:      append([]sysmenu.OrderOption{}, smq.order...),
-		inters:     append([]Interceptor{}, smq.inters...),
-		predicates: append([]predicate.SysMenu{}, smq.predicates...),
+		config:       smq.config,
+		ctx:          smq.ctx.Clone(),
+		order:        append([]sysmenu.OrderOption{}, smq.order...),
+		inters:       append([]Interceptor{}, smq.inters...),
+		predicates:   append([]predicate.SysMenu{}, smq.predicates...),
+		withParent:   smq.withParent.Clone(),
+		withChildren: smq.withChildren.Clone(),
 		// clone intermediate query.
 		sql:  smq.sql.Clone(),
 		path: smq.path,
 	}
+}
+
+// WithParent tells the query-builder to eager-load the nodes that are connected to
+// the "parent" edge. The optional arguments are used to configure the query builder of the edge.
+func (smq *SysMenuQuery) WithParent(opts ...func(*SysMenuQuery)) *SysMenuQuery {
+	query := (&SysMenuClient{config: smq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	smq.withParent = query
+	return smq
+}
+
+// WithChildren tells the query-builder to eager-load the nodes that are connected to
+// the "children" edge. The optional arguments are used to configure the query builder of the edge.
+func (smq *SysMenuQuery) WithChildren(opts ...func(*SysMenuQuery)) *SysMenuQuery {
+	query := (&SysMenuClient{config: smq.config}).Query()
+	for _, opt := range opts {
+		opt(query)
+	}
+	smq.withChildren = query
+	return smq
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -333,8 +404,12 @@ func (smq *SysMenuQuery) prepareQuery(ctx context.Context) error {
 
 func (smq *SysMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysMenu, error) {
 	var (
-		nodes = []*SysMenu{}
-		_spec = smq.querySpec()
+		nodes       = []*SysMenu{}
+		_spec       = smq.querySpec()
+		loadedTypes = [2]bool{
+			smq.withParent != nil,
+			smq.withChildren != nil,
+		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysMenu).scanValues(nil, columns)
@@ -342,6 +417,7 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 	_spec.Assign = func(columns []string, values []any) error {
 		node := &SysMenu{config: smq.config}
 		nodes = append(nodes, node)
+		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
 	if len(smq.modifiers) > 0 {
@@ -356,7 +432,86 @@ func (smq *SysMenuQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
+	if query := smq.withParent; query != nil {
+		if err := smq.loadParent(ctx, query, nodes, nil,
+			func(n *SysMenu, e *SysMenu) { n.Edges.Parent = e }); err != nil {
+			return nil, err
+		}
+	}
+	if query := smq.withChildren; query != nil {
+		if err := smq.loadChildren(ctx, query, nodes,
+			func(n *SysMenu) { n.Edges.Children = []*SysMenu{} },
+			func(n *SysMenu, e *SysMenu) { n.Edges.Children = append(n.Edges.Children, e) }); err != nil {
+			return nil, err
+		}
+	}
 	return nodes, nil
+}
+
+func (smq *SysMenuQuery) loadParent(ctx context.Context, query *SysMenuQuery, nodes []*SysMenu, init func(*SysMenu), assign func(*SysMenu, *SysMenu)) error {
+	ids := make([]string, 0, len(nodes))
+	nodeids := make(map[string][]*SysMenu)
+	for i := range nodes {
+		if nodes[i].ParentID == nil {
+			continue
+		}
+		fk := *nodes[i].ParentID
+		if _, ok := nodeids[fk]; !ok {
+			ids = append(ids, fk)
+		}
+		nodeids[fk] = append(nodeids[fk], nodes[i])
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	query.Where(sysmenu.IDIn(ids...))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		nodes, ok := nodeids[n.ID]
+		if !ok {
+			return fmt.Errorf(`unexpected foreign-key "parent_id" returned %v`, n.ID)
+		}
+		for i := range nodes {
+			assign(nodes[i], n)
+		}
+	}
+	return nil
+}
+func (smq *SysMenuQuery) loadChildren(ctx context.Context, query *SysMenuQuery, nodes []*SysMenu, init func(*SysMenu), assign func(*SysMenu, *SysMenu)) error {
+	fks := make([]driver.Value, 0, len(nodes))
+	nodeids := make(map[string]*SysMenu)
+	for i := range nodes {
+		fks = append(fks, nodes[i].ID)
+		nodeids[nodes[i].ID] = nodes[i]
+		if init != nil {
+			init(nodes[i])
+		}
+	}
+	if len(query.ctx.Fields) > 0 {
+		query.ctx.AppendFieldOnce(sysmenu.FieldParentID)
+	}
+	query.Where(predicate.SysMenu(func(s *sql.Selector) {
+		s.Where(sql.InValues(s.C(sysmenu.ChildrenColumn), fks...))
+	}))
+	neighbors, err := query.All(ctx)
+	if err != nil {
+		return err
+	}
+	for _, n := range neighbors {
+		fk := n.ParentID
+		if fk == nil {
+			return fmt.Errorf(`foreign-key "parent_id" is nil for node %v`, n.ID)
+		}
+		node, ok := nodeids[*fk]
+		if !ok {
+			return fmt.Errorf(`unexpected referenced foreign-key "parent_id" returned %v for node %v`, *fk, n.ID)
+		}
+		assign(node, n)
+	}
+	return nil
 }
 
 func (smq *SysMenuQuery) sqlCount(ctx context.Context) (int, error) {
@@ -386,6 +541,9 @@ func (smq *SysMenuQuery) querySpec() *sqlgraph.QuerySpec {
 			if fields[i] != sysmenu.FieldID {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
+		}
+		if smq.withParent != nil {
+			_spec.Node.AddColumnOnce(sysmenu.FieldParentID)
 		}
 	}
 	if ps := smq.predicates; len(ps) > 0 {

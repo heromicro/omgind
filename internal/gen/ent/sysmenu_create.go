@@ -229,6 +229,26 @@ func (smc *SysMenuCreate) SetNillableID(s *string) *SysMenuCreate {
 	return smc
 }
 
+// SetParent sets the "parent" edge to the SysMenu entity.
+func (smc *SysMenuCreate) SetParent(s *SysMenu) *SysMenuCreate {
+	return smc.SetParentID(s.ID)
+}
+
+// AddChildIDs adds the "children" edge to the SysMenu entity by IDs.
+func (smc *SysMenuCreate) AddChildIDs(ids ...string) *SysMenuCreate {
+	smc.mutation.AddChildIDs(ids...)
+	return smc
+}
+
+// AddChildren adds the "children" edges to the SysMenu entity.
+func (smc *SysMenuCreate) AddChildren(s ...*SysMenu) *SysMenuCreate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return smc.AddChildIDs(ids...)
+}
+
 // Mutation returns the SysMenuMutation object of the builder.
 func (smc *SysMenuCreate) Mutation() *SysMenuMutation {
 	return smc.mutation
@@ -452,10 +472,6 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 		_spec.SetField(sysmenu.FieldIsShow, field.TypeBool, value)
 		_node.IsShow = value
 	}
-	if value, ok := smc.mutation.ParentID(); ok {
-		_spec.SetField(sysmenu.FieldParentID, field.TypeString, value)
-		_node.ParentID = &value
-	}
 	if value, ok := smc.mutation.ParentPath(); ok {
 		_spec.SetField(sysmenu.FieldParentPath, field.TypeString, value)
 		_node.ParentPath = &value
@@ -471,6 +487,39 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 	if value, ok := smc.mutation.OpenBlank(); ok {
 		_spec.SetField(sysmenu.FieldOpenBlank, field.TypeBool, value)
 		_node.OpenBlank = &value
+	}
+	if nodes := smc.mutation.ParentIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   sysmenu.ParentTable,
+			Columns: []string{sysmenu.ParentColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.ParentID = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := smc.mutation.ChildrenIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   sysmenu.ChildrenTable,
+			Columns: []string{sysmenu.ChildrenColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

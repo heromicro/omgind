@@ -48,8 +48,44 @@ type SysMenu struct {
 	// 是否是子叶
 	IsLeaf *bool `json:"is_leaf"`
 	// 打开新标签
-	OpenBlank    *bool `json:"open_blank,omitempty"`
+	OpenBlank *bool `json:"open_blank,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the SysMenuQuery when eager-loading is set.
+	Edges        SysMenuEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// SysMenuEdges holds the relations/edges for other nodes in the graph.
+type SysMenuEdges struct {
+	// Parent holds the value of the parent edge.
+	Parent *SysMenu `json:"parent,omitempty"`
+	// Children holds the value of the children edge.
+	Children []*SysMenu `json:"children,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [2]bool
+}
+
+// ParentOrErr returns the Parent value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SysMenuEdges) ParentOrErr() (*SysMenu, error) {
+	if e.loadedTypes[0] {
+		if e.Parent == nil {
+			// Edge was loaded but was not found.
+			return nil, &NotFoundError{label: sysmenu.Label}
+		}
+		return e.Parent, nil
+	}
+	return nil, &NotLoadedError{edge: "parent"}
+}
+
+// ChildrenOrErr returns the Children value or an error if the edge
+// was not loaded in eager-loading.
+func (e SysMenuEdges) ChildrenOrErr() ([]*SysMenu, error) {
+	if e.loadedTypes[1] {
+		return e.Children, nil
+	}
+	return nil, &NotLoadedError{edge: "children"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -201,6 +237,16 @@ func (sm *SysMenu) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (sm *SysMenu) Value(name string) (ent.Value, error) {
 	return sm.selectValues.Get(name)
+}
+
+// QueryParent queries the "parent" edge of the SysMenu entity.
+func (sm *SysMenu) QueryParent() *SysMenuQuery {
+	return NewSysMenuClient(sm.config).QueryParent(sm)
+}
+
+// QueryChildren queries the "children" edge of the SysMenu entity.
+func (sm *SysMenu) QueryChildren() *SysMenuQuery {
+	return NewSysMenuClient(sm.config).QueryChildren(sm)
 }
 
 // Update returns a builder for updating this SysMenu.

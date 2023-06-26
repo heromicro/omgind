@@ -26,9 +26,10 @@ type Menu struct {
 	IsLeaf bool  `json:"is_leaf" yaml:"is_leaf"` // 是否子叶
 
 	Creator string `json:"creator" yaml:"-"` // 创建者
-	// CreatedAt  *time.Time  `json:"created_at" yaml:"-"`                           // 创建时间
-	// UpdatedAt  *time.Time  `json:"updated_at" yaml:"-"`                           // 更新时间
-	Actions MenuActions `json:"actions" yaml:"actions"` // 动作列表
+
+	Actions  MenuActions `json:"actions" yaml:"actions"` // 动作列表
+	Parent   *Menu       `json:"parent" yaml:"-"`        // 父级
+	Children Menus       `json:"children" yaml:"-"`      // 子级
 }
 
 func (a *Menu) String() string {
@@ -49,6 +50,9 @@ type MenuQueryParam struct {
 
 	Level_Order string `form:"level__order" json:"level__order"` // asc/desc
 	BasicOrderParam
+
+	WithParent   *bool `form:"w__parent" json:"w__parent"`     //
+	WithChildren *bool `form:"w__children" json:"w__children"` //
 }
 
 func (a *MenuQueryParam) String() string {

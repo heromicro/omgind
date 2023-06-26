@@ -36,7 +36,7 @@ func (SysMenuActionResource) Fields() []ent.Field {
 // Edges of the SysMenuActionResource.
 func (SysMenuActionResource) Edges() []ent.Edge {
 	return []ent.Edge{
-		//edge.From("action", SysMenuAction.Type).Field("action_id").Ref("resources").Unique().Required(),
+		// edge.From("action", SysMenuAction.Type).Field("action_id").Ref("resources").Unique().Required(),
 	}
 }
 

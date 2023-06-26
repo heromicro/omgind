@@ -33,13 +33,13 @@ func (SysMenuAction) Fields() []ent.Field {
 	}
 }
 
-//// Edges of the SysMenuAction.
-//func (SysMenuAction) Edges() []ent.Edge {
-//	return []ent.Edge{
-//		//edge.To("resources", SysMenuActionResource.Type),
-//		//edge.From("menu", SysMenu.Type).Field("menu_id").Ref("actions").Unique().Required(),
-//	}
-//}
+// Edges of the SysMenuAction.
+func (SysMenuAction) Edges() []ent.Edge {
+	return []ent.Edge{
+		// edge.To("resources", SysMenuActionResource.Type),
+		// edge.From("menu", SysMenu.Type).Field("menu_id").Ref("actions").Unique().Required(),
+	}
+}
 
 func (SysMenuAction) Indexes() []ent.Index {
 	return []ent.Index{}

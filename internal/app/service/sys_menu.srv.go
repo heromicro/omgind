@@ -326,10 +326,10 @@ func (a *Menu) Get(ctx context.Context, id string, opts ...schema.MenuQueryOptio
 }
 
 // Get 查询指定数据
-func (a *Menu) View(ctx context.Context, id string, opts ...schema.MenuQueryOptions) (*schema.Menu, error) {
-	item, err := a.MenuRepo.Get(ctx, id, opts...)
+func (a *Menu) View(ctx context.Context, id string, params schema.MenuQueryParam, opts ...schema.MenuQueryOptions) (*schema.Menu, error) {
+	item, err := a.MenuRepo.View(ctx, id, params, opts...)
 	if err != nil {
-		log.Println(" ----- =1111= err == ", err)
+		// log.Println(" ----- =1111= err == ", err)
 		return nil, err
 	} else if item == nil {
 		return nil, errors.ErrNotFound
@@ -337,7 +337,7 @@ func (a *Menu) View(ctx context.Context, id string, opts ...schema.MenuQueryOpti
 
 	actions, err := a.QueryActions(ctx, id)
 	if err != nil {
-		log.Println(" ----- =2222= err == ", err)
+		// log.Println(" ----- =2222= err == ", err)
 		return nil, err
 	}
 
@@ -396,12 +396,15 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, 
 	if err != nil {
 		return nil, err
 	}
-	item.ParentPath = a.getParentPathNet(pitem, *item.ParentID)
+	item.ParentPath = a.getParentPathNet(pitem, item.ParentID)
 	item.Level = 1
 	if pitem != nil {
 		item.Level = pitem.Level + 1
 	}
 	item.IsLeaf = true
+	if item.ParentID != nil && *item.ParentID == "" {
+		item.ParentID = nil
+	}
 
 	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
 
@@ -474,8 +477,8 @@ func (a *Menu) getParent(ctx context.Context, parentID *string) (*schema.Menu, e
 	return pitem, nil
 }
 
-func (a *Menu) getParentPathNet(pitem *schema.Menu, parentID string) string {
-	if parentID == "" {
+func (a *Menu) getParentPathNet(pitem *schema.Menu, parentID *string) string {
+	if parentID == nil || *parentID == "" {
 		return ""
 	}
 	if pitem == nil {
@@ -540,7 +543,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 		}
 
 		item.Level = nparent.Level + 1
-		item.ParentPath = a.getParentPathNet(nparent, *item.ParentID)
+		item.ParentPath = a.getParentPathNet(nparent, item.ParentID)
 		item.IsLeaf = oldItem.IsLeaf
 
 		menuinput := repo.ToEntUpdateSysMenuInput(&item)

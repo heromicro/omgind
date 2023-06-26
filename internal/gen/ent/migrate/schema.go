@@ -772,17 +772,25 @@ var (
 		{Name: "icon", Type: field.TypeString, Size: 256},
 		{Name: "router", Type: field.TypeString, Size: 4096},
 		{Name: "is_show", Type: field.TypeBool, Default: true},
-		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "ppath", Type: field.TypeString, Nullable: true, Size: 160},
 		{Name: "level", Type: field.TypeInt32},
 		{Name: "is_leaf", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "open_blank", Type: field.TypeBool, Nullable: true, Default: false},
+		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// SysMenusTable holds the schema information for the "sys_menus" table.
 	SysMenusTable = &schema.Table{
 		Name:       "sys_menus",
 		Columns:    SysMenusColumns,
 		PrimaryKey: []*schema.Column{SysMenusColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "sys_menus_sys_menus_children",
+				Columns:    []*schema.Column{SysMenusColumns[16]},
+				RefColumns: []*schema.Column{SysMenusColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
 		Indexes: []*schema.Index{
 			{
 				Name:    "sysmenu_id",
@@ -817,12 +825,12 @@ var (
 			{
 				Name:    "sysmenu_pid",
 				Unique:  false,
-				Columns: []*schema.Column{SysMenusColumns[12]},
+				Columns: []*schema.Column{SysMenusColumns[16]},
 			},
 			{
 				Name:    "sysmenu_pid_name",
 				Unique:  true,
-				Columns: []*schema.Column{SysMenusColumns[12], SysMenusColumns[8]},
+				Columns: []*schema.Column{SysMenusColumns[16], SysMenusColumns[8]},
 			},
 		},
 	}
@@ -1204,4 +1212,5 @@ func init() {
 	OrgStaffsTable.ForeignKeys[4].RefTable = SysAddressesTable
 	SysDictItemsTable.ForeignKeys[0].RefTable = SysDictsTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
+	SysMenusTable.ForeignKeys[0].RefTable = SysMenusTable
 }

@@ -24,6 +24,14 @@ type Menu struct {
 func ToSchemaSysMenu(dit *ent.SysMenu) *schema.Menu {
 	item := new(schema.Menu)
 	structure.Copy(dit, item)
+	if dit.Edges.Parent != nil {
+		item.Parent = ToSchemaSysMenu(dit.Edges.Parent)
+	}
+
+	if dit.Edges.Children != nil {
+		item.Children = ToSchemaSysMenus(dit.Edges.Children)
+	}
+
 	return item
 }
 
@@ -145,6 +153,25 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 func (a *Menu) Get(ctx context.Context, id string, opts ...schema.MenuQueryOptions) (*schema.Menu, error) {
 
 	menu, err := a.EntCli.SysMenu.Query().Where(sysmenu.IDEQ(id)).Only(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+	return ToSchemaSysMenu(menu), nil
+}
+
+// Get 查询指定数据
+func (a *Menu) View(ctx context.Context, id string, params schema.MenuQueryParam, opts ...schema.MenuQueryOptions) (*schema.Menu, error) {
+
+	query := a.EntCli.SysMenu.Query()
+	if v := params.WithParent; v != nil && *v {
+		query = query.WithParent()
+	}
+	if v := params.WithChildren; v != nil && *v {
+		query = query.WithChildren()
+	}
+
+	menu, err := query.Where(sysmenu.IDEQ(id)).Only(ctx)
 
 	if err != nil {
 		return nil, err
