@@ -1,4 +1,4 @@
-package migrate
+package load
 
 // tree_id,tree_left,tree_right,tree_level,ids,name,initials,pinyin,longitude,latitude,area_code,zip_code,stcode,mname,msname,extra,sort,status,is_del,pids,updated_time,created_time,suffix,sname,is_hot,mpoint,need_customs,is_r,is_d,t_path,crtd_at,uptd_at
 
