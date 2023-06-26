@@ -1,0 +1,2 @@
+INSERT INTO `sys_dict_items` (`id`, `is_del`, `memo`, `sort`, `crtd_at`, `uptd_at`, `dltd_at`, `label`, `val`, `dict_id`, `is_active`) VALUES ('01GSA84NYPX58X9QNB09DW5HFV', 0, '', 9999, '2023-02-15 17:57:54', '2023-02-15 17:57:54', NULL, '男', '1', '01GSA84NYNDYBRECTKDAR4EFJZ', 1);
+INSERT INTO `sys_dict_items` (`id`, `is_del`, `memo`, `sort`, `crtd_at`, `uptd_at`, `dltd_at`, `label`, `val`, `dict_id`, `is_active`) VALUES ('01GSA84NYR0NM6VXJMCF7Y64HB', 0, '', 9999, '2023-02-15 17:57:54', '2023-02-15 17:57:54', NULL, '女', '2', '01GSA84NYNDYBRECTKDAR4EFJZ', 1);

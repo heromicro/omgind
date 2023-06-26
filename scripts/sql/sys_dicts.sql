@@ -1,0 +1,1 @@
+INSERT INTO `sys_dicts` (`id`, `is_del`, `memo`, `sort`, `crtd_at`, `uptd_at`, `dltd_at`, `name_cn`, `name_en`, `is_active`) VALUES ('01GSA84NYNDYBRECTKDAR4EFJZ', 0, '', 9999, '2023-02-15 17:57:54', '2023-02-15 17:57:54', NULL, '性别', 'gender', 1);
