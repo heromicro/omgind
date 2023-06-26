@@ -231,7 +231,7 @@ func (a *Menu) createMenus(ctx context.Context, parentID string, list schema.Men
 			return err
 		}
 
-		parentPath, err := a.getParentPath(ctx, *sitem.ParentID)
+		parentPath, err := a.getParentPath(ctx, sitem.ParentID)
 		if err != nil {
 			return err
 		}
