@@ -6,7 +6,7 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
@@ -17,19 +17,19 @@ var DemoSet = wire.NewSet(wire.Struct(new(Demo), "*"))
 
 // Demo 示例程序
 type Demo struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 
 	DemoRepo *repo.Demo
 }
 
 // ToSchemaDemo 转换为
-func ToSchemaDemo(a *ent.XxxDemo) *schema.Demo {
+func ToSchemaDemo(a *entscheme.XxxDemo) *schema.Demo {
 	item := new(schema.Demo)
 	structure.Copy(a, item)
 	return item
 }
 
-func ToSchemaDemos(us ent.XxxDemos) []*schema.Demo {
+func ToSchemaDemos(us entscheme.XxxDemos) []*schema.Demo {
 	list := make([]*schema.Demo, len(us))
 	for i, item := range us {
 		list[i] = ToSchemaDemo(item)
@@ -37,22 +37,22 @@ func ToSchemaDemos(us ent.XxxDemos) []*schema.Demo {
 	return list
 }
 
-func ToEntCreateDemoInput(a *schema.Demo) *ent.CreateXxxDemoInput {
-	createinput := new(ent.CreateXxxDemoInput)
+func ToEntCreateDemoInput(a *schema.Demo) *entscheme.CreateXxxDemoInput {
+	createinput := new(entscheme.CreateXxxDemoInput)
 	structure.Copy(a, &createinput)
 
 	return createinput
 }
 
-func toEntUpdateDemoInput(a *schema.Demo) *ent.UpdateXxxDemoInput {
-	updateinput := new(ent.UpdateXxxDemoInput)
+func toEntUpdateDemoInput(a *schema.Demo) *entscheme.UpdateXxxDemoInput {
+	updateinput := new(entscheme.UpdateXxxDemoInput)
 	structure.Copy(a, &updateinput)
 
 	return updateinput
 }
 
-func toEntCreateDemoInputs(dms schema.Demos) []*ent.CreateXxxDemoInput {
-	list := make([]*ent.CreateXxxDemoInput, len(dms))
+func toEntCreateDemoInputs(dms schema.Demos) []*entscheme.CreateXxxDemoInput {
+	list := make([]*entscheme.CreateXxxDemoInput, len(dms))
 	for i, item := range dms {
 		list[i] = ToEntCreateDemoInput(item)
 	}

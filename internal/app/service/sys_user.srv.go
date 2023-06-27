@@ -8,8 +8,8 @@ import (
 	"github.com/gotidy/ptr"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysuserrole"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/hash"
@@ -22,7 +22,7 @@ var SysUserSet = wire.NewSet(wire.Struct(new(User), "*"))
 type User struct {
 	Enforcer *casbin.SyncedEnforcer
 
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 
 	UserRepo     *repo.User
 	UserRoleRepo *repo.UserRole
@@ -92,7 +92,7 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, erro
 	pword, _ := hash.MakePassword(item.Password)
 	item.Password = pword
 
-	err = repo.WithTx(ctx, a.UserRepo.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.UserRepo.EntCli, func(tx *entscheme.Tx) error {
 
 		userInput := repo.ToEntCreateSysUserInput(&item)
 		userInput.CreatedAt = nil
@@ -174,7 +174,7 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 	item.ID = oldItem.ID
 	item.Creator = oldItem.Creator
 	item.CreatedAt = oldItem.CreatedAt
-	err = repo.WithTx(ctx, a.UserRepo.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.UserRepo.EntCli, func(tx *entscheme.Tx) error {
 		addUserRoles, delUserRoles := a.compareUserRoles(ctx, oldItem.UserRoles, item.UserRoles)
 
 		// 添加的

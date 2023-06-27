@@ -8,14 +8,14 @@ import (
 
 	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysdistrict"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/jszwec/csvutil"
 	"github.com/ttacon/chalk"
 )
 
-func Load_district_data(ctx context.Context, eclient *ent.Client, datafile string) error {
+func Load_district_data(ctx context.Context, eclient *entscheme.Client, datafile string) error {
 
 	greenOnWhite := chalk.Green.NewStyle().WithBackground(chalk.White)
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
@@ -98,7 +98,7 @@ func Load_district_data(ctx context.Context, eclient *ent.Client, datafile strin
 
 		// log.Println(cyanOnBlue, "===--  : ", item.Ids, " ", *district.MergeSname, " ", item.MergeSname, chalk.Reset)
 
-		var pdistrict *ent.SysDistrict = nil
+		var pdistrict *entscheme.SysDistrict = nil
 
 		if item.TreeLevel > 1 {
 			log.Println(" ---------- ======== ", item.ParentID)

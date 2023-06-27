@@ -8,9 +8,9 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysrole"
-	"github.com/heromicro/omgind/internal/gen/ent/sysuserrole"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysrole"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysuserrole"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -20,16 +20,16 @@ var RoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 
 // Role 角色存储
 type Role struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 }
 
-func ToSchemaRole(role *ent.SysRole) *schema.Role {
+func ToSchemaRole(role *entscheme.SysRole) *schema.Role {
 	item := new(schema.Role)
 	structure.Copy(role, item)
 	return item
 }
 
-func ToSchemaRoles(roles ent.SysRoles) []*schema.Role {
+func ToSchemaRoles(roles entscheme.SysRoles) []*schema.Role {
 	list := make([]*schema.Role, len(roles))
 	for i, item := range roles {
 		list[i] = ToSchemaRole(item)
@@ -37,15 +37,15 @@ func ToSchemaRoles(roles ent.SysRoles) []*schema.Role {
 	return list
 }
 
-func ToEntCreateSysRoleInput(schrole *schema.Role) *ent.CreateSysRoleInput {
-	createinput := new(ent.CreateSysRoleInput)
+func ToEntCreateSysRoleInput(schrole *schema.Role) *entscheme.CreateSysRoleInput {
+	createinput := new(entscheme.CreateSysRoleInput)
 	structure.Copy(schrole, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysRoleInput(schrole *schema.Role) *ent.UpdateSysRoleInput {
-	updateinput := new(ent.UpdateSysRoleInput)
+func ToEntUpdateSysRoleInput(schrole *schema.Role) *entscheme.UpdateSysRoleInput {
+	updateinput := new(entscheme.UpdateSysRoleInput)
 	structure.Copy(schrole, &updateinput)
 
 	return updateinput
@@ -121,7 +121,7 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := ent.SysRoles(list)
+	rlist := entscheme.SysRoles(list)
 
 	qr := &schema.RoleQueryResult{
 		PageResult: pr,

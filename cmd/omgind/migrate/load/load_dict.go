@@ -7,15 +7,15 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysdict"
-	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysdict"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysdictitem"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/ttacon/chalk"
 	"gopkg.in/yaml.v2"
 )
 
-func Load_dict_data(ctx context.Context, eclient *ent.Client, filename string) error {
+func Load_dict_data(ctx context.Context, eclient *entscheme.Client, filename string) error {
 
 	greenOnWhite := chalk.Blue.NewStyle().WithBackground(chalk.White)
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
@@ -35,10 +35,10 @@ func Load_dict_data(ctx context.Context, eclient *ent.Client, filename string) e
 		return err
 	}
 
-	var dictBulk []*ent.SysDictCreate
-	var dictItemBulk []*ent.SysDictItemCreate
+	var dictBulk []*entscheme.SysDictCreate
+	var dictItemBulk []*entscheme.SysDictItemCreate
 
-	err = repo.WithTx(ctx, eclient, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, eclient, func(tx *entscheme.Tx) error {
 
 		for _, d := range dicts {
 			for _, di := range d.Items {

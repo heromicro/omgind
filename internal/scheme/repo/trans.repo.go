@@ -3,9 +3,8 @@ package repo
 import (
 	"context"
 
+	"github.com/heromicro/omgind/internal/gen/entscheme"
 	"github.com/pkg/errors"
-
-	"github.com/heromicro/omgind/internal/gen/ent"
 )
 
 // TransSet 注入Trans
@@ -13,7 +12,7 @@ import (
 
 // Trans 事务管理
 // type Trans struct {
-// 	EntCli *ent.Client
+// 	EntCli *entscheme.Client
 // }
 
 //
@@ -30,7 +29,7 @@ import (
 //}
 
 // WithTx best Practices, reusable function that runs callbacks in a transaction
-func WithTx(ctx context.Context, client *ent.Client, fn func(tx *ent.Tx) error) error {
+func WithTx(ctx context.Context, client *entscheme.Client, fn func(tx *entscheme.Tx) error) error {
 
 	tx, err := client.Tx(ctx)
 	if err != nil {

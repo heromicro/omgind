@@ -7,14 +7,14 @@ import (
 	"os"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysrolemenu"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysrolemenu"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/ttacon/chalk"
 	"gopkg.in/yaml.v2"
 )
 
-func Dump_role_menu(ctx context.Context, eclient *ent.Client, datafile string) error {
+func Dump_role_menu(ctx context.Context, eclient *entscheme.Client, datafile string) error {
 
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
 	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
@@ -47,7 +47,7 @@ func Dump_role_menu(ctx context.Context, eclient *ent.Client, datafile string) e
 
 		query := eclient.SysRoleMenu.Query()
 
-		query = query.Order(ent.Asc(sysrolemenu.FieldID), ent.Asc(sysrolemenu.FieldIsDel))
+		query = query.Order(entscheme.Asc(sysrolemenu.FieldID), entscheme.Asc(sysrolemenu.FieldIsDel))
 
 		r_rolemenus, err := query.Limit(pageSize).Offset(offset).All(ctx)
 		if err != nil {

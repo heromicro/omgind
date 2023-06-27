@@ -7,9 +7,9 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
-	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysaddress"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -19,11 +19,11 @@ var OrgOrganSet = wire.NewSet(wire.Struct(new(OrgOrgan), "*"))
 
 // OrgOrgan 组织管理存储
 type OrgOrgan struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 }
 
 // ToSchemaOrgOrgan 转换为
-func ToSchemaOrgOrganShow(et *ent.OrgOrgan) *schema.OrgOrganShow {
+func ToSchemaOrgOrganShow(et *entscheme.OrgOrgan) *schema.OrgOrganShow {
 	item := new(schema.OrgOrganShow)
 
 	structure.Copy(et, item)
@@ -33,7 +33,7 @@ func ToSchemaOrgOrganShow(et *ent.OrgOrgan) *schema.OrgOrganShow {
 	return item
 }
 
-func ToSchemaOrgOrgan(et *ent.OrgOrgan) *schema.OrgOrgan {
+func ToSchemaOrgOrgan(et *entscheme.OrgOrgan) *schema.OrgOrgan {
 	item := new(schema.OrgOrgan)
 
 	structure.Copy(et, item)
@@ -43,7 +43,7 @@ func ToSchemaOrgOrgan(et *ent.OrgOrgan) *schema.OrgOrgan {
 	return item
 }
 
-func ToSchemaOrgOrgans(ets ent.OrgOrgans) []*schema.OrgOrgan {
+func ToSchemaOrgOrgans(ets entscheme.OrgOrgans) []*schema.OrgOrgan {
 	list := make([]*schema.OrgOrgan, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaOrgOrgan(item)
@@ -51,15 +51,15 @@ func ToSchemaOrgOrgans(ets ent.OrgOrgans) []*schema.OrgOrgan {
 	return list
 }
 
-func ToEntCreateOrgOrganInput(sch *schema.OrgOrgan) *ent.CreateOrgOrganInput {
-	createinput := new(ent.CreateOrgOrganInput)
+func ToEntCreateOrgOrganInput(sch *schema.OrgOrgan) *entscheme.CreateOrgOrganInput {
+	createinput := new(entscheme.CreateOrgOrganInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateOrgOrganInput(sch *schema.OrgOrgan) *ent.UpdateOrgOrganInput {
-	updateinput := new(ent.UpdateOrgOrganInput)
+func ToEntUpdateOrgOrganInput(sch *schema.OrgOrgan) *entscheme.UpdateOrgOrganInput {
+	updateinput := new(entscheme.UpdateOrgOrganInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -80,7 +80,7 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 	query := a.EntCli.OrgOrgan.Query()
 
 	// if opt.FieldsAll || (slices.Contains(opt.FieldsIncludes, orgorgan.EdgeHaddr) && !slices.Contains(opt.FieldsExcludes, orgorgan.EdgeHaddr)) {
-	query = query.WithHaddr(func(saq *ent.SysAddressQuery) {
+	query = query.WithHaddr(func(saq *entscheme.SysAddressQuery) {
 		saq.Select(sysaddress.FieldID, sysaddress.FieldCountry, sysaddress.FieldCountryID, sysaddress.FieldProvince, sysaddress.FieldProvinceID, sysaddress.FieldCity, sysaddress.FieldCityID, sysaddress.FieldCounty, sysaddress.FieldCountyID, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldFirstName, sysaddress.FieldLastName, sysaddress.FieldDaddr, sysaddress.FieldZipCode)
 	})
 	// }
@@ -126,12 +126,12 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 	}
 	query = query.Limit(params.Limit()).Offset(params.Offset())
 
-	var query_select *ent.OrgOrganSelect
+	var query_select *entscheme.OrgOrganSelect
 	if len(opt.FieldsIncludes) > 0 {
 		query_select = query.Select(opt.FieldsIncludes...)
 	}
 
-	var list []*ent.OrgOrgan
+	var list []*entscheme.OrgOrgan
 	if query_select != nil {
 		list, err = query_select.All(ctx)
 	} else {
@@ -201,7 +201,7 @@ func (a *OrgOrgan) QuerySelect(ctx context.Context, params schema.OrgOrganQueryP
 	}
 	query = query.Limit(params.Limit()).Offset(params.Offset())
 
-	var query_select *ent.OrgOrganSelect
+	var query_select *entscheme.OrgOrganSelect
 	if opt.FieldsIncludes != nil {
 		query_select = query.Select(opt.FieldsIncludes...)
 	}
@@ -224,7 +224,7 @@ func (a *OrgOrgan) Get(ctx context.Context, id string, opts ...schema.OrgOrganQu
 
 	r_orgorgan, err := a.EntCli.OrgOrgan.Query().Where(orgorgan.IDEQ(id)).WithHaddr().Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if entscheme.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -238,7 +238,7 @@ func (a *OrgOrgan) View(ctx context.Context, id string, opts ...schema.OrgOrganQ
 
 	r_orgorgan, err := a.EntCli.OrgOrgan.Query().Where(orgorgan.IDEQ(id)).WithHaddr().Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if entscheme.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err

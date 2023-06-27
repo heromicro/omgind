@@ -7,8 +7,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysaddress"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -18,17 +18,17 @@ var SysAddressSet = wire.NewSet(wire.Struct(new(SysAddress), "*"))
 
 // SysAddress 地址管理存储
 type SysAddress struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 }
 
 // ToSchemaSysAddress 转换为
-func ToSchemaSysAddress(et *ent.SysAddress) *schema.SysAddress {
+func ToSchemaSysAddress(et *entscheme.SysAddress) *schema.SysAddress {
 	item := new(schema.SysAddress)
 	structure.Copy(et, item)
 	return item
 }
 
-func ToSchemaSysAddresses(ets ent.SysAddresses) []*schema.SysAddress {
+func ToSchemaSysAddresses(ets entscheme.SysAddresses) []*schema.SysAddress {
 	list := make([]*schema.SysAddress, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaSysAddress(item)
@@ -36,15 +36,15 @@ func ToSchemaSysAddresses(ets ent.SysAddresses) []*schema.SysAddress {
 	return list
 }
 
-func ToEntCreateSysAddressInput(sch *schema.SysAddress) *ent.CreateSysAddressInput {
-	createinput := new(ent.CreateSysAddressInput)
+func ToEntCreateSysAddressInput(sch *schema.SysAddress) *entscheme.CreateSysAddressInput {
+	createinput := new(entscheme.CreateSysAddressInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysAddressInput(sch *schema.SysAddress) *ent.UpdateSysAddressInput {
-	updateinput := new(ent.UpdateSysAddressInput)
+func ToEntUpdateSysAddressInput(sch *schema.SysAddress) *entscheme.UpdateSysAddressInput {
+	updateinput := new(entscheme.UpdateSysAddressInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -141,7 +141,7 @@ func (a *SysAddress) Get(ctx context.Context, id string, opts ...schema.SysAddre
 
 	r_sysaddress, err := a.EntCli.SysAddress.Query().Where(sysaddress.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if _, ok := err.(*ent.NotFoundError); ok {
+		if _, ok := err.(*entscheme.NotFoundError); ok {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -155,7 +155,7 @@ func (a *SysAddress) View(ctx context.Context, id string, opts ...schema.SysAddr
 
 	r_sysaddress, err := a.EntCli.SysAddress.Query().Where(sysaddress.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if _, ok := err.(*ent.NotFoundError); ok {
+		if _, ok := err.(*entscheme.NotFoundError); ok {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err

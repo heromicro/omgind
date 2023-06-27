@@ -9,9 +9,9 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuaction"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuactionresource"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -21,17 +21,17 @@ var MenuActionResourceSet = wire.NewSet(wire.Struct(new(MenuActionResource), "*"
 
 // MenuActionResource 菜单动作关联资源存储
 type MenuActionResource struct {
-	EntCli *ent.Client
-	//TxCli *ent.Tx
+	EntCli *entscheme.Client
+	//TxCli *entscheme.Tx
 }
 
-func ToSchemaSysMenuActionResource(ma *ent.SysMenuActionResource) *schema.MenuActionResource {
+func ToSchemaSysMenuActionResource(ma *entscheme.SysMenuActionResource) *schema.MenuActionResource {
 	item := new(schema.MenuActionResource)
 	structure.Copy(ma, item)
 	return item
 }
 
-func ToSchemaSysMenuActionResources(mas ent.SysMenuActionResources) []*schema.
+func ToSchemaSysMenuActionResources(mas entscheme.SysMenuActionResources) []*schema.
 	MenuActionResource {
 	list := make([]*schema.MenuActionResource, len(mas))
 	for i, item := range mas {
@@ -40,15 +40,15 @@ func ToSchemaSysMenuActionResources(mas ent.SysMenuActionResources) []*schema.
 	return list
 }
 
-func ToEntCreateSysMenuActionResourceInput(ma *schema.MenuActionResource) *ent.CreateSysMenuActionResourceInput {
-	createinput := new(ent.CreateSysMenuActionResourceInput)
+func ToEntCreateSysMenuActionResourceInput(ma *schema.MenuActionResource) *entscheme.CreateSysMenuActionResourceInput {
+	createinput := new(entscheme.CreateSysMenuActionResourceInput)
 	structure.Copy(ma, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysMenuActionResourceInput(ma *schema.MenuActionResource) *ent.UpdateSysMenuActionResourceInput {
-	updateinput := new(ent.UpdateSysMenuActionResourceInput)
+func ToEntUpdateSysMenuActionResourceInput(ma *schema.MenuActionResource) *entscheme.UpdateSysMenuActionResourceInput {
+	updateinput := new(entscheme.UpdateSysMenuActionResourceInput)
 	structure.Copy(ma, &updateinput)
 
 	return updateinput
@@ -120,7 +120,7 @@ func (a *MenuActionResource) Query(ctx context.Context, params schema.MenuAction
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := ent.SysMenuActionResources(list)
+	rlist := entscheme.SysMenuActionResources(list)
 
 	qr := &schema.MenuActionResourceQueryResult{
 		PageResult: pr,

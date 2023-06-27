@@ -6,9 +6,9 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
-	"github.com/heromicro/omgind/internal/gen/ent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysaddress"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -18,7 +18,7 @@ var OrgOrganSet = wire.NewSet(wire.Struct(new(OrgOrgan), "*"))
 
 // OrgOrgan 组织管理
 type OrgOrgan struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 
 	OrgOrganRepo *repo.OrgOrgan
 
@@ -66,14 +66,14 @@ func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.Or
 	item.Haddr = nil
 	organ_iteminput := repo.ToEntCreateOrgOrganInput(&item)
 
-	var rr_orgorgan *ent.OrgOrgan
+	var rr_orgorgan *entscheme.OrgOrgan
 
 	la_tree_id, err := a.OrgDeptRepo.GetLatestTreeID(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
 
 		r_addr, err := tx.SysAddress.Create().SetInput(*addr_iteminput).Save(ctx)
 		if err != nil {
@@ -123,8 +123,8 @@ func (a *OrgOrgan) Update(ctx context.Context, id string, item schema.OrgOrgan) 
 	item.Haddr = nil
 	organ_iteminput := repo.ToEntUpdateOrgOrganInput(&item)
 
-	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
-		var haddr *ent.SysAddress
+	err = repo.WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+		var haddr *entscheme.SysAddress
 		if v := oitem.HaddrID; v != nil {
 			_, err := tx.SysAddress.Update().Where(sysaddress.IDEQ(*v)).SetInput(*addr_update_input).Save(ctx)
 			if err != nil {

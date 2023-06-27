@@ -7,16 +7,16 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenu"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuaction"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/ttacon/chalk"
 	"gopkg.in/yaml.v2"
 )
 
-func Load_role_data(ctx context.Context, eclient *ent.Client, filename string) error {
+func Load_role_data(ctx context.Context, eclient *entscheme.Client, filename string) error {
 
 	greenOnWhite := chalk.Green.NewStyle().WithBackground(chalk.White)
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
@@ -35,11 +35,11 @@ func Load_role_data(ctx context.Context, eclient *ent.Client, filename string) e
 		return err
 	}
 
-	var menuBulk []*ent.SysMenuCreate
-	var actionBulk []*ent.SysMenuActionCreate
-	var resourceBulk []*ent.SysMenuActionResourceCreate
+	var menuBulk []*entscheme.SysMenuCreate
+	var actionBulk []*entscheme.SysMenuActionCreate
+	var resourceBulk []*entscheme.SysMenuActionResourceCreate
 
-	err = repo.WithTx(ctx, eclient, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, eclient, func(tx *entscheme.Tx) error {
 
 		for _, m := range menus {
 

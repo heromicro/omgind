@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
-	"github.com/heromicro/omgind/internal/gen/ent/orgposition"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/entscheme/orgposition"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 
@@ -19,11 +19,11 @@ var OrgPositionSet = wire.NewSet(wire.Struct(new(OrgPosition), "*"))
 
 // OrgPosition 职位管理存储
 type OrgPosition struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 }
 
 // ToSchemaOrgPosition 转换为
-func ToSchemaOrgPosition(et *ent.OrgPosition) *schema.OrgPosition {
+func ToSchemaOrgPosition(et *entscheme.OrgPosition) *schema.OrgPosition {
 	item := new(schema.OrgPosition)
 	structure.Copy(et, item)
 
@@ -35,7 +35,7 @@ func ToSchemaOrgPosition(et *ent.OrgPosition) *schema.OrgPosition {
 	return item
 }
 
-func ToSchemaOrgPositions(ets ent.OrgPositions) []*schema.OrgPosition {
+func ToSchemaOrgPositions(ets entscheme.OrgPositions) []*schema.OrgPosition {
 	list := make([]*schema.OrgPosition, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaOrgPosition(item)
@@ -43,15 +43,15 @@ func ToSchemaOrgPositions(ets ent.OrgPositions) []*schema.OrgPosition {
 	return list
 }
 
-func ToEntCreateOrgPositionInput(sch *schema.OrgPosition) *ent.CreateOrgPositionInput {
-	createinput := new(ent.CreateOrgPositionInput)
+func ToEntCreateOrgPositionInput(sch *schema.OrgPosition) *entscheme.CreateOrgPositionInput {
+	createinput := new(entscheme.CreateOrgPositionInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateOrgPositionInput(sch *schema.OrgPosition) *ent.UpdateOrgPositionInput {
-	updateinput := new(ent.UpdateOrgPositionInput)
+func ToEntUpdateOrgPositionInput(sch *schema.OrgPosition) *entscheme.UpdateOrgPositionInput {
+	updateinput := new(entscheme.UpdateOrgPositionInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -69,7 +69,7 @@ func (a *OrgPosition) getQueryOption(opts ...schema.OrgPositionQueryOptions) sch
 func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryParam, opts ...schema.OrgPositionQueryOptions) (*schema.OrgPositionQueryResult, error) {
 	// opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
 	})
 
@@ -134,12 +134,12 @@ func (a *OrgPosition) Query(ctx context.Context, params schema.OrgPositionQueryP
 // Get 查询指定数据
 func (a *OrgPosition) Get(ctx context.Context, id string, opts ...schema.OrgPositionQueryOptions) (*schema.OrgPosition, error) {
 
-	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo)
 	})
 	r_orgposition, err := query.Where(orgposition.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if entscheme.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -151,12 +151,12 @@ func (a *OrgPosition) Get(ctx context.Context, id string, opts ...schema.OrgPosi
 // View 查询指定数据
 func (a *OrgPosition) View(ctx context.Context, id string, opts ...schema.OrgPositionQueryOptions) (*schema.OrgPosition, error) {
 
-	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+	query := a.EntCli.OrgPosition.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo)
 	})
 	r_orgposition, err := query.Where(orgposition.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if entscheme.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err

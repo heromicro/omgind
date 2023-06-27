@@ -13,9 +13,9 @@ import (
 	"github.com/jossef/format"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
-	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/orgdept"
+	"github.com/heromicro/omgind/internal/gen/entscheme/orgorgan"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
@@ -29,7 +29,7 @@ var OrgDeptSet = wire.NewSet(NewOrgDeptSrv)
 
 // OrgDept 部门管理
 type OrgDept struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 
 	OrgDeptRepo *repo.OrgDept
 
@@ -37,7 +37,7 @@ type OrgDept struct {
 	consumer *worker.Consumer
 }
 
-func NewOrgDeptSrv(entCli *ent.Client, deptRepo *repo.OrgDept, q queue.Queuer, c *worker.Consumer) *OrgDept {
+func NewOrgDeptSrv(entCli *entscheme.Client, deptRepo *repo.OrgDept, q queue.Queuer, c *worker.Consumer) *OrgDept {
 
 	depSrv := &OrgDept{
 		EntCli:      entCli,
@@ -58,13 +58,13 @@ func (s *OrgDept) ProcessTask(ctx context.Context, t *asynq.Task) error {
 
 	log.Println(" -------- ==== id : ", id)
 
-	parent, err := s.EntCli.OrgDept.Query().Where(orgdept.IDEQ(id)).WithChildren(func(sdq *ent.OrgDeptQuery) {
+	parent, err := s.EntCli.OrgDept.Query().Where(orgdept.IDEQ(id)).WithChildren(func(sdq *entscheme.OrgDeptQuery) {
 		sdq.Where(orgdept.IsDel(false)).Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldIsLeaf, orgdept.FieldTreeLeft, orgdept.FieldTreeRight, orgdept.FieldParentID)
 
 	}).First(ctx)
 
 	if err != nil {
-		if !ent.IsNotFound(err) {
+		if !entscheme.IsNotFound(err) {
 			return err
 		}
 	}
@@ -180,7 +180,7 @@ func (a *OrgDept) Create(ctx context.Context, item schema.OrgDept) (*schema.OrgD
 		return nil, err
 	}
 
-	var parent *ent.OrgDept
+	var parent *entscheme.OrgDept
 	if item.ParentID != nil && *item.ParentID != "" {
 		parent, err = a.EntCli.OrgDept.Query().Where(orgdept.IDEQ(*item.ParentID), orgdept.OrgIDEQ(organ.ID)).Only(ctx)
 		if err != nil {
@@ -191,7 +191,7 @@ func (a *OrgDept) Create(ctx context.Context, item schema.OrgDept) (*schema.OrgD
 	if parent == nil || item.ParentID == nil || *item.ParentID == "" {
 		parent, err = a.EntCli.OrgDept.Query().Where(orgdept.OrgIDEQ(*item.OrgID), orgdept.TreeLeftEQ(1), orgdept.TreeLevelEQ(1)).Only(ctx)
 		if err != nil {
-			if ent.IsNotFound(err) {
+			if entscheme.IsNotFound(err) {
 				la_tree_id, err := a.OrgDeptRepo.GetLatestTreeID(ctx)
 				if err != nil {
 					return nil, err
@@ -230,8 +230,8 @@ func (a *OrgDept) Create(ctx context.Context, item schema.OrgDept) (*schema.OrgD
 
 	dept_create_input := repo.ToEntCreateOrgDeptInput(&item)
 
-	var res_dept *ent.OrgDept
-	err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+	var res_dept *entscheme.OrgDept
+	err = repo.WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
 
 		res_dept, err = tx.OrgDept.Create().SetInput(*dept_create_input).Save(ctx)
 
@@ -402,7 +402,7 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 
 		iteminput := repo.ToEntUpdateOrgDeptInput(&item)
 
-		err = repo.WithTx(ctx, a.EntCli, func(tx *ent.Tx) error {
+		err = repo.WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
 
 			// repair old parent's left/right
 			_, err := tx.OrgDept.Update().Where(orgdept.TreeIDEQ(*oparent.TreeID), orgdept.TreeLeftGT(*oparent.TreeRight), orgdept.TreeLeftLTE(*nparent.TreeLeft)).AddTreeLeft(-d1).Save(ctx)

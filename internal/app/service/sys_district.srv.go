@@ -11,8 +11,8 @@ import (
 	"github.com/jossef/format"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysdistrict"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysdistrict"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
@@ -26,14 +26,14 @@ var SysDistrictSet = wire.NewSet(NewSysDistrictSrv)
 
 // SysDistrict 行政区域
 type SysDistrict struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 
 	SysDistrictRepo *repo.SysDistrict
 	Queue           queue.Queuer
 	consumer        *worker.Consumer
 }
 
-func NewSysDistrictSrv(entCli *ent.Client, districtRepo *repo.SysDistrict, q queue.Queuer, c *worker.Consumer) *SysDistrict {
+func NewSysDistrictSrv(entCli *entscheme.Client, districtRepo *repo.SysDistrict, q queue.Queuer, c *worker.Consumer) *SysDistrict {
 
 	districtSrv := &SysDistrict{
 		EntCli:          entCli,
@@ -54,13 +54,13 @@ func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
 	// log.Println(" --- ---- === = ", t.Type())
 	id := string(t.Payload())
 
-	parent, err := s.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).WithChildren(func(sdq *ent.SysDistrictQuery) {
+	parent, err := s.EntCli.SysDistrict.Query().Where(sysdistrict.IDEQ(id)).WithChildren(func(sdq *entscheme.SysDistrictQuery) {
 		sdq.Where(sysdistrict.IsDel(false)).Select(sysdistrict.FieldID, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldName, sysdistrict.FieldSname, sysdistrict.FieldIsLeaf, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight, sysdistrict.FieldParentID)
 
 	}).First(ctx)
 
 	if err != nil {
-		if !ent.IsNotFound(err) {
+		if !entscheme.IsNotFound(err) {
 			return err
 		}
 	}

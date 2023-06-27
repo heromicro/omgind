@@ -7,8 +7,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysdictitem"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/str"
@@ -18,7 +18,7 @@ var DictSet = wire.NewSet(wire.Struct(new(Dict), "*"))
 
 // Demo 示例程序
 type Dict struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 
 	DictRepo *repo.Dict
 }
@@ -86,7 +86,7 @@ func (a *Dict) Create(ctx context.Context, item schema.Dict) (*schema.IDResult, 
 	item.NameEn = str.RemoveDuplicateBlank(item.NameEn)
 	item.NameCn = str.RemoveDuplicateBlank(item.NameCn)
 
-	err := repo.WithTx(ctx, a.DictRepo.EntCli, func(tx *ent.Tx) error {
+	err := repo.WithTx(ctx, a.DictRepo.EntCli, func(tx *entscheme.Tx) error {
 
 		dictInput := repo.ToEntCreateSysDictInput(&item)
 		dictInput.CreatedAt = nil
@@ -140,7 +140,7 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) (*schema
 
 	addItems, delItems, updateItems := a.compareDictItems(ctx, oldItem.Items, item.Items)
 
-	err1 := repo.WithTx(ctx, a.DictRepo.EntCli, func(tx *ent.Tx) error {
+	err1 := repo.WithTx(ctx, a.DictRepo.EntCli, func(tx *entscheme.Tx) error {
 
 		// 添加
 		for _, itm := range addItems {

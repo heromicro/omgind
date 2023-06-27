@@ -1,9 +1,7 @@
 package resolver
 
-import (
-	"github.com/heromicro/omgind/internal/gen/ent"
-)
+import "github.com/heromicro/omgind/internal/gen/entscheme"
 
 type Resolver struct {
-	EntClient *ent.Client
+	EntClient *entscheme.Client
 }

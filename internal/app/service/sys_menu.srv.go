@@ -13,9 +13,9 @@ import (
 	"github.com/jossef/format"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenu"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/yaml"
@@ -30,7 +30,7 @@ var SysMenuSet = wire.NewSet(NewMenuSrv)
 
 // Menu 菜单管理
 type Menu struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 
 	MenuRepo               *repo.Menu
 	MenuActionRepo         *repo.MenuAction
@@ -40,7 +40,7 @@ type Menu struct {
 	consumer *worker.Consumer
 }
 
-func NewMenuSrv(entCli *ent.Client, menuRepo *repo.Menu, menuActionRepo *repo.MenuAction, menuActionResourceRepo *repo.MenuActionResource, q queue.Queuer, c *worker.Consumer) *Menu {
+func NewMenuSrv(entCli *entscheme.Client, menuRepo *repo.Menu, menuActionRepo *repo.MenuAction, menuActionResourceRepo *repo.MenuActionResource, q queue.Queuer, c *worker.Consumer) *Menu {
 
 	menuSrv := &Menu{
 		EntCli:                 entCli,
@@ -70,17 +70,17 @@ func (s *Menu) ProcessTask(ctx context.Context, t *asynq.Task) error {
 
 	zmenu, err := s.EntCli.SysMenu.Query().Where(sysmenu.IDEQ(id)).First(ctx)
 	if err != nil {
-		if !ent.IsNotFound(err) {
+		if !entscheme.IsNotFound(err) {
 			return err
 		}
 	}
 
-	var parent *ent.SysMenu = nil
+	var parent *entscheme.SysMenu = nil
 	if zmenu.ParentID != nil && *zmenu.ParentID != "" {
 		parent, err = s.EntCli.SysMenu.Query().Where(sysmenu.IDEQ(*zmenu.ParentID)).First(ctx)
 		if err != nil {
 
-			if !ent.IsNotFound(err) {
+			if !entscheme.IsNotFound(err) {
 
 				return err
 			}
@@ -111,7 +111,7 @@ func (s *Menu) ProcessTask(ctx context.Context, t *asynq.Task) error {
 		submenus, err := s.EntCli.SysMenu.Query().Where(sysmenu.ParentIDEQ(id)).Where(sysmenu.IsDelEQ(false)).All(ctx)
 		if err != nil {
 			log.Println(" ----- ==== --- err - ", err)
-			if !ent.IsNotFound(err) {
+			if !entscheme.IsNotFound(err) {
 				return err
 			}
 		}
@@ -119,11 +119,11 @@ func (s *Menu) ProcessTask(ctx context.Context, t *asynq.Task) error {
 		if len(submenus) > 0 {
 
 			ppath := s.joinParentPath(*zmenu.ParentPath, zmenu.ID)
-			err := repo.WithTx(ctx, s.EntCli, func(tx *ent.Tx) error {
+			err := repo.WithTx(ctx, s.EntCli, func(tx *entscheme.Tx) error {
 
 				_, err := tx.SysMenu.Update().Where(sysmenu.ParentIDEQ(zmenu.ID)).SetParentPath(ppath).SetLevel(zmenu.Level + 1).Save(ctx)
 				if err != nil {
-					if !ent.IsNotFound(err) {
+					if !entscheme.IsNotFound(err) {
 						return err
 					}
 				}
@@ -406,7 +406,7 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, 
 		item.ParentID = nil
 	}
 
-	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *entscheme.Tx) error {
 
 		menuinput := repo.ToEntCreateSysMenuInput(&item)
 		amenu, err := tx.SysMenu.Create().SetInput(*menuinput).Save(ctx)
@@ -435,7 +435,7 @@ func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, 
 }
 
 // 创建动作数据
-func (a *Menu) createActionsTx(ctx context.Context, tx *ent.Tx, menuID string, items schema.MenuActions) error {
+func (a *Menu) createActionsTx(ctx context.Context, tx *entscheme.Tx, menuID string, items schema.MenuActions) error {
 
 	for _, actitem := range items {
 		actitem.MenuID = menuID
@@ -547,7 +547,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 		item.IsLeaf = oldItem.IsLeaf
 
 		menuinput := repo.ToEntUpdateSysMenuInput(&item)
-		err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
+		err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *entscheme.Tx) error {
 
 			_, err = tx.SysMenu.UpdateOneID(id).SetInput(*menuinput).Save(ctx)
 			if err != nil {
@@ -607,7 +607,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 		menuinput := repo.ToEntUpdateSysMenuInput(&item)
 		menuinput.ClearParentID = true
 
-		err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
+		err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *entscheme.Tx) error {
 
 			_, err = tx.SysMenu.UpdateOneID(id).SetInput(*menuinput).Save(ctx)
 			if err != nil {
@@ -662,7 +662,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 }
 
 // 更新动作数据
-func (a *Menu) updateActions(ctx context.Context, tx *ent.Tx, menuID string, oldItems,
+func (a *Menu) updateActions(ctx context.Context, tx *entscheme.Tx, menuID string, oldItems,
 	newItems schema.MenuActions) error {
 	addActions, delActions, updateActions := a.compareActions(ctx, oldItems, newItems)
 
@@ -762,7 +762,7 @@ func (a *Menu) compareResources(ctx context.Context, oldResources, newResources 
 }
 
 // 检查并更新下级节点的父级路径
-func (a *Menu) updateChildParentPath(ctx context.Context, tx *ent.Tx, oldItem, newItem schema.Menu) error {
+func (a *Menu) updateChildParentPath(ctx context.Context, tx *entscheme.Tx, oldItem, newItem schema.Menu) error {
 	if oldItem.ParentID == newItem.ParentID {
 		return nil
 	}
@@ -810,12 +810,12 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 		MenuID: id,
 	})
 	if err != nil {
-		if !ent.IsNotFound(err) {
+		if !entscheme.IsNotFound(err) {
 			return err
 		}
 	}
 
-	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *ent.Tx) error {
+	err = repo.WithTx(ctx, a.MenuRepo.EntCli, func(tx *entscheme.Tx) error {
 
 		ma_ids := make([]string, len(ma_result.Data))
 		for i, nit := range ma_result.Data {

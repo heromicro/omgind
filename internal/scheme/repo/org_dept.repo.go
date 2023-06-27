@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/orgdept"
-	"github.com/heromicro/omgind/internal/gen/ent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/orgdept"
+	"github.com/heromicro/omgind/internal/gen/entscheme/orgorgan"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 
@@ -19,11 +19,11 @@ var OrgDeptSet = wire.NewSet(wire.Struct(new(OrgDept), "*"))
 
 // OrgDept 部门管理存储
 type OrgDept struct {
-	EntCli *ent.Client
+	EntCli *entscheme.Client
 }
 
 // ToSchemaOrgDept 转换为
-func ToSchemaOrgDept(et *ent.OrgDept) *schema.OrgDept {
+func ToSchemaOrgDept(et *entscheme.OrgDept) *schema.OrgDept {
 	item := new(schema.OrgDept)
 	structure.Copy(et, item)
 	if et.Edges.Organ != nil {
@@ -35,7 +35,7 @@ func ToSchemaOrgDept(et *ent.OrgDept) *schema.OrgDept {
 	return item
 }
 
-func ToSchemaOrgDepts(ets ent.OrgDepts) []*schema.OrgDept {
+func ToSchemaOrgDepts(ets entscheme.OrgDepts) []*schema.OrgDept {
 	list := make([]*schema.OrgDept, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaOrgDept(item)
@@ -43,15 +43,15 @@ func ToSchemaOrgDepts(ets ent.OrgDepts) []*schema.OrgDept {
 	return list
 }
 
-func ToEntCreateOrgDeptInput(sch *schema.OrgDept) *ent.CreateOrgDeptInput {
-	createinput := new(ent.CreateOrgDeptInput)
+func ToEntCreateOrgDeptInput(sch *schema.OrgDept) *entscheme.CreateOrgDeptInput {
+	createinput := new(entscheme.CreateOrgDeptInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateOrgDeptInput(sch *schema.OrgDept) *ent.UpdateOrgDeptInput {
-	updateinput := new(ent.UpdateOrgDeptInput)
+func ToEntUpdateOrgDeptInput(sch *schema.OrgDept) *entscheme.UpdateOrgDeptInput {
+	updateinput := new(entscheme.UpdateOrgDeptInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -69,7 +69,7 @@ func (a *OrgDept) getQueryOption(opts ...schema.OrgDeptQueryOptions) schema.OrgD
 func (a *OrgDept) Query(ctx context.Context, params schema.OrgDeptQueryParam, opts ...schema.OrgDeptQueryOptions) (*schema.OrgDeptQueryResult, error) {
 	// opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
 	})
 
@@ -144,14 +144,14 @@ func (a *OrgDept) Query(ctx context.Context, params schema.OrgDeptQueryParam, op
 // Get 查询指定数据
 func (a *OrgDept) Get(ctx context.Context, id string, opts ...schema.OrgDeptQueryOptions) (*schema.OrgDept, error) {
 
-	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo)
-	}).WithParent(func(odq *ent.OrgDeptQuery) {
+	}).WithParent(func(odq *entscheme.OrgDeptQuery) {
 		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreeID, orgdept.FieldTreePath)
 	})
 	r_orgdept, err := query.Where(orgdept.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if entscheme.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -163,14 +163,14 @@ func (a *OrgDept) Get(ctx context.Context, id string, opts ...schema.OrgDeptQuer
 // View 查询指定数据
 func (a *OrgDept) View(ctx context.Context, id string, opts ...schema.OrgDeptQueryOptions) (*schema.OrgDept, error) {
 
-	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *ent.OrgOrganQuery) {
+	query := a.EntCli.OrgDept.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo).WithHaddr()
-	}).WithParent(func(odq *ent.OrgDeptQuery) {
+	}).WithParent(func(odq *entscheme.OrgDeptQuery) {
 		odq.Select(orgdept.FieldID, orgdept.FieldName)
 	})
 	r_orgdept, err := query.Where(orgdept.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if entscheme.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -393,7 +393,7 @@ func (a *OrgDept) GetLatestTreeID(ctx context.Context) (int64, error) {
 	most, err := a.EntCli.OrgDept.Query().Order(orgdept.ByTreeID(OrderDirection("desc"))).Select(orgdept.FieldID, orgdept.FieldTreeID).First(ctx)
 
 	if err != nil {
-		if ent.IsNotFound(err) {
+		if entscheme.IsNotFound(err) {
 			return 1, nil
 		}
 		return -1, err

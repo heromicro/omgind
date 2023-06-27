@@ -4,8 +4,8 @@ package mixin
 
 import (
 	"entgo.io/ent"
-	// gen "github.com/heromicro/omgind/internal/gen/ent"
-	// "github.com/heromicro/omgind/internal/gen/ent/hook"
+	// gen "github.com/heromicro/omgind/internal/gen/entscheme"
+	// "github.com/heromicro/omgind/internal/gen/entscheme/hook"
 )
 
 func (MpttTreeMixin) Hooks() []ent.Hook {
@@ -13,7 +13,7 @@ func (MpttTreeMixin) Hooks() []ent.Hook {
 
 		// hook.On(
 		// 	func(next ent.Mutator) ent.Mutator {
-		// 		return hook.SysDistrictFunc(func(ctx context.Context, m *gen.SysDistrictMutation) (ent.Value, error) {
+		// 		return hook.SysDistrictFunc(func(ctx context.Context, m *entscheme.SysDistrictMutation) (ent.Value, error) {
 		// 			isLeaf, ok := m.IsLeaf()
 		// 			if !ok {
 		// 				return nil, fmt.Errorf("is_leaf is not ok")
@@ -37,7 +37,7 @@ func (MpttTreeMixin) Hooks() []ent.Hook {
 
 		// hook.On(
 		// 	func(next ent.Mutator) ent.Mutator {
-		// 		return hook.SysDistrictFunc(func(ctx context.Context, m *gen.SysDistrictMutation) (ent.Value, error) {
+		// 		return hook.SysDistrictFunc(func(ctx context.Context, m *entscheme.SysDistrictMutation) (ent.Value, error) {
 		// 			treeLevel, ok := m.TreeLevel()
 		// 			if !ok {
 		// 				return nil, fmt.Errorf("tree_level is not ok")

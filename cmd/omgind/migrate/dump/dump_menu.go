@@ -7,16 +7,16 @@ import (
 	"os"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenu"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenuaction"
-	"github.com/heromicro/omgind/internal/gen/ent/sysmenuactionresource"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenu"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuaction"
+	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/ttacon/chalk"
 	"gopkg.in/yaml.v2"
 )
 
-func Dump_menu(ctx context.Context, eclient *ent.Client, datafile string) error {
+func Dump_menu(ctx context.Context, eclient *entscheme.Client, datafile string) error {
 
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
 	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
@@ -51,7 +51,7 @@ func Dump_menu(ctx context.Context, eclient *ent.Client, datafile string) error 
 
 		query := eclient.SysMenu.Query()
 
-		query = query.Order(ent.Asc(sysmenu.FieldLevel), ent.Asc(sysmenu.FieldSort))
+		query = query.Order(entscheme.Asc(sysmenu.FieldLevel), entscheme.Asc(sysmenu.FieldSort))
 
 		r_menus, err := query.Limit(pageSize).Offset(offset).All(ctx)
 		if err != nil {
@@ -61,7 +61,7 @@ func Dump_menu(ctx context.Context, eclient *ent.Client, datafile string) error 
 
 		for _, menu := range r_menus {
 
-			r_actions, err := eclient.SysMenuAction.Query().Where(sysmenuaction.MenuIDEQ(menu.ID)).Order(ent.Asc(sysmenuaction.FieldID)).All(ctx)
+			r_actions, err := eclient.SysMenuAction.Query().Where(sysmenuaction.MenuIDEQ(menu.ID)).Order(entscheme.Asc(sysmenuaction.FieldID)).All(ctx)
 			if err != nil {
 				return err
 			}
@@ -69,7 +69,7 @@ func Dump_menu(ctx context.Context, eclient *ent.Client, datafile string) error 
 			var sch_actions []*schema.MenuAction
 
 			for _, action := range r_actions {
-				r_resourceses, err := eclient.SysMenuActionResource.Query().Where(sysmenuactionresource.ActionID(action.ID)).Order(ent.Asc(sysmenuactionresource.FieldID)).All(ctx)
+				r_resourceses, err := eclient.SysMenuActionResource.Query().Where(sysmenuactionresource.ActionID(action.ID)).Order(entscheme.Asc(sysmenuactionresource.FieldID)).All(ctx)
 				if err != nil {
 					return err
 				}

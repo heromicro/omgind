@@ -1,13 +1,12 @@
 package entity
 
-import (
-	"github.com/heromicro/omgind/internal/gen/ent"
-	// "github.com/heromicro/omgind/internal/gen/ent/intercept"
-)
+import "github.com/heromicro/omgind/internal/gen/entscheme"
 
-func (s SysDict) Interceptors() []ent.Interceptor {
+// "github.com/heromicro/omgind/internal/gen/entscheme/intercept"
 
-	return []ent.Interceptor{
+func (s SysDict) Interceptors() []entscheme.Interceptor {
+
+	return []entscheme.Interceptor{
 		// intercept.TraverseFunc(func(ctx context.Context, q intercept.Query) error {
 		// 	if skip, _: = ctx.Value(); skip {
 		// 		return nil

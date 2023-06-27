@@ -7,40 +7,28 @@ import (
 	"context"
 	"fmt"
 
-	"entgo.io/ent"
-
-	gen "github.com/heromicro/omgind/internal/gen/ent"
-	"github.com/heromicro/omgind/internal/gen/ent/hook"
+	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/entscheme/hook"
 )
 
 // doc https://entgo.io/docs/hooks/#hooks-registration
 
-func (SysAddress) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysAddress) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 		//
 
 	}
 }
 
-func (SysDistrict) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysDistrict) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 		//
 
 	}
 }
 
-func (SysDictItem) Hooks() []ent.Hook {
-	return []ent.Hook{
-		//
-
-	}
-}
-
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-
-func (SysDict) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysDictItem) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 		//
 
 	}
@@ -49,12 +37,22 @@ func (SysDict) Hooks() []ent.Hook {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-func (SysLogging) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysDict) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
+		//
+
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+func (SysLogging) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 
 		hook.On(
-			func(next ent.Mutator) ent.Mutator {
-				return hook.SysLoggingFunc(func(ctx context.Context, m *gen.SysLoggingMutation) (ent.Value, error) {
+			func(next entscheme.Mutator) entscheme.Mutator {
+				return hook.SysLoggingFunc(func(ctx context.Context, m *entscheme.SysLoggingMutation) (entscheme.Value, error) {
 					_, ok := m.ID()
 					if !ok {
 						return nil, fmt.Errorf("id is not ok")
@@ -62,7 +60,7 @@ func (SysLogging) Hooks() []ent.Hook {
 					return next.Mutate(ctx, m)
 				})
 			},
-			ent.OpCreate,
+			entscheme.OpCreate,
 		),
 
 		//
@@ -73,8 +71,8 @@ func (SysLogging) Hooks() []ent.Hook {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-func (SysMenuActionResource) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysMenuActionResource) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 		//
 
 	}
@@ -83,8 +81,8 @@ func (SysMenuActionResource) Hooks() []ent.Hook {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-func (SysMenuAction) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysMenuAction) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 		//
 
 	}
@@ -93,8 +91,8 @@ func (SysMenuAction) Hooks() []ent.Hook {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-func (SysMenu) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysMenu) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 		//
 
 	}
@@ -103,8 +101,8 @@ func (SysMenu) Hooks() []ent.Hook {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-func (SysRole) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysRole) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 		//
 
 	}
@@ -113,8 +111,8 @@ func (SysRole) Hooks() []ent.Hook {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-func (SysUser) Hooks() []ent.Hook {
-	return []ent.Hook{
+func (SysUser) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{
 		//
 
 	}
@@ -125,6 +123,6 @@ func (SysUser) Hooks() []ent.Hook {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-func (OrgStaff) Hooks() []ent.Hook {
-	return []ent.Hook{}
+func (OrgStaff) Hooks() []entscheme.Hook {
+	return []entscheme.Hook{}
 }
