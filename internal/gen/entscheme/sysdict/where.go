@@ -8,6 +8,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/heromicro/omgind/internal/gen/entscheme/predicate"
+	"github.com/heromicro/omgind/internal/scheme/enumtipe"
 )
 
 // ID filters vertices based on their ID field.
@@ -595,24 +596,24 @@ func DictKeyContainsFold(v string) predicate.SysDict {
 	return predicate.SysDict(sql.FieldContainsFold(FieldDictKey, v))
 }
 
-// TipeEQ applies the EQ predicate on the "tipe" field.
-func TipeEQ(v Tipe) predicate.SysDict {
-	return predicate.SysDict(sql.FieldEQ(FieldTipe, v))
+// ValTipeEQ applies the EQ predicate on the "val_tipe" field.
+func ValTipeEQ(v enumtipe.DictValueTipe) predicate.SysDict {
+	return predicate.SysDict(sql.FieldEQ(FieldValTipe, v))
 }
 
-// TipeNEQ applies the NEQ predicate on the "tipe" field.
-func TipeNEQ(v Tipe) predicate.SysDict {
-	return predicate.SysDict(sql.FieldNEQ(FieldTipe, v))
+// ValTipeNEQ applies the NEQ predicate on the "val_tipe" field.
+func ValTipeNEQ(v enumtipe.DictValueTipe) predicate.SysDict {
+	return predicate.SysDict(sql.FieldNEQ(FieldValTipe, v))
 }
 
-// TipeIn applies the In predicate on the "tipe" field.
-func TipeIn(vs ...Tipe) predicate.SysDict {
-	return predicate.SysDict(sql.FieldIn(FieldTipe, vs...))
+// ValTipeIn applies the In predicate on the "val_tipe" field.
+func ValTipeIn(vs ...enumtipe.DictValueTipe) predicate.SysDict {
+	return predicate.SysDict(sql.FieldIn(FieldValTipe, vs...))
 }
 
-// TipeNotIn applies the NotIn predicate on the "tipe" field.
-func TipeNotIn(vs ...Tipe) predicate.SysDict {
-	return predicate.SysDict(sql.FieldNotIn(FieldTipe, vs...))
+// ValTipeNotIn applies the NotIn predicate on the "val_tipe" field.
+func ValTipeNotIn(vs ...enumtipe.DictValueTipe) predicate.SysDict {
+	return predicate.SysDict(sql.FieldNotIn(FieldValTipe, vs...))
 }
 
 // HasItems applies the HasEdge predicate on the "items" edge.

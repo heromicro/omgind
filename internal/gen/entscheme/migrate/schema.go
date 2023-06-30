@@ -426,7 +426,7 @@ var (
 		{Name: "name_cn", Type: field.TypeString, Size: 128},
 		{Name: "name_en", Type: field.TypeString, Size: 128},
 		{Name: "dict_key", Type: field.TypeString, Size: 64},
-		{Name: "tipe", Type: field.TypeEnum, Enums: []string{"int", "string"}, Default: "int"},
+		{Name: "val_tipe", Type: field.TypeEnum, Enums: []string{"int", "str"}, Default: "int"},
 	}
 	// SysDictsTable holds the schema information for the "sys_dicts" table.
 	SysDictsTable = &schema.Table{

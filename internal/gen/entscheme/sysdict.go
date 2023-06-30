@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysdict"
+	"github.com/heromicro/omgind/internal/scheme/enumtipe"
 )
 
 // SysDict is the model entity for the SysDict schema.
@@ -38,7 +39,7 @@ type SysDict struct {
 	// 字典键
 	DictKey string `json:"dict_key,omitempty"`
 	// 值类型
-	Tipe sysdict.Tipe `json:"tipe,omitempty"`
+	ValTipe enumtipe.DictValueTipe `json:"tipe,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysDictQuery when eager-loading is set.
 	Edges        SysDictEdges `json:"edges"`
@@ -72,7 +73,7 @@ func (*SysDict) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case sysdict.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case sysdict.FieldID, sysdict.FieldMemo, sysdict.FieldNameCn, sysdict.FieldNameEn, sysdict.FieldDictKey, sysdict.FieldTipe:
+		case sysdict.FieldID, sysdict.FieldMemo, sysdict.FieldNameCn, sysdict.FieldNameEn, sysdict.FieldDictKey, sysdict.FieldValTipe:
 			values[i] = new(sql.NullString)
 		case sysdict.FieldCreatedAt, sysdict.FieldUpdatedAt, sysdict.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -161,11 +162,11 @@ func (sd *SysDict) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				sd.DictKey = value.String
 			}
-		case sysdict.FieldTipe:
+		case sysdict.FieldValTipe:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field tipe", values[i])
+				return fmt.Errorf("unexpected type %T for field val_tipe", values[i])
 			} else if value.Valid {
-				sd.Tipe = sysdict.Tipe(value.String)
+				sd.ValTipe = enumtipe.DictValueTipe(value.String)
 			}
 		default:
 			sd.selectValues.Set(columns[i], values[i])
@@ -246,8 +247,8 @@ func (sd *SysDict) String() string {
 	builder.WriteString("dict_key=")
 	builder.WriteString(sd.DictKey)
 	builder.WriteString(", ")
-	builder.WriteString("tipe=")
-	builder.WriteString(fmt.Sprintf("%v", sd.Tipe))
+	builder.WriteString("val_tipe=")
+	builder.WriteString(fmt.Sprintf("%v", sd.ValTipe))
 	builder.WriteByte(')')
 	return builder.String()
 }

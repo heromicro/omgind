@@ -168,6 +168,8 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 			query = query.Where(sysdict.NameCnEQ(v))
 		} else if v := params.NameEn; v != "" {
 			query = query.Where(sysdict.NameEnEQ(v))
+		} else if v := params.DictKey; v != "" {
+			query = query.Where(sysdict.DictKeyEQ(v))
 		}
 	}
 

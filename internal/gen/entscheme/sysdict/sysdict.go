@@ -8,6 +8,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/heromicro/omgind/internal/scheme/enumtipe"
 )
 
 const (
@@ -35,8 +36,8 @@ const (
 	FieldNameEn = "name_en"
 	// FieldDictKey holds the string denoting the dict_key field in the database.
 	FieldDictKey = "dict_key"
-	// FieldTipe holds the string denoting the tipe field in the database.
-	FieldTipe = "tipe"
+	// FieldValTipe holds the string denoting the val_tipe field in the database.
+	FieldValTipe = "val_tipe"
 	// EdgeItems holds the string denoting the items edge name in mutations.
 	EdgeItems = "items"
 	// Table holds the table name of the sysdict in the database.
@@ -63,7 +64,7 @@ var Columns = []string{
 	FieldNameCn,
 	FieldNameEn,
 	FieldDictKey,
-	FieldTipe,
+	FieldValTipe,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -105,29 +106,15 @@ var (
 	IDValidator func(string) error
 )
 
-// Tipe defines the type for the "tipe" enum field.
-type Tipe string
+const DefaultValTipe enumtipe.DictValueTipe = "int"
 
-// TipeInt is the default value of the Tipe enum.
-const DefaultTipe = TipeInt
-
-// Tipe values.
-const (
-	TipeInt    Tipe = "int"
-	TipeString Tipe = "string"
-)
-
-func (t Tipe) String() string {
-	return string(t)
-}
-
-// TipeValidator is a validator for the "tipe" field enum values. It is called by the builders before save.
-func TipeValidator(t Tipe) error {
-	switch t {
-	case TipeInt, TipeString:
+// ValTipeValidator is a validator for the "val_tipe" field enum values. It is called by the builders before save.
+func ValTipeValidator(vt enumtipe.DictValueTipe) error {
+	switch vt.String() {
+	case "int", "str":
 		return nil
 	default:
-		return fmt.Errorf("sysdict: invalid enum value for tipe field: %q", t)
+		return fmt.Errorf("sysdict: invalid enum value for val_tipe field: %q", vt)
 	}
 }
 
@@ -189,9 +176,9 @@ func ByDictKey(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldDictKey, opts...).ToFunc()
 }
 
-// ByTipe orders the results by the tipe field.
-func ByTipe(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTipe, opts...).ToFunc()
+// ByValTipe orders the results by the val_tipe field.
+func ByValTipe(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldValTipe, opts...).ToFunc()
 }
 
 // ByItemsCount orders the results by items count.

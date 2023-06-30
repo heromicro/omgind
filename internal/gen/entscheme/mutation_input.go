@@ -5,7 +5,7 @@ package entscheme
 import (
 	"time"
 
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysdict"
+	"github.com/heromicro/omgind/internal/scheme/enumtipe"
 )
 
 // CreateOrgDeptInput represents a mutation input for creating orgdepts.
@@ -1470,7 +1470,7 @@ type CreateSysDictInput struct {
 	NameCn    string
 	NameEn    string
 	DictKey   string
-	Tipe      *sysdict.Tipe
+	ValTipe   *enumtipe.DictValueTipe
 	Items     []string
 }
 
@@ -1500,8 +1500,8 @@ func (i *CreateSysDictInput) Mutate(m *SysDictCreate) {
 	m.SetNameCn(i.NameCn)
 	m.SetNameEn(i.NameEn)
 	m.SetDictKey(i.DictKey)
-	if v := i.Tipe; v != nil {
-		m.SetTipe(*v)
+	if v := i.ValTipe; v != nil {
+		m.SetValTipe(*v)
 	}
 	if ids := i.Items; len(ids) > 0 {
 		m.AddItemIDs(ids...)
@@ -1528,7 +1528,7 @@ type UpdateSysDictInput struct {
 	NameCn         *string
 	NameEn         *string
 	DictKey        *string
-	Tipe           *sysdict.Tipe
+	ValTipe        *enumtipe.DictValueTipe
 	AddItemIDs     []string
 	RemoveItemIDs  []string
 }
@@ -1571,8 +1571,8 @@ func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	if v := i.DictKey; v != nil {
 		m.SetDictKey(*v)
 	}
-	if v := i.Tipe; v != nil {
-		m.SetTipe(*v)
+	if v := i.ValTipe; v != nil {
+		m.SetValTipe(*v)
 	}
 	if ids := i.AddItemIDs; len(ids) > 0 {
 		m.AddItemIDs(ids...)

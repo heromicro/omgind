@@ -33,10 +33,13 @@ type DictQueryParam struct {
 
 	QueryValue string `form:"queryValue" json:"queryValue"` // 模糊查询
 
-	IDs      []string `form:"ids" json:"ids"`         // 唯一标识列表
-	NameCn   string   `form:"name_cn" json:"name_cn"` // 字典名称(中)
-	NameEn   string   `form:"name_en" json:"name_en"` // 字典名称(英)
-	WithItem *bool    `form:"wi" json:"wi"`           //
+	IDs     []string `form:"ids" json:"ids"`                                // 唯一标识列表
+	NameCn  string   `form:"name_cn" json:"name_cn"`                        // 字典名称(中)
+	NameEn  string   `form:"name_en" json:"name_en"`                        // 字典名称(英)
+	DictKey string   `form:"dict_key" json:"dict_key"`                      // 字典键
+	ValTipe string   `json:"val_tipe" bingding:"required" yaml:"val_tipe" ` // 值类型
+
+	WithItem *bool `form:"wi" json:"wi"` //
 
 	IsActive *bool `form:"is_active" json:"is_active"` //
 

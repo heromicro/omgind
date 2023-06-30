@@ -6,6 +6,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 
+	"github.com/heromicro/omgind/internal/scheme/enumtipe"
 	"github.com/heromicro/omgind/internal/scheme/mixin"
 )
 
@@ -35,7 +36,7 @@ func (sd SysDict) Fields() []ent.Field {
 		field.String("dict_key").StorageKey("dict_key").
 			MaxLen(64).StructTag(`json:"dict_key,omitempty"`).Comment("字典键"),
 
-		field.Enum("tipe").Values("int", "string").Default("int").StorageKey("tipe").StructTag(`json:"tipe,omitempty"`).Comment("值类型"),
+		field.Enum("val_tipe").GoType(enumtipe.DictValueTipe("")).Default(enumtipe.DictValueTipeInt.String()).StorageKey("val_tipe").StructTag(`json:"tipe,omitempty"`).Comment("值类型"),
 	}
 }
 

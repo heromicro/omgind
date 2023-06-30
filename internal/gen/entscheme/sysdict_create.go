@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysdict"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysdictitem"
+	"github.com/heromicro/omgind/internal/scheme/enumtipe"
 )
 
 // SysDictCreate is the builder for creating a SysDict entity.
@@ -140,16 +141,16 @@ func (sdc *SysDictCreate) SetDictKey(s string) *SysDictCreate {
 	return sdc
 }
 
-// SetTipe sets the "tipe" field.
-func (sdc *SysDictCreate) SetTipe(s sysdict.Tipe) *SysDictCreate {
-	sdc.mutation.SetTipe(s)
+// SetValTipe sets the "val_tipe" field.
+func (sdc *SysDictCreate) SetValTipe(evt enumtipe.DictValueTipe) *SysDictCreate {
+	sdc.mutation.SetValTipe(evt)
 	return sdc
 }
 
-// SetNillableTipe sets the "tipe" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableTipe(s *sysdict.Tipe) *SysDictCreate {
-	if s != nil {
-		sdc.SetTipe(*s)
+// SetNillableValTipe sets the "val_tipe" field if the given value is not nil.
+func (sdc *SysDictCreate) SetNillableValTipe(evt *enumtipe.DictValueTipe) *SysDictCreate {
+	if evt != nil {
+		sdc.SetValTipe(*evt)
 	}
 	return sdc
 }
@@ -242,9 +243,9 @@ func (sdc *SysDictCreate) defaults() {
 		v := sysdict.DefaultIsActive
 		sdc.mutation.SetIsActive(v)
 	}
-	if _, ok := sdc.mutation.Tipe(); !ok {
-		v := sysdict.DefaultTipe
-		sdc.mutation.SetTipe(v)
+	if _, ok := sdc.mutation.ValTipe(); !ok {
+		v := sysdict.DefaultValTipe
+		sdc.mutation.SetValTipe(v)
 	}
 	if _, ok := sdc.mutation.ID(); !ok {
 		v := sysdict.DefaultID()
@@ -292,12 +293,12 @@ func (sdc *SysDictCreate) check() error {
 			return &ValidationError{Name: "dict_key", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.dict_key": %w`, err)}
 		}
 	}
-	if _, ok := sdc.mutation.Tipe(); !ok {
-		return &ValidationError{Name: "tipe", err: errors.New(`entscheme: missing required field "SysDict.tipe"`)}
+	if _, ok := sdc.mutation.ValTipe(); !ok {
+		return &ValidationError{Name: "val_tipe", err: errors.New(`entscheme: missing required field "SysDict.val_tipe"`)}
 	}
-	if v, ok := sdc.mutation.Tipe(); ok {
-		if err := sysdict.TipeValidator(v); err != nil {
-			return &ValidationError{Name: "tipe", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.tipe": %w`, err)}
+	if v, ok := sdc.mutation.ValTipe(); ok {
+		if err := sysdict.ValTipeValidator(v); err != nil {
+			return &ValidationError{Name: "val_tipe", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.val_tipe": %w`, err)}
 		}
 	}
 	if v, ok := sdc.mutation.ID(); ok {
@@ -381,9 +382,9 @@ func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 		_spec.SetField(sysdict.FieldDictKey, field.TypeString, value)
 		_node.DictKey = value
 	}
-	if value, ok := sdc.mutation.Tipe(); ok {
-		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)
-		_node.Tipe = value
+	if value, ok := sdc.mutation.ValTipe(); ok {
+		_spec.SetField(sysdict.FieldValTipe, field.TypeEnum, value)
+		_node.ValTipe = value
 	}
 	if nodes := sdc.mutation.ItemsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -585,15 +586,15 @@ func (u *SysDictUpsert) UpdateDictKey() *SysDictUpsert {
 	return u
 }
 
-// SetTipe sets the "tipe" field.
-func (u *SysDictUpsert) SetTipe(v sysdict.Tipe) *SysDictUpsert {
-	u.Set(sysdict.FieldTipe, v)
+// SetValTipe sets the "val_tipe" field.
+func (u *SysDictUpsert) SetValTipe(v enumtipe.DictValueTipe) *SysDictUpsert {
+	u.Set(sysdict.FieldValTipe, v)
 	return u
 }
 
-// UpdateTipe sets the "tipe" field to the value that was provided on create.
-func (u *SysDictUpsert) UpdateTipe() *SysDictUpsert {
-	u.SetExcluded(sysdict.FieldTipe)
+// UpdateValTipe sets the "val_tipe" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateValTipe() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldValTipe)
 	return u
 }
 
@@ -802,17 +803,17 @@ func (u *SysDictUpsertOne) UpdateDictKey() *SysDictUpsertOne {
 	})
 }
 
-// SetTipe sets the "tipe" field.
-func (u *SysDictUpsertOne) SetTipe(v sysdict.Tipe) *SysDictUpsertOne {
+// SetValTipe sets the "val_tipe" field.
+func (u *SysDictUpsertOne) SetValTipe(v enumtipe.DictValueTipe) *SysDictUpsertOne {
 	return u.Update(func(s *SysDictUpsert) {
-		s.SetTipe(v)
+		s.SetValTipe(v)
 	})
 }
 
-// UpdateTipe sets the "tipe" field to the value that was provided on create.
-func (u *SysDictUpsertOne) UpdateTipe() *SysDictUpsertOne {
+// UpdateValTipe sets the "val_tipe" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateValTipe() *SysDictUpsertOne {
 	return u.Update(func(s *SysDictUpsert) {
-		s.UpdateTipe()
+		s.UpdateValTipe()
 	})
 }
 
@@ -1184,17 +1185,17 @@ func (u *SysDictUpsertBulk) UpdateDictKey() *SysDictUpsertBulk {
 	})
 }
 
-// SetTipe sets the "tipe" field.
-func (u *SysDictUpsertBulk) SetTipe(v sysdict.Tipe) *SysDictUpsertBulk {
+// SetValTipe sets the "val_tipe" field.
+func (u *SysDictUpsertBulk) SetValTipe(v enumtipe.DictValueTipe) *SysDictUpsertBulk {
 	return u.Update(func(s *SysDictUpsert) {
-		s.SetTipe(v)
+		s.SetValTipe(v)
 	})
 }
 
-// UpdateTipe sets the "tipe" field to the value that was provided on create.
-func (u *SysDictUpsertBulk) UpdateTipe() *SysDictUpsertBulk {
+// UpdateValTipe sets the "val_tipe" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateValTipe() *SysDictUpsertBulk {
 	return u.Update(func(s *SysDictUpsert) {
-		s.UpdateTipe()
+		s.UpdateValTipe()
 	})
 }
 

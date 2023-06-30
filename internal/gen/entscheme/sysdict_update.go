@@ -14,6 +14,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/entscheme/predicate"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysdict"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysdictitem"
+	"github.com/heromicro/omgind/internal/scheme/enumtipe"
 )
 
 // SysDictUpdate is the builder for updating SysDict entities.
@@ -149,16 +150,16 @@ func (sdu *SysDictUpdate) SetDictKey(s string) *SysDictUpdate {
 	return sdu
 }
 
-// SetTipe sets the "tipe" field.
-func (sdu *SysDictUpdate) SetTipe(s sysdict.Tipe) *SysDictUpdate {
-	sdu.mutation.SetTipe(s)
+// SetValTipe sets the "val_tipe" field.
+func (sdu *SysDictUpdate) SetValTipe(evt enumtipe.DictValueTipe) *SysDictUpdate {
+	sdu.mutation.SetValTipe(evt)
 	return sdu
 }
 
-// SetNillableTipe sets the "tipe" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableTipe(s *sysdict.Tipe) *SysDictUpdate {
-	if s != nil {
-		sdu.SetTipe(*s)
+// SetNillableValTipe sets the "val_tipe" field if the given value is not nil.
+func (sdu *SysDictUpdate) SetNillableValTipe(evt *enumtipe.DictValueTipe) *SysDictUpdate {
+	if evt != nil {
+		sdu.SetValTipe(*evt)
 	}
 	return sdu
 }
@@ -262,9 +263,9 @@ func (sdu *SysDictUpdate) check() error {
 			return &ValidationError{Name: "dict_key", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.dict_key": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.Tipe(); ok {
-		if err := sysdict.TipeValidator(v); err != nil {
-			return &ValidationError{Name: "tipe", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.tipe": %w`, err)}
+	if v, ok := sdu.mutation.ValTipe(); ok {
+		if err := sysdict.ValTipeValidator(v); err != nil {
+			return &ValidationError{Name: "val_tipe", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.val_tipe": %w`, err)}
 		}
 	}
 	return nil
@@ -330,8 +331,8 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := sdu.mutation.DictKey(); ok {
 		_spec.SetField(sysdict.FieldDictKey, field.TypeString, value)
 	}
-	if value, ok := sdu.mutation.Tipe(); ok {
-		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)
+	if value, ok := sdu.mutation.ValTipe(); ok {
+		_spec.SetField(sysdict.FieldValTipe, field.TypeEnum, value)
 	}
 	if sdu.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -519,16 +520,16 @@ func (sduo *SysDictUpdateOne) SetDictKey(s string) *SysDictUpdateOne {
 	return sduo
 }
 
-// SetTipe sets the "tipe" field.
-func (sduo *SysDictUpdateOne) SetTipe(s sysdict.Tipe) *SysDictUpdateOne {
-	sduo.mutation.SetTipe(s)
+// SetValTipe sets the "val_tipe" field.
+func (sduo *SysDictUpdateOne) SetValTipe(evt enumtipe.DictValueTipe) *SysDictUpdateOne {
+	sduo.mutation.SetValTipe(evt)
 	return sduo
 }
 
-// SetNillableTipe sets the "tipe" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableTipe(s *sysdict.Tipe) *SysDictUpdateOne {
-	if s != nil {
-		sduo.SetTipe(*s)
+// SetNillableValTipe sets the "val_tipe" field if the given value is not nil.
+func (sduo *SysDictUpdateOne) SetNillableValTipe(evt *enumtipe.DictValueTipe) *SysDictUpdateOne {
+	if evt != nil {
+		sduo.SetValTipe(*evt)
 	}
 	return sduo
 }
@@ -645,9 +646,9 @@ func (sduo *SysDictUpdateOne) check() error {
 			return &ValidationError{Name: "dict_key", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.dict_key": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.Tipe(); ok {
-		if err := sysdict.TipeValidator(v); err != nil {
-			return &ValidationError{Name: "tipe", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.tipe": %w`, err)}
+	if v, ok := sduo.mutation.ValTipe(); ok {
+		if err := sysdict.ValTipeValidator(v); err != nil {
+			return &ValidationError{Name: "val_tipe", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.val_tipe": %w`, err)}
 		}
 	}
 	return nil
@@ -730,8 +731,8 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 	if value, ok := sduo.mutation.DictKey(); ok {
 		_spec.SetField(sysdict.FieldDictKey, field.TypeString, value)
 	}
-	if value, ok := sduo.mutation.Tipe(); ok {
-		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)
+	if value, ok := sduo.mutation.ValTipe(); ok {
+		_spec.SetField(sysdict.FieldValTipe, field.TypeEnum, value)
 	}
 	if sduo.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{

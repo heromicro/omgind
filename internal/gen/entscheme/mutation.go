@@ -30,6 +30,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/entscheme/xxxdemo"
+	"github.com/heromicro/omgind/internal/scheme/enumtipe"
 )
 
 const (
@@ -9881,7 +9882,7 @@ type SysDictMutation struct {
 	name_cn       *string
 	name_en       *string
 	dict_key      *string
-	tipe          *sysdict.Tipe
+	val_tipe      *enumtipe.DictValueTipe
 	clearedFields map[string]struct{}
 	items         map[string]struct{}
 	removeditems  map[string]struct{}
@@ -10427,40 +10428,40 @@ func (m *SysDictMutation) ResetDictKey() {
 	m.dict_key = nil
 }
 
-// SetTipe sets the "tipe" field.
-func (m *SysDictMutation) SetTipe(s sysdict.Tipe) {
-	m.tipe = &s
+// SetValTipe sets the "val_tipe" field.
+func (m *SysDictMutation) SetValTipe(evt enumtipe.DictValueTipe) {
+	m.val_tipe = &evt
 }
 
-// Tipe returns the value of the "tipe" field in the mutation.
-func (m *SysDictMutation) Tipe() (r sysdict.Tipe, exists bool) {
-	v := m.tipe
+// ValTipe returns the value of the "val_tipe" field in the mutation.
+func (m *SysDictMutation) ValTipe() (r enumtipe.DictValueTipe, exists bool) {
+	v := m.val_tipe
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldTipe returns the old "tipe" field's value of the SysDict entity.
+// OldValTipe returns the old "val_tipe" field's value of the SysDict entity.
 // If the SysDict object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *SysDictMutation) OldTipe(ctx context.Context) (v sysdict.Tipe, err error) {
+func (m *SysDictMutation) OldValTipe(ctx context.Context) (v enumtipe.DictValueTipe, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldTipe is only allowed on UpdateOne operations")
+		return v, errors.New("OldValTipe is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldTipe requires an ID field in the mutation")
+		return v, errors.New("OldValTipe requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldTipe: %w", err)
+		return v, fmt.Errorf("querying old value for OldValTipe: %w", err)
 	}
-	return oldValue.Tipe, nil
+	return oldValue.ValTipe, nil
 }
 
-// ResetTipe resets all changes to the "tipe" field.
-func (m *SysDictMutation) ResetTipe() {
-	m.tipe = nil
+// ResetValTipe resets all changes to the "val_tipe" field.
+func (m *SysDictMutation) ResetValTipe() {
+	m.val_tipe = nil
 }
 
 // AddItemIDs adds the "items" edge to the SysDictItem entity by ids.
@@ -10582,8 +10583,8 @@ func (m *SysDictMutation) Fields() []string {
 	if m.dict_key != nil {
 		fields = append(fields, sysdict.FieldDictKey)
 	}
-	if m.tipe != nil {
-		fields = append(fields, sysdict.FieldTipe)
+	if m.val_tipe != nil {
+		fields = append(fields, sysdict.FieldValTipe)
 	}
 	return fields
 }
@@ -10613,8 +10614,8 @@ func (m *SysDictMutation) Field(name string) (ent.Value, bool) {
 		return m.NameEn()
 	case sysdict.FieldDictKey:
 		return m.DictKey()
-	case sysdict.FieldTipe:
-		return m.Tipe()
+	case sysdict.FieldValTipe:
+		return m.ValTipe()
 	}
 	return nil, false
 }
@@ -10644,8 +10645,8 @@ func (m *SysDictMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldNameEn(ctx)
 	case sysdict.FieldDictKey:
 		return m.OldDictKey(ctx)
-	case sysdict.FieldTipe:
-		return m.OldTipe(ctx)
+	case sysdict.FieldValTipe:
+		return m.OldValTipe(ctx)
 	}
 	return nil, fmt.Errorf("unknown SysDict field %s", name)
 }
@@ -10725,12 +10726,12 @@ func (m *SysDictMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetDictKey(v)
 		return nil
-	case sysdict.FieldTipe:
-		v, ok := value.(sysdict.Tipe)
+	case sysdict.FieldValTipe:
+		v, ok := value.(enumtipe.DictValueTipe)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetTipe(v)
+		m.SetValTipe(v)
 		return nil
 	}
 	return fmt.Errorf("unknown SysDict field %s", name)
@@ -10853,8 +10854,8 @@ func (m *SysDictMutation) ResetField(name string) error {
 	case sysdict.FieldDictKey:
 		m.ResetDictKey()
 		return nil
-	case sysdict.FieldTipe:
-		m.ResetTipe()
+	case sysdict.FieldValTipe:
+		m.ResetValTipe()
 		return nil
 	}
 	return fmt.Errorf("unknown SysDict field %s", name)
