@@ -1469,6 +1469,7 @@ type CreateSysDictInput struct {
 	IsActive  *bool
 	NameCn    string
 	NameEn    string
+	DictKey   string
 	Tipe      *sysdict.Tipe
 	Items     []string
 }
@@ -1498,6 +1499,7 @@ func (i *CreateSysDictInput) Mutate(m *SysDictCreate) {
 	}
 	m.SetNameCn(i.NameCn)
 	m.SetNameEn(i.NameEn)
+	m.SetDictKey(i.DictKey)
 	if v := i.Tipe; v != nil {
 		m.SetTipe(*v)
 	}
@@ -1525,6 +1527,7 @@ type UpdateSysDictInput struct {
 	IsActive       *bool
 	NameCn         *string
 	NameEn         *string
+	DictKey        *string
 	Tipe           *sysdict.Tipe
 	AddItemIDs     []string
 	RemoveItemIDs  []string
@@ -1564,6 +1567,9 @@ func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	}
 	if v := i.NameEn; v != nil {
 		m.SetNameEn(*v)
+	}
+	if v := i.DictKey; v != nil {
+		m.SetDictKey(*v)
 	}
 	if v := i.Tipe; v != nil {
 		m.SetTipe(*v)

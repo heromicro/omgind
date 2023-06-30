@@ -12,6 +12,7 @@ type Dict struct {
 
 	NameCn   string `json:"name_cn" binding:"required" yaml:"name_cn"`     // 字典名（中）
 	NameEn   string `json:"name_en" binding:"required" yaml:"name_en"`     // 字典名（英）
+	DictKey  string `json:"dict_key" binding:"required" yaml:"dict_key"`   // 字典键
 	IsActive *bool  `json:"is_active" binding:"required" yaml:"is_active"` // 状态
 	Memo     string `json:"memo" yaml:"memo"`                              // 备注
 	Sort     int    `json:"sort" yaml:"sort"`                              // 排序

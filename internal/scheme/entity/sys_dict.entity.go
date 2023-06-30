@@ -4,6 +4,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
 
 	"github.com/heromicro/omgind/internal/scheme/mixin"
 )
@@ -31,6 +32,9 @@ func (sd SysDict) Fields() []ent.Field {
 		field.String("name_en").StorageKey("name_en").
 			MaxLen(128).StructTag(`json:"name_en,omitempty"`).Comment("字典名（英）"),
 
+		field.String("dict_key").StorageKey("dict_key").
+			MaxLen(64).StructTag(`json:"dict_key,omitempty"`).Comment("字典键"),
+
 		field.Enum("tipe").Values("int", "string").Default("int").StorageKey("tipe").StructTag(`json:"tipe,omitempty"`).Comment("值类型"),
 	}
 }
@@ -48,7 +52,9 @@ func (sd SysDict) Edges() []ent.Edge {
 }
 
 func (SysDict) Indexes() []ent.Index {
-	return []ent.Index{}
+	return []ent.Index{
+		index.Fields("dict_key").Unique(),
+	}
 }
 
 func makeupDictFrom(name string, refname string, fieldname string) []ent.Edge {

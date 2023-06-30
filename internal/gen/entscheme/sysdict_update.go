@@ -143,6 +143,12 @@ func (sdu *SysDictUpdate) SetNameEn(s string) *SysDictUpdate {
 	return sdu
 }
 
+// SetDictKey sets the "dict_key" field.
+func (sdu *SysDictUpdate) SetDictKey(s string) *SysDictUpdate {
+	sdu.mutation.SetDictKey(s)
+	return sdu
+}
+
 // SetTipe sets the "tipe" field.
 func (sdu *SysDictUpdate) SetTipe(s sysdict.Tipe) *SysDictUpdate {
 	sdu.mutation.SetTipe(s)
@@ -251,6 +257,11 @@ func (sdu *SysDictUpdate) check() error {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.name_en": %w`, err)}
 		}
 	}
+	if v, ok := sdu.mutation.DictKey(); ok {
+		if err := sysdict.DictKeyValidator(v); err != nil {
+			return &ValidationError{Name: "dict_key", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.dict_key": %w`, err)}
+		}
+	}
 	if v, ok := sdu.mutation.Tipe(); ok {
 		if err := sysdict.TipeValidator(v); err != nil {
 			return &ValidationError{Name: "tipe", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.tipe": %w`, err)}
@@ -315,6 +326,9 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := sdu.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
+	}
+	if value, ok := sdu.mutation.DictKey(); ok {
+		_spec.SetField(sysdict.FieldDictKey, field.TypeString, value)
 	}
 	if value, ok := sdu.mutation.Tipe(); ok {
 		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)
@@ -499,6 +513,12 @@ func (sduo *SysDictUpdateOne) SetNameEn(s string) *SysDictUpdateOne {
 	return sduo
 }
 
+// SetDictKey sets the "dict_key" field.
+func (sduo *SysDictUpdateOne) SetDictKey(s string) *SysDictUpdateOne {
+	sduo.mutation.SetDictKey(s)
+	return sduo
+}
+
 // SetTipe sets the "tipe" field.
 func (sduo *SysDictUpdateOne) SetTipe(s sysdict.Tipe) *SysDictUpdateOne {
 	sduo.mutation.SetTipe(s)
@@ -620,6 +640,11 @@ func (sduo *SysDictUpdateOne) check() error {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.name_en": %w`, err)}
 		}
 	}
+	if v, ok := sduo.mutation.DictKey(); ok {
+		if err := sysdict.DictKeyValidator(v); err != nil {
+			return &ValidationError{Name: "dict_key", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.dict_key": %w`, err)}
+		}
+	}
 	if v, ok := sduo.mutation.Tipe(); ok {
 		if err := sysdict.TipeValidator(v); err != nil {
 			return &ValidationError{Name: "tipe", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.tipe": %w`, err)}
@@ -701,6 +726,9 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 	}
 	if value, ok := sduo.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
+	}
+	if value, ok := sduo.mutation.DictKey(); ok {
+		_spec.SetField(sysdict.FieldDictKey, field.TypeString, value)
 	}
 	if value, ok := sduo.mutation.Tipe(); ok {
 		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)

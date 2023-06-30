@@ -33,6 +33,8 @@ const (
 	FieldNameCn = "name_cn"
 	// FieldNameEn holds the string denoting the name_en field in the database.
 	FieldNameEn = "name_en"
+	// FieldDictKey holds the string denoting the dict_key field in the database.
+	FieldDictKey = "dict_key"
 	// FieldTipe holds the string denoting the tipe field in the database.
 	FieldTipe = "tipe"
 	// EdgeItems holds the string denoting the items edge name in mutations.
@@ -60,6 +62,7 @@ var Columns = []string{
 	FieldIsActive,
 	FieldNameCn,
 	FieldNameEn,
+	FieldDictKey,
 	FieldTipe,
 }
 
@@ -94,6 +97,8 @@ var (
 	NameCnValidator func(string) error
 	// NameEnValidator is a validator for the "name_en" field. It is called by the builders before save.
 	NameEnValidator func(string) error
+	// DictKeyValidator is a validator for the "dict_key" field. It is called by the builders before save.
+	DictKeyValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
@@ -177,6 +182,11 @@ func ByNameCn(opts ...sql.OrderTermOption) OrderOption {
 // ByNameEn orders the results by the name_en field.
 func ByNameEn(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldNameEn, opts...).ToFunc()
+}
+
+// ByDictKey orders the results by the dict_key field.
+func ByDictKey(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDictKey, opts...).ToFunc()
 }
 
 // ByTipe orders the results by the tipe field.

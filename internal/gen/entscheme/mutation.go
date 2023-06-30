@@ -9880,6 +9880,7 @@ type SysDictMutation struct {
 	is_active     *bool
 	name_cn       *string
 	name_en       *string
+	dict_key      *string
 	tipe          *sysdict.Tipe
 	clearedFields map[string]struct{}
 	items         map[string]struct{}
@@ -10390,6 +10391,42 @@ func (m *SysDictMutation) ResetNameEn() {
 	m.name_en = nil
 }
 
+// SetDictKey sets the "dict_key" field.
+func (m *SysDictMutation) SetDictKey(s string) {
+	m.dict_key = &s
+}
+
+// DictKey returns the value of the "dict_key" field in the mutation.
+func (m *SysDictMutation) DictKey() (r string, exists bool) {
+	v := m.dict_key
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDictKey returns the old "dict_key" field's value of the SysDict entity.
+// If the SysDict object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysDictMutation) OldDictKey(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDictKey is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDictKey requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDictKey: %w", err)
+	}
+	return oldValue.DictKey, nil
+}
+
+// ResetDictKey resets all changes to the "dict_key" field.
+func (m *SysDictMutation) ResetDictKey() {
+	m.dict_key = nil
+}
+
 // SetTipe sets the "tipe" field.
 func (m *SysDictMutation) SetTipe(s sysdict.Tipe) {
 	m.tipe = &s
@@ -10514,7 +10551,7 @@ func (m *SysDictMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysDictMutation) Fields() []string {
-	fields := make([]string, 0, 10)
+	fields := make([]string, 0, 11)
 	if m.is_del != nil {
 		fields = append(fields, sysdict.FieldIsDel)
 	}
@@ -10541,6 +10578,9 @@ func (m *SysDictMutation) Fields() []string {
 	}
 	if m.name_en != nil {
 		fields = append(fields, sysdict.FieldNameEn)
+	}
+	if m.dict_key != nil {
+		fields = append(fields, sysdict.FieldDictKey)
 	}
 	if m.tipe != nil {
 		fields = append(fields, sysdict.FieldTipe)
@@ -10571,6 +10611,8 @@ func (m *SysDictMutation) Field(name string) (ent.Value, bool) {
 		return m.NameCn()
 	case sysdict.FieldNameEn:
 		return m.NameEn()
+	case sysdict.FieldDictKey:
+		return m.DictKey()
 	case sysdict.FieldTipe:
 		return m.Tipe()
 	}
@@ -10600,6 +10642,8 @@ func (m *SysDictMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldNameCn(ctx)
 	case sysdict.FieldNameEn:
 		return m.OldNameEn(ctx)
+	case sysdict.FieldDictKey:
+		return m.OldDictKey(ctx)
 	case sysdict.FieldTipe:
 		return m.OldTipe(ctx)
 	}
@@ -10673,6 +10717,13 @@ func (m *SysDictMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetNameEn(v)
+		return nil
+	case sysdict.FieldDictKey:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDictKey(v)
 		return nil
 	case sysdict.FieldTipe:
 		v, ok := value.(sysdict.Tipe)
@@ -10798,6 +10849,9 @@ func (m *SysDictMutation) ResetField(name string) error {
 		return nil
 	case sysdict.FieldNameEn:
 		m.ResetNameEn()
+		return nil
+	case sysdict.FieldDictKey:
+		m.ResetDictKey()
 		return nil
 	case sysdict.FieldTipe:
 		m.ResetTipe()

@@ -578,6 +578,10 @@ func init() {
 	sysdictDescNameEn := sysdictFields[1].Descriptor()
 	// sysdict.NameEnValidator is a validator for the "name_en" field. It is called by the builders before save.
 	sysdict.NameEnValidator = sysdictDescNameEn.Validators[0].(func(string) error)
+	// sysdictDescDictKey is the schema descriptor for dict_key field.
+	sysdictDescDictKey := sysdictFields[2].Descriptor()
+	// sysdict.DictKeyValidator is a validator for the "dict_key" field. It is called by the builders before save.
+	sysdict.DictKeyValidator = sysdictDescDictKey.Validators[0].(func(string) error)
 	// sysdictDescID is the schema descriptor for id field.
 	sysdictDescID := sysdictMixinFields0[0].Descriptor()
 	// sysdict.DefaultID holds the default value on creation for the id field.

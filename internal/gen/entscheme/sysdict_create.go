@@ -134,6 +134,12 @@ func (sdc *SysDictCreate) SetNameEn(s string) *SysDictCreate {
 	return sdc
 }
 
+// SetDictKey sets the "dict_key" field.
+func (sdc *SysDictCreate) SetDictKey(s string) *SysDictCreate {
+	sdc.mutation.SetDictKey(s)
+	return sdc
+}
+
 // SetTipe sets the "tipe" field.
 func (sdc *SysDictCreate) SetTipe(s sysdict.Tipe) *SysDictCreate {
 	sdc.mutation.SetTipe(s)
@@ -278,6 +284,14 @@ func (sdc *SysDictCreate) check() error {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.name_en": %w`, err)}
 		}
 	}
+	if _, ok := sdc.mutation.DictKey(); !ok {
+		return &ValidationError{Name: "dict_key", err: errors.New(`entscheme: missing required field "SysDict.dict_key"`)}
+	}
+	if v, ok := sdc.mutation.DictKey(); ok {
+		if err := sysdict.DictKeyValidator(v); err != nil {
+			return &ValidationError{Name: "dict_key", err: fmt.Errorf(`entscheme: validator failed for field "SysDict.dict_key": %w`, err)}
+		}
+	}
 	if _, ok := sdc.mutation.Tipe(); !ok {
 		return &ValidationError{Name: "tipe", err: errors.New(`entscheme: missing required field "SysDict.tipe"`)}
 	}
@@ -362,6 +376,10 @@ func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 	if value, ok := sdc.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 		_node.NameEn = value
+	}
+	if value, ok := sdc.mutation.DictKey(); ok {
+		_spec.SetField(sysdict.FieldDictKey, field.TypeString, value)
+		_node.DictKey = value
 	}
 	if value, ok := sdc.mutation.Tipe(); ok {
 		_spec.SetField(sysdict.FieldTipe, field.TypeEnum, value)
@@ -552,6 +570,18 @@ func (u *SysDictUpsert) SetNameEn(v string) *SysDictUpsert {
 // UpdateNameEn sets the "name_en" field to the value that was provided on create.
 func (u *SysDictUpsert) UpdateNameEn() *SysDictUpsert {
 	u.SetExcluded(sysdict.FieldNameEn)
+	return u
+}
+
+// SetDictKey sets the "dict_key" field.
+func (u *SysDictUpsert) SetDictKey(v string) *SysDictUpsert {
+	u.Set(sysdict.FieldDictKey, v)
+	return u
+}
+
+// UpdateDictKey sets the "dict_key" field to the value that was provided on create.
+func (u *SysDictUpsert) UpdateDictKey() *SysDictUpsert {
+	u.SetExcluded(sysdict.FieldDictKey)
 	return u
 }
 
@@ -755,6 +785,20 @@ func (u *SysDictUpsertOne) SetNameEn(v string) *SysDictUpsertOne {
 func (u *SysDictUpsertOne) UpdateNameEn() *SysDictUpsertOne {
 	return u.Update(func(s *SysDictUpsert) {
 		s.UpdateNameEn()
+	})
+}
+
+// SetDictKey sets the "dict_key" field.
+func (u *SysDictUpsertOne) SetDictKey(v string) *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetDictKey(v)
+	})
+}
+
+// UpdateDictKey sets the "dict_key" field to the value that was provided on create.
+func (u *SysDictUpsertOne) UpdateDictKey() *SysDictUpsertOne {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateDictKey()
 	})
 }
 
@@ -1123,6 +1167,20 @@ func (u *SysDictUpsertBulk) SetNameEn(v string) *SysDictUpsertBulk {
 func (u *SysDictUpsertBulk) UpdateNameEn() *SysDictUpsertBulk {
 	return u.Update(func(s *SysDictUpsert) {
 		s.UpdateNameEn()
+	})
+}
+
+// SetDictKey sets the "dict_key" field.
+func (u *SysDictUpsertBulk) SetDictKey(v string) *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.SetDictKey(v)
+	})
+}
+
+// UpdateDictKey sets the "dict_key" field to the value that was provided on create.
+func (u *SysDictUpsertBulk) UpdateDictKey() *SysDictUpsertBulk {
+	return u.Update(func(s *SysDictUpsert) {
+		s.UpdateDictKey()
 	})
 }
 

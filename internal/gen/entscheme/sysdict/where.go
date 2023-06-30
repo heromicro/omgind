@@ -110,6 +110,11 @@ func NameEn(v string) predicate.SysDict {
 	return predicate.SysDict(sql.FieldEQ(FieldNameEn, v))
 }
 
+// DictKey applies equality check predicate on the "dict_key" field. It's identical to DictKeyEQ.
+func DictKey(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldEQ(FieldDictKey, v))
+}
+
 // IsDelEQ applies the EQ predicate on the "is_del" field.
 func IsDelEQ(v bool) predicate.SysDict {
 	return predicate.SysDict(sql.FieldEQ(FieldIsDel, v))
@@ -523,6 +528,71 @@ func NameEnEqualFold(v string) predicate.SysDict {
 // NameEnContainsFold applies the ContainsFold predicate on the "name_en" field.
 func NameEnContainsFold(v string) predicate.SysDict {
 	return predicate.SysDict(sql.FieldContainsFold(FieldNameEn, v))
+}
+
+// DictKeyEQ applies the EQ predicate on the "dict_key" field.
+func DictKeyEQ(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldEQ(FieldDictKey, v))
+}
+
+// DictKeyNEQ applies the NEQ predicate on the "dict_key" field.
+func DictKeyNEQ(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldNEQ(FieldDictKey, v))
+}
+
+// DictKeyIn applies the In predicate on the "dict_key" field.
+func DictKeyIn(vs ...string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldIn(FieldDictKey, vs...))
+}
+
+// DictKeyNotIn applies the NotIn predicate on the "dict_key" field.
+func DictKeyNotIn(vs ...string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldNotIn(FieldDictKey, vs...))
+}
+
+// DictKeyGT applies the GT predicate on the "dict_key" field.
+func DictKeyGT(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldGT(FieldDictKey, v))
+}
+
+// DictKeyGTE applies the GTE predicate on the "dict_key" field.
+func DictKeyGTE(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldGTE(FieldDictKey, v))
+}
+
+// DictKeyLT applies the LT predicate on the "dict_key" field.
+func DictKeyLT(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldLT(FieldDictKey, v))
+}
+
+// DictKeyLTE applies the LTE predicate on the "dict_key" field.
+func DictKeyLTE(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldLTE(FieldDictKey, v))
+}
+
+// DictKeyContains applies the Contains predicate on the "dict_key" field.
+func DictKeyContains(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldContains(FieldDictKey, v))
+}
+
+// DictKeyHasPrefix applies the HasPrefix predicate on the "dict_key" field.
+func DictKeyHasPrefix(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldHasPrefix(FieldDictKey, v))
+}
+
+// DictKeyHasSuffix applies the HasSuffix predicate on the "dict_key" field.
+func DictKeyHasSuffix(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldHasSuffix(FieldDictKey, v))
+}
+
+// DictKeyEqualFold applies the EqualFold predicate on the "dict_key" field.
+func DictKeyEqualFold(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldEqualFold(FieldDictKey, v))
+}
+
+// DictKeyContainsFold applies the ContainsFold predicate on the "dict_key" field.
+func DictKeyContainsFold(v string) predicate.SysDict {
+	return predicate.SysDict(sql.FieldContainsFold(FieldDictKey, v))
 }
 
 // TipeEQ applies the EQ predicate on the "tipe" field.

@@ -35,6 +35,8 @@ type SysDict struct {
 	NameCn string `json:"name_cn,omitempty"`
 	// 字典名（英）
 	NameEn string `json:"name_en,omitempty"`
+	// 字典键
+	DictKey string `json:"dict_key,omitempty"`
 	// 值类型
 	Tipe sysdict.Tipe `json:"tipe,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -70,7 +72,7 @@ func (*SysDict) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case sysdict.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case sysdict.FieldID, sysdict.FieldMemo, sysdict.FieldNameCn, sysdict.FieldNameEn, sysdict.FieldTipe:
+		case sysdict.FieldID, sysdict.FieldMemo, sysdict.FieldNameCn, sysdict.FieldNameEn, sysdict.FieldDictKey, sysdict.FieldTipe:
 			values[i] = new(sql.NullString)
 		case sysdict.FieldCreatedAt, sysdict.FieldUpdatedAt, sysdict.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -153,6 +155,12 @@ func (sd *SysDict) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				sd.NameEn = value.String
 			}
+		case sysdict.FieldDictKey:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field dict_key", values[i])
+			} else if value.Valid {
+				sd.DictKey = value.String
+			}
 		case sysdict.FieldTipe:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field tipe", values[i])
@@ -234,6 +242,9 @@ func (sd *SysDict) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("name_en=")
 	builder.WriteString(sd.NameEn)
+	builder.WriteString(", ")
+	builder.WriteString("dict_key=")
+	builder.WriteString(sd.DictKey)
 	builder.WriteString(", ")
 	builder.WriteString("tipe=")
 	builder.WriteString(fmt.Sprintf("%v", sd.Tipe))

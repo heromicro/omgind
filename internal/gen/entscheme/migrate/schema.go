@@ -425,6 +425,7 @@ var (
 		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "name_cn", Type: field.TypeString, Size: 128},
 		{Name: "name_en", Type: field.TypeString, Size: 128},
+		{Name: "dict_key", Type: field.TypeString, Size: 64},
 		{Name: "tipe", Type: field.TypeEnum, Enums: []string{"int", "string"}, Default: "int"},
 	}
 	// SysDictsTable holds the schema information for the "sys_dicts" table.
@@ -462,6 +463,11 @@ var (
 				Name:    "sysdict_is_active",
 				Unique:  false,
 				Columns: []*schema.Column{SysDictsColumns[7]},
+			},
+			{
+				Name:    "sysdict_dict_key",
+				Unique:  true,
+				Columns: []*schema.Column{SysDictsColumns[10]},
 			},
 		},
 	}

@@ -29,5 +29,16 @@ type BasicOrderParam struct {
 	// example: asc
 	// example: desc
 	IsActive_Order string `form:"is_active__order" json:"is_active__order"` // asc/desc
-	Sort_Order     string `form:"sort__order" json:"sort__order"`           // asc/desc
+	// example: "asc"
+	// example: "desc"
+	Sort_Order string `form:"sort__order" json:"sort__order"` // asc/desc
+}
+
+type TimeOrderParam struct {
+	// example: asc
+	// example: desc
+	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc/desc
+	// example: "asc"
+	// example: "desc"
+	UpdatedAt_Order string `form:"updated_at__order" json:"updated_at__order"` // asc/desc
 }
