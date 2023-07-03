@@ -172,7 +172,7 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 	}
 
 	item.ID = oldItem.ID
-	item.Creator = oldItem.Creator
+
 	item.CreatedAt = oldItem.CreatedAt
 	err = repo.WithTx(ctx, a.UserRepo.EntCli, func(tx *entscheme.Tx) error {
 		addUserRoles, delUserRoles := a.compareUserRoles(ctx, oldItem.UserRoles, item.UserRoles)

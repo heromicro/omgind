@@ -42,6 +42,10 @@ type Tx struct {
 	SysRole *SysRoleClient
 	// SysRoleMenu is the client for interacting with the SysRoleMenu builders.
 	SysRoleMenu *SysRoleMenuClient
+	// SysTeam is the client for interacting with the SysTeam builders.
+	SysTeam *SysTeamClient
+	// SysTeamUser is the client for interacting with the SysTeamUser builders.
+	SysTeamUser *SysTeamUserClient
 	// SysUser is the client for interacting with the SysUser builders.
 	SysUser *SysUserClient
 	// SysUserRole is the client for interacting with the SysUserRole builders.
@@ -194,6 +198,8 @@ func (tx *Tx) init() {
 	tx.SysMenuActionResource = NewSysMenuActionResourceClient(tx.config)
 	tx.SysRole = NewSysRoleClient(tx.config)
 	tx.SysRoleMenu = NewSysRoleMenuClient(tx.config)
+	tx.SysTeam = NewSysTeamClient(tx.config)
+	tx.SysTeamUser = NewSysTeamUserClient(tx.config)
 	tx.SysUser = NewSysUserClient(tx.config)
 	tx.SysUserRole = NewSysUserRoleClient(tx.config)
 	tx.XxxDemo = NewXxxDemoClient(tx.config)

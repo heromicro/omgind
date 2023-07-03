@@ -347,20 +347,6 @@ func (sac *SysAddressCreate) SetNillableMobile(s *string) *SysAddressCreate {
 	return sac
 }
 
-// SetCreator sets the "creator" field.
-func (sac *SysAddressCreate) SetCreator(s string) *SysAddressCreate {
-	sac.mutation.SetCreator(s)
-	return sac
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableCreator(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetCreator(*s)
-	}
-	return sac
-}
-
 // SetID sets the "id" field.
 func (sac *SysAddressCreate) SetID(s string) *SysAddressCreate {
 	sac.mutation.SetID(s)
@@ -573,11 +559,6 @@ func (sac *SysAddressCreate) check() error {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`entscheme: validator failed for field "SysAddress.mobile": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.Creator(); ok {
-		if err := sysaddress.CreatorValidator(v); err != nil {
-			return &ValidationError{Name: "creator", err: fmt.Errorf(`entscheme: validator failed for field "SysAddress.creator": %w`, err)}
-		}
-	}
 	if v, ok := sac.mutation.ID(); ok {
 		if err := sysaddress.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`entscheme: validator failed for field "SysAddress.id": %w`, err)}
@@ -710,10 +691,6 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 	if value, ok := sac.mutation.Mobile(); ok {
 		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
 		_node.Mobile = &value
-	}
-	if value, ok := sac.mutation.Creator(); ok {
-		_spec.SetField(sysaddress.FieldCreator, field.TypeString, value)
-		_node.Creator = &value
 	}
 	if nodes := sac.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -1178,24 +1155,6 @@ func (u *SysAddressUpsert) UpdateMobile() *SysAddressUpsert {
 // ClearMobile clears the value of the "mobile" field.
 func (u *SysAddressUpsert) ClearMobile() *SysAddressUpsert {
 	u.SetNull(sysaddress.FieldMobile)
-	return u
-}
-
-// SetCreator sets the "creator" field.
-func (u *SysAddressUpsert) SetCreator(v string) *SysAddressUpsert {
-	u.Set(sysaddress.FieldCreator, v)
-	return u
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *SysAddressUpsert) UpdateCreator() *SysAddressUpsert {
-	u.SetExcluded(sysaddress.FieldCreator)
-	return u
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *SysAddressUpsert) ClearCreator() *SysAddressUpsert {
-	u.SetNull(sysaddress.FieldCreator)
 	return u
 }
 
@@ -1677,27 +1636,6 @@ func (u *SysAddressUpsertOne) UpdateMobile() *SysAddressUpsertOne {
 func (u *SysAddressUpsertOne) ClearMobile() *SysAddressUpsertOne {
 	return u.Update(func(s *SysAddressUpsert) {
 		s.ClearMobile()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *SysAddressUpsertOne) SetCreator(v string) *SysAddressUpsertOne {
-	return u.Update(func(s *SysAddressUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *SysAddressUpsertOne) UpdateCreator() *SysAddressUpsertOne {
-	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateCreator()
-	})
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *SysAddressUpsertOne) ClearCreator() *SysAddressUpsertOne {
-	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearCreator()
 	})
 }
 
@@ -2342,27 +2280,6 @@ func (u *SysAddressUpsertBulk) UpdateMobile() *SysAddressUpsertBulk {
 func (u *SysAddressUpsertBulk) ClearMobile() *SysAddressUpsertBulk {
 	return u.Update(func(s *SysAddressUpsert) {
 		s.ClearMobile()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *SysAddressUpsertBulk) SetCreator(v string) *SysAddressUpsertBulk {
-	return u.Update(func(s *SysAddressUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *SysAddressUpsertBulk) UpdateCreator() *SysAddressUpsertBulk {
-	return u.Update(func(s *SysAddressUpsert) {
-		s.UpdateCreator()
-	})
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *SysAddressUpsertBulk) ClearCreator() *SysAddressUpsertBulk {
-	return u.Update(func(s *SysAddressUpsert) {
-		s.ClearCreator()
 	})
 }
 

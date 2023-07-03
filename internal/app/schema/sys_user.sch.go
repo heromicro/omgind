@@ -44,8 +44,6 @@ type User struct {
 	IsActive  *bool  `json:"is_active" binding:"required"`  // 状态
 	Gender    int    `json:"gender" binding:"max=3,min=1"`  // 性别(1:男,2:女)
 
-	Creator string `json:"creator" ` // 创建者
-
 	UserRoles UserRoles `json:"user_roles" binding:"required,gt=0"` // 角色授权
 }
 

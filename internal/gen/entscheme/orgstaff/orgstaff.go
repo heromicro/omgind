@@ -68,8 +68,6 @@ const (
 	FieldDeptID = "dept_id"
 	// FieldPosiID holds the string denoting the posi_id field in the database.
 	FieldPosiID = "posi_id"
-	// FieldCreator holds the string denoting the creator field in the database.
-	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
 	EdgeOrgan = "organ"
 	// EdgeIdenAddr holds the string denoting the iden_addr edge name in mutations.
@@ -149,7 +147,6 @@ var Columns = []string{
 	FieldEmpystDictID,
 	FieldDeptID,
 	FieldPosiID,
-	FieldCreator,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -354,11 +351,6 @@ func ByDeptID(opts ...sql.OrderTermOption) OrderOption {
 // ByPosiID orders the results by the posi_id field.
 func ByPosiID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldPosiID, opts...).ToFunc()
-}
-
-// ByCreator orders the results by the creator field.
-func ByCreator(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreator, opts...).ToFunc()
 }
 
 // ByOrganField orders the results by organ field.

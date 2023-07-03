@@ -17,8 +17,6 @@ type Dict struct {
 	Memo     string `json:"memo" yaml:"memo"`                              // 备注
 	Sort     int    `json:"sort" yaml:"sort"`                              // 排序
 
-	Creator string `json:"creator" yaml:"-"` // 创建者
-
 	Items DictItems `json:"items" binding:"required,gt=0" yaml:"items"` // 字典项列表
 
 }

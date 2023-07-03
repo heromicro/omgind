@@ -84,7 +84,6 @@ func (a *Role) Create(c *gin.Context) {
 		return
 	}
 
-	item.Creator = ginx.GetUserID(c)
 	result, err := a.RoleSrv.Create(ctx, item)
 	if err != nil {
 		ginx.ResError(c, err)

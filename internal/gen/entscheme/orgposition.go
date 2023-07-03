@@ -38,8 +38,6 @@ type OrgPosition struct {
 	Code *string `json:"code,omitempty"`
 	// 企业id
 	OrgID *string `json:"org_id,omitempty"`
-	// 创建者
-	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrgPositionQuery when eager-loading is set.
 	Edges        OrgPositionEdges `json:"edges"`
@@ -88,7 +86,7 @@ func (*OrgPosition) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgposition.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case orgposition.FieldID, orgposition.FieldMemo, orgposition.FieldName, orgposition.FieldCode, orgposition.FieldOrgID, orgposition.FieldCreator:
+		case orgposition.FieldID, orgposition.FieldMemo, orgposition.FieldName, orgposition.FieldCode, orgposition.FieldOrgID:
 			values[i] = new(sql.NullString)
 		case orgposition.FieldCreatedAt, orgposition.FieldUpdatedAt, orgposition.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -180,13 +178,6 @@ func (op *OrgPosition) assignValues(columns []string, values []any) error {
 				op.OrgID = new(string)
 				*op.OrgID = value.String
 			}
-		case orgposition.FieldCreator:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field creator", values[i])
-			} else if value.Valid {
-				op.Creator = new(string)
-				*op.Creator = value.String
-			}
 		default:
 			op.selectValues.Set(columns[i], values[i])
 		}
@@ -274,11 +265,6 @@ func (op *OrgPosition) String() string {
 	builder.WriteString(", ")
 	if v := op.OrgID; v != nil {
 		builder.WriteString("org_id=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := op.Creator; v != nil {
-		builder.WriteString("creator=")
 		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')

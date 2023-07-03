@@ -13,9 +13,6 @@ type OrgPosition struct {
 	Sort     int     `json:"sort,omitempty"`
 
 	OrgMixin
-
-	Creator string `json:"creator"` // 创建者
-	
 }
 
 // OrgPositionQueryParam 查询条件

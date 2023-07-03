@@ -25,8 +25,6 @@ type Menu struct {
 	Level  int32 `json:"level" yaml:"level"`     // 层级
 	IsLeaf bool  `json:"is_leaf" yaml:"is_leaf"` // 是否子叶
 
-	Creator string `json:"creator" yaml:"-"` // 创建者
-
 	Actions  MenuActions `json:"actions" yaml:"actions"` // 动作列表
 	Parent   *Menu       `json:"parent" yaml:"-"`        // 父级
 	Children Menus       `json:"children" yaml:"-"`      // 子级

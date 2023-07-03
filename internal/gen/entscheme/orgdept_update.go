@@ -420,26 +420,6 @@ func (odu *OrgDeptUpdate) ClearIsShow() *OrgDeptUpdate {
 	return odu
 }
 
-// SetCreator sets the "creator" field.
-func (odu *OrgDeptUpdate) SetCreator(s string) *OrgDeptUpdate {
-	odu.mutation.SetCreator(s)
-	return odu
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableCreator(s *string) *OrgDeptUpdate {
-	if s != nil {
-		odu.SetCreator(*s)
-	}
-	return odu
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (odu *OrgDeptUpdate) ClearCreator() *OrgDeptUpdate {
-	odu.mutation.ClearCreator()
-	return odu
-}
-
 // SetParent sets the "parent" edge to the OrgDept entity.
 func (odu *OrgDeptUpdate) SetParent(o *OrgDept) *OrgDeptUpdate {
 	return odu.SetParentID(o.ID)
@@ -752,12 +732,6 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if odu.mutation.IsShowCleared() {
 		_spec.ClearField(orgdept.FieldIsShow, field.TypeBool)
-	}
-	if value, ok := odu.mutation.Creator(); ok {
-		_spec.SetField(orgdept.FieldCreator, field.TypeString, value)
-	}
-	if odu.mutation.CreatorCleared() {
-		_spec.ClearField(orgdept.FieldCreator, field.TypeString)
 	}
 	if odu.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1318,26 +1292,6 @@ func (oduo *OrgDeptUpdateOne) ClearIsShow() *OrgDeptUpdateOne {
 	return oduo
 }
 
-// SetCreator sets the "creator" field.
-func (oduo *OrgDeptUpdateOne) SetCreator(s string) *OrgDeptUpdateOne {
-	oduo.mutation.SetCreator(s)
-	return oduo
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableCreator(s *string) *OrgDeptUpdateOne {
-	if s != nil {
-		oduo.SetCreator(*s)
-	}
-	return oduo
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (oduo *OrgDeptUpdateOne) ClearCreator() *OrgDeptUpdateOne {
-	oduo.mutation.ClearCreator()
-	return oduo
-}
-
 // SetParent sets the "parent" edge to the OrgDept entity.
 func (oduo *OrgDeptUpdateOne) SetParent(o *OrgDept) *OrgDeptUpdateOne {
 	return oduo.SetParentID(o.ID)
@@ -1680,12 +1634,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 	}
 	if oduo.mutation.IsShowCleared() {
 		_spec.ClearField(orgdept.FieldIsShow, field.TypeBool)
-	}
-	if value, ok := oduo.mutation.Creator(); ok {
-		_spec.SetField(orgdept.FieldCreator, field.TypeString, value)
-	}
-	if oduo.mutation.CreatorCleared() {
-		_spec.ClearField(orgdept.FieldCreator, field.TypeString)
 	}
 	if oduo.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{

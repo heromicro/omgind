@@ -16,10 +16,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       id:
         description: 唯一标识
         type: string
@@ -46,10 +43,7 @@ definitions:
     properties:
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       id:
         description: 唯一标识
         type: string
@@ -86,9 +80,6 @@ definitions:
     properties:
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
         type: string
       dict_id:
         description: dict.id
@@ -158,10 +149,7 @@ definitions:
         type: array
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       icon:
         description: 菜单图标
         type: string
@@ -303,10 +291,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       id:
         description: 唯一标识
         type: string
@@ -372,10 +357,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       haddr:
         allOf:
         - $ref: '#/definitions/schema.SysAddress'
@@ -439,10 +421,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       id:
         description: 唯一标识
         type: string
@@ -476,10 +455,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       cubicle:
         description: 工位
         type: string
@@ -602,10 +578,7 @@ definitions:
     properties:
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       deleted_at:
         description: 更新时间
         type: string
@@ -727,10 +700,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       daddr:
         description: 详细地址
         type: string
@@ -778,10 +748,7 @@ definitions:
         description: children
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       extra:
         description: 带前缀简名称
         type: string
@@ -898,10 +865,7 @@ definitions:
     properties:
       created_at:
         description: 创建时间
-        type: string
-      creator:
-        description: 创建者
-        type: string
+        type: string 
       email:
         description: 邮箱
         type: string

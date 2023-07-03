@@ -189,6 +189,30 @@ func (f SysRoleMenuFunc) Mutate(ctx context.Context, m entscheme.Mutation) (ents
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *entscheme.SysRoleMenuMutation", m)
 }
 
+// The SysTeamFunc type is an adapter to allow the use of ordinary
+// function as SysTeam mutator.
+type SysTeamFunc func(context.Context, *entscheme.SysTeamMutation) (entscheme.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SysTeamFunc) Mutate(ctx context.Context, m entscheme.Mutation) (entscheme.Value, error) {
+	if mv, ok := m.(*entscheme.SysTeamMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *entscheme.SysTeamMutation", m)
+}
+
+// The SysTeamUserFunc type is an adapter to allow the use of ordinary
+// function as SysTeamUser mutator.
+type SysTeamUserFunc func(context.Context, *entscheme.SysTeamUserMutation) (entscheme.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SysTeamUserFunc) Mutate(ctx context.Context, m entscheme.Mutation) (entscheme.Value, error) {
+	if mv, ok := m.(*entscheme.SysTeamUserMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *entscheme.SysTeamUserMutation", m)
+}
+
 // The SysUserFunc type is an adapter to allow the use of ordinary
 // function as SysUser mutator.
 type SysUserFunc func(context.Context, *entscheme.SysUserMutation) (entscheme.Value, error)

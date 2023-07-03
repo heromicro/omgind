@@ -33,7 +33,7 @@ func main() {
 
 		entc.Extensions(
 		// enthistory.NewHistoryExtension(
-		// 	enthistory.WithUpdatedBy("creator", enthistory.ValueTypeString),
+		// 	enthistory.WithUpdatedBy("userid", enthistory.ValueTypeString),
 		// 	enthistory.WithAuditing(),
 		// 	enthistory.WithHistoryTimeIndex(),
 		// ),

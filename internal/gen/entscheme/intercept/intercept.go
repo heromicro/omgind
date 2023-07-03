@@ -24,6 +24,8 @@ import (
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysrole"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysrolemenu"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeam"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeamuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/entscheme/xxxdemo"
@@ -490,6 +492,60 @@ func (f TraverseSysRoleMenu) Traverse(ctx context.Context, q entscheme.Query) er
 	return fmt.Errorf("unexpected query type %T. expect *entscheme.SysRoleMenuQuery", q)
 }
 
+// The SysTeamFunc type is an adapter to allow the use of ordinary function as a Querier.
+type SysTeamFunc func(context.Context, *entscheme.SysTeamQuery) (entscheme.Value, error)
+
+// Query calls f(ctx, q).
+func (f SysTeamFunc) Query(ctx context.Context, q entscheme.Query) (entscheme.Value, error) {
+	if q, ok := q.(*entscheme.SysTeamQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *entscheme.SysTeamQuery", q)
+}
+
+// The TraverseSysTeam type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseSysTeam func(context.Context, *entscheme.SysTeamQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseSysTeam) Intercept(next entscheme.Querier) entscheme.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseSysTeam) Traverse(ctx context.Context, q entscheme.Query) error {
+	if q, ok := q.(*entscheme.SysTeamQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *entscheme.SysTeamQuery", q)
+}
+
+// The SysTeamUserFunc type is an adapter to allow the use of ordinary function as a Querier.
+type SysTeamUserFunc func(context.Context, *entscheme.SysTeamUserQuery) (entscheme.Value, error)
+
+// Query calls f(ctx, q).
+func (f SysTeamUserFunc) Query(ctx context.Context, q entscheme.Query) (entscheme.Value, error) {
+	if q, ok := q.(*entscheme.SysTeamUserQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *entscheme.SysTeamUserQuery", q)
+}
+
+// The TraverseSysTeamUser type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseSysTeamUser func(context.Context, *entscheme.SysTeamUserQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseSysTeamUser) Intercept(next entscheme.Querier) entscheme.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseSysTeamUser) Traverse(ctx context.Context, q entscheme.Query) error {
+	if q, ok := q.(*entscheme.SysTeamUserQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *entscheme.SysTeamUserQuery", q)
+}
+
 // The SysUserFunc type is an adapter to allow the use of ordinary function as a Querier.
 type SysUserFunc func(context.Context, *entscheme.SysUserQuery) (entscheme.Value, error)
 
@@ -604,6 +660,10 @@ func NewQuery(q entscheme.Query) (Query, error) {
 		return &query[*entscheme.SysRoleQuery, predicate.SysRole, sysrole.OrderOption]{typ: entscheme.TypeSysRole, tq: q}, nil
 	case *entscheme.SysRoleMenuQuery:
 		return &query[*entscheme.SysRoleMenuQuery, predicate.SysRoleMenu, sysrolemenu.OrderOption]{typ: entscheme.TypeSysRoleMenu, tq: q}, nil
+	case *entscheme.SysTeamQuery:
+		return &query[*entscheme.SysTeamQuery, predicate.SysTeam, systeam.OrderOption]{typ: entscheme.TypeSysTeam, tq: q}, nil
+	case *entscheme.SysTeamUserQuery:
+		return &query[*entscheme.SysTeamUserQuery, predicate.SysTeamUser, systeamuser.OrderOption]{typ: entscheme.TypeSysTeamUser, tq: q}, nil
 	case *entscheme.SysUserQuery:
 		return &query[*entscheme.SysUserQuery, predicate.SysUser, sysuser.OrderOption]{typ: entscheme.TypeSysUser, tq: q}, nil
 	case *entscheme.SysUserRoleQuery:

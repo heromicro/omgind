@@ -39,7 +39,6 @@ func (OrgOrgan) Fields() []ent.Field {
 
 		// field.Bool("is_dept").Comment("是否是部门"),
 
-		field.String("creator").Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
 }
 

@@ -66,7 +66,6 @@ func (a *SysAddress) Create(c *gin.Context) {
 		return
 	}
 
-	item.Creator = ginx.GetUserID(c)
 	result, err := a.SysAddressSrv.Create(ctx, item)
 	if err != nil {
 		ginx.ResError(c, err)

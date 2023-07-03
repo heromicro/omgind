@@ -130,11 +130,6 @@ func HaddrID(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldEQ(FieldHaddrID, v))
 }
 
-// Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
-func Creator(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldEQ(FieldCreator, v))
-}
-
 // IsDelEQ applies the EQ predicate on the "is_del" field.
 func IsDelEQ(v bool) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldEQ(FieldIsDel, v))
@@ -868,81 +863,6 @@ func HaddrIDEqualFold(v string) predicate.OrgOrgan {
 // HaddrIDContainsFold applies the ContainsFold predicate on the "haddr_id" field.
 func HaddrIDContainsFold(v string) predicate.OrgOrgan {
 	return predicate.OrgOrgan(sql.FieldContainsFold(FieldHaddrID, v))
-}
-
-// CreatorEQ applies the EQ predicate on the "creator" field.
-func CreatorEQ(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldEQ(FieldCreator, v))
-}
-
-// CreatorNEQ applies the NEQ predicate on the "creator" field.
-func CreatorNEQ(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldNEQ(FieldCreator, v))
-}
-
-// CreatorIn applies the In predicate on the "creator" field.
-func CreatorIn(vs ...string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldIn(FieldCreator, vs...))
-}
-
-// CreatorNotIn applies the NotIn predicate on the "creator" field.
-func CreatorNotIn(vs ...string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldNotIn(FieldCreator, vs...))
-}
-
-// CreatorGT applies the GT predicate on the "creator" field.
-func CreatorGT(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldGT(FieldCreator, v))
-}
-
-// CreatorGTE applies the GTE predicate on the "creator" field.
-func CreatorGTE(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldGTE(FieldCreator, v))
-}
-
-// CreatorLT applies the LT predicate on the "creator" field.
-func CreatorLT(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldLT(FieldCreator, v))
-}
-
-// CreatorLTE applies the LTE predicate on the "creator" field.
-func CreatorLTE(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldLTE(FieldCreator, v))
-}
-
-// CreatorContains applies the Contains predicate on the "creator" field.
-func CreatorContains(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldContains(FieldCreator, v))
-}
-
-// CreatorHasPrefix applies the HasPrefix predicate on the "creator" field.
-func CreatorHasPrefix(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldHasPrefix(FieldCreator, v))
-}
-
-// CreatorHasSuffix applies the HasSuffix predicate on the "creator" field.
-func CreatorHasSuffix(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldHasSuffix(FieldCreator, v))
-}
-
-// CreatorIsNil applies the IsNil predicate on the "creator" field.
-func CreatorIsNil() predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldIsNull(FieldCreator))
-}
-
-// CreatorNotNil applies the NotNil predicate on the "creator" field.
-func CreatorNotNil() predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldNotNull(FieldCreator))
-}
-
-// CreatorEqualFold applies the EqualFold predicate on the "creator" field.
-func CreatorEqualFold(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldEqualFold(FieldCreator, v))
-}
-
-// CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
-func CreatorContainsFold(v string) predicate.OrgOrgan {
-	return predicate.OrgOrgan(sql.FieldContainsFold(FieldCreator, v))
 }
 
 // HasHaddr applies the HasEdge predicate on the "haddr" edge.

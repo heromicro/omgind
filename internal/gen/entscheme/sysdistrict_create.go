@@ -485,12 +485,6 @@ func (sdc *SysDistrictCreate) SetNillableIsDirect(b *bool) *SysDistrictCreate {
 	return sdc
 }
 
-// SetCreator sets the "creator" field.
-func (sdc *SysDistrictCreate) SetCreator(s string) *SysDistrictCreate {
-	sdc.mutation.SetCreator(s)
-	return sdc
-}
-
 // SetID sets the "id" field.
 func (sdc *SysDistrictCreate) SetID(s string) *SysDistrictCreate {
 	sdc.mutation.SetID(s)
@@ -692,14 +686,6 @@ func (sdc *SysDistrictCreate) check() error {
 			return &ValidationError{Name: "suffix", err: fmt.Errorf(`entscheme: validator failed for field "SysDistrict.suffix": %w`, err)}
 		}
 	}
-	if _, ok := sdc.mutation.Creator(); !ok {
-		return &ValidationError{Name: "creator", err: errors.New(`entscheme: missing required field "SysDistrict.creator"`)}
-	}
-	if v, ok := sdc.mutation.Creator(); ok {
-		if err := sysdistrict.CreatorValidator(v); err != nil {
-			return &ValidationError{Name: "creator", err: fmt.Errorf(`entscheme: validator failed for field "SysDistrict.creator": %w`, err)}
-		}
-	}
 	if v, ok := sdc.mutation.ID(); ok {
 		if err := sysdistrict.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`entscheme: validator failed for field "SysDistrict.id": %w`, err)}
@@ -868,10 +854,6 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 	if value, ok := sdc.mutation.IsDirect(); ok {
 		_spec.SetField(sysdistrict.FieldIsDirect, field.TypeBool, value)
 		_node.IsDirect = &value
-	}
-	if value, ok := sdc.mutation.Creator(); ok {
-		_spec.SetField(sysdistrict.FieldCreator, field.TypeString, value)
-		_node.Creator = value
 	}
 	if nodes := sdc.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -1555,18 +1537,6 @@ func (u *SysDistrictUpsert) UpdateIsDirect() *SysDistrictUpsert {
 // ClearIsDirect clears the value of the "is_direct" field.
 func (u *SysDistrictUpsert) ClearIsDirect() *SysDistrictUpsert {
 	u.SetNull(sysdistrict.FieldIsDirect)
-	return u
-}
-
-// SetCreator sets the "creator" field.
-func (u *SysDistrictUpsert) SetCreator(v string) *SysDistrictUpsert {
-	u.Set(sysdistrict.FieldCreator, v)
-	return u
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *SysDistrictUpsert) UpdateCreator() *SysDistrictUpsert {
-	u.SetExcluded(sysdistrict.FieldCreator)
 	return u
 }
 
@@ -2318,20 +2288,6 @@ func (u *SysDistrictUpsertOne) UpdateIsDirect() *SysDistrictUpsertOne {
 func (u *SysDistrictUpsertOne) ClearIsDirect() *SysDistrictUpsertOne {
 	return u.Update(func(s *SysDistrictUpsert) {
 		s.ClearIsDirect()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *SysDistrictUpsertOne) SetCreator(v string) *SysDistrictUpsertOne {
-	return u.Update(func(s *SysDistrictUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *SysDistrictUpsertOne) UpdateCreator() *SysDistrictUpsertOne {
-	return u.Update(func(s *SysDistrictUpsert) {
-		s.UpdateCreator()
 	})
 }
 
@@ -3246,20 +3202,6 @@ func (u *SysDistrictUpsertBulk) UpdateIsDirect() *SysDistrictUpsertBulk {
 func (u *SysDistrictUpsertBulk) ClearIsDirect() *SysDistrictUpsertBulk {
 	return u.Update(func(s *SysDistrictUpsert) {
 		s.ClearIsDirect()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *SysDistrictUpsertBulk) SetCreator(v string) *SysDistrictUpsertBulk {
-	return u.Update(func(s *SysDistrictUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *SysDistrictUpsertBulk) UpdateCreator() *SysDistrictUpsertBulk {
-	return u.Update(func(s *SysDistrictUpsert) {
-		s.UpdateCreator()
 	})
 }
 

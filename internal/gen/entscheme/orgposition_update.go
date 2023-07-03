@@ -192,26 +192,6 @@ func (opu *OrgPositionUpdate) ClearOrgID() *OrgPositionUpdate {
 	return opu
 }
 
-// SetCreator sets the "creator" field.
-func (opu *OrgPositionUpdate) SetCreator(s string) *OrgPositionUpdate {
-	opu.mutation.SetCreator(s)
-	return opu
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (opu *OrgPositionUpdate) SetNillableCreator(s *string) *OrgPositionUpdate {
-	if s != nil {
-		opu.SetCreator(*s)
-	}
-	return opu
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (opu *OrgPositionUpdate) ClearCreator() *OrgPositionUpdate {
-	opu.mutation.ClearCreator()
-	return opu
-}
-
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
 func (opu *OrgPositionUpdate) SetOrganID(id string) *OrgPositionUpdate {
 	opu.mutation.SetOrganID(id)
@@ -401,12 +381,6 @@ func (opu *OrgPositionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if opu.mutation.CodeCleared() {
 		_spec.ClearField(orgposition.FieldCode, field.TypeString)
-	}
-	if value, ok := opu.mutation.Creator(); ok {
-		_spec.SetField(orgposition.FieldCreator, field.TypeString, value)
-	}
-	if opu.mutation.CreatorCleared() {
-		_spec.ClearField(orgposition.FieldCreator, field.TypeString)
 	}
 	if opu.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -665,26 +639,6 @@ func (opuo *OrgPositionUpdateOne) ClearOrgID() *OrgPositionUpdateOne {
 	return opuo
 }
 
-// SetCreator sets the "creator" field.
-func (opuo *OrgPositionUpdateOne) SetCreator(s string) *OrgPositionUpdateOne {
-	opuo.mutation.SetCreator(s)
-	return opuo
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (opuo *OrgPositionUpdateOne) SetNillableCreator(s *string) *OrgPositionUpdateOne {
-	if s != nil {
-		opuo.SetCreator(*s)
-	}
-	return opuo
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (opuo *OrgPositionUpdateOne) ClearCreator() *OrgPositionUpdateOne {
-	opuo.mutation.ClearCreator()
-	return opuo
-}
-
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
 func (opuo *OrgPositionUpdateOne) SetOrganID(id string) *OrgPositionUpdateOne {
 	opuo.mutation.SetOrganID(id)
@@ -904,12 +858,6 @@ func (opuo *OrgPositionUpdateOne) sqlSave(ctx context.Context) (_node *OrgPositi
 	}
 	if opuo.mutation.CodeCleared() {
 		_spec.ClearField(orgposition.FieldCode, field.TypeString)
-	}
-	if value, ok := opuo.mutation.Creator(); ok {
-		_spec.SetField(orgposition.FieldCreator, field.TypeString, value)
-	}
-	if opuo.mutation.CreatorCleared() {
-		_spec.ClearField(orgposition.FieldCreator, field.TypeString)
 	}
 	if opuo.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{

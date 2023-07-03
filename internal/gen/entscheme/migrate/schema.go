@@ -29,7 +29,6 @@ var (
 		{Name: "mname", Type: field.TypeString, Nullable: true, Size: 1024},
 		{Name: "is_rl", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "is_sh", Type: field.TypeBool, Nullable: true, Default: true},
-		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 	}
@@ -41,13 +40,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "org_depts_org_depts_children",
-				Columns:    []*schema.Column{OrgDeptsColumns[20]},
+				Columns:    []*schema.Column{OrgDeptsColumns[19]},
 				RefColumns: []*schema.Column{OrgDeptsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_depts_org_organs_depts",
-				Columns:    []*schema.Column{OrgDeptsColumns[21]},
+				Columns:    []*schema.Column{OrgDeptsColumns[20]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -120,7 +119,6 @@ var (
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
 		{Name: "iden_no", Type: field.TypeString, Nullable: true, Size: 20},
 		{Name: "owner_id", Type: field.TypeString, Nullable: true, Size: 36},
-		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "haddr_id", Type: field.TypeString, Unique: true, Nullable: true, Size: 36},
 	}
 	// OrgOrgansTable holds the schema information for the "org_organs" table.
@@ -131,7 +129,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "org_organs_sys_addresses_organ",
-				Columns:    []*schema.Column{OrgOrgansColumns[14]},
+				Columns:    []*schema.Column{OrgOrgansColumns[13]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -186,7 +184,6 @@ var (
 		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
 		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "code", Type: field.TypeString, Nullable: true, Size: 16},
-		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// OrgPositionsTable holds the schema information for the "org_positions" table.
@@ -197,7 +194,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "org_positions_org_organs_positions",
-				Columns:    []*schema.Column{OrgPositionsColumns[11]},
+				Columns:    []*schema.Column{OrgPositionsColumns[10]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -260,7 +257,6 @@ var (
 		{Name: "resign_date", Type: field.TypeTime, Nullable: true},
 		{Name: "empy_stat", Type: field.TypeInt32, Default: 1},
 		{Name: "empyst_dict_id", Type: field.TypeString, Nullable: true, Size: 36},
-		{Name: "creator", Type: field.TypeString, Nullable: true},
 		{Name: "dept_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "org_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "posi_id", Type: field.TypeString, Nullable: true, Size: 36},
@@ -275,31 +271,31 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "org_staffs_org_depts_staffs",
-				Columns:    []*schema.Column{OrgStaffsColumns[24]},
+				Columns:    []*schema.Column{OrgStaffsColumns[23]},
 				RefColumns: []*schema.Column{OrgDeptsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_org_organs_staffs",
-				Columns:    []*schema.Column{OrgStaffsColumns[25]},
+				Columns:    []*schema.Column{OrgStaffsColumns[24]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_org_positions_staffs",
-				Columns:    []*schema.Column{OrgStaffsColumns[26]},
+				Columns:    []*schema.Column{OrgStaffsColumns[25]},
 				RefColumns: []*schema.Column{OrgPositionsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_sys_addresses_staff_resi",
-				Columns:    []*schema.Column{OrgStaffsColumns[27]},
+				Columns:    []*schema.Column{OrgStaffsColumns[26]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_sys_addresses_staff_iden",
-				Columns:    []*schema.Column{OrgStaffsColumns[28]},
+				Columns:    []*schema.Column{OrgStaffsColumns[27]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -363,7 +359,6 @@ var (
 		{Name: "last_name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "area_code", Type: field.TypeString, Nullable: true, Size: 8},
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Size: 64},
-		{Name: "creator", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// SysAddressesTable holds the schema information for the "sys_addresses" table.
 	SysAddressesTable = &schema.Table{
@@ -566,7 +561,6 @@ var (
 		{Name: "is_r", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "is_m", Type: field.TypeBool, Nullable: true, Default: true},
 		{Name: "is_d", Type: field.TypeBool, Nullable: true, Default: true},
-		{Name: "creator", Type: field.TypeString, Size: 36},
 		{Name: "pid", Type: field.TypeString, Nullable: true, Size: 36},
 	}
 	// SysDistrictsTable holds the schema information for the "sys_districts" table.
@@ -577,7 +571,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "sys_districts_sys_districts_children",
-				Columns:    []*schema.Column{SysDistrictsColumns[34]},
+				Columns:    []*schema.Column{SysDistrictsColumns[33]},
 				RefColumns: []*schema.Column{SysDistrictsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -1033,6 +1027,127 @@ var (
 			},
 		},
 	}
+	// SysTeamsColumns holds the columns for the "sys_teams" table.
+	SysTeamsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString, Size: 36},
+		{Name: "sort", Type: field.TypeInt32, Default: 9999},
+		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
+		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
+		{Name: "is_del", Type: field.TypeBool, Default: false},
+		{Name: "name", Type: field.TypeString, Nullable: true, Size: 64},
+		{Name: "code", Type: field.TypeString, Nullable: true, Size: 64},
+	}
+	// SysTeamsTable holds the schema information for the "sys_teams" table.
+	SysTeamsTable = &schema.Table{
+		Name:       "sys_teams",
+		Columns:    SysTeamsColumns,
+		PrimaryKey: []*schema.Column{SysTeamsColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "systeam_id",
+				Unique:  true,
+				Columns: []*schema.Column{SysTeamsColumns[0]},
+			},
+			{
+				Name:    "systeam_sort",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamsColumns[1]},
+			},
+			{
+				Name:    "systeam_crtd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamsColumns[2]},
+			},
+			{
+				Name:    "systeam_dltd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamsColumns[4]},
+			},
+			{
+				Name:    "systeam_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamsColumns[5]},
+			},
+			{
+				Name:    "systeam_is_del",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamsColumns[7]},
+			},
+		},
+	}
+	// SysTeamUsersColumns holds the columns for the "sys_team_users" table.
+	SysTeamUsersColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString, Size: 36},
+		{Name: "sort", Type: field.TypeInt32, Default: 9999},
+		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
+		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
+		{Name: "is_del", Type: field.TypeBool, Default: false},
+		{Name: "user_id", Type: field.TypeString, Size: 36},
+		{Name: "team_id", Type: field.TypeString, Size: 36},
+	}
+	// SysTeamUsersTable holds the schema information for the "sys_team_users" table.
+	SysTeamUsersTable = &schema.Table{
+		Name:       "sys_team_users",
+		Columns:    SysTeamUsersColumns,
+		PrimaryKey: []*schema.Column{SysTeamUsersColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "sys_team_users_sys_users_user",
+				Columns:    []*schema.Column{SysTeamUsersColumns[8]},
+				RefColumns: []*schema.Column{SysUsersColumns[0]},
+				OnDelete:   schema.NoAction,
+			},
+			{
+				Symbol:     "sys_team_users_sys_teams_team",
+				Columns:    []*schema.Column{SysTeamUsersColumns[9]},
+				RefColumns: []*schema.Column{SysTeamsColumns[0]},
+				OnDelete:   schema.NoAction,
+			},
+		},
+		Indexes: []*schema.Index{
+			{
+				Name:    "systeamuser_id",
+				Unique:  true,
+				Columns: []*schema.Column{SysTeamUsersColumns[0]},
+			},
+			{
+				Name:    "systeamuser_sort",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamUsersColumns[1]},
+			},
+			{
+				Name:    "systeamuser_crtd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamUsersColumns[2]},
+			},
+			{
+				Name:    "systeamuser_dltd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamUsersColumns[4]},
+			},
+			{
+				Name:    "systeamuser_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamUsersColumns[5]},
+			},
+			{
+				Name:    "systeamuser_is_del",
+				Unique:  false,
+				Columns: []*schema.Column{SysTeamUsersColumns[7]},
+			},
+			{
+				Name:    "systeamuser_team_id_user_id",
+				Unique:  true,
+				Columns: []*schema.Column{SysTeamUsersColumns[9], SysTeamUsersColumns[8]},
+			},
+		},
+	}
 	// SysUsersColumns holds the columns for the "sys_users" table.
 	SysUsersColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
@@ -1200,6 +1315,8 @@ var (
 		SysMenuActionResourcesTable,
 		SysRolesTable,
 		SysRoleMenusTable,
+		SysTeamsTable,
+		SysTeamUsersTable,
 		SysUsersTable,
 		SysUserRolesTable,
 		XxxDemosTable,
@@ -1219,4 +1336,6 @@ func init() {
 	SysDictItemsTable.ForeignKeys[0].RefTable = SysDictsTable
 	SysDistrictsTable.ForeignKeys[0].RefTable = SysDistrictsTable
 	SysMenusTable.ForeignKeys[0].RefTable = SysMenusTable
+	SysTeamUsersTable.ForeignKeys[0].RefTable = SysUsersTable
+	SysTeamUsersTable.ForeignKeys[1].RefTable = SysTeamsTable
 }

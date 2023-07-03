@@ -405,20 +405,6 @@ func (osc *OrgStaffCreate) SetNillablePosiID(s *string) *OrgStaffCreate {
 	return osc
 }
 
-// SetCreator sets the "creator" field.
-func (osc *OrgStaffCreate) SetCreator(s string) *OrgStaffCreate {
-	osc.mutation.SetCreator(s)
-	return osc
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableCreator(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetCreator(*s)
-	}
-	return osc
-}
-
 // SetID sets the "id" field.
 func (osc *OrgStaffCreate) SetID(s string) *OrgStaffCreate {
 	osc.mutation.SetID(s)
@@ -753,10 +739,6 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 	if value, ok := osc.mutation.EmpystDictID(); ok {
 		_spec.SetField(orgstaff.FieldEmpystDictID, field.TypeString, value)
 		_node.EmpystDictID = &value
-	}
-	if value, ok := osc.mutation.Creator(); ok {
-		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
-		_node.Creator = &value
 	}
 	if nodes := osc.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -1357,24 +1339,6 @@ func (u *OrgStaffUpsert) ClearPosiID() *OrgStaffUpsert {
 	return u
 }
 
-// SetCreator sets the "creator" field.
-func (u *OrgStaffUpsert) SetCreator(v string) *OrgStaffUpsert {
-	u.Set(orgstaff.FieldCreator, v)
-	return u
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgStaffUpsert) UpdateCreator() *OrgStaffUpsert {
-	u.SetExcluded(orgstaff.FieldCreator)
-	return u
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgStaffUpsert) ClearCreator() *OrgStaffUpsert {
-	u.SetNull(orgstaff.FieldCreator)
-	return u
-}
-
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -1962,27 +1926,6 @@ func (u *OrgStaffUpsertOne) UpdatePosiID() *OrgStaffUpsertOne {
 func (u *OrgStaffUpsertOne) ClearPosiID() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearPosiID()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *OrgStaffUpsertOne) SetCreator(v string) *OrgStaffUpsertOne {
-	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgStaffUpsertOne) UpdateCreator() *OrgStaffUpsertOne {
-	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateCreator()
-	})
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgStaffUpsertOne) ClearCreator() *OrgStaffUpsertOne {
-	return u.Update(func(s *OrgStaffUpsert) {
-		s.ClearCreator()
 	})
 }
 
@@ -2736,27 +2679,6 @@ func (u *OrgStaffUpsertBulk) UpdatePosiID() *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) ClearPosiID() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearPosiID()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *OrgStaffUpsertBulk) SetCreator(v string) *OrgStaffUpsertBulk {
-	return u.Update(func(s *OrgStaffUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgStaffUpsertBulk) UpdateCreator() *OrgStaffUpsertBulk {
-	return u.Update(func(s *OrgStaffUpsert) {
-		s.UpdateCreator()
-	})
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgStaffUpsertBulk) ClearCreator() *OrgStaffUpsertBulk {
-	return u.Update(func(s *OrgStaffUpsert) {
-		s.ClearCreator()
 	})
 }
 

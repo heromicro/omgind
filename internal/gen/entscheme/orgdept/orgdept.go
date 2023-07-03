@@ -54,8 +54,6 @@ const (
 	FieldIsReal = "is_rl"
 	// FieldIsShow holds the string denoting the is_show field in the database.
 	FieldIsShow = "is_sh"
-	// FieldCreator holds the string denoting the creator field in the database.
-	FieldCreator = "creator"
 	// EdgeParent holds the string denoting the parent edge name in mutations.
 	EdgeParent = "parent"
 	// EdgeChildren holds the string denoting the children edge name in mutations.
@@ -113,7 +111,6 @@ var Columns = []string{
 	FieldParentID,
 	FieldIsReal,
 	FieldIsShow,
-	FieldCreator,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -271,11 +268,6 @@ func ByIsReal(opts ...sql.OrderTermOption) OrderOption {
 // ByIsShow orders the results by the is_show field.
 func ByIsShow(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsShow, opts...).ToFunc()
-}
-
-// ByCreator orders the results by the creator field.
-func ByCreator(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreator, opts...).ToFunc()
 }
 
 // ByParentField orders the results by parent field.

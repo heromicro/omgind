@@ -59,7 +59,6 @@ func (SysDistrict) Fields() []ent.Field {
 
 		// field.JSON("tag", []string{}).Default([]string{}).Optional().Comment("tag"),
 
-		field.String("creator").MaxLen(36).StorageKey("creator").Comment("创建者"),
 	}
 }
 

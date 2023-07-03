@@ -6,12 +6,12 @@ import "time"
 type Role struct {
 	TimeMixin `yaml:"-"`
 
-	ID        string     `json:"id" `                                // 唯一标识
-	Name      string     `json:"name" binding:"required"`            // 角色名称
-	Sort      int        `json:"sort"`                               // 排序值
-	Memo      string     `json:"memo"`                               // 备注
-	IsActive  *bool      `json:"is_active" binding:"required"`       // 状态
-	Creator   string     `json:"creator" `                           // 创建者
+	ID       string `json:"id" `                          // 唯一标识
+	Name     string `json:"name" binding:"required"`      // 角色名称
+	Sort     int    `json:"sort"`                         // 排序值
+	Memo     string `json:"memo"`                         // 备注
+	IsActive *bool  `json:"is_active" binding:"required"` // 状态
+
 	CreatedAt *time.Time `json:"created_at" `                        // 创建时间
 	UpdatedAt *time.Time `json:"updated_at" `                        // 更新时间
 	DeletedAt *time.Time `json:"deleted_at" `                        // 更新时间

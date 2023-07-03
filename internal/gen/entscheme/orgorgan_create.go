@@ -209,20 +209,6 @@ func (ooc *OrgOrganCreate) SetNillableHaddrID(s *string) *OrgOrganCreate {
 	return ooc
 }
 
-// SetCreator sets the "creator" field.
-func (ooc *OrgOrganCreate) SetCreator(s string) *OrgOrganCreate {
-	ooc.mutation.SetCreator(s)
-	return ooc
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (ooc *OrgOrganCreate) SetNillableCreator(s *string) *OrgOrganCreate {
-	if s != nil {
-		ooc.SetCreator(*s)
-	}
-	return ooc
-}
-
 // SetID sets the "id" field.
 func (ooc *OrgOrganCreate) SetID(s string) *OrgOrganCreate {
 	ooc.mutation.SetID(s)
@@ -486,10 +472,6 @@ func (ooc *OrgOrganCreate) createSpec() (*OrgOrgan, *sqlgraph.CreateSpec) {
 	if value, ok := ooc.mutation.OwnerID(); ok {
 		_spec.SetField(orgorgan.FieldOwnerID, field.TypeString, value)
 		_node.OwnerID = &value
-	}
-	if value, ok := ooc.mutation.Creator(); ok {
-		_spec.SetField(orgorgan.FieldCreator, field.TypeString, value)
-		_node.Creator = &value
 	}
 	if nodes := ooc.mutation.HaddrIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -812,24 +794,6 @@ func (u *OrgOrganUpsert) ClearHaddrID() *OrgOrganUpsert {
 	return u
 }
 
-// SetCreator sets the "creator" field.
-func (u *OrgOrganUpsert) SetCreator(v string) *OrgOrganUpsert {
-	u.Set(orgorgan.FieldCreator, v)
-	return u
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgOrganUpsert) UpdateCreator() *OrgOrganUpsert {
-	u.SetExcluded(orgorgan.FieldCreator)
-	return u
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgOrganUpsert) ClearCreator() *OrgOrganUpsert {
-	u.SetNull(orgorgan.FieldCreator)
-	return u
-}
-
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -1116,27 +1080,6 @@ func (u *OrgOrganUpsertOne) UpdateHaddrID() *OrgOrganUpsertOne {
 func (u *OrgOrganUpsertOne) ClearHaddrID() *OrgOrganUpsertOne {
 	return u.Update(func(s *OrgOrganUpsert) {
 		s.ClearHaddrID()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *OrgOrganUpsertOne) SetCreator(v string) *OrgOrganUpsertOne {
-	return u.Update(func(s *OrgOrganUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgOrganUpsertOne) UpdateCreator() *OrgOrganUpsertOne {
-	return u.Update(func(s *OrgOrganUpsert) {
-		s.UpdateCreator()
-	})
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgOrganUpsertOne) ClearCreator() *OrgOrganUpsertOne {
-	return u.Update(func(s *OrgOrganUpsert) {
-		s.ClearCreator()
 	})
 }
 
@@ -1589,27 +1532,6 @@ func (u *OrgOrganUpsertBulk) UpdateHaddrID() *OrgOrganUpsertBulk {
 func (u *OrgOrganUpsertBulk) ClearHaddrID() *OrgOrganUpsertBulk {
 	return u.Update(func(s *OrgOrganUpsert) {
 		s.ClearHaddrID()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *OrgOrganUpsertBulk) SetCreator(v string) *OrgOrganUpsertBulk {
-	return u.Update(func(s *OrgOrganUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgOrganUpsertBulk) UpdateCreator() *OrgOrganUpsertBulk {
-	return u.Update(func(s *OrgOrganUpsert) {
-		s.UpdateCreator()
-	})
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgOrganUpsertBulk) ClearCreator() *OrgOrganUpsertBulk {
-	return u.Update(func(s *OrgOrganUpsert) {
-		s.ClearCreator()
 	})
 }
 

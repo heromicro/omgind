@@ -542,26 +542,6 @@ func (osu *OrgStaffUpdate) ClearPosiID() *OrgStaffUpdate {
 	return osu
 }
 
-// SetCreator sets the "creator" field.
-func (osu *OrgStaffUpdate) SetCreator(s string) *OrgStaffUpdate {
-	osu.mutation.SetCreator(s)
-	return osu
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableCreator(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetCreator(*s)
-	}
-	return osu
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (osu *OrgStaffUpdate) ClearCreator() *OrgStaffUpdate {
-	osu.mutation.ClearCreator()
-	return osu
-}
-
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
 func (osu *OrgStaffUpdate) SetOrganID(id string) *OrgStaffUpdate {
 	osu.mutation.SetOrganID(id)
@@ -890,12 +870,6 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if osu.mutation.EmpystDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldEmpystDictID, field.TypeString)
-	}
-	if value, ok := osu.mutation.Creator(); ok {
-		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
-	}
-	if osu.mutation.CreatorCleared() {
-		_spec.ClearField(orgstaff.FieldCreator, field.TypeString)
 	}
 	if osu.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1573,26 +1547,6 @@ func (osuo *OrgStaffUpdateOne) ClearPosiID() *OrgStaffUpdateOne {
 	return osuo
 }
 
-// SetCreator sets the "creator" field.
-func (osuo *OrgStaffUpdateOne) SetCreator(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetCreator(s)
-	return osuo
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableCreator(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetCreator(*s)
-	}
-	return osuo
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (osuo *OrgStaffUpdateOne) ClearCreator() *OrgStaffUpdateOne {
-	osuo.mutation.ClearCreator()
-	return osuo
-}
-
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
 func (osuo *OrgStaffUpdateOne) SetOrganID(id string) *OrgStaffUpdateOne {
 	osuo.mutation.SetOrganID(id)
@@ -1951,12 +1905,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 	}
 	if osuo.mutation.EmpystDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldEmpystDictID, field.TypeString)
-	}
-	if value, ok := osuo.mutation.Creator(); ok {
-		_spec.SetField(orgstaff.FieldCreator, field.TypeString, value)
-	}
-	if osuo.mutation.CreatorCleared() {
-		_spec.ClearField(orgstaff.FieldCreator, field.TypeString)
 	}
 	if osuo.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{

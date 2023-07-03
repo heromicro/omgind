@@ -40,8 +40,6 @@ const (
 	FieldOwnerID = "owner_id"
 	// FieldHaddrID holds the string denoting the haddr_id field in the database.
 	FieldHaddrID = "haddr_id"
-	// FieldCreator holds the string denoting the creator field in the database.
-	FieldCreator = "creator"
 	// EdgeHaddr holds the string denoting the haddr edge name in mutations.
 	EdgeHaddr = "haddr"
 	// EdgeDepts holds the string denoting the depts edge name in mutations.
@@ -98,7 +96,6 @@ var Columns = []string{
 	FieldIdenNo,
 	FieldOwnerID,
 	FieldHaddrID,
-	FieldCreator,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -217,11 +214,6 @@ func ByOwnerID(opts ...sql.OrderTermOption) OrderOption {
 // ByHaddrID orders the results by the haddr_id field.
 func ByHaddrID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldHaddrID, opts...).ToFunc()
-}
-
-// ByCreator orders the results by the creator field.
-func ByCreator(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreator, opts...).ToFunc()
 }
 
 // ByHaddrField orders the results by haddr field.

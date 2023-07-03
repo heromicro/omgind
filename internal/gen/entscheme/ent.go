@@ -27,6 +27,8 @@ import (
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysrole"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysrolemenu"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeam"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeamuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/entscheme/xxxdemo"
@@ -105,6 +107,8 @@ func checkColumn(table, column string) error {
 			sysmenuactionresource.Table: sysmenuactionresource.ValidColumn,
 			sysrole.Table:               sysrole.ValidColumn,
 			sysrolemenu.Table:           sysrolemenu.ValidColumn,
+			systeam.Table:               systeam.ValidColumn,
+			systeamuser.Table:           systeamuser.ValidColumn,
 			sysuser.Table:               sysuser.ValidColumn,
 			sysuserrole.Table:           sysuserrole.ValidColumn,
 			xxxdemo.Table:               xxxdemo.ValidColumn,

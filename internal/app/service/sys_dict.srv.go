@@ -135,7 +135,7 @@ func (a *Dict) Update(ctx context.Context, id string, item schema.Dict) (*schema
 	}
 
 	item.ID = oldItem.ID
-	item.Creator = oldItem.Creator
+
 	item.CreatedAt = oldItem.CreatedAt
 
 	addItems, delItems, updateItems := a.compareDictItems(ctx, oldItem.Items, item.Items)

@@ -20,7 +20,6 @@ type OrgDept struct {
 	OrgMixin
 	TreeMixin
 
-	Creator   string     `json:"creator"`    // 创建者
 	CreatedAt *time.Time `json:"created_at"` // 创建时间
 	UpdatedAt *time.Time `json:"updated_at"` // 更新时间
 

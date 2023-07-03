@@ -40,6 +40,8 @@ type Router struct {
 	OrgStaffAPIV2    *api_v2.OrgStaff
 	OrgPositionAPIV2 *api_v2.OrgPosition
 	OrgDeptAPIV2     *api_v2.OrgDept
+	SysTeamAPIV2     *api_v2.SysTeam
+	SysTeamAPIV2     *api_v2.SysTeam
 }
 
 // Register 注册路由

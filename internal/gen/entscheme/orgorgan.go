@@ -44,8 +44,6 @@ type OrgOrgan struct {
 	OwnerID *string `json:"owner_id,omitempty"`
 	// 驻地地址id
 	HaddrID *string `json:"haddr_id,omitempty"`
-	// 创建者
-	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrgOrganQuery when eager-loading is set.
 	Edges        OrgOrganEdges `json:"edges"`
@@ -116,7 +114,7 @@ func (*OrgOrgan) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgorgan.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case orgorgan.FieldID, orgorgan.FieldMemo, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldCode, orgorgan.FieldIdenNo, orgorgan.FieldOwnerID, orgorgan.FieldHaddrID, orgorgan.FieldCreator:
+		case orgorgan.FieldID, orgorgan.FieldMemo, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldCode, orgorgan.FieldIdenNo, orgorgan.FieldOwnerID, orgorgan.FieldHaddrID:
 			values[i] = new(sql.NullString)
 		case orgorgan.FieldCreatedAt, orgorgan.FieldUpdatedAt, orgorgan.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -228,13 +226,6 @@ func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				oo.HaddrID = new(string)
 				*oo.HaddrID = value.String
-			}
-		case orgorgan.FieldCreator:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field creator", values[i])
-			} else if value.Valid {
-				oo.Creator = new(string)
-				*oo.Creator = value.String
 			}
 		default:
 			oo.selectValues.Set(columns[i], values[i])
@@ -348,11 +339,6 @@ func (oo *OrgOrgan) String() string {
 	builder.WriteString(", ")
 	if v := oo.HaddrID; v != nil {
 		builder.WriteString("haddr_id=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := oo.Creator; v != nil {
-		builder.WriteString("creator=")
 		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')

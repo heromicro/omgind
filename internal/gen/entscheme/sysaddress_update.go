@@ -432,26 +432,6 @@ func (sau *SysAddressUpdate) ClearMobile() *SysAddressUpdate {
 	return sau
 }
 
-// SetCreator sets the "creator" field.
-func (sau *SysAddressUpdate) SetCreator(s string) *SysAddressUpdate {
-	sau.mutation.SetCreator(s)
-	return sau
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableCreator(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetCreator(*s)
-	}
-	return sau
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (sau *SysAddressUpdate) ClearCreator() *SysAddressUpdate {
-	sau.mutation.ClearCreator()
-	return sau
-}
-
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
 func (sau *SysAddressUpdate) SetOrganID(id string) *SysAddressUpdate {
 	sau.mutation.SetOrganID(id)
@@ -630,11 +610,6 @@ func (sau *SysAddressUpdate) check() error {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`entscheme: validator failed for field "SysAddress.mobile": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.Creator(); ok {
-		if err := sysaddress.CreatorValidator(v); err != nil {
-			return &ValidationError{Name: "creator", err: fmt.Errorf(`entscheme: validator failed for field "SysAddress.creator": %w`, err)}
-		}
-	}
 	return nil
 }
 
@@ -781,12 +756,6 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if sau.mutation.MobileCleared() {
 		_spec.ClearField(sysaddress.FieldMobile, field.TypeString)
-	}
-	if value, ok := sau.mutation.Creator(); ok {
-		_spec.SetField(sysaddress.FieldCreator, field.TypeString, value)
-	}
-	if sau.mutation.CreatorCleared() {
-		_spec.ClearField(sysaddress.FieldCreator, field.TypeString)
 	}
 	if sau.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1298,26 +1267,6 @@ func (sauo *SysAddressUpdateOne) ClearMobile() *SysAddressUpdateOne {
 	return sauo
 }
 
-// SetCreator sets the "creator" field.
-func (sauo *SysAddressUpdateOne) SetCreator(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetCreator(s)
-	return sauo
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableCreator(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetCreator(*s)
-	}
-	return sauo
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (sauo *SysAddressUpdateOne) ClearCreator() *SysAddressUpdateOne {
-	sauo.mutation.ClearCreator()
-	return sauo
-}
-
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
 func (sauo *SysAddressUpdateOne) SetOrganID(id string) *SysAddressUpdateOne {
 	sauo.mutation.SetOrganID(id)
@@ -1509,11 +1458,6 @@ func (sauo *SysAddressUpdateOne) check() error {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`entscheme: validator failed for field "SysAddress.mobile": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.Creator(); ok {
-		if err := sysaddress.CreatorValidator(v); err != nil {
-			return &ValidationError{Name: "creator", err: fmt.Errorf(`entscheme: validator failed for field "SysAddress.creator": %w`, err)}
-		}
-	}
 	return nil
 }
 
@@ -1677,12 +1621,6 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 	}
 	if sauo.mutation.MobileCleared() {
 		_spec.ClearField(sysaddress.FieldMobile, field.TypeString)
-	}
-	if value, ok := sauo.mutation.Creator(); ok {
-		_spec.SetField(sysaddress.FieldCreator, field.TypeString, value)
-	}
-	if sauo.mutation.CreatorCleared() {
-		_spec.ClearField(sysaddress.FieldCreator, field.TypeString)
 	}
 	if sauo.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{

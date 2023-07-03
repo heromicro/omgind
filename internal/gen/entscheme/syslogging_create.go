@@ -226,9 +226,7 @@ func (slc *SysLoggingCreate) Mutation() *SysLoggingMutation {
 
 // Save creates the SysLogging in the database.
 func (slc *SysLoggingCreate) Save(ctx context.Context) (*SysLogging, error) {
-	if err := slc.defaults(); err != nil {
-		return nil, err
-	}
+	slc.defaults()
 	return withHooks(ctx, slc.sqlSave, slc.mutation, slc.hooks)
 }
 
@@ -255,18 +253,12 @@ func (slc *SysLoggingCreate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (slc *SysLoggingCreate) defaults() error {
+func (slc *SysLoggingCreate) defaults() {
 	if _, ok := slc.mutation.CreatedAt(); !ok {
-		if syslogging.DefaultCreatedAt == nil {
-			return fmt.Errorf("entscheme: uninitialized syslogging.DefaultCreatedAt (forgotten import entscheme/runtime?)")
-		}
 		v := syslogging.DefaultCreatedAt()
 		slc.mutation.SetCreatedAt(v)
 	}
 	if _, ok := slc.mutation.UpdatedAt(); !ok {
-		if syslogging.DefaultUpdatedAt == nil {
-			return fmt.Errorf("entscheme: uninitialized syslogging.DefaultUpdatedAt (forgotten import entscheme/runtime?)")
-		}
 		v := syslogging.DefaultUpdatedAt()
 		slc.mutation.SetUpdatedAt(v)
 	}
@@ -279,13 +271,9 @@ func (slc *SysLoggingCreate) defaults() error {
 		slc.mutation.SetMemo(v)
 	}
 	if _, ok := slc.mutation.ID(); !ok {
-		if syslogging.DefaultID == nil {
-			return fmt.Errorf("entscheme: uninitialized syslogging.DefaultID (forgotten import entscheme/runtime?)")
-		}
 		v := syslogging.DefaultID()
 		slc.mutation.SetID(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.

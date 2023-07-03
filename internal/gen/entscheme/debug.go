@@ -124,6 +124,22 @@ func (c *SysRoleMenuClient) Debug() *SysRoleMenuClient {
 	return &SysRoleMenuClient{config: cfg}
 }
 
+func (c *SysTeamClient) Debug() *SysTeamClient {
+	if c.debug {
+		return c
+	}
+	cfg := config{driver: dialect.Debug(c.driver, c.log), log: c.log, debug: true, hooks: c.hooks}
+	return &SysTeamClient{config: cfg}
+}
+
+func (c *SysTeamUserClient) Debug() *SysTeamUserClient {
+	if c.debug {
+		return c
+	}
+	cfg := config{driver: dialect.Debug(c.driver, c.log), log: c.log, debug: true, hooks: c.hooks}
+	return &SysTeamUserClient{config: cfg}
+}
+
 func (c *SysUserClient) Debug() *SysUserClient {
 	if c.debug {
 		return c

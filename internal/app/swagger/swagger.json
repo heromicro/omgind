@@ -5885,10 +5885,6 @@
                     "description": "创建时间",
                     "type": "string"
                 },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
@@ -5925,10 +5921,6 @@
             "properties": {
                 "created_at": {
                     "description": "创建时间",
-                    "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
                     "type": "string"
                 },
                 "id": {
@@ -5979,10 +5971,6 @@
             "properties": {
                 "created_at": {
                     "description": "创建时间",
-                    "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
                     "type": "string"
                 },
                 "dict_id": {
@@ -6078,10 +6066,6 @@
                 },
                 "created_at": {
                     "description": "创建时间",
-                    "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
                     "type": "string"
                 },
                 "icon": {
@@ -6282,10 +6266,6 @@
                     "description": "创建时间",
                     "type": "string"
                 },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
@@ -6377,10 +6357,6 @@
                 },
                 "created_at": {
                     "description": "创建时间",
-                    "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
                     "type": "string"
                 },
                 "haddr": {
@@ -6476,10 +6452,6 @@
                     "description": "创建时间",
                     "type": "string"
                 },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
@@ -6533,10 +6505,6 @@
                 },
                 "created_at": {
                     "description": "创建时间",
-                    "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
                     "type": "string"
                 },
                 "cubicle": {
@@ -6708,10 +6676,6 @@
                     "description": "创建时间",
                     "type": "string"
                 },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
                 "deleted_at": {
                     "description": "更新时间",
                     "type": "string"
@@ -6875,10 +6839,6 @@
                     "description": "创建时间",
                     "type": "string"
                 },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
                 "daddr": {
                     "description": "详细地址",
                     "type": "string"
@@ -6949,10 +6909,6 @@
                 },
                 "created_at": {
                     "description": "创建时间",
-                    "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
                     "type": "string"
                 },
                 "extra": {
@@ -7118,10 +7074,6 @@
             "properties": {
                 "created_at": {
                     "description": "创建时间",
-                    "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
                     "type": "string"
                 },
                 "email": {

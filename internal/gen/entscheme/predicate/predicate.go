@@ -51,6 +51,12 @@ type SysRole func(*sql.Selector)
 // SysRoleMenu is the predicate function for sysrolemenu builders.
 type SysRoleMenu func(*sql.Selector)
 
+// SysTeam is the predicate function for systeam builders.
+type SysTeam func(*sql.Selector)
+
+// SysTeamUser is the predicate function for systeamuser builders.
+type SysTeamUser func(*sql.Selector)
+
 // SysUser is the predicate function for sysuser builders.
 type SysUser func(*sql.Selector)
 

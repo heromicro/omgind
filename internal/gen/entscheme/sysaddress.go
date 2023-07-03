@@ -65,8 +65,6 @@ type SysAddress struct {
 	AreaCode *string `json:"area_code,omitempty"`
 	// 电话
 	Mobile *string `json:"mobile,omitempty"`
-	// 创建者
-	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysAddressQuery when eager-loading is set.
 	Edges        SysAddressEdges `json:"edges"`
@@ -134,7 +132,7 @@ func (*SysAddress) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case sysaddress.FieldSort:
 			values[i] = new(sql.NullInt64)
-		case sysaddress.FieldID, sysaddress.FieldUserID, sysaddress.FieldOrgID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvince, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProvinceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldFirstName, sysaddress.FieldLastName, sysaddress.FieldAreaCode, sysaddress.FieldMobile, sysaddress.FieldCreator:
+		case sysaddress.FieldID, sysaddress.FieldUserID, sysaddress.FieldOrgID, sysaddress.FieldMemo, sysaddress.FieldCountry, sysaddress.FieldProvince, sysaddress.FieldCity, sysaddress.FieldCounty, sysaddress.FieldCountryID, sysaddress.FieldProvinceID, sysaddress.FieldCityID, sysaddress.FieldCountyID, sysaddress.FieldZipCode, sysaddress.FieldDaddr, sysaddress.FieldFirstName, sysaddress.FieldLastName, sysaddress.FieldAreaCode, sysaddress.FieldMobile:
 			values[i] = new(sql.NullString)
 		case sysaddress.FieldCreatedAt, sysaddress.FieldUpdatedAt, sysaddress.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -317,13 +315,6 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 				sa.Mobile = new(string)
 				*sa.Mobile = value.String
 			}
-		case sysaddress.FieldCreator:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field creator", values[i])
-			} else if value.Valid {
-				sa.Creator = new(string)
-				*sa.Creator = value.String
-			}
 		default:
 			sa.selectValues.Set(columns[i], values[i])
 		}
@@ -481,11 +472,6 @@ func (sa *SysAddress) String() string {
 	builder.WriteString(", ")
 	if v := sa.Mobile; v != nil {
 		builder.WriteString("mobile=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := sa.Creator; v != nil {
-		builder.WriteString("creator=")
 		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')

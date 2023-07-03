@@ -139,8 +139,6 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 		}
 	}
 
-	item.Creator = oldItem.Creator
-
 	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *entscheme.Tx) error {
 
 		addRoleMenus, delRoleMenus := a.compareRoleMenus(ctx, oldItem.RoleMenus, item.RoleMenus)

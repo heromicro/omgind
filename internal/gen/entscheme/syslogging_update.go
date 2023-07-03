@@ -242,9 +242,7 @@ func (slu *SysLoggingUpdate) Mutation() *SysLoggingMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (slu *SysLoggingUpdate) Save(ctx context.Context) (int, error) {
-	if err := slu.defaults(); err != nil {
-		return 0, err
-	}
+	slu.defaults()
 	return withHooks(ctx, slu.sqlSave, slu.mutation, slu.hooks)
 }
 
@@ -271,15 +269,11 @@ func (slu *SysLoggingUpdate) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (slu *SysLoggingUpdate) defaults() error {
+func (slu *SysLoggingUpdate) defaults() {
 	if _, ok := slu.mutation.UpdatedAt(); !ok && !slu.mutation.UpdatedAtCleared() {
-		if syslogging.UpdateDefaultUpdatedAt == nil {
-			return fmt.Errorf("entscheme: uninitialized syslogging.UpdateDefaultUpdatedAt (forgotten import entscheme/runtime?)")
-		}
 		v := syslogging.UpdateDefaultUpdatedAt()
 		slu.mutation.SetUpdatedAt(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -657,9 +651,7 @@ func (sluo *SysLoggingUpdateOne) Select(field string, fields ...string) *SysLogg
 
 // Save executes the query and returns the updated SysLogging entity.
 func (sluo *SysLoggingUpdateOne) Save(ctx context.Context) (*SysLogging, error) {
-	if err := sluo.defaults(); err != nil {
-		return nil, err
-	}
+	sluo.defaults()
 	return withHooks(ctx, sluo.sqlSave, sluo.mutation, sluo.hooks)
 }
 
@@ -686,15 +678,11 @@ func (sluo *SysLoggingUpdateOne) ExecX(ctx context.Context) {
 }
 
 // defaults sets the default values of the builder before save.
-func (sluo *SysLoggingUpdateOne) defaults() error {
+func (sluo *SysLoggingUpdateOne) defaults() {
 	if _, ok := sluo.mutation.UpdatedAt(); !ok && !sluo.mutation.UpdatedAtCleared() {
-		if syslogging.UpdateDefaultUpdatedAt == nil {
-			return fmt.Errorf("entscheme: uninitialized syslogging.UpdateDefaultUpdatedAt (forgotten import entscheme/runtime?)")
-		}
 		v := syslogging.UpdateDefaultUpdatedAt()
 		sluo.mutation.SetUpdatedAt(v)
 	}
-	return nil
 }
 
 // check runs all checks and user-defined validators on the builder.

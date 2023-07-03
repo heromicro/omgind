@@ -16,8 +16,6 @@ type DictItem struct {
 	Memo     string `json:"memo" yaml:"memo"`                               // 备注
 	Sort     int    `json:"sort" yaml:"sort"`                               // 排序
 
-	Creator string `json:"creator" yaml:"-"` // 创建者
-
 }
 
 func (a *DictItem) String() string {

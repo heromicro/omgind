@@ -60,8 +60,6 @@ const (
 	FieldAreaCode = "area_code"
 	// FieldMobile holds the string denoting the mobile field in the database.
 	FieldMobile = "mobile"
-	// FieldCreator holds the string denoting the creator field in the database.
-	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
 	EdgeOrgan = "organ"
 	// EdgeStaffResi holds the string denoting the staff_resi edge name in mutations.
@@ -119,7 +117,6 @@ var Columns = []string{
 	FieldLastName,
 	FieldAreaCode,
 	FieldMobile,
-	FieldCreator,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -173,8 +170,6 @@ var (
 	AreaCodeValidator func(string) error
 	// MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	MobileValidator func(string) error
-	// CreatorValidator is a validator for the "creator" field. It is called by the builders before save.
-	CreatorValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
@@ -302,11 +297,6 @@ func ByAreaCode(opts ...sql.OrderTermOption) OrderOption {
 // ByMobile orders the results by the mobile field.
 func ByMobile(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMobile, opts...).ToFunc()
-}
-
-// ByCreator orders the results by the creator field.
-func ByCreator(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreator, opts...).ToFunc()
 }
 
 // ByOrganField orders the results by organ field.

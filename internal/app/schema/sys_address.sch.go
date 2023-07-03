@@ -23,10 +23,8 @@ type SysAddress struct {
 	AreaCode  *string `json:"area_code,omitempty"`  // 电话区号码
 	Mobile    string  `json:"mobile,omitempty"`     // 电话
 
-	IsActive *bool  `json:"is_active,omitempty"` // 状态
-	Sort     int    `json:"sort,omitempty"`
-	Creator  string `json:"creator,omitempty"` // 创建者
-
+	IsActive *bool `json:"is_active,omitempty"` // 状态
+	Sort     int   `json:"sort,omitempty"`
 }
 
 // SysAddressQueryParam 查询条件

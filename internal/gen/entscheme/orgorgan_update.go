@@ -254,26 +254,6 @@ func (oou *OrgOrganUpdate) ClearHaddrID() *OrgOrganUpdate {
 	return oou
 }
 
-// SetCreator sets the "creator" field.
-func (oou *OrgOrganUpdate) SetCreator(s string) *OrgOrganUpdate {
-	oou.mutation.SetCreator(s)
-	return oou
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (oou *OrgOrganUpdate) SetNillableCreator(s *string) *OrgOrganUpdate {
-	if s != nil {
-		oou.SetCreator(*s)
-	}
-	return oou
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (oou *OrgOrganUpdate) ClearCreator() *OrgOrganUpdate {
-	oou.mutation.ClearCreator()
-	return oou
-}
-
 // SetHaddr sets the "haddr" edge to the SysAddress entity.
 func (oou *OrgOrganUpdate) SetHaddr(s *SysAddress) *OrgOrganUpdate {
 	return oou.SetHaddrID(s.ID)
@@ -554,12 +534,6 @@ func (oou *OrgOrganUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if oou.mutation.OwnerIDCleared() {
 		_spec.ClearField(orgorgan.FieldOwnerID, field.TypeString)
-	}
-	if value, ok := oou.mutation.Creator(); ok {
-		_spec.SetField(orgorgan.FieldCreator, field.TypeString, value)
-	}
-	if oou.mutation.CreatorCleared() {
-		_spec.ClearField(orgorgan.FieldCreator, field.TypeString)
 	}
 	if oou.mutation.HaddrCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -968,26 +942,6 @@ func (oouo *OrgOrganUpdateOne) ClearHaddrID() *OrgOrganUpdateOne {
 	return oouo
 }
 
-// SetCreator sets the "creator" field.
-func (oouo *OrgOrganUpdateOne) SetCreator(s string) *OrgOrganUpdateOne {
-	oouo.mutation.SetCreator(s)
-	return oouo
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (oouo *OrgOrganUpdateOne) SetNillableCreator(s *string) *OrgOrganUpdateOne {
-	if s != nil {
-		oouo.SetCreator(*s)
-	}
-	return oouo
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (oouo *OrgOrganUpdateOne) ClearCreator() *OrgOrganUpdateOne {
-	oouo.mutation.ClearCreator()
-	return oouo
-}
-
 // SetHaddr sets the "haddr" edge to the SysAddress entity.
 func (oouo *OrgOrganUpdateOne) SetHaddr(s *SysAddress) *OrgOrganUpdateOne {
 	return oouo.SetHaddrID(s.ID)
@@ -1298,12 +1252,6 @@ func (oouo *OrgOrganUpdateOne) sqlSave(ctx context.Context) (_node *OrgOrgan, er
 	}
 	if oouo.mutation.OwnerIDCleared() {
 		_spec.ClearField(orgorgan.FieldOwnerID, field.TypeString)
-	}
-	if value, ok := oouo.mutation.Creator(); ok {
-		_spec.SetField(orgorgan.FieldCreator, field.TypeString, value)
-	}
-	if oouo.mutation.CreatorCleared() {
-		_spec.ClearField(orgorgan.FieldCreator, field.TypeString)
 	}
 	if oouo.mutation.HaddrCleared() {
 		edge := &sqlgraph.EdgeSpec{

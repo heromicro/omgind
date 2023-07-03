@@ -209,6 +209,15 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2OrgDept := &api_v2.OrgDept{
 		OrgDeptSrv: serviceOrgDept,
 	}
+	sysTeam := &repo.SysTeam{
+		EntCli: client,
+	}
+	serviceSysTeam := &service.SysTeam{
+		SysTeamRepo: sysTeam,
+	}
+	api_v2SysTeam := &api_v2.SysTeam{
+		SysTeamSrv: serviceSysTeam,
+	}
 	routerRouter := &router.Router{
 		Auth:             auther,
 		CasbinEnforcer:   syncedEnforcer,
@@ -224,6 +233,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		OrgStaffAPIV2:    api_v2OrgStaff,
 		OrgPositionAPIV2: api_v2OrgPosition,
 		OrgDeptAPIV2:     api_v2OrgDept,
+		SysTeamAPIV2:     api_v2SysTeam,
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{

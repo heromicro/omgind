@@ -230,11 +230,6 @@ func IsDirect(v bool) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldEQ(FieldIsDirect, v))
 }
 
-// Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
-func Creator(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldEQ(FieldCreator, v))
-}
-
 // IsDelEQ applies the EQ predicate on the "is_del" field.
 func IsDelEQ(v bool) predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldEQ(FieldIsDel, v))
@@ -2043,71 +2038,6 @@ func IsDirectIsNil() predicate.SysDistrict {
 // IsDirectNotNil applies the NotNil predicate on the "is_direct" field.
 func IsDirectNotNil() predicate.SysDistrict {
 	return predicate.SysDistrict(sql.FieldNotNull(FieldIsDirect))
-}
-
-// CreatorEQ applies the EQ predicate on the "creator" field.
-func CreatorEQ(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldEQ(FieldCreator, v))
-}
-
-// CreatorNEQ applies the NEQ predicate on the "creator" field.
-func CreatorNEQ(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldNEQ(FieldCreator, v))
-}
-
-// CreatorIn applies the In predicate on the "creator" field.
-func CreatorIn(vs ...string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldIn(FieldCreator, vs...))
-}
-
-// CreatorNotIn applies the NotIn predicate on the "creator" field.
-func CreatorNotIn(vs ...string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldNotIn(FieldCreator, vs...))
-}
-
-// CreatorGT applies the GT predicate on the "creator" field.
-func CreatorGT(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldGT(FieldCreator, v))
-}
-
-// CreatorGTE applies the GTE predicate on the "creator" field.
-func CreatorGTE(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldGTE(FieldCreator, v))
-}
-
-// CreatorLT applies the LT predicate on the "creator" field.
-func CreatorLT(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldLT(FieldCreator, v))
-}
-
-// CreatorLTE applies the LTE predicate on the "creator" field.
-func CreatorLTE(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldLTE(FieldCreator, v))
-}
-
-// CreatorContains applies the Contains predicate on the "creator" field.
-func CreatorContains(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldContains(FieldCreator, v))
-}
-
-// CreatorHasPrefix applies the HasPrefix predicate on the "creator" field.
-func CreatorHasPrefix(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldHasPrefix(FieldCreator, v))
-}
-
-// CreatorHasSuffix applies the HasSuffix predicate on the "creator" field.
-func CreatorHasSuffix(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldHasSuffix(FieldCreator, v))
-}
-
-// CreatorEqualFold applies the EqualFold predicate on the "creator" field.
-func CreatorEqualFold(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldEqualFold(FieldCreator, v))
-}
-
-// CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
-func CreatorContainsFold(v string) predicate.SysDistrict {
-	return predicate.SysDistrict(sql.FieldContainsFold(FieldCreator, v))
 }
 
 // HasParent applies the HasEdge predicate on the "parent" edge.

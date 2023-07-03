@@ -30,7 +30,6 @@ type CreateOrgDeptInput struct {
 	ParentID  *string
 	IsReal    *bool
 	IsShow    *bool
-	Creator   *string
 	Parent    *string
 	Children  []string
 	Organ     *string
@@ -99,9 +98,6 @@ func (i *CreateOrgDeptInput) Mutate(m *OrgDeptCreate) {
 	if v := i.IsShow; v != nil {
 		m.SetIsShow(*v)
 	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
-	}
 	if v := i.Parent; v != nil {
 		m.SetParentID(*v)
 	}
@@ -159,8 +155,6 @@ type UpdateOrgDeptInput struct {
 	ClearIsReal    bool
 	IsShow         *bool
 	ClearIsShow    bool
-	Creator        *string
-	ClearCreator   bool
 	Parent         *string
 	ClearParent    bool
 	AddChildIDs    []string
@@ -278,12 +272,6 @@ func (i *UpdateOrgDeptInput) Mutate(m *OrgDeptMutation) {
 	if v := i.IsShow; v != nil {
 		m.SetIsShow(*v)
 	}
-	if i.ClearCreator {
-		m.ClearCreator()
-	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
-	}
 	if i.ClearParent {
 		m.ClearParent()
 	}
@@ -337,7 +325,6 @@ type CreateOrgOrganInput struct {
 	IdenNo    *string
 	OwnerID   *string
 	HaddrID   *string
-	Creator   *string
 	Haddr     *string
 	Depts     []string
 	Staffs    []string
@@ -385,9 +372,6 @@ func (i *CreateOrgOrganInput) Mutate(m *OrgOrganCreate) {
 	if v := i.HaddrID; v != nil {
 		m.SetHaddrID(*v)
 	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
-	}
 	if v := i.Haddr; v != nil {
 		m.SetHaddrID(*v)
 	}
@@ -431,8 +415,6 @@ type UpdateOrgOrganInput struct {
 	ClearOwnerID      bool
 	HaddrID           *string
 	ClearHaddrID      bool
-	Creator           *string
-	ClearCreator      bool
 	Haddr             *string
 	ClearHaddr        bool
 	AddDeptIDs        []string
@@ -508,12 +490,6 @@ func (i *UpdateOrgOrganInput) Mutate(m *OrgOrganMutation) {
 	if v := i.HaddrID; v != nil {
 		m.SetHaddrID(*v)
 	}
-	if i.ClearCreator {
-		m.ClearCreator()
-	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
-	}
 	if i.ClearHaddr {
 		m.ClearHaddr()
 	}
@@ -564,7 +540,6 @@ type CreateOrgPositionInput struct {
 	Name      *string
 	Code      *string
 	OrgID     *string
-	Creator   *string
 	Organ     *string
 	Staffs    []string
 }
@@ -601,9 +576,6 @@ func (i *CreateOrgPositionInput) Mutate(m *OrgPositionCreate) {
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
 	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
-	}
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
 	}
@@ -635,8 +607,6 @@ type UpdateOrgPositionInput struct {
 	ClearCode      bool
 	OrgID          *string
 	ClearOrgID     bool
-	Creator        *string
-	ClearCreator   bool
 	Organ          *string
 	ClearOrgan     bool
 	AddStaffIDs    []string
@@ -689,12 +659,6 @@ func (i *UpdateOrgPositionInput) Mutate(m *OrgPositionMutation) {
 	}
 	if v := i.OrgID; v != nil {
 		m.SetOrgID(*v)
-	}
-	if i.ClearCreator {
-		m.ClearCreator()
-	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
 	}
 	if i.ClearOrgan {
 		m.ClearOrgan()
@@ -751,7 +715,6 @@ type CreateOrgStaffInput struct {
 	EmpystDictID *string
 	DeptID       *string
 	PosiID       *string
-	Creator      *string
 	Organ        *string
 	IdenAddr     *string
 	ResiAddr     *string
@@ -842,9 +805,6 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	if v := i.PosiID; v != nil {
 		m.SetPosiID(*v)
 	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
-	}
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
 	}
@@ -918,8 +878,6 @@ type UpdateOrgStaffInput struct {
 	ClearDeptID       bool
 	PosiID            *string
 	ClearPosiID       bool
-	Creator           *string
-	ClearCreator      bool
 	Organ             *string
 	ClearOrgan        bool
 	IdenAddr          *string
@@ -1078,12 +1036,6 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	if v := i.PosiID; v != nil {
 		m.SetPosiID(*v)
 	}
-	if i.ClearCreator {
-		m.ClearCreator()
-	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
-	}
 	if i.ClearOrgan {
 		m.ClearOrgan()
 	}
@@ -1153,7 +1105,6 @@ type CreateSysAddressInput struct {
 	LastName   *string
 	AreaCode   *string
 	Mobile     *string
-	Creator    *string
 	Organ      *string
 	StaffResi  *string
 	StaffIden  *string
@@ -1230,9 +1181,6 @@ func (i *CreateSysAddressInput) Mutate(m *SysAddressCreate) {
 	if v := i.Mobile; v != nil {
 		m.SetMobile(*v)
 	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
-	}
 	if v := i.Organ; v != nil {
 		m.SetOrganID(*v)
 	}
@@ -1291,8 +1239,6 @@ type UpdateSysAddressInput struct {
 	ClearAreaCode   bool
 	Mobile          *string
 	ClearMobile     bool
-	Creator         *string
-	ClearCreator    bool
 	Organ           *string
 	ClearOrgan      bool
 	StaffResi       *string
@@ -1419,12 +1365,6 @@ func (i *UpdateSysAddressInput) Mutate(m *SysAddressMutation) {
 	}
 	if v := i.Mobile; v != nil {
 		m.SetMobile(*v)
-	}
-	if i.ClearCreator {
-		m.ClearCreator()
-	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
 	}
 	if i.ClearOrgan {
 		m.ClearOrgan()
@@ -1763,7 +1703,6 @@ type CreateSysDistrictInput struct {
 	IsReal     *bool
 	IsMain     *bool
 	IsDirect   *bool
-	Creator    string
 	Parent     *string
 	Children   []string
 }
@@ -1869,7 +1808,6 @@ func (i *CreateSysDistrictInput) Mutate(m *SysDistrictCreate) {
 	if v := i.IsDirect; v != nil {
 		m.SetIsDirect(*v)
 	}
-	m.SetCreator(i.Creator)
 	if v := i.Parent; v != nil {
 		m.SetParentID(*v)
 	}
@@ -1947,7 +1885,6 @@ type UpdateSysDistrictInput struct {
 	ClearIsMain     bool
 	IsDirect        *bool
 	ClearIsDirect   bool
-	Creator         *string
 	Parent          *string
 	ClearParent     bool
 	AddChildIDs     []string
@@ -2138,9 +2075,6 @@ func (i *UpdateSysDistrictInput) Mutate(m *SysDistrictMutation) {
 	}
 	if v := i.IsDirect; v != nil {
 		m.SetIsDirect(*v)
-	}
-	if v := i.Creator; v != nil {
-		m.SetCreator(*v)
 	}
 	if i.ClearParent {
 		m.ClearParent()
@@ -3066,6 +3000,282 @@ func (u *SysRoleMenuUpdateOne) SetInput(i UpdateSysRoleMenuInput) *SysRoleMenuUp
 	return u
 }
 
+// CreateSysTeamInput represents a mutation input for creating systeams.
+type CreateSysTeamInput struct {
+	Sort      *int32
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
+	IsActive  *bool
+	Memo      *string
+	IsDel     *bool
+	Name      *string
+	Code      *string
+	Users     []string
+	TeamUsers []string
+}
+
+// Mutate applies the CreateSysTeamInput on the SysTeamCreate builder.
+func (i *CreateSysTeamInput) Mutate(m *SysTeamCreate) {
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if v := i.Code; v != nil {
+		m.SetCode(*v)
+	}
+	if ids := i.Users; len(ids) > 0 {
+		m.AddUserIDs(ids...)
+	}
+	if ids := i.TeamUsers; len(ids) > 0 {
+		m.AddTeamUserIDs(ids...)
+	}
+}
+
+// SetInput applies the change-set in the CreateSysTeamInput on the create builder.
+func (c *SysTeamCreate) SetInput(i CreateSysTeamInput) *SysTeamCreate {
+	i.Mutate(c)
+	return c
+}
+
+// UpdateSysTeamInput represents a mutation input for updating systeams.
+type UpdateSysTeamInput struct {
+	Sort              *int32
+	UpdatedAt         *time.Time
+	ClearUpdatedAt    bool
+	DeletedAt         *time.Time
+	ClearDeletedAt    bool
+	IsActive          *bool
+	Memo              *string
+	ClearMemo         bool
+	IsDel             *bool
+	Name              *string
+	ClearName         bool
+	Code              *string
+	ClearCode         bool
+	AddUserIDs        []string
+	RemoveUserIDs     []string
+	AddTeamUserIDs    []string
+	RemoveTeamUserIDs []string
+}
+
+// Mutate applies the UpdateSysTeamInput on the SysTeamMutation.
+func (i *UpdateSysTeamInput) Mutate(m *SysTeamMutation) {
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if i.ClearName {
+		m.ClearName()
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if i.ClearCode {
+		m.ClearCode()
+	}
+	if v := i.Code; v != nil {
+		m.SetCode(*v)
+	}
+	if ids := i.AddUserIDs; len(ids) > 0 {
+		m.AddUserIDs(ids...)
+	}
+	if ids := i.RemoveUserIDs; len(ids) > 0 {
+		m.RemoveUserIDs(ids...)
+	}
+	if ids := i.AddTeamUserIDs; len(ids) > 0 {
+		m.AddTeamUserIDs(ids...)
+	}
+	if ids := i.RemoveTeamUserIDs; len(ids) > 0 {
+		m.RemoveTeamUserIDs(ids...)
+	}
+}
+
+// SetInput applies the change-set in the UpdateSysTeamInput on the update builder.
+func (u *SysTeamUpdate) SetInput(i UpdateSysTeamInput) *SysTeamUpdate {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// SetInput applies the change-set in the UpdateSysTeamInput on the update-one builder.
+func (u *SysTeamUpdateOne) SetInput(i UpdateSysTeamInput) *SysTeamUpdateOne {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// CreateSysTeamUserInput represents a mutation input for creating systeamusers.
+type CreateSysTeamUserInput struct {
+	Sort      *int32
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
+	IsActive  *bool
+	Memo      *string
+	IsDel     *bool
+	TeamID    string
+	UserID    string
+	User      string
+	Team      string
+}
+
+// Mutate applies the CreateSysTeamUserInput on the SysTeamUserCreate builder.
+func (i *CreateSysTeamUserInput) Mutate(m *SysTeamUserCreate) {
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	m.SetTeamID(i.TeamID)
+	m.SetUserID(i.UserID)
+	m.SetUserID(i.User)
+	m.SetTeamID(i.Team)
+}
+
+// SetInput applies the change-set in the CreateSysTeamUserInput on the create builder.
+func (c *SysTeamUserCreate) SetInput(i CreateSysTeamUserInput) *SysTeamUserCreate {
+	i.Mutate(c)
+	return c
+}
+
+// UpdateSysTeamUserInput represents a mutation input for updating systeamusers.
+type UpdateSysTeamUserInput struct {
+	Sort           *int32
+	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
+	DeletedAt      *time.Time
+	ClearDeletedAt bool
+	IsActive       *bool
+	Memo           *string
+	ClearMemo      bool
+	IsDel          *bool
+	TeamID         *string
+	UserID         *string
+	User           *string
+	ClearUser      bool
+	Team           *string
+	ClearTeam      bool
+}
+
+// Mutate applies the UpdateSysTeamUserInput on the SysTeamUserMutation.
+func (i *UpdateSysTeamUserInput) Mutate(m *SysTeamUserMutation) {
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if i.ClearMemo {
+		m.ClearMemo()
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.TeamID; v != nil {
+		m.SetTeamID(*v)
+	}
+	if v := i.UserID; v != nil {
+		m.SetUserID(*v)
+	}
+	if i.ClearUser {
+		m.ClearUser()
+	}
+	if v := i.User; v != nil {
+		m.SetUserID(*v)
+	}
+	if i.ClearTeam {
+		m.ClearTeam()
+	}
+	if v := i.Team; v != nil {
+		m.SetTeamID(*v)
+	}
+}
+
+// SetInput applies the change-set in the UpdateSysTeamUserInput on the update builder.
+func (u *SysTeamUserUpdate) SetInput(i UpdateSysTeamUserInput) *SysTeamUserUpdate {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// SetInput applies the change-set in the UpdateSysTeamUserInput on the update-one builder.
+func (u *SysTeamUserUpdateOne) SetInput(i UpdateSysTeamUserInput) *SysTeamUserUpdateOne {
+	i.Mutate(u.Mutation())
+	return u
+}
+
 // CreateSysUserInput represents a mutation input for creating sysusers.
 type CreateSysUserInput struct {
 	IsDel     *bool
@@ -3082,6 +3292,8 @@ type CreateSysUserInput struct {
 	Email     string
 	Mobile    string
 	Salt      *string
+	Teams     []string
+	TeamUsers []string
 }
 
 // Mutate applies the CreateSysUserInput on the SysUserCreate builder.
@@ -3120,6 +3332,12 @@ func (i *CreateSysUserInput) Mutate(m *SysUserCreate) {
 	if v := i.Salt; v != nil {
 		m.SetSalt(*v)
 	}
+	if ids := i.Teams; len(ids) > 0 {
+		m.AddTeamIDs(ids...)
+	}
+	if ids := i.TeamUsers; len(ids) > 0 {
+		m.AddTeamUserIDs(ids...)
+	}
 }
 
 // SetInput applies the change-set in the CreateSysUserInput on the create builder.
@@ -3130,23 +3348,27 @@ func (c *SysUserCreate) SetInput(i CreateSysUserInput) *SysUserCreate {
 
 // UpdateSysUserInput represents a mutation input for updating sysusers.
 type UpdateSysUserInput struct {
-	IsDel          *bool
-	Sort           *int32
-	UpdatedAt      *time.Time
-	ClearUpdatedAt bool
-	DeletedAt      *time.Time
-	ClearDeletedAt bool
-	IsActive       *bool
-	RealName       *string
-	ClearRealName  bool
-	FirstName      *string
-	ClearFirstName bool
-	LastName       *string
-	ClearLastName  bool
-	Password       *string
-	Email          *string
-	Mobile         *string
-	Salt           *string
+	IsDel             *bool
+	Sort              *int32
+	UpdatedAt         *time.Time
+	ClearUpdatedAt    bool
+	DeletedAt         *time.Time
+	ClearDeletedAt    bool
+	IsActive          *bool
+	RealName          *string
+	ClearRealName     bool
+	FirstName         *string
+	ClearFirstName    bool
+	LastName          *string
+	ClearLastName     bool
+	Password          *string
+	Email             *string
+	Mobile            *string
+	Salt              *string
+	AddTeamIDs        []string
+	RemoveTeamIDs     []string
+	AddTeamUserIDs    []string
+	RemoveTeamUserIDs []string
 }
 
 // Mutate applies the UpdateSysUserInput on the SysUserMutation.
@@ -3201,6 +3423,18 @@ func (i *UpdateSysUserInput) Mutate(m *SysUserMutation) {
 	}
 	if v := i.Salt; v != nil {
 		m.SetSalt(*v)
+	}
+	if ids := i.AddTeamIDs; len(ids) > 0 {
+		m.AddTeamIDs(ids...)
+	}
+	if ids := i.RemoveTeamIDs; len(ids) > 0 {
+		m.RemoveTeamIDs(ids...)
+	}
+	if ids := i.AddTeamUserIDs; len(ids) > 0 {
+		m.AddTeamUserIDs(ids...)
+	}
+	if ids := i.RemoveTeamUserIDs; len(ids) > 0 {
+		m.RemoveTeamUserIDs(ids...)
 	}
 }
 

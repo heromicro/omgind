@@ -180,11 +180,6 @@ func Mobile(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldEQ(FieldMobile, v))
 }
 
-// Creator applies equality check predicate on the "creator" field. It's identical to CreatorEQ.
-func Creator(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldCreator, v))
-}
-
 // IsDelEQ applies the EQ predicate on the "is_del" field.
 func IsDelEQ(v bool) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldEQ(FieldIsDel, v))
@@ -1668,81 +1663,6 @@ func MobileEqualFold(v string) predicate.SysAddress {
 // MobileContainsFold applies the ContainsFold predicate on the "mobile" field.
 func MobileContainsFold(v string) predicate.SysAddress {
 	return predicate.SysAddress(sql.FieldContainsFold(FieldMobile, v))
-}
-
-// CreatorEQ applies the EQ predicate on the "creator" field.
-func CreatorEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEQ(FieldCreator, v))
-}
-
-// CreatorNEQ applies the NEQ predicate on the "creator" field.
-func CreatorNEQ(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNEQ(FieldCreator, v))
-}
-
-// CreatorIn applies the In predicate on the "creator" field.
-func CreatorIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIn(FieldCreator, vs...))
-}
-
-// CreatorNotIn applies the NotIn predicate on the "creator" field.
-func CreatorNotIn(vs ...string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotIn(FieldCreator, vs...))
-}
-
-// CreatorGT applies the GT predicate on the "creator" field.
-func CreatorGT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGT(FieldCreator, v))
-}
-
-// CreatorGTE applies the GTE predicate on the "creator" field.
-func CreatorGTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldGTE(FieldCreator, v))
-}
-
-// CreatorLT applies the LT predicate on the "creator" field.
-func CreatorLT(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLT(FieldCreator, v))
-}
-
-// CreatorLTE applies the LTE predicate on the "creator" field.
-func CreatorLTE(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldLTE(FieldCreator, v))
-}
-
-// CreatorContains applies the Contains predicate on the "creator" field.
-func CreatorContains(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContains(FieldCreator, v))
-}
-
-// CreatorHasPrefix applies the HasPrefix predicate on the "creator" field.
-func CreatorHasPrefix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasPrefix(FieldCreator, v))
-}
-
-// CreatorHasSuffix applies the HasSuffix predicate on the "creator" field.
-func CreatorHasSuffix(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldHasSuffix(FieldCreator, v))
-}
-
-// CreatorIsNil applies the IsNil predicate on the "creator" field.
-func CreatorIsNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldIsNull(FieldCreator))
-}
-
-// CreatorNotNil applies the NotNil predicate on the "creator" field.
-func CreatorNotNil() predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldNotNull(FieldCreator))
-}
-
-// CreatorEqualFold applies the EqualFold predicate on the "creator" field.
-func CreatorEqualFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldEqualFold(FieldCreator, v))
-}
-
-// CreatorContainsFold applies the ContainsFold predicate on the "creator" field.
-func CreatorContainsFold(v string) predicate.SysAddress {
-	return predicate.SysAddress(sql.FieldContainsFold(FieldCreator, v))
 }
 
 // HasOrgan applies the HasEdge predicate on the "organ" edge.

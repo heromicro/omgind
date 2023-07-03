@@ -34,8 +34,6 @@ const (
 	FieldCode = "code"
 	// FieldOrgID holds the string denoting the org_id field in the database.
 	FieldOrgID = "org_id"
-	// FieldCreator holds the string denoting the creator field in the database.
-	FieldCreator = "creator"
 	// EdgeOrgan holds the string denoting the organ edge name in mutations.
 	EdgeOrgan = "organ"
 	// EdgeStaffs holds the string denoting the staffs edge name in mutations.
@@ -71,7 +69,6 @@ var Columns = []string{
 	FieldName,
 	FieldCode,
 	FieldOrgID,
-	FieldCreator,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -169,11 +166,6 @@ func ByCode(opts ...sql.OrderTermOption) OrderOption {
 // ByOrgID orders the results by the org_id field.
 func ByOrgID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldOrgID, opts...).ToFunc()
-}
-
-// ByCreator orders the results by the creator field.
-func ByCreator(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreator, opts...).ToFunc()
 }
 
 // ByOrganField orders the results by organ field.

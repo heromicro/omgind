@@ -5892,11 +5892,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
@@ -5934,11 +5930,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
@@ -5988,11 +5980,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "dict_id": {
                     "description": "dict.id",
                     "type": "string"
@@ -6087,11 +6075,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "icon": {
                     "description": "菜单图标",
                     "type": "string"
@@ -6289,11 +6273,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
@@ -6386,11 +6366,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "haddr": {
                     "description": "总部地址",
                     "allOf": [
@@ -6483,11 +6459,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "id": {
                     "description": "唯一标识",
                     "type": "string"
@@ -6542,11 +6514,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "cubicle": {
                     "description": "工位",
                     "type": "string"
@@ -6715,11 +6683,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "deleted_at": {
                     "description": "更新时间",
                     "type": "string"
@@ -6882,11 +6846,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "daddr": {
                     "description": "详细地址",
                     "type": "string"
@@ -6958,11 +6918,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "extra": {
                     "description": "带前缀简名称",
                     "type": "string"
@@ -7127,11 +7083,7 @@ const docTemplate = `{
                 "created_at": {
                     "description": "创建时间",
                     "type": "string"
-                },
-                "creator": {
-                    "description": "创建者",
-                    "type": "string"
-                },
+                }, 
                 "email": {
                     "description": "邮箱",
                     "type": "string"

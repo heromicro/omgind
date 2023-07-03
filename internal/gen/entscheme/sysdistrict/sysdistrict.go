@@ -80,8 +80,6 @@ const (
 	FieldIsMain = "is_m"
 	// FieldIsDirect holds the string denoting the is_direct field in the database.
 	FieldIsDirect = "is_d"
-	// FieldCreator holds the string denoting the creator field in the database.
-	FieldCreator = "creator"
 	// EdgeParent holds the string denoting the parent edge name in mutations.
 	EdgeParent = "parent"
 	// EdgeChildren holds the string denoting the children edge name in mutations.
@@ -134,7 +132,6 @@ var Columns = []string{
 	FieldIsReal,
 	FieldIsMain,
 	FieldIsDirect,
-	FieldCreator,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -200,8 +197,6 @@ var (
 	DefaultIsMain bool
 	// DefaultIsDirect holds the default value on creation for the "is_direct" field.
 	DefaultIsDirect bool
-	// CreatorValidator is a validator for the "creator" field. It is called by the builders before save.
-	CreatorValidator func(string) error
 	// DefaultID holds the default value on creation for the "id" field.
 	DefaultID func() string
 	// IDValidator is a validator for the "id" field. It is called by the builders before save.
@@ -379,11 +374,6 @@ func ByIsMain(opts ...sql.OrderTermOption) OrderOption {
 // ByIsDirect orders the results by the is_direct field.
 func ByIsDirect(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldIsDirect, opts...).ToFunc()
-}
-
-// ByCreator orders the results by the creator field.
-func ByCreator(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldCreator, opts...).ToFunc()
 }
 
 // ByParentField orders the results by parent field.

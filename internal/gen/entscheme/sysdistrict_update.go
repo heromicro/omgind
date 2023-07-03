@@ -692,12 +692,6 @@ func (sdu *SysDistrictUpdate) ClearIsDirect() *SysDistrictUpdate {
 	return sdu
 }
 
-// SetCreator sets the "creator" field.
-func (sdu *SysDistrictUpdate) SetCreator(s string) *SysDistrictUpdate {
-	sdu.mutation.SetCreator(s)
-	return sdu
-}
-
 // SetParent sets the "parent" edge to the SysDistrict entity.
 func (sdu *SysDistrictUpdate) SetParent(s *SysDistrict) *SysDistrictUpdate {
 	return sdu.SetParentID(s.ID)
@@ -861,11 +855,6 @@ func (sdu *SysDistrictUpdate) check() error {
 	if v, ok := sdu.mutation.Suffix(); ok {
 		if err := sysdistrict.SuffixValidator(v); err != nil {
 			return &ValidationError{Name: "suffix", err: fmt.Errorf(`entscheme: validator failed for field "SysDistrict.suffix": %w`, err)}
-		}
-	}
-	if v, ok := sdu.mutation.Creator(); ok {
-		if err := sysdistrict.CreatorValidator(v); err != nil {
-			return &ValidationError{Name: "creator", err: fmt.Errorf(`entscheme: validator failed for field "SysDistrict.creator": %w`, err)}
 		}
 	}
 	return nil
@@ -1089,9 +1078,6 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if sdu.mutation.IsDirectCleared() {
 		_spec.ClearField(sysdistrict.FieldIsDirect, field.TypeBool)
-	}
-	if value, ok := sdu.mutation.Creator(); ok {
-		_spec.SetField(sysdistrict.FieldCreator, field.TypeString, value)
 	}
 	if sdu.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1852,12 +1838,6 @@ func (sduo *SysDistrictUpdateOne) ClearIsDirect() *SysDistrictUpdateOne {
 	return sduo
 }
 
-// SetCreator sets the "creator" field.
-func (sduo *SysDistrictUpdateOne) SetCreator(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetCreator(s)
-	return sduo
-}
-
 // SetParent sets the "parent" edge to the SysDistrict entity.
 func (sduo *SysDistrictUpdateOne) SetParent(s *SysDistrict) *SysDistrictUpdateOne {
 	return sduo.SetParentID(s.ID)
@@ -2034,11 +2014,6 @@ func (sduo *SysDistrictUpdateOne) check() error {
 	if v, ok := sduo.mutation.Suffix(); ok {
 		if err := sysdistrict.SuffixValidator(v); err != nil {
 			return &ValidationError{Name: "suffix", err: fmt.Errorf(`entscheme: validator failed for field "SysDistrict.suffix": %w`, err)}
-		}
-	}
-	if v, ok := sduo.mutation.Creator(); ok {
-		if err := sysdistrict.CreatorValidator(v); err != nil {
-			return &ValidationError{Name: "creator", err: fmt.Errorf(`entscheme: validator failed for field "SysDistrict.creator": %w`, err)}
 		}
 	}
 	return nil
@@ -2279,9 +2254,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 	}
 	if sduo.mutation.IsDirectCleared() {
 		_spec.ClearField(sysdistrict.FieldIsDirect, field.TypeBool)
-	}
-	if value, ok := sduo.mutation.Creator(); ok {
-		_spec.SetField(sysdistrict.FieldCreator, field.TypeString, value)
 	}
 	if sduo.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{

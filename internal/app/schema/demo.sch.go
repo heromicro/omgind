@@ -11,8 +11,6 @@ type Demo struct {
 	Memo     string `json:"memo"`                         // 备注
 	IsActive *bool  `json:"is_active" binding:"required"` // 状态
 	Sort     int    `json:"sort,omitempty"`
-
-	Creator string `json:"creator" ` // 创建者
 }
 
 // DemoQueryParam 查询条件

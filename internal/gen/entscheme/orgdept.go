@@ -58,8 +58,6 @@ type OrgDept struct {
 	IsReal *bool `json:"is_real,omitempty"`
 	// 是否显示
 	IsShow *bool `json:"is_show,omitempty"`
-	// 创建者
-	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrgDeptQuery when eager-loading is set.
 	Edges        OrgDeptEdges `json:"edges"`
@@ -134,7 +132,7 @@ func (*OrgDept) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgdept.FieldSort, orgdept.FieldTreeID, orgdept.FieldTreeLevel, orgdept.FieldTreeLeft, orgdept.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
-		case orgdept.FieldID, orgdept.FieldMemo, orgdept.FieldTreePath, orgdept.FieldName, orgdept.FieldCode, orgdept.FieldMergeName, orgdept.FieldOrgID, orgdept.FieldParentID, orgdept.FieldCreator:
+		case orgdept.FieldID, orgdept.FieldMemo, orgdept.FieldTreePath, orgdept.FieldName, orgdept.FieldCode, orgdept.FieldMergeName, orgdept.FieldOrgID, orgdept.FieldParentID:
 			values[i] = new(sql.NullString)
 		case orgdept.FieldCreatedAt, orgdept.FieldUpdatedAt, orgdept.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -296,13 +294,6 @@ func (od *OrgDept) assignValues(columns []string, values []any) error {
 				od.IsShow = new(bool)
 				*od.IsShow = value.Bool
 			}
-		case orgdept.FieldCreator:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field creator", values[i])
-			} else if value.Valid {
-				od.Creator = new(string)
-				*od.Creator = value.String
-			}
 		default:
 			od.selectValues.Set(columns[i], values[i])
 		}
@@ -451,11 +442,6 @@ func (od *OrgDept) String() string {
 	if v := od.IsShow; v != nil {
 		builder.WriteString("is_show=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
-	}
-	builder.WriteString(", ")
-	if v := od.Creator; v != nil {
-		builder.WriteString("creator=")
-		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')
 	return builder.String()

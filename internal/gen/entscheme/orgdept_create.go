@@ -305,20 +305,6 @@ func (odc *OrgDeptCreate) SetNillableIsShow(b *bool) *OrgDeptCreate {
 	return odc
 }
 
-// SetCreator sets the "creator" field.
-func (odc *OrgDeptCreate) SetCreator(s string) *OrgDeptCreate {
-	odc.mutation.SetCreator(s)
-	return odc
-}
-
-// SetNillableCreator sets the "creator" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableCreator(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetCreator(*s)
-	}
-	return odc
-}
-
 // SetID sets the "id" field.
 func (odc *OrgDeptCreate) SetID(s string) *OrgDeptCreate {
 	odc.mutation.SetID(s)
@@ -617,10 +603,6 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 	if value, ok := odc.mutation.IsShow(); ok {
 		_spec.SetField(orgdept.FieldIsShow, field.TypeBool, value)
 		_node.IsShow = &value
-	}
-	if value, ok := odc.mutation.Creator(); ok {
-		_spec.SetField(orgdept.FieldCreator, field.TypeString, value)
-		_node.Creator = &value
 	}
 	if nodes := odc.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -1094,24 +1076,6 @@ func (u *OrgDeptUpsert) ClearIsShow() *OrgDeptUpsert {
 	return u
 }
 
-// SetCreator sets the "creator" field.
-func (u *OrgDeptUpsert) SetCreator(v string) *OrgDeptUpsert {
-	u.Set(orgdept.FieldCreator, v)
-	return u
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgDeptUpsert) UpdateCreator() *OrgDeptUpsert {
-	u.SetExcluded(orgdept.FieldCreator)
-	return u
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgDeptUpsert) ClearCreator() *OrgDeptUpsert {
-	u.SetNull(orgdept.FieldCreator)
-	return u
-}
-
 // UpdateNewValues updates the mutable fields using the new values that were set on create except the ID field.
 // Using this option is equivalent to using:
 //
@@ -1573,27 +1537,6 @@ func (u *OrgDeptUpsertOne) UpdateIsShow() *OrgDeptUpsertOne {
 func (u *OrgDeptUpsertOne) ClearIsShow() *OrgDeptUpsertOne {
 	return u.Update(func(s *OrgDeptUpsert) {
 		s.ClearIsShow()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *OrgDeptUpsertOne) SetCreator(v string) *OrgDeptUpsertOne {
-	return u.Update(func(s *OrgDeptUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgDeptUpsertOne) UpdateCreator() *OrgDeptUpsertOne {
-	return u.Update(func(s *OrgDeptUpsert) {
-		s.UpdateCreator()
-	})
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgDeptUpsertOne) ClearCreator() *OrgDeptUpsertOne {
-	return u.Update(func(s *OrgDeptUpsert) {
-		s.ClearCreator()
 	})
 }
 
@@ -2221,27 +2164,6 @@ func (u *OrgDeptUpsertBulk) UpdateIsShow() *OrgDeptUpsertBulk {
 func (u *OrgDeptUpsertBulk) ClearIsShow() *OrgDeptUpsertBulk {
 	return u.Update(func(s *OrgDeptUpsert) {
 		s.ClearIsShow()
-	})
-}
-
-// SetCreator sets the "creator" field.
-func (u *OrgDeptUpsertBulk) SetCreator(v string) *OrgDeptUpsertBulk {
-	return u.Update(func(s *OrgDeptUpsert) {
-		s.SetCreator(v)
-	})
-}
-
-// UpdateCreator sets the "creator" field to the value that was provided on create.
-func (u *OrgDeptUpsertBulk) UpdateCreator() *OrgDeptUpsertBulk {
-	return u.Update(func(s *OrgDeptUpsert) {
-		s.UpdateCreator()
-	})
-}
-
-// ClearCreator clears the value of the "creator" field.
-func (u *OrgDeptUpsertBulk) ClearCreator() *OrgDeptUpsertBulk {
-	return u.Update(func(s *OrgDeptUpsert) {
-		s.ClearCreator()
 	})
 }
 

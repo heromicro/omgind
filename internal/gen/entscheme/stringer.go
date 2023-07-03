@@ -109,6 +109,20 @@ func (srm *SysRoleMenu) GoString() string {
 	return srm.String()
 }
 
+func (st *SysTeam) GoString() string {
+	if st == nil {
+		return fmt.Sprintf("SysTeam(nil)")
+	}
+	return st.String()
+}
+
+func (stu *SysTeamUser) GoString() string {
+	if stu == nil {
+		return fmt.Sprintf("SysTeamUser(nil)")
+	}
+	return stu.String()
+}
+
 func (su *SysUser) GoString() string {
 	if su == nil {
 		return fmt.Sprintf("SysUser(nil)")

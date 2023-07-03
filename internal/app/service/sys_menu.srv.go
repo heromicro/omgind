@@ -530,7 +530,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 	}
 
 	item.ID = oldItem.ID
-	item.Creator = oldItem.Creator
+
 	item.CreatedAt = oldItem.CreatedAt
 
 	if item.ParentID != nil && *item.ParentID != "" {

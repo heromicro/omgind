@@ -46,8 +46,6 @@ func (SysAddress) Fields() []ent.Field {
 
 		field.String("area_code").MaxLen(8).Nillable().Optional().StorageKey("area_code").Comment("国际区号"),
 		field.String("mobile").MaxLen(64).Nillable().Optional().StorageKey("mobile").Comment("电话"),
-
-		field.String("creator").MaxLen(36).Nillable().Optional().StorageKey("creator").Comment("创建者"),
 	}
 }
 
@@ -56,7 +54,7 @@ func (SysAddress) Edges() []ent.Edge {
 		edge.To("organ", OrgOrgan.Type).Unique(),
 
 		edge.To("staff_resi", OrgStaff.Type).Unique(),
-		edge.To("staff_iden", OrgStaff.Type).Unique(), 
+		edge.To("staff_iden", OrgStaff.Type).Unique(),
 	}
 }
 

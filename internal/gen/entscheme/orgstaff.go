@@ -75,8 +75,6 @@ type OrgStaff struct {
 	DeptID *string `json:"dept_id,omitempty"`
 	// position.id
 	PosiID *string `json:"posi_id,omitempty"`
-	// 创建者
-	Creator *string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the OrgStaffQuery when eager-loading is set.
 	Edges        OrgStaffEdges `json:"edges"`
@@ -174,7 +172,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort, orgstaff.FieldGender, orgstaff.FieldEmpyStat:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldRank, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldPosiID, orgstaff.FieldCreator:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldRank, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldPosiID:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
@@ -384,13 +382,6 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 				os.PosiID = new(string)
 				*os.PosiID = value.String
 			}
-		case orgstaff.FieldCreator:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field creator", values[i])
-			} else if value.Valid {
-				os.Creator = new(string)
-				*os.Creator = value.String
-			}
 		default:
 			os.selectValues.Set(columns[i], values[i])
 		}
@@ -576,11 +567,6 @@ func (os *OrgStaff) String() string {
 	builder.WriteString(", ")
 	if v := os.PosiID; v != nil {
 		builder.WriteString("posi_id=")
-		builder.WriteString(*v)
-	}
-	builder.WriteString(", ")
-	if v := os.Creator; v != nil {
-		builder.WriteString("creator=")
 		builder.WriteString(*v)
 	}
 	builder.WriteByte(')')

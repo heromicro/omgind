@@ -52,8 +52,6 @@ type OrgStaff struct {
 	Sort     int     `json:"sort,omitempty"`
 	Memo     *string `json:"memo"` //
 
-	Creator string `json:"creator"` // 创建者
-
 }
 
 // OrgStaffQueryParam 查询条件

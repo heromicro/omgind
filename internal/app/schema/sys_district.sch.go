@@ -36,8 +36,6 @@ type SysDistrict struct {
 
 	TreeMixin
 
-	Creator string `json:"creator"` // 创建者
-
 	// Ids       *int       `json:"ids"`        //
 	// Pids      *int       `json:"pids"`       //
 }

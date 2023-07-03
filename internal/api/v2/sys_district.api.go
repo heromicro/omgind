@@ -120,7 +120,6 @@ func (a *SysDistrict) Create(c *gin.Context) {
 		return
 	}
 
-	item.Creator = ginx.GetUserID(c)
 	result, err := a.SysDistrictSrv.Create(ctx, item)
 	if err != nil {
 		// log.Println(" -------- ==== district create error ", err)

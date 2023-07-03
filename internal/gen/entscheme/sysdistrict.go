@@ -83,8 +83,6 @@ type SysDistrict struct {
 	IsMain *bool `json:"is_main,omitempty"`
 	// 是否是直辖
 	IsDirect *bool `json:"is_direct,omitempty"`
-	// 创建者
-	Creator string `json:"creator,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the SysDistrictQuery when eager-loading is set.
 	Edges        SysDistrictEdges `json:"edges"`
@@ -135,7 +133,7 @@ func (*SysDistrict) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullFloat64)
 		case sysdistrict.FieldSort, sysdistrict.FieldTreeID, sysdistrict.FieldTreeLevel, sysdistrict.FieldTreeLeft, sysdistrict.FieldTreeRight:
 			values[i] = new(sql.NullInt64)
-		case sysdistrict.FieldID, sysdistrict.FieldTreePath, sysdistrict.FieldName, sysdistrict.FieldNameEn, sysdistrict.FieldSname, sysdistrict.FieldSnameEn, sysdistrict.FieldAbbr, sysdistrict.FieldStCode, sysdistrict.FieldInitials, sysdistrict.FieldPinyin, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldZipCode, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldExtra, sysdistrict.FieldSuffix, sysdistrict.FieldCreator:
+		case sysdistrict.FieldID, sysdistrict.FieldTreePath, sysdistrict.FieldName, sysdistrict.FieldNameEn, sysdistrict.FieldSname, sysdistrict.FieldSnameEn, sysdistrict.FieldAbbr, sysdistrict.FieldStCode, sysdistrict.FieldInitials, sysdistrict.FieldPinyin, sysdistrict.FieldParentID, sysdistrict.FieldAreaCode, sysdistrict.FieldZipCode, sysdistrict.FieldMergeName, sysdistrict.FieldMergeSname, sysdistrict.FieldExtra, sysdistrict.FieldSuffix:
 			values[i] = new(sql.NullString)
 		case sysdistrict.FieldCreatedAt, sysdistrict.FieldUpdatedAt, sysdistrict.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -388,12 +386,6 @@ func (sd *SysDistrict) assignValues(columns []string, values []any) error {
 				sd.IsDirect = new(bool)
 				*sd.IsDirect = value.Bool
 			}
-		case sysdistrict.FieldCreator:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field creator", values[i])
-			} else if value.Valid {
-				sd.Creator = value.String
-			}
 		default:
 			sd.selectValues.Set(columns[i], values[i])
 		}
@@ -598,9 +590,6 @@ func (sd *SysDistrict) String() string {
 		builder.WriteString("is_direct=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
-	builder.WriteString(", ")
-	builder.WriteString("creator=")
-	builder.WriteString(sd.Creator)
 	builder.WriteByte(')')
 	return builder.String()
 }

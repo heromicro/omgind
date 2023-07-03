@@ -22,9 +22,6 @@ type OrgOrgan struct {
 	IsActive *bool   `json:"is_active" binding:"required"` // 状态
 
 	Sort int `json:"sort,omitempty"`
-
-	Creator string `json:"creator"` // 创建者
-
 }
 
 // OrgOrganQueryParam 查询条件

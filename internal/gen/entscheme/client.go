@@ -29,6 +29,8 @@ import (
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysrole"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysrolemenu"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeam"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeamuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/entscheme/xxxdemo"
@@ -69,6 +71,10 @@ type Client struct {
 	SysRole *SysRoleClient
 	// SysRoleMenu is the client for interacting with the SysRoleMenu builders.
 	SysRoleMenu *SysRoleMenuClient
+	// SysTeam is the client for interacting with the SysTeam builders.
+	SysTeam *SysTeamClient
+	// SysTeamUser is the client for interacting with the SysTeamUser builders.
+	SysTeamUser *SysTeamUserClient
 	// SysUser is the client for interacting with the SysUser builders.
 	SysUser *SysUserClient
 	// SysUserRole is the client for interacting with the SysUserRole builders.
@@ -103,6 +109,8 @@ func (c *Client) init() {
 	c.SysMenuActionResource = NewSysMenuActionResourceClient(c.config)
 	c.SysRole = NewSysRoleClient(c.config)
 	c.SysRoleMenu = NewSysRoleMenuClient(c.config)
+	c.SysTeam = NewSysTeamClient(c.config)
+	c.SysTeamUser = NewSysTeamUserClient(c.config)
 	c.SysUser = NewSysUserClient(c.config)
 	c.SysUserRole = NewSysUserRoleClient(c.config)
 	c.XxxDemo = NewXxxDemoClient(c.config)
@@ -203,6 +211,8 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		SysMenuActionResource: NewSysMenuActionResourceClient(cfg),
 		SysRole:               NewSysRoleClient(cfg),
 		SysRoleMenu:           NewSysRoleMenuClient(cfg),
+		SysTeam:               NewSysTeamClient(cfg),
+		SysTeamUser:           NewSysTeamUserClient(cfg),
 		SysUser:               NewSysUserClient(cfg),
 		SysUserRole:           NewSysUserRoleClient(cfg),
 		XxxDemo:               NewXxxDemoClient(cfg),
@@ -240,6 +250,8 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		SysMenuActionResource: NewSysMenuActionResourceClient(cfg),
 		SysRole:               NewSysRoleClient(cfg),
 		SysRoleMenu:           NewSysRoleMenuClient(cfg),
+		SysTeam:               NewSysTeamClient(cfg),
+		SysTeamUser:           NewSysTeamUserClient(cfg),
 		SysUser:               NewSysUserClient(cfg),
 		SysUserRole:           NewSysUserRoleClient(cfg),
 		XxxDemo:               NewXxxDemoClient(cfg),
@@ -274,8 +286,8 @@ func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
 		c.OrgDept, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict,
 		c.SysDictItem, c.SysDistrict, c.SysJwtBlock, c.SysLogging, c.SysMenu,
-		c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysUser,
-		c.SysUserRole, c.XxxDemo,
+		c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysTeam,
+		c.SysTeamUser, c.SysUser, c.SysUserRole, c.XxxDemo,
 	} {
 		n.Use(hooks...)
 	}
@@ -287,8 +299,8 @@ func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
 		c.OrgDept, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict,
 		c.SysDictItem, c.SysDistrict, c.SysJwtBlock, c.SysLogging, c.SysMenu,
-		c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysUser,
-		c.SysUserRole, c.XxxDemo,
+		c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysTeam,
+		c.SysTeamUser, c.SysUser, c.SysUserRole, c.XxxDemo,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -327,6 +339,10 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.SysRole.mutate(ctx, m)
 	case *SysRoleMenuMutation:
 		return c.SysRoleMenu.mutate(ctx, m)
+	case *SysTeamMutation:
+		return c.SysTeam.mutate(ctx, m)
+	case *SysTeamUserMutation:
+		return c.SysTeamUser.mutate(ctx, m)
 	case *SysUserMutation:
 		return c.SysUser.mutate(ctx, m)
 	case *SysUserRoleMutation:
@@ -1847,8 +1863,7 @@ func (c *SysLoggingClient) GetX(ctx context.Context, id string) *SysLogging {
 
 // Hooks returns the client hooks.
 func (c *SysLoggingClient) Hooks() []Hook {
-	hooks := c.hooks.SysLogging
-	return append(hooks[:len(hooks):len(hooks)], syslogging.Hooks[:]...)
+	return c.hooks.SysLogging
 }
 
 // Interceptors returns the client interceptors.
@@ -2493,6 +2508,306 @@ func (c *SysRoleMenuClient) mutate(ctx context.Context, m *SysRoleMenuMutation) 
 	}
 }
 
+// SysTeamClient is a client for the SysTeam schema.
+type SysTeamClient struct {
+	config
+}
+
+// NewSysTeamClient returns a client for the SysTeam from the given config.
+func NewSysTeamClient(c config) *SysTeamClient {
+	return &SysTeamClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `systeam.Hooks(f(g(h())))`.
+func (c *SysTeamClient) Use(hooks ...Hook) {
+	c.hooks.SysTeam = append(c.hooks.SysTeam, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `systeam.Intercept(f(g(h())))`.
+func (c *SysTeamClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysTeam = append(c.inters.SysTeam, interceptors...)
+}
+
+// Create returns a builder for creating a SysTeam entity.
+func (c *SysTeamClient) Create() *SysTeamCreate {
+	mutation := newSysTeamMutation(c.config, OpCreate)
+	return &SysTeamCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of SysTeam entities.
+func (c *SysTeamClient) CreateBulk(builders ...*SysTeamCreate) *SysTeamCreateBulk {
+	return &SysTeamCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for SysTeam.
+func (c *SysTeamClient) Update() *SysTeamUpdate {
+	mutation := newSysTeamMutation(c.config, OpUpdate)
+	return &SysTeamUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SysTeamClient) UpdateOne(st *SysTeam) *SysTeamUpdateOne {
+	mutation := newSysTeamMutation(c.config, OpUpdateOne, withSysTeam(st))
+	return &SysTeamUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SysTeamClient) UpdateOneID(id string) *SysTeamUpdateOne {
+	mutation := newSysTeamMutation(c.config, OpUpdateOne, withSysTeamID(id))
+	return &SysTeamUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for SysTeam.
+func (c *SysTeamClient) Delete() *SysTeamDelete {
+	mutation := newSysTeamMutation(c.config, OpDelete)
+	return &SysTeamDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *SysTeamClient) DeleteOne(st *SysTeam) *SysTeamDeleteOne {
+	return c.DeleteOneID(st.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *SysTeamClient) DeleteOneID(id string) *SysTeamDeleteOne {
+	builder := c.Delete().Where(systeam.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SysTeamDeleteOne{builder}
+}
+
+// Query returns a query builder for SysTeam.
+func (c *SysTeamClient) Query() *SysTeamQuery {
+	return &SysTeamQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysTeam},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a SysTeam entity by its id.
+func (c *SysTeamClient) Get(ctx context.Context, id string) (*SysTeam, error) {
+	return c.Query().Where(systeam.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SysTeamClient) GetX(ctx context.Context, id string) *SysTeam {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryUsers queries the users edge of a SysTeam.
+func (c *SysTeamClient) QueryUsers(st *SysTeam) *SysUserQuery {
+	query := (&SysUserClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(systeam.Table, systeam.FieldID, id),
+			sqlgraph.To(sysuser.Table, sysuser.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, systeam.UsersTable, systeam.UsersPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryTeamUsers queries the team_users edge of a SysTeam.
+func (c *SysTeamClient) QueryTeamUsers(st *SysTeam) *SysTeamUserQuery {
+	query := (&SysTeamUserClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(systeam.Table, systeam.FieldID, id),
+			sqlgraph.To(systeamuser.Table, systeamuser.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, true, systeam.TeamUsersTable, systeam.TeamUsersColumn),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *SysTeamClient) Hooks() []Hook {
+	return c.hooks.SysTeam
+}
+
+// Interceptors returns the client interceptors.
+func (c *SysTeamClient) Interceptors() []Interceptor {
+	return c.inters.SysTeam
+}
+
+func (c *SysTeamClient) mutate(ctx context.Context, m *SysTeamMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysTeamCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysTeamUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysTeamUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysTeamDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("entscheme: unknown SysTeam mutation op: %q", m.Op())
+	}
+}
+
+// SysTeamUserClient is a client for the SysTeamUser schema.
+type SysTeamUserClient struct {
+	config
+}
+
+// NewSysTeamUserClient returns a client for the SysTeamUser from the given config.
+func NewSysTeamUserClient(c config) *SysTeamUserClient {
+	return &SysTeamUserClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `systeamuser.Hooks(f(g(h())))`.
+func (c *SysTeamUserClient) Use(hooks ...Hook) {
+	c.hooks.SysTeamUser = append(c.hooks.SysTeamUser, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `systeamuser.Intercept(f(g(h())))`.
+func (c *SysTeamUserClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysTeamUser = append(c.inters.SysTeamUser, interceptors...)
+}
+
+// Create returns a builder for creating a SysTeamUser entity.
+func (c *SysTeamUserClient) Create() *SysTeamUserCreate {
+	mutation := newSysTeamUserMutation(c.config, OpCreate)
+	return &SysTeamUserCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of SysTeamUser entities.
+func (c *SysTeamUserClient) CreateBulk(builders ...*SysTeamUserCreate) *SysTeamUserCreateBulk {
+	return &SysTeamUserCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for SysTeamUser.
+func (c *SysTeamUserClient) Update() *SysTeamUserUpdate {
+	mutation := newSysTeamUserMutation(c.config, OpUpdate)
+	return &SysTeamUserUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SysTeamUserClient) UpdateOne(stu *SysTeamUser) *SysTeamUserUpdateOne {
+	mutation := newSysTeamUserMutation(c.config, OpUpdateOne, withSysTeamUser(stu))
+	return &SysTeamUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SysTeamUserClient) UpdateOneID(id string) *SysTeamUserUpdateOne {
+	mutation := newSysTeamUserMutation(c.config, OpUpdateOne, withSysTeamUserID(id))
+	return &SysTeamUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for SysTeamUser.
+func (c *SysTeamUserClient) Delete() *SysTeamUserDelete {
+	mutation := newSysTeamUserMutation(c.config, OpDelete)
+	return &SysTeamUserDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *SysTeamUserClient) DeleteOne(stu *SysTeamUser) *SysTeamUserDeleteOne {
+	return c.DeleteOneID(stu.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *SysTeamUserClient) DeleteOneID(id string) *SysTeamUserDeleteOne {
+	builder := c.Delete().Where(systeamuser.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SysTeamUserDeleteOne{builder}
+}
+
+// Query returns a query builder for SysTeamUser.
+func (c *SysTeamUserClient) Query() *SysTeamUserQuery {
+	return &SysTeamUserQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysTeamUser},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a SysTeamUser entity by its id.
+func (c *SysTeamUserClient) Get(ctx context.Context, id string) (*SysTeamUser, error) {
+	return c.Query().Where(systeamuser.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SysTeamUserClient) GetX(ctx context.Context, id string) *SysTeamUser {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryUser queries the user edge of a SysTeamUser.
+func (c *SysTeamUserClient) QueryUser(stu *SysTeamUser) *SysUserQuery {
+	query := (&SysUserClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := stu.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(systeamuser.Table, systeamuser.FieldID, id),
+			sqlgraph.To(sysuser.Table, sysuser.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, systeamuser.UserTable, systeamuser.UserColumn),
+		)
+		fromV = sqlgraph.Neighbors(stu.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryTeam queries the team edge of a SysTeamUser.
+func (c *SysTeamUserClient) QueryTeam(stu *SysTeamUser) *SysTeamQuery {
+	query := (&SysTeamClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := stu.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(systeamuser.Table, systeamuser.FieldID, id),
+			sqlgraph.To(systeam.Table, systeam.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, false, systeamuser.TeamTable, systeamuser.TeamColumn),
+		)
+		fromV = sqlgraph.Neighbors(stu.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *SysTeamUserClient) Hooks() []Hook {
+	return c.hooks.SysTeamUser
+}
+
+// Interceptors returns the client interceptors.
+func (c *SysTeamUserClient) Interceptors() []Interceptor {
+	return c.inters.SysTeamUser
+}
+
+func (c *SysTeamUserClient) mutate(ctx context.Context, m *SysTeamUserMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysTeamUserCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysTeamUserUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysTeamUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysTeamUserDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("entscheme: unknown SysTeamUser mutation op: %q", m.Op())
+	}
+}
+
 // SysUserClient is a client for the SysUser schema.
 type SysUserClient struct {
 	config
@@ -2584,6 +2899,38 @@ func (c *SysUserClient) GetX(ctx context.Context, id string) *SysUser {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryTeams queries the teams edge of a SysUser.
+func (c *SysUserClient) QueryTeams(su *SysUser) *SysTeamQuery {
+	query := (&SysTeamClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := su.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysuser.Table, sysuser.FieldID, id),
+			sqlgraph.To(systeam.Table, systeam.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, true, sysuser.TeamsTable, sysuser.TeamsPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(su.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryTeamUsers queries the team_users edge of a SysUser.
+func (c *SysUserClient) QueryTeamUsers(su *SysUser) *SysTeamUserQuery {
+	query := (&SysTeamUserClient{config: c.config}).Query()
+	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
+		id := su.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(sysuser.Table, sysuser.FieldID, id),
+			sqlgraph.To(systeamuser.Table, systeamuser.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, true, sysuser.TeamUsersTable, sysuser.TeamUsersColumn),
+		)
+		fromV = sqlgraph.Neighbors(su.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // Hooks returns the client hooks.
@@ -2852,13 +3199,13 @@ type (
 	hooks struct {
 		OrgDept, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict, SysDictItem,
 		SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
-		SysMenuActionResource, SysRole, SysRoleMenu, SysUser, SysUserRole,
-		XxxDemo []ent.Hook
+		SysMenuActionResource, SysRole, SysRoleMenu, SysTeam, SysTeamUser, SysUser,
+		SysUserRole, XxxDemo []ent.Hook
 	}
 	inters struct {
 		OrgDept, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict, SysDictItem,
 		SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
-		SysMenuActionResource, SysRole, SysRoleMenu, SysUser, SysUserRole,
-		XxxDemo []ent.Interceptor
+		SysMenuActionResource, SysRole, SysRoleMenu, SysTeam, SysTeamUser, SysUser,
+		SysUserRole, XxxDemo []ent.Interceptor
 	}
 )

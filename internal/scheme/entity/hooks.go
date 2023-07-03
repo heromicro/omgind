@@ -4,11 +4,8 @@ package entity
 
 ///*
 import (
-	"context"
-	"fmt"
-
 	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/hook"
+	// "github.com/heromicro/omgind/internal/gen/entscheme/hook"
 )
 
 // doc https://entgo.io/docs/hooks/#hooks-registration
@@ -47,26 +44,25 @@ func (SysDict) Hooks() []entscheme.Hook {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-func (SysLogging) Hooks() []entscheme.Hook {
-	return []entscheme.Hook{
+// func (SysLogging) Hooks() []entscheme.Hook {
+// 	return []entscheme.Hook{
+// 		// hook.On(
+// 		// 	func(next entscheme.Mutator) entscheme.Mutator {
+// 		// 		return hook.SysLoggingFunc(func(ctx context.Context, m *entscheme.SysLoggingMutation) (entscheme.Value, error) {
+// 		// 			_, ok := m.ID()
+// 		// 			if !ok {
+// 		// 				return nil, fmt.Errorf("id is not ok")
+// 		// 			}
+// 		// 			return next.Mutate(ctx, m)
+// 		// 		})
+// 		// 	},
+// 		// 	entscheme.OpCreate,
+// 		// ),
 
-		hook.On(
-			func(next entscheme.Mutator) entscheme.Mutator {
-				return hook.SysLoggingFunc(func(ctx context.Context, m *entscheme.SysLoggingMutation) (entscheme.Value, error) {
-					_, ok := m.ID()
-					if !ok {
-						return nil, fmt.Errorf("id is not ok")
-					}
-					return next.Mutate(ctx, m)
-				})
-			},
-			entscheme.OpCreate,
-		),
+// 		//
 
-		//
-
-	}
-}
+// 	}
+// }
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////

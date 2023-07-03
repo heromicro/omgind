@@ -16,4 +16,5 @@ var APIV2Set = wire.NewSet(
 	OrgStaffSet,
 	OrgPositionSet,
 	OrgDeptSet,
+	SysTeamSet,
 )
