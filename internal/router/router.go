@@ -27,11 +27,12 @@ type Router struct {
 
 	// SockIO *socketio.Server
 
-	DictApiV2 *api_v2.Dict
-	DemoAPIV2 *api_v2.Demo
-	MenuAPIV2 *api_v2.Menu
-	RoleAPIV2 *api_v2.Role
-	UserAPIV2 *api_v2.User
+	DictApiV2    *api_v2.Dict
+	DemoAPIV2    *api_v2.Demo
+	MenuAPIV2    *api_v2.Menu
+	RoleAPIV2    *api_v2.Role
+	UserAPIV2    *api_v2.User
+	SysTeamAPIV2 *api_v2.SysTeam
 
 	SignInAPIV2      *api_v2.SignIn
 	SysDistrictAPIV2 *api_v2.SysDistrict
@@ -40,8 +41,6 @@ type Router struct {
 	OrgStaffAPIV2    *api_v2.OrgStaff
 	OrgPositionAPIV2 *api_v2.OrgPosition
 	OrgDeptAPIV2     *api_v2.OrgDept
-	SysTeamAPIV2     *api_v2.SysTeam
-	SysTeamAPIV2     *api_v2.SysTeam
 }
 
 // Register 注册路由
