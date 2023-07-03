@@ -2,6 +2,7 @@ package entity
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 
@@ -61,5 +62,10 @@ func (SysUser) Edges() []ent.Edge {
 	return []ent.Edge{
 		// edge.To("organ", OrgOrgan.Type),
 		// edge.To("userRoles", SysUserRole.Type).Comment("userroles: "),
+
+		edge.From("teams", SysTeam.Type).Ref("users").Through("team_users", SysTeamUser.Type),
+
+		//
+
 	}
 }
