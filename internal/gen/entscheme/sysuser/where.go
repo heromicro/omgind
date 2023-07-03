@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/heromicro/omgind/internal/gen/entscheme/predicate"
 )
 
@@ -892,6 +893,52 @@ func SaltEqualFold(v string) predicate.SysUser {
 // SaltContainsFold applies the ContainsFold predicate on the "salt" field.
 func SaltContainsFold(v string) predicate.SysUser {
 	return predicate.SysUser(sql.FieldContainsFold(FieldSalt, v))
+}
+
+// HasTeams applies the HasEdge predicate on the "teams" edge.
+func HasTeams() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, true, TeamsTable, TeamsPrimaryKey...),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasTeamsWith applies the HasEdge predicate on the "teams" edge with a given conditions (other predicates).
+func HasTeamsWith(preds ...predicate.SysTeam) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		step := newTeamsStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasTeamUsers applies the HasEdge predicate on the "team_users" edge.
+func HasTeamUsers() predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, true, TeamUsersTable, TeamUsersColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasTeamUsersWith applies the HasEdge predicate on the "team_users" edge with a given conditions (other predicates).
+func HasTeamUsersWith(preds ...predicate.SysTeamUser) predicate.SysUser {
+	return predicate.SysUser(func(s *sql.Selector) {
+		step := newTeamUsersStep()
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
 }
 
 // And groups predicates with the AND operator between them.

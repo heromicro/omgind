@@ -44,8 +44,40 @@ type SysUser struct {
 	// 电话号码
 	Mobile string `json:"mobile,omitempty"`
 	// 盐
-	Salt         string `json:"salt,omitempty"`
+	Salt string `json:"salt,omitempty"`
+	// Edges holds the relations/edges for other nodes in the graph.
+	// The values are being populated by the SysUserQuery when eager-loading is set.
+	Edges        SysUserEdges `json:"edges"`
 	selectValues sql.SelectValues
+}
+
+// SysUserEdges holds the relations/edges for other nodes in the graph.
+type SysUserEdges struct {
+	// Teams holds the value of the teams edge.
+	Teams []*SysTeam `json:"teams,omitempty"`
+	// TeamUsers holds the value of the team_users edge.
+	TeamUsers []*SysTeamUser `json:"team_users,omitempty"`
+	// loadedTypes holds the information for reporting if a
+	// type was loaded (or requested) in eager-loading or not.
+	loadedTypes [2]bool
+}
+
+// TeamsOrErr returns the Teams value or an error if the edge
+// was not loaded in eager-loading.
+func (e SysUserEdges) TeamsOrErr() ([]*SysTeam, error) {
+	if e.loadedTypes[0] {
+		return e.Teams, nil
+	}
+	return nil, &NotLoadedError{edge: "teams"}
+}
+
+// TeamUsersOrErr returns the TeamUsers value or an error if the edge
+// was not loaded in eager-loading.
+func (e SysUserEdges) TeamUsersOrErr() ([]*SysTeamUser, error) {
+	if e.loadedTypes[1] {
+		return e.TeamUsers, nil
+	}
+	return nil, &NotLoadedError{edge: "team_users"}
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -183,6 +215,16 @@ func (su *SysUser) assignValues(columns []string, values []any) error {
 // This includes values selected through modifiers, order, etc.
 func (su *SysUser) Value(name string) (ent.Value, error) {
 	return su.selectValues.Get(name)
+}
+
+// QueryTeams queries the "teams" edge of the SysUser entity.
+func (su *SysUser) QueryTeams() *SysTeamQuery {
+	return NewSysUserClient(su.config).QueryTeams(su)
+}
+
+// QueryTeamUsers queries the "team_users" edge of the SysUser entity.
+func (su *SysUser) QueryTeamUsers() *SysTeamUserQuery {
+	return NewSysUserClient(su.config).QueryTeamUsers(su)
 }
 
 // Update returns a builder for updating this SysUser.

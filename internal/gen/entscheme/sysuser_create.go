@@ -12,6 +12,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeam"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeamuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuser"
 )
 
@@ -199,6 +201,36 @@ func (suc *SysUserCreate) SetNillableID(s *string) *SysUserCreate {
 		suc.SetID(*s)
 	}
 	return suc
+}
+
+// AddTeamIDs adds the "teams" edge to the SysTeam entity by IDs.
+func (suc *SysUserCreate) AddTeamIDs(ids ...string) *SysUserCreate {
+	suc.mutation.AddTeamIDs(ids...)
+	return suc
+}
+
+// AddTeams adds the "teams" edges to the SysTeam entity.
+func (suc *SysUserCreate) AddTeams(s ...*SysTeam) *SysUserCreate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suc.AddTeamIDs(ids...)
+}
+
+// AddTeamUserIDs adds the "team_users" edge to the SysTeamUser entity by IDs.
+func (suc *SysUserCreate) AddTeamUserIDs(ids ...string) *SysUserCreate {
+	suc.mutation.AddTeamUserIDs(ids...)
+	return suc
+}
+
+// AddTeamUsers adds the "team_users" edges to the SysTeamUser entity.
+func (suc *SysUserCreate) AddTeamUsers(s ...*SysTeamUser) *SysUserCreate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suc.AddTeamUserIDs(ids...)
 }
 
 // Mutation returns the SysUserMutation object of the builder.
@@ -423,6 +455,45 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 	if value, ok := suc.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 		_node.Salt = value
+	}
+	if nodes := suc.mutation.TeamsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.TeamsTable,
+			Columns: sysuser.TeamsPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		createE := &SysTeamUserCreate{config: suc.config, mutation: newSysTeamUserMutation(suc.config, OpCreate)}
+		createE.defaults()
+		_, specE := createE.createSpec()
+		edge.Target.Fields = specE.Fields
+		if specE.ID.Value != nil {
+			edge.Target.Fields = append(edge.Target.Fields, specE.ID)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := suc.mutation.TeamUsersIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   sysuser.TeamUsersTable,
+			Columns: []string{sysuser.TeamUsersColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

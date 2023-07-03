@@ -12,6 +12,8 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/heromicro/omgind/internal/gen/entscheme/predicate"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeam"
+	"github.com/heromicro/omgind/internal/gen/entscheme/systeamuser"
 	"github.com/heromicro/omgind/internal/gen/entscheme/sysuser"
 )
 
@@ -202,9 +204,81 @@ func (suu *SysUserUpdate) SetNillableSalt(s *string) *SysUserUpdate {
 	return suu
 }
 
+// AddTeamIDs adds the "teams" edge to the SysTeam entity by IDs.
+func (suu *SysUserUpdate) AddTeamIDs(ids ...string) *SysUserUpdate {
+	suu.mutation.AddTeamIDs(ids...)
+	return suu
+}
+
+// AddTeams adds the "teams" edges to the SysTeam entity.
+func (suu *SysUserUpdate) AddTeams(s ...*SysTeam) *SysUserUpdate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suu.AddTeamIDs(ids...)
+}
+
+// AddTeamUserIDs adds the "team_users" edge to the SysTeamUser entity by IDs.
+func (suu *SysUserUpdate) AddTeamUserIDs(ids ...string) *SysUserUpdate {
+	suu.mutation.AddTeamUserIDs(ids...)
+	return suu
+}
+
+// AddTeamUsers adds the "team_users" edges to the SysTeamUser entity.
+func (suu *SysUserUpdate) AddTeamUsers(s ...*SysTeamUser) *SysUserUpdate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suu.AddTeamUserIDs(ids...)
+}
+
 // Mutation returns the SysUserMutation object of the builder.
 func (suu *SysUserUpdate) Mutation() *SysUserMutation {
 	return suu.mutation
+}
+
+// ClearTeams clears all "teams" edges to the SysTeam entity.
+func (suu *SysUserUpdate) ClearTeams() *SysUserUpdate {
+	suu.mutation.ClearTeams()
+	return suu
+}
+
+// RemoveTeamIDs removes the "teams" edge to SysTeam entities by IDs.
+func (suu *SysUserUpdate) RemoveTeamIDs(ids ...string) *SysUserUpdate {
+	suu.mutation.RemoveTeamIDs(ids...)
+	return suu
+}
+
+// RemoveTeams removes "teams" edges to SysTeam entities.
+func (suu *SysUserUpdate) RemoveTeams(s ...*SysTeam) *SysUserUpdate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suu.RemoveTeamIDs(ids...)
+}
+
+// ClearTeamUsers clears all "team_users" edges to the SysTeamUser entity.
+func (suu *SysUserUpdate) ClearTeamUsers() *SysUserUpdate {
+	suu.mutation.ClearTeamUsers()
+	return suu
+}
+
+// RemoveTeamUserIDs removes the "team_users" edge to SysTeamUser entities by IDs.
+func (suu *SysUserUpdate) RemoveTeamUserIDs(ids ...string) *SysUserUpdate {
+	suu.mutation.RemoveTeamUserIDs(ids...)
+	return suu
+}
+
+// RemoveTeamUsers removes "team_users" edges to SysTeamUser entities.
+func (suu *SysUserUpdate) RemoveTeamUsers(s ...*SysTeamUser) *SysUserUpdate {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suu.RemoveTeamUserIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
@@ -352,6 +426,117 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := suu.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
+	}
+	if suu.mutation.TeamsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.TeamsTable,
+			Columns: sysuser.TeamsPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
+			},
+		}
+		createE := &SysTeamUserCreate{config: suu.config, mutation: newSysTeamUserMutation(suu.config, OpCreate)}
+		createE.defaults()
+		_, specE := createE.createSpec()
+		edge.Target.Fields = specE.Fields
+		if specE.ID.Value != nil {
+			edge.Target.Fields = append(edge.Target.Fields, specE.ID)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suu.mutation.RemovedTeamsIDs(); len(nodes) > 0 && !suu.mutation.TeamsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.TeamsTable,
+			Columns: sysuser.TeamsPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		createE := &SysTeamUserCreate{config: suu.config, mutation: newSysTeamUserMutation(suu.config, OpCreate)}
+		createE.defaults()
+		_, specE := createE.createSpec()
+		edge.Target.Fields = specE.Fields
+		if specE.ID.Value != nil {
+			edge.Target.Fields = append(edge.Target.Fields, specE.ID)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suu.mutation.TeamsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.TeamsTable,
+			Columns: sysuser.TeamsPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		createE := &SysTeamUserCreate{config: suu.config, mutation: newSysTeamUserMutation(suu.config, OpCreate)}
+		createE.defaults()
+		_, specE := createE.createSpec()
+		edge.Target.Fields = specE.Fields
+		if specE.ID.Value != nil {
+			edge.Target.Fields = append(edge.Target.Fields, specE.ID)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if suu.mutation.TeamUsersCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   sysuser.TeamUsersTable,
+			Columns: []string{sysuser.TeamUsersColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suu.mutation.RemovedTeamUsersIDs(); len(nodes) > 0 && !suu.mutation.TeamUsersCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   sysuser.TeamUsersTable,
+			Columns: []string{sysuser.TeamUsersColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suu.mutation.TeamUsersIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   sysuser.TeamUsersTable,
+			Columns: []string{sysuser.TeamUsersColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.AddModifiers(suu.modifiers...)
 	if n, err = sqlgraph.UpdateNodes(ctx, suu.driver, _spec); err != nil {
@@ -548,9 +733,81 @@ func (suuo *SysUserUpdateOne) SetNillableSalt(s *string) *SysUserUpdateOne {
 	return suuo
 }
 
+// AddTeamIDs adds the "teams" edge to the SysTeam entity by IDs.
+func (suuo *SysUserUpdateOne) AddTeamIDs(ids ...string) *SysUserUpdateOne {
+	suuo.mutation.AddTeamIDs(ids...)
+	return suuo
+}
+
+// AddTeams adds the "teams" edges to the SysTeam entity.
+func (suuo *SysUserUpdateOne) AddTeams(s ...*SysTeam) *SysUserUpdateOne {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suuo.AddTeamIDs(ids...)
+}
+
+// AddTeamUserIDs adds the "team_users" edge to the SysTeamUser entity by IDs.
+func (suuo *SysUserUpdateOne) AddTeamUserIDs(ids ...string) *SysUserUpdateOne {
+	suuo.mutation.AddTeamUserIDs(ids...)
+	return suuo
+}
+
+// AddTeamUsers adds the "team_users" edges to the SysTeamUser entity.
+func (suuo *SysUserUpdateOne) AddTeamUsers(s ...*SysTeamUser) *SysUserUpdateOne {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suuo.AddTeamUserIDs(ids...)
+}
+
 // Mutation returns the SysUserMutation object of the builder.
 func (suuo *SysUserUpdateOne) Mutation() *SysUserMutation {
 	return suuo.mutation
+}
+
+// ClearTeams clears all "teams" edges to the SysTeam entity.
+func (suuo *SysUserUpdateOne) ClearTeams() *SysUserUpdateOne {
+	suuo.mutation.ClearTeams()
+	return suuo
+}
+
+// RemoveTeamIDs removes the "teams" edge to SysTeam entities by IDs.
+func (suuo *SysUserUpdateOne) RemoveTeamIDs(ids ...string) *SysUserUpdateOne {
+	suuo.mutation.RemoveTeamIDs(ids...)
+	return suuo
+}
+
+// RemoveTeams removes "teams" edges to SysTeam entities.
+func (suuo *SysUserUpdateOne) RemoveTeams(s ...*SysTeam) *SysUserUpdateOne {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suuo.RemoveTeamIDs(ids...)
+}
+
+// ClearTeamUsers clears all "team_users" edges to the SysTeamUser entity.
+func (suuo *SysUserUpdateOne) ClearTeamUsers() *SysUserUpdateOne {
+	suuo.mutation.ClearTeamUsers()
+	return suuo
+}
+
+// RemoveTeamUserIDs removes the "team_users" edge to SysTeamUser entities by IDs.
+func (suuo *SysUserUpdateOne) RemoveTeamUserIDs(ids ...string) *SysUserUpdateOne {
+	suuo.mutation.RemoveTeamUserIDs(ids...)
+	return suuo
+}
+
+// RemoveTeamUsers removes "team_users" edges to SysTeamUser entities.
+func (suuo *SysUserUpdateOne) RemoveTeamUsers(s ...*SysTeamUser) *SysUserUpdateOne {
+	ids := make([]string, len(s))
+	for i := range s {
+		ids[i] = s[i].ID
+	}
+	return suuo.RemoveTeamUserIDs(ids...)
 }
 
 // Where appends a list predicates to the SysUserUpdate builder.
@@ -728,6 +985,117 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 	}
 	if value, ok := suuo.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
+	}
+	if suuo.mutation.TeamsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.TeamsTable,
+			Columns: sysuser.TeamsPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
+			},
+		}
+		createE := &SysTeamUserCreate{config: suuo.config, mutation: newSysTeamUserMutation(suuo.config, OpCreate)}
+		createE.defaults()
+		_, specE := createE.createSpec()
+		edge.Target.Fields = specE.Fields
+		if specE.ID.Value != nil {
+			edge.Target.Fields = append(edge.Target.Fields, specE.ID)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suuo.mutation.RemovedTeamsIDs(); len(nodes) > 0 && !suuo.mutation.TeamsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.TeamsTable,
+			Columns: sysuser.TeamsPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		createE := &SysTeamUserCreate{config: suuo.config, mutation: newSysTeamUserMutation(suuo.config, OpCreate)}
+		createE.defaults()
+		_, specE := createE.createSpec()
+		edge.Target.Fields = specE.Fields
+		if specE.ID.Value != nil {
+			edge.Target.Fields = append(edge.Target.Fields, specE.ID)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suuo.mutation.TeamsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: true,
+			Table:   sysuser.TeamsTable,
+			Columns: sysuser.TeamsPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		createE := &SysTeamUserCreate{config: suuo.config, mutation: newSysTeamUserMutation(suuo.config, OpCreate)}
+		createE.defaults()
+		_, specE := createE.createSpec()
+		edge.Target.Fields = specE.Fields
+		if specE.ID.Value != nil {
+			edge.Target.Fields = append(edge.Target.Fields, specE.ID)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if suuo.mutation.TeamUsersCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   sysuser.TeamUsersTable,
+			Columns: []string{sysuser.TeamUsersColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString),
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suuo.mutation.RemovedTeamUsersIDs(); len(nodes) > 0 && !suuo.mutation.TeamUsersCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   sysuser.TeamUsersTable,
+			Columns: []string{sysuser.TeamUsersColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := suuo.mutation.TeamUsersIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   sysuser.TeamUsersTable,
+			Columns: []string{sysuser.TeamUsersColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	_spec.AddModifiers(suuo.modifiers...)
 	_node = &SysUser{config: suuo.config}
