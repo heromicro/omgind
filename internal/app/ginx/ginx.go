@@ -111,6 +111,16 @@ func ResSuccess(c *gin.Context, v any, message ...string) {
 	}
 }
 
+// ResCodeMessageBurden 响应成功
+func ResCodeMessageBurden(c *gin.Context, code int, message string, burden any) {
+	ResJSON(c, http.StatusOK, schema.CodeMessageBurden{Code: code, Message: message, Burden: burden})
+}
+
+// ResSuccess 响应成功
+func ResCodeMessage(c *gin.Context, code int, message string) {
+	ResJSON(c, http.StatusOK, schema.CodeMessageBurden{Code: code, Message: message, Burden: nil})
+}
+
 // ResJSON 响应JSON数据
 func ResJSON(c *gin.Context, status int, v any) {
 	buf, err := json.Marshal(v)

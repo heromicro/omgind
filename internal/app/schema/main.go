@@ -33,6 +33,13 @@ type StatusResult struct {
 	Burden  any      `json:"burden"`
 }
 
+// CodeMessageBurden 响应状态
+type CodeMessageBurden struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Burden  any    `json:"burden"`
+}
+
 // ErrorResult 响应错误
 type ErrorResult struct {
 	Error ErrorItem `json:"error"` // 错误项
