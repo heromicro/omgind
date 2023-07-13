@@ -179,9 +179,9 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 	// 如果是root用户，则查询所有显示的菜单树
 	params := schema.MenuQueryParam{
 		IsActive:    ptr.Bool(true),
-		Level_Order: "asc",
+		Level_Order: repo.OrderByASC.String(),
 	}
-	params.Sort_Order = "asc"
+	params.Sort_Order = repo.OrderByASC.String()
 
 	if isRoot {
 
@@ -235,9 +235,8 @@ func (a *SignIn) QueryUserMenuTree(ctx context.Context, userID string) (schema.M
 	}
 	// 获取这些差异的父级菜单的信息，补充到menuResult.Data中
 	if len(qIDs) > 0 {
-		pmenuResult, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
-			IDs: qIDs,
-		})
+		params.IDs = qIDs
+		pmenuResult, err := a.MenuRepo.Query(ctx, params)
 		if err != nil {
 			return nil, err
 		}
