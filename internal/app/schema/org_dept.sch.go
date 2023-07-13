@@ -29,7 +29,7 @@ type OrgDept struct {
 type OrgDeptQueryParam struct {
 	PaginationParam
 
-	QueryValue string `form:"queryValue"` // 模糊查询
+	QueryValue string `form:"q"` // 模糊查询
 
 	Name     string `form:"name" json:"name"`           //
 	Code     string `form:"code" json:"code"`           //

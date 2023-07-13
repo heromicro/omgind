@@ -115,7 +115,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "查询值",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -578,7 +578,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -1164,7 +1164,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -1659,7 +1659,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -2171,7 +2171,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -3013,7 +3013,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     }
                 ],
@@ -3456,7 +3456,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -3938,7 +3938,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -4498,7 +4498,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -4648,7 +4648,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "查询值",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -5078,7 +5078,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "查询值",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -5191,7 +5191,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "查询值",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {
@@ -5528,7 +5528,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "模糊查询",
-                        "name": "queryValue",
+                        "name": "q",
                         "in": "query"
                     },
                     {

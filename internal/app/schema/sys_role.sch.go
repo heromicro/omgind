@@ -21,11 +21,11 @@ type Role struct {
 // RoleQueryParam 查询条件
 type RoleQueryParam struct {
 	PaginationParam
-	IDs        []string `form:"-"`          // 唯一标识列表
-	Name       string   `form:"-"`          // 角色名称
-	QueryValue string   `form:"queryValue"` // 模糊查询
-	UserID     string   `form:"-"`          // 用户ID
-	IsActive   *bool    `form:"is_active"`
+	IDs        []string `form:"-"`         // 唯一标识列表
+	Name       string   `form:"-"`         // 角色名称
+	QueryValue string   `form:"q"`         // 模糊查询
+	UserID     string   `form:"-"`         // 用户ID
+	IsActive   *bool    `form:"is_active"` //
 
 	BasicOrderParam
 }

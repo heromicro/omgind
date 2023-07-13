@@ -17,7 +17,7 @@ type Menu struct{}
 //	@Security	ApiKeyAuth
 //	@Param		current		query		int		true	"分页索引"	default(1)
 //	@Param		pageSize	query		int		true	"分页大小"	default(10)
-//	@Param		queryValue	query		string	false	"查询值"
+//	@Param		q	query		string	false	"查询值"
 //	@Param		is_active	query		bool	false	"是否有效"
 //	@Param		isShow		query		bool	false	"显示状态(true:显示 false:隐藏)"
 //	@Param		parentID	query		string	false	"父级ID"

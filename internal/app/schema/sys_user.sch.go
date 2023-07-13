@@ -60,10 +60,10 @@ func (a *User) CleanSecure() *User {
 // UserQueryParam 查询条件
 type UserQueryParam struct {
 	PaginationParam
-	UserName   string   `form:"userName"`   // 用户名
-	QueryValue string   `form:"queryValue"` // 模糊查询
-	IsActive   *bool    `form:"is_active"`
-	RoleIDs    []string `form:"role_ids"` // 角色ID列表
+	UserName   string   `form:"userName"`  // 用户名
+	QueryValue string   `form:"q"`         // 模糊查询
+	IsActive   *bool    `form:"is_active"` //
+	RoleIDs    []string `form:"role_ids"`  // 角色ID列表
 
 	BasicOrderParam
 }

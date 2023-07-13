@@ -28,7 +28,7 @@ type OrgOrgan struct {
 type OrgOrganQueryParam struct {
 	PaginationParam
 
-	QueryValue string  `form:"queryValue" json:"queryValue"` // 模糊查询
+	QueryValue string  `form:"q" json:"q"` // 模糊查询
 	Code       *string `form:"code" json:"code"`             //
 	Name       string  `form:"name" json:"name"`             //
 	IsActive   *bool   `form:"is_active" json:"is_active"`   //

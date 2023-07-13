@@ -40,7 +40,7 @@ type MenuQueryParam struct {
 	IDs              []string `form:"-"`          // 唯一标识列表
 	Name             string   `form:"-"`          // 菜单名称
 	PrefixParentPath string   `form:"-"`          // 父级路径(前缀模糊查询)
-	QueryValue       string   `form:"queryValue"` // 模糊查询
+	QueryValue       string   `form:"q"` // 模糊查询
 	ParentID         *string  `form:"pid"`        // 父级内码
 	IsShow           *bool    `form:"isShow"`
 	IsActive         *bool    `form:"is_active"` // 状态

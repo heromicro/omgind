@@ -47,7 +47,7 @@ type DictItemQueryParam struct {
 	PaginationParam
 	DictID string //字典id
 	IDs    []string
-	// QueryValue string `form:"queryValue"` // 模糊查询
+	// QueryValue string `form:"q"` // 模糊查询
 	// IsActive   *bool  `form:"is_active"`
 }
 

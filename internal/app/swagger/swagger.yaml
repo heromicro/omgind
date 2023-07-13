@@ -1051,7 +1051,7 @@ paths:
         type: boolean
       - description: 查询值
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: create_at 结束
         in: query
@@ -1348,7 +1348,7 @@ paths:
         type: string
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: |-
           example: "asc"
@@ -1725,7 +1725,7 @@ paths:
         type: string
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: asc desc
         in: query
@@ -2037,7 +2037,7 @@ paths:
         type: boolean
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: asc desc
         in: query
@@ -2360,7 +2360,7 @@ paths:
         type: boolean
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       - in: query
         name: rank__ed
@@ -2888,7 +2888,7 @@ paths:
         type: string
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       responses:
         "200":
@@ -3172,7 +3172,7 @@ paths:
         type: boolean
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: asc/desc
         in: query
@@ -3482,7 +3482,7 @@ paths:
         type: string
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: 区域后缀,省/市/区/旗/盟/自治区/
         in: query
@@ -3841,7 +3841,7 @@ paths:
         type: string
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: 区域后缀,省/市/区/旗/盟/自治区/
         in: query
@@ -3937,7 +3937,7 @@ paths:
         type: integer
       - description: 查询值
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: 是否有效
         in: query
@@ -4203,7 +4203,7 @@ paths:
         type: integer
       - description: 查询值
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: 是否有效
         in: query
@@ -4271,7 +4271,7 @@ paths:
       parameters:
       - description: 查询值
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: 是否有效
         in: query
@@ -4481,7 +4481,7 @@ paths:
         type: boolean
       - description: 模糊查询
         in: query
-        name: queryValue
+        name: q
         type: string
       - description: 角色ID列表
         in: query

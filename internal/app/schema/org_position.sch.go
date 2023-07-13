@@ -18,7 +18,7 @@ type OrgPosition struct {
 // OrgPositionQueryParam 查询条件
 type OrgPositionQueryParam struct {
 	PaginationParam
-	QueryValue string `form:"queryValue" json:"queryValue"` // 模糊查询
+	QueryValue string `form:"q" json:"q"` // 模糊查询
 
 	Name     string `form:"name" json:"name"`           //
 	Code     string `form:"code" json:"code"`           //

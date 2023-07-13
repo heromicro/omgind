@@ -45,7 +45,7 @@ type SysDistrictQueryParam struct {
 	PaginationParam
 
 	ParentID   *string `form:"pid" json:"pid"`               // pid
-	QueryValue string  `form:"queryValue" json:"queryValue"` // 模糊查询
+	QueryValue string  `form:"q" json:"q"` // 模糊查询
 	Name       string  `form:"name" json:"name"`             // 名称
 	NameEN     string  `form:"name_en" json:"name_en"`       // 名称
 	Initials   string  `form:"initials" json:"initials"`     // 简拼

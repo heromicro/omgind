@@ -30,7 +30,7 @@ type SysAddress struct {
 // SysAddressQueryParam 查询条件
 type SysAddressQueryParam struct {
 	PaginationParam
-	QueryValue string `form:"queryValue"` // 模糊查询
+	QueryValue string `form:"q"` // 模糊查询
 
 	CountryID  string  `form:"country_id" json:"country_id"`   //
 	ProvinceID string  `form:"province_id" json:"province_id"` //

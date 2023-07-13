@@ -29,7 +29,7 @@ func (a *Dict) String() string {
 type DictQueryParam struct {
 	PaginationParam
 
-	QueryValue string `form:"queryValue" json:"queryValue"` // 模糊查询
+	QueryValue string `form:"q" json:"q"` // 模糊查询
 
 	IDs     []string `form:"ids" json:"ids"`                                // 唯一标识列表
 	NameCn  string   `form:"name_cn" json:"name_cn"`                        // 字典名称(中)

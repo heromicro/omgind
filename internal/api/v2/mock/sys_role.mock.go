@@ -18,7 +18,7 @@ type Role struct {
 //	@Security	ApiKeyAuth
 //	@Param		current		query		int		true	"分页索引"	default(1)
 //	@Param		pageSize	query		int		true	"分页大小"	default(10)
-//	@Param		queryValue	query		string	false	"查询值"
+//	@Param		q	query		string	false	"查询值"
 //	@Param		is_active	query		bool	false	"是否有效"
 //	@Success	200			{object}	schema.ListResult{list=schema.Roles,pagination=schema.PaginationResult}"
 //	@Failure	401			{object}	schema.ErrorResult	"{error:{code:0,message:未授权}}"
@@ -31,7 +31,7 @@ func (a *Role) Query(c *gin.Context) {
 //	@Tags		角色管理
 //	@Summary	查询选择数据
 //	@Security	ApiKeyAuth
-//	@Param		queryValue	query		string									false	"查询值"
+//	@Param		q	query		string									false	"查询值"
 //	@Param		is_active	query		bool									false	"是否有效"
 //	@Success	200			{object}	schema.ListResult{list=[]schema.Role}	"查询结果"
 //	@Failure	400			{object}	schema.ErrorResult						"{error:{code:0,message:未知的查询类型}}"

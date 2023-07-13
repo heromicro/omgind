@@ -17,7 +17,7 @@ type Demo struct {
 // swagger:parameters
 type DemoQueryParam struct {
 	PaginationParam
-	QueryValue string `form:"queryValue" json:"queryValue"` // 查询值
+	QueryValue string `form:"q" json:"q"` // 查询值
 	Code       string `form:"code" json:"code"`             // 编号
 	Name       string `form:"name" json:"name"`             // 名称
 	IsActive   *bool  `form:"is_active" json:"is_active"`   // 状态
