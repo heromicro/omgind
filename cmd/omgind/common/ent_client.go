@@ -1,12 +1,12 @@
 package common
 
 import (
-	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/mainent"
 	"github.com/heromicro/omgind/internal/scheme"
 	"github.com/heromicro/omgind/pkg/config"
 )
 
-func MakeEntClient(cf string) (*entscheme.Client, func(), error) {
+func MakeEntClient(cf string) (*mainent.Client, func(), error) {
 
 	vip, err := config.New(cf)
 	if err != nil {

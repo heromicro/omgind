@@ -22,8 +22,8 @@ func main() {
 				gen.FeatureIntercept,
 				// entc.FeatureNames("intercept"),
 			},
-			Package: "github.com/heromicro/omgind/internal/gen/entscheme",
-			Target:  "./internal/gen/entscheme",
+			Package: "github.com/heromicro/omgind/internal/gen/mainent",
+			Target:  "./internal/gen/mainent",
 			Templates: []*gen.Template{
 				gen.MustParse(gen.NewTemplate("mutation_input").ParseDir("./internal/scheme/template")),
 				gen.MustParse(gen.NewTemplate("stringer").ParseDir("./internal/scheme/template")),

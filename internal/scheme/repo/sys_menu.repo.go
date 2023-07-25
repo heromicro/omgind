@@ -6,8 +6,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenu"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysmenu"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -17,10 +17,10 @@ var MenuSet = wire.NewSet(wire.Struct(new(Menu), "*"))
 
 // Menu 菜单存储
 type Menu struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
-func ToSchemaSysMenu(dit *entscheme.SysMenu) *schema.Menu {
+func ToSchemaSysMenu(dit *mainent.SysMenu) *schema.Menu {
 	item := new(schema.Menu)
 	structure.Copy(dit, item)
 	if dit.Edges.Parent != nil {
@@ -34,7 +34,7 @@ func ToSchemaSysMenu(dit *entscheme.SysMenu) *schema.Menu {
 	return item
 }
 
-func ToSchemaSysMenus(dits entscheme.SysMenus) []*schema.Menu {
+func ToSchemaSysMenus(dits mainent.SysMenus) []*schema.Menu {
 	list := make([]*schema.Menu, len(dits))
 	for i, item := range dits {
 		list[i] = ToSchemaSysMenu(item)
@@ -42,15 +42,15 @@ func ToSchemaSysMenus(dits entscheme.SysMenus) []*schema.Menu {
 	return list
 }
 
-func ToEntCreateSysMenuInput(m *schema.Menu) *entscheme.CreateSysMenuInput {
-	createinput := new(entscheme.CreateSysMenuInput)
+func ToEntCreateSysMenuInput(m *schema.Menu) *mainent.CreateSysMenuInput {
+	createinput := new(mainent.CreateSysMenuInput)
 	structure.Copy(m, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysMenuInput(m *schema.Menu) *entscheme.UpdateSysMenuInput {
-	updateinput := new(entscheme.UpdateSysMenuInput)
+func ToEntUpdateSysMenuInput(m *schema.Menu) *mainent.UpdateSysMenuInput {
+	updateinput := new(mainent.UpdateSysMenuInput)
 	structure.Copy(m, &updateinput)
 
 	return updateinput
@@ -138,7 +138,7 @@ func (a *Menu) Query(ctx context.Context, params schema.MenuQueryParam, opts ...
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.SysMenus(list)
+	rlist := mainent.SysMenus(list)
 
 	qr := &schema.MenuQueryResult{
 		PageResult: pr,

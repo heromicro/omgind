@@ -6,15 +6,15 @@ import (
 	"math"
 	"os"
 
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysdict"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/ttacon/chalk"
 	"gopkg.in/yaml.v2"
 )
 
-func Dump_dict(ctx context.Context, eclient *entscheme.Client, datafile string) error {
+func Dump_dict(ctx context.Context, eclient *mainent.Client, datafile string) error {
 
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
 	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
@@ -47,10 +47,10 @@ func Dump_dict(ctx context.Context, eclient *entscheme.Client, datafile string) 
 			break
 		}
 
-		query := eclient.SysDict.Query().WithItems(func(sdiq *entscheme.SysDictItemQuery) {
+		query := eclient.SysDict.Query().WithItems(func(sdiq *mainent.SysDictItemQuery) {
 			sdiq.Select(sysdictitem.FieldID, sysdictitem.FieldLabel, sysdictitem.FieldValue, sysdictitem.FieldDictID, sysdictitem.FieldSort, sysdictitem.FieldMemo)
 		})
-		query = query.Order(entscheme.Asc(sysdict.FieldSort))
+		query = query.Order(mainent.Asc(sysdict.FieldSort))
 
 		r_dicts, err := query.Limit(pageSize).Offset(offset).All(ctx)
 		if err != nil {

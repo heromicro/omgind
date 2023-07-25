@@ -9,9 +9,9 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysuser"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysuserrole"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysuser"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysuserrole"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -21,16 +21,16 @@ var UserSet = wire.NewSet(wire.Struct(new(User), "*"))
 
 // User 用户存储
 type User struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
-func ToSchemaSysUser(u *entscheme.SysUser) *schema.User {
+func ToSchemaSysUser(u *mainent.SysUser) *schema.User {
 	item := new(schema.User)
 	structure.Copy(u, item)
 	return item
 }
 
-func ToSchemaSysUsers(us entscheme.SysUsers) []*schema.User {
+func ToSchemaSysUsers(us mainent.SysUsers) []*schema.User {
 	list := make([]*schema.User, len(us))
 	for i, item := range us {
 		list[i] = ToSchemaSysUser(item)
@@ -38,15 +38,15 @@ func ToSchemaSysUsers(us entscheme.SysUsers) []*schema.User {
 	return list
 }
 
-func ToEntCreateSysUserInput(user *schema.User) *entscheme.CreateSysUserInput {
-	createinput := new(entscheme.CreateSysUserInput)
+func ToEntCreateSysUserInput(user *schema.User) *mainent.CreateSysUserInput {
+	createinput := new(mainent.CreateSysUserInput)
 	structure.Copy(user, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysUserInput(user *schema.User) *entscheme.UpdateSysUserInput {
-	updateinput := new(entscheme.UpdateSysUserInput)
+func ToEntUpdateSysUserInput(user *schema.User) *mainent.UpdateSysUserInput {
+	updateinput := new(mainent.UpdateSysUserInput)
 	structure.Copy(user, &updateinput)
 
 	return updateinput
@@ -127,7 +127,7 @@ func (a *User) Query(ctx context.Context, params schema.UserQueryParam, opts ...
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.SysUsers(list)
+	rlist := mainent.SysUsers(list)
 
 	qr := &schema.UserQueryResult{
 		PageResult: pr,
@@ -151,7 +151,7 @@ func (a *User) Get(ctx context.Context, id string, opts ...schema.UserQueryOptio
 		if *v {
 			ent_userroles, err := a.EntCli.SysUserRole.Query().Where(sysuserrole.UserIDEQ(id)).Where(sysuserrole.IsDel(false)).All(ctx)
 			if err != nil {
-				if !entscheme.IsNotFound(err) {
+				if !mainent.IsNotFound(err) {
 					return nil, err
 				}
 			}

@@ -3,7 +3,7 @@ package repo
 import (
 	"context"
 
-	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/mainent"
 	"github.com/pkg/errors"
 )
 
@@ -12,7 +12,7 @@ import (
 
 // Trans 事务管理
 // type Trans struct {
-// 	EntCli *entscheme.Client
+// 	EntCli *mainent.Client
 // }
 
 //
@@ -29,7 +29,7 @@ import (
 //}
 
 // WithTx best Practices, reusable function that runs callbacks in a transaction
-func WithTx(ctx context.Context, client *entscheme.Client, fn func(tx *entscheme.Tx) error) error {
+func WithTx(ctx context.Context, client *mainent.Client, fn func(tx *mainent.Tx) error) error {
 
 	tx, err := client.Tx(ctx)
 	if err != nil {

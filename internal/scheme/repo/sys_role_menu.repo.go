@@ -7,8 +7,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysrolemenu"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysrolemenu"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -18,16 +18,16 @@ var RoleMenuSet = wire.NewSet(wire.Struct(new(RoleMenu), "*"))
 
 // RoleMenu 角色菜单存储
 type RoleMenu struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
-func ToSchemaSysRoleMenu(role *entscheme.SysRoleMenu) *schema.RoleMenu {
+func ToSchemaSysRoleMenu(role *mainent.SysRoleMenu) *schema.RoleMenu {
 	item := new(schema.RoleMenu)
 	structure.Copy(role, item)
 	return item
 }
 
-func ToSchemaSysRoleMenus(roles entscheme.SysRoleMenus) []*schema.RoleMenu {
+func ToSchemaSysRoleMenus(roles mainent.SysRoleMenus) []*schema.RoleMenu {
 	list := make([]*schema.RoleMenu, len(roles))
 	for i, item := range roles {
 		list[i] = ToSchemaSysRoleMenu(item)
@@ -35,15 +35,15 @@ func ToSchemaSysRoleMenus(roles entscheme.SysRoleMenus) []*schema.RoleMenu {
 	return list
 }
 
-func ToEntCreateSysRoleMenuInput(schrole *schema.RoleMenu) *entscheme.CreateSysRoleMenuInput {
-	createinput := new(entscheme.CreateSysRoleMenuInput)
+func ToEntCreateSysRoleMenuInput(schrole *schema.RoleMenu) *mainent.CreateSysRoleMenuInput {
+	createinput := new(mainent.CreateSysRoleMenuInput)
 	structure.Copy(schrole, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysRoleMenuInput(schrole *schema.RoleMenu) *entscheme.UpdateSysRoleMenuInput {
-	updateinput := new(entscheme.UpdateSysRoleMenuInput)
+func ToEntUpdateSysRoleMenuInput(schrole *schema.RoleMenu) *mainent.UpdateSysRoleMenuInput {
+	updateinput := new(mainent.UpdateSysRoleMenuInput)
 	structure.Copy(schrole, &updateinput)
 
 	return updateinput
@@ -96,7 +96,7 @@ func (a *RoleMenu) Query(ctx context.Context, params schema.RoleMenuQueryParam, 
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.SysRoleMenus(list)
+	rlist := mainent.SysRoleMenus(list)
 
 	qr := &schema.RoleMenuQueryResult{
 		PageResult: pr,

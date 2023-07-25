@@ -7,14 +7,14 @@ import (
 	"os"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysrole"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysrole"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/ttacon/chalk"
 	"gopkg.in/yaml.v2"
 )
 
-func Dump_role(ctx context.Context, eclient *entscheme.Client, datafile string) error {
+func Dump_role(ctx context.Context, eclient *mainent.Client, datafile string) error {
 
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
 	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
@@ -47,7 +47,7 @@ func Dump_role(ctx context.Context, eclient *entscheme.Client, datafile string) 
 
 		query := eclient.SysRole.Query()
 
-		query = query.Order(entscheme.Asc(sysrole.FieldID), entscheme.Asc(sysrole.FieldSort))
+		query = query.Order(mainent.Asc(sysrole.FieldID), mainent.Asc(sysrole.FieldSort))
 
 		r_roles, err := query.Limit(pageSize).Offset(offset).All(ctx)
 		if err != nil {

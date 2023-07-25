@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/orgdept"
-	"github.com/heromicro/omgind/internal/gen/entscheme/orgorgan"
-	"github.com/heromicro/omgind/internal/gen/entscheme/orgposition"
-	"github.com/heromicro/omgind/internal/gen/entscheme/orgstaff"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/orgdept"
+	"github.com/heromicro/omgind/internal/gen/mainent/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/mainent/orgposition"
+	"github.com/heromicro/omgind/internal/gen/mainent/orgstaff"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 
@@ -21,11 +21,11 @@ var OrgStaffSet = wire.NewSet(wire.Struct(new(OrgStaff), "*"))
 
 // OrgStaff 员工存储
 type OrgStaff struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
 // ToSchemaOrgStaff 转换为
-func ToSchemaOrgStaff(et *entscheme.OrgStaff) *schema.OrgStaff {
+func ToSchemaOrgStaff(et *mainent.OrgStaff) *schema.OrgStaff {
 	item := new(schema.OrgStaff)
 	structure.Copy(et, item)
 	if et.Edges.Organ != nil {
@@ -50,7 +50,7 @@ func ToSchemaOrgStaff(et *entscheme.OrgStaff) *schema.OrgStaff {
 	return item
 }
 
-func ToSchemaOrgStaffs(ets entscheme.OrgStaffs) []*schema.OrgStaff {
+func ToSchemaOrgStaffs(ets mainent.OrgStaffs) []*schema.OrgStaff {
 	list := make([]*schema.OrgStaff, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaOrgStaff(item)
@@ -58,15 +58,15 @@ func ToSchemaOrgStaffs(ets entscheme.OrgStaffs) []*schema.OrgStaff {
 	return list
 }
 
-func ToEntCreateOrgStaffInput(sch *schema.OrgStaff) *entscheme.CreateOrgStaffInput {
-	createinput := new(entscheme.CreateOrgStaffInput)
+func ToEntCreateOrgStaffInput(sch *schema.OrgStaff) *mainent.CreateOrgStaffInput {
+	createinput := new(mainent.CreateOrgStaffInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateOrgStaffInput(sch *schema.OrgStaff) *entscheme.UpdateOrgStaffInput {
-	updateinput := new(entscheme.UpdateOrgStaffInput)
+func ToEntUpdateOrgStaffInput(sch *schema.OrgStaff) *mainent.UpdateOrgStaffInput {
+	updateinput := new(mainent.UpdateOrgStaffInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -84,15 +84,15 @@ func (a *OrgStaff) getQueryOption(opts ...schema.OrgStaffQueryOptions) schema.Or
 func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, opts ...schema.OrgStaffQueryOptions) (*schema.OrgStaffQueryResult, error) {
 	// opt := a.getQueryOption(opts...)
 
-	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
+	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *mainent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
 	}).WithIdenAddr().WithResiAddr()
 
-	query = query.WithDept(func(odq *entscheme.OrgDeptQuery) {
+	query = query.WithDept(func(odq *mainent.OrgDeptQuery) {
 		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
 	})
 
-	query = query.WithPosi(func(opq *entscheme.OrgPositionQuery) {
+	query = query.WithPosi(func(opq *mainent.OrgPositionQuery) {
 		opq.Select(orgposition.FieldID, orgposition.FieldName)
 	})
 
@@ -178,21 +178,21 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 // Get 查询指定数据
 func (a *OrgStaff) Get(ctx context.Context, id string, opts ...schema.OrgStaffQueryOptions) (*schema.OrgStaff, error) {
 
-	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
+	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *mainent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname)
 	}).WithIdenAddr().WithResiAddr()
 
-	query = query.WithDept(func(odq *entscheme.OrgDeptQuery) {
+	query = query.WithDept(func(odq *mainent.OrgDeptQuery) {
 		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
 	})
 
-	query = query.WithPosi(func(opq *entscheme.OrgPositionQuery) {
+	query = query.WithPosi(func(opq *mainent.OrgPositionQuery) {
 		opq.Select(orgposition.FieldID, orgposition.FieldName)
 	})
 
 	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if entscheme.IsNotFound(err) {
+		if mainent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -204,21 +204,21 @@ func (a *OrgStaff) Get(ctx context.Context, id string, opts ...schema.OrgStaffQu
 // View 查询指定数据
 func (a *OrgStaff) View(ctx context.Context, id string, opts ...schema.OrgStaffQueryOptions) (*schema.OrgStaff, error) {
 
-	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *entscheme.OrgOrganQuery) {
+	query := a.EntCli.OrgStaff.Query().WithOrgan(func(ooq *mainent.OrgOrganQuery) {
 		ooq.Select(orgorgan.FieldID, orgorgan.FieldName, orgorgan.FieldSname, orgorgan.FieldIdenNo).WithHaddr()
 	}).WithIdenAddr().WithResiAddr()
 
-	query = query.WithDept(func(odq *entscheme.OrgDeptQuery) {
+	query = query.WithDept(func(odq *mainent.OrgDeptQuery) {
 		odq.Select(orgdept.FieldID, orgdept.FieldName, orgdept.FieldMergeName, orgdept.FieldTreePath)
 	})
 
-	query = query.WithPosi(func(opq *entscheme.OrgPositionQuery) {
+	query = query.WithPosi(func(opq *mainent.OrgPositionQuery) {
 		opq.Select(orgposition.FieldID, orgposition.FieldName)
 	})
 
 	r_orgstaff, err := query.Where(orgstaff.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if entscheme.IsNotFound(err) {
+		if mainent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err

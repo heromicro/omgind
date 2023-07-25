@@ -16,8 +16,8 @@ import (
 	sqldblogger "github.com/simukti/sqldb-logger"
 	"github.com/simukti/sqldb-logger/logadapter/zerologadapter"
 
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	_ "github.com/heromicro/omgind/internal/gen/entscheme/runtime"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	_ "github.com/heromicro/omgind/internal/gen/mainent/runtime"
 	"github.com/heromicro/omgind/pkg/config"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -26,7 +26,7 @@ import (
 )
 
 // 初始化ent存储
-func New(acfg *config.AppConfig) (*entscheme.Client, func(), error) {
+func New(acfg *config.AppConfig) (*mainent.Client, func(), error) {
 	cfg := acfg.Ent
 	cli, cleanFunc, err := NewEntClient(acfg)
 	if err != nil {
@@ -44,8 +44,8 @@ func New(acfg *config.AppConfig) (*entscheme.Client, func(), error) {
 		}
 	}
 	// add hooks
-	cli.Use(func(next entscheme.Mutator) entscheme.Mutator {
-		return entscheme.MutateFunc(func(ctx context.Context, m entscheme.Mutation) (entscheme.Value, error) {
+	cli.Use(func(next mainent.Mutator) mainent.Mutator {
+		return mainent.MutateFunc(func(ctx context.Context, m mainent.Mutation) (mainent.Value, error) {
 			start := time.Now()
 			defer func() {
 				log.Printf("Op=%s\tType=%s\tTime=%s\tConcreteType=%T\n", m.Op(), m.Type(), time.Since(start), m)
@@ -58,7 +58,7 @@ func New(acfg *config.AppConfig) (*entscheme.Client, func(), error) {
 }
 
 // 创建ent实例
-func NewEntClient(cfg *config.AppConfig) (*entscheme.Client, func(), error) {
+func NewEntClient(cfg *config.AppConfig) (*mainent.Client, func(), error) {
 
 	var dsn string
 
@@ -106,7 +106,7 @@ func NewEntClient(cfg *config.AppConfig) (*entscheme.Client, func(), error) {
 		return nil, cleanFunc, err
 	}
 
-	client := entscheme.NewClient(entscheme.Driver(drv))
+	client := mainent.NewClient(mainent.Driver(drv))
 
 	return client, cleanFunc, nil
 }

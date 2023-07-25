@@ -6,7 +6,7 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
+	"github.com/heromicro/omgind/internal/gen/mainent"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -16,7 +16,7 @@ var SysAddressSet = wire.NewSet(wire.Struct(new(SysAddress), "*"))
 
 // SysAddress 地址管理
 type SysAddress struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 
 	SysAddressRepo *repo.SysAddress
 }

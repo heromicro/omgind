@@ -9,8 +9,8 @@ import (
 	"github.com/heromicro/omgind/pkg/logger"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	_ "github.com/heromicro/omgind/internal/gen/entscheme/runtime"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	_ "github.com/heromicro/omgind/internal/gen/mainent/runtime"
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/jackc/pgx/v4/stdlib"
@@ -47,7 +47,7 @@ func New(c *Config) *Hook {
 }
 
 // NewEnt 创建ent实例
-func NewEntClient(cfg *Config) (*entscheme.Client, func(), error) {
+func NewEntClient(cfg *Config) (*mainent.Client, func(), error) {
 
 	drv, err := sql.Open(cfg.DBType, cfg.DSN)
 	if err != nil {
@@ -75,14 +75,14 @@ func NewEntClient(cfg *Config) (*entscheme.Client, func(), error) {
 		return nil, cleanFunc, err
 	}
 
-	client := entscheme.NewClient(entscheme.Driver(drv))
+	client := mainent.NewClient(mainent.Driver(drv))
 
 	return client, cleanFunc, nil
 }
 
 // Hook gorm日志钩子
 type Hook struct {
-	eclient *entscheme.Client
+	eclient *mainent.Client
 }
 
 // Exec 执行日志写入

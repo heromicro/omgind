@@ -6,8 +6,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysuserrole"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysuserrole"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -17,16 +17,16 @@ var UserRoleSet = wire.NewSet(wire.Struct(new(UserRole), "*"))
 
 // UserRole 用户角色存储
 type UserRole struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
-func ToSchemaSysUserRole(dit *entscheme.SysUserRole) *schema.UserRole {
+func ToSchemaSysUserRole(dit *mainent.SysUserRole) *schema.UserRole {
 	item := new(schema.UserRole)
 	structure.Copy(dit, item)
 	return item
 }
 
-func ToSchemaSysUserRoles(dits entscheme.SysUserRoles) []*schema.UserRole {
+func ToSchemaSysUserRoles(dits mainent.SysUserRoles) []*schema.UserRole {
 	list := make([]*schema.UserRole, len(dits))
 	for i, item := range dits {
 		list[i] = ToSchemaSysUserRole(item)
@@ -80,7 +80,7 @@ func (a *UserRole) Query(ctx context.Context, params schema.UserRoleQueryParam, 
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.SysUserRoles(list)
+	rlist := mainent.SysUserRoles(list)
 
 	qr := &schema.UserRoleQueryResult{
 		PageResult: pr,

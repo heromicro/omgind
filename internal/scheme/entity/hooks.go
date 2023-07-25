@@ -4,38 +4,28 @@ package entity
 
 // ///*
 // import (
-// 	"github.com/heromicro/omgind/internal/gen/entscheme"
-// 	// "github.com/heromicro/omgind/internal/gen/entscheme/hook"
+// 	"github.com/heromicro/omgind/internal/gen/mainent"
+// 	// "github.com/heromicro/omgind/internal/gen/mainent/hook"
 // )
 
 // // doc https://entgo.io/docs/hooks/#hooks-registration
 
-// func (SysAddress) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
+// func (SysAddress) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
 // 		//
 
 // 	}
 // }
 
-// func (SysDistrict) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
+// func (SysDistrict) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
 // 		//
 
 // 	}
 // }
 
-// func (SysDictItem) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
-// 		//
-
-// 	}
-// }
-
-// ////////////////////////////////////////////////////////////////////////
-// ////////////////////////////////////////////////////////////////////////
-
-// func (SysDict) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
+// func (SysDictItem) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
 // 		//
 
 // 	}
@@ -44,11 +34,21 @@ package entity
 // ////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////
 
-// // func (SysLogging) Hooks() []entscheme.Hook {
-// // 	return []entscheme.Hook{
+// func (SysDict) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
+// 		//
+
+// 	}
+// }
+
+// ////////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////
+
+// // func (SysLogging) Hooks() []mainent.Hook {
+// // 	return []mainent.Hook{
 // // 		// hook.On(
-// // 		// 	func(next entscheme.Mutator) entscheme.Mutator {
-// // 		// 		return hook.SysLoggingFunc(func(ctx context.Context, m *entscheme.SysLoggingMutation) (entscheme.Value, error) {
+// // 		// 	func(next mainent.Mutator) mainent.Mutator {
+// // 		// 		return hook.SysLoggingFunc(func(ctx context.Context, m *mainent.SysLoggingMutation) (mainent.Value, error) {
 // // 		// 			_, ok := m.ID()
 // // 		// 			if !ok {
 // // 		// 				return nil, fmt.Errorf("id is not ok")
@@ -56,7 +56,7 @@ package entity
 // // 		// 			return next.Mutate(ctx, m)
 // // 		// 		})
 // // 		// 	},
-// // 		// 	entscheme.OpCreate,
+// // 		// 	mainent.OpCreate,
 // // 		// ),
 
 // // 		//
@@ -67,8 +67,8 @@ package entity
 // ////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////
 
-// func (SysMenuActionResource) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
+// func (SysMenuActionResource) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
 // 		//
 
 // 	}
@@ -77,8 +77,8 @@ package entity
 // ////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////
 
-// func (SysMenuAction) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
+// func (SysMenuAction) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
 // 		//
 
 // 	}
@@ -87,8 +87,8 @@ package entity
 // ////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////
 
-// func (SysMenu) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
+// func (SysMenu) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
 // 		//
 
 // 	}
@@ -97,8 +97,8 @@ package entity
 // ////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////
 
-// func (SysRole) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
+// func (SysRole) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
 // 		//
 
 // 	}
@@ -107,8 +107,8 @@ package entity
 // ////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////
 
-// func (SysUser) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{
+// func (SysUser) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{
 // 		//
 
 // 	}
@@ -119,6 +119,6 @@ package entity
 // ////////////////////////////////////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////
 
-// func (OrgStaff) Hooks() []entscheme.Hook {
-// 	return []entscheme.Hook{}
+// func (OrgStaff) Hooks() []mainent.Hook {
+// 	return []mainent.Hook{}
 // }

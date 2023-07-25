@@ -12,8 +12,8 @@ import (
 	"github.com/jossef/format"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysdistrict"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysdistrict"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 	"github.com/heromicro/omgind/pkg/mw/queue"
@@ -25,18 +25,18 @@ var SysDistrictSet = wire.NewSet(wire.Struct(new(SysDistrict), "*"))
 
 // SysDistrict 行政区域存储
 type SysDistrict struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 	Queue  queue.Queuer
 }
 
 // ToSchemaSysDistrict 转换为
-func ToSchemaSysDistrict(et *entscheme.SysDistrict) *schema.SysDistrict {
+func ToSchemaSysDistrict(et *mainent.SysDistrict) *schema.SysDistrict {
 	item := new(schema.SysDistrict)
 	structure.Copy(et, item)
 	return item
 }
 
-func ToSchemaSysDistricts(ets entscheme.SysDistricts) []*schema.SysDistrict {
+func ToSchemaSysDistricts(ets mainent.SysDistricts) []*schema.SysDistrict {
 	list := make([]*schema.SysDistrict, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaSysDistrict(item)
@@ -44,15 +44,15 @@ func ToSchemaSysDistricts(ets entscheme.SysDistricts) []*schema.SysDistrict {
 	return list
 }
 
-func ToEntCreateSysDistrictInput(sch *schema.SysDistrict) *entscheme.CreateSysDistrictInput {
-	createinput := new(entscheme.CreateSysDistrictInput)
+func ToEntCreateSysDistrictInput(sch *schema.SysDistrict) *mainent.CreateSysDistrictInput {
+	createinput := new(mainent.CreateSysDistrictInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysDistrictInput(sch *schema.SysDistrict) *entscheme.UpdateSysDistrictInput {
-	updateinput := new(entscheme.UpdateSysDistrictInput)
+func ToEntUpdateSysDistrictInput(sch *schema.SysDistrict) *mainent.UpdateSysDistrictInput {
+	updateinput := new(mainent.UpdateSysDistrictInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -419,7 +419,7 @@ func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDist
 
 	r_sysdistrict, err := query_district.Where(sysdistrict.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if entscheme.IsNotFound(err) {
+		if mainent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -436,7 +436,7 @@ func (a *SysDistrict) Get(ctx context.Context, id string, opts ...schema.SysDist
 // Create 创建数据
 func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*schema.SysDistrict, error) {
 
-	var res_sysdistrict *entscheme.SysDistrict
+	var res_sysdistrict *mainent.SysDistrict
 	var err error
 
 	// check pid
@@ -520,7 +520,7 @@ func (a *SysDistrict) Create(ctx context.Context, item schema.SysDistrict) (*sch
 
 		iteminput := ToEntCreateSysDistrictInput(&item)
 
-		err = WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+		err = WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 
 			res_sysdistrict, err = tx.SysDistrict.Create().SetInput(*iteminput).Save(ctx)
 
@@ -659,7 +659,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 			iteminput := ToEntUpdateSysDistrictInput(&item)
 
-			err = WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+			err = WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 				// step 1: update old item's and it's sub's tree_left and tree_right
 				count, err := tx.SysDistrict.Update().Where(sysdistrict.TreeID(*oitem.TreeID)).AddTreeLeft(*nparent.TreeRight - 1).AddTreeRight(*nparent.TreeRight - 1).Save(ctx)
 				if err != nil {
@@ -765,7 +765,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 			log.Println(" ---- ==== yyyyyyyy ")
 
-			err = WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+			err = WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 				// step:1 update tree_id with most newest,
 
 				count1, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oitem.TreeID), sysdistrict.TreeLeftGTE(*oitem.TreeLeft), sysdistrict.TreeRightLTE(*oitem.TreeRight)).SetTreeID(most).Save(ctx)
@@ -935,7 +935,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 						d2 = *nparent.TreeRight - *oitem.TreeLeft
 					}
 
-					err = WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+					err = WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 
 						// step 2: repair old parent's left/right
 						_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.And(sysdistrict.TreeLeftGT(*oparent.TreeRight), sysdistrict.TreeLeftLTE(*nparent.TreeLeft))).AddTreeLeft(-d1).Save(ctx)
@@ -992,7 +992,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 				} else {
 
-					err = WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+					err = WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 
 						// step 1: repair old parent's left/right
 						_, err := tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*oparent.TreeID), sysdistrict.TreeLeftGT(*oitem.TreeRight)).AddTreeLeft(-d1).Save(ctx)
@@ -1062,7 +1062,7 @@ func (a *SysDistrict) GetLatestTreeID(ctx context.Context) (int64, error) {
 	most, err := a.EntCli.SysDistrict.Query().Order(sysdistrict.ByTreeID(OrderDirection("desc"))).Select(sysdistrict.FieldID, sysdistrict.FieldTreeID).First(ctx)
 
 	if err != nil {
-		if entscheme.IsNotFound(err) {
+		if mainent.IsNotFound(err) {
 			return 1, nil
 		}
 		return -1, err
@@ -1081,7 +1081,7 @@ func (a *SysDistrict) Delete(ctx context.Context, id string) error {
 	}
 	distance := *tobeDel.TreeRight - *tobeDel.TreeLeft + 1
 
-	err = WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+	err = WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 
 		_, err = tx.SysDistrict.Update().Where(sysdistrict.TreeIDEQ(*tobeDel.TreeID), sysdistrict.TreeLeftGTE(*tobeDel.TreeLeft), sysdistrict.TreeRightLTE(*tobeDel.TreeRight)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 		if err != nil {

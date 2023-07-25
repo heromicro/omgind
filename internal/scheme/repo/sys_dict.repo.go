@@ -7,9 +7,9 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysdict"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -19,10 +19,10 @@ var DictSet = wire.NewSet(wire.Struct(new(Dict), "*"))
 
 // Dict 字典存储
 type Dict struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
-func ToSchemaSysDict(dit *entscheme.SysDict) *schema.Dict {
+func ToSchemaSysDict(dit *mainent.SysDict) *schema.Dict {
 	item := new(schema.Dict)
 	structure.Copy(dit, item)
 	if dit.Edges.Items != nil {
@@ -32,7 +32,7 @@ func ToSchemaSysDict(dit *entscheme.SysDict) *schema.Dict {
 	return item
 }
 
-func ToSchemaSysDicts(dits entscheme.SysDicts) []*schema.Dict {
+func ToSchemaSysDicts(dits mainent.SysDicts) []*schema.Dict {
 	list := make([]*schema.Dict, len(dits))
 	for i, item := range dits {
 		list[i] = ToSchemaSysDict(item)
@@ -40,15 +40,15 @@ func ToSchemaSysDicts(dits entscheme.SysDicts) []*schema.Dict {
 	return list
 }
 
-func ToEntCreateSysDictInput(sdi *schema.Dict) *entscheme.CreateSysDictInput {
-	createinput := new(entscheme.CreateSysDictInput)
+func ToEntCreateSysDictInput(sdi *schema.Dict) *mainent.CreateSysDictInput {
+	createinput := new(mainent.CreateSysDictInput)
 	structure.Copy(sdi, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysDictInput(sdi *schema.Dict) *entscheme.UpdateSysDictInput {
-	updateinput := new(entscheme.UpdateSysDictInput)
+func ToEntUpdateSysDictInput(sdi *schema.Dict) *mainent.UpdateSysDictInput {
+	updateinput := new(mainent.UpdateSysDictInput)
 	structure.Copy(sdi, &updateinput)
 
 	return updateinput
@@ -69,7 +69,7 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 
 	query := a.EntCli.SysDict.Query().Where(sysdict.DeletedAtIsNil(), sysdict.IsDelEQ(false))
 	if v := params.WithItem; v != nil && *v {
-		query = query.WithItems(func(sdiq *entscheme.SysDictItemQuery) {
+		query = query.WithItems(func(sdiq *mainent.SysDictItemQuery) {
 			sdiq.Where(sysdictitem.IsDelEQ(false)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive)
 		})
 	}
@@ -135,7 +135,7 @@ func (a *Dict) Query(ctx context.Context, params schema.DictQueryParam, opts ...
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.SysDicts(list)
+	rlist := mainent.SysDicts(list)
 
 	qr := &schema.DictQueryResult{
 		PageResult: pr,
@@ -159,8 +159,8 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 		query = query.Where(sysdict.IDEQ(id))
 	}
 
-	query = query.WithItems(func(sdiq *entscheme.SysDictItemQuery) {
-		sdiq.Order(entscheme.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID)
+	query = query.WithItems(func(sdiq *mainent.SysDictItemQuery) {
+		sdiq.Order(mainent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID)
 	})
 
 	if id == "-" {
@@ -201,7 +201,7 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.SysDicts(list)
+	rlist := mainent.SysDicts(list)
 
 	qr := &schema.DictQueryResult{
 		PageResult: pr,
@@ -215,8 +215,8 @@ func (a *Dict) QueryItems(ctx context.Context, id string, params schema.DictQuer
 func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptions) (*schema.Dict, error) {
 
 	query := a.EntCli.SysDict.Query()
-	query = query.WithItems(func(sdiq *entscheme.SysDictItemQuery) {
-		sdiq.Order(entscheme.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID)
+	query = query.WithItems(func(sdiq *mainent.SysDictItemQuery) {
+		sdiq.Order(mainent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID)
 	})
 
 	dict, err := query.Where(sysdict.IDEQ(id)).Only(ctx)

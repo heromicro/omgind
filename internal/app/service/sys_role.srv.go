@@ -9,8 +9,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysrolemenu"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysrolemenu"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -22,7 +22,7 @@ var SysRoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 type Role struct {
 	Enforcer *casbin.SyncedEnforcer
 
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 
 	RoleRepo               *repo.Role
 	RoleMenuRepo           *repo.RoleMenu
@@ -71,7 +71,7 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, erro
 		return nil, err
 	}
 
-	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *entscheme.Tx) error {
+	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *mainent.Tx) error {
 		role_input := repo.ToEntCreateSysRoleInput(&item)
 
 		arole, err := tx.SysRole.Create().SetInput(*role_input).Save(ctx)
@@ -139,7 +139,7 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 		}
 	}
 
-	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *entscheme.Tx) error {
+	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *mainent.Tx) error {
 
 		addRoleMenus, delRoleMenus := a.compareRoleMenus(ctx, oldItem.RoleMenus, item.RoleMenus)
 		for _, rmitem := range addRoleMenus {
@@ -239,7 +239,7 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 		return errors.New400Response("该角色已被赋予用户，不允许删除")
 	}
 
-	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *entscheme.Tx) error {
+	err = repo.WithTx(ctx, a.RoleRepo.EntCli, func(tx *mainent.Tx) error {
 		_, err := tx.SysRoleMenu.Update().Where(sysrolemenu.RoleIDEQ(id)).SetDeletedAt(time.Now()).SetIsDel(true).Save(ctx)
 		if err != nil {
 			return err

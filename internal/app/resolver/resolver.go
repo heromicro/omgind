@@ -1,7 +1,7 @@
 package resolver
 
-import "github.com/heromicro/omgind/internal/gen/entscheme"
+import "github.com/heromicro/omgind/internal/gen/mainent"
 
 type Resolver struct {
-	EntClient *entscheme.Client
+	EntClient *mainent.Client
 }

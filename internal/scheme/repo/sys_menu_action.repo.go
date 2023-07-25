@@ -7,8 +7,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuaction"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysmenuaction"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -18,17 +18,17 @@ var MenuActionSet = wire.NewSet(wire.Struct(new(MenuAction), "*"))
 
 // MenuAction 菜单动作存储
 type MenuAction struct {
-	EntCli *entscheme.Client
-	//TxCli *entscheme.Tx
+	EntCli *mainent.Client
+	//TxCli *mainent.Tx
 }
 
-func ToSchemaSysMenuAction(ma *entscheme.SysMenuAction) *schema.MenuAction {
+func ToSchemaSysMenuAction(ma *mainent.SysMenuAction) *schema.MenuAction {
 	item := new(schema.MenuAction)
 	structure.Copy(ma, item)
 	return item
 }
 
-func ToSchemaSysMenuActions(mas entscheme.SysMenuActions) []*schema.MenuAction {
+func ToSchemaSysMenuActions(mas mainent.SysMenuActions) []*schema.MenuAction {
 	list := make([]*schema.MenuAction, len(mas))
 	for i, item := range mas {
 		list[i] = ToSchemaSysMenuAction(item)
@@ -36,15 +36,15 @@ func ToSchemaSysMenuActions(mas entscheme.SysMenuActions) []*schema.MenuAction {
 	return list
 }
 
-func ToEntCreateSysMenuActionInput(ma *schema.MenuAction) *entscheme.CreateSysMenuActionInput {
-	createinput := new(entscheme.CreateSysMenuActionInput)
+func ToEntCreateSysMenuActionInput(ma *schema.MenuAction) *mainent.CreateSysMenuActionInput {
+	createinput := new(mainent.CreateSysMenuActionInput)
 	structure.Copy(ma, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysMenuActionInput(ma *schema.MenuAction) *entscheme.UpdateSysMenuActionInput {
-	updateinput := new(entscheme.UpdateSysMenuActionInput)
+func ToEntUpdateSysMenuActionInput(ma *schema.MenuAction) *mainent.UpdateSysMenuActionInput {
+	updateinput := new(mainent.UpdateSysMenuActionInput)
 	structure.Copy(ma, &updateinput)
 
 	return updateinput
@@ -96,7 +96,7 @@ func (a *MenuAction) Query(ctx context.Context, params schema.MenuActionQueryPar
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.SysMenuActions(list)
+	rlist := mainent.SysMenuActions(list)
 
 	qr := &schema.MenuActionQueryResult{
 		PageResult: pr,

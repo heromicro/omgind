@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/systeamuser"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/systeamuser"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 
@@ -18,17 +18,17 @@ var SysTeamUserSet = wire.NewSet(wire.Struct(new(SysTeamUser), "*"))
 
 // SysTeamUser 地址管理存储
 type SysTeamUser struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
 // ToSchemaSysTeamUser 转换为
-func ToSchemaSysTeamUser(et *entscheme.SysTeamUser) *schema.SysTeamUser {
+func ToSchemaSysTeamUser(et *mainent.SysTeamUser) *schema.SysTeamUser {
 	item := new(schema.SysTeamUser)
 	structure.Copy(et, item)
 	return item
 }
 
-func ToSchemaSysTeamUsers(ets entscheme.SysTeamUsers) []*schema.SysTeamUser {
+func ToSchemaSysTeamUsers(ets mainent.SysTeamUsers) []*schema.SysTeamUser {
 	list := make([]*schema.SysTeamUser, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaSysTeamUser(item)
@@ -36,15 +36,15 @@ func ToSchemaSysTeamUsers(ets entscheme.SysTeamUsers) []*schema.SysTeamUser {
 	return list
 }
 
-func ToEntCreateSysTeamUserInput(sch *schema.SysTeamUser) *entscheme.CreateSysTeamUserInput {
-	createinput := new(entscheme.CreateSysTeamUserInput)
+func ToEntCreateSysTeamUserInput(sch *schema.SysTeamUser) *mainent.CreateSysTeamUserInput {
+	createinput := new(mainent.CreateSysTeamUserInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysTeamUserInput(sch *schema.SysTeamUser) *entscheme.UpdateSysTeamUserInput {
-	updateinput := new(entscheme.UpdateSysTeamUserInput)
+func ToEntUpdateSysTeamUserInput(sch *schema.SysTeamUser) *mainent.UpdateSysTeamUserInput {
+	updateinput := new(mainent.UpdateSysTeamUserInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -77,7 +77,7 @@ func (a *SysTeamUser) Query(ctx context.Context, params schema.SysTeamUserQueryP
 		return &schema.SysTeamUserQueryResult{PageResult: pr}, nil
 	}
 
-	query = query.Order(entscheme.Asc(systeamuser.FieldSort))
+	query = query.Order(mainent.Asc(systeamuser.FieldSort))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -104,7 +104,7 @@ func (a *SysTeamUser) Get(ctx context.Context, id string, opts ...schema.SysTeam
 
 	r_systeamuser, err := a.EntCli.SysTeamUser.Query().Where(systeamuser.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if entscheme.IsNotFound(err) {
+		if mainent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -118,7 +118,7 @@ func (a *SysTeamUser) View(ctx context.Context, id string, opts ...schema.SysTea
 
 	r_systeamuser, err := a.EntCli.SysTeamUser.Query().Where(systeamuser.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if entscheme.IsNotFound(err) {
+		if mainent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err

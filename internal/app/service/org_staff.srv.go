@@ -6,9 +6,9 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/orgstaff"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/orgstaff"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysaddress"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
@@ -18,7 +18,7 @@ var OrgStaffSet = wire.NewSet(wire.Struct(new(OrgStaff), "*"))
 
 // OrgStaff 员工管理
 type OrgStaff struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 
 	OrgStaffRepo *repo.OrgStaff
 }
@@ -63,9 +63,9 @@ func (a *OrgStaff) Create(ctx context.Context, item schema.OrgStaff) (*schema.Or
 
 	staff_input := repo.ToEntCreateOrgStaffInput(&item)
 
-	var rr_orgstaff *entscheme.OrgStaff
+	var rr_orgstaff *mainent.OrgStaff
 
-	err := repo.WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+	err := repo.WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 
 		iden_addr, err := tx.SysAddress.Create().SetInput(*iden_addr_iteminput).Save(ctx)
 		if err != nil {
@@ -118,9 +118,9 @@ func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) 
 
 	staff_input := repo.ToEntUpdateOrgStaffInput(&item)
 
-	err = repo.WithTx(ctx, a.EntCli, func(tx *entscheme.Tx) error {
+	err = repo.WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 
-		var iden_addr *entscheme.SysAddress
+		var iden_addr *mainent.SysAddress
 		if v := oitem.IdenAddrID; v != nil {
 			_, err = tx.SysAddress.Update().Where(sysaddress.IDEQ(*v)).SetInput(*iden_addr_update_input).Save(ctx)
 			if err != nil {
@@ -133,7 +133,7 @@ func (a *OrgStaff) Update(ctx context.Context, id string, item schema.OrgStaff) 
 			}
 		}
 
-		var resi_addr *entscheme.SysAddress
+		var resi_addr *mainent.SysAddress
 		if v := oitem.ResiAddrID; v != nil {
 			_, err = tx.SysAddress.Update().Where(sysaddress.IDEQ(*v)).SetInput(*resi_addr_update_input).Save(ctx)
 			if err != nil {

@@ -7,8 +7,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/xxxdemo"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/xxxdemo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -16,17 +16,17 @@ import (
 var DemoSet = wire.NewSet(wire.Struct(new(Demo), "*"))
 
 type Demo struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
 // ToSchemaDemo 转换为
-func ToSchemaDemo(xd *entscheme.XxxDemo) *schema.Demo {
+func ToSchemaDemo(xd *mainent.XxxDemo) *schema.Demo {
 	item := new(schema.Demo)
 	structure.Copy(xd, item)
 	return item
 }
 
-func ToSchemaDemos(xds entscheme.XxxDemos) []*schema.Demo {
+func ToSchemaDemos(xds mainent.XxxDemos) []*schema.Demo {
 	list := make([]*schema.Demo, len(xds))
 	for i, item := range xds {
 		list[i] = ToSchemaDemo(item)
@@ -34,15 +34,15 @@ func ToSchemaDemos(xds entscheme.XxxDemos) []*schema.Demo {
 	return list
 }
 
-func ToEntCreateDemoInput(sch *schema.Demo) *entscheme.CreateXxxDemoInput {
-	createinput := new(entscheme.CreateXxxDemoInput)
+func ToEntCreateDemoInput(sch *schema.Demo) *mainent.CreateXxxDemoInput {
+	createinput := new(mainent.CreateXxxDemoInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateDemoInput(sch *schema.Demo) *entscheme.UpdateXxxDemoInput {
-	updateinput := new(entscheme.UpdateXxxDemoInput)
+func ToEntUpdateDemoInput(sch *schema.Demo) *mainent.UpdateXxxDemoInput {
+	updateinput := new(mainent.UpdateXxxDemoInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -129,7 +129,7 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.XxxDemos(list)
+	rlist := mainent.XxxDemos(list)
 
 	qr := &schema.DemoQueryResult{
 		PageResult: pr,

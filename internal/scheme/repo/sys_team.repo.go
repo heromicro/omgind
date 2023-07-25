@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/systeam"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/systeam"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 
@@ -18,17 +18,17 @@ var SysTeamSet = wire.NewSet(wire.Struct(new(SysTeam), "*"))
 
 // SysTeam 地址管理存储
 type SysTeam struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
 // ToSchemaSysTeam 转换为
-func ToSchemaSysTeam(et *entscheme.SysTeam) *schema.SysTeam {
+func ToSchemaSysTeam(et *mainent.SysTeam) *schema.SysTeam {
 	item := new(schema.SysTeam)
 	structure.Copy(et, item)
 	return item
 }
 
-func ToSchemaSysTeams(ets entscheme.SysTeams) []*schema.SysTeam {
+func ToSchemaSysTeams(ets mainent.SysTeams) []*schema.SysTeam {
 	list := make([]*schema.SysTeam, len(ets))
 	for i, item := range ets {
 		list[i] = ToSchemaSysTeam(item)
@@ -36,15 +36,15 @@ func ToSchemaSysTeams(ets entscheme.SysTeams) []*schema.SysTeam {
 	return list
 }
 
-func ToEntCreateSysTeamInput(sch *schema.SysTeam) *entscheme.CreateSysTeamInput {
-	createinput := new(entscheme.CreateSysTeamInput)
+func ToEntCreateSysTeamInput(sch *schema.SysTeam) *mainent.CreateSysTeamInput {
+	createinput := new(mainent.CreateSysTeamInput)
 	structure.Copy(sch, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysTeamInput(sch *schema.SysTeam) *entscheme.UpdateSysTeamInput {
-	updateinput := new(entscheme.UpdateSysTeamInput)
+func ToEntUpdateSysTeamInput(sch *schema.SysTeam) *mainent.UpdateSysTeamInput {
+	updateinput := new(mainent.UpdateSysTeamInput)
 	structure.Copy(sch, &updateinput)
 
 	return updateinput
@@ -77,7 +77,7 @@ func (a *SysTeam) Query(ctx context.Context, params schema.SysTeamQueryParam, op
 		return &schema.SysTeamQueryResult{PageResult: pr}, nil
 	}
 
-	query = query.Order(entscheme.Asc(systeam.FieldSort))
+	query = query.Order(mainent.Asc(systeam.FieldSort))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()
@@ -104,7 +104,7 @@ func (a *SysTeam) Get(ctx context.Context, id string, opts ...schema.SysTeamQuer
 
 	r_systeam, err := a.EntCli.SysTeam.Query().Where(systeam.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if entscheme.IsNotFound(err) {
+		if mainent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err
@@ -118,7 +118,7 @@ func (a *SysTeam) View(ctx context.Context, id string, opts ...schema.SysTeamQue
 
 	r_systeam, err := a.EntCli.SysTeam.Query().Where(systeam.IDEQ(id)).Only(ctx)
 	if err != nil {
-		if entscheme.IsNotFound(err) {
+		if mainent.IsNotFound(err) {
 			return nil, errors.ErrNotFound
 		}
 		return nil, err

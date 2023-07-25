@@ -7,16 +7,16 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenu"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuaction"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysmenuactionresource"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysmenu"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysmenuaction"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysmenuactionresource"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/ttacon/chalk"
 	"gopkg.in/yaml.v2"
 )
 
-func Load_menu_data(ctx context.Context, eclient *entscheme.Client, filename string) error {
+func Load_menu_data(ctx context.Context, eclient *mainent.Client, filename string) error {
 
 	greenOnWhite := chalk.Green.NewStyle().WithBackground(chalk.White)
 	redOnWhite := chalk.Red.NewStyle().WithBackground(chalk.White)
@@ -35,11 +35,11 @@ func Load_menu_data(ctx context.Context, eclient *entscheme.Client, filename str
 		return err
 	}
 
-	var menuBulk []*entscheme.SysMenuCreate
-	var actionBulk []*entscheme.SysMenuActionCreate
-	var resourceBulk []*entscheme.SysMenuActionResourceCreate
+	var menuBulk []*mainent.SysMenuCreate
+	var actionBulk []*mainent.SysMenuActionCreate
+	var resourceBulk []*mainent.SysMenuActionResourceCreate
 
-	err = repo.WithTx(ctx, eclient, func(tx *entscheme.Tx) error {
+	err = repo.WithTx(ctx, eclient, func(tx *mainent.Tx) error {
 
 		for _, m := range menus {
 

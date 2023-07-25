@@ -7,8 +7,8 @@ import (
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
-	"github.com/heromicro/omgind/internal/gen/entscheme"
-	"github.com/heromicro/omgind/internal/gen/entscheme/sysdictitem"
+	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 )
@@ -18,16 +18,16 @@ var DictItemSet = wire.NewSet(wire.Struct(new(DictItem), "*"))
 
 // DictItem 字典项存储
 type DictItem struct {
-	EntCli *entscheme.Client
+	EntCli *mainent.Client
 }
 
-func ToSchemaDictItem(dit *entscheme.SysDictItem) *schema.DictItem {
+func ToSchemaDictItem(dit *mainent.SysDictItem) *schema.DictItem {
 	item := new(schema.DictItem)
 	structure.Copy(dit, item)
 	return item
 }
 
-func ToSchemaDictItems(dits entscheme.SysDictItems) []*schema.DictItem {
+func ToSchemaDictItems(dits mainent.SysDictItems) []*schema.DictItem {
 	list := make([]*schema.DictItem, len(dits))
 	for i, item := range dits {
 		list[i] = ToSchemaDictItem(item)
@@ -35,15 +35,15 @@ func ToSchemaDictItems(dits entscheme.SysDictItems) []*schema.DictItem {
 	return list
 }
 
-func ToEntCreateSysDictItemInput(sdi *schema.DictItem) *entscheme.CreateSysDictItemInput {
-	createinput := new(entscheme.CreateSysDictItemInput)
+func ToEntCreateSysDictItemInput(sdi *schema.DictItem) *mainent.CreateSysDictItemInput {
+	createinput := new(mainent.CreateSysDictItemInput)
 	structure.Copy(sdi, &createinput)
 
 	return createinput
 }
 
-func ToEntUpdateSysDictItemInput(sdi *schema.DictItem) *entscheme.UpdateSysDictItemInput {
-	updateinput := new(entscheme.UpdateSysDictItemInput)
+func ToEntUpdateSysDictItemInput(sdi *schema.DictItem) *mainent.UpdateSysDictItemInput {
+	updateinput := new(mainent.UpdateSysDictItemInput)
 	structure.Copy(sdi, &updateinput)
 
 	return updateinput
@@ -99,7 +99,7 @@ func (a *DictItem) Query(ctx context.Context, params schema.DictItemQueryParam, 
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}
-	rlist := entscheme.SysDictItems(list)
+	rlist := mainent.SysDictItems(list)
 
 	qr := &schema.DictItemQueryResult{
 		PageResult: pr,

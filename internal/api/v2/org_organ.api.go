@@ -7,7 +7,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/app/service"
-	"github.com/heromicro/omgind/internal/gen/entscheme/orgorgan"
+	"github.com/heromicro/omgind/internal/gen/mainent/orgorgan"
 )
 
 // OrgOrganSet 注入OrgOrgan
