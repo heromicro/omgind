@@ -14,7 +14,7 @@ type DictItem struct {
 	IsActive *bool  `json:"is_active" binding:"required"  yaml:"is_active"` // 状态
 	DictID   string `json:"dict_id" binding:"required" yaml:"dict_id"`      // dict.id
 	Memo     string `json:"memo" yaml:"memo"`                               // 备注
-	Sort     int    `json:"sort" yaml:"sort"`                               // 排序
+	Sort     int32  `json:"sort" yaml:"sort"`                               // 排序
 
 }
 

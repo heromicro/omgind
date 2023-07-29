@@ -15,7 +15,7 @@ type Dict struct {
 	DictKey  string `json:"dict_key" binding:"required" yaml:"dict_key"`   // 字典键
 	IsActive *bool  `json:"is_active" binding:"required" yaml:"is_active"` // 状态
 	Memo     string `json:"memo" yaml:"memo"`                              // 备注
-	Sort     int    `json:"sort" yaml:"sort"`                              // 排序
+	Sort     int32  `json:"sort" yaml:"sort"`                              // 排序
 
 	Items DictItems `json:"items" binding:"required,gt=0" yaml:"items"` // 字典项列表
 

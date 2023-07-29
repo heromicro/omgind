@@ -15,7 +15,7 @@ func (r *Router) initDictRouterV2(urg *gin.RouterGroup, api *api_v2.Dict, pathco
 		gDemo.DELETE(":id", api.Delete)
 		gDemo.PATCH(":id/enable", api.Enable)
 		gDemo.PATCH(":id/disable", api.Disable)
-		// gDemo.GET(":id/view", api.View)
+		gDemo.GET(":id/view", api.View)
 		gDemo.GET(":id/items", api.QueryItems)
 
 	}
