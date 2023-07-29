@@ -33,7 +33,7 @@ func (sd SysDict) Fields() []ent.Field {
 		field.String("name_en").StorageKey("name_en").
 			MaxLen(128).StructTag(`json:"name_en,omitempty"`).Comment("字典名（英）"),
 
-		field.String("dict_key").StorageKey("dict_key").
+		field.String("dict_key").Immutable().StorageKey("dict_key").
 			MaxLen(64).StructTag(`json:"dict_key,omitempty"`).Comment("字典键"),
 
 		field.Enum("val_tipe").GoType(enumtipe.DictValueTipe("")).Default(enumtipe.DictValueTipeInt.String()).StorageKey("val_tipe").StructTag(`json:"tipe,omitempty"`).Comment("值类型"),

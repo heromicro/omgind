@@ -1589,7 +1589,6 @@ type UpdateSysDictInput struct {
 	IsActive       *bool
 	NameCn         *string
 	NameEn         *string
-	DictKey        *string
 	ValTipe        *enumtipe.DictValueTipe
 	AddItemIDs     []string
 	RemoveItemIDs  []string
@@ -1629,9 +1628,6 @@ func (i *UpdateSysDictInput) Mutate(m *SysDictMutation) {
 	}
 	if v := i.NameEn; v != nil {
 		m.SetNameEn(*v)
-	}
-	if v := i.DictKey; v != nil {
-		m.SetDictKey(*v)
 	}
 	if v := i.ValTipe; v != nil {
 		m.SetValTipe(*v)

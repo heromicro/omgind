@@ -574,18 +574,6 @@ func (u *SysDictUpsert) UpdateNameEn() *SysDictUpsert {
 	return u
 }
 
-// SetDictKey sets the "dict_key" field.
-func (u *SysDictUpsert) SetDictKey(v string) *SysDictUpsert {
-	u.Set(sysdict.FieldDictKey, v)
-	return u
-}
-
-// UpdateDictKey sets the "dict_key" field to the value that was provided on create.
-func (u *SysDictUpsert) UpdateDictKey() *SysDictUpsert {
-	u.SetExcluded(sysdict.FieldDictKey)
-	return u
-}
-
 // SetValTipe sets the "val_tipe" field.
 func (u *SysDictUpsert) SetValTipe(v enumtipe.DictValueTipe) *SysDictUpsert {
 	u.Set(sysdict.FieldValTipe, v)
@@ -617,6 +605,9 @@ func (u *SysDictUpsertOne) UpdateNewValues() *SysDictUpsertOne {
 		}
 		if _, exists := u.create.mutation.CreatedAt(); exists {
 			s.SetIgnore(sysdict.FieldCreatedAt)
+		}
+		if _, exists := u.create.mutation.DictKey(); exists {
+			s.SetIgnore(sysdict.FieldDictKey)
 		}
 	}))
 	return u
@@ -786,20 +777,6 @@ func (u *SysDictUpsertOne) SetNameEn(v string) *SysDictUpsertOne {
 func (u *SysDictUpsertOne) UpdateNameEn() *SysDictUpsertOne {
 	return u.Update(func(s *SysDictUpsert) {
 		s.UpdateNameEn()
-	})
-}
-
-// SetDictKey sets the "dict_key" field.
-func (u *SysDictUpsertOne) SetDictKey(v string) *SysDictUpsertOne {
-	return u.Update(func(s *SysDictUpsert) {
-		s.SetDictKey(v)
-	})
-}
-
-// UpdateDictKey sets the "dict_key" field to the value that was provided on create.
-func (u *SysDictUpsertOne) UpdateDictKey() *SysDictUpsertOne {
-	return u.Update(func(s *SysDictUpsert) {
-		s.UpdateDictKey()
 	})
 }
 
@@ -999,6 +976,9 @@ func (u *SysDictUpsertBulk) UpdateNewValues() *SysDictUpsertBulk {
 			if _, exists := b.mutation.CreatedAt(); exists {
 				s.SetIgnore(sysdict.FieldCreatedAt)
 			}
+			if _, exists := b.mutation.DictKey(); exists {
+				s.SetIgnore(sysdict.FieldDictKey)
+			}
 		}
 	}))
 	return u
@@ -1168,20 +1148,6 @@ func (u *SysDictUpsertBulk) SetNameEn(v string) *SysDictUpsertBulk {
 func (u *SysDictUpsertBulk) UpdateNameEn() *SysDictUpsertBulk {
 	return u.Update(func(s *SysDictUpsert) {
 		s.UpdateNameEn()
-	})
-}
-
-// SetDictKey sets the "dict_key" field.
-func (u *SysDictUpsertBulk) SetDictKey(v string) *SysDictUpsertBulk {
-	return u.Update(func(s *SysDictUpsert) {
-		s.SetDictKey(v)
-	})
-}
-
-// UpdateDictKey sets the "dict_key" field to the value that was provided on create.
-func (u *SysDictUpsertBulk) UpdateDictKey() *SysDictUpsertBulk {
-	return u.Update(func(s *SysDictUpsert) {
-		s.UpdateDictKey()
 	})
 }
 
