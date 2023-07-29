@@ -68,7 +68,9 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 
 		a.initOrgDeptRouterV2(v2, a.OrgDeptAPIV2, "org-depts")
 
-		a.initSysTeamRouterV2(v2, a.SysTeamAPIV2, "systeams")
+		a.initSysTeamRouterV2(v2, a.SysTeamAPIV2, "sys-teams")
+
+		a.initSysAnnexRouterV2(v2, a.SysAnnexAPIV2, "sys-annexes")
 
 	}
 

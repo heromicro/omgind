@@ -69,6 +69,18 @@ func (f SysAddressFunc) Mutate(ctx context.Context, m mainent.Mutation) (mainent
 	return nil, fmt.Errorf("unexpected mutation type %T. expect *mainent.SysAddressMutation", m)
 }
 
+// The SysAnnexFunc type is an adapter to allow the use of ordinary
+// function as SysAnnex mutator.
+type SysAnnexFunc func(context.Context, *mainent.SysAnnexMutation) (mainent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SysAnnexFunc) Mutate(ctx context.Context, m mainent.Mutation) (mainent.Value, error) {
+	if mv, ok := m.(*mainent.SysAnnexMutation); ok {
+		return f(ctx, mv)
+	}
+	return nil, fmt.Errorf("unexpected mutation type %T. expect *mainent.SysAnnexMutation", m)
+}
+
 // The SysDictFunc type is an adapter to allow the use of ordinary
 // function as SysDict mutator.
 type SysDictFunc func(context.Context, *mainent.SysDictMutation) (mainent.Value, error)

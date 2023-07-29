@@ -1398,6 +1398,128 @@ func (u *SysAddressUpdateOne) SetInput(i UpdateSysAddressInput) *SysAddressUpdat
 	return u
 }
 
+// CreateSysAnnexInput represents a mutation input for creating sysannexes.
+type CreateSysAnnexInput struct {
+	Memo      *string
+	Sort      *int32
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
+	IsActive  *bool
+	IsDel     *bool
+	Name      *string
+	FilePath  *string
+}
+
+// Mutate applies the CreateSysAnnexInput on the SysAnnexCreate builder.
+func (i *CreateSysAnnexInput) Mutate(m *SysAnnexCreate) {
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if v := i.CreatedAt; v != nil {
+		m.SetCreatedAt(*v)
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if v := i.FilePath; v != nil {
+		m.SetFilePath(*v)
+	}
+}
+
+// SetInput applies the change-set in the CreateSysAnnexInput on the create builder.
+func (c *SysAnnexCreate) SetInput(i CreateSysAnnexInput) *SysAnnexCreate {
+	i.Mutate(c)
+	return c
+}
+
+// UpdateSysAnnexInput represents a mutation input for updating sysannexes.
+type UpdateSysAnnexInput struct {
+	Memo           *string
+	ClearMemo      bool
+	Sort           *int32
+	UpdatedAt      *time.Time
+	ClearUpdatedAt bool
+	DeletedAt      *time.Time
+	ClearDeletedAt bool
+	IsActive       *bool
+	IsDel          *bool
+	Name           *string
+	ClearName      bool
+	FilePath       *string
+	ClearFilePath  bool
+}
+
+// Mutate applies the UpdateSysAnnexInput on the SysAnnexMutation.
+func (i *UpdateSysAnnexInput) Mutate(m *SysAnnexMutation) {
+	if i.ClearMemo {
+		m.ClearMemo()
+	}
+	if v := i.Memo; v != nil {
+		m.SetMemo(*v)
+	}
+	if v := i.Sort; v != nil {
+		m.SetSort(*v)
+	}
+	if i.ClearUpdatedAt {
+		m.ClearUpdatedAt()
+	}
+	if v := i.UpdatedAt; v != nil {
+		m.SetUpdatedAt(*v)
+	}
+	if i.ClearDeletedAt {
+		m.ClearDeletedAt()
+	}
+	if v := i.DeletedAt; v != nil {
+		m.SetDeletedAt(*v)
+	}
+	if v := i.IsActive; v != nil {
+		m.SetIsActive(*v)
+	}
+	if v := i.IsDel; v != nil {
+		m.SetIsDel(*v)
+	}
+	if i.ClearName {
+		m.ClearName()
+	}
+	if v := i.Name; v != nil {
+		m.SetName(*v)
+	}
+	if i.ClearFilePath {
+		m.ClearFilePath()
+	}
+	if v := i.FilePath; v != nil {
+		m.SetFilePath(*v)
+	}
+}
+
+// SetInput applies the change-set in the UpdateSysAnnexInput on the update builder.
+func (u *SysAnnexUpdate) SetInput(i UpdateSysAnnexInput) *SysAnnexUpdate {
+	i.Mutate(u.Mutation())
+	return u
+}
+
+// SetInput applies the change-set in the UpdateSysAnnexInput on the update-one builder.
+func (u *SysAnnexUpdateOne) SetInput(i UpdateSysAnnexInput) *SysAnnexUpdateOne {
+	i.Mutate(u.Mutation())
+	return u
+}
+
 // CreateSysDictInput represents a mutation input for creating sysdicts.
 type CreateSysDictInput struct {
 	IsDel     *bool

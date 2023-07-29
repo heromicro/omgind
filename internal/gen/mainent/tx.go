@@ -22,6 +22,8 @@ type Tx struct {
 	OrgStaff *OrgStaffClient
 	// SysAddress is the client for interacting with the SysAddress builders.
 	SysAddress *SysAddressClient
+	// SysAnnex is the client for interacting with the SysAnnex builders.
+	SysAnnex *SysAnnexClient
 	// SysDict is the client for interacting with the SysDict builders.
 	SysDict *SysDictClient
 	// SysDictItem is the client for interacting with the SysDictItem builders.
@@ -188,6 +190,7 @@ func (tx *Tx) init() {
 	tx.OrgPosition = NewOrgPositionClient(tx.config)
 	tx.OrgStaff = NewOrgStaffClient(tx.config)
 	tx.SysAddress = NewSysAddressClient(tx.config)
+	tx.SysAnnex = NewSysAnnexClient(tx.config)
 	tx.SysDict = NewSysDictClient(tx.config)
 	tx.SysDictItem = NewSysDictItemClient(tx.config)
 	tx.SysDistrict = NewSysDistrictClient(tx.config)

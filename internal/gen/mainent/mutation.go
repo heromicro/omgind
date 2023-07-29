@@ -17,6 +17,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/mainent/predicate"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysannex"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdistrict"
@@ -49,6 +50,7 @@ const (
 	TypeOrgPosition           = "OrgPosition"
 	TypeOrgStaff              = "OrgStaff"
 	TypeSysAddress            = "SysAddress"
+	TypeSysAnnex              = "SysAnnex"
 	TypeSysDict               = "SysDict"
 	TypeSysDictItem           = "SysDictItem"
 	TypeSysDistrict           = "SysDistrict"
@@ -9502,6 +9504,923 @@ func (m *SysAddressMutation) ResetEdge(name string) error {
 		return nil
 	}
 	return fmt.Errorf("unknown SysAddress edge %s", name)
+}
+
+// SysAnnexMutation represents an operation that mutates the SysAnnex nodes in the graph.
+type SysAnnexMutation struct {
+	config
+	op            Op
+	typ           string
+	id            *string
+	memo          *string
+	sort          *int32
+	addsort       *int32
+	created_at    *time.Time
+	updated_at    *time.Time
+	deleted_at    *time.Time
+	is_active     *bool
+	is_del        *bool
+	name          *string
+	file_path     *string
+	clearedFields map[string]struct{}
+	done          bool
+	oldValue      func(context.Context) (*SysAnnex, error)
+	predicates    []predicate.SysAnnex
+}
+
+var _ ent.Mutation = (*SysAnnexMutation)(nil)
+
+// sysannexOption allows management of the mutation configuration using functional options.
+type sysannexOption func(*SysAnnexMutation)
+
+// newSysAnnexMutation creates new mutation for the SysAnnex entity.
+func newSysAnnexMutation(c config, op Op, opts ...sysannexOption) *SysAnnexMutation {
+	m := &SysAnnexMutation{
+		config:        c,
+		op:            op,
+		typ:           TypeSysAnnex,
+		clearedFields: make(map[string]struct{}),
+	}
+	for _, opt := range opts {
+		opt(m)
+	}
+	return m
+}
+
+// withSysAnnexID sets the ID field of the mutation.
+func withSysAnnexID(id string) sysannexOption {
+	return func(m *SysAnnexMutation) {
+		var (
+			err   error
+			once  sync.Once
+			value *SysAnnex
+		)
+		m.oldValue = func(ctx context.Context) (*SysAnnex, error) {
+			once.Do(func() {
+				if m.done {
+					err = errors.New("querying old values post mutation is not allowed")
+				} else {
+					value, err = m.Client().SysAnnex.Get(ctx, id)
+				}
+			})
+			return value, err
+		}
+		m.id = &id
+	}
+}
+
+// withSysAnnex sets the old SysAnnex of the mutation.
+func withSysAnnex(node *SysAnnex) sysannexOption {
+	return func(m *SysAnnexMutation) {
+		m.oldValue = func(context.Context) (*SysAnnex, error) {
+			return node, nil
+		}
+		m.id = &node.ID
+	}
+}
+
+// Client returns a new `ent.Client` from the mutation. If the mutation was
+// executed in a transaction (ent.Tx), a transactional client is returned.
+func (m SysAnnexMutation) Client() *Client {
+	client := &Client{config: m.config}
+	client.init()
+	return client
+}
+
+// Tx returns an `ent.Tx` for mutations that were executed in transactions;
+// it returns an error otherwise.
+func (m SysAnnexMutation) Tx() (*Tx, error) {
+	if _, ok := m.driver.(*txDriver); !ok {
+		return nil, errors.New("mainent: mutation is not running in a transaction")
+	}
+	tx := &Tx{config: m.config}
+	tx.init()
+	return tx, nil
+}
+
+// SetID sets the value of the id field. Note that this
+// operation is only accepted on creation of SysAnnex entities.
+func (m *SysAnnexMutation) SetID(id string) {
+	m.id = &id
+}
+
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
+func (m *SysAnnexMutation) ID() (id string, exists bool) {
+	if m.id == nil {
+		return
+	}
+	return *m.id, true
+}
+
+// IDs queries the database and returns the entity ids that match the mutation's predicate.
+// That means, if the mutation is applied within a transaction with an isolation level such
+// as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
+// or updated by the mutation.
+func (m *SysAnnexMutation) IDs(ctx context.Context) ([]string, error) {
+	switch {
+	case m.op.Is(OpUpdateOne | OpDeleteOne):
+		id, exists := m.ID()
+		if exists {
+			return []string{id}, nil
+		}
+		fallthrough
+	case m.op.Is(OpUpdate | OpDelete):
+		return m.Client().SysAnnex.Query().Where(m.predicates...).IDs(ctx)
+	default:
+		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
+	}
+}
+
+// SetMemo sets the "memo" field.
+func (m *SysAnnexMutation) SetMemo(s string) {
+	m.memo = &s
+}
+
+// Memo returns the value of the "memo" field in the mutation.
+func (m *SysAnnexMutation) Memo() (r string, exists bool) {
+	v := m.memo
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMemo returns the old "memo" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldMemo(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMemo is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMemo requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMemo: %w", err)
+	}
+	return oldValue.Memo, nil
+}
+
+// ClearMemo clears the value of the "memo" field.
+func (m *SysAnnexMutation) ClearMemo() {
+	m.memo = nil
+	m.clearedFields[sysannex.FieldMemo] = struct{}{}
+}
+
+// MemoCleared returns if the "memo" field was cleared in this mutation.
+func (m *SysAnnexMutation) MemoCleared() bool {
+	_, ok := m.clearedFields[sysannex.FieldMemo]
+	return ok
+}
+
+// ResetMemo resets all changes to the "memo" field.
+func (m *SysAnnexMutation) ResetMemo() {
+	m.memo = nil
+	delete(m.clearedFields, sysannex.FieldMemo)
+}
+
+// SetSort sets the "sort" field.
+func (m *SysAnnexMutation) SetSort(i int32) {
+	m.sort = &i
+	m.addsort = nil
+}
+
+// Sort returns the value of the "sort" field in the mutation.
+func (m *SysAnnexMutation) Sort() (r int32, exists bool) {
+	v := m.sort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSort returns the old "sort" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldSort(ctx context.Context) (v int32, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSort is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSort requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSort: %w", err)
+	}
+	return oldValue.Sort, nil
+}
+
+// AddSort adds i to the "sort" field.
+func (m *SysAnnexMutation) AddSort(i int32) {
+	if m.addsort != nil {
+		*m.addsort += i
+	} else {
+		m.addsort = &i
+	}
+}
+
+// AddedSort returns the value that was added to the "sort" field in this mutation.
+func (m *SysAnnexMutation) AddedSort() (r int32, exists bool) {
+	v := m.addsort
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetSort resets all changes to the "sort" field.
+func (m *SysAnnexMutation) ResetSort() {
+	m.sort = nil
+	m.addsort = nil
+}
+
+// SetCreatedAt sets the "created_at" field.
+func (m *SysAnnexMutation) SetCreatedAt(t time.Time) {
+	m.created_at = &t
+}
+
+// CreatedAt returns the value of the "created_at" field in the mutation.
+func (m *SysAnnexMutation) CreatedAt() (r time.Time, exists bool) {
+	v := m.created_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreatedAt returns the old "created_at" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldCreatedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldCreatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldCreatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreatedAt: %w", err)
+	}
+	return oldValue.CreatedAt, nil
+}
+
+// ClearCreatedAt clears the value of the "created_at" field.
+func (m *SysAnnexMutation) ClearCreatedAt() {
+	m.created_at = nil
+	m.clearedFields[sysannex.FieldCreatedAt] = struct{}{}
+}
+
+// CreatedAtCleared returns if the "created_at" field was cleared in this mutation.
+func (m *SysAnnexMutation) CreatedAtCleared() bool {
+	_, ok := m.clearedFields[sysannex.FieldCreatedAt]
+	return ok
+}
+
+// ResetCreatedAt resets all changes to the "created_at" field.
+func (m *SysAnnexMutation) ResetCreatedAt() {
+	m.created_at = nil
+	delete(m.clearedFields, sysannex.FieldCreatedAt)
+}
+
+// SetUpdatedAt sets the "updated_at" field.
+func (m *SysAnnexMutation) SetUpdatedAt(t time.Time) {
+	m.updated_at = &t
+}
+
+// UpdatedAt returns the value of the "updated_at" field in the mutation.
+func (m *SysAnnexMutation) UpdatedAt() (r time.Time, exists bool) {
+	v := m.updated_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdatedAt returns the old "updated_at" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldUpdatedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUpdatedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUpdatedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdatedAt: %w", err)
+	}
+	return oldValue.UpdatedAt, nil
+}
+
+// ClearUpdatedAt clears the value of the "updated_at" field.
+func (m *SysAnnexMutation) ClearUpdatedAt() {
+	m.updated_at = nil
+	m.clearedFields[sysannex.FieldUpdatedAt] = struct{}{}
+}
+
+// UpdatedAtCleared returns if the "updated_at" field was cleared in this mutation.
+func (m *SysAnnexMutation) UpdatedAtCleared() bool {
+	_, ok := m.clearedFields[sysannex.FieldUpdatedAt]
+	return ok
+}
+
+// ResetUpdatedAt resets all changes to the "updated_at" field.
+func (m *SysAnnexMutation) ResetUpdatedAt() {
+	m.updated_at = nil
+	delete(m.clearedFields, sysannex.FieldUpdatedAt)
+}
+
+// SetDeletedAt sets the "deleted_at" field.
+func (m *SysAnnexMutation) SetDeletedAt(t time.Time) {
+	m.deleted_at = &t
+}
+
+// DeletedAt returns the value of the "deleted_at" field in the mutation.
+func (m *SysAnnexMutation) DeletedAt() (r time.Time, exists bool) {
+	v := m.deleted_at
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDeletedAt returns the old "deleted_at" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldDeletedAt(ctx context.Context) (v *time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldDeletedAt is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldDeletedAt requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDeletedAt: %w", err)
+	}
+	return oldValue.DeletedAt, nil
+}
+
+// ClearDeletedAt clears the value of the "deleted_at" field.
+func (m *SysAnnexMutation) ClearDeletedAt() {
+	m.deleted_at = nil
+	m.clearedFields[sysannex.FieldDeletedAt] = struct{}{}
+}
+
+// DeletedAtCleared returns if the "deleted_at" field was cleared in this mutation.
+func (m *SysAnnexMutation) DeletedAtCleared() bool {
+	_, ok := m.clearedFields[sysannex.FieldDeletedAt]
+	return ok
+}
+
+// ResetDeletedAt resets all changes to the "deleted_at" field.
+func (m *SysAnnexMutation) ResetDeletedAt() {
+	m.deleted_at = nil
+	delete(m.clearedFields, sysannex.FieldDeletedAt)
+}
+
+// SetIsActive sets the "is_active" field.
+func (m *SysAnnexMutation) SetIsActive(b bool) {
+	m.is_active = &b
+}
+
+// IsActive returns the value of the "is_active" field in the mutation.
+func (m *SysAnnexMutation) IsActive() (r bool, exists bool) {
+	v := m.is_active
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsActive returns the old "is_active" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldIsActive(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsActive is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsActive requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsActive: %w", err)
+	}
+	return oldValue.IsActive, nil
+}
+
+// ResetIsActive resets all changes to the "is_active" field.
+func (m *SysAnnexMutation) ResetIsActive() {
+	m.is_active = nil
+}
+
+// SetIsDel sets the "is_del" field.
+func (m *SysAnnexMutation) SetIsDel(b bool) {
+	m.is_del = &b
+}
+
+// IsDel returns the value of the "is_del" field in the mutation.
+func (m *SysAnnexMutation) IsDel() (r bool, exists bool) {
+	v := m.is_del
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldIsDel returns the old "is_del" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldIsDel(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldIsDel is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldIsDel requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldIsDel: %w", err)
+	}
+	return oldValue.IsDel, nil
+}
+
+// ResetIsDel resets all changes to the "is_del" field.
+func (m *SysAnnexMutation) ResetIsDel() {
+	m.is_del = nil
+}
+
+// SetName sets the "name" field.
+func (m *SysAnnexMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *SysAnnexMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldName(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ClearName clears the value of the "name" field.
+func (m *SysAnnexMutation) ClearName() {
+	m.name = nil
+	m.clearedFields[sysannex.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *SysAnnexMutation) NameCleared() bool {
+	_, ok := m.clearedFields[sysannex.FieldName]
+	return ok
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *SysAnnexMutation) ResetName() {
+	m.name = nil
+	delete(m.clearedFields, sysannex.FieldName)
+}
+
+// SetFilePath sets the "file_path" field.
+func (m *SysAnnexMutation) SetFilePath(s string) {
+	m.file_path = &s
+}
+
+// FilePath returns the value of the "file_path" field in the mutation.
+func (m *SysAnnexMutation) FilePath() (r string, exists bool) {
+	v := m.file_path
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldFilePath returns the old "file_path" field's value of the SysAnnex entity.
+// If the SysAnnex object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysAnnexMutation) OldFilePath(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldFilePath is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldFilePath requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldFilePath: %w", err)
+	}
+	return oldValue.FilePath, nil
+}
+
+// ClearFilePath clears the value of the "file_path" field.
+func (m *SysAnnexMutation) ClearFilePath() {
+	m.file_path = nil
+	m.clearedFields[sysannex.FieldFilePath] = struct{}{}
+}
+
+// FilePathCleared returns if the "file_path" field was cleared in this mutation.
+func (m *SysAnnexMutation) FilePathCleared() bool {
+	_, ok := m.clearedFields[sysannex.FieldFilePath]
+	return ok
+}
+
+// ResetFilePath resets all changes to the "file_path" field.
+func (m *SysAnnexMutation) ResetFilePath() {
+	m.file_path = nil
+	delete(m.clearedFields, sysannex.FieldFilePath)
+}
+
+// Where appends a list predicates to the SysAnnexMutation builder.
+func (m *SysAnnexMutation) Where(ps ...predicate.SysAnnex) {
+	m.predicates = append(m.predicates, ps...)
+}
+
+// WhereP appends storage-level predicates to the SysAnnexMutation builder. Using this method,
+// users can use type-assertion to append predicates that do not depend on any generated package.
+func (m *SysAnnexMutation) WhereP(ps ...func(*sql.Selector)) {
+	p := make([]predicate.SysAnnex, len(ps))
+	for i := range ps {
+		p[i] = ps[i]
+	}
+	m.Where(p...)
+}
+
+// Op returns the operation name.
+func (m *SysAnnexMutation) Op() Op {
+	return m.op
+}
+
+// SetOp allows setting the mutation operation.
+func (m *SysAnnexMutation) SetOp(op Op) {
+	m.op = op
+}
+
+// Type returns the node type of this mutation (SysAnnex).
+func (m *SysAnnexMutation) Type() string {
+	return m.typ
+}
+
+// Fields returns all fields that were changed during this mutation. Note that in
+// order to get all numeric fields that were incremented/decremented, call
+// AddedFields().
+func (m *SysAnnexMutation) Fields() []string {
+	fields := make([]string, 0, 9)
+	if m.memo != nil {
+		fields = append(fields, sysannex.FieldMemo)
+	}
+	if m.sort != nil {
+		fields = append(fields, sysannex.FieldSort)
+	}
+	if m.created_at != nil {
+		fields = append(fields, sysannex.FieldCreatedAt)
+	}
+	if m.updated_at != nil {
+		fields = append(fields, sysannex.FieldUpdatedAt)
+	}
+	if m.deleted_at != nil {
+		fields = append(fields, sysannex.FieldDeletedAt)
+	}
+	if m.is_active != nil {
+		fields = append(fields, sysannex.FieldIsActive)
+	}
+	if m.is_del != nil {
+		fields = append(fields, sysannex.FieldIsDel)
+	}
+	if m.name != nil {
+		fields = append(fields, sysannex.FieldName)
+	}
+	if m.file_path != nil {
+		fields = append(fields, sysannex.FieldFilePath)
+	}
+	return fields
+}
+
+// Field returns the value of a field with the given name. The second boolean
+// return value indicates that this field was not set, or was not defined in the
+// schema.
+func (m *SysAnnexMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case sysannex.FieldMemo:
+		return m.Memo()
+	case sysannex.FieldSort:
+		return m.Sort()
+	case sysannex.FieldCreatedAt:
+		return m.CreatedAt()
+	case sysannex.FieldUpdatedAt:
+		return m.UpdatedAt()
+	case sysannex.FieldDeletedAt:
+		return m.DeletedAt()
+	case sysannex.FieldIsActive:
+		return m.IsActive()
+	case sysannex.FieldIsDel:
+		return m.IsDel()
+	case sysannex.FieldName:
+		return m.Name()
+	case sysannex.FieldFilePath:
+		return m.FilePath()
+	}
+	return nil, false
+}
+
+// OldField returns the old value of the field from the database. An error is
+// returned if the mutation operation is not UpdateOne, or the query to the
+// database failed.
+func (m *SysAnnexMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case sysannex.FieldMemo:
+		return m.OldMemo(ctx)
+	case sysannex.FieldSort:
+		return m.OldSort(ctx)
+	case sysannex.FieldCreatedAt:
+		return m.OldCreatedAt(ctx)
+	case sysannex.FieldUpdatedAt:
+		return m.OldUpdatedAt(ctx)
+	case sysannex.FieldDeletedAt:
+		return m.OldDeletedAt(ctx)
+	case sysannex.FieldIsActive:
+		return m.OldIsActive(ctx)
+	case sysannex.FieldIsDel:
+		return m.OldIsDel(ctx)
+	case sysannex.FieldName:
+		return m.OldName(ctx)
+	case sysannex.FieldFilePath:
+		return m.OldFilePath(ctx)
+	}
+	return nil, fmt.Errorf("unknown SysAnnex field %s", name)
+}
+
+// SetField sets the value of a field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *SysAnnexMutation) SetField(name string, value ent.Value) error {
+	switch name {
+	case sysannex.FieldMemo:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMemo(v)
+		return nil
+	case sysannex.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSort(v)
+		return nil
+	case sysannex.FieldCreatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreatedAt(v)
+		return nil
+	case sysannex.FieldUpdatedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdatedAt(v)
+		return nil
+	case sysannex.FieldDeletedAt:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDeletedAt(v)
+		return nil
+	case sysannex.FieldIsActive:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsActive(v)
+		return nil
+	case sysannex.FieldIsDel:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetIsDel(v)
+		return nil
+	case sysannex.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
+	case sysannex.FieldFilePath:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetFilePath(v)
+		return nil
+	}
+	return fmt.Errorf("unknown SysAnnex field %s", name)
+}
+
+// AddedFields returns all numeric fields that were incremented/decremented during
+// this mutation.
+func (m *SysAnnexMutation) AddedFields() []string {
+	var fields []string
+	if m.addsort != nil {
+		fields = append(fields, sysannex.FieldSort)
+	}
+	return fields
+}
+
+// AddedField returns the numeric value that was incremented/decremented on a field
+// with the given name. The second boolean return value indicates that this field
+// was not set, or was not defined in the schema.
+func (m *SysAnnexMutation) AddedField(name string) (ent.Value, bool) {
+	switch name {
+	case sysannex.FieldSort:
+		return m.AddedSort()
+	}
+	return nil, false
+}
+
+// AddField adds the value to the field with the given name. It returns an error if
+// the field is not defined in the schema, or if the type mismatched the field
+// type.
+func (m *SysAnnexMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	case sysannex.FieldSort:
+		v, ok := value.(int32)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddSort(v)
+		return nil
+	}
+	return fmt.Errorf("unknown SysAnnex numeric field %s", name)
+}
+
+// ClearedFields returns all nullable fields that were cleared during this
+// mutation.
+func (m *SysAnnexMutation) ClearedFields() []string {
+	var fields []string
+	if m.FieldCleared(sysannex.FieldMemo) {
+		fields = append(fields, sysannex.FieldMemo)
+	}
+	if m.FieldCleared(sysannex.FieldCreatedAt) {
+		fields = append(fields, sysannex.FieldCreatedAt)
+	}
+	if m.FieldCleared(sysannex.FieldUpdatedAt) {
+		fields = append(fields, sysannex.FieldUpdatedAt)
+	}
+	if m.FieldCleared(sysannex.FieldDeletedAt) {
+		fields = append(fields, sysannex.FieldDeletedAt)
+	}
+	if m.FieldCleared(sysannex.FieldName) {
+		fields = append(fields, sysannex.FieldName)
+	}
+	if m.FieldCleared(sysannex.FieldFilePath) {
+		fields = append(fields, sysannex.FieldFilePath)
+	}
+	return fields
+}
+
+// FieldCleared returns a boolean indicating if a field with the given name was
+// cleared in this mutation.
+func (m *SysAnnexMutation) FieldCleared(name string) bool {
+	_, ok := m.clearedFields[name]
+	return ok
+}
+
+// ClearField clears the value of the field with the given name. It returns an
+// error if the field is not defined in the schema.
+func (m *SysAnnexMutation) ClearField(name string) error {
+	switch name {
+	case sysannex.FieldMemo:
+		m.ClearMemo()
+		return nil
+	case sysannex.FieldCreatedAt:
+		m.ClearCreatedAt()
+		return nil
+	case sysannex.FieldUpdatedAt:
+		m.ClearUpdatedAt()
+		return nil
+	case sysannex.FieldDeletedAt:
+		m.ClearDeletedAt()
+		return nil
+	case sysannex.FieldName:
+		m.ClearName()
+		return nil
+	case sysannex.FieldFilePath:
+		m.ClearFilePath()
+		return nil
+	}
+	return fmt.Errorf("unknown SysAnnex nullable field %s", name)
+}
+
+// ResetField resets all changes in the mutation for the field with the given name.
+// It returns an error if the field is not defined in the schema.
+func (m *SysAnnexMutation) ResetField(name string) error {
+	switch name {
+	case sysannex.FieldMemo:
+		m.ResetMemo()
+		return nil
+	case sysannex.FieldSort:
+		m.ResetSort()
+		return nil
+	case sysannex.FieldCreatedAt:
+		m.ResetCreatedAt()
+		return nil
+	case sysannex.FieldUpdatedAt:
+		m.ResetUpdatedAt()
+		return nil
+	case sysannex.FieldDeletedAt:
+		m.ResetDeletedAt()
+		return nil
+	case sysannex.FieldIsActive:
+		m.ResetIsActive()
+		return nil
+	case sysannex.FieldIsDel:
+		m.ResetIsDel()
+		return nil
+	case sysannex.FieldName:
+		m.ResetName()
+		return nil
+	case sysannex.FieldFilePath:
+		m.ResetFilePath()
+		return nil
+	}
+	return fmt.Errorf("unknown SysAnnex field %s", name)
+}
+
+// AddedEdges returns all edge names that were set/added in this mutation.
+func (m *SysAnnexMutation) AddedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// AddedIDs returns all IDs (to other nodes) that were added for the given edge
+// name in this mutation.
+func (m *SysAnnexMutation) AddedIDs(name string) []ent.Value {
+	return nil
+}
+
+// RemovedEdges returns all edge names that were removed in this mutation.
+func (m *SysAnnexMutation) RemovedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// RemovedIDs returns all IDs (to other nodes) that were removed for the edge with
+// the given name in this mutation.
+func (m *SysAnnexMutation) RemovedIDs(name string) []ent.Value {
+	return nil
+}
+
+// ClearedEdges returns all edge names that were cleared in this mutation.
+func (m *SysAnnexMutation) ClearedEdges() []string {
+	edges := make([]string, 0, 0)
+	return edges
+}
+
+// EdgeCleared returns a boolean which indicates if the edge with the given name
+// was cleared in this mutation.
+func (m *SysAnnexMutation) EdgeCleared(name string) bool {
+	return false
+}
+
+// ClearEdge clears the value of the edge with the given name. It returns an error
+// if that edge is not defined in the schema.
+func (m *SysAnnexMutation) ClearEdge(name string) error {
+	return fmt.Errorf("unknown SysAnnex unique edge %s", name)
+}
+
+// ResetEdge resets all changes to the edge with the given name in this mutation.
+// It returns an error if the edge is not defined in the schema.
+func (m *SysAnnexMutation) ResetEdge(name string) error {
+	return fmt.Errorf("unknown SysAnnex edge %s", name)
 }
 
 // SysDictMutation represents an operation that mutates the SysDict nodes in the graph.

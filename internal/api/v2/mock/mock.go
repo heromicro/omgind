@@ -19,4 +19,5 @@ var MockSet = wire.NewSet(
 	OrgPositionSet,
 	OrgDeptSet,
 	SysTeamSet,
+	SysAnnexSet,
 )

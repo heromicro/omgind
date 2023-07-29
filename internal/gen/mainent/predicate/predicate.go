@@ -21,6 +21,9 @@ type OrgStaff func(*sql.Selector)
 // SysAddress is the predicate function for sysaddress builders.
 type SysAddress func(*sql.Selector)
 
+// SysAnnex is the predicate function for sysannex builders.
+type SysAnnex func(*sql.Selector)
+
 // SysDict is the predicate function for sysdict builders.
 type SysDict func(*sql.Selector)
 

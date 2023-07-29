@@ -17,6 +17,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/mainent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysannex"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdistrict"
@@ -97,6 +98,7 @@ func checkColumn(table, column string) error {
 			orgposition.Table:           orgposition.ValidColumn,
 			orgstaff.Table:              orgstaff.ValidColumn,
 			sysaddress.Table:            sysaddress.ValidColumn,
+			sysannex.Table:              sysannex.ValidColumn,
 			sysdict.Table:               sysdict.ValidColumn,
 			sysdictitem.Table:           sysdictitem.ValidColumn,
 			sysdistrict.Table:           sysdistrict.ValidColumn,

@@ -408,6 +408,57 @@ var (
 			},
 		},
 	}
+	// SysAnnexesColumns holds the columns for the "sys_annexes" table.
+	SysAnnexesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeString, Size: 36},
+		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
+		{Name: "sort", Type: field.TypeInt32, Default: 9999},
+		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "is_active", Type: field.TypeBool, Default: true},
+		{Name: "is_del", Type: field.TypeBool, Default: false},
+		{Name: "name", Type: field.TypeString, Nullable: true, Size: 128},
+		{Name: "file_path", Type: field.TypeString, Nullable: true},
+	}
+	// SysAnnexesTable holds the schema information for the "sys_annexes" table.
+	SysAnnexesTable = &schema.Table{
+		Name:       "sys_annexes",
+		Columns:    SysAnnexesColumns,
+		PrimaryKey: []*schema.Column{SysAnnexesColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "sysannex_id",
+				Unique:  true,
+				Columns: []*schema.Column{SysAnnexesColumns[0]},
+			},
+			{
+				Name:    "sysannex_sort",
+				Unique:  false,
+				Columns: []*schema.Column{SysAnnexesColumns[2]},
+			},
+			{
+				Name:    "sysannex_crtd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysAnnexesColumns[3]},
+			},
+			{
+				Name:    "sysannex_dltd_at",
+				Unique:  false,
+				Columns: []*schema.Column{SysAnnexesColumns[5]},
+			},
+			{
+				Name:    "sysannex_is_active",
+				Unique:  false,
+				Columns: []*schema.Column{SysAnnexesColumns[6]},
+			},
+			{
+				Name:    "sysannex_is_del",
+				Unique:  false,
+				Columns: []*schema.Column{SysAnnexesColumns[7]},
+			},
+		},
+	}
 	// SysDictsColumns holds the columns for the "sys_dicts" table.
 	SysDictsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeString, Size: 36},
@@ -1305,6 +1356,7 @@ var (
 		OrgPositionsTable,
 		OrgStaffsTable,
 		SysAddressesTable,
+		SysAnnexesTable,
 		SysDictsTable,
 		SysDictItemsTable,
 		SysDistrictsTable,

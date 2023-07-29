@@ -39,6 +39,13 @@ func (sa *SysAddress) GoString() string {
 	return sa.String()
 }
 
+func (sa *SysAnnex) GoString() string {
+	if sa == nil {
+		return fmt.Sprintf("SysAnnex(nil)")
+	}
+	return sa.String()
+}
+
 func (sd *SysDict) GoString() string {
 	if sd == nil {
 		return fmt.Sprintf("SysDict(nil)")

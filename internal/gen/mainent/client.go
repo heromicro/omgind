@@ -19,6 +19,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/mainent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysannex"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdistrict"
@@ -51,6 +52,8 @@ type Client struct {
 	OrgStaff *OrgStaffClient
 	// SysAddress is the client for interacting with the SysAddress builders.
 	SysAddress *SysAddressClient
+	// SysAnnex is the client for interacting with the SysAnnex builders.
+	SysAnnex *SysAnnexClient
 	// SysDict is the client for interacting with the SysDict builders.
 	SysDict *SysDictClient
 	// SysDictItem is the client for interacting with the SysDictItem builders.
@@ -99,6 +102,7 @@ func (c *Client) init() {
 	c.OrgPosition = NewOrgPositionClient(c.config)
 	c.OrgStaff = NewOrgStaffClient(c.config)
 	c.SysAddress = NewSysAddressClient(c.config)
+	c.SysAnnex = NewSysAnnexClient(c.config)
 	c.SysDict = NewSysDictClient(c.config)
 	c.SysDictItem = NewSysDictItemClient(c.config)
 	c.SysDistrict = NewSysDistrictClient(c.config)
@@ -201,6 +205,7 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		OrgPosition:           NewOrgPositionClient(cfg),
 		OrgStaff:              NewOrgStaffClient(cfg),
 		SysAddress:            NewSysAddressClient(cfg),
+		SysAnnex:              NewSysAnnexClient(cfg),
 		SysDict:               NewSysDictClient(cfg),
 		SysDictItem:           NewSysDictItemClient(cfg),
 		SysDistrict:           NewSysDistrictClient(cfg),
@@ -240,6 +245,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		OrgPosition:           NewOrgPositionClient(cfg),
 		OrgStaff:              NewOrgStaffClient(cfg),
 		SysAddress:            NewSysAddressClient(cfg),
+		SysAnnex:              NewSysAnnexClient(cfg),
 		SysDict:               NewSysDictClient(cfg),
 		SysDictItem:           NewSysDictItemClient(cfg),
 		SysDistrict:           NewSysDistrictClient(cfg),
@@ -284,10 +290,10 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	for _, n := range []interface{ Use(...Hook) }{
-		c.OrgDept, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict,
-		c.SysDictItem, c.SysDistrict, c.SysJwtBlock, c.SysLogging, c.SysMenu,
-		c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysTeam,
-		c.SysTeamUser, c.SysUser, c.SysUserRole, c.XxxDemo,
+		c.OrgDept, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysAnnex,
+		c.SysDict, c.SysDictItem, c.SysDistrict, c.SysJwtBlock, c.SysLogging,
+		c.SysMenu, c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu,
+		c.SysTeam, c.SysTeamUser, c.SysUser, c.SysUserRole, c.XxxDemo,
 	} {
 		n.Use(hooks...)
 	}
@@ -297,10 +303,10 @@ func (c *Client) Use(hooks ...Hook) {
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
 	for _, n := range []interface{ Intercept(...Interceptor) }{
-		c.OrgDept, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysDict,
-		c.SysDictItem, c.SysDistrict, c.SysJwtBlock, c.SysLogging, c.SysMenu,
-		c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu, c.SysTeam,
-		c.SysTeamUser, c.SysUser, c.SysUserRole, c.XxxDemo,
+		c.OrgDept, c.OrgOrgan, c.OrgPosition, c.OrgStaff, c.SysAddress, c.SysAnnex,
+		c.SysDict, c.SysDictItem, c.SysDistrict, c.SysJwtBlock, c.SysLogging,
+		c.SysMenu, c.SysMenuAction, c.SysMenuActionResource, c.SysRole, c.SysRoleMenu,
+		c.SysTeam, c.SysTeamUser, c.SysUser, c.SysUserRole, c.XxxDemo,
 	} {
 		n.Intercept(interceptors...)
 	}
@@ -319,6 +325,8 @@ func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 		return c.OrgStaff.mutate(ctx, m)
 	case *SysAddressMutation:
 		return c.SysAddress.mutate(ctx, m)
+	case *SysAnnexMutation:
+		return c.SysAnnex.mutate(ctx, m)
 	case *SysDictMutation:
 		return c.SysDict.mutate(ctx, m)
 	case *SysDictItemMutation:
@@ -1229,6 +1237,124 @@ func (c *SysAddressClient) mutate(ctx context.Context, m *SysAddressMutation) (V
 		return (&SysAddressDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
 		return nil, fmt.Errorf("mainent: unknown SysAddress mutation op: %q", m.Op())
+	}
+}
+
+// SysAnnexClient is a client for the SysAnnex schema.
+type SysAnnexClient struct {
+	config
+}
+
+// NewSysAnnexClient returns a client for the SysAnnex from the given config.
+func NewSysAnnexClient(c config) *SysAnnexClient {
+	return &SysAnnexClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `sysannex.Hooks(f(g(h())))`.
+func (c *SysAnnexClient) Use(hooks ...Hook) {
+	c.hooks.SysAnnex = append(c.hooks.SysAnnex, hooks...)
+}
+
+// Intercept adds a list of query interceptors to the interceptors stack.
+// A call to `Intercept(f, g, h)` equals to `sysannex.Intercept(f(g(h())))`.
+func (c *SysAnnexClient) Intercept(interceptors ...Interceptor) {
+	c.inters.SysAnnex = append(c.inters.SysAnnex, interceptors...)
+}
+
+// Create returns a builder for creating a SysAnnex entity.
+func (c *SysAnnexClient) Create() *SysAnnexCreate {
+	mutation := newSysAnnexMutation(c.config, OpCreate)
+	return &SysAnnexCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of SysAnnex entities.
+func (c *SysAnnexClient) CreateBulk(builders ...*SysAnnexCreate) *SysAnnexCreateBulk {
+	return &SysAnnexCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for SysAnnex.
+func (c *SysAnnexClient) Update() *SysAnnexUpdate {
+	mutation := newSysAnnexMutation(c.config, OpUpdate)
+	return &SysAnnexUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SysAnnexClient) UpdateOne(sa *SysAnnex) *SysAnnexUpdateOne {
+	mutation := newSysAnnexMutation(c.config, OpUpdateOne, withSysAnnex(sa))
+	return &SysAnnexUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SysAnnexClient) UpdateOneID(id string) *SysAnnexUpdateOne {
+	mutation := newSysAnnexMutation(c.config, OpUpdateOne, withSysAnnexID(id))
+	return &SysAnnexUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for SysAnnex.
+func (c *SysAnnexClient) Delete() *SysAnnexDelete {
+	mutation := newSysAnnexMutation(c.config, OpDelete)
+	return &SysAnnexDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a builder for deleting the given entity.
+func (c *SysAnnexClient) DeleteOne(sa *SysAnnex) *SysAnnexDeleteOne {
+	return c.DeleteOneID(sa.ID)
+}
+
+// DeleteOneID returns a builder for deleting the given entity by its id.
+func (c *SysAnnexClient) DeleteOneID(id string) *SysAnnexDeleteOne {
+	builder := c.Delete().Where(sysannex.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SysAnnexDeleteOne{builder}
+}
+
+// Query returns a query builder for SysAnnex.
+func (c *SysAnnexClient) Query() *SysAnnexQuery {
+	return &SysAnnexQuery{
+		config: c.config,
+		ctx:    &QueryContext{Type: TypeSysAnnex},
+		inters: c.Interceptors(),
+	}
+}
+
+// Get returns a SysAnnex entity by its id.
+func (c *SysAnnexClient) Get(ctx context.Context, id string) (*SysAnnex, error) {
+	return c.Query().Where(sysannex.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SysAnnexClient) GetX(ctx context.Context, id string) *SysAnnex {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *SysAnnexClient) Hooks() []Hook {
+	return c.hooks.SysAnnex
+}
+
+// Interceptors returns the client interceptors.
+func (c *SysAnnexClient) Interceptors() []Interceptor {
+	return c.inters.SysAnnex
+}
+
+func (c *SysAnnexClient) mutate(ctx context.Context, m *SysAnnexMutation) (Value, error) {
+	switch m.Op() {
+	case OpCreate:
+		return (&SysAnnexCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdate:
+		return (&SysAnnexUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpUpdateOne:
+		return (&SysAnnexUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+	case OpDelete, OpDeleteOne:
+		return (&SysAnnexDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+	default:
+		return nil, fmt.Errorf("mainent: unknown SysAnnex mutation op: %q", m.Op())
 	}
 }
 
@@ -3197,14 +3323,14 @@ func (c *XxxDemoClient) mutate(ctx context.Context, m *XxxDemoMutation) (Value, 
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		OrgDept, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict, SysDictItem,
-		SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
+		OrgDept, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysAnnex, SysDict,
+		SysDictItem, SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
 		SysMenuActionResource, SysRole, SysRoleMenu, SysTeam, SysTeamUser, SysUser,
 		SysUserRole, XxxDemo []ent.Hook
 	}
 	inters struct {
-		OrgDept, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysDict, SysDictItem,
-		SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
+		OrgDept, OrgOrgan, OrgPosition, OrgStaff, SysAddress, SysAnnex, SysDict,
+		SysDictItem, SysDistrict, SysJwtBlock, SysLogging, SysMenu, SysMenuAction,
 		SysMenuActionResource, SysRole, SysRoleMenu, SysTeam, SysTeamUser, SysUser,
 		SysUserRole, XxxDemo []ent.Interceptor
 	}

@@ -10,6 +10,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent/orgposition"
 	"github.com/heromicro/omgind/internal/gen/mainent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysannex"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdistrict"
@@ -512,6 +513,87 @@ func init() {
 	// sysaddress.IDValidator is a validator for the "id" field. It is called by the builders before save.
 	sysaddress.IDValidator = func() func(string) error {
 		validators := sysaddressDescID.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(id string) error {
+			for _, fn := range fns {
+				if err := fn(id); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	sysannexMixin := entity.SysAnnex{}.Mixin()
+	sysannexMixinFields0 := sysannexMixin[0].Fields()
+	_ = sysannexMixinFields0
+	sysannexMixinFields1 := sysannexMixin[1].Fields()
+	_ = sysannexMixinFields1
+	sysannexMixinFields2 := sysannexMixin[2].Fields()
+	_ = sysannexMixinFields2
+	sysannexMixinFields3 := sysannexMixin[3].Fields()
+	_ = sysannexMixinFields3
+	sysannexMixinFields4 := sysannexMixin[4].Fields()
+	_ = sysannexMixinFields4
+	sysannexMixinFields5 := sysannexMixin[5].Fields()
+	_ = sysannexMixinFields5
+	sysannexFields := entity.SysAnnex{}.Fields()
+	_ = sysannexFields
+	// sysannexDescMemo is the schema descriptor for memo field.
+	sysannexDescMemo := sysannexMixinFields1[0].Descriptor()
+	// sysannex.DefaultMemo holds the default value on creation for the memo field.
+	sysannex.DefaultMemo = sysannexDescMemo.Default.(string)
+	// sysannex.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
+	sysannex.MemoValidator = sysannexDescMemo.Validators[0].(func(string) error)
+	// sysannexDescSort is the schema descriptor for sort field.
+	sysannexDescSort := sysannexMixinFields2[0].Descriptor()
+	// sysannex.DefaultSort holds the default value on creation for the sort field.
+	sysannex.DefaultSort = sysannexDescSort.Default.(int32)
+	// sysannexDescCreatedAt is the schema descriptor for created_at field.
+	sysannexDescCreatedAt := sysannexMixinFields3[0].Descriptor()
+	// sysannex.DefaultCreatedAt holds the default value on creation for the created_at field.
+	sysannex.DefaultCreatedAt = sysannexDescCreatedAt.Default.(func() time.Time)
+	// sysannexDescUpdatedAt is the schema descriptor for updated_at field.
+	sysannexDescUpdatedAt := sysannexMixinFields3[1].Descriptor()
+	// sysannex.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	sysannex.DefaultUpdatedAt = sysannexDescUpdatedAt.Default.(func() time.Time)
+	// sysannex.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	sysannex.UpdateDefaultUpdatedAt = sysannexDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// sysannexDescIsActive is the schema descriptor for is_active field.
+	sysannexDescIsActive := sysannexMixinFields4[0].Descriptor()
+	// sysannex.DefaultIsActive holds the default value on creation for the is_active field.
+	sysannex.DefaultIsActive = sysannexDescIsActive.Default.(bool)
+	// sysannexDescIsDel is the schema descriptor for is_del field.
+	sysannexDescIsDel := sysannexMixinFields5[0].Descriptor()
+	// sysannex.DefaultIsDel holds the default value on creation for the is_del field.
+	sysannex.DefaultIsDel = sysannexDescIsDel.Default.(bool)
+	// sysannexDescName is the schema descriptor for name field.
+	sysannexDescName := sysannexFields[0].Descriptor()
+	// sysannex.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	sysannex.NameValidator = func() func(string) error {
+		validators := sysannexDescName.Validators
+		fns := [...]func(string) error{
+			validators[0].(func(string) error),
+			validators[1].(func(string) error),
+		}
+		return func(name string) error {
+			for _, fn := range fns {
+				if err := fn(name); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+	}()
+	// sysannexDescID is the schema descriptor for id field.
+	sysannexDescID := sysannexMixinFields0[0].Descriptor()
+	// sysannex.DefaultID holds the default value on creation for the id field.
+	sysannex.DefaultID = sysannexDescID.Default.(func() string)
+	// sysannex.IDValidator is a validator for the "id" field. It is called by the builders before save.
+	sysannex.IDValidator = func() func(string) error {
+		validators := sysannexDescID.Validators
 		fns := [...]func(string) error{
 			validators[0].(func(string) error),
 			validators[1].(func(string) error),

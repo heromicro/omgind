@@ -14,6 +14,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent/orgstaff"
 	"github.com/heromicro/omgind/internal/gen/mainent/predicate"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysaddress"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysannex"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdistrict"
@@ -220,6 +221,33 @@ func (f TraverseSysAddress) Traverse(ctx context.Context, q mainent.Query) error
 		return f(ctx, q)
 	}
 	return fmt.Errorf("unexpected query type %T. expect *mainent.SysAddressQuery", q)
+}
+
+// The SysAnnexFunc type is an adapter to allow the use of ordinary function as a Querier.
+type SysAnnexFunc func(context.Context, *mainent.SysAnnexQuery) (mainent.Value, error)
+
+// Query calls f(ctx, q).
+func (f SysAnnexFunc) Query(ctx context.Context, q mainent.Query) (mainent.Value, error) {
+	if q, ok := q.(*mainent.SysAnnexQuery); ok {
+		return f(ctx, q)
+	}
+	return nil, fmt.Errorf("unexpected query type %T. expect *mainent.SysAnnexQuery", q)
+}
+
+// The TraverseSysAnnex type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseSysAnnex func(context.Context, *mainent.SysAnnexQuery) error
+
+// Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
+func (f TraverseSysAnnex) Intercept(next mainent.Querier) mainent.Querier {
+	return next
+}
+
+// Traverse calls f(ctx, q).
+func (f TraverseSysAnnex) Traverse(ctx context.Context, q mainent.Query) error {
+	if q, ok := q.(*mainent.SysAnnexQuery); ok {
+		return f(ctx, q)
+	}
+	return fmt.Errorf("unexpected query type %T. expect *mainent.SysAnnexQuery", q)
 }
 
 // The SysDictFunc type is an adapter to allow the use of ordinary function as a Querier.
@@ -640,6 +668,8 @@ func NewQuery(q mainent.Query) (Query, error) {
 		return &query[*mainent.OrgStaffQuery, predicate.OrgStaff, orgstaff.OrderOption]{typ: mainent.TypeOrgStaff, tq: q}, nil
 	case *mainent.SysAddressQuery:
 		return &query[*mainent.SysAddressQuery, predicate.SysAddress, sysaddress.OrderOption]{typ: mainent.TypeSysAddress, tq: q}, nil
+	case *mainent.SysAnnexQuery:
+		return &query[*mainent.SysAnnexQuery, predicate.SysAnnex, sysannex.OrderOption]{typ: mainent.TypeSysAnnex, tq: q}, nil
 	case *mainent.SysDictQuery:
 		return &query[*mainent.SysDictQuery, predicate.SysDict, sysdict.OrderOption]{typ: mainent.TypeSysDict, tq: q}, nil
 	case *mainent.SysDictItemQuery:

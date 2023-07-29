@@ -44,6 +44,14 @@ func (c *SysAddressClient) Debug() *SysAddressClient {
 	return &SysAddressClient{config: cfg}
 }
 
+func (c *SysAnnexClient) Debug() *SysAnnexClient {
+	if c.debug {
+		return c
+	}
+	cfg := config{driver: dialect.Debug(c.driver, c.log), log: c.log, debug: true, hooks: c.hooks}
+	return &SysAnnexClient{config: cfg}
+}
+
 func (c *SysDictClient) Debug() *SysDictClient {
 	if c.debug {
 		return c
