@@ -216,7 +216,7 @@ func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptio
 
 	query := a.EntCli.SysDict.Query()
 	query = query.WithItems(func(sdiq *mainent.SysDictItemQuery) {
-		sdiq.Order(mainent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID)
+		sdiq.Order(mainent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID, sysdictitem.FieldSort)
 	})
 
 	dict, err := query.Where(sysdict.IDEQ(id)).Only(ctx)

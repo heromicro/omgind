@@ -68,7 +68,7 @@ func (a *Dict) Get(c *gin.Context) {
 // View 查询指定数据
 func (a *Dict) View(c *gin.Context) {
 	ctx := c.Request.Context()
-	item, err := a.DictSrv.Get(ctx, c.Param("id"))
+	item, err := a.DictSrv.View(ctx, c.Param("id"))
 	if err != nil {
 		ginx.ResError(c, err)
 		return

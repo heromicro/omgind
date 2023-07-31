@@ -8,6 +8,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
@@ -44,6 +45,22 @@ func (a *Dict) Get(ctx context.Context, id string, opts ...schema.DictQueryOptio
 	}
 
 	return item, nil
+}
+
+// View 查询指定数据
+func (a *Dict) View(ctx context.Context, id string, opts ...schema.DictQueryOptions) (*schema.Dict, error) {
+
+	query := a.EntCli.SysDict.Query()
+	query = query.WithItems(func(sdiq *mainent.SysDictItemQuery) {
+		sdiq.Order(mainent.Asc(sysdictitem.FieldValue)).Select(sysdictitem.FieldID, sysdictitem.FieldValue, sysdictitem.FieldLabel, sysdictitem.FieldIsActive, sysdictitem.FieldMemo, sysdictitem.FieldDictID, sysdictitem.FieldSort)
+	})
+
+	dict, err := query.Where(sysdict.IDEQ(id)).Only(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return repo.ToSchemaSysDict(dict), nil
 }
 
 func (d *Dict) checkName(ctx context.Context, item schema.Dict) error {
