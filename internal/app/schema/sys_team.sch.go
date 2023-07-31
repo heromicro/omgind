@@ -21,7 +21,14 @@ func (a *SysTeam) String() string {
 // SysTeamQueryParam 查询条件
 type SysTeamQueryParam struct {
 	PaginationParam
-	QueryValue string `form:"q"` // 模糊查询
+
+	QueryValue string   `form:"q"`                        // 模糊查询
+	Code       string   `form:"code"`                     // 编号
+	Name       string   `form:"name"`                     // 名称
+	UserIDs    []string `form:"user_ids" json:"user_ids"` // sys_user.ID列表
+
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // SysTeamQueryOptions 查询可选参数项

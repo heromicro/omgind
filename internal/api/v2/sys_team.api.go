@@ -6,6 +6,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/app/service"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 )
 
 // SysTeamSet 注入SysTeam
@@ -27,6 +28,33 @@ func (a *SysTeam) Query(c *gin.Context) {
 
 	params.Pagination = true
 	result, err := a.SysTeamSrv.Query(ctx, params)
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+
+	ginx.ResPage(c, result.Data, result.PageResult)
+}
+
+// QuerySelectPage 查询选择数据
+func (a *SysTeam) QuerySelectPage(c *gin.Context) {
+	ctx := c.Request.Context()
+	var params schema.SysTeamQueryParam
+
+	if err := ginx.ParseQuery(c, &params); err != nil {
+
+		//fmt.Printf(" ------- ------ %+v \n", err)
+		ginx.ResError(c, err)
+		return
+	}
+	params.Pagination = true
+
+	//fmt.Printf(" ------- ------ %+v \n", params)
+	params.Sort_Order = repo.OrderByASC.String()
+
+	result, err := a.SysTeamSrv.QuerySelectPage(ctx, params, schema.SysTeamQueryOptions{
+		OrderFields: schema.NewOrderFields(schema.NewOrderField("id", schema.OrderByDESC)),
+	})
 	if err != nil {
 		ginx.ResError(c, err)
 		return

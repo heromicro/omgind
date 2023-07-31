@@ -71,6 +71,7 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 		a.initOrgDeptRouterV2(v2, a.OrgDeptAPIV2, "org-depts")
 
 		a.initSysTeamRouterV2(v2, a.SysTeamAPIV2, "sys-teams")
+		v2.GET("/sys-teams.select.page", a.SysTeamAPIV2.QuerySelectPage)
 
 		a.initSysAnnexRouterV2(v2, a.SysAnnexAPIV2, "sys-annexes")
 
