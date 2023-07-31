@@ -6,6 +6,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/app/service"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 )
 
 // DictSet 注入Dict
@@ -33,6 +34,27 @@ func (a *Dict) Query(c *gin.Context) {
 	}
 
 	ginx.ResPage(c, result.Data, result.PageResult)
+}
+
+// QuerySelect 查询选择数据
+func (a *Dict) QuerySelect(c *gin.Context) {
+	ctx := c.Request.Context()
+	var params schema.DictQueryParam
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		// log.Printf(" ------- ------ %+v \n", err)
+
+		ginx.ResError(c, err)
+		return
+	}
+
+	// log.Printf(" ------- ------ %+v \n", params)
+	params.Sort_Order = repo.OrderByASC.String()
+	result, err := a.DictSrv.Query(ctx, params)
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+	ginx.ResList(c, result.Data)
 }
 
 // Query 查询数据

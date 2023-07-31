@@ -47,11 +47,13 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 		v2.GET("/sys-menus.tree", a.MenuAPIV2.QueryTree)
 
 		a.initRoleRouterV2(v2, a.RoleAPIV2, "sys-roles")
-		v2.GET("/sys-roles.select", a.RoleAPIV2.QuerySelect)
+		v2.GET("/sys-roles.select.page", a.RoleAPIV2.QuerySelectPage)
 
 		a.initUserRouterV2(v2, a.UserAPIV2, "sys-users")
+		v2.GET("/sys-users.select.page", a.UserAPIV2.QuerySelectPage)
 
 		a.initDictRouterV2(v2, a.DictApiV2, "sys-dicts")
+		v2.GET("/sys-dicts.select", a.DictApiV2.QuerySelect)
 
 		a.initSysDistrictRouterV2(v2, a.SysDistrictAPIV2, "sys-district")
 
@@ -60,7 +62,7 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 		a.initDemoRouterV2(v2, a.DemoAPIV2, "demos")
 
 		a.initOrgOrganRouterV2(v2, a.OrgOrganAPIV2, "org-organs")
-		v2.GET("/org-organs.select", a.OrgOrganAPIV2.QuerySelect)
+		v2.GET("/sys-organs.select.page", a.OrgOrganAPIV2.QuerySelectPage)
 
 		a.initOrgStaffRouterV2(v2, a.OrgStaffAPIV2, "org-staffs")
 

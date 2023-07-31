@@ -8,6 +8,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/app/service"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
 )
 
@@ -37,6 +38,30 @@ func (a *User) Query(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
+	ginx.ResPage(c, result.Data, result.PageResult)
+}
+
+// QuerySelectPage 查询选择数据
+func (a *User) QuerySelectPage(c *gin.Context) {
+
+	ctx := c.Request.Context()
+	var params schema.UserQueryParam
+
+	if err := ginx.ParseQuery(c, &params); err != nil {
+		//fmt.Printf(" ------- ------ %+v \n", err)
+		ginx.ResError(c, err)
+		return
+	}
+
+	params.Pagination = true
+	//fmt.Printf(" --- 000000 --- user select page %+v \n", params)
+	params.Sort_Order = repo.OrderByDESC.String()
+	result, err := a.UserSrv.QuerySelectPage(ctx, params)
+	if err != nil {
+		ginx.ResError(c, err)
+		return
+	}
+
 	ginx.ResPage(c, result.Data, result.PageResult)
 }
 

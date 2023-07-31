@@ -113,14 +113,14 @@
           name: 新增
           resources:
             - method: GET
-              path: "/api/v2/sys-roles.select"
+              path: "/api/v2/sys-roles.select.page"
             - method: POST
               path: "/api/v2/sys-users"
         - code: edit
           name: 编辑
           resources:
             - method: GET
-              path: "/api/v2/sys-roles.select"
+              path: "/api/v2/sys-roles.select.page"
             - method: GET
               path: "/api/v2/sys-users/:id"
             - method: PUT
@@ -377,14 +377,14 @@
           name: 新增
           resources:
             - method: GET
-              path: "/api/v2/org-organs.select"
+              path: "/api/v2/org-organs.select.page"
             - method: POST
               path: "/api/v2/org-depts"
         - code: edit
           name: 编辑
           resources: 
             - method: GET
-              path: "/api/v2/org-organs.select"
+              path: "/api/v2/org-organs.select.page"
             - method: GET
               path: "/api/v2/org-depts/:id"
             - method: PUT
@@ -481,14 +481,14 @@
           name: 新增
           resources:
             - method: GET
-              path: "/api/v2/org-organs.select"
+              path: "/api/v2/org-organs.select.page"
             - method: POST
               path: "/api/v2/org-positions"
         - code: edit
           name: 编辑
           resources: 
             - method: GET
-              path: "/api/v2/org-organs.select"
+              path: "/api/v2/org-organs.select.page"
             - method: GET
               path: "/api/v2/org-positions/:id"
             - method: PUT

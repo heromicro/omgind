@@ -38,8 +38,8 @@ func (a *OrgOrgan) Query(c *gin.Context) {
 	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
-// QuerySelect 查询选择数据
-func (a *OrgOrgan) QuerySelect(c *gin.Context) {
+// QuerySelectPage 查询选择数据
+func (a *OrgOrgan) QuerySelectPage(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.OrgOrganQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
@@ -51,7 +51,7 @@ func (a *OrgOrgan) QuerySelect(c *gin.Context) {
 
 	// log.Printf(" ------- ------ %+v \n", params)
 
-	result, err := a.OrgOrganSrv.QuerySelect(ctx, params, schema.OrgOrganQueryOptions{
+	result, err := a.OrgOrganSrv.QuerySelectPage(ctx, params, schema.OrgOrganQueryOptions{
 		OrderFields:    schema.NewOrderFields(schema.NewOrderField("id", schema.OrderByDESC)),
 		FieldsAll:      false,
 		FieldsIncludes: []string{orgorgan.FieldID, orgorgan.FieldName},
@@ -60,7 +60,7 @@ func (a *OrgOrgan) QuerySelect(c *gin.Context) {
 		ginx.ResError(c, err)
 		return
 	}
-	ginx.ResList(c, result.Data)
+	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
 // Get 查询指定数据

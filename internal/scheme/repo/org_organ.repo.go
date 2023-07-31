@@ -150,15 +150,15 @@ func (a *OrgOrgan) Query(ctx context.Context, params schema.OrgOrganQueryParam, 
 	return qr, nil
 }
 
-// Query 查询数据
-func (a *OrgOrgan) QuerySelect(ctx context.Context, params schema.OrgOrganQueryParam, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrganQueryResult, error) {
+// QuerySelectPage 查询数据
+func (a *OrgOrgan) QuerySelectPage(ctx context.Context, params schema.OrgOrganQueryParam, opts ...schema.OrgOrganQueryOptions) (*schema.OrgOrganQueryResult, error) {
 
 	opt := a.getQueryOption(opts...)
 
 	query := a.EntCli.OrgOrgan.Query().Where(orgorgan.IsDelEQ(false))
 
 	query = query.Where(orgorgan.DeletedAtIsNil())
-	// TODO: 查询条件
+
 	if v := params.QueryValue; v != "" {
 		query = query.Where(orgorgan.Or(orgorgan.NameContains(v), orgorgan.CodeContains(v)))
 	}
@@ -192,7 +192,7 @@ func (a *OrgOrgan) QuerySelect(ctx context.Context, params schema.OrgOrganQueryP
 	if v := params.Sort_Order; v != "" {
 		query = query.Order(orgorgan.BySort(OrderDirection(v)))
 	}
-	query = query.Order(orgorgan.ByID(OrderDirection("desc")))
+	query = query.Order(orgorgan.ByID(OrderDirection(OrderByDESC.String())))
 
 	pr.Current = params.PaginationParam.GetCurrent()
 	pr.PageSize = params.PaginationParam.GetPageSize()

@@ -9,6 +9,7 @@ import (
 
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/gen/mainent"
+	"github.com/heromicro/omgind/internal/gen/mainent/sysuser"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysuserrole"
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/errors"
@@ -58,6 +59,56 @@ func (a *User) QueryShow(ctx context.Context, params schema.UserQueryParam, opts
 	}
 
 	return result.ToShowResult(userRoleResult.Data.ToUserIDMap(), roleResult.Data.ToMap()), nil
+}
+
+// QuerySelectPage 查询显示项数据
+func (a *User) QuerySelectPage(ctx context.Context, params schema.UserQueryParam,
+	opts ...schema.UserQueryOptions) (*schema.UserQueryResult, error) {
+
+	query := a.EntCli.SysUser.Query().Where(sysuser.DeletedAtIsNil())
+
+	if v := params.QueryValue; v != "" {
+		query = query.Where(sysuser.Or(
+			sysuser.UserNameContains(v),
+			sysuser.RealNameContains(v),
+			sysuser.FirstNameContains(v),
+		))
+	}
+	if v := params.After; v != "" {
+		query = query.Where(sysuser.IDGT(v))
+	}
+
+	count, err := query.Count(ctx)
+
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	pr := &schema.PaginationResult{Total: count}
+
+	pr.Current = params.PaginationParam.GetCurrent()
+	pr.PageSize = params.PaginationParam.GetPageSize()
+	pr.After = params.After
+	pr.Before = params.Before
+
+	if params.Offset() > count {
+		return &schema.UserQueryResult{PageResult: pr}, nil
+	}
+
+	query = query.Limit(params.Limit()).Offset(params.Offset())
+	qs := query.Select(sysuser.FieldID, sysuser.FieldUserName, sysuser.FieldRealName)
+
+	list, err1 := qs.All(ctx)
+
+	if err1 != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	qr := &schema.UserQueryResult{
+		PageResult: pr,
+		Data:       repo.ToSchemaSysUsers(list),
+	}
+
+	return qr, nil
 }
 
 // Get 查询指定数据

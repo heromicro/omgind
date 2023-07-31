@@ -35,6 +35,11 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 	return a.RoleRepo.Query(ctx, params, opts...)
 }
 
+// Query 查询数据
+func (a *Role) QuerySelectPage(ctx context.Context, params schema.RoleQueryParam, opts ...schema.RoleQueryOptions) (*schema.RoleQueryResult, error) {
+	return a.RoleRepo.QuerySelectPage(ctx, params, opts...)
+}
+
 // Get 查询指定数据
 func (a *Role) Get(ctx context.Context, id string, opts ...schema.RoleQueryOptions) (*schema.Role, error) {
 	item, err := a.RoleRepo.Get(ctx, id, opts...)

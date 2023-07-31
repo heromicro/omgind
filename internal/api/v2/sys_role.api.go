@@ -8,6 +8,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/internal/app/service"
+	"github.com/heromicro/omgind/internal/scheme/repo"
 )
 
 // RoleSet 注入Role
@@ -38,8 +39,8 @@ func (a *Role) Query(c *gin.Context) {
 	ginx.ResPage(c, result.Data, result.PageResult)
 }
 
-// QuerySelect 查询选择数据
-func (a *Role) QuerySelect(c *gin.Context) {
+// QuerySelectPage 查询选择数据
+func (a *Role) QuerySelectPage(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.RoleQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
@@ -50,10 +51,9 @@ func (a *Role) QuerySelect(c *gin.Context) {
 	}
 
 	// log.Printf(" ------- ------ %+v \n", params)
+	params.Sort_Order = repo.OrderByASC.String()
 
-	result, err := a.RoleSrv.Query(ctx, params, schema.RoleQueryOptions{
-		OrderFields: schema.NewOrderFields(schema.NewOrderField("sort", schema.OrderByDESC)),
-	})
+	result, err := a.RoleSrv.QuerySelectPage(ctx, params)
 	if err != nil {
 		ginx.ResError(c, err)
 		return

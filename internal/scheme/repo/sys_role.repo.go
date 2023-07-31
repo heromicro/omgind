@@ -131,6 +131,78 @@ func (a *Role) Query(ctx context.Context, params schema.RoleQueryParam, opts ...
 	return qr, nil
 }
 
+// Query 查询数据
+func (a *Role) QuerySelectPage(ctx context.Context, params schema.RoleQueryParam, opts ...schema.RoleQueryOptions) (*schema.RoleQueryResult, error) {
+
+	query := a.EntCli.SysRole.Query().Where(sysrole.DeletedAtIsNil())
+
+	if v := params.IDs; len(v) > 0 {
+		query = query.Where(sysrole.IDIn(v...))
+	}
+
+	if v := params.Name; v != "" {
+		query = query.Where(sysrole.NameEQ(v))
+	}
+
+	if v := params.UserID; v != "" {
+		query = query.Where(func(s *sql.Selector) {
+			sur_t := sql.Table(sysuserrole.Table)
+			s.Where(sql.In(
+				sysrole.FieldID,
+				sql.Select(sysuserrole.FieldRoleID).
+					From(sur_t).
+					Where(sql.EQ(sysuserrole.FieldUserID, v)),
+			),
+			)
+		})
+	}
+
+	if v := params.QueryValue; v != "" {
+		query = query.Where(sysrole.Or(sysrole.NameContains(v), sysrole.MemoContains(v)))
+	}
+
+	count, err := query.Count(ctx)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	// get total
+	pr := &schema.PaginationResult{Total: count}
+
+	if params.PaginationParam.OnlyCount {
+		return &schema.RoleQueryResult{PageResult: pr}, nil
+	}
+
+	if v := params.Sort_Order; v != "" {
+		query = query.Order(sysrole.ByIsActive(OrderDirection(v)))
+	}
+
+	query = query.Order(sysrole.ByID(OrderDirection(OrderByDESC.String())))
+
+	pr.Current = params.PaginationParam.GetCurrent()
+	pr.PageSize = params.PaginationParam.GetPageSize()
+
+	if params.Offset() > count {
+		return &schema.RoleQueryResult{PageResult: pr}, nil
+	}
+
+	query = query.Limit(params.Limit()).Offset(params.Offset())
+
+	qs := query.Select(sysrole.FieldID, sysrole.FieldName, sysrole.FieldIsActive)
+
+	list, err1 := qs.All(ctx)
+	if err1 != nil {
+		return nil, errors.WithStack(err)
+	}
+	rlist := mainent.SysRoles(list)
+
+	qr := &schema.RoleQueryResult{
+		PageResult: pr,
+		Data:       ToSchemaRoles(rlist),
+	}
+
+	return qr, nil
+}
+
 // Get 查询指定数据
 func (a *Role) Get(ctx context.Context, id string, opts ...schema.RoleQueryOptions) (*schema.Role, error) {
 
