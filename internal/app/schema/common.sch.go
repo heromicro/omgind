@@ -32,6 +32,9 @@ type BasicOrderParam struct {
 	// example: "asc"
 	// example: "desc"
 	Sort_Order string `form:"sort__order" json:"sort__order"` // asc/desc
+
+	MustIncludeIDs []string `form:"muin_ids"  json:"muin_ids"` // 必须包含这些ids
+
 }
 
 type TimeOrderParam struct {

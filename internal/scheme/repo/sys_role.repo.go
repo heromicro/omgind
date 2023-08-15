@@ -157,6 +157,10 @@ func (a *Role) QuerySelectPage(ctx context.Context, params schema.RoleQueryParam
 		})
 	}
 
+	if v := params.MustIncludeIDs; len(v) > 0 {
+		query = query.Where(sysrole.IDNotIn(v...))
+	}
+
 	if v := params.QueryValue; v != "" {
 		query = query.Where(sysrole.Or(sysrole.NameContains(v), sysrole.MemoContains(v)))
 	}
@@ -193,11 +197,34 @@ func (a *Role) QuerySelectPage(ctx context.Context, params schema.RoleQueryParam
 	if err1 != nil {
 		return nil, errors.WithStack(err)
 	}
+	var inRoles schema.Roles = make(schema.Roles, 0)
+
+	if v := params.MustIncludeIDs; len(v) > 0 {
+		query_in := a.EntCli.SysRole.Query().Where(sysrole.IDIn(v...))
+		roles_ent, err := query_in.All(ctx)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		inRoles = append(inRoles, ToSchemaRoles(roles_ent)...)
+	}
+
 	rlist := mainent.SysRoles(list)
+
+	// qr := &schema.RoleQueryResult{
+	// 	PageResult: pr,
+	// 	Data:       ToSchemaRoles(rlist),
+	// }
 
 	qr := &schema.RoleQueryResult{
 		PageResult: pr,
-		Data:       ToSchemaRoles(rlist),
+		// Data:       inRoles + ToSchemaRoles(rlist),
+	}
+	if (len(inRoles)) > 0 {
+		inRoles = append(inRoles, ToSchemaRoles(rlist)...)
+		qr.Data = inRoles
+
+	} else {
+		qr.Data = ToSchemaRoles(rlist)
 	}
 
 	return qr, nil
