@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"compress/gzip"
 	"io"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -33,17 +32,17 @@ func CopyBodyMiddleware(skippers ...SkipperFunc) gin.HandlerFunc {
 			reader, err := gzip.NewReader(safe)
 			if err == nil {
 				isGzip = true
-				requestBody, _ = ioutil.ReadAll(reader)
+				requestBody, _ = io.ReadAll(reader)
 			}
 		}
 
 		if !isGzip {
-			requestBody, _ = ioutil.ReadAll(safe)
+			requestBody, _ = io.ReadAll(safe)
 		}
 
 		c.Request.Body.Close()
 		bf := bytes.NewBuffer(requestBody)
-		c.Request.Body = http.MaxBytesReader(c.Writer, ioutil.NopCloser(bf), maxMemory)
+		c.Request.Body = http.MaxBytesReader(c.Writer, io.NopCloser(bf), maxMemory)
 		c.Set(ginx.ReqBodyKey, requestBody)
 
 		c.Next()

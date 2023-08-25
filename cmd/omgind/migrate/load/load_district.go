@@ -2,8 +2,8 @@ package load
 
 import (
 	"context"
-	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/gotidy/ptr"
@@ -22,7 +22,7 @@ func Load_district_data(ctx context.Context, eclient *mainent.Client, datafile s
 	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
 	whiteOnGreen := chalk.Cyan.NewStyle().WithBackground(chalk.Green)
 
-	bytes, err := ioutil.ReadFile(datafile)
+	bytes, err := os.ReadFile(datafile)
 	if err != nil {
 		log.Println(redOnWhite, " ----- === === ", err)
 		return err

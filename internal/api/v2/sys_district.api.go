@@ -2,7 +2,7 @@ package api_v2
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -134,7 +134,7 @@ func (a *SysDistrict) Create(c *gin.Context) {
 func (a *SysDistrict) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.SysDistrict
-	body, _ := ioutil.ReadAll(c.Request.Body)
+	body, _ := io.ReadAll(c.Request.Body)
 	log.Println(" ---- --- body ", string(body))
 	err := json.Unmarshal(body, &item)
 	// err := ginx.ParseJSON(c, &item)

@@ -2,8 +2,8 @@ package load
 
 import (
 	"context"
-	"io/ioutil"
 	"log"
+	"os"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/heromicro/omgind/internal/app/schema"
@@ -23,7 +23,7 @@ func Load_role_data(ctx context.Context, eclient *mainent.Client, filename strin
 	cyanOnBlue := chalk.Cyan.NewStyle().WithBackground(chalk.Blue)
 	whiteOnGreen := chalk.Cyan.NewStyle().WithBackground(chalk.Green)
 
-	bytes, err := ioutil.ReadFile(filename)
+	bytes, err := os.ReadFile(filename)
 	if err != nil {
 		log.Println(redOnWhite, " ----- === === ", err)
 		return err
