@@ -6,13 +6,14 @@ import (
 	"io"
 	"time"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/mojocn/base64Captcha"
+	"github.com/redis/go-redis/v9"
+
 	"github.com/heromicro/omgind/pkg/config/option"
 	"github.com/heromicro/omgind/pkg/helper/str"
 	"github.com/heromicro/omgind/pkg/helper/uid/uuid"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
 	"github.com/heromicro/omgind/pkg/vcode/store"
-	"github.com/mojocn/base64Captcha"
 )
 
 var (

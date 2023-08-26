@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
-	"github.com/go-redis/redis_rate/v9"
+	"github.com/redis/go-redis/v9"
+	"github.com/go-redis/redis_rate/v10"
 	"github.com/heromicro/omgind/internal/app/ginx"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/global"

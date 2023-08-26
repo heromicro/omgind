@@ -5,9 +5,9 @@ import (
 	"errors"
 	"log"
 
-	"github.com/go-redis/redis/v8"
 	"github.com/google/wire"
 	"github.com/heromicro/omgind/pkg/config"
+	"github.com/redis/go-redis/v9"
 )
 
 // c

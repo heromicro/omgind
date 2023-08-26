@@ -5,9 +5,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-redis/redis/v8"
-	"github.com/heromicro/omgind/pkg/mw/rdb"
 	"github.com/mojocn/base64Captcha"
+	"github.com/redis/go-redis/v9"
+
+	"github.com/heromicro/omgind/pkg/mw/rdb"
 )
 
 type RedisStore struct {
