@@ -8,7 +8,7 @@ import (
 	"github.com/heromicro/omgind/pkg/config/option"
 	"github.com/heromicro/omgind/pkg/mw/queue"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 	"github.com/hibiken/asynq"
 	"github.com/hibiken/asynqmon"
 	"github.com/oklog/ulid/v2"
@@ -44,7 +44,7 @@ func NewQueue(opts *queue.QueueOptions) queue.Queuer {
 	}
 }
 
-func (q *RedisQueue) Write(taskName types.TaskName, queueName types.QueueName, job *queue.Job) error {
+func (q *RedisQueue) Write(taskName tipes.TaskName, queueName tipes.QueueName, job *queue.Job) error {
 	if job.ID == "" {
 		job.ID = ulid.Make().String()
 	}
@@ -70,7 +70,7 @@ func (q *RedisQueue) Inspector() *asynq.Inspector {
 	return q.inspector
 }
 
-func (q *RedisQueue) DeleteEventDeliveriesfromQueue(queuename types.QueueName, ids []string) error {
+func (q *RedisQueue) DeleteEventDeliveriesfromQueue(queuename tipes.QueueName, ids []string) error {
 	for _, id := range ids {
 		taskInfo, err := q.inspector.GetTaskInfo(string(queuename), id)
 		if err != nil {

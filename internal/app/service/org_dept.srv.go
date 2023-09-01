@@ -20,7 +20,7 @@ import (
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
 	"github.com/heromicro/omgind/pkg/mw/queue"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 )
 
 // OrgDeptSet 注入OrgDept
@@ -47,7 +47,7 @@ func NewOrgDeptSrv(entCli *mainent.Client, deptRepo *repo.OrgDept, q queue.Queue
 	}
 
 	// TODO: register tasks
-	depSrv.consumer.RegisterHandlers(types.TaskName_REPAIR_DEPT_TREE_PATH, depSrv)
+	depSrv.consumer.RegisterHandlers(tipes.TaskName_REPAIR_DEPT_TREE_PATH, depSrv)
 
 	return depSrv
 }
@@ -115,7 +115,7 @@ func (s *OrgDept) ProcessTask(ctx context.Context, t *asynq.Task) error {
 					Delay:   200 * time.Millisecond,
 				}
 
-				s.Queue.Write(types.TaskName_REPAIR_DEPT_TREE_PATH, types.RepaireTreeQueue, job)
+				s.Queue.Write(tipes.TaskName_REPAIR_DEPT_TREE_PATH, tipes.RepaireTreeQueue, job)
 			}
 
 		}
@@ -362,7 +362,7 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 			return nil, err
 		}
 
-		_ = a.Queue.Write(types.TaskName_REPAIR_DEPT_TREE_PATH, types.RepaireTreeQueue, job)
+		_ = a.Queue.Write(tipes.TaskName_REPAIR_DEPT_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 	} else {
 
@@ -449,7 +449,7 @@ func (a *OrgDept) Update(ctx context.Context, id string, item schema.OrgDept) (*
 			}
 
 			// step 5: trigger update subs's tree_path
-			_ = a.Queue.Write(types.TaskName_REPAIR_DEPT_TREE_PATH, types.RepaireTreeQueue, job)
+			_ = a.Queue.Write(tipes.TaskName_REPAIR_DEPT_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 			return nil
 		})

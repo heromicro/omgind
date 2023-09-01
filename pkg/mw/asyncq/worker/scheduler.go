@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/heromicro/omgind/pkg/mw/queue"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 	"github.com/hibiken/asynq"
 )
 
@@ -33,7 +33,7 @@ func (s *Scheduler) Start() {
 	}
 }
 
-func (s *Scheduler) RegisterTask(cronspec string, queue types.QueueName, taskName types.TaskName) {
+func (s *Scheduler) RegisterTask(cronspec string, queue tipes.QueueName, taskName tipes.TaskName) {
 	task := asynq.NewTask(string(taskName), nil)
 	_, err := s.inner.Register(cronspec, task, asynq.Queue(string(queue)))
 	if err != nil {

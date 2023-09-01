@@ -17,7 +17,7 @@ import (
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
 	"github.com/heromicro/omgind/pkg/mw/queue"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 )
 
 // SysDistrictSet 注入SysDistrict
@@ -43,7 +43,7 @@ func NewSysDistrictSrv(entCli *mainent.Client, districtRepo *repo.SysDistrict, q
 	}
 
 	// TODO: register tasks
-	districtSrv.consumer.RegisterHandlers(types.TaskName_REPAIR_DISTRICT_TREE_PATH, districtSrv)
+	districtSrv.consumer.RegisterHandlers(tipes.TaskName_REPAIR_DISTRICT_TREE_PATH, districtSrv)
 
 	return districtSrv
 }
@@ -122,7 +122,7 @@ func (s *SysDistrict) ProcessTask(ctx context.Context, t *asynq.Task) error {
 					Delay:   100 * time.Millisecond,
 				}
 
-				s.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.RepaireTreeQueue, job)
+				s.Queue.Write(tipes.TaskName_REPAIR_DISTRICT_TREE_PATH, tipes.RepaireTreeQueue, job)
 			}
 		}
 	}

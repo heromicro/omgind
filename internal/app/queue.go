@@ -6,15 +6,15 @@ import (
 	"github.com/heromicro/omgind/pkg/mw/queue"
 	"github.com/heromicro/omgind/pkg/mw/queue/redisqueue"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 )
 
 func InitQueue(conf *config.AppConfig, rdb *rdb.Redis) (queue.Queuer, func(), error) {
 
 	queueNames := map[string]int{
-		string(types.RepaireTreeQueue): 1,
-		string(types.ScheduleQueue):    1,
-		string(types.DefaultQueue):     1,
+		string(tipes.RepaireTreeQueue): 1,
+		string(tipes.ScheduleQueue):    1,
+		string(tipes.DefaultQueue):     1,
 	}
 
 	opts := &queue.QueueOptions{

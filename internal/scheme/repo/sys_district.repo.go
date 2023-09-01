@@ -17,7 +17,7 @@ import (
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/structure"
 	"github.com/heromicro/omgind/pkg/mw/queue"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 )
 
 // SysDistrictSet 注入SysDistrict
@@ -705,7 +705,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 				// TODO: maybe can trigger celery to do this
 				job.ID = format.String(`{id}-{ml}`, format.Items{"id": nparent.ID, "ml": time.Now().UnixMilli()})
 				job.Payload = json.RawMessage(nparent.ID)
-				err = a.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.RepaireTreeQueue, job)
+				err = a.Queue.Write(tipes.TaskName_REPAIR_DISTRICT_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 				log.Println(" -- -- --- 0 -- --- -- 0000 enqueue err : ", err)
 
@@ -812,7 +812,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 				// step 6: trigger udpate tree_path and merge_name, merge_sname,
 
-				err = a.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.RepaireTreeQueue, job)
+				err = a.Queue.Write(tipes.TaskName_REPAIR_DISTRICT_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 				log.Println(" -- -- --- 0 -- --- -- 1111 enqueue err : ", err)
 
@@ -980,7 +980,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 						}
 						// step 5: trigger update subs's tree_path, merge_name, merge_sname
 						// job.ID =
-						err = a.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.RepaireTreeQueue, job)
+						err = a.Queue.Write(tipes.TaskName_REPAIR_DISTRICT_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 						log.Println(" -- -- --- 0 -- --- -- 2222 enqueue err : ", err)
 						return nil
@@ -1029,7 +1029,7 @@ func (a *SysDistrict) Update(ctx context.Context, id string, item schema.SysDist
 
 						// step 5: trigger update subs's tree_path, merge_name, merge_sname
 						// job.ID =
-						err = a.Queue.Write(types.TaskName_REPAIR_DISTRICT_TREE_PATH, types.RepaireTreeQueue, job)
+						err = a.Queue.Write(tipes.TaskName_REPAIR_DISTRICT_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 						log.Println(" -- -- --- 0 -- --- -- 3333 enqueue err : ", err)
 

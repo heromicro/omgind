@@ -21,7 +21,7 @@ import (
 	"github.com/heromicro/omgind/pkg/helper/yaml"
 	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
 	"github.com/heromicro/omgind/pkg/mw/queue"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 )
 
 // MenuSet 注入Menu
@@ -52,7 +52,7 @@ func NewMenuSrv(entCli *mainent.Client, menuRepo *repo.Menu, menuActionRepo *rep
 	}
 
 	// TODO: register tasks
-	menuSrv.consumer.RegisterHandlers(types.TaskName_REPAIR_MENU_TREE_PATH, menuSrv)
+	menuSrv.consumer.RegisterHandlers(tipes.TaskName_REPAIR_MENU_TREE_PATH, menuSrv)
 
 	return menuSrv
 }
@@ -148,7 +148,7 @@ func (s *Menu) ProcessTask(ctx context.Context, t *asynq.Task) error {
 					Delay:   100 * time.Millisecond,
 				}
 
-				s.Queue.Write(types.TaskName_REPAIR_MENU_TREE_PATH, types.RepaireTreeQueue, job)
+				s.Queue.Write(tipes.TaskName_REPAIR_MENU_TREE_PATH, tipes.RepaireTreeQueue, job)
 			}
 
 			return nil
@@ -597,7 +597,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 		log.Println(" ------ === jobid ==== ", jobid)
 		log.Println(" ------ === jobid ==== ", jobid)
 
-		a.Queue.Write(types.TaskName_REPAIR_MENU_TREE_PATH, types.RepaireTreeQueue, job)
+		a.Queue.Write(tipes.TaskName_REPAIR_MENU_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 	} else {
 
@@ -653,7 +653,7 @@ func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema
 			Delay:   100 * time.Millisecond,
 		}
 
-		a.Queue.Write(types.TaskName_REPAIR_MENU_TREE_PATH, types.RepaireTreeQueue, job)
+		a.Queue.Write(tipes.TaskName_REPAIR_MENU_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 	}
 
@@ -851,7 +851,7 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 		Delay:   100 * time.Millisecond,
 	}
 
-	a.Queue.Write(types.TaskName_REPAIR_MENU_TREE_PATH, types.RepaireTreeQueue, job)
+	a.Queue.Write(tipes.TaskName_REPAIR_MENU_TREE_PATH, tipes.RepaireTreeQueue, job)
 
 	return err
 

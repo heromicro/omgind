@@ -6,7 +6,7 @@ import (
 
 	"github.com/heromicro/omgind/pkg/mw/asyncq/worker/taskmeta"
 	"github.com/heromicro/omgind/pkg/mw/queue"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 	"github.com/hibiken/asynq"
 )
 
@@ -51,11 +51,11 @@ func (c *Consumer) Start() {
 	}
 }
 
-func (c *Consumer) RegisterHandlers(taskName types.TaskName, handler asynq.Handler) {
+func (c *Consumer) RegisterHandlers(taskName tipes.TaskName, handler asynq.Handler) {
 	c.mux.Handle(string(taskName), handler)
 }
 
-func (c *Consumer) RegisterHandlerFuncs(taskName types.TaskName, handler func(context.Context, *asynq.Task) error) {
+func (c *Consumer) RegisterHandlerFuncs(taskName tipes.TaskName, handler func(context.Context, *asynq.Task) error) {
 	c.mux.HandleFunc(string(taskName), handler)
 }
 

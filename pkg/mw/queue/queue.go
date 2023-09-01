@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"github.com/heromicro/omgind/pkg/mw/rdb"
-	"github.com/heromicro/omgind/pkg/types"
+	"github.com/heromicro/omgind/pkg/tipes"
 )
 
 type Queuer interface {
-	Write(types.TaskName, types.QueueName, *Job) error
+	Write(tipes.TaskName, tipes.QueueName, *Job) error
 	Options() *QueueOptions
 }
 

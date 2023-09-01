@@ -1,4 +1,4 @@
-package types
+package tipes
 
 type QueueName string
 

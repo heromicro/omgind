@@ -14,8 +14,8 @@ var dictValueTipes = []string{
 	DictValueTipeStr.String(),
 }
 
-func (DictValueTipe) Values() (tipes []string) {
-	tipes = append(tipes, dictValueTipes...)
+func (DictValueTipe) Values() (dtipes []string) {
+	dtipes = append(dtipes, dictValueTipes...)
 	return
 }
 
