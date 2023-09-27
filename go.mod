@@ -3,10 +3,10 @@ module github.com/heromicro/omgind
 go 1.21
 
 require (
-	entgo.io/ent v0.12.3
+	entgo.io/ent v0.12.4
 	github.com/99designs/gqlgen v0.17.24
 	github.com/LyricTian/queue v1.3.0
-	github.com/casbin/casbin/v2 v2.65.2
+	github.com/casbin/casbin/v2 v2.77.2
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/gzip v0.0.6
 	github.com/gin-gonic/gin v1.9.1
@@ -37,7 +37,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/psampaz/slice v0.2.0
 	github.com/rabbitmq/amqp091-go v1.7.0
-	github.com/redis/go-redis/v9 v9.1.0
+	github.com/redis/go-redis/v9 v9.2.0
 	github.com/rs/zerolog v1.29.0
 	github.com/simukti/sqldb-logger v0.0.0-20230108155151-646c1a075551
 	github.com/simukti/sqldb-logger/logadapter/zerologadapter v0.0.0-20201125162808-c35f87e285f2
@@ -55,7 +55,7 @@ require (
 )
 
 require (
-	ariga.io/atlas v0.13.1 // indirect
+	ariga.io/atlas v0.14.1-0.20230918065911-83ad451a4935 // indirect
 	github.com/BurntSushi/toml v1.2.1 // indirect
 	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
@@ -126,7 +126,7 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
 	github.com/tidwall/btree v1.6.0 // indirect
-	github.com/tidwall/gjson v1.16.0 // indirect
+	github.com/tidwall/gjson v1.17.0 // indirect
 	github.com/tidwall/grect v0.1.4 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
