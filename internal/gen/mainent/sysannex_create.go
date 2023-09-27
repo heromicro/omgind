@@ -756,12 +756,16 @@ func (u *SysAnnexUpsertOne) IDX(ctx context.Context) string {
 // SysAnnexCreateBulk is the builder for creating many SysAnnex entities in bulk.
 type SysAnnexCreateBulk struct {
 	config
+	err      error
 	builders []*SysAnnexCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysAnnex entities in the database.
 func (sacb *SysAnnexCreateBulk) Save(ctx context.Context) ([]*SysAnnex, error) {
+	if sacb.err != nil {
+		return nil, sacb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(sacb.builders))
 	nodes := make([]*SysAnnex, len(sacb.builders))
 	mutators := make([]Mutator, len(sacb.builders))
@@ -1085,6 +1089,9 @@ func (u *SysAnnexUpsertBulk) ClearFilePath() *SysAnnexUpsertBulk {
 
 // Exec executes the query.
 func (u *SysAnnexUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysAnnexCreateBulk instead", i)

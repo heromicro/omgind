@@ -835,12 +835,16 @@ func (u *SysDictUpsertOne) IDX(ctx context.Context) string {
 // SysDictCreateBulk is the builder for creating many SysDict entities in bulk.
 type SysDictCreateBulk struct {
 	config
+	err      error
 	builders []*SysDictCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysDict entities in the database.
 func (sdcb *SysDictCreateBulk) Save(ctx context.Context) ([]*SysDict, error) {
+	if sdcb.err != nil {
+		return nil, sdcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(sdcb.builders))
 	nodes := make([]*SysDict, len(sdcb.builders))
 	mutators := make([]Mutator, len(sdcb.builders))
@@ -1167,6 +1171,9 @@ func (u *SysDictUpsertBulk) UpdateValTipe() *SysDictUpsertBulk {
 
 // Exec executes the query.
 func (u *SysDictUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysDictCreateBulk instead", i)

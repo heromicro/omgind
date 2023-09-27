@@ -972,12 +972,16 @@ func (u *SysLoggingUpsertOne) IDX(ctx context.Context) string {
 // SysLoggingCreateBulk is the builder for creating many SysLogging entities in bulk.
 type SysLoggingCreateBulk struct {
 	config
+	err      error
 	builders []*SysLoggingCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysLogging entities in the database.
 func (slcb *SysLoggingCreateBulk) Save(ctx context.Context) ([]*SysLogging, error) {
+	if slcb.err != nil {
+		return nil, slcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(slcb.builders))
 	nodes := make([]*SysLogging, len(slcb.builders))
 	mutators := make([]Mutator, len(slcb.builders))
@@ -1374,6 +1378,9 @@ func (u *SysLoggingUpsertBulk) ClearErrorStack() *SysLoggingUpsertBulk {
 
 // Exec executes the query.
 func (u *SysLoggingUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysLoggingCreateBulk instead", i)

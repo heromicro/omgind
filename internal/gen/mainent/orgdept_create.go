@@ -1581,12 +1581,16 @@ func (u *OrgDeptUpsertOne) IDX(ctx context.Context) string {
 // OrgDeptCreateBulk is the builder for creating many OrgDept entities in bulk.
 type OrgDeptCreateBulk struct {
 	config
+	err      error
 	builders []*OrgDeptCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the OrgDept entities in the database.
 func (odcb *OrgDeptCreateBulk) Save(ctx context.Context) ([]*OrgDept, error) {
+	if odcb.err != nil {
+		return nil, odcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(odcb.builders))
 	nodes := make([]*OrgDept, len(odcb.builders))
 	mutators := make([]Mutator, len(odcb.builders))
@@ -2169,6 +2173,9 @@ func (u *OrgDeptUpsertBulk) ClearIsShow() *OrgDeptUpsertBulk {
 
 // Exec executes the query.
 func (u *OrgDeptUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the OrgDeptCreateBulk instead", i)

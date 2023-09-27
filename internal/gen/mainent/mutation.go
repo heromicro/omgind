@@ -1265,6 +1265,7 @@ func (m *OrgDeptMutation) ResetIsShow() {
 // ClearParent clears the "parent" edge to the OrgDept entity.
 func (m *OrgDeptMutation) ClearParent() {
 	m.clearedparent = true
+	m.clearedFields[orgdept.FieldParentID] = struct{}{}
 }
 
 // ParentCleared reports if the "parent" edge to the OrgDept entity was cleared.
@@ -1350,6 +1351,7 @@ func (m *OrgDeptMutation) SetOrganID(id string) {
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
 func (m *OrgDeptMutation) ClearOrgan() {
 	m.clearedorgan = true
+	m.clearedFields[orgdept.FieldOrgID] = struct{}{}
 }
 
 // OrganCleared reports if the "organ" edge to the OrgOrgan entity was cleared.
@@ -2964,6 +2966,7 @@ func (m *OrgOrganMutation) ResetHaddrID() {
 // ClearHaddr clears the "haddr" edge to the SysAddress entity.
 func (m *OrgOrganMutation) ClearHaddr() {
 	m.clearedhaddr = true
+	m.clearedFields[orgorgan.FieldHaddrID] = struct{}{}
 }
 
 // HaddrCleared reports if the "haddr" edge to the SysAddress entity was cleared.
@@ -4326,6 +4329,7 @@ func (m *OrgPositionMutation) SetOrganID(id string) {
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
 func (m *OrgPositionMutation) ClearOrgan() {
 	m.clearedorgan = true
+	m.clearedFields[orgposition.FieldOrgID] = struct{}{}
 }
 
 // OrganCleared reports if the "organ" edge to the OrgOrgan entity was cleared.
@@ -6348,6 +6352,7 @@ func (m *OrgStaffMutation) SetOrganID(id string) {
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
 func (m *OrgStaffMutation) ClearOrgan() {
 	m.clearedorgan = true
+	m.clearedFields[orgstaff.FieldOrgID] = struct{}{}
 }
 
 // OrganCleared reports if the "organ" edge to the OrgOrgan entity was cleared.
@@ -6382,6 +6387,7 @@ func (m *OrgStaffMutation) ResetOrgan() {
 // ClearIdenAddr clears the "iden_addr" edge to the SysAddress entity.
 func (m *OrgStaffMutation) ClearIdenAddr() {
 	m.clearediden_addr = true
+	m.clearedFields[orgstaff.FieldIdenAddrID] = struct{}{}
 }
 
 // IdenAddrCleared reports if the "iden_addr" edge to the SysAddress entity was cleared.
@@ -6408,6 +6414,7 @@ func (m *OrgStaffMutation) ResetIdenAddr() {
 // ClearResiAddr clears the "resi_addr" edge to the SysAddress entity.
 func (m *OrgStaffMutation) ClearResiAddr() {
 	m.clearedresi_addr = true
+	m.clearedFields[orgstaff.FieldResiAddrID] = struct{}{}
 }
 
 // ResiAddrCleared reports if the "resi_addr" edge to the SysAddress entity was cleared.
@@ -6434,6 +6441,7 @@ func (m *OrgStaffMutation) ResetResiAddr() {
 // ClearDept clears the "dept" edge to the OrgDept entity.
 func (m *OrgStaffMutation) ClearDept() {
 	m.cleareddept = true
+	m.clearedFields[orgstaff.FieldDeptID] = struct{}{}
 }
 
 // DeptCleared reports if the "dept" edge to the OrgDept entity was cleared.
@@ -6460,6 +6468,7 @@ func (m *OrgStaffMutation) ResetDept() {
 // ClearPosi clears the "posi" edge to the OrgPosition entity.
 func (m *OrgStaffMutation) ClearPosi() {
 	m.clearedposi = true
+	m.clearedFields[orgstaff.FieldPosiID] = struct{}{}
 }
 
 // PosiCleared reports if the "posi" edge to the OrgPosition entity was cleared.
@@ -12100,6 +12109,7 @@ func (m *SysDictItemMutation) ResetDictID() {
 // ClearDict clears the "dict" edge to the SysDict entity.
 func (m *SysDictItemMutation) ClearDict() {
 	m.cleareddict = true
+	m.clearedFields[sysdictitem.FieldDictID] = struct{}{}
 }
 
 // DictCleared reports if the "dict" edge to the SysDict entity was cleared.
@@ -14428,6 +14438,7 @@ func (m *SysDistrictMutation) ResetIsDirect() {
 // ClearParent clears the "parent" edge to the SysDistrict entity.
 func (m *SysDistrictMutation) ClearParent() {
 	m.clearedparent = true
+	m.clearedFields[sysdistrict.FieldParentID] = struct{}{}
 }
 
 // ParentCleared reports if the "parent" edge to the SysDistrict entity was cleared.
@@ -18359,6 +18370,7 @@ func (m *SysMenuMutation) ResetOpenBlank() {
 // ClearParent clears the "parent" edge to the SysMenu entity.
 func (m *SysMenuMutation) ClearParent() {
 	m.clearedparent = true
+	m.clearedFields[sysmenu.FieldParentID] = struct{}{}
 }
 
 // ParentCleared reports if the "parent" edge to the SysMenu entity was cleared.
@@ -24048,6 +24060,7 @@ func (m *SysTeamUserMutation) ResetUserID() {
 // ClearUser clears the "user" edge to the SysUser entity.
 func (m *SysTeamUserMutation) ClearUser() {
 	m.cleareduser = true
+	m.clearedFields[systeamuser.FieldUserID] = struct{}{}
 }
 
 // UserCleared reports if the "user" edge to the SysUser entity was cleared.
@@ -24074,6 +24087,7 @@ func (m *SysTeamUserMutation) ResetUser() {
 // ClearTeam clears the "team" edge to the SysTeam entity.
 func (m *SysTeamUserMutation) ClearTeam() {
 	m.clearedteam = true
+	m.clearedFields[systeamuser.FieldTeamID] = struct{}{}
 }
 
 // TeamCleared reports if the "team" edge to the SysTeam entity was cleared.

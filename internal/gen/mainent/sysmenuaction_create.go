@@ -769,12 +769,16 @@ func (u *SysMenuActionUpsertOne) IDX(ctx context.Context) string {
 // SysMenuActionCreateBulk is the builder for creating many SysMenuAction entities in bulk.
 type SysMenuActionCreateBulk struct {
 	config
+	err      error
 	builders []*SysMenuActionCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysMenuAction entities in the database.
 func (smacb *SysMenuActionCreateBulk) Save(ctx context.Context) ([]*SysMenuAction, error) {
+	if smacb.err != nil {
+		return nil, smacb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(smacb.builders))
 	nodes := make([]*SysMenuAction, len(smacb.builders))
 	mutators := make([]Mutator, len(smacb.builders))
@@ -1098,6 +1102,9 @@ func (u *SysMenuActionUpsertBulk) UpdateName() *SysMenuActionUpsertBulk {
 
 // Exec executes the query.
 func (u *SysMenuActionUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysMenuActionCreateBulk instead", i)

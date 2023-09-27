@@ -725,12 +725,16 @@ func (u *XxxDemoUpsertOne) IDX(ctx context.Context) string {
 // XxxDemoCreateBulk is the builder for creating many XxxDemo entities in bulk.
 type XxxDemoCreateBulk struct {
 	config
+	err      error
 	builders []*XxxDemoCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the XxxDemo entities in the database.
 func (xdcb *XxxDemoCreateBulk) Save(ctx context.Context) ([]*XxxDemo, error) {
+	if xdcb.err != nil {
+		return nil, xdcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(xdcb.builders))
 	nodes := make([]*XxxDemo, len(xdcb.builders))
 	mutators := make([]Mutator, len(xdcb.builders))
@@ -1040,6 +1044,9 @@ func (u *XxxDemoUpsertBulk) UpdateName() *XxxDemoUpsertBulk {
 
 // Exec executes the query.
 func (u *XxxDemoUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the XxxDemoCreateBulk instead", i)

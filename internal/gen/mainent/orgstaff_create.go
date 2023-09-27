@@ -1970,12 +1970,16 @@ func (u *OrgStaffUpsertOne) IDX(ctx context.Context) string {
 // OrgStaffCreateBulk is the builder for creating many OrgStaff entities in bulk.
 type OrgStaffCreateBulk struct {
 	config
+	err      error
 	builders []*OrgStaffCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the OrgStaff entities in the database.
 func (oscb *OrgStaffCreateBulk) Save(ctx context.Context) ([]*OrgStaff, error) {
+	if oscb.err != nil {
+		return nil, oscb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(oscb.builders))
 	nodes := make([]*OrgStaff, len(oscb.builders))
 	mutators := make([]Mutator, len(oscb.builders))
@@ -2684,6 +2688,9 @@ func (u *OrgStaffUpsertBulk) ClearPosiID() *OrgStaffUpsertBulk {
 
 // Exec executes the query.
 func (u *OrgStaffUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the OrgStaffCreateBulk instead", i)

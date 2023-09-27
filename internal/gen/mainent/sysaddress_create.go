@@ -1680,12 +1680,16 @@ func (u *SysAddressUpsertOne) IDX(ctx context.Context) string {
 // SysAddressCreateBulk is the builder for creating many SysAddress entities in bulk.
 type SysAddressCreateBulk struct {
 	config
+	err      error
 	builders []*SysAddressCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysAddress entities in the database.
 func (sacb *SysAddressCreateBulk) Save(ctx context.Context) ([]*SysAddress, error) {
+	if sacb.err != nil {
+		return nil, sacb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(sacb.builders))
 	nodes := make([]*SysAddress, len(sacb.builders))
 	mutators := make([]Mutator, len(sacb.builders))
@@ -2285,6 +2289,9 @@ func (u *SysAddressUpsertBulk) ClearMobile() *SysAddressUpsertBulk {
 
 // Exec executes the query.
 func (u *SysAddressUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysAddressCreateBulk instead", i)

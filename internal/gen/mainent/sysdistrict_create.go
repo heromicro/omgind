@@ -2332,12 +2332,16 @@ func (u *SysDistrictUpsertOne) IDX(ctx context.Context) string {
 // SysDistrictCreateBulk is the builder for creating many SysDistrict entities in bulk.
 type SysDistrictCreateBulk struct {
 	config
+	err      error
 	builders []*SysDistrictCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysDistrict entities in the database.
 func (sdcb *SysDistrictCreateBulk) Save(ctx context.Context) ([]*SysDistrict, error) {
+	if sdcb.err != nil {
+		return nil, sdcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(sdcb.builders))
 	nodes := make([]*SysDistrict, len(sdcb.builders))
 	mutators := make([]Mutator, len(sdcb.builders))
@@ -3207,6 +3211,9 @@ func (u *SysDistrictUpsertBulk) ClearIsDirect() *SysDistrictUpsertBulk {
 
 // Exec executes the query.
 func (u *SysDistrictUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysDistrictCreateBulk instead", i)

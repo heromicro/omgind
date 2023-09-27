@@ -617,12 +617,16 @@ func (u *SysJwtBlockUpsertOne) IDX(ctx context.Context) string {
 // SysJwtBlockCreateBulk is the builder for creating many SysJwtBlock entities in bulk.
 type SysJwtBlockCreateBulk struct {
 	config
+	err      error
 	builders []*SysJwtBlockCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysJwtBlock entities in the database.
 func (sjbcb *SysJwtBlockCreateBulk) Save(ctx context.Context) ([]*SysJwtBlock, error) {
+	if sjbcb.err != nil {
+		return nil, sjbcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(sjbcb.builders))
 	nodes := make([]*SysJwtBlock, len(sjbcb.builders))
 	mutators := make([]Mutator, len(sjbcb.builders))
@@ -897,6 +901,9 @@ func (u *SysJwtBlockUpsertBulk) UpdateJwt() *SysJwtBlockUpsertBulk {
 
 // Exec executes the query.
 func (u *SysJwtBlockUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysJwtBlockCreateBulk instead", i)

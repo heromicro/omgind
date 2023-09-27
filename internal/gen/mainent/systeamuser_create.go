@@ -769,12 +769,16 @@ func (u *SysTeamUserUpsertOne) IDX(ctx context.Context) string {
 // SysTeamUserCreateBulk is the builder for creating many SysTeamUser entities in bulk.
 type SysTeamUserCreateBulk struct {
 	config
+	err      error
 	builders []*SysTeamUserCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysTeamUser entities in the database.
 func (stucb *SysTeamUserCreateBulk) Save(ctx context.Context) ([]*SysTeamUser, error) {
+	if stucb.err != nil {
+		return nil, stucb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(stucb.builders))
 	nodes := make([]*SysTeamUser, len(stucb.builders))
 	mutators := make([]Mutator, len(stucb.builders))
@@ -1084,6 +1088,9 @@ func (u *SysTeamUserUpsertBulk) UpdateUserID() *SysTeamUserUpsertBulk {
 
 // Exec executes the query.
 func (u *SysTeamUserUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysTeamUserCreateBulk instead", i)

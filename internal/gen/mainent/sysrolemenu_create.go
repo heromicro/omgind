@@ -606,12 +606,16 @@ func (u *SysRoleMenuUpsertOne) IDX(ctx context.Context) string {
 // SysRoleMenuCreateBulk is the builder for creating many SysRoleMenu entities in bulk.
 type SysRoleMenuCreateBulk struct {
 	config
+	err      error
 	builders []*SysRoleMenuCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysRoleMenu entities in the database.
 func (srmcb *SysRoleMenuCreateBulk) Save(ctx context.Context) ([]*SysRoleMenu, error) {
+	if srmcb.err != nil {
+		return nil, srmcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(srmcb.builders))
 	nodes := make([]*SysRoleMenu, len(srmcb.builders))
 	mutators := make([]Mutator, len(srmcb.builders))
@@ -886,6 +890,9 @@ func (u *SysRoleMenuUpsertBulk) ClearActionID() *SysRoleMenuUpsertBulk {
 
 // Exec executes the query.
 func (u *SysRoleMenuUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysRoleMenuCreateBulk instead", i)

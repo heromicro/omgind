@@ -888,12 +888,16 @@ func (u *OrgPositionUpsertOne) IDX(ctx context.Context) string {
 // OrgPositionCreateBulk is the builder for creating many OrgPosition entities in bulk.
 type OrgPositionCreateBulk struct {
 	config
+	err      error
 	builders []*OrgPositionCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the OrgPosition entities in the database.
 func (opcb *OrgPositionCreateBulk) Save(ctx context.Context) ([]*OrgPosition, error) {
+	if opcb.err != nil {
+		return nil, opcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(opcb.builders))
 	nodes := make([]*OrgPosition, len(opcb.builders))
 	mutators := make([]Mutator, len(opcb.builders))
@@ -1238,6 +1242,9 @@ func (u *OrgPositionUpsertBulk) ClearOrgID() *OrgPositionUpsertBulk {
 
 // Exec executes the query.
 func (u *OrgPositionUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the OrgPositionCreateBulk instead", i)

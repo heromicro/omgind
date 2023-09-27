@@ -544,12 +544,16 @@ func (u *SysUserRoleUpsertOne) IDX(ctx context.Context) string {
 // SysUserRoleCreateBulk is the builder for creating many SysUserRole entities in bulk.
 type SysUserRoleCreateBulk struct {
 	config
+	err      error
 	builders []*SysUserRoleCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysUserRole entities in the database.
 func (surcb *SysUserRoleCreateBulk) Save(ctx context.Context) ([]*SysUserRole, error) {
+	if surcb.err != nil {
+		return nil, surcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(surcb.builders))
 	nodes := make([]*SysUserRole, len(surcb.builders))
 	mutators := make([]Mutator, len(surcb.builders))
@@ -803,6 +807,9 @@ func (u *SysUserRoleUpsertBulk) UpdateRoleID() *SysUserRoleUpsertBulk {
 
 // Exec executes the query.
 func (u *SysUserRoleUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysUserRoleCreateBulk instead", i)

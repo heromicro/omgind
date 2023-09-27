@@ -832,12 +832,16 @@ func (u *SysTeamUpsertOne) IDX(ctx context.Context) string {
 // SysTeamCreateBulk is the builder for creating many SysTeam entities in bulk.
 type SysTeamCreateBulk struct {
 	config
+	err      error
 	builders []*SysTeamCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the SysTeam entities in the database.
 func (stcb *SysTeamCreateBulk) Save(ctx context.Context) ([]*SysTeam, error) {
+	if stcb.err != nil {
+		return nil, stcb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(stcb.builders))
 	nodes := make([]*SysTeam, len(stcb.builders))
 	mutators := make([]Mutator, len(stcb.builders))
@@ -1161,6 +1165,9 @@ func (u *SysTeamUpsertBulk) ClearCode() *SysTeamUpsertBulk {
 
 // Exec executes the query.
 func (u *SysTeamUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the SysTeamCreateBulk instead", i)

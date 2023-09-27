@@ -1124,12 +1124,16 @@ func (u *OrgOrganUpsertOne) IDX(ctx context.Context) string {
 // OrgOrganCreateBulk is the builder for creating many OrgOrgan entities in bulk.
 type OrgOrganCreateBulk struct {
 	config
+	err      error
 	builders []*OrgOrganCreate
 	conflict []sql.ConflictOption
 }
 
 // Save creates the OrgOrgan entities in the database.
 func (oocb *OrgOrganCreateBulk) Save(ctx context.Context) ([]*OrgOrgan, error) {
+	if oocb.err != nil {
+		return nil, oocb.err
+	}
 	specs := make([]*sqlgraph.CreateSpec, len(oocb.builders))
 	nodes := make([]*OrgOrgan, len(oocb.builders))
 	mutators := make([]Mutator, len(oocb.builders))
@@ -1537,6 +1541,9 @@ func (u *OrgOrganUpsertBulk) ClearHaddrID() *OrgOrganUpsertBulk {
 
 // Exec executes the query.
 func (u *OrgOrganUpsertBulk) Exec(ctx context.Context) error {
+	if u.create.err != nil {
+		return u.create.err
+	}
 	for i, b := range u.create.builders {
 		if len(b.conflict) != 0 {
 			return fmt.Errorf("mainent: OnConflict was set for builder %d. Set it on the OrgOrganCreateBulk instead", i)
