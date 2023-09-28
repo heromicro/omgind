@@ -22,6 +22,9 @@ func (a *SysTeamUser) String() string {
 type SysTeamUserQueryParam struct {
 	PaginationParam
 	QueryValue string `form:"q"` // 模糊查询
+
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // SysTeamUserQueryOptions 查询可选参数项

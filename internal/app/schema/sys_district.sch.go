@@ -44,18 +44,18 @@ type SysDistrict struct {
 type SysDistrictQueryParam struct {
 	PaginationParam
 
-	ParentID   *string `form:"pid" json:"pid"`               // pid
-	QueryValue string  `form:"q" json:"q"` // 模糊查询
-	Name       string  `form:"name" json:"name"`             // 名称
-	NameEN     string  `form:"name_en" json:"name_en"`       // 名称
-	Initials   string  `form:"initials" json:"initials"`     // 简拼
-	Suffix     string  `form:"suffix" json:"suffix"`         // 区域后缀,省/市/区/旗/盟/自治区/
-	IsMain     *bool   `form:"is_main" json:"is_main"`       // 主要城市
-	IsHot      *bool   `form:"is_hot" json:"is_hot"`         // 热门城市
-	IsDirect   *bool   `form:"is_direct" json:"is_direct"`   // 是否是直辖
-	IsLeaf     *bool   `form:"is_leaf" json:"is_leaf"`       // 是否是子叶
-	IsActive   *bool   `form:"is_active" json:"is_active"`   // 状态
-	IsReal     *bool   `form:"is_real" json:"is_real"`       // 状态
+	ParentID   *string `form:"pid" json:"pid"`             // pid
+	QueryValue string  `form:"q" json:"q"`                 // 模糊查询
+	Name       string  `form:"name" json:"name"`           // 名称
+	NameEN     string  `form:"name_en" json:"name_en"`     // 名称
+	Initials   string  `form:"initials" json:"initials"`   // 简拼
+	Suffix     string  `form:"suffix" json:"suffix"`       // 区域后缀,省/市/区/旗/盟/自治区/
+	IsMain     *bool   `form:"is_main" json:"is_main"`     // 主要城市
+	IsHot      *bool   `form:"is_hot" json:"is_hot"`       // 热门城市
+	IsDirect   *bool   `form:"is_direct" json:"is_direct"` // 是否是直辖
+	IsLeaf     *bool   `form:"is_leaf" json:"is_leaf"`     // 是否是子叶
+	IsActive   *bool   `form:"is_active" json:"is_active"` // 状态
+	IsReal     *bool   `form:"is_real" json:"is_real"`     // 状态
 
 	TreeID    *int64 `form:"tree_id" json:"tree_id"`       // 树id
 	TreeLevel *int32 `form:"tree_level" json:"tree_level"` // tree_level
@@ -70,7 +70,6 @@ type SysDistrictQueryParam struct {
 
 	// example: asc
 	// example: desc
-	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc, desc
 	Name_Order      string `form:"name__order" json:"name__order"`             // asc desc
 	TreeID_Order    string `form:"tree_id__order" json:"tree_id__order"`       // asc desc
 	TreeLevel_Order string `form:"tree_level__order" json:"tree_level__order"` // 层级 asc desc
@@ -80,6 +79,8 @@ type SysDistrictQueryParam struct {
 	ParentAreaCode *string `form:"p_area_code" json:"p_area_code"` // parent.area_code
 	ParentParentID *string `form:"p_pid" json:"p_pid"`             // parent.pid
 
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // SysDistrictQueryOptions 查询可选参数项

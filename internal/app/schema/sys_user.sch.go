@@ -66,6 +66,7 @@ type UserQueryParam struct {
 	RoleIDs    []string `form:"role_ids"`  // 角色ID列表
 
 	BasicOrderParam
+	TimeOrderParam
 }
 
 // UserQueryOptions 查询可选参数项
@@ -131,6 +132,9 @@ type UserRoleQueryParam struct {
 	PaginationParam
 	UserID  string   // 用户ID
 	UserIDs []string // 用户ID列表
+
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // UserRoleQueryOptions 查询可选参数项

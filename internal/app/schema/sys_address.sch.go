@@ -41,13 +41,14 @@ type SysAddressQueryParam struct {
 
 	// example: asc
 	// example: desc
-	CreatedAt_Order  string `form:"created_at__order" json:"created_at__order"`   // asc, desc
 	ID_Order         string `form:"id__order" json:"id__order"`                   // asc, desc
 	CountryID_Order  string `form:"country_id__order" json:"country_id__order"`   // asc, desc
 	ProvinceID_Order string `form:"province_id__order" json:"province_id__order"` // asc, desc
 	CityID_Order     string `form:"city_id__order" json:"city_id__order"`         // asc, desc
 	CountyID_Order   string `form:"county_id__order" json:"county_id__order"`     // asc, desc
 
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // SysAddressQueryOptions 查询可选参数项

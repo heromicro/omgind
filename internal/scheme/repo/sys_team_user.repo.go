@@ -64,6 +64,12 @@ func (a *SysTeamUser) Query(ctx context.Context, params schema.SysTeamUserQueryP
 
 	query := a.EntCli.SysTeamUser.Query()
 
+	if v := params.IsDel; v != nil && *v {
+		query = query.Where(systeamuser.IsDel(*v))
+	} else {
+		query = query.Where(systeamuser.IsDel(false))
+	}
+
 	query = query.Where(systeamuser.DeletedAtIsNil())
 	// TODO: 查询条件
 

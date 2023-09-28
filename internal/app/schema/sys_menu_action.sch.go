@@ -16,6 +16,9 @@ type MenuActionQueryParam struct {
 	PaginationParam
 	MenuID string   // 菜单ID
 	IDs    []string // 唯一标识列表
+
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // MenuActionQueryOptions 查询可选参数项

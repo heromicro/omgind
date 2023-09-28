@@ -15,6 +15,9 @@ type MenuActionResourceQueryParam struct {
 	PaginationParam
 	MenuID  string   // 菜单ID
 	MenuIDs []string // 菜单ID列表
+
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // MenuActionResourceQueryOptions 查询可选参数项

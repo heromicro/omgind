@@ -28,6 +28,7 @@ type RoleQueryParam struct {
 	IsActive   *bool    `form:"is_active"` //
 
 	BasicOrderParam
+	TimeOrderParam
 }
 
 // RoleQueryOptions 查询可选参数项
@@ -77,6 +78,9 @@ type RoleMenuQueryParam struct {
 	PaginationParam
 	RoleID  string   `form:"role_id" json:"role_id"`   // 角色ID
 	RoleIDs []string `form:"role_ids" json:"role_ids"` // 角色ID列表
+
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // RoleMenuQueryOptions 查询可选参数项

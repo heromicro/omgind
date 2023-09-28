@@ -61,18 +61,11 @@ type OrgDeptQueryParam struct {
 	// example: "asc"
 	// example: "desc"
 	Name_Order string `form:"name__order" json:"name__order"` // asc desc
-	// example: "asc"
-	// example: "desc"
-	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc, desc
-	// example: "asc"
-	// example: "desc"
-	IsActive_Order string `form:"is_active__order" json:"is_active__order"` //  asc desc
-	// example: "asc"
-	// example: "desc"
-	Sort_Order string `form:"sort__order" json:"sort__order"` // asc desc
 
 	ParentParentID *string `form:"p_pid" json:"p_pid"` // parent.pid
 
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // OrgDeptQueryOptions 查询可选参数项

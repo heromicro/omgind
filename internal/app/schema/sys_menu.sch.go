@@ -37,20 +37,22 @@ func (a *Menu) String() string {
 // MenuQueryParam 查询条件
 type MenuQueryParam struct {
 	PaginationParam
-	IDs              []string `form:"-"`          // 唯一标识列表
-	Name             string   `form:"-"`          // 菜单名称
-	PrefixParentPath string   `form:"-"`          // 父级路径(前缀模糊查询)
-	QueryValue       string   `form:"q"` // 模糊查询
-	ParentID         *string  `form:"pid"`        // 父级内码
+	IDs              []string `form:"-"`   // 唯一标识列表
+	Name             string   `form:"-"`   // 菜单名称
+	PrefixParentPath string   `form:"-"`   // 父级路径(前缀模糊查询)
+	QueryValue       string   `form:"q"`   // 模糊查询
+	ParentID         *string  `form:"pid"` // 父级内码
 	IsShow           *bool    `form:"isShow"`
 	IsActive         *bool    `form:"is_active"` // 状态
 	Level            *int32   `form:"level"`     //
 
 	Level_Order string `form:"level__order" json:"level__order"` // asc/desc
-	BasicOrderParam
 
 	WithParent   *bool `form:"w__parent" json:"w__parent"`     //
 	WithChildren *bool `form:"w__children" json:"w__children"` //
+
+	BasicOrderParam
+	TimeOrderParam
 }
 
 func (a *MenuQueryParam) String() string {

@@ -65,12 +65,6 @@ type OrgStaffQueryParam struct {
 	IsActive  *bool  `form:"is_active" json:"is_active"`   //
 	OrgID     string `form:"org_id" json:"org_id"`         //
 
-	// example: asc
-	// example: desc
-	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc, desc
-	IsActive_Order  string `form:"is_active__order" json:"is_active__order"`   //
-	Sort_Order      string `form:"sort__order" json:"sort__order"`             // asc/desc
-
 	BirthDate_Order string `form:"birth_date__order" json:"birth_date__order"` // asc/desc
 
 	WorkerNo_Order    string `form:"worker_no__order" json:"worker_no__order"`       // asc/desc
@@ -82,6 +76,8 @@ type OrgStaffQueryParam struct {
 	Rank_Start string `form:"rank__st" json:"rank__st"`       //
 	Rank_End   string `form:"rank__ed" json:"rank__ed"`       //
 
+	BasicOrderParam
+	TimeOrderParam
 }
 
 // OrgStaffQueryOptions 查询可选参数项
