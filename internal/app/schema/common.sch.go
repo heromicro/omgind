@@ -35,6 +35,7 @@ type BasicOrderParam struct {
 
 	MustIncludeIDs []string `form:"muin_ids"  json:"muin_ids"` // 必须包含这些ids
 
+	IsDel *bool `form:"is_del" json:"is_del"`
 }
 
 type TimeOrderParam struct {
