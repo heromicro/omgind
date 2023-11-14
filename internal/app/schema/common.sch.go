@@ -44,20 +44,20 @@ type BasicOrderParam struct {
 type TimeOrderParam struct {
 	// example: asc
 	// example: desc
-	CreatedAt_Order string `form:"created_at__order" json:"created_at__order"` // asc/desc
+	CreatedAt_Order *string `form:"created_at__order" json:"created_at__order"` // asc/desc
 	// example: "asc"
 	// example: "desc"
-	UpdatedAt_Order string `form:"updated_at__order" json:"updated_at__order"` // asc/desc
+	UpdatedAt_Order *string `form:"updated_at__order" json:"updated_at__order"` // asc/desc
 	// example: "asc"
 	// example: "desc"
-	DeletedAt_Order string `form:"deleted_at__order" json:"deleted_at__order,omitempty"` // asc/desc
+	DeletedAt_Order *string `form:"deleted_at__order" json:"deleted_at__order,omitempty"` // asc/desc
 
-	CreatedAt_St string `form:"created_at__st" json:"created_at__st,omitempty"` //
-	CreatedAt_Ed string `form:"created_at__ed" json:"created_at__ed,omitempty"` //
+	CreatedAt_St *int64 `form:"created_at__st" json:"created_at__st,omitempty"` //
+	CreatedAt_Ed *int64 `form:"created_at__ed" json:"created_at__ed,omitempty"` //
 
-	UpdatedAt_St string `form:"updated_at__st" json:"updated_at__st,omitempty"` //
-	UpdatedAt_Ed string `form:"updated_at__ed" json:"updated_at__ed,omitempty"` //
+	UpdatedAt_St *int64 `form:"updated_at__st" json:"updated_at__st,omitempty"` //
+	UpdatedAt_Ed *int64 `form:"updated_at__ed" json:"updated_at__ed,omitempty"` //
 
-	DeletedAt_St string `form:"deleted_at__st" json:"deleted_at__st,omitempty"` //
-	DeletedAt_Ed string `form:"deleted_at__ed" json:"deleted_at__ed,omitempty"` //  //
+	DeletedAt_St *int64 `form:"deleted_at__st" json:"deleted_at__st,omitempty"` //
+	DeletedAt_Ed *int64 `form:"deleted_at__ed" json:"deleted_at__ed,omitempty"` //  //
 }
