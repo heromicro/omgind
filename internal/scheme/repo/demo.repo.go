@@ -113,8 +113,8 @@ func (a *Demo) Query(ctx context.Context, params schema.DemoQueryParam, opts ...
 		query = query.Order(xxxdemo.ByCode(OrderDirection(v)))
 	}
 
-	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(xxxdemo.ByCreatedAt(OrderDirection(v)))
+	if v := params.CreatedAt_Order; v != nil {
+		query = query.Order(xxxdemo.ByCreatedAt(OrderDirection(*v)))
 	}
 
 	pr.Current = params.PaginationParam.GetCurrent()

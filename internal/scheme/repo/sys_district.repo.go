@@ -158,8 +158,8 @@ func (a *SysDistrict) Query(ctx context.Context, params schema.SysDistrictQueryP
 	}
 
 	has_order := false
-	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(sysdistrict.ByCreatedAt(OrderDirection(v)))
+	if v := params.CreatedAt_Order; v != nil {
+		query = query.Order(sysdistrict.ByCreatedAt(OrderDirection(*v)))
 		has_order = true
 	}
 
@@ -307,8 +307,8 @@ func (a *SysDistrict) GetAllSubs(ctx context.Context, pid string, params schema.
 	}
 
 	has_order := false
-	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(sysdistrict.ByCreatedAt(OrderDirection(v)))
+	if v := params.CreatedAt_Order; v != nil {
+		query = query.Order(sysdistrict.ByCreatedAt(OrderDirection(*v)))
 		has_order = true
 	}
 

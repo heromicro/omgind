@@ -97,8 +97,8 @@ func (a *SysAddress) Query(ctx context.Context, params schema.SysAddressQueryPar
 		return &schema.SysAddressQueryResult{PageResult: pr}, nil
 	}
 
-	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(sysaddress.ByCreatedAt(OrderDirection(v)))
+	if v := params.CreatedAt_Order; v != nil {
+		query = query.Order(sysaddress.ByCreatedAt(OrderDirection(*v)))
 	}
 	if v := params.CountryID_Order; v != "" {
 		query = query.Order(sysaddress.ByCountryID(OrderDirection(v)))

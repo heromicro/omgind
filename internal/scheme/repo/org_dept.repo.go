@@ -261,8 +261,8 @@ func (a *OrgDept) GetAllSubs(ctx context.Context, pid string, params schema.OrgD
 	}
 
 	has_order := false
-	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(orgdept.ByCreatedAt(OrderDirection(v)))
+	if v := params.CreatedAt_Order; v != nil {
+		query = query.Order(orgdept.ByCreatedAt(OrderDirection(*v)))
 		has_order = true
 	}
 

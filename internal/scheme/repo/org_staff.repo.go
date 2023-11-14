@@ -133,8 +133,8 @@ func (a *OrgStaff) Query(ctx context.Context, params schema.OrgStaffQueryParam, 
 		query = query.Order(orgstaff.BySort(OrderDirection(v)))
 	}
 
-	if v := params.CreatedAt_Order; v != "" {
-		query = query.Order(orgstaff.ByCreatedAt(OrderDirection(v)))
+	if v := params.CreatedAt_Order; v != nil {
+		query = query.Order(orgstaff.ByCreatedAt(OrderDirection(*v)))
 	}
 
 	if v := params.BirthDate_Order; v != "" {
