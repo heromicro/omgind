@@ -81,9 +81,25 @@ func (suru *SysUserRoleUpdate) SetUserID(s string) *SysUserRoleUpdate {
 	return suru
 }
 
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (suru *SysUserRoleUpdate) SetNillableUserID(s *string) *SysUserRoleUpdate {
+	if s != nil {
+		suru.SetUserID(*s)
+	}
+	return suru
+}
+
 // SetRoleID sets the "role_id" field.
 func (suru *SysUserRoleUpdate) SetRoleID(s string) *SysUserRoleUpdate {
 	suru.mutation.SetRoleID(s)
+	return suru
+}
+
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (suru *SysUserRoleUpdate) SetNillableRoleID(s *string) *SysUserRoleUpdate {
+	if s != nil {
+		suru.SetRoleID(*s)
+	}
 	return suru
 }
 
@@ -259,9 +275,25 @@ func (suruo *SysUserRoleUpdateOne) SetUserID(s string) *SysUserRoleUpdateOne {
 	return suruo
 }
 
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (suruo *SysUserRoleUpdateOne) SetNillableUserID(s *string) *SysUserRoleUpdateOne {
+	if s != nil {
+		suruo.SetUserID(*s)
+	}
+	return suruo
+}
+
 // SetRoleID sets the "role_id" field.
 func (suruo *SysUserRoleUpdateOne) SetRoleID(s string) *SysUserRoleUpdateOne {
 	suruo.mutation.SetRoleID(s)
+	return suruo
+}
+
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (suruo *SysUserRoleUpdateOne) SetNillableRoleID(s *string) *SysUserRoleUpdateOne {
+	if s != nil {
+		suruo.SetRoleID(*s)
+	}
 	return suruo
 }
 

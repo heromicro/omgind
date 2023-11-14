@@ -178,15 +178,39 @@ func (suu *SysUserUpdate) SetPassword(s string) *SysUserUpdate {
 	return suu
 }
 
+// SetNillablePassword sets the "password" field if the given value is not nil.
+func (suu *SysUserUpdate) SetNillablePassword(s *string) *SysUserUpdate {
+	if s != nil {
+		suu.SetPassword(*s)
+	}
+	return suu
+}
+
 // SetEmail sets the "email" field.
 func (suu *SysUserUpdate) SetEmail(s string) *SysUserUpdate {
 	suu.mutation.SetEmail(s)
 	return suu
 }
 
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (suu *SysUserUpdate) SetNillableEmail(s *string) *SysUserUpdate {
+	if s != nil {
+		suu.SetEmail(*s)
+	}
+	return suu
+}
+
 // SetMobile sets the "mobile" field.
 func (suu *SysUserUpdate) SetMobile(s string) *SysUserUpdate {
 	suu.mutation.SetMobile(s)
+	return suu
+}
+
+// SetNillableMobile sets the "mobile" field if the given value is not nil.
+func (suu *SysUserUpdate) SetNillableMobile(s *string) *SysUserUpdate {
+	if s != nil {
+		suu.SetMobile(*s)
+	}
 	return suu
 }
 
@@ -707,15 +731,39 @@ func (suuo *SysUserUpdateOne) SetPassword(s string) *SysUserUpdateOne {
 	return suuo
 }
 
+// SetNillablePassword sets the "password" field if the given value is not nil.
+func (suuo *SysUserUpdateOne) SetNillablePassword(s *string) *SysUserUpdateOne {
+	if s != nil {
+		suuo.SetPassword(*s)
+	}
+	return suuo
+}
+
 // SetEmail sets the "email" field.
 func (suuo *SysUserUpdateOne) SetEmail(s string) *SysUserUpdateOne {
 	suuo.mutation.SetEmail(s)
 	return suuo
 }
 
+// SetNillableEmail sets the "email" field if the given value is not nil.
+func (suuo *SysUserUpdateOne) SetNillableEmail(s *string) *SysUserUpdateOne {
+	if s != nil {
+		suuo.SetEmail(*s)
+	}
+	return suuo
+}
+
 // SetMobile sets the "mobile" field.
 func (suuo *SysUserUpdateOne) SetMobile(s string) *SysUserUpdateOne {
 	suuo.mutation.SetMobile(s)
+	return suuo
+}
+
+// SetNillableMobile sets the "mobile" field if the given value is not nil.
+func (suuo *SysUserUpdateOne) SetNillableMobile(s *string) *SysUserUpdateOne {
+	if s != nil {
+		suuo.SetMobile(*s)
+	}
 	return suuo
 }
 

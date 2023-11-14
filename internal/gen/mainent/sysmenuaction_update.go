@@ -136,15 +136,39 @@ func (smau *SysMenuActionUpdate) SetMenuID(s string) *SysMenuActionUpdate {
 	return smau
 }
 
+// SetNillableMenuID sets the "menu_id" field if the given value is not nil.
+func (smau *SysMenuActionUpdate) SetNillableMenuID(s *string) *SysMenuActionUpdate {
+	if s != nil {
+		smau.SetMenuID(*s)
+	}
+	return smau
+}
+
 // SetCode sets the "code" field.
 func (smau *SysMenuActionUpdate) SetCode(s string) *SysMenuActionUpdate {
 	smau.mutation.SetCode(s)
 	return smau
 }
 
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (smau *SysMenuActionUpdate) SetNillableCode(s *string) *SysMenuActionUpdate {
+	if s != nil {
+		smau.SetCode(*s)
+	}
+	return smau
+}
+
 // SetName sets the "name" field.
 func (smau *SysMenuActionUpdate) SetName(s string) *SysMenuActionUpdate {
 	smau.mutation.SetName(s)
+	return smau
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (smau *SysMenuActionUpdate) SetNillableName(s *string) *SysMenuActionUpdate {
+	if s != nil {
+		smau.SetName(*s)
+	}
 	return smau
 }
 
@@ -403,15 +427,39 @@ func (smauo *SysMenuActionUpdateOne) SetMenuID(s string) *SysMenuActionUpdateOne
 	return smauo
 }
 
+// SetNillableMenuID sets the "menu_id" field if the given value is not nil.
+func (smauo *SysMenuActionUpdateOne) SetNillableMenuID(s *string) *SysMenuActionUpdateOne {
+	if s != nil {
+		smauo.SetMenuID(*s)
+	}
+	return smauo
+}
+
 // SetCode sets the "code" field.
 func (smauo *SysMenuActionUpdateOne) SetCode(s string) *SysMenuActionUpdateOne {
 	smauo.mutation.SetCode(s)
 	return smauo
 }
 
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (smauo *SysMenuActionUpdateOne) SetNillableCode(s *string) *SysMenuActionUpdateOne {
+	if s != nil {
+		smauo.SetCode(*s)
+	}
+	return smauo
+}
+
 // SetName sets the "name" field.
 func (smauo *SysMenuActionUpdateOne) SetName(s string) *SysMenuActionUpdateOne {
 	smauo.mutation.SetName(s)
+	return smauo
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (smauo *SysMenuActionUpdateOne) SetNillableName(s *string) *SysMenuActionUpdateOne {
+	if s != nil {
+		smauo.SetName(*s)
+	}
 	return smauo
 }
 

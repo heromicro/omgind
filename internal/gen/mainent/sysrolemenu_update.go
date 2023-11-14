@@ -81,9 +81,25 @@ func (srmu *SysRoleMenuUpdate) SetRoleID(s string) *SysRoleMenuUpdate {
 	return srmu
 }
 
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (srmu *SysRoleMenuUpdate) SetNillableRoleID(s *string) *SysRoleMenuUpdate {
+	if s != nil {
+		srmu.SetRoleID(*s)
+	}
+	return srmu
+}
+
 // SetMenuID sets the "menu_id" field.
 func (srmu *SysRoleMenuUpdate) SetMenuID(s string) *SysRoleMenuUpdate {
 	srmu.mutation.SetMenuID(s)
+	return srmu
+}
+
+// SetNillableMenuID sets the "menu_id" field if the given value is not nil.
+func (srmu *SysRoleMenuUpdate) SetNillableMenuID(s *string) *SysRoleMenuUpdate {
+	if s != nil {
+		srmu.SetMenuID(*s)
+	}
 	return srmu
 }
 
@@ -290,9 +306,25 @@ func (srmuo *SysRoleMenuUpdateOne) SetRoleID(s string) *SysRoleMenuUpdateOne {
 	return srmuo
 }
 
+// SetNillableRoleID sets the "role_id" field if the given value is not nil.
+func (srmuo *SysRoleMenuUpdateOne) SetNillableRoleID(s *string) *SysRoleMenuUpdateOne {
+	if s != nil {
+		srmuo.SetRoleID(*s)
+	}
+	return srmuo
+}
+
 // SetMenuID sets the "menu_id" field.
 func (srmuo *SysRoleMenuUpdateOne) SetMenuID(s string) *SysRoleMenuUpdateOne {
 	srmuo.mutation.SetMenuID(s)
+	return srmuo
+}
+
+// SetNillableMenuID sets the "menu_id" field if the given value is not nil.
+func (srmuo *SysRoleMenuUpdateOne) SetNillableMenuID(s *string) *SysRoleMenuUpdateOne {
+	if s != nil {
+		srmuo.SetMenuID(*s)
+	}
 	return srmuo
 }
 

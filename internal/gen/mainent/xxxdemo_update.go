@@ -136,9 +136,25 @@ func (xdu *XxxDemoUpdate) SetCode(s string) *XxxDemoUpdate {
 	return xdu
 }
 
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (xdu *XxxDemoUpdate) SetNillableCode(s *string) *XxxDemoUpdate {
+	if s != nil {
+		xdu.SetCode(*s)
+	}
+	return xdu
+}
+
 // SetName sets the "name" field.
 func (xdu *XxxDemoUpdate) SetName(s string) *XxxDemoUpdate {
 	xdu.mutation.SetName(s)
+	return xdu
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (xdu *XxxDemoUpdate) SetNillableName(s *string) *XxxDemoUpdate {
+	if s != nil {
+		xdu.SetName(*s)
+	}
 	return xdu
 }
 
@@ -389,9 +405,25 @@ func (xduo *XxxDemoUpdateOne) SetCode(s string) *XxxDemoUpdateOne {
 	return xduo
 }
 
+// SetNillableCode sets the "code" field if the given value is not nil.
+func (xduo *XxxDemoUpdateOne) SetNillableCode(s *string) *XxxDemoUpdateOne {
+	if s != nil {
+		xduo.SetCode(*s)
+	}
+	return xduo
+}
+
 // SetName sets the "name" field.
 func (xduo *XxxDemoUpdateOne) SetName(s string) *XxxDemoUpdateOne {
 	xduo.mutation.SetName(s)
+	return xduo
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (xduo *XxxDemoUpdateOne) SetNillableName(s *string) *XxxDemoUpdateOne {
+	if s != nil {
+		xduo.SetName(*s)
+	}
 	return xduo
 }
 

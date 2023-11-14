@@ -137,10 +137,26 @@ func (sdiu *SysDictItemUpdate) SetLabel(s string) *SysDictItemUpdate {
 	return sdiu
 }
 
+// SetNillableLabel sets the "label" field if the given value is not nil.
+func (sdiu *SysDictItemUpdate) SetNillableLabel(s *string) *SysDictItemUpdate {
+	if s != nil {
+		sdiu.SetLabel(*s)
+	}
+	return sdiu
+}
+
 // SetValue sets the "value" field.
 func (sdiu *SysDictItemUpdate) SetValue(i int) *SysDictItemUpdate {
 	sdiu.mutation.ResetValue()
 	sdiu.mutation.SetValue(i)
+	return sdiu
+}
+
+// SetNillableValue sets the "value" field if the given value is not nil.
+func (sdiu *SysDictItemUpdate) SetNillableValue(i *int) *SysDictItemUpdate {
+	if i != nil {
+		sdiu.SetValue(*i)
+	}
 	return sdiu
 }
 
@@ -460,10 +476,26 @@ func (sdiuo *SysDictItemUpdateOne) SetLabel(s string) *SysDictItemUpdateOne {
 	return sdiuo
 }
 
+// SetNillableLabel sets the "label" field if the given value is not nil.
+func (sdiuo *SysDictItemUpdateOne) SetNillableLabel(s *string) *SysDictItemUpdateOne {
+	if s != nil {
+		sdiuo.SetLabel(*s)
+	}
+	return sdiuo
+}
+
 // SetValue sets the "value" field.
 func (sdiuo *SysDictItemUpdateOne) SetValue(i int) *SysDictItemUpdateOne {
 	sdiuo.mutation.ResetValue()
 	sdiuo.mutation.SetValue(i)
+	return sdiuo
+}
+
+// SetNillableValue sets the "value" field if the given value is not nil.
+func (sdiuo *SysDictItemUpdateOne) SetNillableValue(i *int) *SysDictItemUpdateOne {
+	if i != nil {
+		sdiuo.SetValue(*i)
+	}
 	return sdiuo
 }
 

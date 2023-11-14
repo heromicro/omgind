@@ -136,15 +136,39 @@ func (smu *SysMenuUpdate) SetName(s string) *SysMenuUpdate {
 	return smu
 }
 
+// SetNillableName sets the "name" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableName(s *string) *SysMenuUpdate {
+	if s != nil {
+		smu.SetName(*s)
+	}
+	return smu
+}
+
 // SetIcon sets the "icon" field.
 func (smu *SysMenuUpdate) SetIcon(s string) *SysMenuUpdate {
 	smu.mutation.SetIcon(s)
 	return smu
 }
 
+// SetNillableIcon sets the "icon" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableIcon(s *string) *SysMenuUpdate {
+	if s != nil {
+		smu.SetIcon(*s)
+	}
+	return smu
+}
+
 // SetRouter sets the "router" field.
 func (smu *SysMenuUpdate) SetRouter(s string) *SysMenuUpdate {
 	smu.mutation.SetRouter(s)
+	return smu
+}
+
+// SetNillableRouter sets the "router" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableRouter(s *string) *SysMenuUpdate {
+	if s != nil {
+		smu.SetRouter(*s)
+	}
 	return smu
 }
 
@@ -206,6 +230,14 @@ func (smu *SysMenuUpdate) ClearParentPath() *SysMenuUpdate {
 func (smu *SysMenuUpdate) SetLevel(i int32) *SysMenuUpdate {
 	smu.mutation.ResetLevel()
 	smu.mutation.SetLevel(i)
+	return smu
+}
+
+// SetNillableLevel sets the "level" field if the given value is not nil.
+func (smu *SysMenuUpdate) SetNillableLevel(i *int32) *SysMenuUpdate {
+	if i != nil {
+		smu.SetLevel(*i)
+	}
 	return smu
 }
 
@@ -673,15 +705,39 @@ func (smuo *SysMenuUpdateOne) SetName(s string) *SysMenuUpdateOne {
 	return smuo
 }
 
+// SetNillableName sets the "name" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableName(s *string) *SysMenuUpdateOne {
+	if s != nil {
+		smuo.SetName(*s)
+	}
+	return smuo
+}
+
 // SetIcon sets the "icon" field.
 func (smuo *SysMenuUpdateOne) SetIcon(s string) *SysMenuUpdateOne {
 	smuo.mutation.SetIcon(s)
 	return smuo
 }
 
+// SetNillableIcon sets the "icon" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableIcon(s *string) *SysMenuUpdateOne {
+	if s != nil {
+		smuo.SetIcon(*s)
+	}
+	return smuo
+}
+
 // SetRouter sets the "router" field.
 func (smuo *SysMenuUpdateOne) SetRouter(s string) *SysMenuUpdateOne {
 	smuo.mutation.SetRouter(s)
+	return smuo
+}
+
+// SetNillableRouter sets the "router" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableRouter(s *string) *SysMenuUpdateOne {
+	if s != nil {
+		smuo.SetRouter(*s)
+	}
 	return smuo
 }
 
@@ -743,6 +799,14 @@ func (smuo *SysMenuUpdateOne) ClearParentPath() *SysMenuUpdateOne {
 func (smuo *SysMenuUpdateOne) SetLevel(i int32) *SysMenuUpdateOne {
 	smuo.mutation.ResetLevel()
 	smuo.mutation.SetLevel(i)
+	return smuo
+}
+
+// SetNillableLevel sets the "level" field if the given value is not nil.
+func (smuo *SysMenuUpdateOne) SetNillableLevel(i *int32) *SysMenuUpdateOne {
+	if i != nil {
+		smuo.SetLevel(*i)
+	}
 	return smuo
 }
 

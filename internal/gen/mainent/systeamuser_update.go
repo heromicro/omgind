@@ -138,9 +138,25 @@ func (stuu *SysTeamUserUpdate) SetTeamID(s string) *SysTeamUserUpdate {
 	return stuu
 }
 
+// SetNillableTeamID sets the "team_id" field if the given value is not nil.
+func (stuu *SysTeamUserUpdate) SetNillableTeamID(s *string) *SysTeamUserUpdate {
+	if s != nil {
+		stuu.SetTeamID(*s)
+	}
+	return stuu
+}
+
 // SetUserID sets the "user_id" field.
 func (stuu *SysTeamUserUpdate) SetUserID(s string) *SysTeamUserUpdate {
 	stuu.mutation.SetUserID(s)
+	return stuu
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (stuu *SysTeamUserUpdate) SetNillableUserID(s *string) *SysTeamUserUpdate {
+	if s != nil {
+		stuu.SetUserID(*s)
+	}
 	return stuu
 }
 
@@ -471,9 +487,25 @@ func (stuuo *SysTeamUserUpdateOne) SetTeamID(s string) *SysTeamUserUpdateOne {
 	return stuuo
 }
 
+// SetNillableTeamID sets the "team_id" field if the given value is not nil.
+func (stuuo *SysTeamUserUpdateOne) SetNillableTeamID(s *string) *SysTeamUserUpdateOne {
+	if s != nil {
+		stuuo.SetTeamID(*s)
+	}
+	return stuuo
+}
+
 // SetUserID sets the "user_id" field.
 func (stuuo *SysTeamUserUpdateOne) SetUserID(s string) *SysTeamUserUpdateOne {
 	stuuo.mutation.SetUserID(s)
+	return stuuo
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (stuuo *SysTeamUserUpdateOne) SetNillableUserID(s *string) *SysTeamUserUpdateOne {
+	if s != nil {
+		stuuo.SetUserID(*s)
+	}
 	return stuuo
 }
 

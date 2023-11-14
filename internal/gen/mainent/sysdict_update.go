@@ -138,9 +138,25 @@ func (sdu *SysDictUpdate) SetNameCn(s string) *SysDictUpdate {
 	return sdu
 }
 
+// SetNillableNameCn sets the "name_cn" field if the given value is not nil.
+func (sdu *SysDictUpdate) SetNillableNameCn(s *string) *SysDictUpdate {
+	if s != nil {
+		sdu.SetNameCn(*s)
+	}
+	return sdu
+}
+
 // SetNameEn sets the "name_en" field.
 func (sdu *SysDictUpdate) SetNameEn(s string) *SysDictUpdate {
 	sdu.mutation.SetNameEn(s)
+	return sdu
+}
+
+// SetNillableNameEn sets the "name_en" field if the given value is not nil.
+func (sdu *SysDictUpdate) SetNillableNameEn(s *string) *SysDictUpdate {
+	if s != nil {
+		sdu.SetNameEn(*s)
+	}
 	return sdu
 }
 
@@ -494,9 +510,25 @@ func (sduo *SysDictUpdateOne) SetNameCn(s string) *SysDictUpdateOne {
 	return sduo
 }
 
+// SetNillableNameCn sets the "name_cn" field if the given value is not nil.
+func (sduo *SysDictUpdateOne) SetNillableNameCn(s *string) *SysDictUpdateOne {
+	if s != nil {
+		sduo.SetNameCn(*s)
+	}
+	return sduo
+}
+
 // SetNameEn sets the "name_en" field.
 func (sduo *SysDictUpdateOne) SetNameEn(s string) *SysDictUpdateOne {
 	sduo.mutation.SetNameEn(s)
+	return sduo
+}
+
+// SetNillableNameEn sets the "name_en" field if the given value is not nil.
+func (sduo *SysDictUpdateOne) SetNillableNameEn(s *string) *SysDictUpdateOne {
+	if s != nil {
+		sduo.SetNameEn(*s)
+	}
 	return sduo
 }
 

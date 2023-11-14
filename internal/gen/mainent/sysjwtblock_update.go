@@ -115,6 +115,14 @@ func (sjbu *SysJwtBlockUpdate) SetJwt(s string) *SysJwtBlockUpdate {
 	return sjbu
 }
 
+// SetNillableJwt sets the "jwt" field if the given value is not nil.
+func (sjbu *SysJwtBlockUpdate) SetNillableJwt(s *string) *SysJwtBlockUpdate {
+	if s != nil {
+		sjbu.SetJwt(*s)
+	}
+	return sjbu
+}
+
 // Mutation returns the SysJwtBlockMutation object of the builder.
 func (sjbu *SysJwtBlockUpdate) Mutation() *SysJwtBlockMutation {
 	return sjbu.mutation
@@ -324,6 +332,14 @@ func (sjbuo *SysJwtBlockUpdateOne) SetNillableIsActive(b *bool) *SysJwtBlockUpda
 // SetJwt sets the "jwt" field.
 func (sjbuo *SysJwtBlockUpdateOne) SetJwt(s string) *SysJwtBlockUpdateOne {
 	sjbuo.mutation.SetJwt(s)
+	return sjbuo
+}
+
+// SetNillableJwt sets the "jwt" field if the given value is not nil.
+func (sjbuo *SysJwtBlockUpdateOne) SetNillableJwt(s *string) *SysJwtBlockUpdateOne {
+	if s != nil {
+		sjbuo.SetJwt(*s)
+	}
 	return sjbuo
 }
 

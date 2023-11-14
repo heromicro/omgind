@@ -136,15 +136,39 @@ func (smaru *SysMenuActionResourceUpdate) SetMethod(s string) *SysMenuActionReso
 	return smaru
 }
 
+// SetNillableMethod sets the "method" field if the given value is not nil.
+func (smaru *SysMenuActionResourceUpdate) SetNillableMethod(s *string) *SysMenuActionResourceUpdate {
+	if s != nil {
+		smaru.SetMethod(*s)
+	}
+	return smaru
+}
+
 // SetPath sets the "path" field.
 func (smaru *SysMenuActionResourceUpdate) SetPath(s string) *SysMenuActionResourceUpdate {
 	smaru.mutation.SetPath(s)
 	return smaru
 }
 
+// SetNillablePath sets the "path" field if the given value is not nil.
+func (smaru *SysMenuActionResourceUpdate) SetNillablePath(s *string) *SysMenuActionResourceUpdate {
+	if s != nil {
+		smaru.SetPath(*s)
+	}
+	return smaru
+}
+
 // SetActionID sets the "action_id" field.
 func (smaru *SysMenuActionResourceUpdate) SetActionID(s string) *SysMenuActionResourceUpdate {
 	smaru.mutation.SetActionID(s)
+	return smaru
+}
+
+// SetNillableActionID sets the "action_id" field if the given value is not nil.
+func (smaru *SysMenuActionResourceUpdate) SetNillableActionID(s *string) *SysMenuActionResourceUpdate {
+	if s != nil {
+		smaru.SetActionID(*s)
+	}
 	return smaru
 }
 
@@ -403,15 +427,39 @@ func (smaruo *SysMenuActionResourceUpdateOne) SetMethod(s string) *SysMenuAction
 	return smaruo
 }
 
+// SetNillableMethod sets the "method" field if the given value is not nil.
+func (smaruo *SysMenuActionResourceUpdateOne) SetNillableMethod(s *string) *SysMenuActionResourceUpdateOne {
+	if s != nil {
+		smaruo.SetMethod(*s)
+	}
+	return smaruo
+}
+
 // SetPath sets the "path" field.
 func (smaruo *SysMenuActionResourceUpdateOne) SetPath(s string) *SysMenuActionResourceUpdateOne {
 	smaruo.mutation.SetPath(s)
 	return smaruo
 }
 
+// SetNillablePath sets the "path" field if the given value is not nil.
+func (smaruo *SysMenuActionResourceUpdateOne) SetNillablePath(s *string) *SysMenuActionResourceUpdateOne {
+	if s != nil {
+		smaruo.SetPath(*s)
+	}
+	return smaruo
+}
+
 // SetActionID sets the "action_id" field.
 func (smaruo *SysMenuActionResourceUpdateOne) SetActionID(s string) *SysMenuActionResourceUpdateOne {
 	smaruo.mutation.SetActionID(s)
+	return smaruo
+}
+
+// SetNillableActionID sets the "action_id" field if the given value is not nil.
+func (smaruo *SysMenuActionResourceUpdateOne) SetNillableActionID(s *string) *SysMenuActionResourceUpdateOne {
+	if s != nil {
+		smaruo.SetActionID(*s)
+	}
 	return smaruo
 }
 

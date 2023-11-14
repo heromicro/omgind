@@ -136,6 +136,14 @@ func (sru *SysRoleUpdate) SetName(s string) *SysRoleUpdate {
 	return sru
 }
 
+// SetNillableName sets the "name" field if the given value is not nil.
+func (sru *SysRoleUpdate) SetNillableName(s *string) *SysRoleUpdate {
+	if s != nil {
+		sru.SetName(*s)
+	}
+	return sru
+}
+
 // Mutation returns the SysRoleMutation object of the builder.
 func (sru *SysRoleUpdate) Mutation() *SysRoleMutation {
 	return sru.mutation
@@ -372,6 +380,14 @@ func (sruo *SysRoleUpdateOne) ClearDeletedAt() *SysRoleUpdateOne {
 // SetName sets the "name" field.
 func (sruo *SysRoleUpdateOne) SetName(s string) *SysRoleUpdateOne {
 	sruo.mutation.SetName(s)
+	return sruo
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (sruo *SysRoleUpdateOne) SetNillableName(s *string) *SysRoleUpdateOne {
+	if s != nil {
+		sruo.SetName(*s)
+	}
 	return sruo
 }
 
