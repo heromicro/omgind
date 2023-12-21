@@ -23,7 +23,7 @@ require (
 	github.com/hibiken/asynqmon v0.7.1
 	github.com/influxdata/influxdb-client-go/v2 v2.12.2
 	github.com/jackc/pgx/v4 v4.18.1
-	github.com/jinzhu/copier v0.3.5
+	github.com/jinzhu/copier v0.4.0
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jossef/format v1.0.0
 	github.com/json-iterator/go v1.1.12
