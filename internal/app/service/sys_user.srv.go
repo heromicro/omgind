@@ -202,7 +202,12 @@ func (a *User) checkUserName(ctx context.Context, item schema.User) error {
 
 // Update 更新数据
 func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema.User, error) {
-	oldItem, err := a.Get(ctx, id)
+
+	opt := schema.UserQueryOptions{
+		UserRoles: ptr.Bool(true),
+	}
+	opts := []schema.UserQueryOptions{opt}
+	oldItem, err := a.Get(ctx, id, opts...)
 
 	if err != nil {
 		return nil, err
