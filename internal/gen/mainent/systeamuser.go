@@ -57,12 +57,10 @@ type SysTeamUserEdges struct {
 // UserOrErr returns the User value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e SysTeamUserEdges) UserOrErr() (*SysUser, error) {
-	if e.loadedTypes[0] {
-		if e.User == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: sysuser.Label}
-		}
+	if e.User != nil {
 		return e.User, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: sysuser.Label}
 	}
 	return nil, &NotLoadedError{edge: "user"}
 }
@@ -70,12 +68,10 @@ func (e SysTeamUserEdges) UserOrErr() (*SysUser, error) {
 // TeamOrErr returns the Team value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e SysTeamUserEdges) TeamOrErr() (*SysTeam, error) {
-	if e.loadedTypes[1] {
-		if e.Team == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: systeam.Label}
-		}
+	if e.Team != nil {
 		return e.Team, nil
+	} else if e.loadedTypes[1] {
+		return nil, &NotFoundError{label: systeam.Label}
 	}
 	return nil, &NotLoadedError{edge: "team"}
 }

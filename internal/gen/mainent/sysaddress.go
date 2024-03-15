@@ -87,12 +87,10 @@ type SysAddressEdges struct {
 // OrganOrErr returns the Organ value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e SysAddressEdges) OrganOrErr() (*OrgOrgan, error) {
-	if e.loadedTypes[0] {
-		if e.Organ == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: orgorgan.Label}
-		}
+	if e.Organ != nil {
 		return e.Organ, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: orgorgan.Label}
 	}
 	return nil, &NotLoadedError{edge: "organ"}
 }
@@ -100,12 +98,10 @@ func (e SysAddressEdges) OrganOrErr() (*OrgOrgan, error) {
 // StaffResiOrErr returns the StaffResi value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e SysAddressEdges) StaffResiOrErr() (*OrgStaff, error) {
-	if e.loadedTypes[1] {
-		if e.StaffResi == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: orgstaff.Label}
-		}
+	if e.StaffResi != nil {
 		return e.StaffResi, nil
+	} else if e.loadedTypes[1] {
+		return nil, &NotFoundError{label: orgstaff.Label}
 	}
 	return nil, &NotLoadedError{edge: "staff_resi"}
 }
@@ -113,12 +109,10 @@ func (e SysAddressEdges) StaffResiOrErr() (*OrgStaff, error) {
 // StaffIdenOrErr returns the StaffIden value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e SysAddressEdges) StaffIdenOrErr() (*OrgStaff, error) {
-	if e.loadedTypes[2] {
-		if e.StaffIden == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: orgstaff.Label}
-		}
+	if e.StaffIden != nil {
 		return e.StaffIden, nil
+	} else if e.loadedTypes[2] {
+		return nil, &NotFoundError{label: orgstaff.Label}
 	}
 	return nil, &NotLoadedError{edge: "staff_iden"}
 }

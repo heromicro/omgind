@@ -58,12 +58,10 @@ type OrgPositionEdges struct {
 // OrganOrErr returns the Organ value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e OrgPositionEdges) OrganOrErr() (*OrgOrgan, error) {
-	if e.loadedTypes[0] {
-		if e.Organ == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: orgorgan.Label}
-		}
+	if e.Organ != nil {
 		return e.Organ, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: orgorgan.Label}
 	}
 	return nil, &NotLoadedError{edge: "organ"}
 }

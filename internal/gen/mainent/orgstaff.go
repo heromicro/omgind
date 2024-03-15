@@ -101,12 +101,10 @@ type OrgStaffEdges struct {
 // OrganOrErr returns the Organ value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e OrgStaffEdges) OrganOrErr() (*OrgOrgan, error) {
-	if e.loadedTypes[0] {
-		if e.Organ == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: orgorgan.Label}
-		}
+	if e.Organ != nil {
 		return e.Organ, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: orgorgan.Label}
 	}
 	return nil, &NotLoadedError{edge: "organ"}
 }
@@ -114,12 +112,10 @@ func (e OrgStaffEdges) OrganOrErr() (*OrgOrgan, error) {
 // IdenAddrOrErr returns the IdenAddr value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e OrgStaffEdges) IdenAddrOrErr() (*SysAddress, error) {
-	if e.loadedTypes[1] {
-		if e.IdenAddr == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: sysaddress.Label}
-		}
+	if e.IdenAddr != nil {
 		return e.IdenAddr, nil
+	} else if e.loadedTypes[1] {
+		return nil, &NotFoundError{label: sysaddress.Label}
 	}
 	return nil, &NotLoadedError{edge: "iden_addr"}
 }
@@ -127,12 +123,10 @@ func (e OrgStaffEdges) IdenAddrOrErr() (*SysAddress, error) {
 // ResiAddrOrErr returns the ResiAddr value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e OrgStaffEdges) ResiAddrOrErr() (*SysAddress, error) {
-	if e.loadedTypes[2] {
-		if e.ResiAddr == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: sysaddress.Label}
-		}
+	if e.ResiAddr != nil {
 		return e.ResiAddr, nil
+	} else if e.loadedTypes[2] {
+		return nil, &NotFoundError{label: sysaddress.Label}
 	}
 	return nil, &NotLoadedError{edge: "resi_addr"}
 }
@@ -140,12 +134,10 @@ func (e OrgStaffEdges) ResiAddrOrErr() (*SysAddress, error) {
 // DeptOrErr returns the Dept value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e OrgStaffEdges) DeptOrErr() (*OrgDept, error) {
-	if e.loadedTypes[3] {
-		if e.Dept == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: orgdept.Label}
-		}
+	if e.Dept != nil {
 		return e.Dept, nil
+	} else if e.loadedTypes[3] {
+		return nil, &NotFoundError{label: orgdept.Label}
 	}
 	return nil, &NotLoadedError{edge: "dept"}
 }
@@ -153,12 +145,10 @@ func (e OrgStaffEdges) DeptOrErr() (*OrgDept, error) {
 // PosiOrErr returns the Posi value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e OrgStaffEdges) PosiOrErr() (*OrgPosition, error) {
-	if e.loadedTypes[4] {
-		if e.Posi == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: orgposition.Label}
-		}
+	if e.Posi != nil {
 		return e.Posi, nil
+	} else if e.loadedTypes[4] {
+		return nil, &NotFoundError{label: orgposition.Label}
 	}
 	return nil, &NotLoadedError{edge: "posi"}
 }

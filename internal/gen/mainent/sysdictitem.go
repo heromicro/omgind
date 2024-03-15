@@ -56,12 +56,10 @@ type SysDictItemEdges struct {
 // DictOrErr returns the Dict value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e SysDictItemEdges) DictOrErr() (*SysDict, error) {
-	if e.loadedTypes[0] {
-		if e.Dict == nil {
-			// Edge was loaded but was not found.
-			return nil, &NotFoundError{label: sysdict.Label}
-		}
+	if e.Dict != nil {
 		return e.Dict, nil
+	} else if e.loadedTypes[0] {
+		return nil, &NotFoundError{label: sysdict.Label}
 	}
 	return nil, &NotLoadedError{edge: "dict"}
 }
