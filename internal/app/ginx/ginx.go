@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/gotidy/ptr"
 	"github.com/heromicro/omgind/internal/app/schema"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/json"
@@ -149,7 +150,7 @@ func ResError(c *gin.Context, err error, status ...int) {
 	}
 
 	if len(status) > 0 {
-		res.StatusCode = status[0]
+		res.StatusCode = &status[0]
 	}
 
 	if err := res.ERR; err != nil {
@@ -157,9 +158,9 @@ func ResError(c *gin.Context, err error, status ...int) {
 			res.Message = err.Error()
 		}
 
-		if status := res.StatusCode; status >= 400 && status < 500 {
+		if status := res.StatusCode; *status >= 400 && *status < 500 {
 			logger.WithContext(ctx).Warnf(err.Error())
-		} else if status >= 500 {
+		} else if *status >= 500 {
 			logger.WithContext(logger.NewStackContext(ctx, err)).Errorf(err.Error())
 		}
 	}
@@ -168,5 +169,43 @@ func ResError(c *gin.Context, err error, status ...int) {
 		Code:    res.Code,
 		Message: res.Message,
 	}
-	ResJSON(c, res.StatusCode, schema.ErrorResult{Error: eitem})
+	ResJSON(c, *res.StatusCode, schema.ErrorResult{Error: eitem})
+}
+
+func ResErrorCode(c *gin.Context, code int, err error, status ...int) {
+	ctx := c.Request.Context()
+	var res *errors.ResponseError
+
+	if err != nil {
+		if e, ok := err.(*errors.ResponseError); ok {
+			res = e
+		} else {
+			res = errors.UnWrapResponse(errors.ErrInternalServer)
+			res.ERR = err
+		}
+	} else {
+		res = errors.UnWrapResponse(errors.ErrInternalServer)
+	}
+
+	if len(status) > 0 {
+		res.StatusCode = &status[0]
+	} else {
+		res.StatusCode = ptr.Int(http.StatusOK)
+	}
+
+	if err != nil {
+		if res.Message == "" {
+			res.Message = err.Error()
+		}
+		if status := res.StatusCode; status != nil {
+			if *status >= 400 && *status < 500 {
+				logger.WithContext(ctx).Warnf(err.Error())
+			} else {
+				logger.WithContext(logger.NewStackContext(ctx, err)).Errorf(err.Error())
+			}
+		}
+	}
+
+	logger.WithContext(ctx).Warnf(err.Error())
+	ResJSON(c, *res.StatusCode, schema.StatusResult{Code: schema.CodeEnum(code), Message: res.Message})
 }

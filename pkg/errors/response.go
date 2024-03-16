@@ -6,7 +6,7 @@ import "fmt"
 type ResponseError struct {
 	Code       int    // 错误码
 	Message    string // 错误消息
-	StatusCode int    // 响应状态码
+	StatusCode *int   // 响应状态码
 	ERR        error  // 响应错误
 }
 
@@ -31,7 +31,7 @@ func WrapResponse(err error, code, statusCode int, msg string, args ...any) erro
 		Code:       code,
 		Message:    fmt.Sprintf(msg, args...),
 		ERR:        err,
-		StatusCode: statusCode,
+		StatusCode: &statusCode,
 	}
 	return res
 }
@@ -51,7 +51,7 @@ func NewResponse(code, statusCode int, msg string, args ...any) error {
 	res := &ResponseError{
 		Code:       code,
 		Message:    fmt.Sprintf(msg, args...),
-		StatusCode: statusCode,
+		StatusCode: &statusCode,
 	}
 	return res
 }
