@@ -21,14 +21,14 @@ func (a *Demo) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.DemoQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.DemoSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1020, err)
 		return
 	}
 	ginx.ResPage(c, result.Data, result.PageResult)
@@ -39,7 +39,7 @@ func (a *Demo) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.DemoSrv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1030, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -50,13 +50,13 @@ func (a *Demo) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.Demo
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.DemoSrv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1040, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -67,13 +67,13 @@ func (a *Demo) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.Demo
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.DemoSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1050, err)
 		return
 	}
 
@@ -85,7 +85,7 @@ func (a *Demo) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.DemoSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1060, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -96,7 +96,7 @@ func (a *Demo) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.DemoSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1070, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -107,7 +107,7 @@ func (a *Demo) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.DemoSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1080, err)
 		return
 	}
 

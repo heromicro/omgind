@@ -21,14 +21,14 @@ func (a *SysAnnex) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.SysAnnexQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.SysAnnexSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1010, err)
 		return
 	}
 
@@ -40,7 +40,7 @@ func (a *SysAnnex) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.SysAnnexSrv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1020, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -51,7 +51,7 @@ func (a *SysAnnex) View(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.SysAnnexSrv.View(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1030, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -62,14 +62,14 @@ func (a *SysAnnex) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.SysAnnex
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	// item.Creator = ginx.GetUserID(c)
 	result, err := a.SysAnnexSrv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1040, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -80,13 +80,13 @@ func (a *SysAnnex) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.SysAnnex
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.SysAnnexSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1050, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -97,7 +97,7 @@ func (a *SysAnnex) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysAnnexSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1060, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -108,7 +108,7 @@ func (a *SysAnnex) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysAnnexSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1070, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -119,7 +119,7 @@ func (a *SysAnnex) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysAnnexSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1080, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")

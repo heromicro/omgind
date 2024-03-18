@@ -22,14 +22,14 @@ func (a *SysTeam) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.SysTeamQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.SysTeamSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1010, err)
 		return
 	}
 
@@ -42,9 +42,7 @@ func (a *SysTeam) QuerySelectPage(c *gin.Context) {
 	var params schema.SysTeamQueryParam
 
 	if err := ginx.ParseQuery(c, &params); err != nil {
-
-		//fmt.Printf(" ------- ------ %+v \n", err)
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 	params.Pagination = true
@@ -56,7 +54,7 @@ func (a *SysTeam) QuerySelectPage(c *gin.Context) {
 		OrderFields: schema.NewOrderFields(schema.NewOrderField("id", schema.OrderByDESC)),
 	})
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1015, err)
 		return
 	}
 
@@ -68,7 +66,7 @@ func (a *SysTeam) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.SysTeamSrv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1020, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -79,7 +77,7 @@ func (a *SysTeam) View(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.SysTeamSrv.View(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1030, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -90,13 +88,13 @@ func (a *SysTeam) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.SysTeam
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.SysTeamSrv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1040, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -107,13 +105,13 @@ func (a *SysTeam) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.SysTeam
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.SysTeamSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1050, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -124,7 +122,7 @@ func (a *SysTeam) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysTeamSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1060, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -135,7 +133,7 @@ func (a *SysTeam) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysTeamSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1070, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -146,7 +144,7 @@ func (a *SysTeam) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysTeamSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1080, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")

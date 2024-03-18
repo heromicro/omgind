@@ -22,7 +22,7 @@ func (a *Menu) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.MenuQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
@@ -33,7 +33,7 @@ func (a *Menu) Query(c *gin.Context) {
 
 	result, err := a.MenuSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1010, err)
 		return
 	}
 	ginx.ResPage(c, result.Data, result.PageResult)
@@ -45,7 +45,7 @@ func (a *Menu) QueryTree(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.MenuQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
@@ -59,7 +59,7 @@ func (a *Menu) QueryTree(c *gin.Context) {
 
 	result, err := a.MenuSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1018, err)
 		return
 	}
 	ginx.ResList(c, result.Data.ToTree())
@@ -70,7 +70,7 @@ func (a *Menu) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.MenuSrv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1020, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -86,7 +86,7 @@ func (a *Menu) View(c *gin.Context) {
 
 	item, err := a.MenuSrv.View(ctx, c.Param("id"), params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1030, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -97,13 +97,13 @@ func (a *Menu) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.Menu
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.MenuSrv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1040, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -114,13 +114,13 @@ func (a *Menu) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.Menu
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.MenuSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1050, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -131,7 +131,7 @@ func (a *Menu) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.MenuSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1060, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -142,7 +142,7 @@ func (a *Menu) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.MenuSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1070, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -153,7 +153,7 @@ func (a *Menu) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.MenuSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1080, err)
 		return
 	}
 	ginx.ResOK(c, "禁用成功")

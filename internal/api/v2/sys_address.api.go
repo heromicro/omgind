@@ -21,14 +21,14 @@ func (a *SysAddress) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.SysAddressQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.SysAddressSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1010, err)
 		return
 	}
 
@@ -40,7 +40,7 @@ func (a *SysAddress) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.SysAddressSrv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1020, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -51,7 +51,7 @@ func (a *SysAddress) View(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.SysAddressSrv.View(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1030, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -62,13 +62,13 @@ func (a *SysAddress) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.SysAddress
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.SysAddressSrv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1040, err)
 		return
 	}
 	ginx.ResSuccess(c, result.ID)
@@ -79,13 +79,13 @@ func (a *SysAddress) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.SysAddress
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.SysAddressSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1050, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -96,7 +96,7 @@ func (a *SysAddress) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysAddressSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1060, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -107,7 +107,7 @@ func (a *SysAddress) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysAddressSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1070, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -118,7 +118,7 @@ func (a *SysAddress) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.SysAddressSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1080, err)
 		return
 	}
 	ginx.ResOK(c, "禁用成功")

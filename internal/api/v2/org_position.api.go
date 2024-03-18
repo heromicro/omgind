@@ -21,14 +21,14 @@ func (a *OrgPosition) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.OrgPositionQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.OrgPositionSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1010, err)
 		return
 	}
 
@@ -40,7 +40,7 @@ func (a *OrgPosition) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.OrgPositionSrv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1020, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -51,7 +51,7 @@ func (a *OrgPosition) View(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.OrgPositionSrv.View(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1030, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -62,13 +62,13 @@ func (a *OrgPosition) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.OrgPosition
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.OrgPositionSrv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1040, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -79,13 +79,13 @@ func (a *OrgPosition) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.OrgPosition
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.OrgPositionSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1050, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -96,7 +96,7 @@ func (a *OrgPosition) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.OrgPositionSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1060, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -107,7 +107,7 @@ func (a *OrgPosition) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.OrgPositionSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1070, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -118,7 +118,7 @@ func (a *OrgPosition) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.OrgPositionSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1080, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")

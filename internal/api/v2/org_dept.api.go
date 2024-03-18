@@ -23,14 +23,14 @@ func (a *OrgDept) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.OrgDeptQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.OrgDeptSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1010, err)
 		return
 	}
 
@@ -42,7 +42,7 @@ func (a *OrgDept) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.OrgDeptSrv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1020, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -53,7 +53,7 @@ func (a *OrgDept) View(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.OrgDeptSrv.View(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1030, err)
 		return
 	}
 	ginx.ResSuccess(c, item)
@@ -64,7 +64,7 @@ func (a *OrgDept) GetAllSubs(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.OrgDeptQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 	var pid string = c.Param("id")
@@ -76,7 +76,7 @@ func (a *OrgDept) GetAllSubs(c *gin.Context) {
 
 	result, err := a.OrgDeptSrv.GetAllSubs(ctx, pid, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1017, err)
 		return
 	}
 	ginx.ResPage(c, result.Data, result.PageResult)
@@ -88,7 +88,7 @@ func (a *OrgDept) QueryTree(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.OrgDeptQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 	var pid string = c.Param("id")
@@ -98,7 +98,7 @@ func (a *OrgDept) QueryTree(c *gin.Context) {
 	result, err := a.OrgDeptSrv.GetTree(ctx, pid, params)
 
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1017, err)
 		return
 	}
 
@@ -110,13 +110,13 @@ func (a *OrgDept) Create(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.OrgDept
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.OrgDeptSrv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1040, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -127,13 +127,13 @@ func (a *OrgDept) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.OrgDept
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.OrgDeptSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1050, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -144,7 +144,7 @@ func (a *OrgDept) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.OrgDeptSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1060, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -155,7 +155,7 @@ func (a *OrgDept) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.OrgDeptSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1070, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -166,7 +166,7 @@ func (a *OrgDept) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.OrgDeptSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1080, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")

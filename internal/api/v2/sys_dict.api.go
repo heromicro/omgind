@@ -22,14 +22,14 @@ func (a *Dict) Query(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.DictQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	params.Pagination = true
 	result, err := a.DictSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1010, err)
 		return
 	}
 
@@ -41,9 +41,7 @@ func (a *Dict) QuerySelect(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.DictQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		// log.Printf(" ------- ------ %+v \n", err)
-
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
@@ -51,7 +49,7 @@ func (a *Dict) QuerySelect(c *gin.Context) {
 	params.Sort_Order = repo.OrderByASC.String()
 	result, err := a.DictSrv.Query(ctx, params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1016, err)
 		return
 	}
 	ginx.ResList(c, result.Data)
@@ -62,13 +60,13 @@ func (a *Dict) QueryItems(c *gin.Context) {
 	ctx := c.Request.Context()
 	var params schema.DictQueryParam
 	if err := ginx.ParseQuery(c, &params); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.DictSrv.QueryItems(ctx, c.Param("id"), params)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1018, err)
 		return
 	}
 
@@ -80,7 +78,7 @@ func (a *Dict) Get(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.DictSrv.Get(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1020, err)
 		return
 	}
 
@@ -92,7 +90,7 @@ func (a *Dict) View(c *gin.Context) {
 	ctx := c.Request.Context()
 	item, err := a.DictSrv.View(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1030, err)
 		return
 	}
 
@@ -106,13 +104,13 @@ func (a *Dict) Create(c *gin.Context) {
 	var item schema.Dict
 
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.DictSrv.Create(ctx, item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1040, err)
 		return
 	}
 	ginx.ResSuccess(c, result)
@@ -124,13 +122,13 @@ func (a *Dict) Update(c *gin.Context) {
 	ctx := c.Request.Context()
 	var item schema.Dict
 	if err := ginx.ParseJSON(c, &item); err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1000, err)
 		return
 	}
 
 	result, err := a.DictSrv.Update(ctx, c.Param("id"), item)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1050, err)
 		return
 	}
 
@@ -142,7 +140,7 @@ func (a *Dict) Delete(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.DictSrv.Delete(ctx, c.Param("id"))
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1060, err)
 		return
 	}
 	ginx.ResOK(c, "成功删除数据")
@@ -153,7 +151,7 @@ func (a *Dict) Enable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.DictSrv.UpdateActive(ctx, c.Param("id"), true)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1070, err)
 		return
 	}
 	ginx.ResOK(c, "启用成功")
@@ -164,7 +162,7 @@ func (a *Dict) Disable(c *gin.Context) {
 	ctx := c.Request.Context()
 	err := a.DictSrv.UpdateActive(ctx, c.Param("id"), false)
 	if err != nil {
-		ginx.ResError(c, err)
+		ginx.ResErrorCode(c, -1080, err)
 		return
 	}
 
