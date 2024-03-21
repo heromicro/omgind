@@ -4,7 +4,7 @@
 //go:build !wireinject
 // +build !wireinject
 
-package app
+package wirex
 
 import (
 	"github.com/heromicro/omgind/internal/api/v2"
@@ -15,10 +15,6 @@ import (
 	"github.com/heromicro/omgind/internal/scheme/repo"
 	"github.com/heromicro/omgind/pkg/config"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
-)
-
-import (
-	_ "github.com/heromicro/omgind/internal/app/swagger"
 )
 
 // Injectors from wire.go:
@@ -141,6 +137,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		EntCli: client,
 	}
 	serviceSysTeam := &service.SysTeam{
+		EntCli:      client,
 		SysTeamRepo: sysTeam,
 	}
 	api_v2SysTeam := &api_v2.SysTeam{
@@ -218,6 +215,15 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2OrgDept := &api_v2.OrgDept{
 		OrgDeptSrv: serviceOrgDept,
 	}
+	sysAnnex := &repo.SysAnnex{
+		EntCli: client,
+	}
+	serviceSysAnnex := &service.SysAnnex{
+		SysAnnexRepo: sysAnnex,
+	}
+	api_v2SysAnnex := &api_v2.SysAnnex{
+		SysAnnexSrv: serviceSysAnnex,
+	}
 	routerRouter := &router.Router{
 		Auth:             auther,
 		CasbinEnforcer:   syncedEnforcer,
@@ -234,6 +240,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		OrgStaffAPIV2:    api_v2OrgStaff,
 		OrgPositionAPIV2: api_v2OrgPosition,
 		OrgDeptAPIV2:     api_v2OrgDept,
+		SysAnnexAPIV2:    api_v2SysAnnex,
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{

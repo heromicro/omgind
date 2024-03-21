@@ -3,7 +3,7 @@
 
 // The build tag makes sure the stub is not built in the final build.
 
-package app
+package wirex
 
 import (
 	"github.com/heromicro/omgind/internal/api/v2"
