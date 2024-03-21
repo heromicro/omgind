@@ -1,4 +1,4 @@
-package app
+package wirex
 
 import (
 	"github.com/heromicro/omgind/internal/app/middleware"

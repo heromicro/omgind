@@ -13,6 +13,7 @@ import (
 
 	"github.com/google/gops/agent"
 
+	"github.com/heromicro/omgind/internal/wirex"
 	"github.com/heromicro/omgind/pkg/global"
 	"github.com/heromicro/omgind/pkg/logger"
 
@@ -88,7 +89,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	logger.WithContext(ctx).Printf("服务启动，运行模式：%s，版本号：%s，进程号：%d", global.CFG.System.RunMode, o.Version, os.Getpid())
 
 	// 初始化日志模块
-	loggerCleanFunc, err := InitLogger(global.CFG)
+	loggerCleanFunc, err := wirex.InitLogger(global.CFG)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	monitorCleanFunc := InitMonitor(ctx)
 
 	// 初始化依赖注入器
-	injector, injectorCleanFunc, err := BuildInjector(global.CFG)
+	injector, injectorCleanFunc, err := wirex.BuildInjector(global.CFG)
 	if err != nil {
 		return nil, err
 	}

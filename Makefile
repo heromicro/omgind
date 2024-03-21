@@ -24,7 +24,7 @@ swagger:
 	@swag init -d ./cmd/${APP}/,internal/ --output ./internal/app/swagger
 
 wire:
-	@wire gen ./internal/app
+	@wire gen ./internal/wirex
 
 entc:
 	@#entc generate ./internal/scheme/entity --target ./internal/gen/ent

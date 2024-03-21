@@ -1,4 +1,4 @@
-package app
+package wirex
 
 import (
 	"github.com/casbin/casbin/v2"
