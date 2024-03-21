@@ -58,7 +58,7 @@ $ air
 $ make start
 
 # OR 使用go命令运行
-$ go run cmd/omgind/main.go web -c ./configs/config.toml -m ./configs/model.conf --menu ./configs/menu.yaml
+$ go run cmd/omgind/main.go web -c ./configs/config.toml -m ./configs/rbac_model.conf --menu ./configs/menu.yaml
 ```
 
 > 启动成功之后，可在浏览器中输入地址进行访问：[http://127.0.0.1:10088/swagger/index.html](http://127.0.0.1:10088/swagger/index.html)
