@@ -16,7 +16,7 @@ import (
 
 const (
 	configFile = "../../../configs/config.toml"
-	modelFile  = "../../../configs/model.conf"
+	modelFile  = "../../../configs/rbac_model.conf"
 	apiPrefix  = "/api/"
 )
 
@@ -30,7 +30,7 @@ func init() {
 	global.CFG.Log.Level = 2
 	global.CFG.JWTAuth.Enable = false
 	global.CFG.Casbin.Enable = false
-	global.CFG.Casbin.Model = modelFile
+	global.CFG.Casbin.ModelFile = modelFile
 	// global.CFG.Gorm.Debug = false
 	// global.CFG.Gorm.DBType = "sqlite3"
 

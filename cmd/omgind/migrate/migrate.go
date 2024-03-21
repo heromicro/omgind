@@ -28,4 +28,4 @@ var Cmd = &cobra.Command{
 	},
 }
 
-// go run -ldflags "-X main.VERSION=$(RELEASE_TAG)" ./cmd/${APP}/main.go dump -c ./configs/config.toml -m ./configs/model.conf --menu ./configs/menu.yaml
+// go run -ldflags "-X main.VERSION=$(RELEASE_TAG)" ./cmd/${APP}/main.go dump -c ./configs/config.toml -m ./configs/rbac_model.conf --menu ./configs/menu.yaml

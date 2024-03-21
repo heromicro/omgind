@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 
-	"github.com/casbin/casbin/v2"
 	"github.com/google/wire"
 	"github.com/gotidy/ptr"
 
@@ -21,7 +20,7 @@ var SysUserSet = wire.NewSet(wire.Struct(new(User), "*"))
 
 // User 用户管理
 type User struct {
-	Enforcer *casbin.SyncedEnforcer
+	// Enforcer *casbin.SyncedEnforcer
 
 	EntCli *mainent.Client
 
@@ -169,9 +168,9 @@ func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, erro
 		return nil, err
 	}
 
-	for _, urItem := range item.UserRoles {
-		a.Enforcer.AddRoleForUser(urItem.UserID, urItem.RoleID)
-	}
+	// for _, urItem := range item.UserRoles {
+	// 	a.Enforcer.AddRoleForUser(urItem.UserID, urItem.RoleID)
+	// }
 
 	nitem, err := a.UserRepo.Get(ctx, item.ID)
 	if err != nil {
@@ -256,13 +255,13 @@ func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema
 			return err
 		}
 
-		for _, aitem := range addUserRoles {
-			a.Enforcer.AddRoleForUser(id, aitem.ID)
-		}
+		// for _, aitem := range addUserRoles {
+		// 	a.Enforcer.AddRoleForUser(id, aitem.ID)
+		// }
 
-		for _, ritem := range delUserRoles {
-			a.Enforcer.DeleteRoleForUser(id, ritem.ID)
-		}
+		// for _, ritem := range delUserRoles {
+		// 	a.Enforcer.DeleteRoleForUser(id, ritem.ID)
+		// }
 
 		return nil
 	})
@@ -314,7 +313,8 @@ func (a *User) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	a.Enforcer.DeleteUser(id)
+	// a.Enforcer.DeleteUser(id)
+
 	return nil
 }
 
@@ -336,11 +336,11 @@ func (a *User) UpdateActive(ctx context.Context, id string, isActive bool) error
 	}
 
 	if isActive {
-		for _, uritem := range oldItem.UserRoles {
-			a.Enforcer.AddRoleForUser(id, uritem.RoleID)
-		}
+		// for _, uritem := range oldItem.UserRoles {
+		// 	a.Enforcer.AddRoleForUser(id, uritem.RoleID)
+		// }
 	} else {
-		a.Enforcer.DeleteUser(id)
+		// a.Enforcer.DeleteUser(id)
 	}
 	return nil
 }

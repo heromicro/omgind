@@ -15,10 +15,10 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 		middleware.AllowPathPrefixSkipper("/ws/"),
 	))
 
-	g.Use(middleware.CasbinMiddleware(a.CasbinEnforcer,
-		middleware.AllowPathPrefixSkipper("/api/v2/pub"),
-		middleware.AllowPathPrefixSkipper("/ws/"),
-	))
+	// g.Use(middleware.CasbinMiddleware(a.CasbinEnforcer,
+	// 	middleware.AllowPathPrefixSkipper("/api/v2/pub"),
+	// 	middleware.AllowPathPrefixSkipper("/ws/"),
+	// ))
 
 	g.Use(middleware.RateLimiterMiddleware())
 

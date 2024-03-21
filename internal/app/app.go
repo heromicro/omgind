@@ -76,7 +76,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 
 	global.MustLoad(o.ConfigFile)
 	if v := o.ModelFile; v != "" {
-		global.CFG.Casbin.Model = v
+		global.CFG.Casbin.ModelFile = v
 	}
 	if v := o.WWWDir; v != "" {
 		global.CFG.System.WWW = v

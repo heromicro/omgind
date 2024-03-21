@@ -5,7 +5,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/casbin/casbin/v2"
 	"github.com/google/wire"
 
 	"github.com/heromicro/omgind/internal/app/schema"
@@ -20,7 +19,7 @@ var SysRoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 
 // Role 角色管理
 type Role struct {
-	Enforcer *casbin.SyncedEnforcer
+	// Enforcer *casbin.SyncedEnforcer
 
 	EntCli *mainent.Client
 
@@ -100,15 +99,15 @@ func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, erro
 		return nil, err
 	}
 
-	resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
-		MenuIDs: item.RoleMenus.ToMenuIDs(),
-	})
-	if err != nil {
-		return nil, err
-	}
-	for _, ritem := range resources.Data.ToMap() {
-		a.Enforcer.AddPermissionForUser(item.ID, ritem.Path, ritem.Method)
-	}
+	// resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
+	// 	MenuIDs: item.RoleMenus.ToMenuIDs(),
+	// })
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// for _, ritem := range resources.Data.ToMap() {
+	// 	a.Enforcer.AddPermissionForUser(item.ID, ritem.Path, ritem.Method)
+	// }
 
 	nitem, err := a.Get(ctx, item.ID)
 	if err != nil {
@@ -180,25 +179,24 @@ func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema
 		return nil, err
 	}
 
-	roleMenus, err := a.RoleMenuRepo.Query(ctx, schema.RoleMenuQueryParam{
-		RoleID: id,
-	})
-	if err != nil {
-		return nil, err
-	}
+	// roleMenus, err := a.RoleMenuRepo.Query(ctx, schema.RoleMenuQueryParam{
+	// 	RoleID: id,
+	// })
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
-		MenuIDs: roleMenus.Data.ToMenuIDs(),
-	})
+	// resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
+	// 	MenuIDs: roleMenus.Data.ToMenuIDs(),
+	// })
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	if err != nil {
-		return nil, err
-	}
-
-	a.Enforcer.DeletePermissionsForUser(item.ID)
-	for _, ritem := range resources.Data.ToMap() {
-		a.Enforcer.AddPermissionForUser(item.ID, ritem.Path, ritem.Method)
-	}
+	// a.Enforcer.DeletePermissionsForUser(item.ID)
+	// for _, ritem := range resources.Data.ToMap() {
+	// 	a.Enforcer.AddPermissionForUser(item.ID, ritem.Path, ritem.Method)
+	// }
 
 	nitem, err := a.Get(ctx, item.ID)
 	if err != nil {
@@ -256,7 +254,7 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 		return err
 	}
 
-	a.Enforcer.DeleteRole(id)
+	// a.Enforcer.DeleteRole(id)
 
 	return nil
 }
@@ -276,24 +274,24 @@ func (a *Role) UpdateActive(ctx context.Context, id string, isActive bool) error
 	}
 
 	if isActive {
-		roleMenus, err := a.RoleMenuRepo.Query(ctx, schema.RoleMenuQueryParam{
-			RoleID: id,
-		})
-		if err != nil {
-			return err
-		}
-		resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
-			MenuIDs: roleMenus.Data.ToMenuIDs(),
-		})
-		if err != nil {
-			return err
-		}
+		// roleMenus, err := a.RoleMenuRepo.Query(ctx, schema.RoleMenuQueryParam{
+		// 	RoleID: id,
+		// })
+		// if err != nil {
+		// 	return err
+		// }
+		// resources, err := a.MenuActionResourceRepo.Query(ctx, schema.MenuActionResourceQueryParam{
+		// 	MenuIDs: roleMenus.Data.ToMenuIDs(),
+		// })
+		// if err != nil {
+		// 	return err
+		// }
 
-		for _, ritem := range resources.Data.ToMap() {
-			a.Enforcer.AddPermissionForUser(id, ritem.Path, ritem.Method)
-		}
+		// for _, ritem := range resources.Data.ToMap() {
+		// 	a.Enforcer.AddPermissionForUser(id, ritem.Path, ritem.Method)
+		// }
 	} else {
-		a.Enforcer.DeleteRole(id)
+		// a.Enforcer.DeleteRole(id)
 	}
 
 	return nil
