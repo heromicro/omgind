@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -62,7 +63,7 @@ func (saq *SysAnnexQuery) Order(o ...sysannex.OrderOption) *SysAnnexQuery {
 // First returns the first SysAnnex entity from the query.
 // Returns a *NotFoundError when no SysAnnex was found.
 func (saq *SysAnnexQuery) First(ctx context.Context) (*SysAnnex, error) {
-	nodes, err := saq.Limit(1).All(setContextOp(ctx, saq.ctx, "First"))
+	nodes, err := saq.Limit(1).All(setContextOp(ctx, saq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (saq *SysAnnexQuery) FirstX(ctx context.Context) *SysAnnex {
 // Returns a *NotFoundError when no SysAnnex ID was found.
 func (saq *SysAnnexQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = saq.Limit(1).IDs(setContextOp(ctx, saq.ctx, "FirstID")); err != nil {
+	if ids, err = saq.Limit(1).IDs(setContextOp(ctx, saq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (saq *SysAnnexQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysAnnex entity is found.
 // Returns a *NotFoundError when no SysAnnex entities are found.
 func (saq *SysAnnexQuery) Only(ctx context.Context) (*SysAnnex, error) {
-	nodes, err := saq.Limit(2).All(setContextOp(ctx, saq.ctx, "Only"))
+	nodes, err := saq.Limit(2).All(setContextOp(ctx, saq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (saq *SysAnnexQuery) OnlyX(ctx context.Context) *SysAnnex {
 // Returns a *NotFoundError when no entities are found.
 func (saq *SysAnnexQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = saq.Limit(2).IDs(setContextOp(ctx, saq.ctx, "OnlyID")); err != nil {
+	if ids, err = saq.Limit(2).IDs(setContextOp(ctx, saq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,7 +162,7 @@ func (saq *SysAnnexQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysAnnexes.
 func (saq *SysAnnexQuery) All(ctx context.Context) ([]*SysAnnex, error) {
-	ctx = setContextOp(ctx, saq.ctx, "All")
+	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryAll)
 	if err := saq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (saq *SysAnnexQuery) IDs(ctx context.Context) (ids []string, err error) {
 	if saq.ctx.Unique == nil && saq.path != nil {
 		saq.Unique(true)
 	}
-	ctx = setContextOp(ctx, saq.ctx, "IDs")
+	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryIDs)
 	if err = saq.Select(sysannex.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (saq *SysAnnexQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (saq *SysAnnexQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, saq.ctx, "Count")
+	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryCount)
 	if err := saq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -219,7 +220,7 @@ func (saq *SysAnnexQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (saq *SysAnnexQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, saq.ctx, "Exist")
+	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryExist)
 	switch _, err := saq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -252,8 +253,9 @@ func (saq *SysAnnexQuery) Clone() *SysAnnexQuery {
 		inters:     append([]Interceptor{}, saq.inters...),
 		predicates: append([]predicate.SysAnnex{}, saq.predicates...),
 		// clone intermediate query.
-		sql:  saq.sql.Clone(),
-		path: saq.path,
+		sql:       saq.sql.Clone(),
+		path:      saq.path,
+		modifiers: append([]func(*sql.Selector){}, saq.modifiers...),
 	}
 }
 
@@ -492,7 +494,7 @@ func (sagb *SysAnnexGroupBy) Aggregate(fns ...AggregateFunc) *SysAnnexGroupBy {
 
 // Scan applies the selector query and scans the result into the given value.
 func (sagb *SysAnnexGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sagb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, sagb.build.ctx, ent.OpQueryGroupBy)
 	if err := sagb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -540,7 +542,7 @@ func (sas *SysAnnexSelect) Aggregate(fns ...AggregateFunc) *SysAnnexSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (sas *SysAnnexSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sas.ctx, "Select")
+	ctx = setContextOp(ctx, sas.ctx, ent.OpQuerySelect)
 	if err := sas.prepareQuery(ctx); err != nil {
 		return err
 	}

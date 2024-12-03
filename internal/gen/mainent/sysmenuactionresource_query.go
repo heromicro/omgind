@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -62,7 +63,7 @@ func (smarq *SysMenuActionResourceQuery) Order(o ...sysmenuactionresource.OrderO
 // First returns the first SysMenuActionResource entity from the query.
 // Returns a *NotFoundError when no SysMenuActionResource was found.
 func (smarq *SysMenuActionResourceQuery) First(ctx context.Context) (*SysMenuActionResource, error) {
-	nodes, err := smarq.Limit(1).All(setContextOp(ctx, smarq.ctx, "First"))
+	nodes, err := smarq.Limit(1).All(setContextOp(ctx, smarq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (smarq *SysMenuActionResourceQuery) FirstX(ctx context.Context) *SysMenuAct
 // Returns a *NotFoundError when no SysMenuActionResource ID was found.
 func (smarq *SysMenuActionResourceQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smarq.Limit(1).IDs(setContextOp(ctx, smarq.ctx, "FirstID")); err != nil {
+	if ids, err = smarq.Limit(1).IDs(setContextOp(ctx, smarq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (smarq *SysMenuActionResourceQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysMenuActionResource entity is found.
 // Returns a *NotFoundError when no SysMenuActionResource entities are found.
 func (smarq *SysMenuActionResourceQuery) Only(ctx context.Context) (*SysMenuActionResource, error) {
-	nodes, err := smarq.Limit(2).All(setContextOp(ctx, smarq.ctx, "Only"))
+	nodes, err := smarq.Limit(2).All(setContextOp(ctx, smarq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (smarq *SysMenuActionResourceQuery) OnlyX(ctx context.Context) *SysMenuActi
 // Returns a *NotFoundError when no entities are found.
 func (smarq *SysMenuActionResourceQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smarq.Limit(2).IDs(setContextOp(ctx, smarq.ctx, "OnlyID")); err != nil {
+	if ids, err = smarq.Limit(2).IDs(setContextOp(ctx, smarq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,7 +162,7 @@ func (smarq *SysMenuActionResourceQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysMenuActionResources.
 func (smarq *SysMenuActionResourceQuery) All(ctx context.Context) ([]*SysMenuActionResource, error) {
-	ctx = setContextOp(ctx, smarq.ctx, "All")
+	ctx = setContextOp(ctx, smarq.ctx, ent.OpQueryAll)
 	if err := smarq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (smarq *SysMenuActionResourceQuery) IDs(ctx context.Context) (ids []string,
 	if smarq.ctx.Unique == nil && smarq.path != nil {
 		smarq.Unique(true)
 	}
-	ctx = setContextOp(ctx, smarq.ctx, "IDs")
+	ctx = setContextOp(ctx, smarq.ctx, ent.OpQueryIDs)
 	if err = smarq.Select(sysmenuactionresource.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (smarq *SysMenuActionResourceQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (smarq *SysMenuActionResourceQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, smarq.ctx, "Count")
+	ctx = setContextOp(ctx, smarq.ctx, ent.OpQueryCount)
 	if err := smarq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -219,7 +220,7 @@ func (smarq *SysMenuActionResourceQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (smarq *SysMenuActionResourceQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, smarq.ctx, "Exist")
+	ctx = setContextOp(ctx, smarq.ctx, ent.OpQueryExist)
 	switch _, err := smarq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -252,8 +253,9 @@ func (smarq *SysMenuActionResourceQuery) Clone() *SysMenuActionResourceQuery {
 		inters:     append([]Interceptor{}, smarq.inters...),
 		predicates: append([]predicate.SysMenuActionResource{}, smarq.predicates...),
 		// clone intermediate query.
-		sql:  smarq.sql.Clone(),
-		path: smarq.path,
+		sql:       smarq.sql.Clone(),
+		path:      smarq.path,
+		modifiers: append([]func(*sql.Selector){}, smarq.modifiers...),
 	}
 }
 
@@ -492,7 +494,7 @@ func (smargb *SysMenuActionResourceGroupBy) Aggregate(fns ...AggregateFunc) *Sys
 
 // Scan applies the selector query and scans the result into the given value.
 func (smargb *SysMenuActionResourceGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, smargb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, smargb.build.ctx, ent.OpQueryGroupBy)
 	if err := smargb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -540,7 +542,7 @@ func (smars *SysMenuActionResourceSelect) Aggregate(fns ...AggregateFunc) *SysMe
 
 // Scan applies the selector query and scans the result into the given value.
 func (smars *SysMenuActionResourceSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, smars.ctx, "Select")
+	ctx = setContextOp(ctx, smars.ctx, ent.OpQuerySelect)
 	if err := smars.prepareQuery(ctx); err != nil {
 		return err
 	}

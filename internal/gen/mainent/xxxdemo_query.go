@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -62,7 +63,7 @@ func (xdq *XxxDemoQuery) Order(o ...xxxdemo.OrderOption) *XxxDemoQuery {
 // First returns the first XxxDemo entity from the query.
 // Returns a *NotFoundError when no XxxDemo was found.
 func (xdq *XxxDemoQuery) First(ctx context.Context) (*XxxDemo, error) {
-	nodes, err := xdq.Limit(1).All(setContextOp(ctx, xdq.ctx, "First"))
+	nodes, err := xdq.Limit(1).All(setContextOp(ctx, xdq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (xdq *XxxDemoQuery) FirstX(ctx context.Context) *XxxDemo {
 // Returns a *NotFoundError when no XxxDemo ID was found.
 func (xdq *XxxDemoQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = xdq.Limit(1).IDs(setContextOp(ctx, xdq.ctx, "FirstID")); err != nil {
+	if ids, err = xdq.Limit(1).IDs(setContextOp(ctx, xdq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (xdq *XxxDemoQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one XxxDemo entity is found.
 // Returns a *NotFoundError when no XxxDemo entities are found.
 func (xdq *XxxDemoQuery) Only(ctx context.Context) (*XxxDemo, error) {
-	nodes, err := xdq.Limit(2).All(setContextOp(ctx, xdq.ctx, "Only"))
+	nodes, err := xdq.Limit(2).All(setContextOp(ctx, xdq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (xdq *XxxDemoQuery) OnlyX(ctx context.Context) *XxxDemo {
 // Returns a *NotFoundError when no entities are found.
 func (xdq *XxxDemoQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = xdq.Limit(2).IDs(setContextOp(ctx, xdq.ctx, "OnlyID")); err != nil {
+	if ids, err = xdq.Limit(2).IDs(setContextOp(ctx, xdq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,7 +162,7 @@ func (xdq *XxxDemoQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of XxxDemos.
 func (xdq *XxxDemoQuery) All(ctx context.Context) ([]*XxxDemo, error) {
-	ctx = setContextOp(ctx, xdq.ctx, "All")
+	ctx = setContextOp(ctx, xdq.ctx, ent.OpQueryAll)
 	if err := xdq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (xdq *XxxDemoQuery) IDs(ctx context.Context) (ids []string, err error) {
 	if xdq.ctx.Unique == nil && xdq.path != nil {
 		xdq.Unique(true)
 	}
-	ctx = setContextOp(ctx, xdq.ctx, "IDs")
+	ctx = setContextOp(ctx, xdq.ctx, ent.OpQueryIDs)
 	if err = xdq.Select(xxxdemo.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (xdq *XxxDemoQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (xdq *XxxDemoQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, xdq.ctx, "Count")
+	ctx = setContextOp(ctx, xdq.ctx, ent.OpQueryCount)
 	if err := xdq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -219,7 +220,7 @@ func (xdq *XxxDemoQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (xdq *XxxDemoQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, xdq.ctx, "Exist")
+	ctx = setContextOp(ctx, xdq.ctx, ent.OpQueryExist)
 	switch _, err := xdq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -252,8 +253,9 @@ func (xdq *XxxDemoQuery) Clone() *XxxDemoQuery {
 		inters:     append([]Interceptor{}, xdq.inters...),
 		predicates: append([]predicate.XxxDemo{}, xdq.predicates...),
 		// clone intermediate query.
-		sql:  xdq.sql.Clone(),
-		path: xdq.path,
+		sql:       xdq.sql.Clone(),
+		path:      xdq.path,
+		modifiers: append([]func(*sql.Selector){}, xdq.modifiers...),
 	}
 }
 
@@ -492,7 +494,7 @@ func (xdgb *XxxDemoGroupBy) Aggregate(fns ...AggregateFunc) *XxxDemoGroupBy {
 
 // Scan applies the selector query and scans the result into the given value.
 func (xdgb *XxxDemoGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, xdgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, xdgb.build.ctx, ent.OpQueryGroupBy)
 	if err := xdgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -540,7 +542,7 @@ func (xds *XxxDemoSelect) Aggregate(fns ...AggregateFunc) *XxxDemoSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (xds *XxxDemoSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, xds.ctx, "Select")
+	ctx = setContextOp(ctx, xds.ctx, ent.OpQuerySelect)
 	if err := xds.prepareQuery(ctx); err != nil {
 		return err
 	}

@@ -261,10 +261,10 @@ func (stuc *SysTeamUserCreate) check() error {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysTeamUser.id": %w`, err)}
 		}
 	}
-	if _, ok := stuc.mutation.UserID(); !ok {
+	if len(stuc.mutation.UserIDs()) == 0 {
 		return &ValidationError{Name: "user", err: errors.New(`mainent: missing required edge "SysTeamUser.user"`)}
 	}
-	if _, ok := stuc.mutation.TeamID(); !ok {
+	if len(stuc.mutation.TeamIDs()) == 0 {
 		return &ValidationError{Name: "team", err: errors.New(`mainent: missing required edge "SysTeamUser.team"`)}
 	}
 	return nil

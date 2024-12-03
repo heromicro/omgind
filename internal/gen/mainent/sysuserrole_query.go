@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -62,7 +63,7 @@ func (surq *SysUserRoleQuery) Order(o ...sysuserrole.OrderOption) *SysUserRoleQu
 // First returns the first SysUserRole entity from the query.
 // Returns a *NotFoundError when no SysUserRole was found.
 func (surq *SysUserRoleQuery) First(ctx context.Context) (*SysUserRole, error) {
-	nodes, err := surq.Limit(1).All(setContextOp(ctx, surq.ctx, "First"))
+	nodes, err := surq.Limit(1).All(setContextOp(ctx, surq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (surq *SysUserRoleQuery) FirstX(ctx context.Context) *SysUserRole {
 // Returns a *NotFoundError when no SysUserRole ID was found.
 func (surq *SysUserRoleQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = surq.Limit(1).IDs(setContextOp(ctx, surq.ctx, "FirstID")); err != nil {
+	if ids, err = surq.Limit(1).IDs(setContextOp(ctx, surq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (surq *SysUserRoleQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysUserRole entity is found.
 // Returns a *NotFoundError when no SysUserRole entities are found.
 func (surq *SysUserRoleQuery) Only(ctx context.Context) (*SysUserRole, error) {
-	nodes, err := surq.Limit(2).All(setContextOp(ctx, surq.ctx, "Only"))
+	nodes, err := surq.Limit(2).All(setContextOp(ctx, surq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (surq *SysUserRoleQuery) OnlyX(ctx context.Context) *SysUserRole {
 // Returns a *NotFoundError when no entities are found.
 func (surq *SysUserRoleQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = surq.Limit(2).IDs(setContextOp(ctx, surq.ctx, "OnlyID")); err != nil {
+	if ids, err = surq.Limit(2).IDs(setContextOp(ctx, surq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,7 +162,7 @@ func (surq *SysUserRoleQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysUserRoles.
 func (surq *SysUserRoleQuery) All(ctx context.Context) ([]*SysUserRole, error) {
-	ctx = setContextOp(ctx, surq.ctx, "All")
+	ctx = setContextOp(ctx, surq.ctx, ent.OpQueryAll)
 	if err := surq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (surq *SysUserRoleQuery) IDs(ctx context.Context) (ids []string, err error)
 	if surq.ctx.Unique == nil && surq.path != nil {
 		surq.Unique(true)
 	}
-	ctx = setContextOp(ctx, surq.ctx, "IDs")
+	ctx = setContextOp(ctx, surq.ctx, ent.OpQueryIDs)
 	if err = surq.Select(sysuserrole.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (surq *SysUserRoleQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (surq *SysUserRoleQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, surq.ctx, "Count")
+	ctx = setContextOp(ctx, surq.ctx, ent.OpQueryCount)
 	if err := surq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -219,7 +220,7 @@ func (surq *SysUserRoleQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (surq *SysUserRoleQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, surq.ctx, "Exist")
+	ctx = setContextOp(ctx, surq.ctx, ent.OpQueryExist)
 	switch _, err := surq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -252,8 +253,9 @@ func (surq *SysUserRoleQuery) Clone() *SysUserRoleQuery {
 		inters:     append([]Interceptor{}, surq.inters...),
 		predicates: append([]predicate.SysUserRole{}, surq.predicates...),
 		// clone intermediate query.
-		sql:  surq.sql.Clone(),
-		path: surq.path,
+		sql:       surq.sql.Clone(),
+		path:      surq.path,
+		modifiers: append([]func(*sql.Selector){}, surq.modifiers...),
 	}
 }
 
@@ -492,7 +494,7 @@ func (surgb *SysUserRoleGroupBy) Aggregate(fns ...AggregateFunc) *SysUserRoleGro
 
 // Scan applies the selector query and scans the result into the given value.
 func (surgb *SysUserRoleGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, surgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, surgb.build.ctx, ent.OpQueryGroupBy)
 	if err := surgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -540,7 +542,7 @@ func (surs *SysUserRoleSelect) Aggregate(fns ...AggregateFunc) *SysUserRoleSelec
 
 // Scan applies the selector query and scans the result into the given value.
 func (surs *SysUserRoleSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, surs.ctx, "Select")
+	ctx = setContextOp(ctx, surs.ctx, ent.OpQuerySelect)
 	if err := surs.prepareQuery(ctx); err != nil {
 		return err
 	}

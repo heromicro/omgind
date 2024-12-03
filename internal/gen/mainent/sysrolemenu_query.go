@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -62,7 +63,7 @@ func (srmq *SysRoleMenuQuery) Order(o ...sysrolemenu.OrderOption) *SysRoleMenuQu
 // First returns the first SysRoleMenu entity from the query.
 // Returns a *NotFoundError when no SysRoleMenu was found.
 func (srmq *SysRoleMenuQuery) First(ctx context.Context) (*SysRoleMenu, error) {
-	nodes, err := srmq.Limit(1).All(setContextOp(ctx, srmq.ctx, "First"))
+	nodes, err := srmq.Limit(1).All(setContextOp(ctx, srmq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (srmq *SysRoleMenuQuery) FirstX(ctx context.Context) *SysRoleMenu {
 // Returns a *NotFoundError when no SysRoleMenu ID was found.
 func (srmq *SysRoleMenuQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = srmq.Limit(1).IDs(setContextOp(ctx, srmq.ctx, "FirstID")); err != nil {
+	if ids, err = srmq.Limit(1).IDs(setContextOp(ctx, srmq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (srmq *SysRoleMenuQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysRoleMenu entity is found.
 // Returns a *NotFoundError when no SysRoleMenu entities are found.
 func (srmq *SysRoleMenuQuery) Only(ctx context.Context) (*SysRoleMenu, error) {
-	nodes, err := srmq.Limit(2).All(setContextOp(ctx, srmq.ctx, "Only"))
+	nodes, err := srmq.Limit(2).All(setContextOp(ctx, srmq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (srmq *SysRoleMenuQuery) OnlyX(ctx context.Context) *SysRoleMenu {
 // Returns a *NotFoundError when no entities are found.
 func (srmq *SysRoleMenuQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = srmq.Limit(2).IDs(setContextOp(ctx, srmq.ctx, "OnlyID")); err != nil {
+	if ids, err = srmq.Limit(2).IDs(setContextOp(ctx, srmq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,7 +162,7 @@ func (srmq *SysRoleMenuQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysRoleMenus.
 func (srmq *SysRoleMenuQuery) All(ctx context.Context) ([]*SysRoleMenu, error) {
-	ctx = setContextOp(ctx, srmq.ctx, "All")
+	ctx = setContextOp(ctx, srmq.ctx, ent.OpQueryAll)
 	if err := srmq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (srmq *SysRoleMenuQuery) IDs(ctx context.Context) (ids []string, err error)
 	if srmq.ctx.Unique == nil && srmq.path != nil {
 		srmq.Unique(true)
 	}
-	ctx = setContextOp(ctx, srmq.ctx, "IDs")
+	ctx = setContextOp(ctx, srmq.ctx, ent.OpQueryIDs)
 	if err = srmq.Select(sysrolemenu.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (srmq *SysRoleMenuQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (srmq *SysRoleMenuQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, srmq.ctx, "Count")
+	ctx = setContextOp(ctx, srmq.ctx, ent.OpQueryCount)
 	if err := srmq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -219,7 +220,7 @@ func (srmq *SysRoleMenuQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (srmq *SysRoleMenuQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, srmq.ctx, "Exist")
+	ctx = setContextOp(ctx, srmq.ctx, ent.OpQueryExist)
 	switch _, err := srmq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -252,8 +253,9 @@ func (srmq *SysRoleMenuQuery) Clone() *SysRoleMenuQuery {
 		inters:     append([]Interceptor{}, srmq.inters...),
 		predicates: append([]predicate.SysRoleMenu{}, srmq.predicates...),
 		// clone intermediate query.
-		sql:  srmq.sql.Clone(),
-		path: srmq.path,
+		sql:       srmq.sql.Clone(),
+		path:      srmq.path,
+		modifiers: append([]func(*sql.Selector){}, srmq.modifiers...),
 	}
 }
 
@@ -492,7 +494,7 @@ func (srmgb *SysRoleMenuGroupBy) Aggregate(fns ...AggregateFunc) *SysRoleMenuGro
 
 // Scan applies the selector query and scans the result into the given value.
 func (srmgb *SysRoleMenuGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, srmgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, srmgb.build.ctx, ent.OpQueryGroupBy)
 	if err := srmgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -540,7 +542,7 @@ func (srms *SysRoleMenuSelect) Aggregate(fns ...AggregateFunc) *SysRoleMenuSelec
 
 // Scan applies the selector query and scans the result into the given value.
 func (srms *SysRoleMenuSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, srms.ctx, "Select")
+	ctx = setContextOp(ctx, srms.ctx, ent.OpQuerySelect)
 	if err := srms.prepareQuery(ctx); err != nil {
 		return err
 	}

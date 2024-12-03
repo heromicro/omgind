@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -157,7 +158,7 @@ func (odq *OrgDeptQuery) QueryStaffs() *OrgStaffQuery {
 // First returns the first OrgDept entity from the query.
 // Returns a *NotFoundError when no OrgDept was found.
 func (odq *OrgDeptQuery) First(ctx context.Context) (*OrgDept, error) {
-	nodes, err := odq.Limit(1).All(setContextOp(ctx, odq.ctx, "First"))
+	nodes, err := odq.Limit(1).All(setContextOp(ctx, odq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +181,7 @@ func (odq *OrgDeptQuery) FirstX(ctx context.Context) *OrgDept {
 // Returns a *NotFoundError when no OrgDept ID was found.
 func (odq *OrgDeptQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = odq.Limit(1).IDs(setContextOp(ctx, odq.ctx, "FirstID")); err != nil {
+	if ids, err = odq.Limit(1).IDs(setContextOp(ctx, odq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -203,7 +204,7 @@ func (odq *OrgDeptQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one OrgDept entity is found.
 // Returns a *NotFoundError when no OrgDept entities are found.
 func (odq *OrgDeptQuery) Only(ctx context.Context) (*OrgDept, error) {
-	nodes, err := odq.Limit(2).All(setContextOp(ctx, odq.ctx, "Only"))
+	nodes, err := odq.Limit(2).All(setContextOp(ctx, odq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +232,7 @@ func (odq *OrgDeptQuery) OnlyX(ctx context.Context) *OrgDept {
 // Returns a *NotFoundError when no entities are found.
 func (odq *OrgDeptQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = odq.Limit(2).IDs(setContextOp(ctx, odq.ctx, "OnlyID")); err != nil {
+	if ids, err = odq.Limit(2).IDs(setContextOp(ctx, odq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -256,7 +257,7 @@ func (odq *OrgDeptQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of OrgDepts.
 func (odq *OrgDeptQuery) All(ctx context.Context) ([]*OrgDept, error) {
-	ctx = setContextOp(ctx, odq.ctx, "All")
+	ctx = setContextOp(ctx, odq.ctx, ent.OpQueryAll)
 	if err := odq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -278,7 +279,7 @@ func (odq *OrgDeptQuery) IDs(ctx context.Context) (ids []string, err error) {
 	if odq.ctx.Unique == nil && odq.path != nil {
 		odq.Unique(true)
 	}
-	ctx = setContextOp(ctx, odq.ctx, "IDs")
+	ctx = setContextOp(ctx, odq.ctx, ent.OpQueryIDs)
 	if err = odq.Select(orgdept.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -296,7 +297,7 @@ func (odq *OrgDeptQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (odq *OrgDeptQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, odq.ctx, "Count")
+	ctx = setContextOp(ctx, odq.ctx, ent.OpQueryCount)
 	if err := odq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -314,7 +315,7 @@ func (odq *OrgDeptQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (odq *OrgDeptQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, odq.ctx, "Exist")
+	ctx = setContextOp(ctx, odq.ctx, ent.OpQueryExist)
 	switch _, err := odq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -351,8 +352,9 @@ func (odq *OrgDeptQuery) Clone() *OrgDeptQuery {
 		withOrgan:    odq.withOrgan.Clone(),
 		withStaffs:   odq.withStaffs.Clone(),
 		// clone intermediate query.
-		sql:  odq.sql.Clone(),
-		path: odq.path,
+		sql:       odq.sql.Clone(),
+		path:      odq.path,
+		modifiers: append([]func(*sql.Selector){}, odq.modifiers...),
 	}
 }
 
@@ -805,7 +807,7 @@ func (odgb *OrgDeptGroupBy) Aggregate(fns ...AggregateFunc) *OrgDeptGroupBy {
 
 // Scan applies the selector query and scans the result into the given value.
 func (odgb *OrgDeptGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, odgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, odgb.build.ctx, ent.OpQueryGroupBy)
 	if err := odgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -853,7 +855,7 @@ func (ods *OrgDeptSelect) Aggregate(fns ...AggregateFunc) *OrgDeptSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (ods *OrgDeptSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, ods.ctx, "Select")
+	ctx = setContextOp(ctx, ods.ctx, ent.OpQuerySelect)
 	if err := ods.prepareQuery(ctx); err != nil {
 		return err
 	}

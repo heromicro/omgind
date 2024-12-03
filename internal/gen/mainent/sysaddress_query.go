@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -134,7 +135,7 @@ func (saq *SysAddressQuery) QueryStaffIden() *OrgStaffQuery {
 // First returns the first SysAddress entity from the query.
 // Returns a *NotFoundError when no SysAddress was found.
 func (saq *SysAddressQuery) First(ctx context.Context) (*SysAddress, error) {
-	nodes, err := saq.Limit(1).All(setContextOp(ctx, saq.ctx, "First"))
+	nodes, err := saq.Limit(1).All(setContextOp(ctx, saq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +158,7 @@ func (saq *SysAddressQuery) FirstX(ctx context.Context) *SysAddress {
 // Returns a *NotFoundError when no SysAddress ID was found.
 func (saq *SysAddressQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = saq.Limit(1).IDs(setContextOp(ctx, saq.ctx, "FirstID")); err != nil {
+	if ids, err = saq.Limit(1).IDs(setContextOp(ctx, saq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -180,7 +181,7 @@ func (saq *SysAddressQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysAddress entity is found.
 // Returns a *NotFoundError when no SysAddress entities are found.
 func (saq *SysAddressQuery) Only(ctx context.Context) (*SysAddress, error) {
-	nodes, err := saq.Limit(2).All(setContextOp(ctx, saq.ctx, "Only"))
+	nodes, err := saq.Limit(2).All(setContextOp(ctx, saq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +209,7 @@ func (saq *SysAddressQuery) OnlyX(ctx context.Context) *SysAddress {
 // Returns a *NotFoundError when no entities are found.
 func (saq *SysAddressQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = saq.Limit(2).IDs(setContextOp(ctx, saq.ctx, "OnlyID")); err != nil {
+	if ids, err = saq.Limit(2).IDs(setContextOp(ctx, saq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -233,7 +234,7 @@ func (saq *SysAddressQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysAddresses.
 func (saq *SysAddressQuery) All(ctx context.Context) ([]*SysAddress, error) {
-	ctx = setContextOp(ctx, saq.ctx, "All")
+	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryAll)
 	if err := saq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -255,7 +256,7 @@ func (saq *SysAddressQuery) IDs(ctx context.Context) (ids []string, err error) {
 	if saq.ctx.Unique == nil && saq.path != nil {
 		saq.Unique(true)
 	}
-	ctx = setContextOp(ctx, saq.ctx, "IDs")
+	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryIDs)
 	if err = saq.Select(sysaddress.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -273,7 +274,7 @@ func (saq *SysAddressQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (saq *SysAddressQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, saq.ctx, "Count")
+	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryCount)
 	if err := saq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -291,7 +292,7 @@ func (saq *SysAddressQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (saq *SysAddressQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, saq.ctx, "Exist")
+	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryExist)
 	switch _, err := saq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -327,8 +328,9 @@ func (saq *SysAddressQuery) Clone() *SysAddressQuery {
 		withStaffResi: saq.withStaffResi.Clone(),
 		withStaffIden: saq.withStaffIden.Clone(),
 		// clone intermediate query.
-		sql:  saq.sql.Clone(),
-		path: saq.path,
+		sql:       saq.sql.Clone(),
+		path:      saq.path,
+		modifiers: append([]func(*sql.Selector){}, saq.modifiers...),
 	}
 }
 
@@ -715,7 +717,7 @@ func (sagb *SysAddressGroupBy) Aggregate(fns ...AggregateFunc) *SysAddressGroupB
 
 // Scan applies the selector query and scans the result into the given value.
 func (sagb *SysAddressGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sagb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, sagb.build.ctx, ent.OpQueryGroupBy)
 	if err := sagb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -763,7 +765,7 @@ func (sas *SysAddressSelect) Aggregate(fns ...AggregateFunc) *SysAddressSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (sas *SysAddressSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sas.ctx, "Select")
+	ctx = setContextOp(ctx, sas.ctx, ent.OpQuerySelect)
 	if err := sas.prepareQuery(ctx); err != nil {
 		return err
 	}

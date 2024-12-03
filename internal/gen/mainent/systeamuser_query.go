@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -110,7 +111,7 @@ func (stuq *SysTeamUserQuery) QueryTeam() *SysTeamQuery {
 // First returns the first SysTeamUser entity from the query.
 // Returns a *NotFoundError when no SysTeamUser was found.
 func (stuq *SysTeamUserQuery) First(ctx context.Context) (*SysTeamUser, error) {
-	nodes, err := stuq.Limit(1).All(setContextOp(ctx, stuq.ctx, "First"))
+	nodes, err := stuq.Limit(1).All(setContextOp(ctx, stuq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +134,7 @@ func (stuq *SysTeamUserQuery) FirstX(ctx context.Context) *SysTeamUser {
 // Returns a *NotFoundError when no SysTeamUser ID was found.
 func (stuq *SysTeamUserQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = stuq.Limit(1).IDs(setContextOp(ctx, stuq.ctx, "FirstID")); err != nil {
+	if ids, err = stuq.Limit(1).IDs(setContextOp(ctx, stuq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -156,7 +157,7 @@ func (stuq *SysTeamUserQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysTeamUser entity is found.
 // Returns a *NotFoundError when no SysTeamUser entities are found.
 func (stuq *SysTeamUserQuery) Only(ctx context.Context) (*SysTeamUser, error) {
-	nodes, err := stuq.Limit(2).All(setContextOp(ctx, stuq.ctx, "Only"))
+	nodes, err := stuq.Limit(2).All(setContextOp(ctx, stuq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +185,7 @@ func (stuq *SysTeamUserQuery) OnlyX(ctx context.Context) *SysTeamUser {
 // Returns a *NotFoundError when no entities are found.
 func (stuq *SysTeamUserQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = stuq.Limit(2).IDs(setContextOp(ctx, stuq.ctx, "OnlyID")); err != nil {
+	if ids, err = stuq.Limit(2).IDs(setContextOp(ctx, stuq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -209,7 +210,7 @@ func (stuq *SysTeamUserQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysTeamUsers.
 func (stuq *SysTeamUserQuery) All(ctx context.Context) ([]*SysTeamUser, error) {
-	ctx = setContextOp(ctx, stuq.ctx, "All")
+	ctx = setContextOp(ctx, stuq.ctx, ent.OpQueryAll)
 	if err := stuq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -231,7 +232,7 @@ func (stuq *SysTeamUserQuery) IDs(ctx context.Context) (ids []string, err error)
 	if stuq.ctx.Unique == nil && stuq.path != nil {
 		stuq.Unique(true)
 	}
-	ctx = setContextOp(ctx, stuq.ctx, "IDs")
+	ctx = setContextOp(ctx, stuq.ctx, ent.OpQueryIDs)
 	if err = stuq.Select(systeamuser.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -249,7 +250,7 @@ func (stuq *SysTeamUserQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (stuq *SysTeamUserQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, stuq.ctx, "Count")
+	ctx = setContextOp(ctx, stuq.ctx, ent.OpQueryCount)
 	if err := stuq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -267,7 +268,7 @@ func (stuq *SysTeamUserQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (stuq *SysTeamUserQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, stuq.ctx, "Exist")
+	ctx = setContextOp(ctx, stuq.ctx, ent.OpQueryExist)
 	switch _, err := stuq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -302,8 +303,9 @@ func (stuq *SysTeamUserQuery) Clone() *SysTeamUserQuery {
 		withUser:   stuq.withUser.Clone(),
 		withTeam:   stuq.withTeam.Clone(),
 		// clone intermediate query.
-		sql:  stuq.sql.Clone(),
-		path: stuq.path,
+		sql:       stuq.sql.Clone(),
+		path:      stuq.path,
+		modifiers: append([]func(*sql.Selector){}, stuq.modifiers...),
 	}
 }
 
@@ -646,7 +648,7 @@ func (stugb *SysTeamUserGroupBy) Aggregate(fns ...AggregateFunc) *SysTeamUserGro
 
 // Scan applies the selector query and scans the result into the given value.
 func (stugb *SysTeamUserGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, stugb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, stugb.build.ctx, ent.OpQueryGroupBy)
 	if err := stugb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -694,7 +696,7 @@ func (stus *SysTeamUserSelect) Aggregate(fns ...AggregateFunc) *SysTeamUserSelec
 
 // Scan applies the selector query and scans the result into the given value.
 func (stus *SysTeamUserSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, stus.ctx, "Select")
+	ctx = setContextOp(ctx, stus.ctx, ent.OpQuerySelect)
 	if err := stus.prepareQuery(ctx); err != nil {
 		return err
 	}

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -111,7 +112,7 @@ func (opq *OrgPositionQuery) QueryStaffs() *OrgStaffQuery {
 // First returns the first OrgPosition entity from the query.
 // Returns a *NotFoundError when no OrgPosition was found.
 func (opq *OrgPositionQuery) First(ctx context.Context) (*OrgPosition, error) {
-	nodes, err := opq.Limit(1).All(setContextOp(ctx, opq.ctx, "First"))
+	nodes, err := opq.Limit(1).All(setContextOp(ctx, opq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +135,7 @@ func (opq *OrgPositionQuery) FirstX(ctx context.Context) *OrgPosition {
 // Returns a *NotFoundError when no OrgPosition ID was found.
 func (opq *OrgPositionQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = opq.Limit(1).IDs(setContextOp(ctx, opq.ctx, "FirstID")); err != nil {
+	if ids, err = opq.Limit(1).IDs(setContextOp(ctx, opq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -157,7 +158,7 @@ func (opq *OrgPositionQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one OrgPosition entity is found.
 // Returns a *NotFoundError when no OrgPosition entities are found.
 func (opq *OrgPositionQuery) Only(ctx context.Context) (*OrgPosition, error) {
-	nodes, err := opq.Limit(2).All(setContextOp(ctx, opq.ctx, "Only"))
+	nodes, err := opq.Limit(2).All(setContextOp(ctx, opq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +186,7 @@ func (opq *OrgPositionQuery) OnlyX(ctx context.Context) *OrgPosition {
 // Returns a *NotFoundError when no entities are found.
 func (opq *OrgPositionQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = opq.Limit(2).IDs(setContextOp(ctx, opq.ctx, "OnlyID")); err != nil {
+	if ids, err = opq.Limit(2).IDs(setContextOp(ctx, opq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -210,7 +211,7 @@ func (opq *OrgPositionQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of OrgPositions.
 func (opq *OrgPositionQuery) All(ctx context.Context) ([]*OrgPosition, error) {
-	ctx = setContextOp(ctx, opq.ctx, "All")
+	ctx = setContextOp(ctx, opq.ctx, ent.OpQueryAll)
 	if err := opq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -232,7 +233,7 @@ func (opq *OrgPositionQuery) IDs(ctx context.Context) (ids []string, err error) 
 	if opq.ctx.Unique == nil && opq.path != nil {
 		opq.Unique(true)
 	}
-	ctx = setContextOp(ctx, opq.ctx, "IDs")
+	ctx = setContextOp(ctx, opq.ctx, ent.OpQueryIDs)
 	if err = opq.Select(orgposition.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -250,7 +251,7 @@ func (opq *OrgPositionQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (opq *OrgPositionQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, opq.ctx, "Count")
+	ctx = setContextOp(ctx, opq.ctx, ent.OpQueryCount)
 	if err := opq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -268,7 +269,7 @@ func (opq *OrgPositionQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (opq *OrgPositionQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, opq.ctx, "Exist")
+	ctx = setContextOp(ctx, opq.ctx, ent.OpQueryExist)
 	switch _, err := opq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -303,8 +304,9 @@ func (opq *OrgPositionQuery) Clone() *OrgPositionQuery {
 		withOrgan:  opq.withOrgan.Clone(),
 		withStaffs: opq.withStaffs.Clone(),
 		// clone intermediate query.
-		sql:  opq.sql.Clone(),
-		path: opq.path,
+		sql:       opq.sql.Clone(),
+		path:      opq.path,
+		modifiers: append([]func(*sql.Selector){}, opq.modifiers...),
 	}
 }
 
@@ -652,7 +654,7 @@ func (opgb *OrgPositionGroupBy) Aggregate(fns ...AggregateFunc) *OrgPositionGrou
 
 // Scan applies the selector query and scans the result into the given value.
 func (opgb *OrgPositionGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, opgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, opgb.build.ctx, ent.OpQueryGroupBy)
 	if err := opgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -700,7 +702,7 @@ func (ops *OrgPositionSelect) Aggregate(fns ...AggregateFunc) *OrgPositionSelect
 
 // Scan applies the selector query and scans the result into the given value.
 func (ops *OrgPositionSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, ops.ctx, "Select")
+	ctx = setContextOp(ctx, ops.ctx, ent.OpQuerySelect)
 	if err := ops.prepareQuery(ctx); err != nil {
 		return err
 	}

@@ -240,10 +240,10 @@ func (stuu *SysTeamUserUpdate) check() error {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysTeamUser.user_id": %w`, err)}
 		}
 	}
-	if _, ok := stuu.mutation.UserID(); stuu.mutation.UserCleared() && !ok {
+	if stuu.mutation.UserCleared() && len(stuu.mutation.UserIDs()) > 0 {
 		return errors.New(`mainent: clearing a required unique edge "SysTeamUser.user"`)
 	}
-	if _, ok := stuu.mutation.TeamID(); stuu.mutation.TeamCleared() && !ok {
+	if stuu.mutation.TeamCleared() && len(stuu.mutation.TeamIDs()) > 0 {
 		return errors.New(`mainent: clearing a required unique edge "SysTeamUser.team"`)
 	}
 	return nil
@@ -602,10 +602,10 @@ func (stuuo *SysTeamUserUpdateOne) check() error {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysTeamUser.user_id": %w`, err)}
 		}
 	}
-	if _, ok := stuuo.mutation.UserID(); stuuo.mutation.UserCleared() && !ok {
+	if stuuo.mutation.UserCleared() && len(stuuo.mutation.UserIDs()) > 0 {
 		return errors.New(`mainent: clearing a required unique edge "SysTeamUser.user"`)
 	}
-	if _, ok := stuuo.mutation.TeamID(); stuuo.mutation.TeamCleared() && !ok {
+	if stuuo.mutation.TeamCleared() && len(stuuo.mutation.TeamIDs()) > 0 {
 		return errors.New(`mainent: clearing a required unique edge "SysTeamUser.team"`)
 	}
 	return nil

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -109,7 +110,7 @@ func (sdq *SysDistrictQuery) QueryChildren() *SysDistrictQuery {
 // First returns the first SysDistrict entity from the query.
 // Returns a *NotFoundError when no SysDistrict was found.
 func (sdq *SysDistrictQuery) First(ctx context.Context) (*SysDistrict, error) {
-	nodes, err := sdq.Limit(1).All(setContextOp(ctx, sdq.ctx, "First"))
+	nodes, err := sdq.Limit(1).All(setContextOp(ctx, sdq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (sdq *SysDistrictQuery) FirstX(ctx context.Context) *SysDistrict {
 // Returns a *NotFoundError when no SysDistrict ID was found.
 func (sdq *SysDistrictQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdq.Limit(1).IDs(setContextOp(ctx, sdq.ctx, "FirstID")); err != nil {
+	if ids, err = sdq.Limit(1).IDs(setContextOp(ctx, sdq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -155,7 +156,7 @@ func (sdq *SysDistrictQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysDistrict entity is found.
 // Returns a *NotFoundError when no SysDistrict entities are found.
 func (sdq *SysDistrictQuery) Only(ctx context.Context) (*SysDistrict, error) {
-	nodes, err := sdq.Limit(2).All(setContextOp(ctx, sdq.ctx, "Only"))
+	nodes, err := sdq.Limit(2).All(setContextOp(ctx, sdq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (sdq *SysDistrictQuery) OnlyX(ctx context.Context) *SysDistrict {
 // Returns a *NotFoundError when no entities are found.
 func (sdq *SysDistrictQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdq.Limit(2).IDs(setContextOp(ctx, sdq.ctx, "OnlyID")); err != nil {
+	if ids, err = sdq.Limit(2).IDs(setContextOp(ctx, sdq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -208,7 +209,7 @@ func (sdq *SysDistrictQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysDistricts.
 func (sdq *SysDistrictQuery) All(ctx context.Context) ([]*SysDistrict, error) {
-	ctx = setContextOp(ctx, sdq.ctx, "All")
+	ctx = setContextOp(ctx, sdq.ctx, ent.OpQueryAll)
 	if err := sdq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -230,7 +231,7 @@ func (sdq *SysDistrictQuery) IDs(ctx context.Context) (ids []string, err error) 
 	if sdq.ctx.Unique == nil && sdq.path != nil {
 		sdq.Unique(true)
 	}
-	ctx = setContextOp(ctx, sdq.ctx, "IDs")
+	ctx = setContextOp(ctx, sdq.ctx, ent.OpQueryIDs)
 	if err = sdq.Select(sysdistrict.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -248,7 +249,7 @@ func (sdq *SysDistrictQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (sdq *SysDistrictQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, sdq.ctx, "Count")
+	ctx = setContextOp(ctx, sdq.ctx, ent.OpQueryCount)
 	if err := sdq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -266,7 +267,7 @@ func (sdq *SysDistrictQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (sdq *SysDistrictQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, sdq.ctx, "Exist")
+	ctx = setContextOp(ctx, sdq.ctx, ent.OpQueryExist)
 	switch _, err := sdq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -301,8 +302,9 @@ func (sdq *SysDistrictQuery) Clone() *SysDistrictQuery {
 		withParent:   sdq.withParent.Clone(),
 		withChildren: sdq.withChildren.Clone(),
 		// clone intermediate query.
-		sql:  sdq.sql.Clone(),
-		path: sdq.path,
+		sql:       sdq.sql.Clone(),
+		path:      sdq.path,
+		modifiers: append([]func(*sql.Selector){}, sdq.modifiers...),
 	}
 }
 
@@ -650,7 +652,7 @@ func (sdgb *SysDistrictGroupBy) Aggregate(fns ...AggregateFunc) *SysDistrictGrou
 
 // Scan applies the selector query and scans the result into the given value.
 func (sdgb *SysDistrictGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sdgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, sdgb.build.ctx, ent.OpQueryGroupBy)
 	if err := sdgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -698,7 +700,7 @@ func (sds *SysDistrictSelect) Aggregate(fns ...AggregateFunc) *SysDistrictSelect
 
 // Scan applies the selector query and scans the result into the given value.
 func (sds *SysDistrictSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sds.ctx, "Select")
+	ctx = setContextOp(ctx, sds.ctx, ent.OpQuerySelect)
 	if err := sds.prepareQuery(ctx); err != nil {
 		return err
 	}

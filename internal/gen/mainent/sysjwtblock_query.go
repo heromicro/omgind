@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -62,7 +63,7 @@ func (sjbq *SysJwtBlockQuery) Order(o ...sysjwtblock.OrderOption) *SysJwtBlockQu
 // First returns the first SysJwtBlock entity from the query.
 // Returns a *NotFoundError when no SysJwtBlock was found.
 func (sjbq *SysJwtBlockQuery) First(ctx context.Context) (*SysJwtBlock, error) {
-	nodes, err := sjbq.Limit(1).All(setContextOp(ctx, sjbq.ctx, "First"))
+	nodes, err := sjbq.Limit(1).All(setContextOp(ctx, sjbq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (sjbq *SysJwtBlockQuery) FirstX(ctx context.Context) *SysJwtBlock {
 // Returns a *NotFoundError when no SysJwtBlock ID was found.
 func (sjbq *SysJwtBlockQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sjbq.Limit(1).IDs(setContextOp(ctx, sjbq.ctx, "FirstID")); err != nil {
+	if ids, err = sjbq.Limit(1).IDs(setContextOp(ctx, sjbq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (sjbq *SysJwtBlockQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysJwtBlock entity is found.
 // Returns a *NotFoundError when no SysJwtBlock entities are found.
 func (sjbq *SysJwtBlockQuery) Only(ctx context.Context) (*SysJwtBlock, error) {
-	nodes, err := sjbq.Limit(2).All(setContextOp(ctx, sjbq.ctx, "Only"))
+	nodes, err := sjbq.Limit(2).All(setContextOp(ctx, sjbq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (sjbq *SysJwtBlockQuery) OnlyX(ctx context.Context) *SysJwtBlock {
 // Returns a *NotFoundError when no entities are found.
 func (sjbq *SysJwtBlockQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sjbq.Limit(2).IDs(setContextOp(ctx, sjbq.ctx, "OnlyID")); err != nil {
+	if ids, err = sjbq.Limit(2).IDs(setContextOp(ctx, sjbq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,7 +162,7 @@ func (sjbq *SysJwtBlockQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysJwtBlocks.
 func (sjbq *SysJwtBlockQuery) All(ctx context.Context) ([]*SysJwtBlock, error) {
-	ctx = setContextOp(ctx, sjbq.ctx, "All")
+	ctx = setContextOp(ctx, sjbq.ctx, ent.OpQueryAll)
 	if err := sjbq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (sjbq *SysJwtBlockQuery) IDs(ctx context.Context) (ids []string, err error)
 	if sjbq.ctx.Unique == nil && sjbq.path != nil {
 		sjbq.Unique(true)
 	}
-	ctx = setContextOp(ctx, sjbq.ctx, "IDs")
+	ctx = setContextOp(ctx, sjbq.ctx, ent.OpQueryIDs)
 	if err = sjbq.Select(sysjwtblock.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (sjbq *SysJwtBlockQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (sjbq *SysJwtBlockQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, sjbq.ctx, "Count")
+	ctx = setContextOp(ctx, sjbq.ctx, ent.OpQueryCount)
 	if err := sjbq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -219,7 +220,7 @@ func (sjbq *SysJwtBlockQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (sjbq *SysJwtBlockQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, sjbq.ctx, "Exist")
+	ctx = setContextOp(ctx, sjbq.ctx, ent.OpQueryExist)
 	switch _, err := sjbq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -252,8 +253,9 @@ func (sjbq *SysJwtBlockQuery) Clone() *SysJwtBlockQuery {
 		inters:     append([]Interceptor{}, sjbq.inters...),
 		predicates: append([]predicate.SysJwtBlock{}, sjbq.predicates...),
 		// clone intermediate query.
-		sql:  sjbq.sql.Clone(),
-		path: sjbq.path,
+		sql:       sjbq.sql.Clone(),
+		path:      sjbq.path,
+		modifiers: append([]func(*sql.Selector){}, sjbq.modifiers...),
 	}
 }
 
@@ -492,7 +494,7 @@ func (sjbgb *SysJwtBlockGroupBy) Aggregate(fns ...AggregateFunc) *SysJwtBlockGro
 
 // Scan applies the selector query and scans the result into the given value.
 func (sjbgb *SysJwtBlockGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sjbgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, sjbgb.build.ctx, ent.OpQueryGroupBy)
 	if err := sjbgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -540,7 +542,7 @@ func (sjbs *SysJwtBlockSelect) Aggregate(fns ...AggregateFunc) *SysJwtBlockSelec
 
 // Scan applies the selector query and scans the result into the given value.
 func (sjbs *SysJwtBlockSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sjbs.ctx, "Select")
+	ctx = setContextOp(ctx, sjbs.ctx, ent.OpQuerySelect)
 	if err := sjbs.prepareQuery(ctx); err != nil {
 		return err
 	}

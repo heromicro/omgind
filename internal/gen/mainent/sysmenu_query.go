@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -109,7 +110,7 @@ func (smq *SysMenuQuery) QueryChildren() *SysMenuQuery {
 // First returns the first SysMenu entity from the query.
 // Returns a *NotFoundError when no SysMenu was found.
 func (smq *SysMenuQuery) First(ctx context.Context) (*SysMenu, error) {
-	nodes, err := smq.Limit(1).All(setContextOp(ctx, smq.ctx, "First"))
+	nodes, err := smq.Limit(1).All(setContextOp(ctx, smq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +133,7 @@ func (smq *SysMenuQuery) FirstX(ctx context.Context) *SysMenu {
 // Returns a *NotFoundError when no SysMenu ID was found.
 func (smq *SysMenuQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smq.Limit(1).IDs(setContextOp(ctx, smq.ctx, "FirstID")); err != nil {
+	if ids, err = smq.Limit(1).IDs(setContextOp(ctx, smq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -155,7 +156,7 @@ func (smq *SysMenuQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysMenu entity is found.
 // Returns a *NotFoundError when no SysMenu entities are found.
 func (smq *SysMenuQuery) Only(ctx context.Context) (*SysMenu, error) {
-	nodes, err := smq.Limit(2).All(setContextOp(ctx, smq.ctx, "Only"))
+	nodes, err := smq.Limit(2).All(setContextOp(ctx, smq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (smq *SysMenuQuery) OnlyX(ctx context.Context) *SysMenu {
 // Returns a *NotFoundError when no entities are found.
 func (smq *SysMenuQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smq.Limit(2).IDs(setContextOp(ctx, smq.ctx, "OnlyID")); err != nil {
+	if ids, err = smq.Limit(2).IDs(setContextOp(ctx, smq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -208,7 +209,7 @@ func (smq *SysMenuQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysMenus.
 func (smq *SysMenuQuery) All(ctx context.Context) ([]*SysMenu, error) {
-	ctx = setContextOp(ctx, smq.ctx, "All")
+	ctx = setContextOp(ctx, smq.ctx, ent.OpQueryAll)
 	if err := smq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -230,7 +231,7 @@ func (smq *SysMenuQuery) IDs(ctx context.Context) (ids []string, err error) {
 	if smq.ctx.Unique == nil && smq.path != nil {
 		smq.Unique(true)
 	}
-	ctx = setContextOp(ctx, smq.ctx, "IDs")
+	ctx = setContextOp(ctx, smq.ctx, ent.OpQueryIDs)
 	if err = smq.Select(sysmenu.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -248,7 +249,7 @@ func (smq *SysMenuQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (smq *SysMenuQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, smq.ctx, "Count")
+	ctx = setContextOp(ctx, smq.ctx, ent.OpQueryCount)
 	if err := smq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -266,7 +267,7 @@ func (smq *SysMenuQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (smq *SysMenuQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, smq.ctx, "Exist")
+	ctx = setContextOp(ctx, smq.ctx, ent.OpQueryExist)
 	switch _, err := smq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -301,8 +302,9 @@ func (smq *SysMenuQuery) Clone() *SysMenuQuery {
 		withParent:   smq.withParent.Clone(),
 		withChildren: smq.withChildren.Clone(),
 		// clone intermediate query.
-		sql:  smq.sql.Clone(),
-		path: smq.path,
+		sql:       smq.sql.Clone(),
+		path:      smq.path,
+		modifiers: append([]func(*sql.Selector){}, smq.modifiers...),
 	}
 }
 
@@ -650,7 +652,7 @@ func (smgb *SysMenuGroupBy) Aggregate(fns ...AggregateFunc) *SysMenuGroupBy {
 
 // Scan applies the selector query and scans the result into the given value.
 func (smgb *SysMenuGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, smgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, smgb.build.ctx, ent.OpQueryGroupBy)
 	if err := smgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -698,7 +700,7 @@ func (sms *SysMenuSelect) Aggregate(fns ...AggregateFunc) *SysMenuSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (sms *SysMenuSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sms.ctx, "Select")
+	ctx = setContextOp(ctx, sms.ctx, ent.OpQuerySelect)
 	if err := sms.prepareQuery(ctx); err != nil {
 		return err
 	}

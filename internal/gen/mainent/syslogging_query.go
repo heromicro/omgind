@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -62,7 +63,7 @@ func (slq *SysLoggingQuery) Order(o ...syslogging.OrderOption) *SysLoggingQuery 
 // First returns the first SysLogging entity from the query.
 // Returns a *NotFoundError when no SysLogging was found.
 func (slq *SysLoggingQuery) First(ctx context.Context) (*SysLogging, error) {
-	nodes, err := slq.Limit(1).All(setContextOp(ctx, slq.ctx, "First"))
+	nodes, err := slq.Limit(1).All(setContextOp(ctx, slq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (slq *SysLoggingQuery) FirstX(ctx context.Context) *SysLogging {
 // Returns a *NotFoundError when no SysLogging ID was found.
 func (slq *SysLoggingQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = slq.Limit(1).IDs(setContextOp(ctx, slq.ctx, "FirstID")); err != nil {
+	if ids, err = slq.Limit(1).IDs(setContextOp(ctx, slq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (slq *SysLoggingQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysLogging entity is found.
 // Returns a *NotFoundError when no SysLogging entities are found.
 func (slq *SysLoggingQuery) Only(ctx context.Context) (*SysLogging, error) {
-	nodes, err := slq.Limit(2).All(setContextOp(ctx, slq.ctx, "Only"))
+	nodes, err := slq.Limit(2).All(setContextOp(ctx, slq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (slq *SysLoggingQuery) OnlyX(ctx context.Context) *SysLogging {
 // Returns a *NotFoundError when no entities are found.
 func (slq *SysLoggingQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = slq.Limit(2).IDs(setContextOp(ctx, slq.ctx, "OnlyID")); err != nil {
+	if ids, err = slq.Limit(2).IDs(setContextOp(ctx, slq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,7 +162,7 @@ func (slq *SysLoggingQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysLoggings.
 func (slq *SysLoggingQuery) All(ctx context.Context) ([]*SysLogging, error) {
-	ctx = setContextOp(ctx, slq.ctx, "All")
+	ctx = setContextOp(ctx, slq.ctx, ent.OpQueryAll)
 	if err := slq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (slq *SysLoggingQuery) IDs(ctx context.Context) (ids []string, err error) {
 	if slq.ctx.Unique == nil && slq.path != nil {
 		slq.Unique(true)
 	}
-	ctx = setContextOp(ctx, slq.ctx, "IDs")
+	ctx = setContextOp(ctx, slq.ctx, ent.OpQueryIDs)
 	if err = slq.Select(syslogging.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (slq *SysLoggingQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (slq *SysLoggingQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, slq.ctx, "Count")
+	ctx = setContextOp(ctx, slq.ctx, ent.OpQueryCount)
 	if err := slq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -219,7 +220,7 @@ func (slq *SysLoggingQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (slq *SysLoggingQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, slq.ctx, "Exist")
+	ctx = setContextOp(ctx, slq.ctx, ent.OpQueryExist)
 	switch _, err := slq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -252,8 +253,9 @@ func (slq *SysLoggingQuery) Clone() *SysLoggingQuery {
 		inters:     append([]Interceptor{}, slq.inters...),
 		predicates: append([]predicate.SysLogging{}, slq.predicates...),
 		// clone intermediate query.
-		sql:  slq.sql.Clone(),
-		path: slq.path,
+		sql:       slq.sql.Clone(),
+		path:      slq.path,
+		modifiers: append([]func(*sql.Selector){}, slq.modifiers...),
 	}
 }
 
@@ -492,7 +494,7 @@ func (slgb *SysLoggingGroupBy) Aggregate(fns ...AggregateFunc) *SysLoggingGroupB
 
 // Scan applies the selector query and scans the result into the given value.
 func (slgb *SysLoggingGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, slgb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, slgb.build.ctx, ent.OpQueryGroupBy)
 	if err := slgb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -540,7 +542,7 @@ func (sls *SysLoggingSelect) Aggregate(fns ...AggregateFunc) *SysLoggingSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (sls *SysLoggingSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sls.ctx, "Select")
+	ctx = setContextOp(ctx, sls.ctx, ent.OpQuerySelect)
 	if err := sls.prepareQuery(ctx); err != nil {
 		return err
 	}

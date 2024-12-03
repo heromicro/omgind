@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -62,7 +63,7 @@ func (smaq *SysMenuActionQuery) Order(o ...sysmenuaction.OrderOption) *SysMenuAc
 // First returns the first SysMenuAction entity from the query.
 // Returns a *NotFoundError when no SysMenuAction was found.
 func (smaq *SysMenuActionQuery) First(ctx context.Context) (*SysMenuAction, error) {
-	nodes, err := smaq.Limit(1).All(setContextOp(ctx, smaq.ctx, "First"))
+	nodes, err := smaq.Limit(1).All(setContextOp(ctx, smaq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +86,7 @@ func (smaq *SysMenuActionQuery) FirstX(ctx context.Context) *SysMenuAction {
 // Returns a *NotFoundError when no SysMenuAction ID was found.
 func (smaq *SysMenuActionQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smaq.Limit(1).IDs(setContextOp(ctx, smaq.ctx, "FirstID")); err != nil {
+	if ids, err = smaq.Limit(1).IDs(setContextOp(ctx, smaq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -108,7 +109,7 @@ func (smaq *SysMenuActionQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysMenuAction entity is found.
 // Returns a *NotFoundError when no SysMenuAction entities are found.
 func (smaq *SysMenuActionQuery) Only(ctx context.Context) (*SysMenuAction, error) {
-	nodes, err := smaq.Limit(2).All(setContextOp(ctx, smaq.ctx, "Only"))
+	nodes, err := smaq.Limit(2).All(setContextOp(ctx, smaq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func (smaq *SysMenuActionQuery) OnlyX(ctx context.Context) *SysMenuAction {
 // Returns a *NotFoundError when no entities are found.
 func (smaq *SysMenuActionQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = smaq.Limit(2).IDs(setContextOp(ctx, smaq.ctx, "OnlyID")); err != nil {
+	if ids, err = smaq.Limit(2).IDs(setContextOp(ctx, smaq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -161,7 +162,7 @@ func (smaq *SysMenuActionQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysMenuActions.
 func (smaq *SysMenuActionQuery) All(ctx context.Context) ([]*SysMenuAction, error) {
-	ctx = setContextOp(ctx, smaq.ctx, "All")
+	ctx = setContextOp(ctx, smaq.ctx, ent.OpQueryAll)
 	if err := smaq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -183,7 +184,7 @@ func (smaq *SysMenuActionQuery) IDs(ctx context.Context) (ids []string, err erro
 	if smaq.ctx.Unique == nil && smaq.path != nil {
 		smaq.Unique(true)
 	}
-	ctx = setContextOp(ctx, smaq.ctx, "IDs")
+	ctx = setContextOp(ctx, smaq.ctx, ent.OpQueryIDs)
 	if err = smaq.Select(sysmenuaction.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (smaq *SysMenuActionQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (smaq *SysMenuActionQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, smaq.ctx, "Count")
+	ctx = setContextOp(ctx, smaq.ctx, ent.OpQueryCount)
 	if err := smaq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -219,7 +220,7 @@ func (smaq *SysMenuActionQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (smaq *SysMenuActionQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, smaq.ctx, "Exist")
+	ctx = setContextOp(ctx, smaq.ctx, ent.OpQueryExist)
 	switch _, err := smaq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -252,8 +253,9 @@ func (smaq *SysMenuActionQuery) Clone() *SysMenuActionQuery {
 		inters:     append([]Interceptor{}, smaq.inters...),
 		predicates: append([]predicate.SysMenuAction{}, smaq.predicates...),
 		// clone intermediate query.
-		sql:  smaq.sql.Clone(),
-		path: smaq.path,
+		sql:       smaq.sql.Clone(),
+		path:      smaq.path,
+		modifiers: append([]func(*sql.Selector){}, smaq.modifiers...),
 	}
 }
 
@@ -492,7 +494,7 @@ func (smagb *SysMenuActionGroupBy) Aggregate(fns ...AggregateFunc) *SysMenuActio
 
 // Scan applies the selector query and scans the result into the given value.
 func (smagb *SysMenuActionGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, smagb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, smagb.build.ctx, ent.OpQueryGroupBy)
 	if err := smagb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -540,7 +542,7 @@ func (smas *SysMenuActionSelect) Aggregate(fns ...AggregateFunc) *SysMenuActionS
 
 // Scan applies the selector query and scans the result into the given value.
 func (smas *SysMenuActionSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, smas.ctx, "Select")
+	ctx = setContextOp(ctx, smas.ctx, ent.OpQuerySelect)
 	if err := smas.prepareQuery(ctx); err != nil {
 		return err
 	}

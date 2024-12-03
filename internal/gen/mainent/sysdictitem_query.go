@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -86,7 +87,7 @@ func (sdiq *SysDictItemQuery) QueryDict() *SysDictQuery {
 // First returns the first SysDictItem entity from the query.
 // Returns a *NotFoundError when no SysDictItem was found.
 func (sdiq *SysDictItemQuery) First(ctx context.Context) (*SysDictItem, error) {
-	nodes, err := sdiq.Limit(1).All(setContextOp(ctx, sdiq.ctx, "First"))
+	nodes, err := sdiq.Limit(1).All(setContextOp(ctx, sdiq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +110,7 @@ func (sdiq *SysDictItemQuery) FirstX(ctx context.Context) *SysDictItem {
 // Returns a *NotFoundError when no SysDictItem ID was found.
 func (sdiq *SysDictItemQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdiq.Limit(1).IDs(setContextOp(ctx, sdiq.ctx, "FirstID")); err != nil {
+	if ids, err = sdiq.Limit(1).IDs(setContextOp(ctx, sdiq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -132,7 +133,7 @@ func (sdiq *SysDictItemQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one SysDictItem entity is found.
 // Returns a *NotFoundError when no SysDictItem entities are found.
 func (sdiq *SysDictItemQuery) Only(ctx context.Context) (*SysDictItem, error) {
-	nodes, err := sdiq.Limit(2).All(setContextOp(ctx, sdiq.ctx, "Only"))
+	nodes, err := sdiq.Limit(2).All(setContextOp(ctx, sdiq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +161,7 @@ func (sdiq *SysDictItemQuery) OnlyX(ctx context.Context) *SysDictItem {
 // Returns a *NotFoundError when no entities are found.
 func (sdiq *SysDictItemQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdiq.Limit(2).IDs(setContextOp(ctx, sdiq.ctx, "OnlyID")); err != nil {
+	if ids, err = sdiq.Limit(2).IDs(setContextOp(ctx, sdiq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -185,7 +186,7 @@ func (sdiq *SysDictItemQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of SysDictItems.
 func (sdiq *SysDictItemQuery) All(ctx context.Context) ([]*SysDictItem, error) {
-	ctx = setContextOp(ctx, sdiq.ctx, "All")
+	ctx = setContextOp(ctx, sdiq.ctx, ent.OpQueryAll)
 	if err := sdiq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -207,7 +208,7 @@ func (sdiq *SysDictItemQuery) IDs(ctx context.Context) (ids []string, err error)
 	if sdiq.ctx.Unique == nil && sdiq.path != nil {
 		sdiq.Unique(true)
 	}
-	ctx = setContextOp(ctx, sdiq.ctx, "IDs")
+	ctx = setContextOp(ctx, sdiq.ctx, ent.OpQueryIDs)
 	if err = sdiq.Select(sysdictitem.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -225,7 +226,7 @@ func (sdiq *SysDictItemQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (sdiq *SysDictItemQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, sdiq.ctx, "Count")
+	ctx = setContextOp(ctx, sdiq.ctx, ent.OpQueryCount)
 	if err := sdiq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -243,7 +244,7 @@ func (sdiq *SysDictItemQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (sdiq *SysDictItemQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, sdiq.ctx, "Exist")
+	ctx = setContextOp(ctx, sdiq.ctx, ent.OpQueryExist)
 	switch _, err := sdiq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -277,8 +278,9 @@ func (sdiq *SysDictItemQuery) Clone() *SysDictItemQuery {
 		predicates: append([]predicate.SysDictItem{}, sdiq.predicates...),
 		withDict:   sdiq.withDict.Clone(),
 		// clone intermediate query.
-		sql:  sdiq.sql.Clone(),
-		path: sdiq.path,
+		sql:       sdiq.sql.Clone(),
+		path:      sdiq.path,
+		modifiers: append([]func(*sql.Selector){}, sdiq.modifiers...),
 	}
 }
 
@@ -574,7 +576,7 @@ func (sdigb *SysDictItemGroupBy) Aggregate(fns ...AggregateFunc) *SysDictItemGro
 
 // Scan applies the selector query and scans the result into the given value.
 func (sdigb *SysDictItemGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sdigb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, sdigb.build.ctx, ent.OpQueryGroupBy)
 	if err := sdigb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -622,7 +624,7 @@ func (sdis *SysDictItemSelect) Aggregate(fns ...AggregateFunc) *SysDictItemSelec
 
 // Scan applies the selector query and scans the result into the given value.
 func (sdis *SysDictItemSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sdis.ctx, "Select")
+	ctx = setContextOp(ctx, sdis.ctx, ent.OpQuerySelect)
 	if err := sdis.prepareQuery(ctx); err != nil {
 		return err
 	}

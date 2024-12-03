@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -159,7 +160,7 @@ func (ooq *OrgOrganQuery) QueryPositions() *OrgPositionQuery {
 // First returns the first OrgOrgan entity from the query.
 // Returns a *NotFoundError when no OrgOrgan was found.
 func (ooq *OrgOrganQuery) First(ctx context.Context) (*OrgOrgan, error) {
-	nodes, err := ooq.Limit(1).All(setContextOp(ctx, ooq.ctx, "First"))
+	nodes, err := ooq.Limit(1).All(setContextOp(ctx, ooq.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +183,7 @@ func (ooq *OrgOrganQuery) FirstX(ctx context.Context) *OrgOrgan {
 // Returns a *NotFoundError when no OrgOrgan ID was found.
 func (ooq *OrgOrganQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = ooq.Limit(1).IDs(setContextOp(ctx, ooq.ctx, "FirstID")); err != nil {
+	if ids, err = ooq.Limit(1).IDs(setContextOp(ctx, ooq.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -205,7 +206,7 @@ func (ooq *OrgOrganQuery) FirstIDX(ctx context.Context) string {
 // Returns a *NotSingularError when more than one OrgOrgan entity is found.
 // Returns a *NotFoundError when no OrgOrgan entities are found.
 func (ooq *OrgOrganQuery) Only(ctx context.Context) (*OrgOrgan, error) {
-	nodes, err := ooq.Limit(2).All(setContextOp(ctx, ooq.ctx, "Only"))
+	nodes, err := ooq.Limit(2).All(setContextOp(ctx, ooq.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +234,7 @@ func (ooq *OrgOrganQuery) OnlyX(ctx context.Context) *OrgOrgan {
 // Returns a *NotFoundError when no entities are found.
 func (ooq *OrgOrganQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = ooq.Limit(2).IDs(setContextOp(ctx, ooq.ctx, "OnlyID")); err != nil {
+	if ids, err = ooq.Limit(2).IDs(setContextOp(ctx, ooq.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -258,7 +259,7 @@ func (ooq *OrgOrganQuery) OnlyIDX(ctx context.Context) string {
 
 // All executes the query and returns a list of OrgOrgans.
 func (ooq *OrgOrganQuery) All(ctx context.Context) ([]*OrgOrgan, error) {
-	ctx = setContextOp(ctx, ooq.ctx, "All")
+	ctx = setContextOp(ctx, ooq.ctx, ent.OpQueryAll)
 	if err := ooq.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
@@ -280,7 +281,7 @@ func (ooq *OrgOrganQuery) IDs(ctx context.Context) (ids []string, err error) {
 	if ooq.ctx.Unique == nil && ooq.path != nil {
 		ooq.Unique(true)
 	}
-	ctx = setContextOp(ctx, ooq.ctx, "IDs")
+	ctx = setContextOp(ctx, ooq.ctx, ent.OpQueryIDs)
 	if err = ooq.Select(orgorgan.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -298,7 +299,7 @@ func (ooq *OrgOrganQuery) IDsX(ctx context.Context) []string {
 
 // Count returns the count of the given query.
 func (ooq *OrgOrganQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, ooq.ctx, "Count")
+	ctx = setContextOp(ctx, ooq.ctx, ent.OpQueryCount)
 	if err := ooq.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
@@ -316,7 +317,7 @@ func (ooq *OrgOrganQuery) CountX(ctx context.Context) int {
 
 // Exist returns true if the query has elements in the graph.
 func (ooq *OrgOrganQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, ooq.ctx, "Exist")
+	ctx = setContextOp(ctx, ooq.ctx, ent.OpQueryExist)
 	switch _, err := ooq.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
@@ -353,8 +354,9 @@ func (ooq *OrgOrganQuery) Clone() *OrgOrganQuery {
 		withStaffs:    ooq.withStaffs.Clone(),
 		withPositions: ooq.withPositions.Clone(),
 		// clone intermediate query.
-		sql:  ooq.sql.Clone(),
-		path: ooq.path,
+		sql:       ooq.sql.Clone(),
+		path:      ooq.path,
+		modifiers: append([]func(*sql.Selector){}, ooq.modifiers...),
 	}
 }
 
@@ -806,7 +808,7 @@ func (oogb *OrgOrganGroupBy) Aggregate(fns ...AggregateFunc) *OrgOrganGroupBy {
 
 // Scan applies the selector query and scans the result into the given value.
 func (oogb *OrgOrganGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, oogb.build.ctx, "GroupBy")
+	ctx = setContextOp(ctx, oogb.build.ctx, ent.OpQueryGroupBy)
 	if err := oogb.build.prepareQuery(ctx); err != nil {
 		return err
 	}
@@ -854,7 +856,7 @@ func (oos *OrgOrganSelect) Aggregate(fns ...AggregateFunc) *OrgOrganSelect {
 
 // Scan applies the selector query and scans the result into the given value.
 func (oos *OrgOrganSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, oos.ctx, "Select")
+	ctx = setContextOp(ctx, oos.ctx, ent.OpQuerySelect)
 	if err := oos.prepareQuery(ctx); err != nil {
 		return err
 	}
