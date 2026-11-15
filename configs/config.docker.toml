@@ -290,3 +290,8 @@
     User  = "omgind"
     # 密码
     Password  = "123456"
+
+# Load the local snapshot only when sys_districts is empty.
+[District]
+    Enable = true
+    Data = "configs/data/districts/world.json.gz"

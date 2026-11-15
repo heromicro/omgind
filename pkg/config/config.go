@@ -35,11 +35,12 @@ func New(pf string) (*viper.Viper, error) {
 
 // Config 配置参数
 type AppConfig struct {
-	System       option.SystemConfig `mapstructure:"System"  json:"system" yaml:"system"`
-	HTTP         option.HTTPConfig   `mapstructure:"HTTP" json:"http"`
-	Menu         option.MenuConfig   `mapstructure:"menu" json:"menu"`
-	Casbin       option.CasbinConfig `mapstructure:"Casbin" json:"casbin"`
-	Log          option.LogConfig    `mapstructure:"Log" json:"log"`
+	District     option.DistrictConfig `mapstructure:"District" json:"district"`
+	System       option.SystemConfig   `mapstructure:"System"  json:"system" yaml:"system"`
+	HTTP         option.HTTPConfig     `mapstructure:"HTTP" json:"http"`
+	Menu         option.MenuConfig     `mapstructure:"menu" json:"menu"`
+	Casbin       option.CasbinConfig   `mapstructure:"Casbin" json:"casbin"`
+	Log          option.LogConfig      `mapstructure:"Log" json:"log"`
 	LogGormHook  option.LogGormHook
 	LogEntHook   option.LogEntHook
 	LogMongoHook option.LogMongoHook
