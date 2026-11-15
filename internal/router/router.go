@@ -1,8 +1,10 @@
 package router
 
 import (
+	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
+	"github.com/heromicro/omgind/internal/gen/mainent"
 
 	api_v2 "github.com/heromicro/omgind/internal/api/v2"
 	"github.com/heromicro/omgind/pkg/auth"
@@ -21,8 +23,9 @@ type IRouter interface {
 
 // Router 路由管理器
 type Router struct {
-	Auth auth.Auther
-	// CasbinEnforcer *casbin.SyncedEnforcer
+	EntCli         *mainent.Client
+	Auth           auth.Auther
+	CasbinEnforcer *casbin.SyncedEnforcer
 
 	// SockIO *socketio.Server
 

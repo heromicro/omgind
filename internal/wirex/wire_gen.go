@@ -8,6 +8,7 @@ package wirex
 
 import (
 	"github.com/heromicro/omgind/internal/api/v2"
+	"github.com/heromicro/omgind/internal/app/module/adapter"
 	"github.com/heromicro/omgind/internal/app/service"
 	"github.com/heromicro/omgind/internal/router"
 	"github.com/heromicro/omgind/internal/scheme"
@@ -20,17 +21,50 @@ import (
 
 // BuildInjector 生成注入器
 func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
-	redis, cleanup, err := rdb.New(cfg)
+	client, cleanup, err := scheme.NewEnt(cfg)
 	if err != nil {
 		return nil, nil, err
 	}
-	auther, cleanup2, err := InitAuth(cfg, redis)
+	redis, cleanup2, err := rdb.New(cfg)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
-	client, cleanup3, err := scheme.NewEnt(cfg)
+	auther, cleanup3, err := InitAuth(cfg, redis)
 	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	orgOrgan := &repo.OrgOrgan{
+		EntCli: client,
+	}
+	role := &repo.Role{
+		EntCli: client,
+	}
+	roleMenu := &repo.RoleMenu{
+		EntCli: client,
+	}
+	menuActionResource := &repo.MenuActionResource{
+		EntCli: client,
+	}
+	user := &repo.User{
+		EntCli: client,
+	}
+	userRole := &repo.UserRole{
+		EntCli: client,
+	}
+	casbinAdapter := &adapter.CasbinAdapter{
+		OrgOrganRepo:     orgOrgan,
+		RoleRepo:         role,
+		RoleMenuRepo:     roleMenu,
+		MenuResourceRepo: menuActionResource,
+		UserRepo:         user,
+		UserRoleRepo:     userRole,
+	}
+	syncedEnforcer, cleanup4, err := InitCasbin(cfg, casbinAdapter)
+	if err != nil {
+		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
@@ -61,17 +95,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	menuAction := &repo.MenuAction{
 		EntCli: client,
 	}
-	menuActionResource := &repo.MenuActionResource{
-		EntCli: client,
-	}
-	queuer, cleanup4, err := InitQueue(cfg, redis)
-	if err != nil {
-		cleanup3()
-		cleanup2()
-		cleanup()
-		return nil, nil, err
-	}
-	consumer, cleanup5, err := InitAsynq(cfg, queuer)
+	queuer, cleanup5, err := InitQueue(cfg, redis)
 	if err != nil {
 		cleanup4()
 		cleanup3()
@@ -79,20 +103,21 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	serviceMenu := service.NewMenuSrv(client, menu, menuAction, menuActionResource, queuer, consumer)
+	consumer, cleanup6, err := InitAsynq(cfg, queuer)
+	if err != nil {
+		cleanup5()
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	serviceMenu := service.NewMenuSrv(client, menu, menuAction, menuActionResource, queuer, consumer, syncedEnforcer)
 	api_v2Menu := &api_v2.Menu{
 		MenuSrv: serviceMenu,
 	}
-	role := &repo.Role{
-		EntCli: client,
-	}
-	roleMenu := &repo.RoleMenu{
-		EntCli: client,
-	}
-	user := &repo.User{
-		EntCli: client,
-	}
 	serviceRole := &service.Role{
+		Enforcer:               syncedEnforcer,
 		EntCli:                 client,
 		RoleRepo:               role,
 		RoleMenuRepo:           roleMenu,
@@ -102,10 +127,8 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2Role := &api_v2.Role{
 		RoleSrv: serviceRole,
 	}
-	userRole := &repo.UserRole{
-		EntCli: client,
-	}
 	serviceUser := &service.User{
+		Enforcer:     syncedEnforcer,
 		EntCli:       client,
 		UserRepo:     user,
 		UserRoleRepo: userRole,
@@ -158,13 +181,11 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	api_v2SysAddress := &api_v2.SysAddress{
 		SysAddressSrv: serviceSysAddress,
 	}
-	orgOrgan := &repo.OrgOrgan{
-		EntCli: client,
-	}
 	orgDept := &repo.OrgDept{
 		EntCli: client,
 	}
 	serviceOrgOrgan := &service.OrgOrgan{
+		Enforcer:     syncedEnforcer,
 		EntCli:       client,
 		OrgOrganRepo: orgOrgan,
 		OrgDeptRepo:  orgDept,
@@ -206,7 +227,9 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		SysAnnexSrv: serviceSysAnnex,
 	}
 	routerRouter := &router.Router{
+		EntCli:           client,
 		Auth:             auther,
+		CasbinEnforcer:   syncedEnforcer,
 		DictApiV2:        api_v2Dict,
 		DemoAPIV2:        api_v2Demo,
 		MenuAPIV2:        api_v2Menu,
@@ -224,14 +247,16 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{
-		Engine:   engine,
-		Auth:     auther,
-		MenuSrv:  serviceMenu,
-		Rdb:      redis,
-		Queue:    queuer,
-		Consumer: consumer,
+		Engine:         engine,
+		Auth:           auther,
+		CasbinEnforcer: syncedEnforcer,
+		MenuSrv:        serviceMenu,
+		Rdb:            redis,
+		Queue:          queuer,
+		Consumer:       consumer,
 	}
 	return injector, func() {
+		cleanup6()
 		cleanup5()
 		cleanup4()
 		cleanup3()

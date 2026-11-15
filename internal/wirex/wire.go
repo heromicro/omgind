@@ -7,6 +7,7 @@ package wirex
 
 import (
 	api_v2 "github.com/heromicro/omgind/internal/api/v2"
+	"github.com/heromicro/omgind/internal/app/module/adapter"
 	"github.com/heromicro/omgind/internal/app/service"
 
 	"github.com/heromicro/omgind/internal/scheme"
@@ -41,13 +42,13 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		//InitRabbitMQ,
 		repo.RepoSet,
 		InitAuth,
-		// InitCasbin,
+		InitCasbin,
 		InitGinEngine,
 		service.ServiceSet,
 
 		api_v2.APIV2Set,
 		router.RouterSet,
-		// adapter.CasbinAdapterSet,
+		adapter.CasbinAdapterSet,
 		InjectorSet,
 		// sockio.ProviderSet,
 

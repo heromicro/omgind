@@ -10,15 +10,14 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 
 	g := app.Group("/api")
 
-	g.Use(middleware.UserAuthMiddleware(a.Auth,
-		middleware.AllowPathPrefixSkipper("/api/v2/pub/signin"),
-		middleware.AllowPathPrefixSkipper("/ws/"),
-	))
+	g.Use(middleware.UserAuthMiddleware(a.Auth, func(c *gin.Context) bool {
+		path := c.Request.URL.Path
+		return (c.Request.Method == "POST" && path == "/api/v2/pub/signin") || (c.Request.Method == "GET" && (path == "/api/v2/pub/signin/captcha" || path == "/api/v2/pub/signin/captchaid"))
+	}))
 
-	// g.Use(middleware.CasbinMiddleware(a.CasbinEnforcer,
-	// 	middleware.AllowPathPrefixSkipper("/api/v2/pub"),
-	// 	middleware.AllowPathPrefixSkipper("/ws/"),
-	// ))
+	g.Use(middleware.TenantMiddleware(a.EntCli))
+
+	g.Use(middleware.CasbinMiddleware(a.CasbinEnforcer))
 
 	g.Use(middleware.RateLimiterMiddleware())
 
@@ -36,6 +35,7 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 
 			gCurrent := pub.Group("current")
 			{
+				gCurrent.GET("organs", a.currentOrganizations)
 				gCurrent.PUT("password", a.SignInAPIV2.UpdatePassword)
 				gCurrent.GET("user", a.SignInAPIV2.GetUserInfo)
 				gCurrent.GET("menutree", a.SignInAPIV2.QueryUserMenuTree)
@@ -63,6 +63,8 @@ func (a *Router) RegisterAPI(app *gin.Engine) {
 
 		a.initOrgOrganRouterV2(v2, a.OrgOrganAPIV2, "org-organs")
 		v2.GET("/sys-organs.select.page", a.OrgOrganAPIV2.QuerySelectPage)
+
+		v2.PUT("/org-staffs/:id/roles", a.assignStaffRoles)
 
 		a.initOrgStaffRouterV2(v2, a.OrgStaffAPIV2, "org-staffs")
 
