@@ -21,7 +21,7 @@ type SysAnnex struct {
 // @Param current query int true "分页索引" default(1)
 // @Param pageSize query int true "分页大小" default(10)
 // @Param q query string false "查询值"
-// @Success 200 {object} schema.ListResult{list=schema.SysAnnexes,pagination=schema.PaginationResult}
+// @Success 200 {object} schema.StatusResult{burden=schema.ListResult{list=schema.SysAnnexes,pagination=schema.PaginationResult}}
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
 // @Router /api/v2/sysannexes [get]
@@ -34,7 +34,7 @@ func (a *SysAnnex) Query(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path string true "唯一标识"
-// @Success 200 {object} schema.SysAnnex
+// @Success 200 {object} schema.StatusResult{burden=schema.SysAnnex}
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
@@ -48,7 +48,7 @@ func (a *SysAnnex) Get(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path string true "唯一标识"
-// @Success 200 {object} schema.SysAnnex
+// @Success 200 {object} schema.StatusResult{burden=schema.SysAnnex}
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 404 {object} schema.ErrorResult "{error:{code:0,message:资源不存在}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
@@ -62,7 +62,7 @@ func (a *SysAnnex) View(c *gin.Context) {
 // @Security ApiKeyAuth
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param body body schema.SysAnnex true "创建数据"
-// @Success 200 {object} schema.SysAnnex
+// @Success 200 {object} schema.StatusResult{burden=schema.SysAnnex}
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"
@@ -77,7 +77,7 @@ func (a *SysAnnex) Create(c *gin.Context) {
 // @Param Authorization header string false "Bearer 用户令牌"
 // @Param id path string true "唯一标识"
 // @Param body body schema.SysAnnex true "更新数据"
-// @Success 200 {object} schema.SysAnnex
+// @Success 200 {object} schema.StatusResult{burden=schema.SysAnnex}
 // @Failure 400 {object} schema.ErrorResult "{error:{code:0,message:无效的请求参数}}"
 // @Failure 401 {object} schema.ErrorResult "{error:{code:0,message:未授权}}"
 // @Failure 500 {object} schema.ErrorResult "{error:{code:0,message:服务器错误}}"

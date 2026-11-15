@@ -6732,19 +6732,31 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/schema.ListResult"
+                                    "$ref": "#/definitions/schema.StatusResult"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "list": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/schema.SysAnnex"
-                                            }
-                                        },
-                                        "pagination": {
-                                            "$ref": "#/definitions/schema.PaginationResult"
+                                        "burden": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/schema.ListResult"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/schema.SysAnnex"
+                                                            }
+                                                        },
+                                                        "pagination": {
+                                                            "$ref": "#/definitions/schema.PaginationResult"
+                                                        }
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 }
@@ -6796,7 +6808,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SysAnnex"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/schema.StatusResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "burden": {
+                                            "$ref": "#/definitions/schema.SysAnnex"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
@@ -6850,7 +6874,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SysAnnex"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/schema.StatusResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "burden": {
+                                            "$ref": "#/definitions/schema.SysAnnex"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "401": {
@@ -6911,7 +6947,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SysAnnex"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/schema.StatusResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "burden": {
+                                            "$ref": "#/definitions/schema.SysAnnex"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "400": {
@@ -7095,7 +7143,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SysAnnex"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/schema.StatusResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "burden": {
+                                            "$ref": "#/definitions/schema.SysAnnex"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "401": {
@@ -7313,19 +7373,31 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/schema.ListResult"
+                                    "$ref": "#/definitions/schema.StatusResult"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "list": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/schema.SysTeam"
-                                            }
-                                        },
-                                        "pagination": {
-                                            "$ref": "#/definitions/schema.PaginationResult"
+                                        "burden": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/schema.ListResult"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/schema.SysTeam"
+                                                            }
+                                                        },
+                                                        "pagination": {
+                                                            "$ref": "#/definitions/schema.PaginationResult"
+                                                        }
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 }
@@ -7431,7 +7503,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SysTeam"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/schema.StatusResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "burden": {
+                                            "$ref": "#/definitions/schema.SysTeam"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "401": {
@@ -7676,7 +7760,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schema.SysTeam"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/schema.StatusResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "burden": {
+                                            "$ref": "#/definitions/schema.SysTeam"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "401": {

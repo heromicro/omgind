@@ -5421,14 +5421,19 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/schema.ListResult'
+            - $ref: '#/definitions/schema.StatusResult'
             - properties:
-                list:
-                  items:
-                    $ref: '#/definitions/schema.SysAnnex'
-                  type: array
-                pagination:
-                  $ref: '#/definitions/schema.PaginationResult'
+                burden:
+                  allOf:
+                  - $ref: '#/definitions/schema.ListResult'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/schema.SysAnnex'
+                        type: array
+                      pagination:
+                        $ref: '#/definitions/schema.PaginationResult'
+                    type: object
               type: object
         "401":
           description: '{error:{code:0,message:未授权}}'
@@ -5459,7 +5464,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SysAnnex'
+            allOf:
+            - $ref: '#/definitions/schema.StatusResult'
+            - properties:
+                burden:
+                  $ref: '#/definitions/schema.SysAnnex'
+              type: object
         "400":
           description: '{error:{code:0,message:无效的请求参数}}'
           schema:
@@ -5522,7 +5532,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SysAnnex'
+            allOf:
+            - $ref: '#/definitions/schema.StatusResult'
+            - properties:
+                burden:
+                  $ref: '#/definitions/schema.SysAnnex'
+              type: object
         "401":
           description: '{error:{code:0,message:未授权}}'
           schema:
@@ -5561,7 +5576,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SysAnnex'
+            allOf:
+            - $ref: '#/definitions/schema.StatusResult'
+            - properties:
+                burden:
+                  $ref: '#/definitions/schema.SysAnnex'
+              type: object
         "400":
           description: '{error:{code:0,message:无效的请求参数}}'
           schema:
@@ -5647,7 +5667,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SysAnnex'
+            allOf:
+            - $ref: '#/definitions/schema.StatusResult'
+            - properties:
+                burden:
+                  $ref: '#/definitions/schema.SysAnnex'
+              type: object
         "401":
           description: '{error:{code:0,message:未授权}}'
           schema:
@@ -5800,14 +5825,19 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/schema.ListResult'
+            - $ref: '#/definitions/schema.StatusResult'
             - properties:
-                list:
-                  items:
-                    $ref: '#/definitions/schema.SysTeam'
-                  type: array
-                pagination:
-                  $ref: '#/definitions/schema.PaginationResult'
+                burden:
+                  allOf:
+                  - $ref: '#/definitions/schema.ListResult'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/schema.SysTeam'
+                        type: array
+                      pagination:
+                        $ref: '#/definitions/schema.PaginationResult'
+                    type: object
               type: object
         "401":
           description: '{error:{code:0,message:未授权}}'
@@ -5901,7 +5931,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SysTeam'
+            allOf:
+            - $ref: '#/definitions/schema.StatusResult'
+            - properties:
+                burden:
+                  $ref: '#/definitions/schema.SysTeam'
+              type: object
         "401":
           description: '{error:{code:0,message:未授权}}'
           schema:
@@ -6026,7 +6061,12 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/schema.SysTeam'
+            allOf:
+            - $ref: '#/definitions/schema.StatusResult'
+            - properties:
+                burden:
+                  $ref: '#/definitions/schema.SysTeam'
+              type: object
         "401":
           description: '{error:{code:0,message:未授权}}'
           schema:
