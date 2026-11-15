@@ -114,6 +114,7 @@ func NewEntClient(cfg *config.AppConfig) (*mainent.Client, func(), error) {
 	}
 
 	client := mainent.NewClient(mainent.Driver(drv))
+	InstallTenantGuards(client)
 
 	return client, cleanFunc, nil
 }
