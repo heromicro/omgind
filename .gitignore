@@ -27,6 +27,8 @@
 .idea
 .vscode
 /vendor
+.codex/
+AGENTS.md
 
 
 # ln -s configs/config.dev.toml configs/config.toml
