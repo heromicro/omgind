@@ -193,7 +193,7 @@ func (a *Menu) InitData(ctx context.Context, dataFile string) error {
 		return err
 	}
 
-	err = a.createMenus(ctx, "", data)
+	err = a.createMenus(ctx, nil, data)
 
 	return err
 }
@@ -212,7 +212,7 @@ func (a *Menu) readData(name string) (schema.MenuTrees, error) {
 	return data, err
 }
 
-func (a *Menu) createMenus(ctx context.Context, parentID string, list schema.MenuTrees) error {
+func (a *Menu) createMenus(ctx context.Context, parentID *string, list schema.MenuTrees) error {
 
 	for _, tritem := range list {
 		sitem := schema.Menu{
@@ -221,7 +221,7 @@ func (a *Menu) createMenus(ctx context.Context, parentID string, list schema.Men
 			Level:    tritem.Level,
 			Icon:     tritem.Icon,
 			Router:   tritem.Router,
-			ParentID: &parentID,
+			ParentID: parentID,
 			IsActive: ptr.Bool(true),
 			IsShow:   tritem.IsShow,
 			Actions:  tritem.Actions,
@@ -250,7 +250,7 @@ func (a *Menu) createMenus(ctx context.Context, parentID string, list schema.Men
 		}
 
 		if tritem.Children != nil && len(*tritem.Children) > 0 {
-			err := a.createMenus(ctx, amenu.ID, *tritem.Children)
+			err := a.createMenus(ctx, &amenu.ID, *tritem.Children)
 
 			if err != nil {
 				return err
