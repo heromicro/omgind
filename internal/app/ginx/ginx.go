@@ -59,7 +59,7 @@ func GetBody(c *gin.Context) []byte {
 func ParseJSON(c *gin.Context, obj any) error {
 	if err := c.ShouldBindJSON(obj); err != nil {
 		fmt.Printf(" 00000 ---- %+v \n", err)
-		return errors.Wrap400Response(err, fmt.Sprintf("解析请求参数发生错误 - %s", err.Error()))
+		return errors.Wrap400Response(err, "解析请求参数发生错误 - %s", err.Error())
 	}
 	return nil
 }
@@ -67,7 +67,7 @@ func ParseJSON(c *gin.Context, obj any) error {
 // ParseQuery 解析Query参数
 func ParseQuery(c *gin.Context, obj any) error {
 	if err := c.ShouldBindQuery(obj); err != nil {
-		return errors.Wrap400Response(err, fmt.Sprintf("解析请求参数发生错误 - %s", err.Error()))
+		return errors.Wrap400Response(err, "解析请求参数发生错误 - %s", err.Error())
 	}
 	return nil
 }
@@ -75,7 +75,7 @@ func ParseQuery(c *gin.Context, obj any) error {
 // ParseForm 解析Form请求
 func ParseForm(c *gin.Context, obj any) error {
 	if err := c.ShouldBindWith(obj, binding.Form); err != nil {
-		return errors.Wrap400Response(err, fmt.Sprintf("解析请求参数发生错误 - %s", err.Error()))
+		return errors.Wrap400Response(err, "解析请求参数发生错误 - %s", err.Error())
 	}
 	return nil
 }
@@ -159,9 +159,9 @@ func ResError(c *gin.Context, err error, status ...int) {
 		}
 
 		if status := res.StatusCode; *status >= 400 && *status < 500 {
-			logger.WithContext(ctx).Warnf(err.Error())
+			logger.WithContext(ctx).Warnf("%s", err.Error())
 		} else if *status >= 500 {
-			logger.WithContext(logger.NewStackContext(ctx, err)).Errorf(err.Error())
+			logger.WithContext(logger.NewStackContext(ctx, err)).Errorf("%s", err.Error())
 		}
 	}
 
@@ -199,13 +199,13 @@ func ResErrorCode(c *gin.Context, code int, err error, status ...int) {
 		}
 		if status := res.StatusCode; status != nil {
 			if *status >= 400 && *status < 500 {
-				logger.WithContext(ctx).Warnf(err.Error())
+				logger.WithContext(ctx).Warnf("%s", err.Error())
 			} else {
-				logger.WithContext(logger.NewStackContext(ctx, err)).Errorf(err.Error())
+				logger.WithContext(logger.NewStackContext(ctx, err)).Errorf("%s", err.Error())
 			}
 		}
 	}
 
-	logger.WithContext(ctx).Warnf(err.Error())
+	logger.WithContext(ctx).Warnf("%s", err.Error())
 	ResJSON(c, *res.StatusCode, schema.StatusResult{Code: schema.CodeEnum(code), Message: res.Message})
 }

@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/golang-module/carbon/v2"
+	"github.com/dromara/carbon/v2"
 	strformat "github.com/jossef/format"
 	"github.com/spf13/cobra"
 	"github.com/ttacon/chalk"

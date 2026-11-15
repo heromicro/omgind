@@ -75,7 +75,7 @@ func (d *Dict) checkName(ctx context.Context, item schema.Dict) error {
 	if err1 != nil {
 		return nil
 	} else if result1.PageResult.Total > 0 {
-		return errors.New400Response("字典名称" + item.NameEn + "已经存在")
+		return errors.New400Response("字典名称%s已经存在", item.NameEn)
 	}
 
 	result2, err2 := d.DictRepo.Query(ctx, schema.DictQueryParam{
@@ -88,7 +88,7 @@ func (d *Dict) checkName(ctx context.Context, item schema.Dict) error {
 	if err2 != nil {
 		return nil
 	} else if result2.PageResult.Total > 0 {
-		return errors.New400Response("字典名称" + item.NameCn + "已经存在")
+		return errors.New400Response("字典名称%s已经存在", item.NameCn)
 	}
 
 	return nil

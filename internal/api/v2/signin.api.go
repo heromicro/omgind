@@ -103,7 +103,7 @@ func (a *SignIn) SignOut(c *gin.Context) {
 		ctx = logger.NewTagContext(ctx, "__signOut__")
 		err := a.SigninSrv.DestroyToken(ctx, ginx.GetToken(c))
 		if err != nil {
-			logger.WithContext(ctx).Errorf(err.Error())
+			logger.WithContext(ctx).Errorf("%s", err.Error())
 		}
 		logger.WithContext(ctx).Infof("登出系统")
 	}
