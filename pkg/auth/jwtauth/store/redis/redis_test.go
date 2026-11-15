@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	redisclient "github.com/redis/go-redis/v9"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -12,11 +13,7 @@ const (
 )
 
 func TestStore(t *testing.T) {
-	store := NewStore(&Config{
-		Addr:      addr,
-		DB:        1,
-		KeyPrefix: "prefix",
-	})
+	store := NewStoreWithClient(redisclient.NewClient(&redisclient.Options{Addr: addr, DB: 1}), "prefix")
 
 	defer store.Close()
 

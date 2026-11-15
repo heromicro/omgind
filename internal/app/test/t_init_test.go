@@ -10,7 +10,7 @@ import (
 	"net/url"
 
 	"github.com/gin-gonic/gin"
-	"github.com/heromicro/omgind/internal/app"
+	"github.com/heromicro/omgind/internal/wirex"
 	"github.com/heromicro/omgind/pkg/global"
 )
 
@@ -34,7 +34,7 @@ func init() {
 	// global.CFG.Gorm.Debug = false
 	// global.CFG.Gorm.DBType = "sqlite3"
 
-	injector, _, err := app.BuildInjector(global.CFG)
+	injector, _, err := wirex.BuildInjector(global.CFG)
 	if err != nil {
 		panic(err)
 	}
