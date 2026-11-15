@@ -35,11 +35,6 @@ func UserAuthMiddleware(a auth.Auther, skippers ...SkipperFunc) gin.HandlerFunc 
 		userID, err := a.ParseUserID(c.Request.Context(), ginx.GetToken(c))
 		if err != nil {
 			if err == auth.ErrInvalidToken {
-				if global.CFG.IsDebugMode() {
-					wrapUserAuthContext(c, global.CFG.Root.UserName)
-					c.Next()
-					return
-				}
 				ginx.ResError(c, errors.ErrInvalidToken)
 				return
 			}
