@@ -27,8 +27,8 @@ wire:
 	@wire gen ./internal/wirex
 
 entc:
-	@#entc generate ./internal/scheme/entity --target ./internal/gen/ent
-	@#ent generate ./internal/scheme/entity --template ./internal/scheme/template --target ./internal/gen/ent
+	@#entc generate ./internal/scheme/entity/entgo --target ./internal/gen/ent
+	@#ent generate ./internal/scheme/entity/entgo --template ./internal/scheme/template --target ./internal/gen/ent
 	@go run cmd/generator/entgo/main.go
 	
 test:

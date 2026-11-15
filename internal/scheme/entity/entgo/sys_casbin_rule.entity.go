@@ -1,4 +1,4 @@
-package entity
+package entgo
 
 //
 //// SysCasbinRule holds the schema definition for the SysCasbinRule entity.

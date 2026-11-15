@@ -1,4 +1,4 @@
-package entity
+package entgo
 
 import (
 	"github.com/heromicro/omgind/internal/scheme/mixin"

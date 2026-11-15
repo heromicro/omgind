@@ -1,4 +1,4 @@
-package entity
+package entgo
 
 // // all entity hooks in the file
 

@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	err := entc.Generate("./internal/scheme/entity",
+	err := entc.Generate("./internal/scheme/entity/entgo",
 		&gen.Config{
 			Features: []gen.Feature{
 				//gen.FeatureEntQL,
