@@ -14,7 +14,7 @@ func MakeEntClient(cf string) (*mainent.Client, func(), error) {
 	}
 	appconfig := config.NewConfig(vip)
 
-	entClient, cleanup, err := scheme.New(appconfig)
+	entClient, cleanup, err := scheme.NewEnt(appconfig)
 
 	if err != nil {
 		return nil, nil, err

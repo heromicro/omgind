@@ -11,7 +11,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/service"
 	"github.com/heromicro/omgind/internal/router"
 	"github.com/heromicro/omgind/internal/scheme"
-	"github.com/heromicro/omgind/internal/scheme/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo/entgo"
 	"github.com/heromicro/omgind/pkg/config"
 	"github.com/heromicro/omgind/pkg/mw/rdb"
 )
@@ -29,7 +29,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	client, cleanup3, err := scheme.New(cfg)
+	client, cleanup3, err := scheme.NewEnt(cfg)
 	if err != nil {
 		cleanup2()
 		cleanup()
