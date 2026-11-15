@@ -25,6 +25,8 @@ type SysUserRole struct {
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// delete time,
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+	// Tenant organization ID; empty for platform roles
+	OrgID string `json:"org_id,omitempty"`
 	// 用户ID, sys_user.id
 	UserID string `json:"user_id,omitempty"`
 	// 角色ID, sys_role.id
@@ -39,7 +41,7 @@ func (*SysUserRole) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case sysuserrole.FieldIsDel:
 			values[i] = new(sql.NullBool)
-		case sysuserrole.FieldID, sysuserrole.FieldUserID, sysuserrole.FieldRoleID:
+		case sysuserrole.FieldID, sysuserrole.FieldOrgID, sysuserrole.FieldUserID, sysuserrole.FieldRoleID:
 			values[i] = new(sql.NullString)
 		case sysuserrole.FieldCreatedAt, sysuserrole.FieldUpdatedAt, sysuserrole.FieldDeletedAt:
 			values[i] = new(sql.NullTime)
@@ -90,6 +92,12 @@ func (_m *SysUserRole) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.DeletedAt = new(time.Time)
 				*_m.DeletedAt = value.Time
+			}
+		case sysuserrole.FieldOrgID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field org_id", values[i])
+			} else if value.Valid {
+				_m.OrgID = value.String
 			}
 		case sysuserrole.FieldUserID:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -156,6 +164,9 @@ func (_m *SysUserRole) String() string {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
+	builder.WriteString(", ")
+	builder.WriteString("org_id=")
+	builder.WriteString(_m.OrgID)
 	builder.WriteString(", ")
 	builder.WriteString("user_id=")
 	builder.WriteString(_m.UserID)

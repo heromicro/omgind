@@ -695,6 +695,7 @@ type CreateOrgStaffInput struct {
 	DeletedAt    *time.Time
 	IsActive     *bool
 	Memo         *string
+	UserID       *string
 	FirstName    *string
 	LastName     *string
 	Mobile       *string
@@ -744,6 +745,9 @@ func (i *CreateOrgStaffInput) Mutate(m *OrgStaffCreate) {
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
+	}
+	if v := i.UserID; v != nil {
+		m.SetUserID(*v)
 	}
 	if v := i.FirstName; v != nil {
 		m.SetFirstName(*v)
@@ -839,6 +843,8 @@ type UpdateOrgStaffInput struct {
 	IsActive          *bool
 	Memo              *string
 	ClearMemo         bool
+	UserID            *string
+	ClearUserID       bool
 	FirstName         *string
 	ClearFirstName    bool
 	LastName          *string
@@ -918,6 +924,12 @@ func (i *UpdateOrgStaffInput) Mutate(m *OrgStaffMutation) {
 	}
 	if v := i.Memo; v != nil {
 		m.SetMemo(*v)
+	}
+	if i.ClearUserID {
+		m.ClearUserID()
+	}
+	if v := i.UserID; v != nil {
+		m.SetUserID(*v)
 	}
 	if i.ClearFirstName {
 		m.ClearFirstName()
@@ -2929,6 +2941,7 @@ type CreateSysRoleInput struct {
 	CreatedAt *time.Time
 	UpdatedAt *time.Time
 	DeletedAt *time.Time
+	OrgID     *string
 	Name      string
 }
 
@@ -2955,6 +2968,9 @@ func (i *CreateSysRoleInput) Mutate(m *SysRoleCreate) {
 	if v := i.DeletedAt; v != nil {
 		m.SetDeletedAt(*v)
 	}
+	if v := i.OrgID; v != nil {
+		m.SetOrgID(*v)
+	}
 	m.SetName(i.Name)
 }
 
@@ -2975,6 +2991,7 @@ type UpdateSysRoleInput struct {
 	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
+	OrgID          *string
 	Name           *string
 }
 
@@ -3006,6 +3023,9 @@ func (i *UpdateSysRoleInput) Mutate(m *SysRoleMutation) {
 	}
 	if v := i.DeletedAt; v != nil {
 		m.SetDeletedAt(*v)
+	}
+	if v := i.OrgID; v != nil {
+		m.SetOrgID(*v)
 	}
 	if v := i.Name; v != nil {
 		m.SetName(*v)
@@ -3574,6 +3594,7 @@ type CreateSysUserRoleInput struct {
 	CreatedAt *time.Time
 	UpdatedAt *time.Time
 	DeletedAt *time.Time
+	OrgID     *string
 	UserID    string
 	RoleID    string
 }
@@ -3592,6 +3613,9 @@ func (i *CreateSysUserRoleInput) Mutate(m *SysUserRoleCreate) {
 	if v := i.DeletedAt; v != nil {
 		m.SetDeletedAt(*v)
 	}
+	if v := i.OrgID; v != nil {
+		m.SetOrgID(*v)
+	}
 	m.SetUserID(i.UserID)
 	m.SetRoleID(i.RoleID)
 }
@@ -3609,6 +3633,7 @@ type UpdateSysUserRoleInput struct {
 	ClearUpdatedAt bool
 	DeletedAt      *time.Time
 	ClearDeletedAt bool
+	OrgID          *string
 	UserID         *string
 	RoleID         *string
 }
@@ -3629,6 +3654,9 @@ func (i *UpdateSysUserRoleInput) Mutate(m *SysUserRoleMutation) {
 	}
 	if v := i.DeletedAt; v != nil {
 		m.SetDeletedAt(*v)
+	}
+	if v := i.OrgID; v != nil {
+		m.SetOrgID(*v)
 	}
 	if v := i.UserID; v != nil {
 		m.SetUserID(*v)

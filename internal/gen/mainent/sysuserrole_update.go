@@ -75,6 +75,20 @@ func (_u *SysUserRoleUpdate) ClearDeletedAt() *SysUserRoleUpdate {
 	return _u
 }
 
+// SetOrgID sets the "org_id" field.
+func (_u *SysUserRoleUpdate) SetOrgID(v string) *SysUserRoleUpdate {
+	_u.mutation.SetOrgID(v)
+	return _u
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (_u *SysUserRoleUpdate) SetNillableOrgID(v *string) *SysUserRoleUpdate {
+	if v != nil {
+		_u.SetOrgID(*v)
+	}
+	return _u
+}
+
 // SetUserID sets the "user_id" field.
 func (_u *SysUserRoleUpdate) SetUserID(v string) *SysUserRoleUpdate {
 	_u.mutation.SetUserID(v)
@@ -146,6 +160,11 @@ func (_u *SysUserRoleUpdate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *SysUserRoleUpdate) check() error {
+	if v, ok := _u.mutation.OrgID(); ok {
+		if err := sysuserrole.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "SysUserRole.org_id": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.UserID(); ok {
 		if err := sysuserrole.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysUserRole.user_id": %w`, err)}
@@ -194,6 +213,9 @@ func (_u *SysUserRoleUpdate) sqlSave(ctx context.Context) (_node int, err error)
 	}
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysuserrole.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.OrgID(); ok {
+		_spec.SetField(sysuserrole.FieldOrgID, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(sysuserrole.FieldUserID, field.TypeString, value)
@@ -266,6 +288,20 @@ func (_u *SysUserRoleUpdateOne) SetNillableDeletedAt(v *time.Time) *SysUserRoleU
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (_u *SysUserRoleUpdateOne) ClearDeletedAt() *SysUserRoleUpdateOne {
 	_u.mutation.ClearDeletedAt()
+	return _u
+}
+
+// SetOrgID sets the "org_id" field.
+func (_u *SysUserRoleUpdateOne) SetOrgID(v string) *SysUserRoleUpdateOne {
+	_u.mutation.SetOrgID(v)
+	return _u
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (_u *SysUserRoleUpdateOne) SetNillableOrgID(v *string) *SysUserRoleUpdateOne {
+	if v != nil {
+		_u.SetOrgID(*v)
+	}
 	return _u
 }
 
@@ -353,6 +389,11 @@ func (_u *SysUserRoleUpdateOne) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (_u *SysUserRoleUpdateOne) check() error {
+	if v, ok := _u.mutation.OrgID(); ok {
+		if err := sysuserrole.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "SysUserRole.org_id": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.UserID(); ok {
 		if err := sysuserrole.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysUserRole.user_id": %w`, err)}
@@ -418,6 +459,9 @@ func (_u *SysUserRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysUserRole
 	}
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysuserrole.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.OrgID(); ok {
+		_spec.SetField(sysuserrole.FieldOrgID, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(sysuserrole.FieldUserID, field.TypeString, value)

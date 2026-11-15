@@ -84,6 +84,11 @@ func DeletedAt(v time.Time) predicate.SysUserRole {
 	return predicate.SysUserRole(sql.FieldEQ(FieldDeletedAt, v))
 }
 
+// OrgID applies equality check predicate on the "org_id" field. It's identical to OrgIDEQ.
+func OrgID(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldEQ(FieldOrgID, v))
+}
+
 // UserID applies equality check predicate on the "user_id" field. It's identical to UserIDEQ.
 func UserID(v string) predicate.SysUserRole {
 	return predicate.SysUserRole(sql.FieldEQ(FieldUserID, v))
@@ -252,6 +257,71 @@ func DeletedAtIsNil() predicate.SysUserRole {
 // DeletedAtNotNil applies the NotNil predicate on the "deleted_at" field.
 func DeletedAtNotNil() predicate.SysUserRole {
 	return predicate.SysUserRole(sql.FieldNotNull(FieldDeletedAt))
+}
+
+// OrgIDEQ applies the EQ predicate on the "org_id" field.
+func OrgIDEQ(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldEQ(FieldOrgID, v))
+}
+
+// OrgIDNEQ applies the NEQ predicate on the "org_id" field.
+func OrgIDNEQ(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldNEQ(FieldOrgID, v))
+}
+
+// OrgIDIn applies the In predicate on the "org_id" field.
+func OrgIDIn(vs ...string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldIn(FieldOrgID, vs...))
+}
+
+// OrgIDNotIn applies the NotIn predicate on the "org_id" field.
+func OrgIDNotIn(vs ...string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldNotIn(FieldOrgID, vs...))
+}
+
+// OrgIDGT applies the GT predicate on the "org_id" field.
+func OrgIDGT(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldGT(FieldOrgID, v))
+}
+
+// OrgIDGTE applies the GTE predicate on the "org_id" field.
+func OrgIDGTE(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldGTE(FieldOrgID, v))
+}
+
+// OrgIDLT applies the LT predicate on the "org_id" field.
+func OrgIDLT(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldLT(FieldOrgID, v))
+}
+
+// OrgIDLTE applies the LTE predicate on the "org_id" field.
+func OrgIDLTE(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldLTE(FieldOrgID, v))
+}
+
+// OrgIDContains applies the Contains predicate on the "org_id" field.
+func OrgIDContains(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldContains(FieldOrgID, v))
+}
+
+// OrgIDHasPrefix applies the HasPrefix predicate on the "org_id" field.
+func OrgIDHasPrefix(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldHasPrefix(FieldOrgID, v))
+}
+
+// OrgIDHasSuffix applies the HasSuffix predicate on the "org_id" field.
+func OrgIDHasSuffix(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldHasSuffix(FieldOrgID, v))
+}
+
+// OrgIDEqualFold applies the EqualFold predicate on the "org_id" field.
+func OrgIDEqualFold(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldEqualFold(FieldOrgID, v))
+}
+
+// OrgIDContainsFold applies the ContainsFold predicate on the "org_id" field.
+func OrgIDContainsFold(v string) predicate.SysUserRole {
+	return predicate.SysUserRole(sql.FieldContainsFold(FieldOrgID, v))
 }
 
 // UserIDEQ applies the EQ predicate on the "user_id" field.

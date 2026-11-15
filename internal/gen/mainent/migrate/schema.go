@@ -242,6 +242,7 @@ var (
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "is_active", Type: field.TypeBool, Default: true},
 		{Name: "memo", Type: field.TypeString, Nullable: true, Size: 1024, Default: ""},
+		{Name: "user_id", Type: field.TypeString, Nullable: true, Size: 36},
 		{Name: "first_name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "last_name", Type: field.TypeString, Nullable: true, Size: 64},
 		{Name: "mobile", Type: field.TypeString, Nullable: true, Size: 32},
@@ -271,31 +272,31 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "org_staffs_org_depts_staffs",
-				Columns:    []*schema.Column{OrgStaffsColumns[23]},
+				Columns:    []*schema.Column{OrgStaffsColumns[24]},
 				RefColumns: []*schema.Column{OrgDeptsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_org_organs_staffs",
-				Columns:    []*schema.Column{OrgStaffsColumns[24]},
+				Columns:    []*schema.Column{OrgStaffsColumns[25]},
 				RefColumns: []*schema.Column{OrgOrgansColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_org_positions_staffs",
-				Columns:    []*schema.Column{OrgStaffsColumns[25]},
+				Columns:    []*schema.Column{OrgStaffsColumns[26]},
 				RefColumns: []*schema.Column{OrgPositionsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_sys_addresses_staff_resi",
-				Columns:    []*schema.Column{OrgStaffsColumns[26]},
+				Columns:    []*schema.Column{OrgStaffsColumns[27]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "org_staffs_sys_addresses_staff_iden",
-				Columns:    []*schema.Column{OrgStaffsColumns[27]},
+				Columns:    []*schema.Column{OrgStaffsColumns[28]},
 				RefColumns: []*schema.Column{SysAddressesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -999,6 +1000,7 @@ var (
 		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "org_id", Type: field.TypeString, Size: 36, Default: ""},
 		{Name: "name", Type: field.TypeString, Size: 64},
 	}
 	// SysRolesTable holds the schema information for the "sys_roles" table.
@@ -1267,6 +1269,7 @@ var (
 		{Name: "crtd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "uptd_at", Type: field.TypeTime, Nullable: true},
 		{Name: "dltd_at", Type: field.TypeTime, Nullable: true},
+		{Name: "org_id", Type: field.TypeString, Size: 36, Default: ""},
 		{Name: "user_id", Type: field.TypeString, Size: 36},
 		{Name: "role_id", Type: field.TypeString, Size: 36},
 	}

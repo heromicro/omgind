@@ -134,6 +134,26 @@ func (_u *OrgStaffUpdate) ClearMemo() *OrgStaffUpdate {
 	return _u
 }
 
+// SetUserID sets the "user_id" field.
+func (_u *OrgStaffUpdate) SetUserID(v string) *OrgStaffUpdate {
+	_u.mutation.SetUserID(v)
+	return _u
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *OrgStaffUpdate) SetNillableUserID(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetUserID(*v)
+	}
+	return _u
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (_u *OrgStaffUpdate) ClearUserID() *OrgStaffUpdate {
+	_u.mutation.ClearUserID()
+	return _u
+}
+
 // SetFirstName sets the "first_name" field.
 func (_u *OrgStaffUpdate) SetFirstName(v string) *OrgStaffUpdate {
 	_u.mutation.SetFirstName(v)
@@ -659,6 +679,11 @@ func (_u *OrgStaffUpdate) check() error {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.memo": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.UserID(); ok {
+		if err := orgstaff.UserIDValidator(v); err != nil {
+			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.user_id": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.FirstName(); ok {
 		if err := orgstaff.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.first_name": %w`, err)}
@@ -777,6 +802,12 @@ func (_u *OrgStaffUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.MemoCleared() {
 		_spec.ClearField(orgstaff.FieldMemo, field.TypeString)
+	}
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(orgstaff.FieldUserID, field.TypeString, value)
+	}
+	if _u.mutation.UserIDCleared() {
+		_spec.ClearField(orgstaff.FieldUserID, field.TypeString)
 	}
 	if value, ok := _u.mutation.FirstName(); ok {
 		_spec.SetField(orgstaff.FieldFirstName, field.TypeString, value)
@@ -1136,6 +1167,26 @@ func (_u *OrgStaffUpdateOne) SetNillableMemo(v *string) *OrgStaffUpdateOne {
 // ClearMemo clears the value of the "memo" field.
 func (_u *OrgStaffUpdateOne) ClearMemo() *OrgStaffUpdateOne {
 	_u.mutation.ClearMemo()
+	return _u
+}
+
+// SetUserID sets the "user_id" field.
+func (_u *OrgStaffUpdateOne) SetUserID(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetUserID(v)
+	return _u
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_u *OrgStaffUpdateOne) SetNillableUserID(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetUserID(*v)
+	}
+	return _u
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (_u *OrgStaffUpdateOne) ClearUserID() *OrgStaffUpdateOne {
+	_u.mutation.ClearUserID()
 	return _u
 }
 
@@ -1677,6 +1728,11 @@ func (_u *OrgStaffUpdateOne) check() error {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.memo": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.UserID(); ok {
+		if err := orgstaff.UserIDValidator(v); err != nil {
+			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.user_id": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.FirstName(); ok {
 		if err := orgstaff.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.first_name": %w`, err)}
@@ -1812,6 +1868,12 @@ func (_u *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, err 
 	}
 	if _u.mutation.MemoCleared() {
 		_spec.ClearField(orgstaff.FieldMemo, field.TypeString)
+	}
+	if value, ok := _u.mutation.UserID(); ok {
+		_spec.SetField(orgstaff.FieldUserID, field.TypeString, value)
+	}
+	if _u.mutation.UserIDCleared() {
+		_spec.ClearField(orgstaff.FieldUserID, field.TypeString)
 	}
 	if value, ok := _u.mutation.FirstName(); ok {
 		_spec.SetField(orgstaff.FieldFirstName, field.TypeString, value)

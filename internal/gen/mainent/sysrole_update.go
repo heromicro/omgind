@@ -130,6 +130,20 @@ func (_u *SysRoleUpdate) ClearDeletedAt() *SysRoleUpdate {
 	return _u
 }
 
+// SetOrgID sets the "org_id" field.
+func (_u *SysRoleUpdate) SetOrgID(v string) *SysRoleUpdate {
+	_u.mutation.SetOrgID(v)
+	return _u
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (_u *SysRoleUpdate) SetNillableOrgID(v *string) *SysRoleUpdate {
+	if v != nil {
+		_u.SetOrgID(*v)
+	}
+	return _u
+}
+
 // SetName sets the "name" field.
 func (_u *SysRoleUpdate) SetName(v string) *SysRoleUpdate {
 	_u.mutation.SetName(v)
@@ -192,6 +206,11 @@ func (_u *SysRoleUpdate) check() error {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysRole.memo": %w`, err)}
 		}
 	}
+	if v, ok := _u.mutation.OrgID(); ok {
+		if err := sysrole.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "SysRole.org_id": %w`, err)}
+		}
+	}
 	if v, ok := _u.mutation.Name(); ok {
 		if err := sysrole.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysRole.name": %w`, err)}
@@ -250,6 +269,9 @@ func (_u *SysRoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 	}
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysrole.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.OrgID(); ok {
+		_spec.SetField(sysrole.FieldOrgID, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysrole.FieldName, field.TypeString, value)
@@ -377,6 +399,20 @@ func (_u *SysRoleUpdateOne) ClearDeletedAt() *SysRoleUpdateOne {
 	return _u
 }
 
+// SetOrgID sets the "org_id" field.
+func (_u *SysRoleUpdateOne) SetOrgID(v string) *SysRoleUpdateOne {
+	_u.mutation.SetOrgID(v)
+	return _u
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (_u *SysRoleUpdateOne) SetNillableOrgID(v *string) *SysRoleUpdateOne {
+	if v != nil {
+		_u.SetOrgID(*v)
+	}
+	return _u
+}
+
 // SetName sets the "name" field.
 func (_u *SysRoleUpdateOne) SetName(v string) *SysRoleUpdateOne {
 	_u.mutation.SetName(v)
@@ -450,6 +486,11 @@ func (_u *SysRoleUpdateOne) check() error {
 	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysrole.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysRole.memo": %w`, err)}
+		}
+	}
+	if v, ok := _u.mutation.OrgID(); ok {
+		if err := sysrole.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "SysRole.org_id": %w`, err)}
 		}
 	}
 	if v, ok := _u.mutation.Name(); ok {
@@ -527,6 +568,9 @@ func (_u *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err er
 	}
 	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysrole.FieldDeletedAt, field.TypeTime)
+	}
+	if value, ok := _u.mutation.OrgID(); ok {
+		_spec.SetField(sysrole.FieldOrgID, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysrole.FieldName, field.TypeString, value)

@@ -23,6 +23,7 @@ func (syr SysUserRole) Mixin() []ent.Mixin {
 // Fields of the SysUserRole.
 func (SysUserRole) Fields() []ent.Field {
 	return []ent.Field{
+ field.String("org_id").Default("").MaxLen(36).Comment("Tenant organization ID; empty for platform roles"),
 		//mixin.IdField_ulid(),
 
 		field.String("user_id").MaxLen(36).NotEmpty().Comment("用户ID, sys_user.id"),

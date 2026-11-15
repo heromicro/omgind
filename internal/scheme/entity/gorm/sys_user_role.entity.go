@@ -15,6 +15,7 @@ type SysUserRole struct {
 	CreatedAt *time.Time `gorm:"column:crtd_at;index:sysuserrole_crtd_at" json:"created_at,omitempty"`
 	UpdatedAt *time.Time `gorm:"column:uptd_at" json:"updated_at,omitempty"`
 	DeletedAt *time.Time `gorm:"column:dltd_at;index:sysuserrole_dltd_at" json:"deleted_at,omitempty"`
+	OrgID     string     `gorm:"column:org_id;not null;size:36;default:''" json:"org_id,omitempty"`
 	UserID    string     `gorm:"column:user_id;not null;size:36" json:"user_id,omitempty"`
 	RoleID    string     `gorm:"column:role_id;not null;size:36" json:"role_id,omitempty"`
 }

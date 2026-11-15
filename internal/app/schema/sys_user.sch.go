@@ -122,6 +122,7 @@ func (a Users) ToUserShows(mUserRoles map[string]UserRoles, mRoles map[string]*R
 
 // UserRole 用户角色
 type UserRole struct {
+	OrgID  string `json:"org_id"`
 	ID     string `json:"id"`      // 唯一标识
 	UserID string `json:"user_id"` // 用户ID
 	RoleID string `json:"role_id"` // 角色ID

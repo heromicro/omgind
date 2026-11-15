@@ -125,6 +125,20 @@ func (_c *OrgStaffCreate) SetNillableMemo(v *string) *OrgStaffCreate {
 	return _c
 }
 
+// SetUserID sets the "user_id" field.
+func (_c *OrgStaffCreate) SetUserID(v string) *OrgStaffCreate {
+	_c.mutation.SetUserID(v)
+	return _c
+}
+
+// SetNillableUserID sets the "user_id" field if the given value is not nil.
+func (_c *OrgStaffCreate) SetNillableUserID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetUserID(*v)
+	}
+	return _c
+}
+
 // SetFirstName sets the "first_name" field.
 func (_c *OrgStaffCreate) SetFirstName(v string) *OrgStaffCreate {
 	_c.mutation.SetFirstName(v)
@@ -543,6 +557,11 @@ func (_c *OrgStaffCreate) check() error {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.memo": %w`, err)}
 		}
 	}
+	if v, ok := _c.mutation.UserID(); ok {
+		if err := orgstaff.UserIDValidator(v); err != nil {
+			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.user_id": %w`, err)}
+		}
+	}
 	if v, ok := _c.mutation.FirstName(); ok {
 		if err := orgstaff.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.first_name": %w`, err)}
@@ -679,6 +698,10 @@ func (_c *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(orgstaff.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
+	}
+	if value, ok := _c.mutation.UserID(); ok {
+		_spec.SetField(orgstaff.FieldUserID, field.TypeString, value)
+		_node.UserID = &value
 	}
 	if value, ok := _c.mutation.FirstName(); ok {
 		_spec.SetField(orgstaff.FieldFirstName, field.TypeString, value)
@@ -970,6 +993,24 @@ func (u *OrgStaffUpsert) UpdateMemo() *OrgStaffUpsert {
 // ClearMemo clears the value of the "memo" field.
 func (u *OrgStaffUpsert) ClearMemo() *OrgStaffUpsert {
 	u.SetNull(orgstaff.FieldMemo)
+	return u
+}
+
+// SetUserID sets the "user_id" field.
+func (u *OrgStaffUpsert) SetUserID(v string) *OrgStaffUpsert {
+	u.Set(orgstaff.FieldUserID, v)
+	return u
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *OrgStaffUpsert) UpdateUserID() *OrgStaffUpsert {
+	u.SetExcluded(orgstaff.FieldUserID)
+	return u
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (u *OrgStaffUpsert) ClearUserID() *OrgStaffUpsert {
+	u.SetNull(orgstaff.FieldUserID)
 	return u
 }
 
@@ -1499,6 +1540,27 @@ func (u *OrgStaffUpsertOne) UpdateMemo() *OrgStaffUpsertOne {
 func (u *OrgStaffUpsertOne) ClearMemo() *OrgStaffUpsertOne {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearMemo()
+	})
+}
+
+// SetUserID sets the "user_id" field.
+func (u *OrgStaffUpsertOne) SetUserID(v string) *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetUserID(v)
+	})
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertOne) UpdateUserID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateUserID()
+	})
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (u *OrgStaffUpsertOne) ClearUserID() *OrgStaffUpsertOne {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearUserID()
 	})
 }
 
@@ -2256,6 +2318,27 @@ func (u *OrgStaffUpsertBulk) UpdateMemo() *OrgStaffUpsertBulk {
 func (u *OrgStaffUpsertBulk) ClearMemo() *OrgStaffUpsertBulk {
 	return u.Update(func(s *OrgStaffUpsert) {
 		s.ClearMemo()
+	})
+}
+
+// SetUserID sets the "user_id" field.
+func (u *OrgStaffUpsertBulk) SetUserID(v string) *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.SetUserID(v)
+	})
+}
+
+// UpdateUserID sets the "user_id" field to the value that was provided on create.
+func (u *OrgStaffUpsertBulk) UpdateUserID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.UpdateUserID()
+	})
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (u *OrgStaffUpsertBulk) ClearUserID() *OrgStaffUpsertBulk {
+	return u.Update(func(s *OrgStaffUpsert) {
+		s.ClearUserID()
 	})
 }
 

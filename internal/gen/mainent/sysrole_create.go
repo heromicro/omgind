@@ -121,6 +121,20 @@ func (_c *SysRoleCreate) SetNillableDeletedAt(v *time.Time) *SysRoleCreate {
 	return _c
 }
 
+// SetOrgID sets the "org_id" field.
+func (_c *SysRoleCreate) SetOrgID(v string) *SysRoleCreate {
+	_c.mutation.SetOrgID(v)
+	return _c
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (_c *SysRoleCreate) SetNillableOrgID(v *string) *SysRoleCreate {
+	if v != nil {
+		_c.SetOrgID(*v)
+	}
+	return _c
+}
+
 // SetName sets the "name" field.
 func (_c *SysRoleCreate) SetName(v string) *SysRoleCreate {
 	_c.mutation.SetName(v)
@@ -200,6 +214,10 @@ func (_c *SysRoleCreate) defaults() {
 		v := sysrole.DefaultUpdatedAt()
 		_c.mutation.SetUpdatedAt(v)
 	}
+	if _, ok := _c.mutation.OrgID(); !ok {
+		v := sysrole.DefaultOrgID
+		_c.mutation.SetOrgID(v)
+	}
 	if _, ok := _c.mutation.ID(); !ok {
 		v := sysrole.DefaultID()
 		_c.mutation.SetID(v)
@@ -220,6 +238,14 @@ func (_c *SysRoleCreate) check() error {
 	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysrole.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysRole.memo": %w`, err)}
+		}
+	}
+	if _, ok := _c.mutation.OrgID(); !ok {
+		return &ValidationError{Name: "org_id", err: errors.New(`mainent: missing required field "SysRole.org_id"`)}
+	}
+	if v, ok := _c.mutation.OrgID(); ok {
+		if err := sysrole.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "SysRole.org_id": %w`, err)}
 		}
 	}
 	if _, ok := _c.mutation.Name(); !ok {
@@ -298,6 +324,10 @@ func (_c *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
+	}
+	if value, ok := _c.mutation.OrgID(); ok {
+		_spec.SetField(sysrole.FieldOrgID, field.TypeString, value)
+		_node.OrgID = value
 	}
 	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(sysrole.FieldName, field.TypeString, value)
@@ -448,6 +478,18 @@ func (u *SysRoleUpsert) UpdateDeletedAt() *SysRoleUpsert {
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (u *SysRoleUpsert) ClearDeletedAt() *SysRoleUpsert {
 	u.SetNull(sysrole.FieldDeletedAt)
+	return u
+}
+
+// SetOrgID sets the "org_id" field.
+func (u *SysRoleUpsert) SetOrgID(v string) *SysRoleUpsert {
+	u.Set(sysrole.FieldOrgID, v)
+	return u
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *SysRoleUpsert) UpdateOrgID() *SysRoleUpsert {
+	u.SetExcluded(sysrole.FieldOrgID)
 	return u
 }
 
@@ -623,6 +665,20 @@ func (u *SysRoleUpsertOne) UpdateDeletedAt() *SysRoleUpsertOne {
 func (u *SysRoleUpsertOne) ClearDeletedAt() *SysRoleUpsertOne {
 	return u.Update(func(s *SysRoleUpsert) {
 		s.ClearDeletedAt()
+	})
+}
+
+// SetOrgID sets the "org_id" field.
+func (u *SysRoleUpsertOne) SetOrgID(v string) *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetOrgID(v)
+	})
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *SysRoleUpsertOne) UpdateOrgID() *SysRoleUpsertOne {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateOrgID()
 	})
 }
 
@@ -967,6 +1023,20 @@ func (u *SysRoleUpsertBulk) UpdateDeletedAt() *SysRoleUpsertBulk {
 func (u *SysRoleUpsertBulk) ClearDeletedAt() *SysRoleUpsertBulk {
 	return u.Update(func(s *SysRoleUpsert) {
 		s.ClearDeletedAt()
+	})
+}
+
+// SetOrgID sets the "org_id" field.
+func (u *SysRoleUpsertBulk) SetOrgID(v string) *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.SetOrgID(v)
+	})
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *SysRoleUpsertBulk) UpdateOrgID() *SysRoleUpsertBulk {
+	return u.Update(func(s *SysRoleUpsert) {
+		s.UpdateOrgID()
 	})
 }
 

@@ -18,6 +18,7 @@ type OrgStaff struct {
 	DeletedAt    *time.Time `gorm:"column:dltd_at;index:orgstaff_dltd_at" json:"deleted_at,omitempty"`
 	IsActive     bool       `gorm:"column:is_active;not null;default:true;index:orgstaff_is_active" json:"is_active,omitempty"`
 	Memo         *string    `gorm:"column:memo;size:1024;default:''" json:"memo,omitempty"`
+	UserID       *string    `gorm:"column:user_id;size:36" json:"user_id,omitempty"`
 	FirstName    *string    `gorm:"column:first_name;size:64" json:"first_name,omitempty"`
 	LastName     *string    `gorm:"column:last_name;size:64" json:"last_name,omitempty"`
 	Mobile       *string    `gorm:"column:mobile;size:32" json:"mobile,omitempty"`

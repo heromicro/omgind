@@ -28,6 +28,8 @@ const (
 	FieldIsActive = "is_active"
 	// FieldMemo holds the string denoting the memo field in the database.
 	FieldMemo = "memo"
+	// FieldUserID holds the string denoting the user_id field in the database.
+	FieldUserID = "user_id"
 	// FieldFirstName holds the string denoting the first_name field in the database.
 	FieldFirstName = "first_name"
 	// FieldLastName holds the string denoting the last_name field in the database.
@@ -127,6 +129,7 @@ var Columns = []string{
 	FieldDeletedAt,
 	FieldIsActive,
 	FieldMemo,
+	FieldUserID,
 	FieldFirstName,
 	FieldLastName,
 	FieldMobile,
@@ -176,6 +179,8 @@ var (
 	DefaultMemo string
 	// MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	MemoValidator func(string) error
+	// UserIDValidator is a validator for the "user_id" field. It is called by the builders before save.
+	UserIDValidator func(string) error
 	// FirstNameValidator is a validator for the "first_name" field. It is called by the builders before save.
 	FirstNameValidator func(string) error
 	// LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
@@ -251,6 +256,11 @@ func ByIsActive(opts ...sql.OrderTermOption) OrderOption {
 // ByMemo orders the results by the memo field.
 func ByMemo(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldMemo, opts...).ToFunc()
+}
+
+// ByUserID orders the results by the user_id field.
+func ByUserID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldUserID, opts...).ToFunc()
 }
 
 // ByFirstName orders the results by the first_name field.

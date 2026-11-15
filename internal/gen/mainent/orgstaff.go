@@ -35,6 +35,8 @@ type OrgStaff struct {
 	IsActive bool `json:"is_active,omitempty"`
 	// memo
 	Memo *string `json:"memo,omitempty" sql:"memo"`
+	// Linked global user account
+	UserID *string `json:"user_id,omitempty"`
 	// 名
 	FirstName *string `json:"first_name,omitempty"`
 	// 姓
@@ -162,7 +164,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 			values[i] = new(sql.NullBool)
 		case orgstaff.FieldSort, orgstaff.FieldGender, orgstaff.FieldEmpyStat:
 			values[i] = new(sql.NullInt64)
-		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldRank, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldPosiID:
+		case orgstaff.FieldID, orgstaff.FieldMemo, orgstaff.FieldUserID, orgstaff.FieldFirstName, orgstaff.FieldLastName, orgstaff.FieldMobile, orgstaff.FieldGenderDictID, orgstaff.FieldIdenNo, orgstaff.FieldIdenAddrID, orgstaff.FieldResiAddrID, orgstaff.FieldWorkerNo, orgstaff.FieldCubicle, orgstaff.FieldRank, orgstaff.FieldOrgID, orgstaff.FieldEmpystDictID, orgstaff.FieldDeptID, orgstaff.FieldPosiID:
 			values[i] = new(sql.NullString)
 		case orgstaff.FieldCreatedAt, orgstaff.FieldUpdatedAt, orgstaff.FieldDeletedAt, orgstaff.FieldBirthDate, orgstaff.FieldEntryDate, orgstaff.FieldRegularDate, orgstaff.FieldResignDate:
 			values[i] = new(sql.NullTime)
@@ -232,6 +234,13 @@ func (_m *OrgStaff) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				_m.Memo = new(string)
 				*_m.Memo = value.String
+			}
+		case orgstaff.FieldUserID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field user_id", values[i])
+			} else if value.Valid {
+				_m.UserID = new(string)
+				*_m.UserID = value.String
 			}
 		case orgstaff.FieldFirstName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -459,6 +468,11 @@ func (_m *OrgStaff) String() string {
 	builder.WriteString(", ")
 	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
+		builder.WriteString(*v)
+	}
+	builder.WriteString(", ")
+	if v := _m.UserID; v != nil {
+		builder.WriteString("user_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")

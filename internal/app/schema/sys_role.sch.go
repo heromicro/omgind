@@ -4,6 +4,7 @@ import "time"
 
 // Role 角色对象
 type Role struct {
+	OrgID     string `json:"org_id"`
 	TimeMixin `yaml:"-"`
 
 	ID       string `json:"id" `                          // 唯一标识

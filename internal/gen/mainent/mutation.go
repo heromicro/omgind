@@ -4875,6 +4875,7 @@ type OrgStaffMutation struct {
 	deleted_at       *time.Time
 	is_active        *bool
 	memo             *string
+	user_id          *string
 	first_name       *string
 	last_name        *string
 	mobile           *string
@@ -5334,6 +5335,55 @@ func (m *OrgStaffMutation) MemoCleared() bool {
 func (m *OrgStaffMutation) ResetMemo() {
 	m.memo = nil
 	delete(m.clearedFields, orgstaff.FieldMemo)
+}
+
+// SetUserID sets the "user_id" field.
+func (m *OrgStaffMutation) SetUserID(s string) {
+	m.user_id = &s
+}
+
+// UserID returns the value of the "user_id" field in the mutation.
+func (m *OrgStaffMutation) UserID() (r string, exists bool) {
+	v := m.user_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUserID returns the old "user_id" field's value of the OrgStaff entity.
+// If the OrgStaff object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *OrgStaffMutation) OldUserID(ctx context.Context) (v *string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldUserID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldUserID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUserID: %w", err)
+	}
+	return oldValue.UserID, nil
+}
+
+// ClearUserID clears the value of the "user_id" field.
+func (m *OrgStaffMutation) ClearUserID() {
+	m.user_id = nil
+	m.clearedFields[orgstaff.FieldUserID] = struct{}{}
+}
+
+// UserIDCleared returns if the "user_id" field was cleared in this mutation.
+func (m *OrgStaffMutation) UserIDCleared() bool {
+	_, ok := m.clearedFields[orgstaff.FieldUserID]
+	return ok
+}
+
+// ResetUserID resets all changes to the "user_id" field.
+func (m *OrgStaffMutation) ResetUserID() {
+	m.user_id = nil
+	delete(m.clearedFields, orgstaff.FieldUserID)
 }
 
 // SetFirstName sets the "first_name" field.
@@ -6526,7 +6576,7 @@ func (m *OrgStaffMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *OrgStaffMutation) Fields() []string {
-	fields := make([]string, 0, 27)
+	fields := make([]string, 0, 28)
 	if m.is_del != nil {
 		fields = append(fields, orgstaff.FieldIsDel)
 	}
@@ -6547,6 +6597,9 @@ func (m *OrgStaffMutation) Fields() []string {
 	}
 	if m.memo != nil {
 		fields = append(fields, orgstaff.FieldMemo)
+	}
+	if m.user_id != nil {
+		fields = append(fields, orgstaff.FieldUserID)
 	}
 	if m.first_name != nil {
 		fields = append(fields, orgstaff.FieldFirstName)
@@ -6630,6 +6683,8 @@ func (m *OrgStaffMutation) Field(name string) (ent.Value, bool) {
 		return m.IsActive()
 	case orgstaff.FieldMemo:
 		return m.Memo()
+	case orgstaff.FieldUserID:
+		return m.UserID()
 	case orgstaff.FieldFirstName:
 		return m.FirstName()
 	case orgstaff.FieldLastName:
@@ -6693,6 +6748,8 @@ func (m *OrgStaffMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldIsActive(ctx)
 	case orgstaff.FieldMemo:
 		return m.OldMemo(ctx)
+	case orgstaff.FieldUserID:
+		return m.OldUserID(ctx)
 	case orgstaff.FieldFirstName:
 		return m.OldFirstName(ctx)
 	case orgstaff.FieldLastName:
@@ -6790,6 +6847,13 @@ func (m *OrgStaffMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetMemo(v)
+		return nil
+	case orgstaff.FieldUserID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUserID(v)
 		return nil
 	case orgstaff.FieldFirstName:
 		v, ok := value.(string)
@@ -7012,6 +7076,9 @@ func (m *OrgStaffMutation) ClearedFields() []string {
 	if m.FieldCleared(orgstaff.FieldMemo) {
 		fields = append(fields, orgstaff.FieldMemo)
 	}
+	if m.FieldCleared(orgstaff.FieldUserID) {
+		fields = append(fields, orgstaff.FieldUserID)
+	}
 	if m.FieldCleared(orgstaff.FieldFirstName) {
 		fields = append(fields, orgstaff.FieldFirstName)
 	}
@@ -7094,6 +7161,9 @@ func (m *OrgStaffMutation) ClearField(name string) error {
 		return nil
 	case orgstaff.FieldMemo:
 		m.ClearMemo()
+		return nil
+	case orgstaff.FieldUserID:
+		m.ClearUserID()
 		return nil
 	case orgstaff.FieldFirstName:
 		m.ClearFirstName()
@@ -7180,6 +7250,9 @@ func (m *OrgStaffMutation) ResetField(name string) error {
 		return nil
 	case orgstaff.FieldMemo:
 		m.ResetMemo()
+		return nil
+	case orgstaff.FieldUserID:
+		m.ResetUserID()
 		return nil
 	case orgstaff.FieldFirstName:
 		m.ResetFirstName()
@@ -20894,6 +20967,7 @@ type SysRoleMutation struct {
 	created_at    *time.Time
 	updated_at    *time.Time
 	deleted_at    *time.Time
+	org_id        *string
 	name          *string
 	clearedFields map[string]struct{}
 	done          bool
@@ -21329,6 +21403,42 @@ func (m *SysRoleMutation) ResetDeletedAt() {
 	delete(m.clearedFields, sysrole.FieldDeletedAt)
 }
 
+// SetOrgID sets the "org_id" field.
+func (m *SysRoleMutation) SetOrgID(s string) {
+	m.org_id = &s
+}
+
+// OrgID returns the value of the "org_id" field in the mutation.
+func (m *SysRoleMutation) OrgID() (r string, exists bool) {
+	v := m.org_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOrgID returns the old "org_id" field's value of the SysRole entity.
+// If the SysRole object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysRoleMutation) OldOrgID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldOrgID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldOrgID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOrgID: %w", err)
+	}
+	return oldValue.OrgID, nil
+}
+
+// ResetOrgID resets all changes to the "org_id" field.
+func (m *SysRoleMutation) ResetOrgID() {
+	m.org_id = nil
+}
+
 // SetName sets the "name" field.
 func (m *SysRoleMutation) SetName(s string) {
 	m.name = &s
@@ -21399,7 +21509,7 @@ func (m *SysRoleMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysRoleMutation) Fields() []string {
-	fields := make([]string, 0, 8)
+	fields := make([]string, 0, 9)
 	if m.is_del != nil {
 		fields = append(fields, sysrole.FieldIsDel)
 	}
@@ -21420,6 +21530,9 @@ func (m *SysRoleMutation) Fields() []string {
 	}
 	if m.deleted_at != nil {
 		fields = append(fields, sysrole.FieldDeletedAt)
+	}
+	if m.org_id != nil {
+		fields = append(fields, sysrole.FieldOrgID)
 	}
 	if m.name != nil {
 		fields = append(fields, sysrole.FieldName)
@@ -21446,6 +21559,8 @@ func (m *SysRoleMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdatedAt()
 	case sysrole.FieldDeletedAt:
 		return m.DeletedAt()
+	case sysrole.FieldOrgID:
+		return m.OrgID()
 	case sysrole.FieldName:
 		return m.Name()
 	}
@@ -21471,6 +21586,8 @@ func (m *SysRoleMutation) OldField(ctx context.Context, name string) (ent.Value,
 		return m.OldUpdatedAt(ctx)
 	case sysrole.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
+	case sysrole.FieldOrgID:
+		return m.OldOrgID(ctx)
 	case sysrole.FieldName:
 		return m.OldName(ctx)
 	}
@@ -21530,6 +21647,13 @@ func (m *SysRoleMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDeletedAt(v)
+		return nil
+	case sysrole.FieldOrgID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOrgID(v)
 		return nil
 	case sysrole.FieldName:
 		v, ok := value.(string)
@@ -21649,6 +21773,9 @@ func (m *SysRoleMutation) ResetField(name string) error {
 		return nil
 	case sysrole.FieldDeletedAt:
 		m.ResetDeletedAt()
+		return nil
+	case sysrole.FieldOrgID:
+		m.ResetOrgID()
 		return nil
 	case sysrole.FieldName:
 		m.ResetName()
@@ -25885,6 +26012,7 @@ type SysUserRoleMutation struct {
 	created_at    *time.Time
 	updated_at    *time.Time
 	deleted_at    *time.Time
+	org_id        *string
 	user_id       *string
 	role_id       *string
 	clearedFields map[string]struct{}
@@ -26180,6 +26308,42 @@ func (m *SysUserRoleMutation) ResetDeletedAt() {
 	delete(m.clearedFields, sysuserrole.FieldDeletedAt)
 }
 
+// SetOrgID sets the "org_id" field.
+func (m *SysUserRoleMutation) SetOrgID(s string) {
+	m.org_id = &s
+}
+
+// OrgID returns the value of the "org_id" field in the mutation.
+func (m *SysUserRoleMutation) OrgID() (r string, exists bool) {
+	v := m.org_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldOrgID returns the old "org_id" field's value of the SysUserRole entity.
+// If the SysUserRole object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *SysUserRoleMutation) OldOrgID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldOrgID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldOrgID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldOrgID: %w", err)
+	}
+	return oldValue.OrgID, nil
+}
+
+// ResetOrgID resets all changes to the "org_id" field.
+func (m *SysUserRoleMutation) ResetOrgID() {
+	m.org_id = nil
+}
+
 // SetUserID sets the "user_id" field.
 func (m *SysUserRoleMutation) SetUserID(s string) {
 	m.user_id = &s
@@ -26286,7 +26450,7 @@ func (m *SysUserRoleMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *SysUserRoleMutation) Fields() []string {
-	fields := make([]string, 0, 6)
+	fields := make([]string, 0, 7)
 	if m.is_del != nil {
 		fields = append(fields, sysuserrole.FieldIsDel)
 	}
@@ -26298,6 +26462,9 @@ func (m *SysUserRoleMutation) Fields() []string {
 	}
 	if m.deleted_at != nil {
 		fields = append(fields, sysuserrole.FieldDeletedAt)
+	}
+	if m.org_id != nil {
+		fields = append(fields, sysuserrole.FieldOrgID)
 	}
 	if m.user_id != nil {
 		fields = append(fields, sysuserrole.FieldUserID)
@@ -26321,6 +26488,8 @@ func (m *SysUserRoleMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdatedAt()
 	case sysuserrole.FieldDeletedAt:
 		return m.DeletedAt()
+	case sysuserrole.FieldOrgID:
+		return m.OrgID()
 	case sysuserrole.FieldUserID:
 		return m.UserID()
 	case sysuserrole.FieldRoleID:
@@ -26342,6 +26511,8 @@ func (m *SysUserRoleMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldUpdatedAt(ctx)
 	case sysuserrole.FieldDeletedAt:
 		return m.OldDeletedAt(ctx)
+	case sysuserrole.FieldOrgID:
+		return m.OldOrgID(ctx)
 	case sysuserrole.FieldUserID:
 		return m.OldUserID(ctx)
 	case sysuserrole.FieldRoleID:
@@ -26382,6 +26553,13 @@ func (m *SysUserRoleMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetDeletedAt(v)
+		return nil
+	case sysuserrole.FieldOrgID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetOrgID(v)
 		return nil
 	case sysuserrole.FieldUserID:
 		v, ok := value.(string)
@@ -26478,6 +26656,9 @@ func (m *SysUserRoleMutation) ResetField(name string) error {
 		return nil
 	case sysuserrole.FieldDeletedAt:
 		m.ResetDeletedAt()
+		return nil
+	case sysuserrole.FieldOrgID:
+		m.ResetOrgID()
 		return nil
 	case sysuserrole.FieldUserID:
 		m.ResetUserID()

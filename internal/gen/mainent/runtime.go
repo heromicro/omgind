@@ -335,60 +335,64 @@ func init() {
 	orgstaff.DefaultMemo = orgstaffDescMemo.Default.(string)
 	// orgstaff.MemoValidator is a validator for the "memo" field. It is called by the builders before save.
 	orgstaff.MemoValidator = orgstaffDescMemo.Validators[0].(func(string) error)
+	// orgstaffDescUserID is the schema descriptor for user_id field.
+	orgstaffDescUserID := orgstaffFields[0].Descriptor()
+	// orgstaff.UserIDValidator is a validator for the "user_id" field. It is called by the builders before save.
+	orgstaff.UserIDValidator = orgstaffDescUserID.Validators[0].(func(string) error)
 	// orgstaffDescFirstName is the schema descriptor for first_name field.
-	orgstaffDescFirstName := orgstaffFields[0].Descriptor()
+	orgstaffDescFirstName := orgstaffFields[1].Descriptor()
 	// orgstaff.FirstNameValidator is a validator for the "first_name" field. It is called by the builders before save.
 	orgstaff.FirstNameValidator = orgstaffDescFirstName.Validators[0].(func(string) error)
 	// orgstaffDescLastName is the schema descriptor for last_name field.
-	orgstaffDescLastName := orgstaffFields[1].Descriptor()
+	orgstaffDescLastName := orgstaffFields[2].Descriptor()
 	// orgstaff.LastNameValidator is a validator for the "last_name" field. It is called by the builders before save.
 	orgstaff.LastNameValidator = orgstaffDescLastName.Validators[0].(func(string) error)
 	// orgstaffDescMobile is the schema descriptor for mobile field.
-	orgstaffDescMobile := orgstaffFields[2].Descriptor()
+	orgstaffDescMobile := orgstaffFields[3].Descriptor()
 	// orgstaff.MobileValidator is a validator for the "mobile" field. It is called by the builders before save.
 	orgstaff.MobileValidator = orgstaffDescMobile.Validators[0].(func(string) error)
 	// orgstaffDescGenderDictID is the schema descriptor for gender_dict_id field.
-	orgstaffDescGenderDictID := orgstaffFields[4].Descriptor()
+	orgstaffDescGenderDictID := orgstaffFields[5].Descriptor()
 	// orgstaff.GenderDictIDValidator is a validator for the "gender_dict_id" field. It is called by the builders before save.
 	orgstaff.GenderDictIDValidator = orgstaffDescGenderDictID.Validators[0].(func(string) error)
 	// orgstaffDescIdenAddrID is the schema descriptor for iden_addr_id field.
-	orgstaffDescIdenAddrID := orgstaffFields[7].Descriptor()
+	orgstaffDescIdenAddrID := orgstaffFields[8].Descriptor()
 	// orgstaff.IdenAddrIDValidator is a validator for the "iden_addr_id" field. It is called by the builders before save.
 	orgstaff.IdenAddrIDValidator = orgstaffDescIdenAddrID.Validators[0].(func(string) error)
 	// orgstaffDescResiAddrID is the schema descriptor for resi_addr_id field.
-	orgstaffDescResiAddrID := orgstaffFields[8].Descriptor()
+	orgstaffDescResiAddrID := orgstaffFields[9].Descriptor()
 	// orgstaff.ResiAddrIDValidator is a validator for the "resi_addr_id" field. It is called by the builders before save.
 	orgstaff.ResiAddrIDValidator = orgstaffDescResiAddrID.Validators[0].(func(string) error)
 	// orgstaffDescWorkerNo is the schema descriptor for worker_no field.
-	orgstaffDescWorkerNo := orgstaffFields[9].Descriptor()
+	orgstaffDescWorkerNo := orgstaffFields[10].Descriptor()
 	// orgstaff.WorkerNoValidator is a validator for the "worker_no" field. It is called by the builders before save.
 	orgstaff.WorkerNoValidator = orgstaffDescWorkerNo.Validators[0].(func(string) error)
 	// orgstaffDescCubicle is the schema descriptor for cubicle field.
-	orgstaffDescCubicle := orgstaffFields[10].Descriptor()
+	orgstaffDescCubicle := orgstaffFields[11].Descriptor()
 	// orgstaff.CubicleValidator is a validator for the "cubicle" field. It is called by the builders before save.
 	orgstaff.CubicleValidator = orgstaffDescCubicle.Validators[0].(func(string) error)
 	// orgstaffDescRank is the schema descriptor for rank field.
-	orgstaffDescRank := orgstaffFields[11].Descriptor()
+	orgstaffDescRank := orgstaffFields[12].Descriptor()
 	// orgstaff.RankValidator is a validator for the "rank" field. It is called by the builders before save.
 	orgstaff.RankValidator = orgstaffDescRank.Validators[0].(func(string) error)
 	// orgstaffDescOrgID is the schema descriptor for org_id field.
-	orgstaffDescOrgID := orgstaffFields[15].Descriptor()
+	orgstaffDescOrgID := orgstaffFields[16].Descriptor()
 	// orgstaff.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
 	orgstaff.OrgIDValidator = orgstaffDescOrgID.Validators[0].(func(string) error)
 	// orgstaffDescEmpyStat is the schema descriptor for empy_stat field.
-	orgstaffDescEmpyStat := orgstaffFields[16].Descriptor()
+	orgstaffDescEmpyStat := orgstaffFields[17].Descriptor()
 	// orgstaff.DefaultEmpyStat holds the default value on creation for the empy_stat field.
 	orgstaff.DefaultEmpyStat = orgstaffDescEmpyStat.Default.(int32)
 	// orgstaffDescEmpystDictID is the schema descriptor for empyst_dict_id field.
-	orgstaffDescEmpystDictID := orgstaffFields[17].Descriptor()
+	orgstaffDescEmpystDictID := orgstaffFields[18].Descriptor()
 	// orgstaff.EmpystDictIDValidator is a validator for the "empyst_dict_id" field. It is called by the builders before save.
 	orgstaff.EmpystDictIDValidator = orgstaffDescEmpystDictID.Validators[0].(func(string) error)
 	// orgstaffDescDeptID is the schema descriptor for dept_id field.
-	orgstaffDescDeptID := orgstaffFields[18].Descriptor()
+	orgstaffDescDeptID := orgstaffFields[19].Descriptor()
 	// orgstaff.DeptIDValidator is a validator for the "dept_id" field. It is called by the builders before save.
 	orgstaff.DeptIDValidator = orgstaffDescDeptID.Validators[0].(func(string) error)
 	// orgstaffDescPosiID is the schema descriptor for posi_id field.
-	orgstaffDescPosiID := orgstaffFields[19].Descriptor()
+	orgstaffDescPosiID := orgstaffFields[20].Descriptor()
 	// orgstaff.PosiIDValidator is a validator for the "posi_id" field. It is called by the builders before save.
 	orgstaff.PosiIDValidator = orgstaffDescPosiID.Validators[0].(func(string) error)
 	// orgstaffDescID is the schema descriptor for id field.
@@ -1416,8 +1420,14 @@ func init() {
 	sysrole.DefaultUpdatedAt = sysroleDescUpdatedAt.Default.(func() time.Time)
 	// sysrole.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysrole.UpdateDefaultUpdatedAt = sysroleDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// sysroleDescOrgID is the schema descriptor for org_id field.
+	sysroleDescOrgID := sysroleFields[0].Descriptor()
+	// sysrole.DefaultOrgID holds the default value on creation for the org_id field.
+	sysrole.DefaultOrgID = sysroleDescOrgID.Default.(string)
+	// sysrole.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
+	sysrole.OrgIDValidator = sysroleDescOrgID.Validators[0].(func(string) error)
 	// sysroleDescName is the schema descriptor for name field.
-	sysroleDescName := sysroleFields[0].Descriptor()
+	sysroleDescName := sysroleFields[1].Descriptor()
 	// sysrole.NameValidator is a validator for the "name" field. It is called by the builders before save.
 	sysrole.NameValidator = func() func(string) error {
 		validators := sysroleDescName.Validators
@@ -1805,8 +1815,14 @@ func init() {
 	sysuserrole.DefaultUpdatedAt = sysuserroleDescUpdatedAt.Default.(func() time.Time)
 	// sysuserrole.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	sysuserrole.UpdateDefaultUpdatedAt = sysuserroleDescUpdatedAt.UpdateDefault.(func() time.Time)
+	// sysuserroleDescOrgID is the schema descriptor for org_id field.
+	sysuserroleDescOrgID := sysuserroleFields[0].Descriptor()
+	// sysuserrole.DefaultOrgID holds the default value on creation for the org_id field.
+	sysuserrole.DefaultOrgID = sysuserroleDescOrgID.Default.(string)
+	// sysuserrole.OrgIDValidator is a validator for the "org_id" field. It is called by the builders before save.
+	sysuserrole.OrgIDValidator = sysuserroleDescOrgID.Validators[0].(func(string) error)
 	// sysuserroleDescUserID is the schema descriptor for user_id field.
-	sysuserroleDescUserID := sysuserroleFields[0].Descriptor()
+	sysuserroleDescUserID := sysuserroleFields[1].Descriptor()
 	// sysuserrole.UserIDValidator is a validator for the "user_id" field. It is called by the builders before save.
 	sysuserrole.UserIDValidator = func() func(string) error {
 		validators := sysuserroleDescUserID.Validators
@@ -1824,7 +1840,7 @@ func init() {
 		}
 	}()
 	// sysuserroleDescRoleID is the schema descriptor for role_id field.
-	sysuserroleDescRoleID := sysuserroleFields[1].Descriptor()
+	sysuserroleDescRoleID := sysuserroleFields[2].Descriptor()
 	// sysuserrole.RoleIDValidator is a validator for the "role_id" field. It is called by the builders before save.
 	sysuserrole.RoleIDValidator = func() func(string) error {
 		validators := sysuserroleDescRoleID.Validators

@@ -26,6 +26,7 @@ func (OrgStaff) Mixin() []ent.Mixin {
 func (OrgStaff) Fields() []ent.Field {
 
 	return []ent.Field{
+ field.String("user_id").Nillable().Optional().MaxLen(36).Comment("Linked global user account"),
 		field.String("first_name").MaxLen(64).Nillable().Optional().StorageKey("first_name").Comment("名"),
 		field.String("last_name").MaxLen(64).Nillable().Optional().StorageKey("last_name").Comment("姓"),
 		field.String("mobile").MaxLen(32).Nillable().Optional().StorageKey("mobile").Comment("电话"),

@@ -79,6 +79,20 @@ func (_c *SysUserRoleCreate) SetNillableDeletedAt(v *time.Time) *SysUserRoleCrea
 	return _c
 }
 
+// SetOrgID sets the "org_id" field.
+func (_c *SysUserRoleCreate) SetOrgID(v string) *SysUserRoleCreate {
+	_c.mutation.SetOrgID(v)
+	return _c
+}
+
+// SetNillableOrgID sets the "org_id" field if the given value is not nil.
+func (_c *SysUserRoleCreate) SetNillableOrgID(v *string) *SysUserRoleCreate {
+	if v != nil {
+		_c.SetOrgID(*v)
+	}
+	return _c
+}
+
 // SetUserID sets the "user_id" field.
 func (_c *SysUserRoleCreate) SetUserID(v string) *SysUserRoleCreate {
 	_c.mutation.SetUserID(v)
@@ -152,6 +166,10 @@ func (_c *SysUserRoleCreate) defaults() {
 		v := sysuserrole.DefaultUpdatedAt()
 		_c.mutation.SetUpdatedAt(v)
 	}
+	if _, ok := _c.mutation.OrgID(); !ok {
+		v := sysuserrole.DefaultOrgID
+		_c.mutation.SetOrgID(v)
+	}
 	if _, ok := _c.mutation.ID(); !ok {
 		v := sysuserrole.DefaultID()
 		_c.mutation.SetID(v)
@@ -162,6 +180,14 @@ func (_c *SysUserRoleCreate) defaults() {
 func (_c *SysUserRoleCreate) check() error {
 	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysUserRole.is_del"`)}
+	}
+	if _, ok := _c.mutation.OrgID(); !ok {
+		return &ValidationError{Name: "org_id", err: errors.New(`mainent: missing required field "SysUserRole.org_id"`)}
+	}
+	if v, ok := _c.mutation.OrgID(); ok {
+		if err := sysuserrole.OrgIDValidator(v); err != nil {
+			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "SysUserRole.org_id": %w`, err)}
+		}
 	}
 	if _, ok := _c.mutation.UserID(); !ok {
 		return &ValidationError{Name: "user_id", err: errors.New(`mainent: missing required field "SysUserRole.user_id"`)}
@@ -235,6 +261,10 @@ func (_c *SysUserRoleCreate) createSpec() (*SysUserRole, *sqlgraph.CreateSpec) {
 	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuserrole.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
+	}
+	if value, ok := _c.mutation.OrgID(); ok {
+		_spec.SetField(sysuserrole.FieldOrgID, field.TypeString, value)
+		_node.OrgID = value
 	}
 	if value, ok := _c.mutation.UserID(); ok {
 		_spec.SetField(sysuserrole.FieldUserID, field.TypeString, value)
@@ -341,6 +371,18 @@ func (u *SysUserRoleUpsert) UpdateDeletedAt() *SysUserRoleUpsert {
 // ClearDeletedAt clears the value of the "deleted_at" field.
 func (u *SysUserRoleUpsert) ClearDeletedAt() *SysUserRoleUpsert {
 	u.SetNull(sysuserrole.FieldDeletedAt)
+	return u
+}
+
+// SetOrgID sets the "org_id" field.
+func (u *SysUserRoleUpsert) SetOrgID(v string) *SysUserRoleUpsert {
+	u.Set(sysuserrole.FieldOrgID, v)
+	return u
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *SysUserRoleUpsert) UpdateOrgID() *SysUserRoleUpsert {
+	u.SetExcluded(sysuserrole.FieldOrgID)
 	return u
 }
 
@@ -472,6 +514,20 @@ func (u *SysUserRoleUpsertOne) UpdateDeletedAt() *SysUserRoleUpsertOne {
 func (u *SysUserRoleUpsertOne) ClearDeletedAt() *SysUserRoleUpsertOne {
 	return u.Update(func(s *SysUserRoleUpsert) {
 		s.ClearDeletedAt()
+	})
+}
+
+// SetOrgID sets the "org_id" field.
+func (u *SysUserRoleUpsertOne) SetOrgID(v string) *SysUserRoleUpsertOne {
+	return u.Update(func(s *SysUserRoleUpsert) {
+		s.SetOrgID(v)
+	})
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *SysUserRoleUpsertOne) UpdateOrgID() *SysUserRoleUpsertOne {
+	return u.Update(func(s *SysUserRoleUpsert) {
+		s.UpdateOrgID()
 	})
 }
 
@@ -774,6 +830,20 @@ func (u *SysUserRoleUpsertBulk) UpdateDeletedAt() *SysUserRoleUpsertBulk {
 func (u *SysUserRoleUpsertBulk) ClearDeletedAt() *SysUserRoleUpsertBulk {
 	return u.Update(func(s *SysUserRoleUpsert) {
 		s.ClearDeletedAt()
+	})
+}
+
+// SetOrgID sets the "org_id" field.
+func (u *SysUserRoleUpsertBulk) SetOrgID(v string) *SysUserRoleUpsertBulk {
+	return u.Update(func(s *SysUserRoleUpsert) {
+		s.SetOrgID(v)
+	})
+}
+
+// UpdateOrgID sets the "org_id" field to the value that was provided on create.
+func (u *SysUserRoleUpsertBulk) UpdateOrgID() *SysUserRoleUpsertBulk {
+	return u.Update(func(s *SysUserRoleUpsert) {
+		s.UpdateOrgID()
 	})
 }
 

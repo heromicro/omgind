@@ -40,6 +40,7 @@ type OrgStaff1 struct {
 
 // OrgStaff 员工对象
 type OrgStaff struct {
+	UserID string `json:"user_id"`
 	OrgStaff0
 	OrgStaff1
 
