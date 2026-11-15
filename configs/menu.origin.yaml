@@ -1,13 +1,13 @@
 ---
 # 菜单配置初始化(服务启动时会进行数据检查，如果存在则不再初始化)
 - name: 首页
-  icon: dashboard
+  icon: DashboardOutlined
   router: "/dashboard"
   sort: 1
   level: 1
 
 - name: DEMO
-  icon: tag
+  icon: TagOutlined
   router: "/example/demo"
   sort: 8
   level: 1
@@ -51,12 +51,12 @@
           path: "/api/v2/demos/:id/view"
 
 - name: 系统管理
-  icon: setting
+  icon: SettingOutlined
   sort: 39
   level: 1
   children:
     - name: 角色管理
-      icon: audit
+      icon: AuditOutlined
       router: "/system/role"
       sort: 49
       level: 2
@@ -104,7 +104,7 @@
               path: "/api/v2/sys-roles/:id/view"
 
     - name: 用户管理
-      icon: user
+      icon: UserOutlined
       router: "/system/user"
       sort: 59
       level: 2
@@ -152,7 +152,7 @@
               path: "/api/v2/sys-users/:id/view"
     
     - name: 数据字典
-      icon: key
+      icon: KeyOutlined
       router: "/system/dict"
       sort: 199
       level: 2
@@ -202,7 +202,7 @@
         
 
     - name: 行政区域
-      icon: key
+      icon: KeyOutlined
       router: "/system/district"
       sort: 88
       level: 2
@@ -262,7 +262,7 @@
               path: "/api/v2/sys-district/:id/tree"
 
     - name: 地址管理
-      icon: key
+      icon: KeyOutlined
       router: "/system/address"
       sort: 88
       level: 2
@@ -315,12 +315,12 @@
 
 
 - name: 企业管理
-  icon: setting
+  icon: SettingOutlined
   sort: 59
   level: 1
   children:
     - name: 企业信息
-      icon: audit
+      icon: AuditOutlined
       router: "/organ/organ"
       sort: 29
       level: 2
@@ -368,7 +368,7 @@
               path: "/api/v2/org-organs/:id/view"
 
     - name: 部门管理
-      icon: audit
+      icon: AuditOutlined
       router: "/organ/dept"
       sort: 49
       level: 2
@@ -416,7 +416,7 @@
               path: "/api/v2/org-depts/:id/view"
 
     - name: 员工管理
-      icon: audit
+      icon: AuditOutlined
       router: "/organ/staff"
       sort: 49
       level: 2
@@ -472,7 +472,7 @@
               path: "/api/v2/org-staffs/:id/view"
 
     - name: 职位管理
-      icon: audit
+      icon: AuditOutlined
       router: "/organ/position"
       sort: 59
       level: 2
@@ -520,12 +520,12 @@
               path: "/api/v2/org-positions/:id/view"
 
 - name: 开发状态
-  icon: setting
+  icon: SettingOutlined
   sort: 999
   level: 1
   children:
     - name: 菜单管理
-      icon: solution
+      icon: SolutionOutlined
       router: "/dev/menu"
       sort: 999
       level: 2

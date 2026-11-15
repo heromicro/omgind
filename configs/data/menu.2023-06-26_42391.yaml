@@ -1,7 +1,7 @@
 - id: 01GWKRR6V68B061WYFT8QK9NYS
   name: 首页
   sort: 1
-  icon: dashboard
+  icon: DashboardOutlined
   router: /dashboard
   parent_id: null
   parent_path: ""
@@ -15,7 +15,7 @@
 - id: 01GWKRR6V8GJ2G28Y0JP90X1XQ
   name: DEMO
   sort: 8
-  icon: tag
+  icon: TagOutlined
   router: /example/demo
   parent_id: null
   parent_path: ""
@@ -96,7 +96,7 @@
 - id: 01GWKRR6VNVTPT04H42YS3YMGS
   name: 系统管理
   sort: 39
-  icon: setting
+  icon: SettingOutlined
   router: ""
   parent_id: null
   parent_path: ""
@@ -110,7 +110,7 @@
 - id: 01GWKRR6YGE0JS4ND3VJPWXDN3
   name: 企业管理
   sort: 59
-  icon: setting
+  icon: SettingOutlined
   router: ""
   parent_id: null
   parent_path: ""
@@ -124,7 +124,7 @@
 - id: 01GWKRR70D8XY7206ZH3VPJ2AE
   name: 开发状态
   sort: 999
-  icon: setting
+  icon: SettingOutlined
   router: ""
   parent_id: null
   parent_path: ""
@@ -166,7 +166,7 @@
 - id: 01GWKRR6YKZZFNC7CRRQ68VS8T
   name: 企业信息
   sort: 29
-  icon: audit
+  icon: AuditOutlined
   router: /organ/organ
   parent_id: 01GWKRR6YGE0JS4ND3VJPWXDN3
   parent_path: 01GWKRR6YGE0JS4ND3VJPWXDN3
@@ -255,7 +255,7 @@
 - id: 01GWKRR6VSDZXG30DQA2BT7GW8
   name: 角色管理
   sort: 49
-  icon: audit
+  icon: AuditOutlined
   router: /system/role
   parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
   parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
@@ -344,7 +344,7 @@
 - id: 01GWKRR6ZMZX7X80ZR67RPYQ14
   name: 员工管理
   sort: 49
-  icon: audit
+  icon: AuditOutlined
   router: /organ/staff
   parent_id: 01GWKRR6YGE0JS4ND3VJPWXDN3
   parent_path: 01GWKRR6YGE0JS4ND3VJPWXDN3
@@ -449,7 +449,7 @@
 - id: 01GWKRR6Z6MMAG5TVGDZYX2V06
   name: 部门管理
   sort: 49
-  icon: audit
+  icon: AuditOutlined
   router: /organ/dept
   parent_id: 01GWKRR6YGE0JS4ND3VJPWXDN3
   parent_path: 01GWKRR6YGE0JS4ND3VJPWXDN3
@@ -538,7 +538,7 @@
 - id: 01GWKRR6W6RVQH3GXFXZBTQ4B5
   name: 用户管理
   sort: 59
-  icon: user
+  icon: UserOutlined
   router: /system/user
   parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
   parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
@@ -627,7 +627,7 @@
 - id: 01GWKRR7019DT23PQ8GH66608X
   name: 职位管理
   sort: 59
-  icon: audit
+  icon: AuditOutlined
   router: /organ/position
   parent_id: 01GWKRR6YGE0JS4ND3VJPWXDN3
   parent_path: 01GWKRR6YGE0JS4ND3VJPWXDN3
@@ -716,7 +716,7 @@
 - id: 01GWKRR6WXTGBBX1K4YYNXN9RM
   name: 行政区域
   sort: 88
-  icon: key
+  icon: KeyOutlined
   router: /system/district
   parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
   parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
@@ -827,7 +827,7 @@
 - id: 01GWKRR6XK83C5ZH6NDA9FNGAH
   name: 地址管理
   sort: 88
-  icon: key
+  icon: KeyOutlined
   router: /system/address
   parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
   parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
@@ -924,7 +924,7 @@
 - id: 01GWKRR6WJ3C2D8H84XPYVFGHW
   name: 数据字典
   sort: 199
-  icon: key
+  icon: KeyOutlined
   router: /system/dict
   parent_id: 01GWKRR6VNVTPT04H42YS3YMGS
   parent_path: 01GWKRR6VNVTPT04H42YS3YMGS
@@ -1005,7 +1005,7 @@
 - id: 01GWKRR70FGJCHGARE0FS8A24J
   name: 菜单管理
   sort: 999
-  icon: solution
+  icon: SolutionOutlined
   router: /dev/menu
   parent_id: 01GWKRR70D8XY7206ZH3VPJ2AE
   parent_path: 01GWKRR70D8XY7206ZH3VPJ2AE
