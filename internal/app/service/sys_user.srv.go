@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/casbin/casbin/v2"
 
 	"github.com/google/wire"
 	"github.com/gotidy/ptr"
@@ -20,6 +21,7 @@ var SysUserSet = wire.NewSet(wire.Struct(new(User), "*"))
 
 // User 用户管理
 type User struct {
+	Enforcer *casbin.SyncedEnforcer
 	// Enforcer *casbin.SyncedEnforcer
 
 	EntCli *mainent.Client
@@ -131,9 +133,14 @@ func (a *User) Get(ctx context.Context, id string, opts ...schema.UserQueryOptio
 }
 
 // Create 创建数据
-func (a *User) Create(ctx context.Context, item schema.User) (*schema.User, error) {
+func (a *User) Create(ctx context.Context, item schema.User) (result *schema.User, err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
 
-	err := a.checkUserName(ctx, item)
+	err = a.checkUserName(ctx, item)
 
 	if err != nil {
 		return nil, err
@@ -200,7 +207,12 @@ func (a *User) checkUserName(ctx context.Context, item schema.User) error {
 }
 
 // Update 更新数据
-func (a *User) Update(ctx context.Context, id string, item schema.User) (*schema.User, error) {
+func (a *User) Update(ctx context.Context, id string, item schema.User) (result *schema.User, err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
 
 	opt := schema.UserQueryOptions{
 		UserRoles: ptr.Bool(true),
@@ -297,7 +309,12 @@ func (a *User) compareUserRoles(ctx context.Context, oldUserRoles, newUserRoles 
 }
 
 // Delete 删除数据
-func (a *User) Delete(ctx context.Context, id string) error {
+func (a *User) Delete(ctx context.Context, id string) (err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
 
 	oldItem, err := a.UserRepo.Get(ctx, id)
 
@@ -319,7 +336,13 @@ func (a *User) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateActive 更新状态
-func (a *User) UpdateActive(ctx context.Context, id string, isActive bool) error {
+func (a *User) UpdateActive(ctx context.Context, id string, isActive bool) (err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
+
 	oldItem, err := a.UserRepo.Get(ctx, id, schema.UserQueryOptions{
 		UserRoles: ptr.Bool(true),
 	})

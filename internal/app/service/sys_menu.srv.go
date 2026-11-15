@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"github.com/casbin/casbin/v2"
 	"log"
 	"os"
 	"time"
@@ -30,7 +31,8 @@ var SysMenuSet = wire.NewSet(NewMenuSrv)
 
 // Menu 菜单管理
 type Menu struct {
-	EntCli *mainent.Client
+	Enforcer *casbin.SyncedEnforcer
+	EntCli   *mainent.Client
 
 	MenuRepo               *repo.Menu
 	MenuActionRepo         *repo.MenuAction
@@ -40,9 +42,10 @@ type Menu struct {
 	consumer *worker.Consumer
 }
 
-func NewMenuSrv(entCli *mainent.Client, menuRepo *repo.Menu, menuActionRepo *repo.MenuAction, menuActionResourceRepo *repo.MenuActionResource, q queue.Queuer, c *worker.Consumer) *Menu {
+func NewMenuSrv(entCli *mainent.Client, menuRepo *repo.Menu, menuActionRepo *repo.MenuAction, menuActionResourceRepo *repo.MenuActionResource, q queue.Queuer, c *worker.Consumer, enforcer *casbin.SyncedEnforcer) *Menu {
 
 	menuSrv := &Menu{
+		Enforcer:               enforcer,
 		EntCli:                 entCli,
 		MenuRepo:               menuRepo,
 		MenuActionRepo:         menuActionRepo,
@@ -172,7 +175,12 @@ func (s *Menu) ProcessTask(ctx context.Context, t *asynq.Task) error {
 }
 
 // InitData 初始化菜单数据
-func (a *Menu) InitData(ctx context.Context, dataFile string) error {
+func (a *Menu) InitData(ctx context.Context, dataFile string) (err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
 
 	result, err := a.MenuRepo.Query(ctx, schema.MenuQueryParam{
 		PaginationParam: schema.PaginationParam{OnlyCount: true},
@@ -386,7 +394,12 @@ func (a *Menu) checkName(ctx context.Context, item schema.Menu) error {
 }
 
 // Create 创建数据
-func (a *Menu) Create(ctx context.Context, item schema.Menu) (*schema.IDResult, error) {
+func (a *Menu) Create(ctx context.Context, item schema.Menu) (result *schema.IDResult, err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
 
 	if err := a.checkName(ctx, item); err != nil {
 		return nil, err
@@ -512,7 +525,12 @@ func (a *Menu) joinParentPath(parent, id string) string {
 }
 
 // Update 更新数据
-func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (*schema.Menu, error) {
+func (a *Menu) Update(ctx context.Context, id string, item schema.Menu) (result *schema.Menu, err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
 
 	if item.ParentID != nil && id == *item.ParentID {
 		return nil, errors.ErrInvalidParent
@@ -787,7 +805,12 @@ func (a *Menu) updateChildParentPath(ctx context.Context, tx *mainent.Tx, oldIte
 }
 
 // Delete 删除数据
-func (a *Menu) Delete(ctx context.Context, id string) error {
+func (a *Menu) Delete(ctx context.Context, id string) (err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
 
 	oldItem, err := a.MenuRepo.Get(ctx, id)
 	if err != nil {
@@ -858,7 +881,13 @@ func (a *Menu) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateActive 更新状态
-func (a *Menu) UpdateActive(ctx context.Context, id string, isActive bool) error {
+func (a *Menu) UpdateActive(ctx context.Context, id string, isActive bool) (err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
+
 	oldItem, err := a.MenuRepo.Get(ctx, id)
 	if err != nil {
 		return err

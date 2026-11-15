@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/casbin/casbin/v2"
 	"log"
 	"time"
 
@@ -19,6 +20,7 @@ var SysRoleSet = wire.NewSet(wire.Struct(new(Role), "*"))
 
 // Role 角色管理
 type Role struct {
+	Enforcer *casbin.SyncedEnforcer
 	// Enforcer *casbin.SyncedEnforcer
 
 	EntCli *mainent.Client
@@ -69,8 +71,14 @@ func (a *Role) QueryRoleMenus(ctx context.Context, roleID string) (schema.RoleMe
 }
 
 // Create 创建数据
-func (a *Role) Create(ctx context.Context, item schema.Role) (*schema.Role, error) {
-	err := a.checkName(ctx, item)
+func (a *Role) Create(ctx context.Context, item schema.Role) (result *schema.Role, err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
+
+	err = a.checkName(ctx, item)
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +138,13 @@ func (a *Role) checkName(ctx context.Context, item schema.Role) error {
 }
 
 // Update 更新数据
-func (a *Role) Update(ctx context.Context, id string, item schema.Role) (*schema.Role, error) {
+func (a *Role) Update(ctx context.Context, id string, item schema.Role) (result *schema.Role, err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
+
 	oldItem, err := a.Get(ctx, id)
 	if err != nil {
 		return nil, err
@@ -224,7 +238,13 @@ func (a *Role) compareRoleMenus(ctx context.Context, oldRoleMenus, newRoleMenus 
 }
 
 // Delete 删除数据
-func (a *Role) Delete(ctx context.Context, id string) error {
+func (a *Role) Delete(ctx context.Context, id string) (err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
+
 	oldItem, err := a.RoleRepo.Get(ctx, id)
 	if err != nil {
 		return err
@@ -260,7 +280,13 @@ func (a *Role) Delete(ctx context.Context, id string) error {
 }
 
 // UpdateActive 更新状态
-func (a *Role) UpdateActive(ctx context.Context, id string, isActive bool) error {
+func (a *Role) UpdateActive(ctx context.Context, id string, isActive bool) (err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
+
 	oldItem, err := a.RoleRepo.Get(ctx, id)
 	if err != nil {
 		return err
