@@ -220,6 +220,22 @@
     EnableAutoMigrate = true
 
 
+# 关系数据库选择由应用 Wire Provider 决定：EntProviderSet 或 GormProviderSet。
+# Ent/GORM 复用下方 MySQL、Postgres、Sqlite3 连接配置。
+[Gorm]
+    DBType = "postgres"
+    Debug = false
+    MaxLifetime = 7200
+    MaxOpenConns = 150
+    MaxIdleConns = 50
+
+# 可与任一关系数据库组合；仅注入 MongoProviderSet 时连接 MongoDB。
+[Mongo]
+    URI = "mongodb://localhost:27017"
+    Database = "omgind"
+    # 连接及 Ping 的超时时间，单位秒
+    ConnectTimeout = 10
+
 [MySQL]
     # 连接地址
     Host = "127.0.0.1"
@@ -275,4 +291,3 @@
     User = "omgind"
     # 密码
     Password = "123456"
-

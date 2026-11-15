@@ -51,6 +51,8 @@ type AppConfig struct {
 	CORS         option.CORSConfig        `mapstructure:"CORS" json:"CORS"`
 	GZIP         option.GZIPConfig        `mapstructure:"GZIP" json:"GZIP"`
 	Redis        option.RedisConfig       `mapstructure:"Redis" json:"redis"`
+	Mongo        option.MongoConfig       `mapstructure:"Mongo" json:"mongo"`
+	Gorm         option.GormConfig        `mapstructure:"Gorm" json:"gorm"`
 	Ent          option.EntConfig         `mapstructure:"Ent" json:"ent"`
 	MySQL        option.MySQLConfig       `mapstructure:"MySQL" json:"mysql"`
 	Postgres     option.PostgresConfig    `mapstructure:"Postgres" json:"postgres"`
