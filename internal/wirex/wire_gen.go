@@ -30,8 +30,28 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	auther, cleanup3, err := InitAuth(cfg, redis)
+	queuer, cleanup3, err := InitQueue(cfg, redis)
 	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	sysDistrict := &repo.SysDistrict{
+		EntCli: client,
+		Queue:  queuer,
+	}
+	consumer, cleanup4, err := InitAsynq(cfg, queuer)
+	if err != nil {
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	serviceSysDistrict := service.NewSysDistrictSrv(client, sysDistrict, queuer, consumer)
+	auther, cleanup5, err := InitAuth(cfg, redis)
+	if err != nil {
+		cleanup4()
+		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
@@ -62,8 +82,10 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		UserRepo:         user,
 		UserRoleRepo:     userRole,
 	}
-	syncedEnforcer, cleanup4, err := InitCasbin(cfg, casbinAdapter)
+	syncedEnforcer, cleanup6, err := InitCasbin(cfg, casbinAdapter)
 	if err != nil {
+		cleanup5()
+		cleanup4()
 		cleanup3()
 		cleanup2()
 		cleanup()
@@ -94,23 +116,6 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	}
 	menuAction := &repo.MenuAction{
 		EntCli: client,
-	}
-	queuer, cleanup5, err := InitQueue(cfg, redis)
-	if err != nil {
-		cleanup4()
-		cleanup3()
-		cleanup2()
-		cleanup()
-		return nil, nil, err
-	}
-	consumer, cleanup6, err := InitAsynq(cfg, queuer)
-	if err != nil {
-		cleanup5()
-		cleanup4()
-		cleanup3()
-		cleanup2()
-		cleanup()
-		return nil, nil, err
 	}
 	serviceMenu := service.NewMenuSrv(client, menu, menuAction, menuActionResource, queuer, consumer, syncedEnforcer)
 	api_v2Menu := &api_v2.Menu{
@@ -163,11 +168,6 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 		SigninSrv: signIn,
 		Vcode:     vcode,
 	}
-	sysDistrict := &repo.SysDistrict{
-		EntCli: client,
-		Queue:  queuer,
-	}
-	serviceSysDistrict := service.NewSysDistrictSrv(client, sysDistrict, queuer, consumer)
 	api_v2SysDistrict := &api_v2.SysDistrict{
 		SysDistrictSrv: serviceSysDistrict,
 	}
@@ -247,6 +247,7 @@ func BuildInjector(cfg *config.AppConfig) (*Injector, func(), error) {
 	}
 	engine := InitGinEngine(routerRouter)
 	injector := &Injector{
+		DistrictSrv:    serviceSysDistrict,
 		Engine:         engine,
 		Auth:           auther,
 		CasbinEnforcer: syncedEnforcer,

@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"github.com/heromicro/omgind/internal/scheme/seed"
 	"strings"
 	"time"
 
@@ -222,4 +223,9 @@ func (a *SysDistrict) UpdateActive(ctx context.Context, id string, active bool) 
 	}
 
 	return a.SysDistrictRepo.UpdateActive(ctx, id, active)
+}
+
+// InitData loads a local administrative seed only when the district table is empty.
+func (a *SysDistrict) InitData(ctx context.Context, path string) (int, error) {
+	return seed.ImportDistricts(ctx, a.EntCli, path)
 }

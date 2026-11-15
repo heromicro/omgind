@@ -117,6 +117,17 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 		}
 	}
 
+	if cfg := global.CFG.District; cfg.Enable {
+		imported, err := injector.DistrictSrv.InitData(ctx, cfg.Data)
+		if err != nil {
+			injectorCleanFunc()
+			monitorCleanFunc()
+			loggerCleanFunc()
+			return nil, fmt.Errorf("initialize districts: %w", err)
+		}
+		logger.WithContext(ctx).Printf("Initialized %d administrative records", imported)
+	}
+
 	// 初始化HTTP服务
 	httpServerCleanFunc := InitHTTPServer(ctx, injector.Engine)
 
