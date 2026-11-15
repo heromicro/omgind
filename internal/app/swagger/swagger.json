@@ -20,6 +20,12 @@
                 "summary": "查询数据",
                 "parameters": [
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -39,25 +45,23 @@
                     },
                     {
                         "type": "string",
-                        "description": "asc desc",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "code__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "create_at 结束",
                         "name": "created_at__ed",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "create_at 开始",
                         "name": "created_at__st",
                         "in": "query"
                     },
@@ -68,9 +72,47 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
+                        "in": "query"
+                    },
+                    {
                         "type": "boolean",
                         "description": "状态",
                         "name": "is_active",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
                         "in": "query"
                     },
                     {
@@ -81,14 +123,8 @@
                     },
                     {
                         "type": "string",
-                        "description": "asc desc",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "name__order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
                         "in": "query"
                     },
                     {
@@ -99,12 +135,6 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
-                        "in": "query"
-                    },
-                    {
                         "type": "string",
                         "description": "查询值",
                         "name": "q",
@@ -112,20 +142,36 @@
                     },
                     {
                         "type": "integer",
-                        "description": "create_at 结束",
+                        "description": "sort 结束",
                         "name": "sort__ed",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "asc desc",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "sort__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "create_at 结束",
+                        "description": "sort 开始",
                         "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     }
                 ],
@@ -463,6 +509,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -480,9 +532,19 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__st",
                         "in": "query"
                     },
                     {
@@ -492,14 +554,36 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
+                        "in": "query"
+                    },
+                    {
                         "type": "boolean",
                         "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "description": "example: asc\nexample: desc",
                         "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
                         "in": "query"
                     },
                     {
@@ -521,6 +605,16 @@
                         "in": "query"
                     },
                     {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "name": "name",
                         "in": "query"
@@ -529,12 +623,6 @@
                         "type": "string",
                         "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "name__order",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
                         "in": "query"
                     },
                     {
@@ -556,12 +644,6 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
-                        "in": "query"
-                    },
-                    {
                         "type": "string",
                         "description": "pid",
                         "name": "pid",
@@ -574,6 +656,12 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "sort__order",
@@ -581,8 +669,8 @@
                     },
                     {
                         "type": "integer",
-                        "description": "tree_left 结束",
-                        "name": "treeLeft",
+                        "description": "sort 开始",
+                        "name": "sort__st",
                         "in": "query"
                     },
                     {
@@ -595,6 +683,12 @@
                         "type": "string",
                         "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "tree_id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "tree_left",
                         "in": "query"
                     },
                     {
@@ -643,6 +737,22 @@
                         "type": "integer",
                         "description": "tree_right 结束",
                         "name": "tree_right__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     }
                 ],
@@ -1061,6 +1171,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -1096,9 +1212,19 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__st",
                         "in": "query"
                     },
                     {
@@ -1108,25 +1234,51 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
+                        "in": "query"
+                    },
+                    {
                         "type": "boolean",
                         "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "asc desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
                         "in": "query"
                     },
                     {
@@ -1142,12 +1294,6 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
-                        "in": "query"
-                    },
-                    {
                         "type": "string",
                         "description": "asc, desc",
                         "name": "province_id__order",
@@ -1160,9 +1306,37 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "asc desc",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     }
                 ],
@@ -1581,6 +1755,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -1598,9 +1778,19 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__st",
                         "in": "query"
                     },
                     {
@@ -1610,24 +1800,51 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
+                        "in": "query"
+                    },
+                    {
                         "type": "boolean",
                         "name": "is_active",
                         "in": "query"
                     },
                     {
                         "type": "string",
+                        "description": "example: asc\nexample: desc",
                         "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
                         "in": "query"
                     },
                     {
@@ -1643,21 +1860,43 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
-                        "in": "query"
-                    },
-                    {
                         "type": "string",
                         "description": "模糊查询",
                         "name": "q",
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "asc desc",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     }
                 ],
@@ -2076,6 +2315,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -2094,6 +2339,11 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
@@ -2101,8 +2351,30 @@
                     },
                     {
                         "type": "integer",
+                        "name": "created_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "当前页",
                         "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
                         "in": "query"
                     },
                     {
@@ -2128,7 +2400,13 @@
                     },
                     {
                         "type": "string",
+                        "description": "example: asc\nexample: desc",
                         "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
                         "in": "query"
                     },
                     {
@@ -2137,9 +2415,13 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
                         "in": "query"
                     },
                     {
@@ -2152,12 +2434,6 @@
                         "type": "integer",
                         "description": "页大小",
                         "name": "pageSize",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
                         "in": "query"
                     },
                     {
@@ -2195,9 +2471,37 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "asc/desc",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     },
                     {
@@ -2900,6 +3204,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -2950,9 +3260,19 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__st",
                         "in": "query"
                     },
                     {
@@ -2962,9 +3282,37 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "asc, desc",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
                         "name": "id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
                         "in": "query"
                     },
                     {
@@ -2973,9 +3321,13 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
                         "in": "query"
                     },
                     {
@@ -2983,12 +3335,6 @@
                         "type": "integer",
                         "description": "页大小",
                         "name": "pageSize",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
                         "in": "query"
                     },
                     {
@@ -3006,6 +3352,40 @@
                         "type": "string",
                         "description": "模糊查询",
                         "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     }
                 ],
@@ -3365,6 +3745,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -3378,8 +3764,47 @@
                     },
                     {
                         "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "created_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "当前页",
                         "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "字典键",
+                        "name": "dict_key",
                         "in": "query"
                     },
                     {
@@ -3387,6 +3812,7 @@
                         "items": {
                             "type": "string"
                         },
+                        "collectionFormat": "csv",
                         "description": "唯一标识列表",
                         "name": "ids",
                         "in": "query"
@@ -3398,8 +3824,23 @@
                     },
                     {
                         "type": "string",
-                        "description": "asc/desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
                         "in": "query"
                     },
                     {
@@ -3427,22 +3868,10 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
-                        "in": "query"
-                    },
-                    {
                         "maximum": 100,
                         "type": "integer",
                         "description": "页大小",
                         "name": "pageSize",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
                         "in": "query"
                     },
                     {
@@ -3452,9 +3881,43 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "asc/desc",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
                         "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "值类型",
+                        "name": "val_tipe",
                         "in": "query"
                     },
                     {
@@ -3801,6 +4264,12 @@
                         "in": "header"
                     },
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -3813,6 +4282,11 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
@@ -3820,8 +4294,30 @@
                     },
                     {
                         "type": "integer",
+                        "name": "created_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "当前页",
                         "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
                         "in": "query"
                     },
                     {
@@ -3834,6 +4330,17 @@
                         "type": "boolean",
                         "description": "状态",
                         "name": "is_active",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
                         "in": "query"
                     },
                     {
@@ -3867,6 +4374,16 @@
                         "in": "query"
                     },
                     {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "名称",
                         "name": "name",
@@ -3874,7 +4391,7 @@
                     },
                     {
                         "type": "string",
-                        "description": "asc desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "name__order",
                         "in": "query"
                     },
@@ -3882,12 +4399,6 @@
                         "type": "string",
                         "description": "名称",
                         "name": "name_en",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
                         "in": "query"
                     },
                     {
@@ -3916,12 +4427,6 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
-                        "in": "query"
-                    },
-                    {
                         "type": "string",
                         "description": "pid",
                         "name": "pid",
@@ -3934,15 +4439,27 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "区域后缀,省/市/区/旗/盟/自治区/",
-                        "name": "suffix",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "sort__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "tree_left 结束",
-                        "name": "treeLeft",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "区域后缀,省/市/区/旗/盟/自治区/",
+                        "name": "suffix",
                         "in": "query"
                     },
                     {
@@ -3955,6 +4472,12 @@
                         "type": "string",
                         "description": "asc desc",
                         "name": "tree_id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "tree_left",
                         "in": "query"
                     },
                     {
@@ -4003,6 +4526,22 @@
                         "type": "integer",
                         "description": "tree_right 结束",
                         "name": "tree_right__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     }
                 ],
@@ -4361,6 +4900,12 @@
                 "summary": "查询数据",
                 "parameters": [
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -4373,6 +4918,11 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "example: asc\nexample: desc",
                         "name": "created_at__order",
@@ -4380,8 +4930,30 @@
                     },
                     {
                         "type": "integer",
+                        "name": "created_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "当前页",
                         "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
                         "in": "query"
                     },
                     {
@@ -4394,6 +4966,17 @@
                         "type": "boolean",
                         "description": "状态",
                         "name": "is_active",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
                         "in": "query"
                     },
                     {
@@ -4427,6 +5010,16 @@
                         "in": "query"
                     },
                     {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "名称",
                         "name": "name",
@@ -4434,7 +5027,7 @@
                     },
                     {
                         "type": "string",
-                        "description": "asc desc",
+                        "description": "example: asc\nexample: desc",
                         "name": "name__order",
                         "in": "query"
                     },
@@ -4442,12 +5035,6 @@
                         "type": "string",
                         "description": "名称",
                         "name": "name_en",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
                         "in": "query"
                     },
                     {
@@ -4476,12 +5063,6 @@
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
-                        "in": "query"
-                    },
-                    {
                         "type": "string",
                         "description": "pid",
                         "name": "pid",
@@ -4494,15 +5075,27 @@
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
-                        "description": "区域后缀,省/市/区/旗/盟/自治区/",
-                        "name": "suffix",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "sort__order",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "tree_left 结束",
-                        "name": "treeLeft",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "区域后缀,省/市/区/旗/盟/自治区/",
+                        "name": "suffix",
                         "in": "query"
                     },
                     {
@@ -4515,6 +5108,12 @@
                         "type": "string",
                         "description": "asc desc",
                         "name": "tree_id__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "tree_left 结束",
+                        "name": "tree_left",
                         "in": "query"
                     },
                     {
@@ -4563,6 +5162,22 @@
                         "type": "integer",
                         "description": "tree_right 结束",
                         "name": "tree_right__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     }
                 ],
@@ -5476,6 +6091,12 @@
                 "summary": "查询数据",
                 "parameters": [
                     {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "id之后的",
                         "name": "after",
@@ -5489,19 +6110,67 @@
                     },
                     {
                         "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "created_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "当前页",
                         "name": "current",
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
-                        "name": "isActive",
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
                         "in": "query"
                     },
                     {
                         "type": "boolean",
-                        "description": "是否仅查询count",
-                        "name": "onlyCount",
+                        "name": "is_active",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
                         "in": "query"
                     },
                     {
@@ -5509,12 +6178,6 @@
                         "type": "integer",
                         "description": "页大小",
                         "name": "pageSize",
-                        "in": "query"
-                    },
-                    {
-                        "type": "boolean",
-                        "description": "是否使用分页查询",
-                        "name": "pagination",
                         "in": "query"
                     },
                     {
@@ -5528,8 +6191,43 @@
                         "items": {
                             "type": "string"
                         },
+                        "collectionFormat": "csv",
                         "description": "角色ID列表",
-                        "name": "roleIDs",
+                        "name": "role_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
                         "in": "query"
                     },
                     {
@@ -5853,6 +6551,1146 @@
                     }
                 }
             }
+        },
+        "/api/v2/sysannexes": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    ""
+                ],
+                "summary": "查询数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id之后的",
+                        "name": "after",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id之前的",
+                        "name": "before",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "created_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页",
+                        "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模糊查询",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "分页索引",
+                        "name": "current",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "分页大小",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询值",
+                        "name": "q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/schema.ListResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "list": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/schema.SysAnnex"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "$ref": "#/definitions/schema.PaginationResult"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    ""
+                ],
+                "summary": "创建数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "创建数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysAnnex"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysAnnex"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/sysannexes/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    ""
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysAnnex"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    ""
+                ],
+                "summary": "更新数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysAnnex"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysAnnex"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    ""
+                ],
+                "summary": "删除数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/sysannexes/{id}/disable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    ""
+                ],
+                "summary": "禁用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/sysannexes/{id}/enable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    ""
+                ],
+                "summary": "启用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/sysannexes/{id}/view": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    ""
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysAnnex"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/systeams": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "地址管理"
+                ],
+                "summary": "查询数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否仅查询count",
+                        "name": "-",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id之后的",
+                        "name": "after",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id之前的",
+                        "name": "before",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "编号",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "created_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "created_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页",
+                        "name": "current",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "//",
+                        "name": "deleted_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "deleted_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "deleted_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: asc\nexample: desc",
+                        "name": "is_active__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "is_del",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "必须包含这些ids",
+                        "name": "muin_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "type": "integer",
+                        "description": "页大小",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "模糊查询",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 结束",
+                        "name": "sort__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "sort__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "sort 开始",
+                        "name": "sort__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__ed",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "example: \"asc\"\nexample: \"desc\"",
+                        "name": "updated_at__order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "updated_at__st",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "sys_user.ID列表",
+                        "name": "user_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "分页索引",
+                        "name": "current",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "分页大小",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询值",
+                        "name": "q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/schema.ListResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "list": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/schema.SysTeam"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "$ref": "#/definitions/schema.PaginationResult"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "地址管理"
+                ],
+                "summary": "创建数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "description": "创建数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysTeam"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.IDResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/systeams/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "地址管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysTeam"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "地址管理"
+                ],
+                "summary": "更新数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "更新数据",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysTeam"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "400": {
+                        "description": "{error:{code:0,message:无效的请求参数}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "地址管理"
+                ],
+                "summary": "删除数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/systeams/{id}/disable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "地址管理"
+                ],
+                "summary": "禁用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/systeams/{id}/enable": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "地址管理"
+                ],
+                "summary": "启用数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{status:OK}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.StatusResult"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/systeams/{id}/view": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "tags": [
+                    "地址管理"
+                ],
+                "summary": "查询指定数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "唯一标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/schema.SysTeam"
+                        }
+                    },
+                    "401": {
+                        "description": "{error:{code:0,message:未授权}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "404": {
+                        "description": "{error:{code:0,message:资源不存在}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    },
+                    "500": {
+                        "description": "{error:{code:0,message:服务器错误}}",
+                        "schema": {
+                            "$ref": "#/definitions/schema.ErrorResult"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -5913,6 +7751,7 @@
         "schema.Dict": {
             "type": "object",
             "required": [
+                "dict_key",
                 "is_active",
                 "items",
                 "name_cn",
@@ -5921,6 +7760,10 @@
             "properties": {
                 "created_at": {
                     "description": "创建时间",
+                    "type": "string"
+                },
+                "dict_key": {
+                    "description": "字典键",
                     "type": "string"
                 },
                 "id": {
@@ -6058,11 +7901,19 @@
             ],
             "properties": {
                 "actions": {
-                    "description": "CreatedAt  *time.Time  `json:\"created_at\" yaml:\"-\"`                           // 创建时间\nUpdatedAt  *time.Time  `json:\"updated_at\" yaml:\"-\"`                           // 更新时间",
+                    "description": "动作列表",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/schema.MenuAction"
                     }
+                },
+                "children": {
+                    "description": "子级",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.Menus"
+                        }
+                    ]
                 },
                 "created_at": {
                     "description": "创建时间",
@@ -6099,6 +7950,18 @@
                 "name": {
                     "description": "菜单名称",
                     "type": "string"
+                },
+                "open_blank": {
+                    "description": "是否打开新标签",
+                    "type": "boolean"
+                },
+                "parent": {
+                    "description": "父级",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/schema.Menu"
+                        }
+                    ]
                 },
                 "parent_id": {
                     "description": "父级ID",
@@ -6224,6 +8087,10 @@
                     "description": "菜单名称",
                     "type": "string"
                 },
+                "open_blank": {
+                    "description": "是否打开新标签",
+                    "type": "boolean"
+                },
                 "parent_id": {
                     "description": "父级ID",
                     "type": "string"
@@ -6240,6 +8107,12 @@
                     "description": "排序值",
                     "type": "integer"
                 }
+            }
+        },
+        "schema.Menus": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/schema.Menu"
             }
         },
         "schema.OrgDept": {
@@ -6638,6 +8511,9 @@
                     "description": "更新时间",
                     "type": "string"
                 },
+                "user_id": {
+                    "type": "string"
+                },
                 "worker_no": {
                     "description": "工号",
                     "type": "string"
@@ -6694,6 +8570,9 @@
                 },
                 "name": {
                     "description": "角色名称",
+                    "type": "string"
+                },
+                "org_id": {
                     "type": "string"
                 },
                 "role_menus": {
@@ -6884,6 +8763,35 @@
                 }
             }
         },
+        "schema.SysAnnex": {
+            "type": "object",
+            "required": [
+                "file_path",
+                "name"
+            ],
+            "properties": {
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "file_path": {
+                    "description": "文件路径",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "文件名称",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
         "schema.SysDistrict": {
             "type": "object",
             "required": [
@@ -7045,6 +8953,31 @@
                 "$ref": "#/definitions/schema.SysDistrict"
             }
         },
+        "schema.SysTeam": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "电话",
+                    "type": "string"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "联系人",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
         "schema.UpdatePasswordParam": {
             "type": "object",
             "required": [
@@ -7136,6 +9069,9 @@
             "properties": {
                 "id": {
                     "description": "唯一标识",
+                    "type": "string"
+                },
+                "org_id": {
                     "type": "string"
                 },
                 "role_id": {

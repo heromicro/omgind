@@ -16,7 +16,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       id:
         description: 唯一标识
         type: string
@@ -43,7 +43,10 @@ definitions:
     properties:
       created_at:
         description: 创建时间
-        type: string 
+        type: string
+      dict_key:
+        description: 字典键
+        type: string
       id:
         description: 唯一标识
         type: string
@@ -71,6 +74,7 @@ definitions:
         description: 更新时间
         type: string
     required:
+    - dict_key
     - is_active
     - items
     - name_cn
@@ -141,15 +145,17 @@ definitions:
   schema.Menu:
     properties:
       actions:
-        description: |-
-          CreatedAt  *time.Time  `json:"created_at" yaml:"-"`                           // 创建时间
-          UpdatedAt  *time.Time  `json:"updated_at" yaml:"-"`                           // 更新时间
+        description: 动作列表
         items:
           $ref: '#/definitions/schema.MenuAction'
         type: array
+      children:
+        allOf:
+        - $ref: '#/definitions/schema.Menus'
+        description: 子级
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       icon:
         description: 菜单图标
         type: string
@@ -174,6 +180,13 @@ definitions:
       name:
         description: 菜单名称
         type: string
+      open_blank:
+        description: 是否打开新标签
+        type: boolean
+      parent:
+        allOf:
+        - $ref: '#/definitions/schema.Menu'
+        description: 父级
       parent_id:
         description: 父级ID
         type: string
@@ -267,6 +280,9 @@ definitions:
       name:
         description: 菜单名称
         type: string
+      open_blank:
+        description: 是否打开新标签
+        type: boolean
       parent_id:
         description: 父级ID
         type: string
@@ -280,6 +296,10 @@ definitions:
         description: 排序值
         type: integer
     type: object
+  schema.Menus:
+    items:
+      $ref: '#/definitions/schema.Menu'
+    type: array
   schema.OrgDept:
     properties:
       children:
@@ -291,7 +311,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       id:
         description: 唯一标识
         type: string
@@ -357,7 +377,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       haddr:
         allOf:
         - $ref: '#/definitions/schema.SysAddress'
@@ -421,7 +441,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       id:
         description: 唯一标识
         type: string
@@ -455,7 +475,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       cubicle:
         description: 工位
         type: string
@@ -545,6 +565,8 @@ definitions:
       updated_at:
         description: 更新时间
         type: string
+      user_id:
+        type: string
       worker_no:
         description: 工号
         type: string
@@ -578,7 +600,7 @@ definitions:
     properties:
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       deleted_at:
         description: 更新时间
         type: string
@@ -593,6 +615,8 @@ definitions:
         type: string
       name:
         description: 角色名称
+        type: string
+      org_id:
         type: string
       role_menus:
         description: 角色菜单列表
@@ -700,7 +724,7 @@ definitions:
         type: string
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       daddr:
         description: 详细地址
         type: string
@@ -734,6 +758,27 @@ definitions:
         description: 邮政编码
         type: string
     type: object
+  schema.SysAnnex:
+    properties:
+      created_at:
+        description: 创建时间
+        type: string
+      file_path:
+        description: 文件路径
+        type: string
+      id:
+        description: 唯一标识
+        type: string
+      name:
+        description: 文件名称
+        type: string
+      updated_at:
+        description: 更新时间
+        type: string
+    required:
+    - file_path
+    - name
+    type: object
   schema.SysDistrict:
     properties:
       abbr:
@@ -748,7 +793,7 @@ definitions:
         description: children
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       extra:
         description: 带前缀简名称
         type: string
@@ -849,6 +894,24 @@ definitions:
     items:
       $ref: '#/definitions/schema.SysDistrict'
     type: array
+  schema.SysTeam:
+    properties:
+      code:
+        description: 电话
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      id:
+        description: 唯一标识
+        type: string
+      name:
+        description: 联系人
+        type: string
+      updated_at:
+        description: 更新时间
+        type: string
+    type: object
   schema.UpdatePasswordParam:
     properties:
       new_password:
@@ -865,7 +928,7 @@ definitions:
     properties:
       created_at:
         description: 创建时间
-        type: string 
+        type: string
       email:
         description: 邮箱
         type: string
@@ -917,6 +980,8 @@ definitions:
     properties:
       id:
         description: 唯一标识
+        type: string
+      org_id:
         type: string
       role_id:
         description: 角色ID
@@ -992,6 +1057,10 @@ paths:
   /api/v2/demos:
     get:
       parameters:
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -1004,66 +1073,105 @@ paths:
         in: query
         name: code
         type: string
-      - description: asc desc
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
         name: code__order
         type: string
-      - description: create_at 结束
-        in: query
+      - in: query
         name: created_at__ed
         type: integer
-      - description: asc, desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: created_at__order
         type: string
-      - description: create_at 开始
-        in: query
+      - in: query
         name: created_at__st
         type: integer
       - description: 当前页
         in: query
         name: current
         type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
+        type: integer
       - description: 状态
         in: query
         name: is_active
         type: boolean
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: is_active__order
+        type: string
+      - in: query
+        name: is_del
+        type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
       - description: 名称
         in: query
         name: name
         type: string
-      - description: asc desc
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
         name: name__order
         type: string
-      - description: 是否仅查询count
-        in: query
-        name: onlyCount
-        type: boolean
       - description: 页大小
         in: query
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: 查询值
         in: query
         name: q
         type: string
-      - description: create_at 结束
+      - description: sort 结束
         in: query
         name: sort__ed
         type: integer
-      - description: asc desc
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
         name: sort__order
         type: string
-      - description: create_at 结束
+      - description: sort 开始
         in: query
         name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
         type: integer
       responses:
         "200":
@@ -1271,6 +1379,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -1282,25 +1394,47 @@ paths:
       - in: query
         name: code
         type: string
+      - in: query
+        name: created_at__ed
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: created_at__order
+        type: string
+      - in: query
+        name: created_at__st
+        type: integer
+      - description: 当前页
+        in: query
+        name: current
+        type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
       - description: |-
           example: "asc"
           example: "desc"
         in: query
-        name: created_at__order
+        name: deleted_at__order
         type: string
-      - description: 当前页
-        in: query
-        name: current
+      - in: query
+        name: deleted_at__st
         type: integer
       - in: query
         name: is_active
         type: boolean
       - description: |-
-          example: "asc"
-          example: "desc"
+          example: asc
+          example: desc
         in: query
         name: is_active__order
         type: string
+      - in: query
+        name: is_del
+        type: boolean
       - description: 是否是子叶
         in: query
         name: is_leaf
@@ -1313,6 +1447,13 @@ paths:
         in: query
         name: is_show
         type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
       - in: query
         name: name
         type: string
@@ -1322,10 +1463,6 @@ paths:
         in: query
         name: name__order
         type: string
-      - description: 是否仅查询count
-        in: query
-        name: onlyCount
-        type: boolean
       - in: query
         name: org_id
         type: string
@@ -1338,10 +1475,6 @@ paths:
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: pid
         in: query
         name: pid
@@ -1350,15 +1483,19 @@ paths:
         in: query
         name: q
         type: string
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
       - description: |-
           example: "asc"
           example: "desc"
         in: query
         name: sort__order
         type: string
-      - description: tree_left 结束
+      - description: sort 开始
         in: query
-        name: treeLeft
+        name: sort__st
         type: integer
       - description: 树id
         in: query
@@ -1370,6 +1507,10 @@ paths:
         in: query
         name: tree_id__order
         type: string
+      - description: tree_left 结束
+        in: query
+        name: tree_left
+        type: integer
       - description: tree_left 结束
         in: query
         name: tree_left__ed
@@ -1401,6 +1542,18 @@ paths:
       - description: tree_right 结束
         in: query
         name: tree_right__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
         type: integer
       responses:
         "200":
@@ -1660,6 +1813,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -1685,28 +1842,57 @@ paths:
         in: query
         name: county_id__order
         type: string
-      - description: asc, desc
+      - in: query
+        name: created_at__ed
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: created_at__order
         type: string
+      - in: query
+        name: created_at__st
+        type: integer
       - description: 当前页
         in: query
         name: current
         type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
+        type: integer
       - in: query
         name: is_active
         type: boolean
-      - description: asc desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: is_active__order
         type: string
       - in: query
+        name: is_del
+        type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
+      - in: query
         name: name
         type: string
-      - description: 是否仅查询count
-        in: query
-        name: onlyCount
-        type: boolean
       - in: query
         name: owner_id
         type: string
@@ -1715,10 +1901,6 @@ paths:
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: asc, desc
         in: query
         name: province_id__order
@@ -1727,10 +1909,32 @@ paths:
         in: query
         name: q
         type: string
-      - description: asc desc
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
         name: sort__order
         type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
+        type: integer
       responses:
         "200":
           description: OK
@@ -1989,6 +2193,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -2000,29 +2208,57 @@ paths:
       - in: query
         name: code
         type: string
+      - in: query
+        name: created_at__ed
+        type: integer
       - description: |-
           example: asc
           example: desc
         in: query
         name: created_at__order
         type: string
+      - in: query
+        name: created_at__st
+        type: integer
       - description: 当前页
         in: query
         name: current
         type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
+        type: integer
       - in: query
         name: is_active
         type: boolean
-      - in: query
+      - description: |-
+          example: asc
+          example: desc
+        in: query
         name: is_active__order
         type: string
       - in: query
+        name: is_del
+        type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
+      - in: query
         name: name
         type: string
-      - description: 是否仅查询count
-        in: query
-        name: onlyCount
-        type: boolean
       - in: query
         name: org_id
         type: string
@@ -2031,18 +2267,36 @@ paths:
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: 模糊查询
         in: query
         name: q
         type: string
-      - description: asc desc
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
         name: sort__order
         type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
+        type: integer
       responses:
         "200":
           description: OK
@@ -2301,6 +2555,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -2313,15 +2571,34 @@ paths:
         in: query
         name: birth_date__order
         type: string
+      - in: query
+        name: created_at__ed
+        type: integer
       - description: |-
           example: asc
           example: desc
         in: query
         name: created_at__order
         type: string
+      - in: query
+        name: created_at__st
+        type: integer
       - description: 当前页
         in: query
         name: current
+        type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
         type: integer
       - description: asc/desc
         in: query
@@ -2336,16 +2613,25 @@ paths:
       - in: query
         name: is_active
         type: boolean
-      - in: query
+      - description: |-
+          example: asc
+          example: desc
+        in: query
         name: is_active__order
         type: string
       - in: query
+        name: is_del
+        type: boolean
+      - in: query
         name: last_name
         type: string
-      - description: 是否仅查询count
+      - collectionFormat: csv
+        description: 必须包含这些ids
         in: query
-        name: onlyCount
-        type: boolean
+        items:
+          type: string
+        name: muin_ids
+        type: array
       - in: query
         name: org_id
         type: string
@@ -2354,10 +2640,6 @@ paths:
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: 模糊查询
         in: query
         name: q
@@ -2380,10 +2662,32 @@ paths:
         in: query
         name: resign_date__order
         type: string
-      - description: asc/desc
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
         name: sort__order
         type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
+        type: integer
       - description: asc/desc
         in: query
         name: worker_no__order
@@ -2817,6 +3121,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -2849,36 +3157,65 @@ paths:
         in: query
         name: county_id__order
         type: string
+      - in: query
+        name: created_at__ed
+        type: integer
       - description: |-
           example: asc
           example: desc
         in: query
         name: created_at__order
         type: string
+      - in: query
+        name: created_at__st
+        type: integer
       - description: 当前页
         in: query
         name: current
         type: integer
-      - description: asc, desc
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: id__order
         type: string
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: is_active__order
+        type: string
+      - in: query
+        name: is_del
+        type: boolean
       - in: query
         name: mobile
         type: string
-      - description: 是否仅查询count
+      - collectionFormat: csv
+        description: 必须包含这些ids
         in: query
-        name: onlyCount
-        type: boolean
+        items:
+          type: string
+        name: muin_ids
+        type: array
       - description: 页大小
         in: query
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - in: query
         name: province_id
         type: string
@@ -2890,6 +3227,32 @@ paths:
         in: query
         name: q
         type: string
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: sort__order
+        type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
+        type: integer
       responses:
         "200":
           description: OK
@@ -3114,6 +3477,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -3122,11 +3489,41 @@ paths:
         in: query
         name: before
         type: string
+      - in: query
+        name: created_at__ed
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: created_at__order
+        type: string
+      - in: query
+        name: created_at__st
+        type: integer
       - description: 当前页
         in: query
         name: current
         type: integer
-      - description: 唯一标识列表
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
+        type: integer
+      - description: 字典键
+        in: query
+        name: dict_key
+        type: string
+      - collectionFormat: csv
+        description: 唯一标识列表
         in: query
         items:
           type: string
@@ -3135,10 +3532,22 @@ paths:
       - in: query
         name: is_active
         type: boolean
-      - description: asc/desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: is_active__order
         type: string
+      - in: query
+        name: is_del
+        type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
       - description: 字典名称(中)
         in: query
         name: name_cn
@@ -3157,26 +3566,44 @@ paths:
         in: query
         name: name_en__order
         type: string
-      - description: 是否仅查询count
-        in: query
-        name: onlyCount
-        type: boolean
       - description: 页大小
         in: query
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: 模糊查询
         in: query
         name: q
         type: string
-      - description: asc/desc
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
         in: query
         name: sort__order
+        type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
+        type: integer
+      - description: 值类型
+        in: query
+        name: val_tipe
         type: string
       - in: query
         name: wi
@@ -3393,6 +3820,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -3401,15 +3832,34 @@ paths:
         in: query
         name: before
         type: string
+      - in: query
+        name: created_at__ed
+        type: integer
       - description: |-
           example: asc
           example: desc
         in: query
         name: created_at__order
         type: string
+      - in: query
+        name: created_at__st
+        type: integer
       - description: 当前页
         in: query
         name: current
+        type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
         type: integer
       - description: 简拼
         in: query
@@ -3418,6 +3868,15 @@ paths:
       - description: 状态
         in: query
         name: is_active
+        type: boolean
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: is_active__order
+        type: string
+      - in: query
+        name: is_del
         type: boolean
       - description: 是否是直辖
         in: query
@@ -3439,11 +3898,20 @@ paths:
         in: query
         name: is_real
         type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
       - description: 名称
         in: query
         name: name
         type: string
-      - description: asc desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: name__order
         type: string
@@ -3451,10 +3919,6 @@ paths:
         in: query
         name: name_en
         type: string
-      - description: 是否仅查询count
-        in: query
-        name: onlyCount
-        type: boolean
       - description: parent.area_code
         in: query
         name: p_area_code
@@ -3472,10 +3936,6 @@ paths:
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: pid
         in: query
         name: pid
@@ -3484,14 +3944,24 @@ paths:
         in: query
         name: q
         type: string
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: sort__order
+        type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
       - description: 区域后缀,省/市/区/旗/盟/自治区/
         in: query
         name: suffix
         type: string
-      - description: tree_left 结束
-        in: query
-        name: treeLeft
-        type: integer
       - description: 树id
         in: query
         name: tree_id
@@ -3500,6 +3970,10 @@ paths:
         in: query
         name: tree_id__order
         type: string
+      - description: tree_left 结束
+        in: query
+        name: tree_left
+        type: integer
       - description: tree_left 结束
         in: query
         name: tree_left__ed
@@ -3531,6 +4005,18 @@ paths:
       - description: tree_right 结束
         in: query
         name: tree_right__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
         type: integer
       responses:
         "200":
@@ -3752,6 +4238,10 @@ paths:
   /api/v2/sys-district/{id}/subs:
     get:
       parameters:
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -3760,15 +4250,34 @@ paths:
         in: query
         name: before
         type: string
+      - in: query
+        name: created_at__ed
+        type: integer
       - description: |-
           example: asc
           example: desc
         in: query
         name: created_at__order
         type: string
+      - in: query
+        name: created_at__st
+        type: integer
       - description: 当前页
         in: query
         name: current
+        type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
         type: integer
       - description: 简拼
         in: query
@@ -3777,6 +4286,15 @@ paths:
       - description: 状态
         in: query
         name: is_active
+        type: boolean
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: is_active__order
+        type: string
+      - in: query
+        name: is_del
         type: boolean
       - description: 是否是直辖
         in: query
@@ -3798,11 +4316,20 @@ paths:
         in: query
         name: is_real
         type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
       - description: 名称
         in: query
         name: name
         type: string
-      - description: asc desc
+      - description: |-
+          example: asc
+          example: desc
         in: query
         name: name__order
         type: string
@@ -3810,10 +4337,6 @@ paths:
         in: query
         name: name_en
         type: string
-      - description: 是否仅查询count
-        in: query
-        name: onlyCount
-        type: boolean
       - description: parent.area_code
         in: query
         name: p_area_code
@@ -3831,10 +4354,6 @@ paths:
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: pid
         in: query
         name: pid
@@ -3843,14 +4362,24 @@ paths:
         in: query
         name: q
         type: string
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: sort__order
+        type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
       - description: 区域后缀,省/市/区/旗/盟/自治区/
         in: query
         name: suffix
         type: string
-      - description: tree_left 结束
-        in: query
-        name: treeLeft
-        type: integer
       - description: 树id
         in: query
         name: tree_id
@@ -3859,6 +4388,10 @@ paths:
         in: query
         name: tree_id__order
         type: string
+      - description: tree_left 结束
+        in: query
+        name: tree_left
+        type: integer
       - description: tree_left 结束
         in: query
         name: tree_left__ed
@@ -3890,6 +4423,18 @@ paths:
       - description: tree_right 结束
         in: query
         name: tree_right__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
         type: integer
       responses:
         "200":
@@ -4451,6 +4996,10 @@ paths:
   /api/v2/sys-users:
     get:
       parameters:
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
       - description: id之后的
         in: query
         name: after
@@ -4459,36 +5008,96 @@ paths:
         in: query
         name: before
         type: string
+      - in: query
+        name: created_at__ed
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: created_at__order
+        type: string
+      - in: query
+        name: created_at__st
+        type: integer
       - description: 当前页
         in: query
         name: current
         type: integer
-      - in: query
-        name: isActive
-        type: boolean
-      - description: 是否仅查询count
+      - description: //
         in: query
-        name: onlyCount
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
+        type: integer
+      - in: query
+        name: is_active
         type: boolean
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: is_active__order
+        type: string
+      - in: query
+        name: is_del
+        type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
       - description: 页大小
         in: query
         maximum: 100
         name: pageSize
         type: integer
-      - description: 是否使用分页查询
-        in: query
-        name: pagination
-        type: boolean
       - description: 模糊查询
         in: query
         name: q
         type: string
-      - description: 角色ID列表
+      - collectionFormat: csv
+        description: 角色ID列表
         in: query
         items:
           type: string
-        name: roleIDs
+        name: role_ids
         type: array
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: sort__order
+        type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
+        type: integer
       - description: 用户名
         in: query
         name: userName
@@ -4692,6 +5301,749 @@ paths:
       summary: 启用数据
       tags:
       - 用户管理
+  /api/v2/sysannexes:
+    get:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
+      - description: id之后的
+        in: query
+        name: after
+        type: string
+      - description: id之前的
+        in: query
+        name: before
+        type: string
+      - in: query
+        name: created_at__ed
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: created_at__order
+        type: string
+      - in: query
+        name: created_at__st
+        type: integer
+      - description: 当前页
+        in: query
+        name: current
+        type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: is_active__order
+        type: string
+      - in: query
+        name: is_del
+        type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
+      - description: 页大小
+        in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      - description: 模糊查询
+        in: query
+        name: q
+        type: string
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: sort__order
+        type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
+        type: integer
+      - default: 1
+        description: 分页索引
+        in: query
+        name: current
+        required: true
+        type: integer
+      - default: 10
+        description: 分页大小
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      - description: 查询值
+        in: query
+        name: q
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/schema.ListResult'
+            - properties:
+                list:
+                  items:
+                    $ref: '#/definitions/schema.SysAnnex'
+                  type: array
+                pagination:
+                  $ref: '#/definitions/schema.PaginationResult'
+              type: object
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询数据
+      tags:
+      - ""
+    post:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 创建数据
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysAnnex'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SysAnnex'
+        "400":
+          description: '{error:{code:0,message:无效的请求参数}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建数据
+      tags:
+      - ""
+  /api/v2/sysannexes/{id}:
+    delete:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除数据
+      tags:
+      - ""
+    get:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SysAnnex'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "404":
+          description: '{error:{code:0,message:资源不存在}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询指定数据
+      tags:
+      - ""
+    put:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 更新数据
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysAnnex'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SysAnnex'
+        "400":
+          description: '{error:{code:0,message:无效的请求参数}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新数据
+      tags:
+      - ""
+  /api/v2/sysannexes/{id}/disable:
+    patch:
+      parameters:
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 禁用数据
+      tags:
+      - ""
+  /api/v2/sysannexes/{id}/enable:
+    patch:
+      parameters:
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 启用数据
+      tags:
+      - ""
+  /api/v2/sysannexes/{id}/view:
+    get:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SysAnnex'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "404":
+          description: '{error:{code:0,message:资源不存在}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询指定数据
+      tags:
+      - ""
+  /api/v2/systeams:
+    get:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 是否仅查询count
+        in: query
+        name: '-'
+        type: boolean
+      - description: id之后的
+        in: query
+        name: after
+        type: string
+      - description: id之前的
+        in: query
+        name: before
+        type: string
+      - description: 编号
+        in: query
+        name: code
+        type: string
+      - in: query
+        name: created_at__ed
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: created_at__order
+        type: string
+      - in: query
+        name: created_at__st
+        type: integer
+      - description: 当前页
+        in: query
+        name: current
+        type: integer
+      - description: //
+        in: query
+        name: deleted_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: deleted_at__order
+        type: string
+      - in: query
+        name: deleted_at__st
+        type: integer
+      - description: |-
+          example: asc
+          example: desc
+        in: query
+        name: is_active__order
+        type: string
+      - in: query
+        name: is_del
+        type: boolean
+      - collectionFormat: csv
+        description: 必须包含这些ids
+        in: query
+        items:
+          type: string
+        name: muin_ids
+        type: array
+      - description: 名称
+        in: query
+        name: name
+        type: string
+      - description: 页大小
+        in: query
+        maximum: 100
+        name: pageSize
+        type: integer
+      - description: 模糊查询
+        in: query
+        name: q
+        type: string
+      - description: sort 结束
+        in: query
+        name: sort__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: sort__order
+        type: string
+      - description: sort 开始
+        in: query
+        name: sort__st
+        type: integer
+      - in: query
+        name: updated_at__ed
+        type: integer
+      - description: |-
+          example: "asc"
+          example: "desc"
+        in: query
+        name: updated_at__order
+        type: string
+      - in: query
+        name: updated_at__st
+        type: integer
+      - collectionFormat: csv
+        description: sys_user.ID列表
+        in: query
+        items:
+          type: string
+        name: user_ids
+        type: array
+      - default: 1
+        description: 分页索引
+        in: query
+        name: current
+        required: true
+        type: integer
+      - default: 10
+        description: 分页大小
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      - description: 查询值
+        in: query
+        name: q
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/schema.ListResult'
+            - properties:
+                list:
+                  items:
+                    $ref: '#/definitions/schema.SysTeam'
+                  type: array
+                pagination:
+                  $ref: '#/definitions/schema.PaginationResult'
+              type: object
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询数据
+      tags:
+      - 地址管理
+    post:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 创建数据
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysTeam'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.IDResult'
+        "400":
+          description: '{error:{code:0,message:无效的请求参数}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建数据
+      tags:
+      - 地址管理
+  /api/v2/systeams/{id}:
+    delete:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{status:OK}'
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除数据
+      tags:
+      - 地址管理
+    get:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SysTeam'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "404":
+          description: '{error:{code:0,message:资源不存在}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询指定数据
+      tags:
+      - 地址管理
+    put:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 更新数据
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SysTeam'
+      responses:
+        "200":
+          description: '{status:OK}'
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "400":
+          description: '{error:{code:0,message:无效的请求参数}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新数据
+      tags:
+      - 地址管理
+  /api/v2/systeams/{id}/disable:
+    patch:
+      parameters:
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{status:OK}'
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 禁用数据
+      tags:
+      - 地址管理
+  /api/v2/systeams/{id}/enable:
+    patch:
+      parameters:
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{status:OK}'
+          schema:
+            $ref: '#/definitions/schema.StatusResult'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 启用数据
+      tags:
+      - 地址管理
+  /api/v2/systeams/{id}/view:
+    get:
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 唯一标识
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schema.SysTeam'
+        "401":
+          description: '{error:{code:0,message:未授权}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "404":
+          description: '{error:{code:0,message:资源不存在}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+        "500":
+          description: '{error:{code:0,message:服务器错误}}'
+          schema:
+            $ref: '#/definitions/schema.ErrorResult'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询指定数据
+      tags:
+      - 地址管理
 securityDefinitions:
   ApiKeyAuth:
     in: header
