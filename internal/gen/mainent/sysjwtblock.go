@@ -54,7 +54,7 @@ func (*SysJwtBlock) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysJwtBlock fields.
-func (sjb *SysJwtBlock) assignValues(columns []string, values []any) error {
+func (_m *SysJwtBlock) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -64,56 +64,56 @@ func (sjb *SysJwtBlock) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				sjb.ID = value.String
+				_m.ID = value.String
 			}
 		case sysjwtblock.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				sjb.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysjwtblock.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sjb.Memo = new(string)
-				*sjb.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case sysjwtblock.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sjb.CreatedAt = new(time.Time)
-				*sjb.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysjwtblock.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sjb.UpdatedAt = new(time.Time)
-				*sjb.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysjwtblock.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				sjb.DeletedAt = new(time.Time)
-				*sjb.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysjwtblock.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sjb.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case sysjwtblock.FieldJwt:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field jwt", values[i])
 			} else if value.Valid {
-				sjb.Jwt = value.String
+				_m.Jwt = value.String
 			}
 		default:
-			sjb.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -121,61 +121,61 @@ func (sjb *SysJwtBlock) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysJwtBlock.
 // This includes values selected through modifiers, order, etc.
-func (sjb *SysJwtBlock) Value(name string) (ent.Value, error) {
-	return sjb.selectValues.Get(name)
+func (_m *SysJwtBlock) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysJwtBlock.
 // Note that you need to call SysJwtBlock.Unwrap() before calling this method if this SysJwtBlock
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (sjb *SysJwtBlock) Update() *SysJwtBlockUpdateOne {
-	return NewSysJwtBlockClient(sjb.config).UpdateOne(sjb)
+func (_m *SysJwtBlock) Update() *SysJwtBlockUpdateOne {
+	return NewSysJwtBlockClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysJwtBlock entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (sjb *SysJwtBlock) Unwrap() *SysJwtBlock {
-	_tx, ok := sjb.config.driver.(*txDriver)
+func (_m *SysJwtBlock) Unwrap() *SysJwtBlock {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysJwtBlock is not a transactional entity")
 	}
-	sjb.config.driver = _tx.drv
-	return sjb
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (sjb *SysJwtBlock) String() string {
+func (_m *SysJwtBlock) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysJwtBlock(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", sjb.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sjb.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
-	if v := sjb.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sjb.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sjb.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sjb.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", sjb.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("jwt=")
-	builder.WriteString(sjb.Jwt)
+	builder.WriteString(_m.Jwt)
 	builder.WriteByte(')')
 	return builder.String()
 }

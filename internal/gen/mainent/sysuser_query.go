@@ -35,44 +35,44 @@ type SysUserQuery struct {
 }
 
 // Where adds a new predicate for the SysUserQuery builder.
-func (suq *SysUserQuery) Where(ps ...predicate.SysUser) *SysUserQuery {
-	suq.predicates = append(suq.predicates, ps...)
-	return suq
+func (_q *SysUserQuery) Where(ps ...predicate.SysUser) *SysUserQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (suq *SysUserQuery) Limit(limit int) *SysUserQuery {
-	suq.ctx.Limit = &limit
-	return suq
+func (_q *SysUserQuery) Limit(limit int) *SysUserQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (suq *SysUserQuery) Offset(offset int) *SysUserQuery {
-	suq.ctx.Offset = &offset
-	return suq
+func (_q *SysUserQuery) Offset(offset int) *SysUserQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (suq *SysUserQuery) Unique(unique bool) *SysUserQuery {
-	suq.ctx.Unique = &unique
-	return suq
+func (_q *SysUserQuery) Unique(unique bool) *SysUserQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (suq *SysUserQuery) Order(o ...sysuser.OrderOption) *SysUserQuery {
-	suq.order = append(suq.order, o...)
-	return suq
+func (_q *SysUserQuery) Order(o ...sysuser.OrderOption) *SysUserQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryTeams chains the current query on the "teams" edge.
-func (suq *SysUserQuery) QueryTeams() *SysTeamQuery {
-	query := (&SysTeamClient{config: suq.config}).Query()
+func (_q *SysUserQuery) QueryTeams() *SysTeamQuery {
+	query := (&SysTeamClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := suq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := suq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -81,20 +81,20 @@ func (suq *SysUserQuery) QueryTeams() *SysTeamQuery {
 			sqlgraph.To(systeam.Table, systeam.FieldID),
 			sqlgraph.Edge(sqlgraph.M2M, true, sysuser.TeamsTable, sysuser.TeamsPrimaryKey...),
 		)
-		fromU = sqlgraph.SetNeighbors(suq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryTeamUsers chains the current query on the "team_users" edge.
-func (suq *SysUserQuery) QueryTeamUsers() *SysTeamUserQuery {
-	query := (&SysTeamUserClient{config: suq.config}).Query()
+func (_q *SysUserQuery) QueryTeamUsers() *SysTeamUserQuery {
+	query := (&SysTeamUserClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := suq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := suq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -103,7 +103,7 @@ func (suq *SysUserQuery) QueryTeamUsers() *SysTeamUserQuery {
 			sqlgraph.To(systeamuser.Table, systeamuser.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, true, sysuser.TeamUsersTable, sysuser.TeamUsersColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(suq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -111,8 +111,8 @@ func (suq *SysUserQuery) QueryTeamUsers() *SysTeamUserQuery {
 
 // First returns the first SysUser entity from the query.
 // Returns a *NotFoundError when no SysUser was found.
-func (suq *SysUserQuery) First(ctx context.Context) (*SysUser, error) {
-	nodes, err := suq.Limit(1).All(setContextOp(ctx, suq.ctx, ent.OpQueryFirst))
+func (_q *SysUserQuery) First(ctx context.Context) (*SysUser, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -123,8 +123,8 @@ func (suq *SysUserQuery) First(ctx context.Context) (*SysUser, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (suq *SysUserQuery) FirstX(ctx context.Context) *SysUser {
-	node, err := suq.First(ctx)
+func (_q *SysUserQuery) FirstX(ctx context.Context) *SysUser {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -133,9 +133,9 @@ func (suq *SysUserQuery) FirstX(ctx context.Context) *SysUser {
 
 // FirstID returns the first SysUser ID from the query.
 // Returns a *NotFoundError when no SysUser ID was found.
-func (suq *SysUserQuery) FirstID(ctx context.Context) (id string, err error) {
+func (_q *SysUserQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = suq.Limit(1).IDs(setContextOp(ctx, suq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -146,8 +146,8 @@ func (suq *SysUserQuery) FirstID(ctx context.Context) (id string, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (suq *SysUserQuery) FirstIDX(ctx context.Context) string {
-	id, err := suq.FirstID(ctx)
+func (_q *SysUserQuery) FirstIDX(ctx context.Context) string {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -157,8 +157,8 @@ func (suq *SysUserQuery) FirstIDX(ctx context.Context) string {
 // Only returns a single SysUser entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one SysUser entity is found.
 // Returns a *NotFoundError when no SysUser entities are found.
-func (suq *SysUserQuery) Only(ctx context.Context) (*SysUser, error) {
-	nodes, err := suq.Limit(2).All(setContextOp(ctx, suq.ctx, ent.OpQueryOnly))
+func (_q *SysUserQuery) Only(ctx context.Context) (*SysUser, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -173,8 +173,8 @@ func (suq *SysUserQuery) Only(ctx context.Context) (*SysUser, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (suq *SysUserQuery) OnlyX(ctx context.Context) *SysUser {
-	node, err := suq.Only(ctx)
+func (_q *SysUserQuery) OnlyX(ctx context.Context) *SysUser {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -184,9 +184,9 @@ func (suq *SysUserQuery) OnlyX(ctx context.Context) *SysUser {
 // OnlyID is like Only, but returns the only SysUser ID in the query.
 // Returns a *NotSingularError when more than one SysUser ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (suq *SysUserQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *SysUserQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = suq.Limit(2).IDs(setContextOp(ctx, suq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -201,8 +201,8 @@ func (suq *SysUserQuery) OnlyID(ctx context.Context) (id string, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (suq *SysUserQuery) OnlyIDX(ctx context.Context) string {
-	id, err := suq.OnlyID(ctx)
+func (_q *SysUserQuery) OnlyIDX(ctx context.Context) string {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -210,18 +210,18 @@ func (suq *SysUserQuery) OnlyIDX(ctx context.Context) string {
 }
 
 // All executes the query and returns a list of SysUsers.
-func (suq *SysUserQuery) All(ctx context.Context) ([]*SysUser, error) {
-	ctx = setContextOp(ctx, suq.ctx, ent.OpQueryAll)
-	if err := suq.prepareQuery(ctx); err != nil {
+func (_q *SysUserQuery) All(ctx context.Context) ([]*SysUser, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*SysUser, *SysUserQuery]()
-	return withInterceptors[[]*SysUser](ctx, suq, qr, suq.inters)
+	return withInterceptors[[]*SysUser](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (suq *SysUserQuery) AllX(ctx context.Context) []*SysUser {
-	nodes, err := suq.All(ctx)
+func (_q *SysUserQuery) AllX(ctx context.Context) []*SysUser {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -229,20 +229,20 @@ func (suq *SysUserQuery) AllX(ctx context.Context) []*SysUser {
 }
 
 // IDs executes the query and returns a list of SysUser IDs.
-func (suq *SysUserQuery) IDs(ctx context.Context) (ids []string, err error) {
-	if suq.ctx.Unique == nil && suq.path != nil {
-		suq.Unique(true)
+func (_q *SysUserQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, suq.ctx, ent.OpQueryIDs)
-	if err = suq.Select(sysuser.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(sysuser.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (suq *SysUserQuery) IDsX(ctx context.Context) []string {
-	ids, err := suq.IDs(ctx)
+func (_q *SysUserQuery) IDsX(ctx context.Context) []string {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -250,17 +250,17 @@ func (suq *SysUserQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (suq *SysUserQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, suq.ctx, ent.OpQueryCount)
-	if err := suq.prepareQuery(ctx); err != nil {
+func (_q *SysUserQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, suq, querierCount[*SysUserQuery](), suq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*SysUserQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (suq *SysUserQuery) CountX(ctx context.Context) int {
-	count, err := suq.Count(ctx)
+func (_q *SysUserQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -268,9 +268,9 @@ func (suq *SysUserQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (suq *SysUserQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, suq.ctx, ent.OpQueryExist)
-	switch _, err := suq.FirstID(ctx); {
+func (_q *SysUserQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -281,8 +281,8 @@ func (suq *SysUserQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (suq *SysUserQuery) ExistX(ctx context.Context) bool {
-	exist, err := suq.Exist(ctx)
+func (_q *SysUserQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -291,45 +291,45 @@ func (suq *SysUserQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the SysUserQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (suq *SysUserQuery) Clone() *SysUserQuery {
-	if suq == nil {
+func (_q *SysUserQuery) Clone() *SysUserQuery {
+	if _q == nil {
 		return nil
 	}
 	return &SysUserQuery{
-		config:        suq.config,
-		ctx:           suq.ctx.Clone(),
-		order:         append([]sysuser.OrderOption{}, suq.order...),
-		inters:        append([]Interceptor{}, suq.inters...),
-		predicates:    append([]predicate.SysUser{}, suq.predicates...),
-		withTeams:     suq.withTeams.Clone(),
-		withTeamUsers: suq.withTeamUsers.Clone(),
+		config:        _q.config,
+		ctx:           _q.ctx.Clone(),
+		order:         append([]sysuser.OrderOption{}, _q.order...),
+		inters:        append([]Interceptor{}, _q.inters...),
+		predicates:    append([]predicate.SysUser{}, _q.predicates...),
+		withTeams:     _q.withTeams.Clone(),
+		withTeamUsers: _q.withTeamUsers.Clone(),
 		// clone intermediate query.
-		sql:       suq.sql.Clone(),
-		path:      suq.path,
-		modifiers: append([]func(*sql.Selector){}, suq.modifiers...),
+		sql:       _q.sql.Clone(),
+		path:      _q.path,
+		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
 }
 
 // WithTeams tells the query-builder to eager-load the nodes that are connected to
 // the "teams" edge. The optional arguments are used to configure the query builder of the edge.
-func (suq *SysUserQuery) WithTeams(opts ...func(*SysTeamQuery)) *SysUserQuery {
-	query := (&SysTeamClient{config: suq.config}).Query()
+func (_q *SysUserQuery) WithTeams(opts ...func(*SysTeamQuery)) *SysUserQuery {
+	query := (&SysTeamClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	suq.withTeams = query
-	return suq
+	_q.withTeams = query
+	return _q
 }
 
 // WithTeamUsers tells the query-builder to eager-load the nodes that are connected to
 // the "team_users" edge. The optional arguments are used to configure the query builder of the edge.
-func (suq *SysUserQuery) WithTeamUsers(opts ...func(*SysTeamUserQuery)) *SysUserQuery {
-	query := (&SysTeamUserClient{config: suq.config}).Query()
+func (_q *SysUserQuery) WithTeamUsers(opts ...func(*SysTeamUserQuery)) *SysUserQuery {
+	query := (&SysTeamUserClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	suq.withTeamUsers = query
-	return suq
+	_q.withTeamUsers = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -346,10 +346,10 @@ func (suq *SysUserQuery) WithTeamUsers(opts ...func(*SysTeamUserQuery)) *SysUser
 //		GroupBy(sysuser.FieldIsDel).
 //		Aggregate(mainent.Count()).
 //		Scan(ctx, &v)
-func (suq *SysUserQuery) GroupBy(field string, fields ...string) *SysUserGroupBy {
-	suq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &SysUserGroupBy{build: suq}
-	grbuild.flds = &suq.ctx.Fields
+func (_q *SysUserQuery) GroupBy(field string, fields ...string) *SysUserGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysUserGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = sysuser.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -367,84 +367,84 @@ func (suq *SysUserQuery) GroupBy(field string, fields ...string) *SysUserGroupBy
 //	client.SysUser.Query().
 //		Select(sysuser.FieldIsDel).
 //		Scan(ctx, &v)
-func (suq *SysUserQuery) Select(fields ...string) *SysUserSelect {
-	suq.ctx.Fields = append(suq.ctx.Fields, fields...)
-	sbuild := &SysUserSelect{SysUserQuery: suq}
+func (_q *SysUserQuery) Select(fields ...string) *SysUserSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &SysUserSelect{SysUserQuery: _q}
 	sbuild.label = sysuser.Label
-	sbuild.flds, sbuild.scan = &suq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a SysUserSelect configured with the given aggregations.
-func (suq *SysUserQuery) Aggregate(fns ...AggregateFunc) *SysUserSelect {
-	return suq.Select().Aggregate(fns...)
+func (_q *SysUserQuery) Aggregate(fns ...AggregateFunc) *SysUserSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (suq *SysUserQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range suq.inters {
+func (_q *SysUserQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("mainent: uninitialized interceptor (forgotten import mainent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, suq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range suq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !sysuser.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("mainent: invalid field %q for query", f)}
 		}
 	}
-	if suq.path != nil {
-		prev, err := suq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		suq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (suq *SysUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysUser, error) {
+func (_q *SysUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysUser, error) {
 	var (
 		nodes       = []*SysUser{}
-		_spec       = suq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [2]bool{
-			suq.withTeams != nil,
-			suq.withTeamUsers != nil,
+			_q.withTeams != nil,
+			_q.withTeamUsers != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysUser).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &SysUser{config: suq.config}
+		node := &SysUser{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(suq.modifiers) > 0 {
-		_spec.Modifiers = suq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, suq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := suq.withTeams; query != nil {
-		if err := suq.loadTeams(ctx, query, nodes,
+	if query := _q.withTeams; query != nil {
+		if err := _q.loadTeams(ctx, query, nodes,
 			func(n *SysUser) { n.Edges.Teams = []*SysTeam{} },
 			func(n *SysUser, e *SysTeam) { n.Edges.Teams = append(n.Edges.Teams, e) }); err != nil {
 			return nil, err
 		}
 	}
-	if query := suq.withTeamUsers; query != nil {
-		if err := suq.loadTeamUsers(ctx, query, nodes,
+	if query := _q.withTeamUsers; query != nil {
+		if err := _q.loadTeamUsers(ctx, query, nodes,
 			func(n *SysUser) { n.Edges.TeamUsers = []*SysTeamUser{} },
 			func(n *SysUser, e *SysTeamUser) { n.Edges.TeamUsers = append(n.Edges.TeamUsers, e) }); err != nil {
 			return nil, err
@@ -453,7 +453,7 @@ func (suq *SysUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sys
 	return nodes, nil
 }
 
-func (suq *SysUserQuery) loadTeams(ctx context.Context, query *SysTeamQuery, nodes []*SysUser, init func(*SysUser), assign func(*SysUser, *SysTeam)) error {
+func (_q *SysUserQuery) loadTeams(ctx context.Context, query *SysTeamQuery, nodes []*SysUser, init func(*SysUser), assign func(*SysUser, *SysTeam)) error {
 	edgeIDs := make([]driver.Value, len(nodes))
 	byID := make(map[string]*SysUser)
 	nids := make(map[string]map[*SysUser]struct{})
@@ -514,7 +514,7 @@ func (suq *SysUserQuery) loadTeams(ctx context.Context, query *SysTeamQuery, nod
 	}
 	return nil
 }
-func (suq *SysUserQuery) loadTeamUsers(ctx context.Context, query *SysTeamUserQuery, nodes []*SysUser, init func(*SysUser), assign func(*SysUser, *SysTeamUser)) error {
+func (_q *SysUserQuery) loadTeamUsers(ctx context.Context, query *SysTeamUserQuery, nodes []*SysUser, init func(*SysUser), assign func(*SysUser, *SysTeamUser)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[string]*SysUser)
 	for i := range nodes {
@@ -545,27 +545,27 @@ func (suq *SysUserQuery) loadTeamUsers(ctx context.Context, query *SysTeamUserQu
 	return nil
 }
 
-func (suq *SysUserQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := suq.querySpec()
-	if len(suq.modifiers) > 0 {
-		_spec.Modifiers = suq.modifiers
+func (_q *SysUserQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = suq.ctx.Fields
-	if len(suq.ctx.Fields) > 0 {
-		_spec.Unique = suq.ctx.Unique != nil && *suq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, suq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (suq *SysUserQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *SysUserQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(sysuser.Table, sysuser.Columns, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
-	_spec.From = suq.sql
-	if unique := suq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if suq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := suq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysuser.FieldID)
 		for i := range fields {
@@ -574,20 +574,20 @@ func (suq *SysUserQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if ps := suq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := suq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := suq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := suq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -597,36 +597,36 @@ func (suq *SysUserQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (suq *SysUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(suq.driver.Dialect())
+func (_q *SysUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(sysuser.Table)
-	columns := suq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysuser.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if suq.sql != nil {
-		selector = suq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if suq.ctx.Unique != nil && *suq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range suq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range suq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range suq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := suq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := suq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -635,33 +635,33 @@ func (suq *SysUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (suq *SysUserQuery) ForUpdate(opts ...sql.LockOption) *SysUserQuery {
-	if suq.driver.Dialect() == dialect.Postgres {
-		suq.Unique(false)
+func (_q *SysUserQuery) ForUpdate(opts ...sql.LockOption) *SysUserQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	suq.modifiers = append(suq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return suq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (suq *SysUserQuery) ForShare(opts ...sql.LockOption) *SysUserQuery {
-	if suq.driver.Dialect() == dialect.Postgres {
-		suq.Unique(false)
+func (_q *SysUserQuery) ForShare(opts ...sql.LockOption) *SysUserQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	suq.modifiers = append(suq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return suq
+	return _q
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (suq *SysUserQuery) Modify(modifiers ...func(s *sql.Selector)) *SysUserSelect {
-	suq.modifiers = append(suq.modifiers, modifiers...)
-	return suq.Select()
+func (_q *SysUserQuery) Modify(modifiers ...func(s *sql.Selector)) *SysUserSelect {
+	_q.modifiers = append(_q.modifiers, modifiers...)
+	return _q.Select()
 }
 
 // SysUserGroupBy is the group-by builder for SysUser entities.
@@ -671,41 +671,41 @@ type SysUserGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (sugb *SysUserGroupBy) Aggregate(fns ...AggregateFunc) *SysUserGroupBy {
-	sugb.fns = append(sugb.fns, fns...)
-	return sugb
+func (_g *SysUserGroupBy) Aggregate(fns ...AggregateFunc) *SysUserGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sugb *SysUserGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sugb.build.ctx, ent.OpQueryGroupBy)
-	if err := sugb.build.prepareQuery(ctx); err != nil {
+func (_g *SysUserGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysUserQuery, *SysUserGroupBy](ctx, sugb.build, sugb, sugb.build.inters, v)
+	return scanWithInterceptors[*SysUserQuery, *SysUserGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (sugb *SysUserGroupBy) sqlScan(ctx context.Context, root *SysUserQuery, v any) error {
+func (_g *SysUserGroupBy) sqlScan(ctx context.Context, root *SysUserQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(sugb.fns))
-	for _, fn := range sugb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*sugb.flds)+len(sugb.fns))
-		for _, f := range *sugb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*sugb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sugb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -719,27 +719,27 @@ type SysUserSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (sus *SysUserSelect) Aggregate(fns ...AggregateFunc) *SysUserSelect {
-	sus.fns = append(sus.fns, fns...)
-	return sus
+func (_s *SysUserSelect) Aggregate(fns ...AggregateFunc) *SysUserSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sus *SysUserSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sus.ctx, ent.OpQuerySelect)
-	if err := sus.prepareQuery(ctx); err != nil {
+func (_s *SysUserSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysUserQuery, *SysUserSelect](ctx, sus.SysUserQuery, sus, sus.inters, v)
+	return scanWithInterceptors[*SysUserQuery, *SysUserSelect](ctx, _s.SysUserQuery, _s, _s.inters, v)
 }
 
-func (sus *SysUserSelect) sqlScan(ctx context.Context, root *SysUserQuery, v any) error {
+func (_s *SysUserSelect) sqlScan(ctx context.Context, root *SysUserQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(sus.fns))
-	for _, fn := range sus.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*sus.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -747,7 +747,7 @@ func (sus *SysUserSelect) sqlScan(ctx context.Context, root *SysUserQuery, v any
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sus.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -755,7 +755,7 @@ func (sus *SysUserSelect) sqlScan(ctx context.Context, root *SysUserQuery, v any
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (sus *SysUserSelect) Modify(modifiers ...func(s *sql.Selector)) *SysUserSelect {
-	sus.modifiers = append(sus.modifiers, modifiers...)
-	return sus
+func (_s *SysUserSelect) Modify(modifiers ...func(s *sql.Selector)) *SysUserSelect {
+	_s.modifiers = append(_s.modifiers, modifiers...)
+	return _s
 }

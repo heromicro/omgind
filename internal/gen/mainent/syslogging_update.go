@@ -24,231 +24,231 @@ type SysLoggingUpdate struct {
 }
 
 // Where appends a list predicates to the SysLoggingUpdate builder.
-func (slu *SysLoggingUpdate) Where(ps ...predicate.SysLogging) *SysLoggingUpdate {
-	slu.mutation.Where(ps...)
-	return slu
+func (_u *SysLoggingUpdate) Where(ps ...predicate.SysLogging) *SysLoggingUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (slu *SysLoggingUpdate) SetUpdatedAt(t time.Time) *SysLoggingUpdate {
-	slu.mutation.SetUpdatedAt(t)
-	return slu
+func (_u *SysLoggingUpdate) SetUpdatedAt(v time.Time) *SysLoggingUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (slu *SysLoggingUpdate) ClearUpdatedAt() *SysLoggingUpdate {
-	slu.mutation.ClearUpdatedAt()
-	return slu
+func (_u *SysLoggingUpdate) ClearUpdatedAt() *SysLoggingUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (slu *SysLoggingUpdate) SetDeletedAt(t time.Time) *SysLoggingUpdate {
-	slu.mutation.SetDeletedAt(t)
-	return slu
+func (_u *SysLoggingUpdate) SetDeletedAt(v time.Time) *SysLoggingUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableDeletedAt(t *time.Time) *SysLoggingUpdate {
-	if t != nil {
-		slu.SetDeletedAt(*t)
+func (_u *SysLoggingUpdate) SetNillableDeletedAt(v *time.Time) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (slu *SysLoggingUpdate) ClearDeletedAt() *SysLoggingUpdate {
-	slu.mutation.ClearDeletedAt()
-	return slu
+func (_u *SysLoggingUpdate) ClearDeletedAt() *SysLoggingUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (slu *SysLoggingUpdate) SetIsDel(b bool) *SysLoggingUpdate {
-	slu.mutation.SetIsDel(b)
-	return slu
+func (_u *SysLoggingUpdate) SetIsDel(v bool) *SysLoggingUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableIsDel(b *bool) *SysLoggingUpdate {
-	if b != nil {
-		slu.SetIsDel(*b)
+func (_u *SysLoggingUpdate) SetNillableIsDel(v *bool) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return slu
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (slu *SysLoggingUpdate) SetMemo(s string) *SysLoggingUpdate {
-	slu.mutation.SetMemo(s)
-	return slu
+func (_u *SysLoggingUpdate) SetMemo(v string) *SysLoggingUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableMemo(s *string) *SysLoggingUpdate {
-	if s != nil {
-		slu.SetMemo(*s)
+func (_u *SysLoggingUpdate) SetNillableMemo(v *string) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (slu *SysLoggingUpdate) ClearMemo() *SysLoggingUpdate {
-	slu.mutation.ClearMemo()
-	return slu
+func (_u *SysLoggingUpdate) ClearMemo() *SysLoggingUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetLevel sets the "level" field.
-func (slu *SysLoggingUpdate) SetLevel(s string) *SysLoggingUpdate {
-	slu.mutation.SetLevel(s)
-	return slu
+func (_u *SysLoggingUpdate) SetLevel(v string) *SysLoggingUpdate {
+	_u.mutation.SetLevel(v)
+	return _u
 }
 
 // SetNillableLevel sets the "level" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableLevel(s *string) *SysLoggingUpdate {
-	if s != nil {
-		slu.SetLevel(*s)
+func (_u *SysLoggingUpdate) SetNillableLevel(v *string) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetLevel(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearLevel clears the value of the "level" field.
-func (slu *SysLoggingUpdate) ClearLevel() *SysLoggingUpdate {
-	slu.mutation.ClearLevel()
-	return slu
+func (_u *SysLoggingUpdate) ClearLevel() *SysLoggingUpdate {
+	_u.mutation.ClearLevel()
+	return _u
 }
 
 // SetTraceID sets the "trace_id" field.
-func (slu *SysLoggingUpdate) SetTraceID(s string) *SysLoggingUpdate {
-	slu.mutation.SetTraceID(s)
-	return slu
+func (_u *SysLoggingUpdate) SetTraceID(v string) *SysLoggingUpdate {
+	_u.mutation.SetTraceID(v)
+	return _u
 }
 
 // SetNillableTraceID sets the "trace_id" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableTraceID(s *string) *SysLoggingUpdate {
-	if s != nil {
-		slu.SetTraceID(*s)
+func (_u *SysLoggingUpdate) SetNillableTraceID(v *string) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetTraceID(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearTraceID clears the value of the "trace_id" field.
-func (slu *SysLoggingUpdate) ClearTraceID() *SysLoggingUpdate {
-	slu.mutation.ClearTraceID()
-	return slu
+func (_u *SysLoggingUpdate) ClearTraceID() *SysLoggingUpdate {
+	_u.mutation.ClearTraceID()
+	return _u
 }
 
 // SetUserID sets the "user_id" field.
-func (slu *SysLoggingUpdate) SetUserID(s string) *SysLoggingUpdate {
-	slu.mutation.SetUserID(s)
-	return slu
+func (_u *SysLoggingUpdate) SetUserID(v string) *SysLoggingUpdate {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableUserID(s *string) *SysLoggingUpdate {
-	if s != nil {
-		slu.SetUserID(*s)
+func (_u *SysLoggingUpdate) SetNillableUserID(v *string) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearUserID clears the value of the "user_id" field.
-func (slu *SysLoggingUpdate) ClearUserID() *SysLoggingUpdate {
-	slu.mutation.ClearUserID()
-	return slu
+func (_u *SysLoggingUpdate) ClearUserID() *SysLoggingUpdate {
+	_u.mutation.ClearUserID()
+	return _u
 }
 
 // SetTag sets the "tag" field.
-func (slu *SysLoggingUpdate) SetTag(s string) *SysLoggingUpdate {
-	slu.mutation.SetTag(s)
-	return slu
+func (_u *SysLoggingUpdate) SetTag(v string) *SysLoggingUpdate {
+	_u.mutation.SetTag(v)
+	return _u
 }
 
 // SetNillableTag sets the "tag" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableTag(s *string) *SysLoggingUpdate {
-	if s != nil {
-		slu.SetTag(*s)
+func (_u *SysLoggingUpdate) SetNillableTag(v *string) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetTag(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearTag clears the value of the "tag" field.
-func (slu *SysLoggingUpdate) ClearTag() *SysLoggingUpdate {
-	slu.mutation.ClearTag()
-	return slu
+func (_u *SysLoggingUpdate) ClearTag() *SysLoggingUpdate {
+	_u.mutation.ClearTag()
+	return _u
 }
 
 // SetVersion sets the "version" field.
-func (slu *SysLoggingUpdate) SetVersion(s string) *SysLoggingUpdate {
-	slu.mutation.SetVersion(s)
-	return slu
+func (_u *SysLoggingUpdate) SetVersion(v string) *SysLoggingUpdate {
+	_u.mutation.SetVersion(v)
+	return _u
 }
 
 // SetNillableVersion sets the "version" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableVersion(s *string) *SysLoggingUpdate {
-	if s != nil {
-		slu.SetVersion(*s)
+func (_u *SysLoggingUpdate) SetNillableVersion(v *string) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetVersion(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearVersion clears the value of the "version" field.
-func (slu *SysLoggingUpdate) ClearVersion() *SysLoggingUpdate {
-	slu.mutation.ClearVersion()
-	return slu
+func (_u *SysLoggingUpdate) ClearVersion() *SysLoggingUpdate {
+	_u.mutation.ClearVersion()
+	return _u
 }
 
 // SetMessage sets the "message" field.
-func (slu *SysLoggingUpdate) SetMessage(s string) *SysLoggingUpdate {
-	slu.mutation.SetMessage(s)
-	return slu
+func (_u *SysLoggingUpdate) SetMessage(v string) *SysLoggingUpdate {
+	_u.mutation.SetMessage(v)
+	return _u
 }
 
 // SetNillableMessage sets the "message" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableMessage(s *string) *SysLoggingUpdate {
-	if s != nil {
-		slu.SetMessage(*s)
+func (_u *SysLoggingUpdate) SetNillableMessage(v *string) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetMessage(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearMessage clears the value of the "message" field.
-func (slu *SysLoggingUpdate) ClearMessage() *SysLoggingUpdate {
-	slu.mutation.ClearMessage()
-	return slu
+func (_u *SysLoggingUpdate) ClearMessage() *SysLoggingUpdate {
+	_u.mutation.ClearMessage()
+	return _u
 }
 
 // SetErrorStack sets the "error_stack" field.
-func (slu *SysLoggingUpdate) SetErrorStack(s string) *SysLoggingUpdate {
-	slu.mutation.SetErrorStack(s)
-	return slu
+func (_u *SysLoggingUpdate) SetErrorStack(v string) *SysLoggingUpdate {
+	_u.mutation.SetErrorStack(v)
+	return _u
 }
 
 // SetNillableErrorStack sets the "error_stack" field if the given value is not nil.
-func (slu *SysLoggingUpdate) SetNillableErrorStack(s *string) *SysLoggingUpdate {
-	if s != nil {
-		slu.SetErrorStack(*s)
+func (_u *SysLoggingUpdate) SetNillableErrorStack(v *string) *SysLoggingUpdate {
+	if v != nil {
+		_u.SetErrorStack(*v)
 	}
-	return slu
+	return _u
 }
 
 // ClearErrorStack clears the value of the "error_stack" field.
-func (slu *SysLoggingUpdate) ClearErrorStack() *SysLoggingUpdate {
-	slu.mutation.ClearErrorStack()
-	return slu
+func (_u *SysLoggingUpdate) ClearErrorStack() *SysLoggingUpdate {
+	_u.mutation.ClearErrorStack()
+	return _u
 }
 
 // Mutation returns the SysLoggingMutation object of the builder.
-func (slu *SysLoggingUpdate) Mutation() *SysLoggingMutation {
-	return slu.mutation
+func (_u *SysLoggingUpdate) Mutation() *SysLoggingMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (slu *SysLoggingUpdate) Save(ctx context.Context) (int, error) {
-	slu.defaults()
-	return withHooks(ctx, slu.sqlSave, slu.mutation, slu.hooks)
+func (_u *SysLoggingUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (slu *SysLoggingUpdate) SaveX(ctx context.Context) int {
-	affected, err := slu.Save(ctx)
+func (_u *SysLoggingUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -256,59 +256,59 @@ func (slu *SysLoggingUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (slu *SysLoggingUpdate) Exec(ctx context.Context) error {
-	_, err := slu.Save(ctx)
+func (_u *SysLoggingUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (slu *SysLoggingUpdate) ExecX(ctx context.Context) {
-	if err := slu.Exec(ctx); err != nil {
+func (_u *SysLoggingUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (slu *SysLoggingUpdate) defaults() {
-	if _, ok := slu.mutation.UpdatedAt(); !ok && !slu.mutation.UpdatedAtCleared() {
+func (_u *SysLoggingUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := syslogging.UpdateDefaultUpdatedAt()
-		slu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (slu *SysLoggingUpdate) check() error {
-	if v, ok := slu.mutation.Memo(); ok {
+func (_u *SysLoggingUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := syslogging.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.memo": %w`, err)}
 		}
 	}
-	if v, ok := slu.mutation.Level(); ok {
+	if v, ok := _u.mutation.Level(); ok {
 		if err := syslogging.LevelValidator(v); err != nil {
 			return &ValidationError{Name: "level", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.level": %w`, err)}
 		}
 	}
-	if v, ok := slu.mutation.TraceID(); ok {
+	if v, ok := _u.mutation.TraceID(); ok {
 		if err := syslogging.TraceIDValidator(v); err != nil {
 			return &ValidationError{Name: "trace_id", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.trace_id": %w`, err)}
 		}
 	}
-	if v, ok := slu.mutation.UserID(); ok {
+	if v, ok := _u.mutation.UserID(); ok {
 		if err := syslogging.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.user_id": %w`, err)}
 		}
 	}
-	if v, ok := slu.mutation.Tag(); ok {
+	if v, ok := _u.mutation.Tag(); ok {
 		if err := syslogging.TagValidator(v); err != nil {
 			return &ValidationError{Name: "tag", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.tag": %w`, err)}
 		}
 	}
-	if v, ok := slu.mutation.Version(); ok {
+	if v, ok := _u.mutation.Version(); ok {
 		if err := syslogging.VersionValidator(v); err != nil {
 			return &ValidationError{Name: "version", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.version": %w`, err)}
 		}
 	}
-	if v, ok := slu.mutation.Message(); ok {
+	if v, ok := _u.mutation.Message(); ok {
 		if err := syslogging.MessageValidator(v); err != nil {
 			return &ValidationError{Name: "message", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.message": %w`, err)}
 		}
@@ -317,94 +317,94 @@ func (slu *SysLoggingUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (slu *SysLoggingUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysLoggingUpdate {
-	slu.modifiers = append(slu.modifiers, modifiers...)
-	return slu
+func (_u *SysLoggingUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysLoggingUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := slu.check(); err != nil {
-		return n, err
+func (_u *SysLoggingUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(syslogging.Table, syslogging.Columns, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
-	if ps := slu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if slu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(syslogging.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := slu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if slu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(syslogging.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := slu.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)
 	}
-	if slu.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(syslogging.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := slu.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := slu.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(syslogging.FieldMemo, field.TypeString, value)
 	}
-	if slu.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(syslogging.FieldMemo, field.TypeString)
 	}
-	if value, ok := slu.mutation.Level(); ok {
+	if value, ok := _u.mutation.Level(); ok {
 		_spec.SetField(syslogging.FieldLevel, field.TypeString, value)
 	}
-	if slu.mutation.LevelCleared() {
+	if _u.mutation.LevelCleared() {
 		_spec.ClearField(syslogging.FieldLevel, field.TypeString)
 	}
-	if value, ok := slu.mutation.TraceID(); ok {
+	if value, ok := _u.mutation.TraceID(); ok {
 		_spec.SetField(syslogging.FieldTraceID, field.TypeString, value)
 	}
-	if slu.mutation.TraceIDCleared() {
+	if _u.mutation.TraceIDCleared() {
 		_spec.ClearField(syslogging.FieldTraceID, field.TypeString)
 	}
-	if value, ok := slu.mutation.UserID(); ok {
+	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(syslogging.FieldUserID, field.TypeString, value)
 	}
-	if slu.mutation.UserIDCleared() {
+	if _u.mutation.UserIDCleared() {
 		_spec.ClearField(syslogging.FieldUserID, field.TypeString)
 	}
-	if value, ok := slu.mutation.Tag(); ok {
+	if value, ok := _u.mutation.Tag(); ok {
 		_spec.SetField(syslogging.FieldTag, field.TypeString, value)
 	}
-	if slu.mutation.TagCleared() {
+	if _u.mutation.TagCleared() {
 		_spec.ClearField(syslogging.FieldTag, field.TypeString)
 	}
-	if value, ok := slu.mutation.Version(); ok {
+	if value, ok := _u.mutation.Version(); ok {
 		_spec.SetField(syslogging.FieldVersion, field.TypeString, value)
 	}
-	if slu.mutation.VersionCleared() {
+	if _u.mutation.VersionCleared() {
 		_spec.ClearField(syslogging.FieldVersion, field.TypeString)
 	}
-	if value, ok := slu.mutation.Message(); ok {
+	if value, ok := _u.mutation.Message(); ok {
 		_spec.SetField(syslogging.FieldMessage, field.TypeString, value)
 	}
-	if slu.mutation.MessageCleared() {
+	if _u.mutation.MessageCleared() {
 		_spec.ClearField(syslogging.FieldMessage, field.TypeString)
 	}
-	if slu.mutation.DataCleared() {
+	if _u.mutation.DataCleared() {
 		_spec.ClearField(syslogging.FieldData, field.TypeString)
 	}
-	if value, ok := slu.mutation.ErrorStack(); ok {
+	if value, ok := _u.mutation.ErrorStack(); ok {
 		_spec.SetField(syslogging.FieldErrorStack, field.TypeString, value)
 	}
-	if slu.mutation.ErrorStackCleared() {
+	if _u.mutation.ErrorStackCleared() {
 		_spec.ClearField(syslogging.FieldErrorStack, field.TypeString)
 	}
-	_spec.AddModifiers(slu.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, slu.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{syslogging.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -412,8 +412,8 @@ func (slu *SysLoggingUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	slu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysLoggingUpdateOne is the builder for updating a single SysLogging entity.
@@ -426,238 +426,238 @@ type SysLoggingUpdateOne struct {
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sluo *SysLoggingUpdateOne) SetUpdatedAt(t time.Time) *SysLoggingUpdateOne {
-	sluo.mutation.SetUpdatedAt(t)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetUpdatedAt(v time.Time) *SysLoggingUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sluo *SysLoggingUpdateOne) ClearUpdatedAt() *SysLoggingUpdateOne {
-	sluo.mutation.ClearUpdatedAt()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearUpdatedAt() *SysLoggingUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sluo *SysLoggingUpdateOne) SetDeletedAt(t time.Time) *SysLoggingUpdateOne {
-	sluo.mutation.SetDeletedAt(t)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetDeletedAt(v time.Time) *SysLoggingUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableDeletedAt(t *time.Time) *SysLoggingUpdateOne {
-	if t != nil {
-		sluo.SetDeletedAt(*t)
+func (_u *SysLoggingUpdateOne) SetNillableDeletedAt(v *time.Time) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sluo *SysLoggingUpdateOne) ClearDeletedAt() *SysLoggingUpdateOne {
-	sluo.mutation.ClearDeletedAt()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearDeletedAt() *SysLoggingUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (sluo *SysLoggingUpdateOne) SetIsDel(b bool) *SysLoggingUpdateOne {
-	sluo.mutation.SetIsDel(b)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetIsDel(v bool) *SysLoggingUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableIsDel(b *bool) *SysLoggingUpdateOne {
-	if b != nil {
-		sluo.SetIsDel(*b)
+func (_u *SysLoggingUpdateOne) SetNillableIsDel(v *bool) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sluo
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sluo *SysLoggingUpdateOne) SetMemo(s string) *SysLoggingUpdateOne {
-	sluo.mutation.SetMemo(s)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetMemo(v string) *SysLoggingUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableMemo(s *string) *SysLoggingUpdateOne {
-	if s != nil {
-		sluo.SetMemo(*s)
+func (_u *SysLoggingUpdateOne) SetNillableMemo(v *string) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sluo *SysLoggingUpdateOne) ClearMemo() *SysLoggingUpdateOne {
-	sluo.mutation.ClearMemo()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearMemo() *SysLoggingUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetLevel sets the "level" field.
-func (sluo *SysLoggingUpdateOne) SetLevel(s string) *SysLoggingUpdateOne {
-	sluo.mutation.SetLevel(s)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetLevel(v string) *SysLoggingUpdateOne {
+	_u.mutation.SetLevel(v)
+	return _u
 }
 
 // SetNillableLevel sets the "level" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableLevel(s *string) *SysLoggingUpdateOne {
-	if s != nil {
-		sluo.SetLevel(*s)
+func (_u *SysLoggingUpdateOne) SetNillableLevel(v *string) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetLevel(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearLevel clears the value of the "level" field.
-func (sluo *SysLoggingUpdateOne) ClearLevel() *SysLoggingUpdateOne {
-	sluo.mutation.ClearLevel()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearLevel() *SysLoggingUpdateOne {
+	_u.mutation.ClearLevel()
+	return _u
 }
 
 // SetTraceID sets the "trace_id" field.
-func (sluo *SysLoggingUpdateOne) SetTraceID(s string) *SysLoggingUpdateOne {
-	sluo.mutation.SetTraceID(s)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetTraceID(v string) *SysLoggingUpdateOne {
+	_u.mutation.SetTraceID(v)
+	return _u
 }
 
 // SetNillableTraceID sets the "trace_id" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableTraceID(s *string) *SysLoggingUpdateOne {
-	if s != nil {
-		sluo.SetTraceID(*s)
+func (_u *SysLoggingUpdateOne) SetNillableTraceID(v *string) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetTraceID(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearTraceID clears the value of the "trace_id" field.
-func (sluo *SysLoggingUpdateOne) ClearTraceID() *SysLoggingUpdateOne {
-	sluo.mutation.ClearTraceID()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearTraceID() *SysLoggingUpdateOne {
+	_u.mutation.ClearTraceID()
+	return _u
 }
 
 // SetUserID sets the "user_id" field.
-func (sluo *SysLoggingUpdateOne) SetUserID(s string) *SysLoggingUpdateOne {
-	sluo.mutation.SetUserID(s)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetUserID(v string) *SysLoggingUpdateOne {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableUserID(s *string) *SysLoggingUpdateOne {
-	if s != nil {
-		sluo.SetUserID(*s)
+func (_u *SysLoggingUpdateOne) SetNillableUserID(v *string) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearUserID clears the value of the "user_id" field.
-func (sluo *SysLoggingUpdateOne) ClearUserID() *SysLoggingUpdateOne {
-	sluo.mutation.ClearUserID()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearUserID() *SysLoggingUpdateOne {
+	_u.mutation.ClearUserID()
+	return _u
 }
 
 // SetTag sets the "tag" field.
-func (sluo *SysLoggingUpdateOne) SetTag(s string) *SysLoggingUpdateOne {
-	sluo.mutation.SetTag(s)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetTag(v string) *SysLoggingUpdateOne {
+	_u.mutation.SetTag(v)
+	return _u
 }
 
 // SetNillableTag sets the "tag" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableTag(s *string) *SysLoggingUpdateOne {
-	if s != nil {
-		sluo.SetTag(*s)
+func (_u *SysLoggingUpdateOne) SetNillableTag(v *string) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetTag(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearTag clears the value of the "tag" field.
-func (sluo *SysLoggingUpdateOne) ClearTag() *SysLoggingUpdateOne {
-	sluo.mutation.ClearTag()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearTag() *SysLoggingUpdateOne {
+	_u.mutation.ClearTag()
+	return _u
 }
 
 // SetVersion sets the "version" field.
-func (sluo *SysLoggingUpdateOne) SetVersion(s string) *SysLoggingUpdateOne {
-	sluo.mutation.SetVersion(s)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetVersion(v string) *SysLoggingUpdateOne {
+	_u.mutation.SetVersion(v)
+	return _u
 }
 
 // SetNillableVersion sets the "version" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableVersion(s *string) *SysLoggingUpdateOne {
-	if s != nil {
-		sluo.SetVersion(*s)
+func (_u *SysLoggingUpdateOne) SetNillableVersion(v *string) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetVersion(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearVersion clears the value of the "version" field.
-func (sluo *SysLoggingUpdateOne) ClearVersion() *SysLoggingUpdateOne {
-	sluo.mutation.ClearVersion()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearVersion() *SysLoggingUpdateOne {
+	_u.mutation.ClearVersion()
+	return _u
 }
 
 // SetMessage sets the "message" field.
-func (sluo *SysLoggingUpdateOne) SetMessage(s string) *SysLoggingUpdateOne {
-	sluo.mutation.SetMessage(s)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetMessage(v string) *SysLoggingUpdateOne {
+	_u.mutation.SetMessage(v)
+	return _u
 }
 
 // SetNillableMessage sets the "message" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableMessage(s *string) *SysLoggingUpdateOne {
-	if s != nil {
-		sluo.SetMessage(*s)
+func (_u *SysLoggingUpdateOne) SetNillableMessage(v *string) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetMessage(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearMessage clears the value of the "message" field.
-func (sluo *SysLoggingUpdateOne) ClearMessage() *SysLoggingUpdateOne {
-	sluo.mutation.ClearMessage()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearMessage() *SysLoggingUpdateOne {
+	_u.mutation.ClearMessage()
+	return _u
 }
 
 // SetErrorStack sets the "error_stack" field.
-func (sluo *SysLoggingUpdateOne) SetErrorStack(s string) *SysLoggingUpdateOne {
-	sluo.mutation.SetErrorStack(s)
-	return sluo
+func (_u *SysLoggingUpdateOne) SetErrorStack(v string) *SysLoggingUpdateOne {
+	_u.mutation.SetErrorStack(v)
+	return _u
 }
 
 // SetNillableErrorStack sets the "error_stack" field if the given value is not nil.
-func (sluo *SysLoggingUpdateOne) SetNillableErrorStack(s *string) *SysLoggingUpdateOne {
-	if s != nil {
-		sluo.SetErrorStack(*s)
+func (_u *SysLoggingUpdateOne) SetNillableErrorStack(v *string) *SysLoggingUpdateOne {
+	if v != nil {
+		_u.SetErrorStack(*v)
 	}
-	return sluo
+	return _u
 }
 
 // ClearErrorStack clears the value of the "error_stack" field.
-func (sluo *SysLoggingUpdateOne) ClearErrorStack() *SysLoggingUpdateOne {
-	sluo.mutation.ClearErrorStack()
-	return sluo
+func (_u *SysLoggingUpdateOne) ClearErrorStack() *SysLoggingUpdateOne {
+	_u.mutation.ClearErrorStack()
+	return _u
 }
 
 // Mutation returns the SysLoggingMutation object of the builder.
-func (sluo *SysLoggingUpdateOne) Mutation() *SysLoggingMutation {
-	return sluo.mutation
+func (_u *SysLoggingUpdateOne) Mutation() *SysLoggingMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the SysLoggingUpdate builder.
-func (sluo *SysLoggingUpdateOne) Where(ps ...predicate.SysLogging) *SysLoggingUpdateOne {
-	sluo.mutation.Where(ps...)
-	return sluo
+func (_u *SysLoggingUpdateOne) Where(ps ...predicate.SysLogging) *SysLoggingUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (sluo *SysLoggingUpdateOne) Select(field string, fields ...string) *SysLoggingUpdateOne {
-	sluo.fields = append([]string{field}, fields...)
-	return sluo
+func (_u *SysLoggingUpdateOne) Select(field string, fields ...string) *SysLoggingUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysLogging entity.
-func (sluo *SysLoggingUpdateOne) Save(ctx context.Context) (*SysLogging, error) {
-	sluo.defaults()
-	return withHooks(ctx, sluo.sqlSave, sluo.mutation, sluo.hooks)
+func (_u *SysLoggingUpdateOne) Save(ctx context.Context) (*SysLogging, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sluo *SysLoggingUpdateOne) SaveX(ctx context.Context) *SysLogging {
-	node, err := sluo.Save(ctx)
+func (_u *SysLoggingUpdateOne) SaveX(ctx context.Context) *SysLogging {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -665,59 +665,59 @@ func (sluo *SysLoggingUpdateOne) SaveX(ctx context.Context) *SysLogging {
 }
 
 // Exec executes the query on the entity.
-func (sluo *SysLoggingUpdateOne) Exec(ctx context.Context) error {
-	_, err := sluo.Save(ctx)
+func (_u *SysLoggingUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sluo *SysLoggingUpdateOne) ExecX(ctx context.Context) {
-	if err := sluo.Exec(ctx); err != nil {
+func (_u *SysLoggingUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sluo *SysLoggingUpdateOne) defaults() {
-	if _, ok := sluo.mutation.UpdatedAt(); !ok && !sluo.mutation.UpdatedAtCleared() {
+func (_u *SysLoggingUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := syslogging.UpdateDefaultUpdatedAt()
-		sluo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sluo *SysLoggingUpdateOne) check() error {
-	if v, ok := sluo.mutation.Memo(); ok {
+func (_u *SysLoggingUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := syslogging.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.memo": %w`, err)}
 		}
 	}
-	if v, ok := sluo.mutation.Level(); ok {
+	if v, ok := _u.mutation.Level(); ok {
 		if err := syslogging.LevelValidator(v); err != nil {
 			return &ValidationError{Name: "level", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.level": %w`, err)}
 		}
 	}
-	if v, ok := sluo.mutation.TraceID(); ok {
+	if v, ok := _u.mutation.TraceID(); ok {
 		if err := syslogging.TraceIDValidator(v); err != nil {
 			return &ValidationError{Name: "trace_id", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.trace_id": %w`, err)}
 		}
 	}
-	if v, ok := sluo.mutation.UserID(); ok {
+	if v, ok := _u.mutation.UserID(); ok {
 		if err := syslogging.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.user_id": %w`, err)}
 		}
 	}
-	if v, ok := sluo.mutation.Tag(); ok {
+	if v, ok := _u.mutation.Tag(); ok {
 		if err := syslogging.TagValidator(v); err != nil {
 			return &ValidationError{Name: "tag", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.tag": %w`, err)}
 		}
 	}
-	if v, ok := sluo.mutation.Version(); ok {
+	if v, ok := _u.mutation.Version(); ok {
 		if err := syslogging.VersionValidator(v); err != nil {
 			return &ValidationError{Name: "version", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.version": %w`, err)}
 		}
 	}
-	if v, ok := sluo.mutation.Message(); ok {
+	if v, ok := _u.mutation.Message(); ok {
 		if err := syslogging.MessageValidator(v); err != nil {
 			return &ValidationError{Name: "message", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.message": %w`, err)}
 		}
@@ -726,22 +726,22 @@ func (sluo *SysLoggingUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sluo *SysLoggingUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysLoggingUpdateOne {
-	sluo.modifiers = append(sluo.modifiers, modifiers...)
-	return sluo
+func (_u *SysLoggingUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysLoggingUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging, err error) {
-	if err := sluo.check(); err != nil {
+func (_u *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(syslogging.Table, syslogging.Columns, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
-	id, ok := sluo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysLogging.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := sluo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, syslogging.FieldID)
 		for _, f := range fields {
@@ -753,87 +753,87 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 			}
 		}
 	}
-	if ps := sluo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if sluo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(syslogging.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sluo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sluo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(syslogging.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sluo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sluo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(syslogging.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sluo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sluo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(syslogging.FieldMemo, field.TypeString, value)
 	}
-	if sluo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(syslogging.FieldMemo, field.TypeString)
 	}
-	if value, ok := sluo.mutation.Level(); ok {
+	if value, ok := _u.mutation.Level(); ok {
 		_spec.SetField(syslogging.FieldLevel, field.TypeString, value)
 	}
-	if sluo.mutation.LevelCleared() {
+	if _u.mutation.LevelCleared() {
 		_spec.ClearField(syslogging.FieldLevel, field.TypeString)
 	}
-	if value, ok := sluo.mutation.TraceID(); ok {
+	if value, ok := _u.mutation.TraceID(); ok {
 		_spec.SetField(syslogging.FieldTraceID, field.TypeString, value)
 	}
-	if sluo.mutation.TraceIDCleared() {
+	if _u.mutation.TraceIDCleared() {
 		_spec.ClearField(syslogging.FieldTraceID, field.TypeString)
 	}
-	if value, ok := sluo.mutation.UserID(); ok {
+	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(syslogging.FieldUserID, field.TypeString, value)
 	}
-	if sluo.mutation.UserIDCleared() {
+	if _u.mutation.UserIDCleared() {
 		_spec.ClearField(syslogging.FieldUserID, field.TypeString)
 	}
-	if value, ok := sluo.mutation.Tag(); ok {
+	if value, ok := _u.mutation.Tag(); ok {
 		_spec.SetField(syslogging.FieldTag, field.TypeString, value)
 	}
-	if sluo.mutation.TagCleared() {
+	if _u.mutation.TagCleared() {
 		_spec.ClearField(syslogging.FieldTag, field.TypeString)
 	}
-	if value, ok := sluo.mutation.Version(); ok {
+	if value, ok := _u.mutation.Version(); ok {
 		_spec.SetField(syslogging.FieldVersion, field.TypeString, value)
 	}
-	if sluo.mutation.VersionCleared() {
+	if _u.mutation.VersionCleared() {
 		_spec.ClearField(syslogging.FieldVersion, field.TypeString)
 	}
-	if value, ok := sluo.mutation.Message(); ok {
+	if value, ok := _u.mutation.Message(); ok {
 		_spec.SetField(syslogging.FieldMessage, field.TypeString, value)
 	}
-	if sluo.mutation.MessageCleared() {
+	if _u.mutation.MessageCleared() {
 		_spec.ClearField(syslogging.FieldMessage, field.TypeString)
 	}
-	if sluo.mutation.DataCleared() {
+	if _u.mutation.DataCleared() {
 		_spec.ClearField(syslogging.FieldData, field.TypeString)
 	}
-	if value, ok := sluo.mutation.ErrorStack(); ok {
+	if value, ok := _u.mutation.ErrorStack(); ok {
 		_spec.SetField(syslogging.FieldErrorStack, field.TypeString, value)
 	}
-	if sluo.mutation.ErrorStackCleared() {
+	if _u.mutation.ErrorStackCleared() {
 		_spec.ClearField(syslogging.FieldErrorStack, field.TypeString)
 	}
-	_spec.AddModifiers(sluo.modifiers...)
-	_node = &SysLogging{config: sluo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysLogging{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, sluo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{syslogging.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -841,6 +841,6 @@ func (sluo *SysLoggingUpdateOne) sqlSave(ctx context.Context) (_node *SysLogging
 		}
 		return nil, err
 	}
-	sluo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

@@ -30,40 +30,40 @@ type SysUserRoleQuery struct {
 }
 
 // Where adds a new predicate for the SysUserRoleQuery builder.
-func (surq *SysUserRoleQuery) Where(ps ...predicate.SysUserRole) *SysUserRoleQuery {
-	surq.predicates = append(surq.predicates, ps...)
-	return surq
+func (_q *SysUserRoleQuery) Where(ps ...predicate.SysUserRole) *SysUserRoleQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (surq *SysUserRoleQuery) Limit(limit int) *SysUserRoleQuery {
-	surq.ctx.Limit = &limit
-	return surq
+func (_q *SysUserRoleQuery) Limit(limit int) *SysUserRoleQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (surq *SysUserRoleQuery) Offset(offset int) *SysUserRoleQuery {
-	surq.ctx.Offset = &offset
-	return surq
+func (_q *SysUserRoleQuery) Offset(offset int) *SysUserRoleQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (surq *SysUserRoleQuery) Unique(unique bool) *SysUserRoleQuery {
-	surq.ctx.Unique = &unique
-	return surq
+func (_q *SysUserRoleQuery) Unique(unique bool) *SysUserRoleQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (surq *SysUserRoleQuery) Order(o ...sysuserrole.OrderOption) *SysUserRoleQuery {
-	surq.order = append(surq.order, o...)
-	return surq
+func (_q *SysUserRoleQuery) Order(o ...sysuserrole.OrderOption) *SysUserRoleQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // First returns the first SysUserRole entity from the query.
 // Returns a *NotFoundError when no SysUserRole was found.
-func (surq *SysUserRoleQuery) First(ctx context.Context) (*SysUserRole, error) {
-	nodes, err := surq.Limit(1).All(setContextOp(ctx, surq.ctx, ent.OpQueryFirst))
+func (_q *SysUserRoleQuery) First(ctx context.Context) (*SysUserRole, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -74,8 +74,8 @@ func (surq *SysUserRoleQuery) First(ctx context.Context) (*SysUserRole, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (surq *SysUserRoleQuery) FirstX(ctx context.Context) *SysUserRole {
-	node, err := surq.First(ctx)
+func (_q *SysUserRoleQuery) FirstX(ctx context.Context) *SysUserRole {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -84,9 +84,9 @@ func (surq *SysUserRoleQuery) FirstX(ctx context.Context) *SysUserRole {
 
 // FirstID returns the first SysUserRole ID from the query.
 // Returns a *NotFoundError when no SysUserRole ID was found.
-func (surq *SysUserRoleQuery) FirstID(ctx context.Context) (id string, err error) {
+func (_q *SysUserRoleQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = surq.Limit(1).IDs(setContextOp(ctx, surq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -97,8 +97,8 @@ func (surq *SysUserRoleQuery) FirstID(ctx context.Context) (id string, err error
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (surq *SysUserRoleQuery) FirstIDX(ctx context.Context) string {
-	id, err := surq.FirstID(ctx)
+func (_q *SysUserRoleQuery) FirstIDX(ctx context.Context) string {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -108,8 +108,8 @@ func (surq *SysUserRoleQuery) FirstIDX(ctx context.Context) string {
 // Only returns a single SysUserRole entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one SysUserRole entity is found.
 // Returns a *NotFoundError when no SysUserRole entities are found.
-func (surq *SysUserRoleQuery) Only(ctx context.Context) (*SysUserRole, error) {
-	nodes, err := surq.Limit(2).All(setContextOp(ctx, surq.ctx, ent.OpQueryOnly))
+func (_q *SysUserRoleQuery) Only(ctx context.Context) (*SysUserRole, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (surq *SysUserRoleQuery) Only(ctx context.Context) (*SysUserRole, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (surq *SysUserRoleQuery) OnlyX(ctx context.Context) *SysUserRole {
-	node, err := surq.Only(ctx)
+func (_q *SysUserRoleQuery) OnlyX(ctx context.Context) *SysUserRole {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -135,9 +135,9 @@ func (surq *SysUserRoleQuery) OnlyX(ctx context.Context) *SysUserRole {
 // OnlyID is like Only, but returns the only SysUserRole ID in the query.
 // Returns a *NotSingularError when more than one SysUserRole ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (surq *SysUserRoleQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *SysUserRoleQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = surq.Limit(2).IDs(setContextOp(ctx, surq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -152,8 +152,8 @@ func (surq *SysUserRoleQuery) OnlyID(ctx context.Context) (id string, err error)
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (surq *SysUserRoleQuery) OnlyIDX(ctx context.Context) string {
-	id, err := surq.OnlyID(ctx)
+func (_q *SysUserRoleQuery) OnlyIDX(ctx context.Context) string {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -161,18 +161,18 @@ func (surq *SysUserRoleQuery) OnlyIDX(ctx context.Context) string {
 }
 
 // All executes the query and returns a list of SysUserRoles.
-func (surq *SysUserRoleQuery) All(ctx context.Context) ([]*SysUserRole, error) {
-	ctx = setContextOp(ctx, surq.ctx, ent.OpQueryAll)
-	if err := surq.prepareQuery(ctx); err != nil {
+func (_q *SysUserRoleQuery) All(ctx context.Context) ([]*SysUserRole, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*SysUserRole, *SysUserRoleQuery]()
-	return withInterceptors[[]*SysUserRole](ctx, surq, qr, surq.inters)
+	return withInterceptors[[]*SysUserRole](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (surq *SysUserRoleQuery) AllX(ctx context.Context) []*SysUserRole {
-	nodes, err := surq.All(ctx)
+func (_q *SysUserRoleQuery) AllX(ctx context.Context) []*SysUserRole {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -180,20 +180,20 @@ func (surq *SysUserRoleQuery) AllX(ctx context.Context) []*SysUserRole {
 }
 
 // IDs executes the query and returns a list of SysUserRole IDs.
-func (surq *SysUserRoleQuery) IDs(ctx context.Context) (ids []string, err error) {
-	if surq.ctx.Unique == nil && surq.path != nil {
-		surq.Unique(true)
+func (_q *SysUserRoleQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, surq.ctx, ent.OpQueryIDs)
-	if err = surq.Select(sysuserrole.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(sysuserrole.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (surq *SysUserRoleQuery) IDsX(ctx context.Context) []string {
-	ids, err := surq.IDs(ctx)
+func (_q *SysUserRoleQuery) IDsX(ctx context.Context) []string {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -201,17 +201,17 @@ func (surq *SysUserRoleQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (surq *SysUserRoleQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, surq.ctx, ent.OpQueryCount)
-	if err := surq.prepareQuery(ctx); err != nil {
+func (_q *SysUserRoleQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, surq, querierCount[*SysUserRoleQuery](), surq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*SysUserRoleQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (surq *SysUserRoleQuery) CountX(ctx context.Context) int {
-	count, err := surq.Count(ctx)
+func (_q *SysUserRoleQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -219,9 +219,9 @@ func (surq *SysUserRoleQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (surq *SysUserRoleQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, surq.ctx, ent.OpQueryExist)
-	switch _, err := surq.FirstID(ctx); {
+func (_q *SysUserRoleQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -232,8 +232,8 @@ func (surq *SysUserRoleQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (surq *SysUserRoleQuery) ExistX(ctx context.Context) bool {
-	exist, err := surq.Exist(ctx)
+func (_q *SysUserRoleQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -242,20 +242,20 @@ func (surq *SysUserRoleQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the SysUserRoleQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (surq *SysUserRoleQuery) Clone() *SysUserRoleQuery {
-	if surq == nil {
+func (_q *SysUserRoleQuery) Clone() *SysUserRoleQuery {
+	if _q == nil {
 		return nil
 	}
 	return &SysUserRoleQuery{
-		config:     surq.config,
-		ctx:        surq.ctx.Clone(),
-		order:      append([]sysuserrole.OrderOption{}, surq.order...),
-		inters:     append([]Interceptor{}, surq.inters...),
-		predicates: append([]predicate.SysUserRole{}, surq.predicates...),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]sysuserrole.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.SysUserRole{}, _q.predicates...),
 		// clone intermediate query.
-		sql:       surq.sql.Clone(),
-		path:      surq.path,
-		modifiers: append([]func(*sql.Selector){}, surq.modifiers...),
+		sql:       _q.sql.Clone(),
+		path:      _q.path,
+		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
 }
 
@@ -273,10 +273,10 @@ func (surq *SysUserRoleQuery) Clone() *SysUserRoleQuery {
 //		GroupBy(sysuserrole.FieldIsDel).
 //		Aggregate(mainent.Count()).
 //		Scan(ctx, &v)
-func (surq *SysUserRoleQuery) GroupBy(field string, fields ...string) *SysUserRoleGroupBy {
-	surq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &SysUserRoleGroupBy{build: surq}
-	grbuild.flds = &surq.ctx.Fields
+func (_q *SysUserRoleQuery) GroupBy(field string, fields ...string) *SysUserRoleGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysUserRoleGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = sysuserrole.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -294,65 +294,65 @@ func (surq *SysUserRoleQuery) GroupBy(field string, fields ...string) *SysUserRo
 //	client.SysUserRole.Query().
 //		Select(sysuserrole.FieldIsDel).
 //		Scan(ctx, &v)
-func (surq *SysUserRoleQuery) Select(fields ...string) *SysUserRoleSelect {
-	surq.ctx.Fields = append(surq.ctx.Fields, fields...)
-	sbuild := &SysUserRoleSelect{SysUserRoleQuery: surq}
+func (_q *SysUserRoleQuery) Select(fields ...string) *SysUserRoleSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &SysUserRoleSelect{SysUserRoleQuery: _q}
 	sbuild.label = sysuserrole.Label
-	sbuild.flds, sbuild.scan = &surq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a SysUserRoleSelect configured with the given aggregations.
-func (surq *SysUserRoleQuery) Aggregate(fns ...AggregateFunc) *SysUserRoleSelect {
-	return surq.Select().Aggregate(fns...)
+func (_q *SysUserRoleQuery) Aggregate(fns ...AggregateFunc) *SysUserRoleSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (surq *SysUserRoleQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range surq.inters {
+func (_q *SysUserRoleQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("mainent: uninitialized interceptor (forgotten import mainent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, surq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range surq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !sysuserrole.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("mainent: invalid field %q for query", f)}
 		}
 	}
-	if surq.path != nil {
-		prev, err := surq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		surq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (surq *SysUserRoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysUserRole, error) {
+func (_q *SysUserRoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysUserRole, error) {
 	var (
 		nodes = []*SysUserRole{}
-		_spec = surq.querySpec()
+		_spec = _q.querySpec()
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysUserRole).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &SysUserRole{config: surq.config}
+		node := &SysUserRole{config: _q.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	if len(surq.modifiers) > 0 {
-		_spec.Modifiers = surq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, surq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
@@ -361,27 +361,27 @@ func (surq *SysUserRoleQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 	return nodes, nil
 }
 
-func (surq *SysUserRoleQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := surq.querySpec()
-	if len(surq.modifiers) > 0 {
-		_spec.Modifiers = surq.modifiers
+func (_q *SysUserRoleQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = surq.ctx.Fields
-	if len(surq.ctx.Fields) > 0 {
-		_spec.Unique = surq.ctx.Unique != nil && *surq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, surq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (surq *SysUserRoleQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *SysUserRoleQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(sysuserrole.Table, sysuserrole.Columns, sqlgraph.NewFieldSpec(sysuserrole.FieldID, field.TypeString))
-	_spec.From = surq.sql
-	if unique := surq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if surq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := surq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysuserrole.FieldID)
 		for i := range fields {
@@ -390,20 +390,20 @@ func (surq *SysUserRoleQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if ps := surq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := surq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := surq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := surq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -413,36 +413,36 @@ func (surq *SysUserRoleQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (surq *SysUserRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(surq.driver.Dialect())
+func (_q *SysUserRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(sysuserrole.Table)
-	columns := surq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysuserrole.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if surq.sql != nil {
-		selector = surq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if surq.ctx.Unique != nil && *surq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range surq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range surq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range surq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := surq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := surq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -451,33 +451,33 @@ func (surq *SysUserRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (surq *SysUserRoleQuery) ForUpdate(opts ...sql.LockOption) *SysUserRoleQuery {
-	if surq.driver.Dialect() == dialect.Postgres {
-		surq.Unique(false)
+func (_q *SysUserRoleQuery) ForUpdate(opts ...sql.LockOption) *SysUserRoleQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	surq.modifiers = append(surq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return surq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (surq *SysUserRoleQuery) ForShare(opts ...sql.LockOption) *SysUserRoleQuery {
-	if surq.driver.Dialect() == dialect.Postgres {
-		surq.Unique(false)
+func (_q *SysUserRoleQuery) ForShare(opts ...sql.LockOption) *SysUserRoleQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	surq.modifiers = append(surq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return surq
+	return _q
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (surq *SysUserRoleQuery) Modify(modifiers ...func(s *sql.Selector)) *SysUserRoleSelect {
-	surq.modifiers = append(surq.modifiers, modifiers...)
-	return surq.Select()
+func (_q *SysUserRoleQuery) Modify(modifiers ...func(s *sql.Selector)) *SysUserRoleSelect {
+	_q.modifiers = append(_q.modifiers, modifiers...)
+	return _q.Select()
 }
 
 // SysUserRoleGroupBy is the group-by builder for SysUserRole entities.
@@ -487,41 +487,41 @@ type SysUserRoleGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (surgb *SysUserRoleGroupBy) Aggregate(fns ...AggregateFunc) *SysUserRoleGroupBy {
-	surgb.fns = append(surgb.fns, fns...)
-	return surgb
+func (_g *SysUserRoleGroupBy) Aggregate(fns ...AggregateFunc) *SysUserRoleGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (surgb *SysUserRoleGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, surgb.build.ctx, ent.OpQueryGroupBy)
-	if err := surgb.build.prepareQuery(ctx); err != nil {
+func (_g *SysUserRoleGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysUserRoleQuery, *SysUserRoleGroupBy](ctx, surgb.build, surgb, surgb.build.inters, v)
+	return scanWithInterceptors[*SysUserRoleQuery, *SysUserRoleGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (surgb *SysUserRoleGroupBy) sqlScan(ctx context.Context, root *SysUserRoleQuery, v any) error {
+func (_g *SysUserRoleGroupBy) sqlScan(ctx context.Context, root *SysUserRoleQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(surgb.fns))
-	for _, fn := range surgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*surgb.flds)+len(surgb.fns))
-		for _, f := range *surgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*surgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := surgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -535,27 +535,27 @@ type SysUserRoleSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (surs *SysUserRoleSelect) Aggregate(fns ...AggregateFunc) *SysUserRoleSelect {
-	surs.fns = append(surs.fns, fns...)
-	return surs
+func (_s *SysUserRoleSelect) Aggregate(fns ...AggregateFunc) *SysUserRoleSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (surs *SysUserRoleSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, surs.ctx, ent.OpQuerySelect)
-	if err := surs.prepareQuery(ctx); err != nil {
+func (_s *SysUserRoleSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysUserRoleQuery, *SysUserRoleSelect](ctx, surs.SysUserRoleQuery, surs, surs.inters, v)
+	return scanWithInterceptors[*SysUserRoleQuery, *SysUserRoleSelect](ctx, _s.SysUserRoleQuery, _s, _s.inters, v)
 }
 
-func (surs *SysUserRoleSelect) sqlScan(ctx context.Context, root *SysUserRoleQuery, v any) error {
+func (_s *SysUserRoleSelect) sqlScan(ctx context.Context, root *SysUserRoleQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(surs.fns))
-	for _, fn := range surs.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*surs.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -563,7 +563,7 @@ func (surs *SysUserRoleSelect) sqlScan(ctx context.Context, root *SysUserRoleQue
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := surs.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -571,7 +571,7 @@ func (surs *SysUserRoleSelect) sqlScan(ctx context.Context, root *SysUserRoleQue
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (surs *SysUserRoleSelect) Modify(modifiers ...func(s *sql.Selector)) *SysUserRoleSelect {
-	surs.modifiers = append(surs.modifiers, modifiers...)
-	return surs
+func (_s *SysUserRoleSelect) Modify(modifiers ...func(s *sql.Selector)) *SysUserRoleSelect {
+	_s.modifiers = append(_s.modifiers, modifiers...)
+	return _s
 }

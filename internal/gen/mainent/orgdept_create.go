@@ -26,367 +26,367 @@ type OrgDeptCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (odc *OrgDeptCreate) SetIsDel(b bool) *OrgDeptCreate {
-	odc.mutation.SetIsDel(b)
-	return odc
+func (_c *OrgDeptCreate) SetIsDel(v bool) *OrgDeptCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableIsDel(b *bool) *OrgDeptCreate {
-	if b != nil {
-		odc.SetIsDel(*b)
+func (_c *OrgDeptCreate) SetNillableIsDel(v *bool) *OrgDeptCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (odc *OrgDeptCreate) SetSort(i int32) *OrgDeptCreate {
-	odc.mutation.SetSort(i)
-	return odc
+func (_c *OrgDeptCreate) SetSort(v int32) *OrgDeptCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableSort(i *int32) *OrgDeptCreate {
-	if i != nil {
-		odc.SetSort(*i)
+func (_c *OrgDeptCreate) SetNillableSort(v *int32) *OrgDeptCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (odc *OrgDeptCreate) SetCreatedAt(t time.Time) *OrgDeptCreate {
-	odc.mutation.SetCreatedAt(t)
-	return odc
+func (_c *OrgDeptCreate) SetCreatedAt(v time.Time) *OrgDeptCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableCreatedAt(t *time.Time) *OrgDeptCreate {
-	if t != nil {
-		odc.SetCreatedAt(*t)
+func (_c *OrgDeptCreate) SetNillableCreatedAt(v *time.Time) *OrgDeptCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (odc *OrgDeptCreate) SetUpdatedAt(t time.Time) *OrgDeptCreate {
-	odc.mutation.SetUpdatedAt(t)
-	return odc
+func (_c *OrgDeptCreate) SetUpdatedAt(v time.Time) *OrgDeptCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableUpdatedAt(t *time.Time) *OrgDeptCreate {
-	if t != nil {
-		odc.SetUpdatedAt(*t)
+func (_c *OrgDeptCreate) SetNillableUpdatedAt(v *time.Time) *OrgDeptCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (odc *OrgDeptCreate) SetDeletedAt(t time.Time) *OrgDeptCreate {
-	odc.mutation.SetDeletedAt(t)
-	return odc
+func (_c *OrgDeptCreate) SetDeletedAt(v time.Time) *OrgDeptCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableDeletedAt(t *time.Time) *OrgDeptCreate {
-	if t != nil {
-		odc.SetDeletedAt(*t)
+func (_c *OrgDeptCreate) SetNillableDeletedAt(v *time.Time) *OrgDeptCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (odc *OrgDeptCreate) SetIsActive(b bool) *OrgDeptCreate {
-	odc.mutation.SetIsActive(b)
-	return odc
+func (_c *OrgDeptCreate) SetIsActive(v bool) *OrgDeptCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableIsActive(b *bool) *OrgDeptCreate {
-	if b != nil {
-		odc.SetIsActive(*b)
+func (_c *OrgDeptCreate) SetNillableIsActive(v *bool) *OrgDeptCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (odc *OrgDeptCreate) SetMemo(s string) *OrgDeptCreate {
-	odc.mutation.SetMemo(s)
-	return odc
+func (_c *OrgDeptCreate) SetMemo(v string) *OrgDeptCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableMemo(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetMemo(*s)
+func (_c *OrgDeptCreate) SetNillableMemo(v *string) *OrgDeptCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetTreeID sets the "tree_id" field.
-func (odc *OrgDeptCreate) SetTreeID(i int64) *OrgDeptCreate {
-	odc.mutation.SetTreeID(i)
-	return odc
+func (_c *OrgDeptCreate) SetTreeID(v int64) *OrgDeptCreate {
+	_c.mutation.SetTreeID(v)
+	return _c
 }
 
 // SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableTreeID(i *int64) *OrgDeptCreate {
-	if i != nil {
-		odc.SetTreeID(*i)
+func (_c *OrgDeptCreate) SetNillableTreeID(v *int64) *OrgDeptCreate {
+	if v != nil {
+		_c.SetTreeID(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (odc *OrgDeptCreate) SetTreeLevel(i int32) *OrgDeptCreate {
-	odc.mutation.SetTreeLevel(i)
-	return odc
+func (_c *OrgDeptCreate) SetTreeLevel(v int32) *OrgDeptCreate {
+	_c.mutation.SetTreeLevel(v)
+	return _c
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableTreeLevel(i *int32) *OrgDeptCreate {
-	if i != nil {
-		odc.SetTreeLevel(*i)
+func (_c *OrgDeptCreate) SetNillableTreeLevel(v *int32) *OrgDeptCreate {
+	if v != nil {
+		_c.SetTreeLevel(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetTreeLeft sets the "tree_left" field.
-func (odc *OrgDeptCreate) SetTreeLeft(i int64) *OrgDeptCreate {
-	odc.mutation.SetTreeLeft(i)
-	return odc
+func (_c *OrgDeptCreate) SetTreeLeft(v int64) *OrgDeptCreate {
+	_c.mutation.SetTreeLeft(v)
+	return _c
 }
 
 // SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableTreeLeft(i *int64) *OrgDeptCreate {
-	if i != nil {
-		odc.SetTreeLeft(*i)
+func (_c *OrgDeptCreate) SetNillableTreeLeft(v *int64) *OrgDeptCreate {
+	if v != nil {
+		_c.SetTreeLeft(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetTreeRight sets the "tree_right" field.
-func (odc *OrgDeptCreate) SetTreeRight(i int64) *OrgDeptCreate {
-	odc.mutation.SetTreeRight(i)
-	return odc
+func (_c *OrgDeptCreate) SetTreeRight(v int64) *OrgDeptCreate {
+	_c.mutation.SetTreeRight(v)
+	return _c
 }
 
 // SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableTreeRight(i *int64) *OrgDeptCreate {
-	if i != nil {
-		odc.SetTreeRight(*i)
+func (_c *OrgDeptCreate) SetNillableTreeRight(v *int64) *OrgDeptCreate {
+	if v != nil {
+		_c.SetTreeRight(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetIsLeaf sets the "is_leaf" field.
-func (odc *OrgDeptCreate) SetIsLeaf(b bool) *OrgDeptCreate {
-	odc.mutation.SetIsLeaf(b)
-	return odc
+func (_c *OrgDeptCreate) SetIsLeaf(v bool) *OrgDeptCreate {
+	_c.mutation.SetIsLeaf(v)
+	return _c
 }
 
 // SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableIsLeaf(b *bool) *OrgDeptCreate {
-	if b != nil {
-		odc.SetIsLeaf(*b)
+func (_c *OrgDeptCreate) SetNillableIsLeaf(v *bool) *OrgDeptCreate {
+	if v != nil {
+		_c.SetIsLeaf(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetTreePath sets the "tree_path" field.
-func (odc *OrgDeptCreate) SetTreePath(s string) *OrgDeptCreate {
-	odc.mutation.SetTreePath(s)
-	return odc
+func (_c *OrgDeptCreate) SetTreePath(v string) *OrgDeptCreate {
+	_c.mutation.SetTreePath(v)
+	return _c
 }
 
 // SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableTreePath(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetTreePath(*s)
+func (_c *OrgDeptCreate) SetNillableTreePath(v *string) *OrgDeptCreate {
+	if v != nil {
+		_c.SetTreePath(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetName sets the "name" field.
-func (odc *OrgDeptCreate) SetName(s string) *OrgDeptCreate {
-	odc.mutation.SetName(s)
-	return odc
+func (_c *OrgDeptCreate) SetName(v string) *OrgDeptCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableName(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetName(*s)
+func (_c *OrgDeptCreate) SetNillableName(v *string) *OrgDeptCreate {
+	if v != nil {
+		_c.SetName(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetCode sets the "code" field.
-func (odc *OrgDeptCreate) SetCode(s string) *OrgDeptCreate {
-	odc.mutation.SetCode(s)
-	return odc
+func (_c *OrgDeptCreate) SetCode(v string) *OrgDeptCreate {
+	_c.mutation.SetCode(v)
+	return _c
 }
 
 // SetNillableCode sets the "code" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableCode(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetCode(*s)
+func (_c *OrgDeptCreate) SetNillableCode(v *string) *OrgDeptCreate {
+	if v != nil {
+		_c.SetCode(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetMergeName sets the "merge_name" field.
-func (odc *OrgDeptCreate) SetMergeName(s string) *OrgDeptCreate {
-	odc.mutation.SetMergeName(s)
-	return odc
+func (_c *OrgDeptCreate) SetMergeName(v string) *OrgDeptCreate {
+	_c.mutation.SetMergeName(v)
+	return _c
 }
 
 // SetNillableMergeName sets the "merge_name" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableMergeName(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetMergeName(*s)
+func (_c *OrgDeptCreate) SetNillableMergeName(v *string) *OrgDeptCreate {
+	if v != nil {
+		_c.SetMergeName(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetOrgID sets the "org_id" field.
-func (odc *OrgDeptCreate) SetOrgID(s string) *OrgDeptCreate {
-	odc.mutation.SetOrgID(s)
-	return odc
+func (_c *OrgDeptCreate) SetOrgID(v string) *OrgDeptCreate {
+	_c.mutation.SetOrgID(v)
+	return _c
 }
 
 // SetNillableOrgID sets the "org_id" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableOrgID(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetOrgID(*s)
+func (_c *OrgDeptCreate) SetNillableOrgID(v *string) *OrgDeptCreate {
+	if v != nil {
+		_c.SetOrgID(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetParentID sets the "parent_id" field.
-func (odc *OrgDeptCreate) SetParentID(s string) *OrgDeptCreate {
-	odc.mutation.SetParentID(s)
-	return odc
+func (_c *OrgDeptCreate) SetParentID(v string) *OrgDeptCreate {
+	_c.mutation.SetParentID(v)
+	return _c
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableParentID(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetParentID(*s)
+func (_c *OrgDeptCreate) SetNillableParentID(v *string) *OrgDeptCreate {
+	if v != nil {
+		_c.SetParentID(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetIsReal sets the "is_real" field.
-func (odc *OrgDeptCreate) SetIsReal(b bool) *OrgDeptCreate {
-	odc.mutation.SetIsReal(b)
-	return odc
+func (_c *OrgDeptCreate) SetIsReal(v bool) *OrgDeptCreate {
+	_c.mutation.SetIsReal(v)
+	return _c
 }
 
 // SetNillableIsReal sets the "is_real" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableIsReal(b *bool) *OrgDeptCreate {
-	if b != nil {
-		odc.SetIsReal(*b)
+func (_c *OrgDeptCreate) SetNillableIsReal(v *bool) *OrgDeptCreate {
+	if v != nil {
+		_c.SetIsReal(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetIsShow sets the "is_show" field.
-func (odc *OrgDeptCreate) SetIsShow(b bool) *OrgDeptCreate {
-	odc.mutation.SetIsShow(b)
-	return odc
+func (_c *OrgDeptCreate) SetIsShow(v bool) *OrgDeptCreate {
+	_c.mutation.SetIsShow(v)
+	return _c
 }
 
 // SetNillableIsShow sets the "is_show" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableIsShow(b *bool) *OrgDeptCreate {
-	if b != nil {
-		odc.SetIsShow(*b)
+func (_c *OrgDeptCreate) SetNillableIsShow(v *bool) *OrgDeptCreate {
+	if v != nil {
+		_c.SetIsShow(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (odc *OrgDeptCreate) SetID(s string) *OrgDeptCreate {
-	odc.mutation.SetID(s)
-	return odc
+func (_c *OrgDeptCreate) SetID(v string) *OrgDeptCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableID(s *string) *OrgDeptCreate {
-	if s != nil {
-		odc.SetID(*s)
+func (_c *OrgDeptCreate) SetNillableID(v *string) *OrgDeptCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return odc
+	return _c
 }
 
 // SetParent sets the "parent" edge to the OrgDept entity.
-func (odc *OrgDeptCreate) SetParent(o *OrgDept) *OrgDeptCreate {
-	return odc.SetParentID(o.ID)
+func (_c *OrgDeptCreate) SetParent(v *OrgDept) *OrgDeptCreate {
+	return _c.SetParentID(v.ID)
 }
 
 // AddChildIDs adds the "children" edge to the OrgDept entity by IDs.
-func (odc *OrgDeptCreate) AddChildIDs(ids ...string) *OrgDeptCreate {
-	odc.mutation.AddChildIDs(ids...)
-	return odc
+func (_c *OrgDeptCreate) AddChildIDs(ids ...string) *OrgDeptCreate {
+	_c.mutation.AddChildIDs(ids...)
+	return _c
 }
 
 // AddChildren adds the "children" edges to the OrgDept entity.
-func (odc *OrgDeptCreate) AddChildren(o ...*OrgDept) *OrgDeptCreate {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_c *OrgDeptCreate) AddChildren(v ...*OrgDept) *OrgDeptCreate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return odc.AddChildIDs(ids...)
+	return _c.AddChildIDs(ids...)
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (odc *OrgDeptCreate) SetOrganID(id string) *OrgDeptCreate {
-	odc.mutation.SetOrganID(id)
-	return odc
+func (_c *OrgDeptCreate) SetOrganID(id string) *OrgDeptCreate {
+	_c.mutation.SetOrganID(id)
+	return _c
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (odc *OrgDeptCreate) SetNillableOrganID(id *string) *OrgDeptCreate {
+func (_c *OrgDeptCreate) SetNillableOrganID(id *string) *OrgDeptCreate {
 	if id != nil {
-		odc = odc.SetOrganID(*id)
+		_c = _c.SetOrganID(*id)
 	}
-	return odc
+	return _c
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (odc *OrgDeptCreate) SetOrgan(o *OrgOrgan) *OrgDeptCreate {
-	return odc.SetOrganID(o.ID)
+func (_c *OrgDeptCreate) SetOrgan(v *OrgOrgan) *OrgDeptCreate {
+	return _c.SetOrganID(v.ID)
 }
 
 // AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
-func (odc *OrgDeptCreate) AddStaffIDs(ids ...string) *OrgDeptCreate {
-	odc.mutation.AddStaffIDs(ids...)
-	return odc
+func (_c *OrgDeptCreate) AddStaffIDs(ids ...string) *OrgDeptCreate {
+	_c.mutation.AddStaffIDs(ids...)
+	return _c
 }
 
 // AddStaffs adds the "staffs" edges to the OrgStaff entity.
-func (odc *OrgDeptCreate) AddStaffs(o ...*OrgStaff) *OrgDeptCreate {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_c *OrgDeptCreate) AddStaffs(v ...*OrgStaff) *OrgDeptCreate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return odc.AddStaffIDs(ids...)
+	return _c.AddStaffIDs(ids...)
 }
 
 // Mutation returns the OrgDeptMutation object of the builder.
-func (odc *OrgDeptCreate) Mutation() *OrgDeptMutation {
-	return odc.mutation
+func (_c *OrgDeptCreate) Mutation() *OrgDeptMutation {
+	return _c.mutation
 }
 
 // Save creates the OrgDept in the database.
-func (odc *OrgDeptCreate) Save(ctx context.Context) (*OrgDept, error) {
-	odc.defaults()
-	return withHooks(ctx, odc.sqlSave, odc.mutation, odc.hooks)
+func (_c *OrgDeptCreate) Save(ctx context.Context) (*OrgDept, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (odc *OrgDeptCreate) SaveX(ctx context.Context) *OrgDept {
-	v, err := odc.Save(ctx)
+func (_c *OrgDeptCreate) SaveX(ctx context.Context) *OrgDept {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -394,104 +394,104 @@ func (odc *OrgDeptCreate) SaveX(ctx context.Context) *OrgDept {
 }
 
 // Exec executes the query.
-func (odc *OrgDeptCreate) Exec(ctx context.Context) error {
-	_, err := odc.Save(ctx)
+func (_c *OrgDeptCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (odc *OrgDeptCreate) ExecX(ctx context.Context) {
-	if err := odc.Exec(ctx); err != nil {
+func (_c *OrgDeptCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (odc *OrgDeptCreate) defaults() {
-	if _, ok := odc.mutation.IsDel(); !ok {
+func (_c *OrgDeptCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := orgdept.DefaultIsDel
-		odc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := odc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := orgdept.DefaultSort
-		odc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := odc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := orgdept.DefaultCreatedAt()
-		odc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := odc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := orgdept.DefaultUpdatedAt()
-		odc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := odc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := orgdept.DefaultIsActive
-		odc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := odc.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := orgdept.DefaultMemo
-		odc.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := odc.mutation.IsLeaf(); !ok {
+	if _, ok := _c.mutation.IsLeaf(); !ok {
 		v := orgdept.DefaultIsLeaf
-		odc.mutation.SetIsLeaf(v)
+		_c.mutation.SetIsLeaf(v)
 	}
-	if _, ok := odc.mutation.IsReal(); !ok {
+	if _, ok := _c.mutation.IsReal(); !ok {
 		v := orgdept.DefaultIsReal
-		odc.mutation.SetIsReal(v)
+		_c.mutation.SetIsReal(v)
 	}
-	if _, ok := odc.mutation.IsShow(); !ok {
+	if _, ok := _c.mutation.IsShow(); !ok {
 		v := orgdept.DefaultIsShow
-		odc.mutation.SetIsShow(v)
+		_c.mutation.SetIsShow(v)
 	}
-	if _, ok := odc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := orgdept.DefaultID()
-		odc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (odc *OrgDeptCreate) check() error {
-	if _, ok := odc.mutation.IsDel(); !ok {
+func (_c *OrgDeptCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "OrgDept.is_del"`)}
 	}
-	if _, ok := odc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "OrgDept.sort"`)}
 	}
-	if _, ok := odc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "OrgDept.is_active"`)}
 	}
-	if v, ok := odc.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := orgdept.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.memo": %w`, err)}
 		}
 	}
-	if v, ok := odc.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := orgdept.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.name": %w`, err)}
 		}
 	}
-	if v, ok := odc.mutation.Code(); ok {
+	if v, ok := _c.mutation.Code(); ok {
 		if err := orgdept.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.code": %w`, err)}
 		}
 	}
-	if v, ok := odc.mutation.MergeName(); ok {
+	if v, ok := _c.mutation.MergeName(); ok {
 		if err := orgdept.MergeNameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.merge_name": %w`, err)}
 		}
 	}
-	if v, ok := odc.mutation.OrgID(); ok {
+	if v, ok := _c.mutation.OrgID(); ok {
 		if err := orgdept.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.org_id": %w`, err)}
 		}
 	}
-	if v, ok := odc.mutation.ParentID(); ok {
+	if v, ok := _c.mutation.ParentID(); ok {
 		if err := orgdept.ParentIDValidator(v); err != nil {
 			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.parent_id": %w`, err)}
 		}
 	}
-	if v, ok := odc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := orgdept.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.id": %w`, err)}
 		}
@@ -499,12 +499,12 @@ func (odc *OrgDeptCreate) check() error {
 	return nil
 }
 
-func (odc *OrgDeptCreate) sqlSave(ctx context.Context) (*OrgDept, error) {
-	if err := odc.check(); err != nil {
+func (_c *OrgDeptCreate) sqlSave(ctx context.Context) (*OrgDept, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := odc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, odc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -517,94 +517,94 @@ func (odc *OrgDeptCreate) sqlSave(ctx context.Context) (*OrgDept, error) {
 			return nil, fmt.Errorf("unexpected OrgDept.ID type: %T", _spec.ID.Value)
 		}
 	}
-	odc.mutation.id = &_node.ID
-	odc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
+func (_c *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 	var (
-		_node = &OrgDept{config: odc.config}
+		_node = &OrgDept{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(orgdept.Table, sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = odc.conflict
-	if id, ok := odc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := odc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(orgdept.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := odc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(orgdept.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := odc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(orgdept.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := odc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(orgdept.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := odc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(orgdept.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := odc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(orgdept.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := odc.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(orgdept.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := odc.mutation.TreeID(); ok {
+	if value, ok := _c.mutation.TreeID(); ok {
 		_spec.SetField(orgdept.FieldTreeID, field.TypeInt64, value)
 		_node.TreeID = &value
 	}
-	if value, ok := odc.mutation.TreeLevel(); ok {
+	if value, ok := _c.mutation.TreeLevel(); ok {
 		_spec.SetField(orgdept.FieldTreeLevel, field.TypeInt32, value)
 		_node.TreeLevel = &value
 	}
-	if value, ok := odc.mutation.TreeLeft(); ok {
+	if value, ok := _c.mutation.TreeLeft(); ok {
 		_spec.SetField(orgdept.FieldTreeLeft, field.TypeInt64, value)
 		_node.TreeLeft = &value
 	}
-	if value, ok := odc.mutation.TreeRight(); ok {
+	if value, ok := _c.mutation.TreeRight(); ok {
 		_spec.SetField(orgdept.FieldTreeRight, field.TypeInt64, value)
 		_node.TreeRight = &value
 	}
-	if value, ok := odc.mutation.IsLeaf(); ok {
+	if value, ok := _c.mutation.IsLeaf(); ok {
 		_spec.SetField(orgdept.FieldIsLeaf, field.TypeBool, value)
 		_node.IsLeaf = &value
 	}
-	if value, ok := odc.mutation.TreePath(); ok {
+	if value, ok := _c.mutation.TreePath(); ok {
 		_spec.SetField(orgdept.FieldTreePath, field.TypeString, value)
 		_node.TreePath = &value
 	}
-	if value, ok := odc.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(orgdept.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
-	if value, ok := odc.mutation.Code(); ok {
+	if value, ok := _c.mutation.Code(); ok {
 		_spec.SetField(orgdept.FieldCode, field.TypeString, value)
 		_node.Code = &value
 	}
-	if value, ok := odc.mutation.MergeName(); ok {
+	if value, ok := _c.mutation.MergeName(); ok {
 		_spec.SetField(orgdept.FieldMergeName, field.TypeString, value)
 		_node.MergeName = &value
 	}
-	if value, ok := odc.mutation.IsReal(); ok {
+	if value, ok := _c.mutation.IsReal(); ok {
 		_spec.SetField(orgdept.FieldIsReal, field.TypeBool, value)
 		_node.IsReal = &value
 	}
-	if value, ok := odc.mutation.IsShow(); ok {
+	if value, ok := _c.mutation.IsShow(); ok {
 		_spec.SetField(orgdept.FieldIsShow, field.TypeBool, value)
 		_node.IsShow = &value
 	}
-	if nodes := odc.mutation.ParentIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -621,7 +621,7 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 		_node.ParentID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := odc.mutation.ChildrenIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -637,7 +637,7 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := odc.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -654,7 +654,7 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 		_node.OrgID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := odc.mutation.StaffsIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.StaffsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -689,10 +689,10 @@ func (odc *OrgDeptCreate) createSpec() (*OrgDept, *sqlgraph.CreateSpec) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (odc *OrgDeptCreate) OnConflict(opts ...sql.ConflictOption) *OrgDeptUpsertOne {
-	odc.conflict = opts
+func (_c *OrgDeptCreate) OnConflict(opts ...sql.ConflictOption) *OrgDeptUpsertOne {
+	_c.conflict = opts
 	return &OrgDeptUpsertOne{
-		create: odc,
+		create: _c,
 	}
 }
 
@@ -702,10 +702,10 @@ func (odc *OrgDeptCreate) OnConflict(opts ...sql.ConflictOption) *OrgDeptUpsertO
 //	client.OrgDept.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (odc *OrgDeptCreate) OnConflictColumns(columns ...string) *OrgDeptUpsertOne {
-	odc.conflict = append(odc.conflict, sql.ConflictColumns(columns...))
+func (_c *OrgDeptCreate) OnConflictColumns(columns ...string) *OrgDeptUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrgDeptUpsertOne{
-		create: odc,
+		create: _c,
 	}
 }
 
@@ -1587,16 +1587,16 @@ type OrgDeptCreateBulk struct {
 }
 
 // Save creates the OrgDept entities in the database.
-func (odcb *OrgDeptCreateBulk) Save(ctx context.Context) ([]*OrgDept, error) {
-	if odcb.err != nil {
-		return nil, odcb.err
+func (_c *OrgDeptCreateBulk) Save(ctx context.Context) ([]*OrgDept, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(odcb.builders))
-	nodes := make([]*OrgDept, len(odcb.builders))
-	mutators := make([]Mutator, len(odcb.builders))
-	for i := range odcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*OrgDept, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := odcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*OrgDeptMutation)
@@ -1610,12 +1610,12 @@ func (odcb *OrgDeptCreateBulk) Save(ctx context.Context) ([]*OrgDept, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, odcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = odcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, odcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1635,7 +1635,7 @@ func (odcb *OrgDeptCreateBulk) Save(ctx context.Context) ([]*OrgDept, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, odcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1643,8 +1643,8 @@ func (odcb *OrgDeptCreateBulk) Save(ctx context.Context) ([]*OrgDept, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (odcb *OrgDeptCreateBulk) SaveX(ctx context.Context) []*OrgDept {
-	v, err := odcb.Save(ctx)
+func (_c *OrgDeptCreateBulk) SaveX(ctx context.Context) []*OrgDept {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1652,14 +1652,14 @@ func (odcb *OrgDeptCreateBulk) SaveX(ctx context.Context) []*OrgDept {
 }
 
 // Exec executes the query.
-func (odcb *OrgDeptCreateBulk) Exec(ctx context.Context) error {
-	_, err := odcb.Save(ctx)
+func (_c *OrgDeptCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (odcb *OrgDeptCreateBulk) ExecX(ctx context.Context) {
-	if err := odcb.Exec(ctx); err != nil {
+func (_c *OrgDeptCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1679,10 +1679,10 @@ func (odcb *OrgDeptCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (odcb *OrgDeptCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrgDeptUpsertBulk {
-	odcb.conflict = opts
+func (_c *OrgDeptCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrgDeptUpsertBulk {
+	_c.conflict = opts
 	return &OrgDeptUpsertBulk{
-		create: odcb,
+		create: _c,
 	}
 }
 
@@ -1692,10 +1692,10 @@ func (odcb *OrgDeptCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrgDeptUp
 //	client.OrgDept.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (odcb *OrgDeptCreateBulk) OnConflictColumns(columns ...string) *OrgDeptUpsertBulk {
-	odcb.conflict = append(odcb.conflict, sql.ConflictColumns(columns...))
+func (_c *OrgDeptCreateBulk) OnConflictColumns(columns ...string) *OrgDeptUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrgDeptUpsertBulk{
-		create: odcb,
+		create: _c,
 	}
 }
 

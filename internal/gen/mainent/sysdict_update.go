@@ -26,204 +26,204 @@ type SysDictUpdate struct {
 }
 
 // Where appends a list predicates to the SysDictUpdate builder.
-func (sdu *SysDictUpdate) Where(ps ...predicate.SysDict) *SysDictUpdate {
-	sdu.mutation.Where(ps...)
-	return sdu
+func (_u *SysDictUpdate) Where(ps ...predicate.SysDict) *SysDictUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (sdu *SysDictUpdate) SetIsDel(b bool) *SysDictUpdate {
-	sdu.mutation.SetIsDel(b)
-	return sdu
+func (_u *SysDictUpdate) SetIsDel(v bool) *SysDictUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableIsDel(b *bool) *SysDictUpdate {
-	if b != nil {
-		sdu.SetIsDel(*b)
+func (_u *SysDictUpdate) SetNillableIsDel(v *bool) *SysDictUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sdu
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sdu *SysDictUpdate) SetMemo(s string) *SysDictUpdate {
-	sdu.mutation.SetMemo(s)
-	return sdu
+func (_u *SysDictUpdate) SetMemo(v string) *SysDictUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableMemo(s *string) *SysDictUpdate {
-	if s != nil {
-		sdu.SetMemo(*s)
+func (_u *SysDictUpdate) SetNillableMemo(v *string) *SysDictUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sdu *SysDictUpdate) ClearMemo() *SysDictUpdate {
-	sdu.mutation.ClearMemo()
-	return sdu
+func (_u *SysDictUpdate) ClearMemo() *SysDictUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sdu *SysDictUpdate) SetSort(i int32) *SysDictUpdate {
-	sdu.mutation.ResetSort()
-	sdu.mutation.SetSort(i)
-	return sdu
+func (_u *SysDictUpdate) SetSort(v int32) *SysDictUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableSort(i *int32) *SysDictUpdate {
-	if i != nil {
-		sdu.SetSort(*i)
+func (_u *SysDictUpdate) SetNillableSort(v *int32) *SysDictUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sdu
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sdu *SysDictUpdate) AddSort(i int32) *SysDictUpdate {
-	sdu.mutation.AddSort(i)
-	return sdu
+// AddSort adds value to the "sort" field.
+func (_u *SysDictUpdate) AddSort(v int32) *SysDictUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sdu *SysDictUpdate) SetUpdatedAt(t time.Time) *SysDictUpdate {
-	sdu.mutation.SetUpdatedAt(t)
-	return sdu
+func (_u *SysDictUpdate) SetUpdatedAt(v time.Time) *SysDictUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sdu *SysDictUpdate) ClearUpdatedAt() *SysDictUpdate {
-	sdu.mutation.ClearUpdatedAt()
-	return sdu
+func (_u *SysDictUpdate) ClearUpdatedAt() *SysDictUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sdu *SysDictUpdate) SetDeletedAt(t time.Time) *SysDictUpdate {
-	sdu.mutation.SetDeletedAt(t)
-	return sdu
+func (_u *SysDictUpdate) SetDeletedAt(v time.Time) *SysDictUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableDeletedAt(t *time.Time) *SysDictUpdate {
-	if t != nil {
-		sdu.SetDeletedAt(*t)
+func (_u *SysDictUpdate) SetNillableDeletedAt(v *time.Time) *SysDictUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sdu *SysDictUpdate) ClearDeletedAt() *SysDictUpdate {
-	sdu.mutation.ClearDeletedAt()
-	return sdu
+func (_u *SysDictUpdate) ClearDeletedAt() *SysDictUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sdu *SysDictUpdate) SetIsActive(b bool) *SysDictUpdate {
-	sdu.mutation.SetIsActive(b)
-	return sdu
+func (_u *SysDictUpdate) SetIsActive(v bool) *SysDictUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableIsActive(b *bool) *SysDictUpdate {
-	if b != nil {
-		sdu.SetIsActive(*b)
+func (_u *SysDictUpdate) SetNillableIsActive(v *bool) *SysDictUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sdu
+	return _u
 }
 
 // SetNameCn sets the "name_cn" field.
-func (sdu *SysDictUpdate) SetNameCn(s string) *SysDictUpdate {
-	sdu.mutation.SetNameCn(s)
-	return sdu
+func (_u *SysDictUpdate) SetNameCn(v string) *SysDictUpdate {
+	_u.mutation.SetNameCn(v)
+	return _u
 }
 
 // SetNillableNameCn sets the "name_cn" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableNameCn(s *string) *SysDictUpdate {
-	if s != nil {
-		sdu.SetNameCn(*s)
+func (_u *SysDictUpdate) SetNillableNameCn(v *string) *SysDictUpdate {
+	if v != nil {
+		_u.SetNameCn(*v)
 	}
-	return sdu
+	return _u
 }
 
 // SetNameEn sets the "name_en" field.
-func (sdu *SysDictUpdate) SetNameEn(s string) *SysDictUpdate {
-	sdu.mutation.SetNameEn(s)
-	return sdu
+func (_u *SysDictUpdate) SetNameEn(v string) *SysDictUpdate {
+	_u.mutation.SetNameEn(v)
+	return _u
 }
 
 // SetNillableNameEn sets the "name_en" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableNameEn(s *string) *SysDictUpdate {
-	if s != nil {
-		sdu.SetNameEn(*s)
+func (_u *SysDictUpdate) SetNillableNameEn(v *string) *SysDictUpdate {
+	if v != nil {
+		_u.SetNameEn(*v)
 	}
-	return sdu
+	return _u
 }
 
 // SetValTipe sets the "val_tipe" field.
-func (sdu *SysDictUpdate) SetValTipe(evt enumtipe.DictValueTipe) *SysDictUpdate {
-	sdu.mutation.SetValTipe(evt)
-	return sdu
+func (_u *SysDictUpdate) SetValTipe(v enumtipe.DictValueTipe) *SysDictUpdate {
+	_u.mutation.SetValTipe(v)
+	return _u
 }
 
 // SetNillableValTipe sets the "val_tipe" field if the given value is not nil.
-func (sdu *SysDictUpdate) SetNillableValTipe(evt *enumtipe.DictValueTipe) *SysDictUpdate {
-	if evt != nil {
-		sdu.SetValTipe(*evt)
+func (_u *SysDictUpdate) SetNillableValTipe(v *enumtipe.DictValueTipe) *SysDictUpdate {
+	if v != nil {
+		_u.SetValTipe(*v)
 	}
-	return sdu
+	return _u
 }
 
 // AddItemIDs adds the "items" edge to the SysDictItem entity by IDs.
-func (sdu *SysDictUpdate) AddItemIDs(ids ...string) *SysDictUpdate {
-	sdu.mutation.AddItemIDs(ids...)
-	return sdu
+func (_u *SysDictUpdate) AddItemIDs(ids ...string) *SysDictUpdate {
+	_u.mutation.AddItemIDs(ids...)
+	return _u
 }
 
 // AddItems adds the "items" edges to the SysDictItem entity.
-func (sdu *SysDictUpdate) AddItems(s ...*SysDictItem) *SysDictUpdate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysDictUpdate) AddItems(v ...*SysDictItem) *SysDictUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sdu.AddItemIDs(ids...)
+	return _u.AddItemIDs(ids...)
 }
 
 // Mutation returns the SysDictMutation object of the builder.
-func (sdu *SysDictUpdate) Mutation() *SysDictMutation {
-	return sdu.mutation
+func (_u *SysDictUpdate) Mutation() *SysDictMutation {
+	return _u.mutation
 }
 
 // ClearItems clears all "items" edges to the SysDictItem entity.
-func (sdu *SysDictUpdate) ClearItems() *SysDictUpdate {
-	sdu.mutation.ClearItems()
-	return sdu
+func (_u *SysDictUpdate) ClearItems() *SysDictUpdate {
+	_u.mutation.ClearItems()
+	return _u
 }
 
 // RemoveItemIDs removes the "items" edge to SysDictItem entities by IDs.
-func (sdu *SysDictUpdate) RemoveItemIDs(ids ...string) *SysDictUpdate {
-	sdu.mutation.RemoveItemIDs(ids...)
-	return sdu
+func (_u *SysDictUpdate) RemoveItemIDs(ids ...string) *SysDictUpdate {
+	_u.mutation.RemoveItemIDs(ids...)
+	return _u
 }
 
 // RemoveItems removes "items" edges to SysDictItem entities.
-func (sdu *SysDictUpdate) RemoveItems(s ...*SysDictItem) *SysDictUpdate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysDictUpdate) RemoveItems(v ...*SysDictItem) *SysDictUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sdu.RemoveItemIDs(ids...)
+	return _u.RemoveItemIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (sdu *SysDictUpdate) Save(ctx context.Context) (int, error) {
-	sdu.defaults()
-	return withHooks(ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
+func (_u *SysDictUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sdu *SysDictUpdate) SaveX(ctx context.Context) int {
-	affected, err := sdu.Save(ctx)
+func (_u *SysDictUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -231,44 +231,44 @@ func (sdu *SysDictUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (sdu *SysDictUpdate) Exec(ctx context.Context) error {
-	_, err := sdu.Save(ctx)
+func (_u *SysDictUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdu *SysDictUpdate) ExecX(ctx context.Context) {
-	if err := sdu.Exec(ctx); err != nil {
+func (_u *SysDictUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sdu *SysDictUpdate) defaults() {
-	if _, ok := sdu.mutation.UpdatedAt(); !ok && !sdu.mutation.UpdatedAtCleared() {
+func (_u *SysDictUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysdict.UpdateDefaultUpdatedAt()
-		sdu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sdu *SysDictUpdate) check() error {
-	if v, ok := sdu.mutation.Memo(); ok {
+func (_u *SysDictUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysdict.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysDict.memo": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.NameCn(); ok {
+	if v, ok := _u.mutation.NameCn(); ok {
 		if err := sysdict.NameCnValidator(v); err != nil {
 			return &ValidationError{Name: "name_cn", err: fmt.Errorf(`mainent: validator failed for field "SysDict.name_cn": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.NameEn(); ok {
+	if v, ok := _u.mutation.NameEn(); ok {
 		if err := sysdict.NameEnValidator(v); err != nil {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`mainent: validator failed for field "SysDict.name_en": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.ValTipe(); ok {
+	if v, ok := _u.mutation.ValTipe(); ok {
 		if err := sysdict.ValTipeValidator(v); err != nil {
 			return &ValidationError{Name: "val_tipe", err: fmt.Errorf(`mainent: validator failed for field "SysDict.val_tipe": %w`, err)}
 		}
@@ -277,66 +277,66 @@ func (sdu *SysDictUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sdu *SysDictUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictUpdate {
-	sdu.modifiers = append(sdu.modifiers, modifiers...)
-	return sdu
+func (_u *SysDictUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := sdu.check(); err != nil {
-		return n, err
+func (_u *SysDictUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysdict.Table, sysdict.Columns, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
-	if ps := sdu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sdu.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysdict.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sdu.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysdict.FieldMemo, field.TypeString, value)
 	}
-	if sdu.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysdict.FieldMemo, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysdict.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sdu.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysdict.FieldSort, field.TypeInt32, value)
 	}
-	if sdu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysdict.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sdu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sdu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysdict.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sdu.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sdu.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysdict.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sdu.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysdict.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sdu.mutation.NameCn(); ok {
+	if value, ok := _u.mutation.NameCn(); ok {
 		_spec.SetField(sysdict.FieldNameCn, field.TypeString, value)
 	}
-	if value, ok := sdu.mutation.NameEn(); ok {
+	if value, ok := _u.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 	}
-	if value, ok := sdu.mutation.ValTipe(); ok {
+	if value, ok := _u.mutation.ValTipe(); ok {
 		_spec.SetField(sysdict.FieldValTipe, field.TypeEnum, value)
 	}
-	if sdu.mutation.ItemsCleared() {
+	if _u.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -349,7 +349,7 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sdu.mutation.RemovedItemsIDs(); len(nodes) > 0 && !sdu.mutation.ItemsCleared() {
+	if nodes := _u.mutation.RemovedItemsIDs(); len(nodes) > 0 && !_u.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -365,7 +365,7 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sdu.mutation.ItemsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ItemsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -381,8 +381,8 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(sdu.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdict.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -390,8 +390,8 @@ func (sdu *SysDictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	sdu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysDictUpdateOne is the builder for updating a single SysDict entity.
@@ -404,211 +404,211 @@ type SysDictUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sduo *SysDictUpdateOne) SetIsDel(b bool) *SysDictUpdateOne {
-	sduo.mutation.SetIsDel(b)
-	return sduo
+func (_u *SysDictUpdateOne) SetIsDel(v bool) *SysDictUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableIsDel(b *bool) *SysDictUpdateOne {
-	if b != nil {
-		sduo.SetIsDel(*b)
+func (_u *SysDictUpdateOne) SetNillableIsDel(v *bool) *SysDictUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sduo
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sduo *SysDictUpdateOne) SetMemo(s string) *SysDictUpdateOne {
-	sduo.mutation.SetMemo(s)
-	return sduo
+func (_u *SysDictUpdateOne) SetMemo(v string) *SysDictUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableMemo(s *string) *SysDictUpdateOne {
-	if s != nil {
-		sduo.SetMemo(*s)
+func (_u *SysDictUpdateOne) SetNillableMemo(v *string) *SysDictUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sduo *SysDictUpdateOne) ClearMemo() *SysDictUpdateOne {
-	sduo.mutation.ClearMemo()
-	return sduo
+func (_u *SysDictUpdateOne) ClearMemo() *SysDictUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sduo *SysDictUpdateOne) SetSort(i int32) *SysDictUpdateOne {
-	sduo.mutation.ResetSort()
-	sduo.mutation.SetSort(i)
-	return sduo
+func (_u *SysDictUpdateOne) SetSort(v int32) *SysDictUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableSort(i *int32) *SysDictUpdateOne {
-	if i != nil {
-		sduo.SetSort(*i)
+func (_u *SysDictUpdateOne) SetNillableSort(v *int32) *SysDictUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sduo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sduo *SysDictUpdateOne) AddSort(i int32) *SysDictUpdateOne {
-	sduo.mutation.AddSort(i)
-	return sduo
+// AddSort adds value to the "sort" field.
+func (_u *SysDictUpdateOne) AddSort(v int32) *SysDictUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sduo *SysDictUpdateOne) SetUpdatedAt(t time.Time) *SysDictUpdateOne {
-	sduo.mutation.SetUpdatedAt(t)
-	return sduo
+func (_u *SysDictUpdateOne) SetUpdatedAt(v time.Time) *SysDictUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sduo *SysDictUpdateOne) ClearUpdatedAt() *SysDictUpdateOne {
-	sduo.mutation.ClearUpdatedAt()
-	return sduo
+func (_u *SysDictUpdateOne) ClearUpdatedAt() *SysDictUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sduo *SysDictUpdateOne) SetDeletedAt(t time.Time) *SysDictUpdateOne {
-	sduo.mutation.SetDeletedAt(t)
-	return sduo
+func (_u *SysDictUpdateOne) SetDeletedAt(v time.Time) *SysDictUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableDeletedAt(t *time.Time) *SysDictUpdateOne {
-	if t != nil {
-		sduo.SetDeletedAt(*t)
+func (_u *SysDictUpdateOne) SetNillableDeletedAt(v *time.Time) *SysDictUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sduo *SysDictUpdateOne) ClearDeletedAt() *SysDictUpdateOne {
-	sduo.mutation.ClearDeletedAt()
-	return sduo
+func (_u *SysDictUpdateOne) ClearDeletedAt() *SysDictUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sduo *SysDictUpdateOne) SetIsActive(b bool) *SysDictUpdateOne {
-	sduo.mutation.SetIsActive(b)
-	return sduo
+func (_u *SysDictUpdateOne) SetIsActive(v bool) *SysDictUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableIsActive(b *bool) *SysDictUpdateOne {
-	if b != nil {
-		sduo.SetIsActive(*b)
+func (_u *SysDictUpdateOne) SetNillableIsActive(v *bool) *SysDictUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sduo
+	return _u
 }
 
 // SetNameCn sets the "name_cn" field.
-func (sduo *SysDictUpdateOne) SetNameCn(s string) *SysDictUpdateOne {
-	sduo.mutation.SetNameCn(s)
-	return sduo
+func (_u *SysDictUpdateOne) SetNameCn(v string) *SysDictUpdateOne {
+	_u.mutation.SetNameCn(v)
+	return _u
 }
 
 // SetNillableNameCn sets the "name_cn" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableNameCn(s *string) *SysDictUpdateOne {
-	if s != nil {
-		sduo.SetNameCn(*s)
+func (_u *SysDictUpdateOne) SetNillableNameCn(v *string) *SysDictUpdateOne {
+	if v != nil {
+		_u.SetNameCn(*v)
 	}
-	return sduo
+	return _u
 }
 
 // SetNameEn sets the "name_en" field.
-func (sduo *SysDictUpdateOne) SetNameEn(s string) *SysDictUpdateOne {
-	sduo.mutation.SetNameEn(s)
-	return sduo
+func (_u *SysDictUpdateOne) SetNameEn(v string) *SysDictUpdateOne {
+	_u.mutation.SetNameEn(v)
+	return _u
 }
 
 // SetNillableNameEn sets the "name_en" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableNameEn(s *string) *SysDictUpdateOne {
-	if s != nil {
-		sduo.SetNameEn(*s)
+func (_u *SysDictUpdateOne) SetNillableNameEn(v *string) *SysDictUpdateOne {
+	if v != nil {
+		_u.SetNameEn(*v)
 	}
-	return sduo
+	return _u
 }
 
 // SetValTipe sets the "val_tipe" field.
-func (sduo *SysDictUpdateOne) SetValTipe(evt enumtipe.DictValueTipe) *SysDictUpdateOne {
-	sduo.mutation.SetValTipe(evt)
-	return sduo
+func (_u *SysDictUpdateOne) SetValTipe(v enumtipe.DictValueTipe) *SysDictUpdateOne {
+	_u.mutation.SetValTipe(v)
+	return _u
 }
 
 // SetNillableValTipe sets the "val_tipe" field if the given value is not nil.
-func (sduo *SysDictUpdateOne) SetNillableValTipe(evt *enumtipe.DictValueTipe) *SysDictUpdateOne {
-	if evt != nil {
-		sduo.SetValTipe(*evt)
+func (_u *SysDictUpdateOne) SetNillableValTipe(v *enumtipe.DictValueTipe) *SysDictUpdateOne {
+	if v != nil {
+		_u.SetValTipe(*v)
 	}
-	return sduo
+	return _u
 }
 
 // AddItemIDs adds the "items" edge to the SysDictItem entity by IDs.
-func (sduo *SysDictUpdateOne) AddItemIDs(ids ...string) *SysDictUpdateOne {
-	sduo.mutation.AddItemIDs(ids...)
-	return sduo
+func (_u *SysDictUpdateOne) AddItemIDs(ids ...string) *SysDictUpdateOne {
+	_u.mutation.AddItemIDs(ids...)
+	return _u
 }
 
 // AddItems adds the "items" edges to the SysDictItem entity.
-func (sduo *SysDictUpdateOne) AddItems(s ...*SysDictItem) *SysDictUpdateOne {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysDictUpdateOne) AddItems(v ...*SysDictItem) *SysDictUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sduo.AddItemIDs(ids...)
+	return _u.AddItemIDs(ids...)
 }
 
 // Mutation returns the SysDictMutation object of the builder.
-func (sduo *SysDictUpdateOne) Mutation() *SysDictMutation {
-	return sduo.mutation
+func (_u *SysDictUpdateOne) Mutation() *SysDictMutation {
+	return _u.mutation
 }
 
 // ClearItems clears all "items" edges to the SysDictItem entity.
-func (sduo *SysDictUpdateOne) ClearItems() *SysDictUpdateOne {
-	sduo.mutation.ClearItems()
-	return sduo
+func (_u *SysDictUpdateOne) ClearItems() *SysDictUpdateOne {
+	_u.mutation.ClearItems()
+	return _u
 }
 
 // RemoveItemIDs removes the "items" edge to SysDictItem entities by IDs.
-func (sduo *SysDictUpdateOne) RemoveItemIDs(ids ...string) *SysDictUpdateOne {
-	sduo.mutation.RemoveItemIDs(ids...)
-	return sduo
+func (_u *SysDictUpdateOne) RemoveItemIDs(ids ...string) *SysDictUpdateOne {
+	_u.mutation.RemoveItemIDs(ids...)
+	return _u
 }
 
 // RemoveItems removes "items" edges to SysDictItem entities.
-func (sduo *SysDictUpdateOne) RemoveItems(s ...*SysDictItem) *SysDictUpdateOne {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysDictUpdateOne) RemoveItems(v ...*SysDictItem) *SysDictUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sduo.RemoveItemIDs(ids...)
+	return _u.RemoveItemIDs(ids...)
 }
 
 // Where appends a list predicates to the SysDictUpdate builder.
-func (sduo *SysDictUpdateOne) Where(ps ...predicate.SysDict) *SysDictUpdateOne {
-	sduo.mutation.Where(ps...)
-	return sduo
+func (_u *SysDictUpdateOne) Where(ps ...predicate.SysDict) *SysDictUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (sduo *SysDictUpdateOne) Select(field string, fields ...string) *SysDictUpdateOne {
-	sduo.fields = append([]string{field}, fields...)
-	return sduo
+func (_u *SysDictUpdateOne) Select(field string, fields ...string) *SysDictUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysDict entity.
-func (sduo *SysDictUpdateOne) Save(ctx context.Context) (*SysDict, error) {
-	sduo.defaults()
-	return withHooks(ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
+func (_u *SysDictUpdateOne) Save(ctx context.Context) (*SysDict, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sduo *SysDictUpdateOne) SaveX(ctx context.Context) *SysDict {
-	node, err := sduo.Save(ctx)
+func (_u *SysDictUpdateOne) SaveX(ctx context.Context) *SysDict {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -616,44 +616,44 @@ func (sduo *SysDictUpdateOne) SaveX(ctx context.Context) *SysDict {
 }
 
 // Exec executes the query on the entity.
-func (sduo *SysDictUpdateOne) Exec(ctx context.Context) error {
-	_, err := sduo.Save(ctx)
+func (_u *SysDictUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sduo *SysDictUpdateOne) ExecX(ctx context.Context) {
-	if err := sduo.Exec(ctx); err != nil {
+func (_u *SysDictUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sduo *SysDictUpdateOne) defaults() {
-	if _, ok := sduo.mutation.UpdatedAt(); !ok && !sduo.mutation.UpdatedAtCleared() {
+func (_u *SysDictUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysdict.UpdateDefaultUpdatedAt()
-		sduo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sduo *SysDictUpdateOne) check() error {
-	if v, ok := sduo.mutation.Memo(); ok {
+func (_u *SysDictUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysdict.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysDict.memo": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.NameCn(); ok {
+	if v, ok := _u.mutation.NameCn(); ok {
 		if err := sysdict.NameCnValidator(v); err != nil {
 			return &ValidationError{Name: "name_cn", err: fmt.Errorf(`mainent: validator failed for field "SysDict.name_cn": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.NameEn(); ok {
+	if v, ok := _u.mutation.NameEn(); ok {
 		if err := sysdict.NameEnValidator(v); err != nil {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`mainent: validator failed for field "SysDict.name_en": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.ValTipe(); ok {
+	if v, ok := _u.mutation.ValTipe(); ok {
 		if err := sysdict.ValTipeValidator(v); err != nil {
 			return &ValidationError{Name: "val_tipe", err: fmt.Errorf(`mainent: validator failed for field "SysDict.val_tipe": %w`, err)}
 		}
@@ -662,22 +662,22 @@ func (sduo *SysDictUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sduo *SysDictUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictUpdateOne {
-	sduo.modifiers = append(sduo.modifiers, modifiers...)
-	return sduo
+func (_u *SysDictUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDictUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err error) {
-	if err := sduo.check(); err != nil {
+func (_u *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysdict.Table, sysdict.Columns, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
-	id, ok := sduo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysDict.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := sduo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysdict.FieldID)
 		for _, f := range fields {
@@ -689,56 +689,56 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 			}
 		}
 	}
-	if ps := sduo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sduo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysdict.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sduo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysdict.FieldMemo, field.TypeString, value)
 	}
-	if sduo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysdict.FieldMemo, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysdict.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sduo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysdict.FieldSort, field.TypeInt32, value)
 	}
-	if sduo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysdict.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sduo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sduo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysdict.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sduo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sduo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysdict.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sduo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysdict.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sduo.mutation.NameCn(); ok {
+	if value, ok := _u.mutation.NameCn(); ok {
 		_spec.SetField(sysdict.FieldNameCn, field.TypeString, value)
 	}
-	if value, ok := sduo.mutation.NameEn(); ok {
+	if value, ok := _u.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 	}
-	if value, ok := sduo.mutation.ValTipe(); ok {
+	if value, ok := _u.mutation.ValTipe(); ok {
 		_spec.SetField(sysdict.FieldValTipe, field.TypeEnum, value)
 	}
-	if sduo.mutation.ItemsCleared() {
+	if _u.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -751,7 +751,7 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sduo.mutation.RemovedItemsIDs(); len(nodes) > 0 && !sduo.mutation.ItemsCleared() {
+	if nodes := _u.mutation.RemovedItemsIDs(); len(nodes) > 0 && !_u.mutation.ItemsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -767,7 +767,7 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sduo.mutation.ItemsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ItemsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -783,11 +783,11 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(sduo.modifiers...)
-	_node = &SysDict{config: sduo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysDict{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, sduo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdict.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -795,6 +795,6 @@ func (sduo *SysDictUpdateOne) sqlSave(ctx context.Context) (_node *SysDict, err 
 		}
 		return nil, err
 	}
-	sduo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

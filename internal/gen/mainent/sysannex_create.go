@@ -24,159 +24,159 @@ type SysAnnexCreate struct {
 }
 
 // SetMemo sets the "memo" field.
-func (sac *SysAnnexCreate) SetMemo(s string) *SysAnnexCreate {
-	sac.mutation.SetMemo(s)
-	return sac
+func (_c *SysAnnexCreate) SetMemo(v string) *SysAnnexCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableMemo(s *string) *SysAnnexCreate {
-	if s != nil {
-		sac.SetMemo(*s)
+func (_c *SysAnnexCreate) SetNillableMemo(v *string) *SysAnnexCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (sac *SysAnnexCreate) SetSort(i int32) *SysAnnexCreate {
-	sac.mutation.SetSort(i)
-	return sac
+func (_c *SysAnnexCreate) SetSort(v int32) *SysAnnexCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableSort(i *int32) *SysAnnexCreate {
-	if i != nil {
-		sac.SetSort(*i)
+func (_c *SysAnnexCreate) SetNillableSort(v *int32) *SysAnnexCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (sac *SysAnnexCreate) SetCreatedAt(t time.Time) *SysAnnexCreate {
-	sac.mutation.SetCreatedAt(t)
-	return sac
+func (_c *SysAnnexCreate) SetCreatedAt(v time.Time) *SysAnnexCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableCreatedAt(t *time.Time) *SysAnnexCreate {
-	if t != nil {
-		sac.SetCreatedAt(*t)
+func (_c *SysAnnexCreate) SetNillableCreatedAt(v *time.Time) *SysAnnexCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sac *SysAnnexCreate) SetUpdatedAt(t time.Time) *SysAnnexCreate {
-	sac.mutation.SetUpdatedAt(t)
-	return sac
+func (_c *SysAnnexCreate) SetUpdatedAt(v time.Time) *SysAnnexCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableUpdatedAt(t *time.Time) *SysAnnexCreate {
-	if t != nil {
-		sac.SetUpdatedAt(*t)
+func (_c *SysAnnexCreate) SetNillableUpdatedAt(v *time.Time) *SysAnnexCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sac *SysAnnexCreate) SetDeletedAt(t time.Time) *SysAnnexCreate {
-	sac.mutation.SetDeletedAt(t)
-	return sac
+func (_c *SysAnnexCreate) SetDeletedAt(v time.Time) *SysAnnexCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableDeletedAt(t *time.Time) *SysAnnexCreate {
-	if t != nil {
-		sac.SetDeletedAt(*t)
+func (_c *SysAnnexCreate) SetNillableDeletedAt(v *time.Time) *SysAnnexCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (sac *SysAnnexCreate) SetIsActive(b bool) *SysAnnexCreate {
-	sac.mutation.SetIsActive(b)
-	return sac
+func (_c *SysAnnexCreate) SetIsActive(v bool) *SysAnnexCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableIsActive(b *bool) *SysAnnexCreate {
-	if b != nil {
-		sac.SetIsActive(*b)
+func (_c *SysAnnexCreate) SetNillableIsActive(v *bool) *SysAnnexCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetIsDel sets the "is_del" field.
-func (sac *SysAnnexCreate) SetIsDel(b bool) *SysAnnexCreate {
-	sac.mutation.SetIsDel(b)
-	return sac
+func (_c *SysAnnexCreate) SetIsDel(v bool) *SysAnnexCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableIsDel(b *bool) *SysAnnexCreate {
-	if b != nil {
-		sac.SetIsDel(*b)
+func (_c *SysAnnexCreate) SetNillableIsDel(v *bool) *SysAnnexCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetName sets the "name" field.
-func (sac *SysAnnexCreate) SetName(s string) *SysAnnexCreate {
-	sac.mutation.SetName(s)
-	return sac
+func (_c *SysAnnexCreate) SetName(v string) *SysAnnexCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableName(s *string) *SysAnnexCreate {
-	if s != nil {
-		sac.SetName(*s)
+func (_c *SysAnnexCreate) SetNillableName(v *string) *SysAnnexCreate {
+	if v != nil {
+		_c.SetName(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetFilePath sets the "file_path" field.
-func (sac *SysAnnexCreate) SetFilePath(s string) *SysAnnexCreate {
-	sac.mutation.SetFilePath(s)
-	return sac
+func (_c *SysAnnexCreate) SetFilePath(v string) *SysAnnexCreate {
+	_c.mutation.SetFilePath(v)
+	return _c
 }
 
 // SetNillableFilePath sets the "file_path" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableFilePath(s *string) *SysAnnexCreate {
-	if s != nil {
-		sac.SetFilePath(*s)
+func (_c *SysAnnexCreate) SetNillableFilePath(v *string) *SysAnnexCreate {
+	if v != nil {
+		_c.SetFilePath(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetID sets the "id" field.
-func (sac *SysAnnexCreate) SetID(s string) *SysAnnexCreate {
-	sac.mutation.SetID(s)
-	return sac
+func (_c *SysAnnexCreate) SetID(v string) *SysAnnexCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (sac *SysAnnexCreate) SetNillableID(s *string) *SysAnnexCreate {
-	if s != nil {
-		sac.SetID(*s)
+func (_c *SysAnnexCreate) SetNillableID(v *string) *SysAnnexCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return sac
+	return _c
 }
 
 // Mutation returns the SysAnnexMutation object of the builder.
-func (sac *SysAnnexCreate) Mutation() *SysAnnexMutation {
-	return sac.mutation
+func (_c *SysAnnexCreate) Mutation() *SysAnnexMutation {
+	return _c.mutation
 }
 
 // Save creates the SysAnnex in the database.
-func (sac *SysAnnexCreate) Save(ctx context.Context) (*SysAnnex, error) {
-	sac.defaults()
-	return withHooks(ctx, sac.sqlSave, sac.mutation, sac.hooks)
+func (_c *SysAnnexCreate) Save(ctx context.Context) (*SysAnnex, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (sac *SysAnnexCreate) SaveX(ctx context.Context) *SysAnnex {
-	v, err := sac.Save(ctx)
+func (_c *SysAnnexCreate) SaveX(ctx context.Context) *SysAnnex {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -184,72 +184,72 @@ func (sac *SysAnnexCreate) SaveX(ctx context.Context) *SysAnnex {
 }
 
 // Exec executes the query.
-func (sac *SysAnnexCreate) Exec(ctx context.Context) error {
-	_, err := sac.Save(ctx)
+func (_c *SysAnnexCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sac *SysAnnexCreate) ExecX(ctx context.Context) {
-	if err := sac.Exec(ctx); err != nil {
+func (_c *SysAnnexCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sac *SysAnnexCreate) defaults() {
-	if _, ok := sac.mutation.Memo(); !ok {
+func (_c *SysAnnexCreate) defaults() {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := sysannex.DefaultMemo
-		sac.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := sac.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysannex.DefaultSort
-		sac.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := sac.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysannex.DefaultCreatedAt()
-		sac.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := sac.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysannex.DefaultUpdatedAt()
-		sac.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := sac.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysannex.DefaultIsActive
-		sac.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := sac.mutation.IsDel(); !ok {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysannex.DefaultIsDel
-		sac.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := sac.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysannex.DefaultID()
-		sac.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sac *SysAnnexCreate) check() error {
-	if v, ok := sac.mutation.Memo(); ok {
+func (_c *SysAnnexCreate) check() error {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysannex.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysAnnex.memo": %w`, err)}
 		}
 	}
-	if _, ok := sac.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysAnnex.sort"`)}
 	}
-	if _, ok := sac.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysAnnex.is_active"`)}
 	}
-	if _, ok := sac.mutation.IsDel(); !ok {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysAnnex.is_del"`)}
 	}
-	if v, ok := sac.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := sysannex.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysAnnex.name": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysannex.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysAnnex.id": %w`, err)}
 		}
@@ -257,12 +257,12 @@ func (sac *SysAnnexCreate) check() error {
 	return nil
 }
 
-func (sac *SysAnnexCreate) sqlSave(ctx context.Context) (*SysAnnex, error) {
-	if err := sac.check(); err != nil {
+func (_c *SysAnnexCreate) sqlSave(ctx context.Context) (*SysAnnex, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := sac.createSpec()
-	if err := sqlgraph.CreateNode(ctx, sac.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -275,54 +275,54 @@ func (sac *SysAnnexCreate) sqlSave(ctx context.Context) (*SysAnnex, error) {
 			return nil, fmt.Errorf("unexpected SysAnnex.ID type: %T", _spec.ID.Value)
 		}
 	}
-	sac.mutation.id = &_node.ID
-	sac.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (sac *SysAnnexCreate) createSpec() (*SysAnnex, *sqlgraph.CreateSpec) {
+func (_c *SysAnnexCreate) createSpec() (*SysAnnex, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysAnnex{config: sac.config}
+		_node = &SysAnnex{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysannex.Table, sqlgraph.NewFieldSpec(sysannex.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = sac.conflict
-	if id, ok := sac.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := sac.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(sysannex.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := sac.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysannex.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := sac.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysannex.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := sac.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysannex.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := sac.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysannex.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := sac.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysannex.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := sac.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysannex.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := sac.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(sysannex.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
-	if value, ok := sac.mutation.FilePath(); ok {
+	if value, ok := _c.mutation.FilePath(); ok {
 		_spec.SetField(sysannex.FieldFilePath, field.TypeString, value)
 		_node.FilePath = &value
 	}
@@ -345,10 +345,10 @@ func (sac *SysAnnexCreate) createSpec() (*SysAnnex, *sqlgraph.CreateSpec) {
 //			SetMemo(v+v).
 //		}).
 //		Exec(ctx)
-func (sac *SysAnnexCreate) OnConflict(opts ...sql.ConflictOption) *SysAnnexUpsertOne {
-	sac.conflict = opts
+func (_c *SysAnnexCreate) OnConflict(opts ...sql.ConflictOption) *SysAnnexUpsertOne {
+	_c.conflict = opts
 	return &SysAnnexUpsertOne{
-		create: sac,
+		create: _c,
 	}
 }
 
@@ -358,10 +358,10 @@ func (sac *SysAnnexCreate) OnConflict(opts ...sql.ConflictOption) *SysAnnexUpser
 //	client.SysAnnex.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sac *SysAnnexCreate) OnConflictColumns(columns ...string) *SysAnnexUpsertOne {
-	sac.conflict = append(sac.conflict, sql.ConflictColumns(columns...))
+func (_c *SysAnnexCreate) OnConflictColumns(columns ...string) *SysAnnexUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysAnnexUpsertOne{
-		create: sac,
+		create: _c,
 	}
 }
 
@@ -762,16 +762,16 @@ type SysAnnexCreateBulk struct {
 }
 
 // Save creates the SysAnnex entities in the database.
-func (sacb *SysAnnexCreateBulk) Save(ctx context.Context) ([]*SysAnnex, error) {
-	if sacb.err != nil {
-		return nil, sacb.err
+func (_c *SysAnnexCreateBulk) Save(ctx context.Context) ([]*SysAnnex, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(sacb.builders))
-	nodes := make([]*SysAnnex, len(sacb.builders))
-	mutators := make([]Mutator, len(sacb.builders))
-	for i := range sacb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysAnnex, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := sacb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysAnnexMutation)
@@ -785,12 +785,12 @@ func (sacb *SysAnnexCreateBulk) Save(ctx context.Context) ([]*SysAnnex, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, sacb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = sacb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, sacb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -810,7 +810,7 @@ func (sacb *SysAnnexCreateBulk) Save(ctx context.Context) ([]*SysAnnex, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, sacb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -818,8 +818,8 @@ func (sacb *SysAnnexCreateBulk) Save(ctx context.Context) ([]*SysAnnex, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sacb *SysAnnexCreateBulk) SaveX(ctx context.Context) []*SysAnnex {
-	v, err := sacb.Save(ctx)
+func (_c *SysAnnexCreateBulk) SaveX(ctx context.Context) []*SysAnnex {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -827,14 +827,14 @@ func (sacb *SysAnnexCreateBulk) SaveX(ctx context.Context) []*SysAnnex {
 }
 
 // Exec executes the query.
-func (sacb *SysAnnexCreateBulk) Exec(ctx context.Context) error {
-	_, err := sacb.Save(ctx)
+func (_c *SysAnnexCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sacb *SysAnnexCreateBulk) ExecX(ctx context.Context) {
-	if err := sacb.Exec(ctx); err != nil {
+func (_c *SysAnnexCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -854,10 +854,10 @@ func (sacb *SysAnnexCreateBulk) ExecX(ctx context.Context) {
 //			SetMemo(v+v).
 //		}).
 //		Exec(ctx)
-func (sacb *SysAnnexCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysAnnexUpsertBulk {
-	sacb.conflict = opts
+func (_c *SysAnnexCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysAnnexUpsertBulk {
+	_c.conflict = opts
 	return &SysAnnexUpsertBulk{
-		create: sacb,
+		create: _c,
 	}
 }
 
@@ -867,10 +867,10 @@ func (sacb *SysAnnexCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysAnnex
 //	client.SysAnnex.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sacb *SysAnnexCreateBulk) OnConflictColumns(columns ...string) *SysAnnexUpsertBulk {
-	sacb.conflict = append(sacb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysAnnexCreateBulk) OnConflictColumns(columns ...string) *SysAnnexUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysAnnexUpsertBulk{
-		create: sacb,
+		create: _c,
 	}
 }
 

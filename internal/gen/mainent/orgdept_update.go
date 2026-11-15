@@ -26,522 +26,522 @@ type OrgDeptUpdate struct {
 }
 
 // Where appends a list predicates to the OrgDeptUpdate builder.
-func (odu *OrgDeptUpdate) Where(ps ...predicate.OrgDept) *OrgDeptUpdate {
-	odu.mutation.Where(ps...)
-	return odu
+func (_u *OrgDeptUpdate) Where(ps ...predicate.OrgDept) *OrgDeptUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (odu *OrgDeptUpdate) SetIsDel(b bool) *OrgDeptUpdate {
-	odu.mutation.SetIsDel(b)
-	return odu
+func (_u *OrgDeptUpdate) SetIsDel(v bool) *OrgDeptUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableIsDel(b *bool) *OrgDeptUpdate {
-	if b != nil {
-		odu.SetIsDel(*b)
+func (_u *OrgDeptUpdate) SetNillableIsDel(v *bool) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return odu
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (odu *OrgDeptUpdate) SetSort(i int32) *OrgDeptUpdate {
-	odu.mutation.ResetSort()
-	odu.mutation.SetSort(i)
-	return odu
+func (_u *OrgDeptUpdate) SetSort(v int32) *OrgDeptUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableSort(i *int32) *OrgDeptUpdate {
-	if i != nil {
-		odu.SetSort(*i)
+func (_u *OrgDeptUpdate) SetNillableSort(v *int32) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return odu
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (odu *OrgDeptUpdate) AddSort(i int32) *OrgDeptUpdate {
-	odu.mutation.AddSort(i)
-	return odu
+// AddSort adds value to the "sort" field.
+func (_u *OrgDeptUpdate) AddSort(v int32) *OrgDeptUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (odu *OrgDeptUpdate) SetUpdatedAt(t time.Time) *OrgDeptUpdate {
-	odu.mutation.SetUpdatedAt(t)
-	return odu
+func (_u *OrgDeptUpdate) SetUpdatedAt(v time.Time) *OrgDeptUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (odu *OrgDeptUpdate) ClearUpdatedAt() *OrgDeptUpdate {
-	odu.mutation.ClearUpdatedAt()
-	return odu
+func (_u *OrgDeptUpdate) ClearUpdatedAt() *OrgDeptUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (odu *OrgDeptUpdate) SetDeletedAt(t time.Time) *OrgDeptUpdate {
-	odu.mutation.SetDeletedAt(t)
-	return odu
+func (_u *OrgDeptUpdate) SetDeletedAt(v time.Time) *OrgDeptUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableDeletedAt(t *time.Time) *OrgDeptUpdate {
-	if t != nil {
-		odu.SetDeletedAt(*t)
+func (_u *OrgDeptUpdate) SetNillableDeletedAt(v *time.Time) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (odu *OrgDeptUpdate) ClearDeletedAt() *OrgDeptUpdate {
-	odu.mutation.ClearDeletedAt()
-	return odu
+func (_u *OrgDeptUpdate) ClearDeletedAt() *OrgDeptUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (odu *OrgDeptUpdate) SetIsActive(b bool) *OrgDeptUpdate {
-	odu.mutation.SetIsActive(b)
-	return odu
+func (_u *OrgDeptUpdate) SetIsActive(v bool) *OrgDeptUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableIsActive(b *bool) *OrgDeptUpdate {
-	if b != nil {
-		odu.SetIsActive(*b)
+func (_u *OrgDeptUpdate) SetNillableIsActive(v *bool) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return odu
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (odu *OrgDeptUpdate) SetMemo(s string) *OrgDeptUpdate {
-	odu.mutation.SetMemo(s)
-	return odu
+func (_u *OrgDeptUpdate) SetMemo(v string) *OrgDeptUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableMemo(s *string) *OrgDeptUpdate {
-	if s != nil {
-		odu.SetMemo(*s)
+func (_u *OrgDeptUpdate) SetNillableMemo(v *string) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (odu *OrgDeptUpdate) ClearMemo() *OrgDeptUpdate {
-	odu.mutation.ClearMemo()
-	return odu
+func (_u *OrgDeptUpdate) ClearMemo() *OrgDeptUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetTreeID sets the "tree_id" field.
-func (odu *OrgDeptUpdate) SetTreeID(i int64) *OrgDeptUpdate {
-	odu.mutation.ResetTreeID()
-	odu.mutation.SetTreeID(i)
-	return odu
+func (_u *OrgDeptUpdate) SetTreeID(v int64) *OrgDeptUpdate {
+	_u.mutation.ResetTreeID()
+	_u.mutation.SetTreeID(v)
+	return _u
 }
 
 // SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableTreeID(i *int64) *OrgDeptUpdate {
-	if i != nil {
-		odu.SetTreeID(*i)
+func (_u *OrgDeptUpdate) SetNillableTreeID(v *int64) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetTreeID(*v)
 	}
-	return odu
+	return _u
 }
 
-// AddTreeID adds i to the "tree_id" field.
-func (odu *OrgDeptUpdate) AddTreeID(i int64) *OrgDeptUpdate {
-	odu.mutation.AddTreeID(i)
-	return odu
+// AddTreeID adds value to the "tree_id" field.
+func (_u *OrgDeptUpdate) AddTreeID(v int64) *OrgDeptUpdate {
+	_u.mutation.AddTreeID(v)
+	return _u
 }
 
 // ClearTreeID clears the value of the "tree_id" field.
-func (odu *OrgDeptUpdate) ClearTreeID() *OrgDeptUpdate {
-	odu.mutation.ClearTreeID()
-	return odu
+func (_u *OrgDeptUpdate) ClearTreeID() *OrgDeptUpdate {
+	_u.mutation.ClearTreeID()
+	return _u
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (odu *OrgDeptUpdate) SetTreeLevel(i int32) *OrgDeptUpdate {
-	odu.mutation.ResetTreeLevel()
-	odu.mutation.SetTreeLevel(i)
-	return odu
+func (_u *OrgDeptUpdate) SetTreeLevel(v int32) *OrgDeptUpdate {
+	_u.mutation.ResetTreeLevel()
+	_u.mutation.SetTreeLevel(v)
+	return _u
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableTreeLevel(i *int32) *OrgDeptUpdate {
-	if i != nil {
-		odu.SetTreeLevel(*i)
+func (_u *OrgDeptUpdate) SetNillableTreeLevel(v *int32) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetTreeLevel(*v)
 	}
-	return odu
+	return _u
 }
 
-// AddTreeLevel adds i to the "tree_level" field.
-func (odu *OrgDeptUpdate) AddTreeLevel(i int32) *OrgDeptUpdate {
-	odu.mutation.AddTreeLevel(i)
-	return odu
+// AddTreeLevel adds value to the "tree_level" field.
+func (_u *OrgDeptUpdate) AddTreeLevel(v int32) *OrgDeptUpdate {
+	_u.mutation.AddTreeLevel(v)
+	return _u
 }
 
 // ClearTreeLevel clears the value of the "tree_level" field.
-func (odu *OrgDeptUpdate) ClearTreeLevel() *OrgDeptUpdate {
-	odu.mutation.ClearTreeLevel()
-	return odu
+func (_u *OrgDeptUpdate) ClearTreeLevel() *OrgDeptUpdate {
+	_u.mutation.ClearTreeLevel()
+	return _u
 }
 
 // SetTreeLeft sets the "tree_left" field.
-func (odu *OrgDeptUpdate) SetTreeLeft(i int64) *OrgDeptUpdate {
-	odu.mutation.ResetTreeLeft()
-	odu.mutation.SetTreeLeft(i)
-	return odu
+func (_u *OrgDeptUpdate) SetTreeLeft(v int64) *OrgDeptUpdate {
+	_u.mutation.ResetTreeLeft()
+	_u.mutation.SetTreeLeft(v)
+	return _u
 }
 
 // SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableTreeLeft(i *int64) *OrgDeptUpdate {
-	if i != nil {
-		odu.SetTreeLeft(*i)
+func (_u *OrgDeptUpdate) SetNillableTreeLeft(v *int64) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetTreeLeft(*v)
 	}
-	return odu
+	return _u
 }
 
-// AddTreeLeft adds i to the "tree_left" field.
-func (odu *OrgDeptUpdate) AddTreeLeft(i int64) *OrgDeptUpdate {
-	odu.mutation.AddTreeLeft(i)
-	return odu
+// AddTreeLeft adds value to the "tree_left" field.
+func (_u *OrgDeptUpdate) AddTreeLeft(v int64) *OrgDeptUpdate {
+	_u.mutation.AddTreeLeft(v)
+	return _u
 }
 
 // ClearTreeLeft clears the value of the "tree_left" field.
-func (odu *OrgDeptUpdate) ClearTreeLeft() *OrgDeptUpdate {
-	odu.mutation.ClearTreeLeft()
-	return odu
+func (_u *OrgDeptUpdate) ClearTreeLeft() *OrgDeptUpdate {
+	_u.mutation.ClearTreeLeft()
+	return _u
 }
 
 // SetTreeRight sets the "tree_right" field.
-func (odu *OrgDeptUpdate) SetTreeRight(i int64) *OrgDeptUpdate {
-	odu.mutation.ResetTreeRight()
-	odu.mutation.SetTreeRight(i)
-	return odu
+func (_u *OrgDeptUpdate) SetTreeRight(v int64) *OrgDeptUpdate {
+	_u.mutation.ResetTreeRight()
+	_u.mutation.SetTreeRight(v)
+	return _u
 }
 
 // SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableTreeRight(i *int64) *OrgDeptUpdate {
-	if i != nil {
-		odu.SetTreeRight(*i)
+func (_u *OrgDeptUpdate) SetNillableTreeRight(v *int64) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetTreeRight(*v)
 	}
-	return odu
+	return _u
 }
 
-// AddTreeRight adds i to the "tree_right" field.
-func (odu *OrgDeptUpdate) AddTreeRight(i int64) *OrgDeptUpdate {
-	odu.mutation.AddTreeRight(i)
-	return odu
+// AddTreeRight adds value to the "tree_right" field.
+func (_u *OrgDeptUpdate) AddTreeRight(v int64) *OrgDeptUpdate {
+	_u.mutation.AddTreeRight(v)
+	return _u
 }
 
 // ClearTreeRight clears the value of the "tree_right" field.
-func (odu *OrgDeptUpdate) ClearTreeRight() *OrgDeptUpdate {
-	odu.mutation.ClearTreeRight()
-	return odu
+func (_u *OrgDeptUpdate) ClearTreeRight() *OrgDeptUpdate {
+	_u.mutation.ClearTreeRight()
+	return _u
 }
 
 // SetIsLeaf sets the "is_leaf" field.
-func (odu *OrgDeptUpdate) SetIsLeaf(b bool) *OrgDeptUpdate {
-	odu.mutation.SetIsLeaf(b)
-	return odu
+func (_u *OrgDeptUpdate) SetIsLeaf(v bool) *OrgDeptUpdate {
+	_u.mutation.SetIsLeaf(v)
+	return _u
 }
 
 // SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableIsLeaf(b *bool) *OrgDeptUpdate {
-	if b != nil {
-		odu.SetIsLeaf(*b)
+func (_u *OrgDeptUpdate) SetNillableIsLeaf(v *bool) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetIsLeaf(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearIsLeaf clears the value of the "is_leaf" field.
-func (odu *OrgDeptUpdate) ClearIsLeaf() *OrgDeptUpdate {
-	odu.mutation.ClearIsLeaf()
-	return odu
+func (_u *OrgDeptUpdate) ClearIsLeaf() *OrgDeptUpdate {
+	_u.mutation.ClearIsLeaf()
+	return _u
 }
 
 // SetTreePath sets the "tree_path" field.
-func (odu *OrgDeptUpdate) SetTreePath(s string) *OrgDeptUpdate {
-	odu.mutation.SetTreePath(s)
-	return odu
+func (_u *OrgDeptUpdate) SetTreePath(v string) *OrgDeptUpdate {
+	_u.mutation.SetTreePath(v)
+	return _u
 }
 
 // SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableTreePath(s *string) *OrgDeptUpdate {
-	if s != nil {
-		odu.SetTreePath(*s)
+func (_u *OrgDeptUpdate) SetNillableTreePath(v *string) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetTreePath(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearTreePath clears the value of the "tree_path" field.
-func (odu *OrgDeptUpdate) ClearTreePath() *OrgDeptUpdate {
-	odu.mutation.ClearTreePath()
-	return odu
+func (_u *OrgDeptUpdate) ClearTreePath() *OrgDeptUpdate {
+	_u.mutation.ClearTreePath()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (odu *OrgDeptUpdate) SetName(s string) *OrgDeptUpdate {
-	odu.mutation.SetName(s)
-	return odu
+func (_u *OrgDeptUpdate) SetName(v string) *OrgDeptUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableName(s *string) *OrgDeptUpdate {
-	if s != nil {
-		odu.SetName(*s)
+func (_u *OrgDeptUpdate) SetNillableName(v *string) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (odu *OrgDeptUpdate) ClearName() *OrgDeptUpdate {
-	odu.mutation.ClearName()
-	return odu
+func (_u *OrgDeptUpdate) ClearName() *OrgDeptUpdate {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetCode sets the "code" field.
-func (odu *OrgDeptUpdate) SetCode(s string) *OrgDeptUpdate {
-	odu.mutation.SetCode(s)
-	return odu
+func (_u *OrgDeptUpdate) SetCode(v string) *OrgDeptUpdate {
+	_u.mutation.SetCode(v)
+	return _u
 }
 
 // SetNillableCode sets the "code" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableCode(s *string) *OrgDeptUpdate {
-	if s != nil {
-		odu.SetCode(*s)
+func (_u *OrgDeptUpdate) SetNillableCode(v *string) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetCode(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearCode clears the value of the "code" field.
-func (odu *OrgDeptUpdate) ClearCode() *OrgDeptUpdate {
-	odu.mutation.ClearCode()
-	return odu
+func (_u *OrgDeptUpdate) ClearCode() *OrgDeptUpdate {
+	_u.mutation.ClearCode()
+	return _u
 }
 
 // SetMergeName sets the "merge_name" field.
-func (odu *OrgDeptUpdate) SetMergeName(s string) *OrgDeptUpdate {
-	odu.mutation.SetMergeName(s)
-	return odu
+func (_u *OrgDeptUpdate) SetMergeName(v string) *OrgDeptUpdate {
+	_u.mutation.SetMergeName(v)
+	return _u
 }
 
 // SetNillableMergeName sets the "merge_name" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableMergeName(s *string) *OrgDeptUpdate {
-	if s != nil {
-		odu.SetMergeName(*s)
+func (_u *OrgDeptUpdate) SetNillableMergeName(v *string) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetMergeName(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearMergeName clears the value of the "merge_name" field.
-func (odu *OrgDeptUpdate) ClearMergeName() *OrgDeptUpdate {
-	odu.mutation.ClearMergeName()
-	return odu
+func (_u *OrgDeptUpdate) ClearMergeName() *OrgDeptUpdate {
+	_u.mutation.ClearMergeName()
+	return _u
 }
 
 // SetOrgID sets the "org_id" field.
-func (odu *OrgDeptUpdate) SetOrgID(s string) *OrgDeptUpdate {
-	odu.mutation.SetOrgID(s)
-	return odu
+func (_u *OrgDeptUpdate) SetOrgID(v string) *OrgDeptUpdate {
+	_u.mutation.SetOrgID(v)
+	return _u
 }
 
 // SetNillableOrgID sets the "org_id" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableOrgID(s *string) *OrgDeptUpdate {
-	if s != nil {
-		odu.SetOrgID(*s)
+func (_u *OrgDeptUpdate) SetNillableOrgID(v *string) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetOrgID(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearOrgID clears the value of the "org_id" field.
-func (odu *OrgDeptUpdate) ClearOrgID() *OrgDeptUpdate {
-	odu.mutation.ClearOrgID()
-	return odu
+func (_u *OrgDeptUpdate) ClearOrgID() *OrgDeptUpdate {
+	_u.mutation.ClearOrgID()
+	return _u
 }
 
 // SetParentID sets the "parent_id" field.
-func (odu *OrgDeptUpdate) SetParentID(s string) *OrgDeptUpdate {
-	odu.mutation.SetParentID(s)
-	return odu
+func (_u *OrgDeptUpdate) SetParentID(v string) *OrgDeptUpdate {
+	_u.mutation.SetParentID(v)
+	return _u
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableParentID(s *string) *OrgDeptUpdate {
-	if s != nil {
-		odu.SetParentID(*s)
+func (_u *OrgDeptUpdate) SetNillableParentID(v *string) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetParentID(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearParentID clears the value of the "parent_id" field.
-func (odu *OrgDeptUpdate) ClearParentID() *OrgDeptUpdate {
-	odu.mutation.ClearParentID()
-	return odu
+func (_u *OrgDeptUpdate) ClearParentID() *OrgDeptUpdate {
+	_u.mutation.ClearParentID()
+	return _u
 }
 
 // SetIsReal sets the "is_real" field.
-func (odu *OrgDeptUpdate) SetIsReal(b bool) *OrgDeptUpdate {
-	odu.mutation.SetIsReal(b)
-	return odu
+func (_u *OrgDeptUpdate) SetIsReal(v bool) *OrgDeptUpdate {
+	_u.mutation.SetIsReal(v)
+	return _u
 }
 
 // SetNillableIsReal sets the "is_real" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableIsReal(b *bool) *OrgDeptUpdate {
-	if b != nil {
-		odu.SetIsReal(*b)
+func (_u *OrgDeptUpdate) SetNillableIsReal(v *bool) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetIsReal(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearIsReal clears the value of the "is_real" field.
-func (odu *OrgDeptUpdate) ClearIsReal() *OrgDeptUpdate {
-	odu.mutation.ClearIsReal()
-	return odu
+func (_u *OrgDeptUpdate) ClearIsReal() *OrgDeptUpdate {
+	_u.mutation.ClearIsReal()
+	return _u
 }
 
 // SetIsShow sets the "is_show" field.
-func (odu *OrgDeptUpdate) SetIsShow(b bool) *OrgDeptUpdate {
-	odu.mutation.SetIsShow(b)
-	return odu
+func (_u *OrgDeptUpdate) SetIsShow(v bool) *OrgDeptUpdate {
+	_u.mutation.SetIsShow(v)
+	return _u
 }
 
 // SetNillableIsShow sets the "is_show" field if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableIsShow(b *bool) *OrgDeptUpdate {
-	if b != nil {
-		odu.SetIsShow(*b)
+func (_u *OrgDeptUpdate) SetNillableIsShow(v *bool) *OrgDeptUpdate {
+	if v != nil {
+		_u.SetIsShow(*v)
 	}
-	return odu
+	return _u
 }
 
 // ClearIsShow clears the value of the "is_show" field.
-func (odu *OrgDeptUpdate) ClearIsShow() *OrgDeptUpdate {
-	odu.mutation.ClearIsShow()
-	return odu
+func (_u *OrgDeptUpdate) ClearIsShow() *OrgDeptUpdate {
+	_u.mutation.ClearIsShow()
+	return _u
 }
 
 // SetParent sets the "parent" edge to the OrgDept entity.
-func (odu *OrgDeptUpdate) SetParent(o *OrgDept) *OrgDeptUpdate {
-	return odu.SetParentID(o.ID)
+func (_u *OrgDeptUpdate) SetParent(v *OrgDept) *OrgDeptUpdate {
+	return _u.SetParentID(v.ID)
 }
 
 // AddChildIDs adds the "children" edge to the OrgDept entity by IDs.
-func (odu *OrgDeptUpdate) AddChildIDs(ids ...string) *OrgDeptUpdate {
-	odu.mutation.AddChildIDs(ids...)
-	return odu
+func (_u *OrgDeptUpdate) AddChildIDs(ids ...string) *OrgDeptUpdate {
+	_u.mutation.AddChildIDs(ids...)
+	return _u
 }
 
 // AddChildren adds the "children" edges to the OrgDept entity.
-func (odu *OrgDeptUpdate) AddChildren(o ...*OrgDept) *OrgDeptUpdate {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_u *OrgDeptUpdate) AddChildren(v ...*OrgDept) *OrgDeptUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return odu.AddChildIDs(ids...)
+	return _u.AddChildIDs(ids...)
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (odu *OrgDeptUpdate) SetOrganID(id string) *OrgDeptUpdate {
-	odu.mutation.SetOrganID(id)
-	return odu
+func (_u *OrgDeptUpdate) SetOrganID(id string) *OrgDeptUpdate {
+	_u.mutation.SetOrganID(id)
+	return _u
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (odu *OrgDeptUpdate) SetNillableOrganID(id *string) *OrgDeptUpdate {
+func (_u *OrgDeptUpdate) SetNillableOrganID(id *string) *OrgDeptUpdate {
 	if id != nil {
-		odu = odu.SetOrganID(*id)
+		_u = _u.SetOrganID(*id)
 	}
-	return odu
+	return _u
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (odu *OrgDeptUpdate) SetOrgan(o *OrgOrgan) *OrgDeptUpdate {
-	return odu.SetOrganID(o.ID)
+func (_u *OrgDeptUpdate) SetOrgan(v *OrgOrgan) *OrgDeptUpdate {
+	return _u.SetOrganID(v.ID)
 }
 
 // AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
-func (odu *OrgDeptUpdate) AddStaffIDs(ids ...string) *OrgDeptUpdate {
-	odu.mutation.AddStaffIDs(ids...)
-	return odu
+func (_u *OrgDeptUpdate) AddStaffIDs(ids ...string) *OrgDeptUpdate {
+	_u.mutation.AddStaffIDs(ids...)
+	return _u
 }
 
 // AddStaffs adds the "staffs" edges to the OrgStaff entity.
-func (odu *OrgDeptUpdate) AddStaffs(o ...*OrgStaff) *OrgDeptUpdate {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_u *OrgDeptUpdate) AddStaffs(v ...*OrgStaff) *OrgDeptUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return odu.AddStaffIDs(ids...)
+	return _u.AddStaffIDs(ids...)
 }
 
 // Mutation returns the OrgDeptMutation object of the builder.
-func (odu *OrgDeptUpdate) Mutation() *OrgDeptMutation {
-	return odu.mutation
+func (_u *OrgDeptUpdate) Mutation() *OrgDeptMutation {
+	return _u.mutation
 }
 
 // ClearParent clears the "parent" edge to the OrgDept entity.
-func (odu *OrgDeptUpdate) ClearParent() *OrgDeptUpdate {
-	odu.mutation.ClearParent()
-	return odu
+func (_u *OrgDeptUpdate) ClearParent() *OrgDeptUpdate {
+	_u.mutation.ClearParent()
+	return _u
 }
 
 // ClearChildren clears all "children" edges to the OrgDept entity.
-func (odu *OrgDeptUpdate) ClearChildren() *OrgDeptUpdate {
-	odu.mutation.ClearChildren()
-	return odu
+func (_u *OrgDeptUpdate) ClearChildren() *OrgDeptUpdate {
+	_u.mutation.ClearChildren()
+	return _u
 }
 
 // RemoveChildIDs removes the "children" edge to OrgDept entities by IDs.
-func (odu *OrgDeptUpdate) RemoveChildIDs(ids ...string) *OrgDeptUpdate {
-	odu.mutation.RemoveChildIDs(ids...)
-	return odu
+func (_u *OrgDeptUpdate) RemoveChildIDs(ids ...string) *OrgDeptUpdate {
+	_u.mutation.RemoveChildIDs(ids...)
+	return _u
 }
 
 // RemoveChildren removes "children" edges to OrgDept entities.
-func (odu *OrgDeptUpdate) RemoveChildren(o ...*OrgDept) *OrgDeptUpdate {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_u *OrgDeptUpdate) RemoveChildren(v ...*OrgDept) *OrgDeptUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return odu.RemoveChildIDs(ids...)
+	return _u.RemoveChildIDs(ids...)
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
-func (odu *OrgDeptUpdate) ClearOrgan() *OrgDeptUpdate {
-	odu.mutation.ClearOrgan()
-	return odu
+func (_u *OrgDeptUpdate) ClearOrgan() *OrgDeptUpdate {
+	_u.mutation.ClearOrgan()
+	return _u
 }
 
 // ClearStaffs clears all "staffs" edges to the OrgStaff entity.
-func (odu *OrgDeptUpdate) ClearStaffs() *OrgDeptUpdate {
-	odu.mutation.ClearStaffs()
-	return odu
+func (_u *OrgDeptUpdate) ClearStaffs() *OrgDeptUpdate {
+	_u.mutation.ClearStaffs()
+	return _u
 }
 
 // RemoveStaffIDs removes the "staffs" edge to OrgStaff entities by IDs.
-func (odu *OrgDeptUpdate) RemoveStaffIDs(ids ...string) *OrgDeptUpdate {
-	odu.mutation.RemoveStaffIDs(ids...)
-	return odu
+func (_u *OrgDeptUpdate) RemoveStaffIDs(ids ...string) *OrgDeptUpdate {
+	_u.mutation.RemoveStaffIDs(ids...)
+	return _u
 }
 
 // RemoveStaffs removes "staffs" edges to OrgStaff entities.
-func (odu *OrgDeptUpdate) RemoveStaffs(o ...*OrgStaff) *OrgDeptUpdate {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_u *OrgDeptUpdate) RemoveStaffs(v ...*OrgStaff) *OrgDeptUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return odu.RemoveStaffIDs(ids...)
+	return _u.RemoveStaffIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (odu *OrgDeptUpdate) Save(ctx context.Context) (int, error) {
-	odu.defaults()
-	return withHooks(ctx, odu.sqlSave, odu.mutation, odu.hooks)
+func (_u *OrgDeptUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (odu *OrgDeptUpdate) SaveX(ctx context.Context) int {
-	affected, err := odu.Save(ctx)
+func (_u *OrgDeptUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -549,54 +549,54 @@ func (odu *OrgDeptUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (odu *OrgDeptUpdate) Exec(ctx context.Context) error {
-	_, err := odu.Save(ctx)
+func (_u *OrgDeptUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (odu *OrgDeptUpdate) ExecX(ctx context.Context) {
-	if err := odu.Exec(ctx); err != nil {
+func (_u *OrgDeptUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (odu *OrgDeptUpdate) defaults() {
-	if _, ok := odu.mutation.UpdatedAt(); !ok && !odu.mutation.UpdatedAtCleared() {
+func (_u *OrgDeptUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orgdept.UpdateDefaultUpdatedAt()
-		odu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (odu *OrgDeptUpdate) check() error {
-	if v, ok := odu.mutation.Memo(); ok {
+func (_u *OrgDeptUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := orgdept.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.memo": %w`, err)}
 		}
 	}
-	if v, ok := odu.mutation.Name(); ok {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := orgdept.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.name": %w`, err)}
 		}
 	}
-	if v, ok := odu.mutation.Code(); ok {
+	if v, ok := _u.mutation.Code(); ok {
 		if err := orgdept.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.code": %w`, err)}
 		}
 	}
-	if v, ok := odu.mutation.MergeName(); ok {
+	if v, ok := _u.mutation.MergeName(); ok {
 		if err := orgdept.MergeNameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.merge_name": %w`, err)}
 		}
 	}
-	if v, ok := odu.mutation.OrgID(); ok {
+	if v, ok := _u.mutation.OrgID(); ok {
 		if err := orgdept.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.org_id": %w`, err)}
 		}
 	}
-	if v, ok := odu.mutation.ParentID(); ok {
+	if v, ok := _u.mutation.ParentID(); ok {
 		if err := orgdept.ParentIDValidator(v); err != nil {
 			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.parent_id": %w`, err)}
 		}
@@ -605,135 +605,135 @@ func (odu *OrgDeptUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (odu *OrgDeptUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrgDeptUpdate {
-	odu.modifiers = append(odu.modifiers, modifiers...)
-	return odu
+func (_u *OrgDeptUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrgDeptUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := odu.check(); err != nil {
-		return n, err
+func (_u *OrgDeptUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(orgdept.Table, orgdept.Columns, sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString))
-	if ps := odu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := odu.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(orgdept.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := odu.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(orgdept.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := odu.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(orgdept.FieldSort, field.TypeInt32, value)
 	}
-	if odu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orgdept.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := odu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orgdept.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if odu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orgdept.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := odu.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(orgdept.FieldDeletedAt, field.TypeTime, value)
 	}
-	if odu.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(orgdept.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := odu.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(orgdept.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := odu.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(orgdept.FieldMemo, field.TypeString, value)
 	}
-	if odu.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(orgdept.FieldMemo, field.TypeString)
 	}
-	if value, ok := odu.mutation.TreeID(); ok {
+	if value, ok := _u.mutation.TreeID(); ok {
 		_spec.SetField(orgdept.FieldTreeID, field.TypeInt64, value)
 	}
-	if value, ok := odu.mutation.AddedTreeID(); ok {
+	if value, ok := _u.mutation.AddedTreeID(); ok {
 		_spec.AddField(orgdept.FieldTreeID, field.TypeInt64, value)
 	}
-	if odu.mutation.TreeIDCleared() {
+	if _u.mutation.TreeIDCleared() {
 		_spec.ClearField(orgdept.FieldTreeID, field.TypeInt64)
 	}
-	if value, ok := odu.mutation.TreeLevel(); ok {
+	if value, ok := _u.mutation.TreeLevel(); ok {
 		_spec.SetField(orgdept.FieldTreeLevel, field.TypeInt32, value)
 	}
-	if value, ok := odu.mutation.AddedTreeLevel(); ok {
+	if value, ok := _u.mutation.AddedTreeLevel(); ok {
 		_spec.AddField(orgdept.FieldTreeLevel, field.TypeInt32, value)
 	}
-	if odu.mutation.TreeLevelCleared() {
+	if _u.mutation.TreeLevelCleared() {
 		_spec.ClearField(orgdept.FieldTreeLevel, field.TypeInt32)
 	}
-	if value, ok := odu.mutation.TreeLeft(); ok {
+	if value, ok := _u.mutation.TreeLeft(); ok {
 		_spec.SetField(orgdept.FieldTreeLeft, field.TypeInt64, value)
 	}
-	if value, ok := odu.mutation.AddedTreeLeft(); ok {
+	if value, ok := _u.mutation.AddedTreeLeft(); ok {
 		_spec.AddField(orgdept.FieldTreeLeft, field.TypeInt64, value)
 	}
-	if odu.mutation.TreeLeftCleared() {
+	if _u.mutation.TreeLeftCleared() {
 		_spec.ClearField(orgdept.FieldTreeLeft, field.TypeInt64)
 	}
-	if value, ok := odu.mutation.TreeRight(); ok {
+	if value, ok := _u.mutation.TreeRight(); ok {
 		_spec.SetField(orgdept.FieldTreeRight, field.TypeInt64, value)
 	}
-	if value, ok := odu.mutation.AddedTreeRight(); ok {
+	if value, ok := _u.mutation.AddedTreeRight(); ok {
 		_spec.AddField(orgdept.FieldTreeRight, field.TypeInt64, value)
 	}
-	if odu.mutation.TreeRightCleared() {
+	if _u.mutation.TreeRightCleared() {
 		_spec.ClearField(orgdept.FieldTreeRight, field.TypeInt64)
 	}
-	if value, ok := odu.mutation.IsLeaf(); ok {
+	if value, ok := _u.mutation.IsLeaf(); ok {
 		_spec.SetField(orgdept.FieldIsLeaf, field.TypeBool, value)
 	}
-	if odu.mutation.IsLeafCleared() {
+	if _u.mutation.IsLeafCleared() {
 		_spec.ClearField(orgdept.FieldIsLeaf, field.TypeBool)
 	}
-	if value, ok := odu.mutation.TreePath(); ok {
+	if value, ok := _u.mutation.TreePath(); ok {
 		_spec.SetField(orgdept.FieldTreePath, field.TypeString, value)
 	}
-	if odu.mutation.TreePathCleared() {
+	if _u.mutation.TreePathCleared() {
 		_spec.ClearField(orgdept.FieldTreePath, field.TypeString)
 	}
-	if value, ok := odu.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(orgdept.FieldName, field.TypeString, value)
 	}
-	if odu.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(orgdept.FieldName, field.TypeString)
 	}
-	if value, ok := odu.mutation.Code(); ok {
+	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(orgdept.FieldCode, field.TypeString, value)
 	}
-	if odu.mutation.CodeCleared() {
+	if _u.mutation.CodeCleared() {
 		_spec.ClearField(orgdept.FieldCode, field.TypeString)
 	}
-	if value, ok := odu.mutation.MergeName(); ok {
+	if value, ok := _u.mutation.MergeName(); ok {
 		_spec.SetField(orgdept.FieldMergeName, field.TypeString, value)
 	}
-	if odu.mutation.MergeNameCleared() {
+	if _u.mutation.MergeNameCleared() {
 		_spec.ClearField(orgdept.FieldMergeName, field.TypeString)
 	}
-	if value, ok := odu.mutation.IsReal(); ok {
+	if value, ok := _u.mutation.IsReal(); ok {
 		_spec.SetField(orgdept.FieldIsReal, field.TypeBool, value)
 	}
-	if odu.mutation.IsRealCleared() {
+	if _u.mutation.IsRealCleared() {
 		_spec.ClearField(orgdept.FieldIsReal, field.TypeBool)
 	}
-	if value, ok := odu.mutation.IsShow(); ok {
+	if value, ok := _u.mutation.IsShow(); ok {
 		_spec.SetField(orgdept.FieldIsShow, field.TypeBool, value)
 	}
-	if odu.mutation.IsShowCleared() {
+	if _u.mutation.IsShowCleared() {
 		_spec.ClearField(orgdept.FieldIsShow, field.TypeBool)
 	}
-	if odu.mutation.ParentCleared() {
+	if _u.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -746,7 +746,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := odu.mutation.ParentIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -762,7 +762,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if odu.mutation.ChildrenCleared() {
+	if _u.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -775,7 +775,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := odu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !odu.mutation.ChildrenCleared() {
+	if nodes := _u.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !_u.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -791,7 +791,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := odu.mutation.ChildrenIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -807,7 +807,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if odu.mutation.OrganCleared() {
+	if _u.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -820,7 +820,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := odu.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -836,7 +836,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if odu.mutation.StaffsCleared() {
+	if _u.mutation.StaffsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -849,7 +849,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := odu.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !odu.mutation.StaffsCleared() {
+	if nodes := _u.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !_u.mutation.StaffsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -865,7 +865,7 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := odu.mutation.StaffsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.StaffsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -881,8 +881,8 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(odu.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, odu.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orgdept.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -890,8 +890,8 @@ func (odu *OrgDeptUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	odu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // OrgDeptUpdateOne is the builder for updating a single OrgDept entity.
@@ -904,529 +904,529 @@ type OrgDeptUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (oduo *OrgDeptUpdateOne) SetIsDel(b bool) *OrgDeptUpdateOne {
-	oduo.mutation.SetIsDel(b)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetIsDel(v bool) *OrgDeptUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableIsDel(b *bool) *OrgDeptUpdateOne {
-	if b != nil {
-		oduo.SetIsDel(*b)
+func (_u *OrgDeptUpdateOne) SetNillableIsDel(v *bool) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return oduo
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (oduo *OrgDeptUpdateOne) SetSort(i int32) *OrgDeptUpdateOne {
-	oduo.mutation.ResetSort()
-	oduo.mutation.SetSort(i)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetSort(v int32) *OrgDeptUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableSort(i *int32) *OrgDeptUpdateOne {
-	if i != nil {
-		oduo.SetSort(*i)
+func (_u *OrgDeptUpdateOne) SetNillableSort(v *int32) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return oduo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (oduo *OrgDeptUpdateOne) AddSort(i int32) *OrgDeptUpdateOne {
-	oduo.mutation.AddSort(i)
-	return oduo
+// AddSort adds value to the "sort" field.
+func (_u *OrgDeptUpdateOne) AddSort(v int32) *OrgDeptUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (oduo *OrgDeptUpdateOne) SetUpdatedAt(t time.Time) *OrgDeptUpdateOne {
-	oduo.mutation.SetUpdatedAt(t)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetUpdatedAt(v time.Time) *OrgDeptUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (oduo *OrgDeptUpdateOne) ClearUpdatedAt() *OrgDeptUpdateOne {
-	oduo.mutation.ClearUpdatedAt()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearUpdatedAt() *OrgDeptUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (oduo *OrgDeptUpdateOne) SetDeletedAt(t time.Time) *OrgDeptUpdateOne {
-	oduo.mutation.SetDeletedAt(t)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetDeletedAt(v time.Time) *OrgDeptUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableDeletedAt(t *time.Time) *OrgDeptUpdateOne {
-	if t != nil {
-		oduo.SetDeletedAt(*t)
+func (_u *OrgDeptUpdateOne) SetNillableDeletedAt(v *time.Time) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (oduo *OrgDeptUpdateOne) ClearDeletedAt() *OrgDeptUpdateOne {
-	oduo.mutation.ClearDeletedAt()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearDeletedAt() *OrgDeptUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (oduo *OrgDeptUpdateOne) SetIsActive(b bool) *OrgDeptUpdateOne {
-	oduo.mutation.SetIsActive(b)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetIsActive(v bool) *OrgDeptUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableIsActive(b *bool) *OrgDeptUpdateOne {
-	if b != nil {
-		oduo.SetIsActive(*b)
+func (_u *OrgDeptUpdateOne) SetNillableIsActive(v *bool) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return oduo
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (oduo *OrgDeptUpdateOne) SetMemo(s string) *OrgDeptUpdateOne {
-	oduo.mutation.SetMemo(s)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetMemo(v string) *OrgDeptUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableMemo(s *string) *OrgDeptUpdateOne {
-	if s != nil {
-		oduo.SetMemo(*s)
+func (_u *OrgDeptUpdateOne) SetNillableMemo(v *string) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (oduo *OrgDeptUpdateOne) ClearMemo() *OrgDeptUpdateOne {
-	oduo.mutation.ClearMemo()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearMemo() *OrgDeptUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetTreeID sets the "tree_id" field.
-func (oduo *OrgDeptUpdateOne) SetTreeID(i int64) *OrgDeptUpdateOne {
-	oduo.mutation.ResetTreeID()
-	oduo.mutation.SetTreeID(i)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetTreeID(v int64) *OrgDeptUpdateOne {
+	_u.mutation.ResetTreeID()
+	_u.mutation.SetTreeID(v)
+	return _u
 }
 
 // SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableTreeID(i *int64) *OrgDeptUpdateOne {
-	if i != nil {
-		oduo.SetTreeID(*i)
+func (_u *OrgDeptUpdateOne) SetNillableTreeID(v *int64) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetTreeID(*v)
 	}
-	return oduo
+	return _u
 }
 
-// AddTreeID adds i to the "tree_id" field.
-func (oduo *OrgDeptUpdateOne) AddTreeID(i int64) *OrgDeptUpdateOne {
-	oduo.mutation.AddTreeID(i)
-	return oduo
+// AddTreeID adds value to the "tree_id" field.
+func (_u *OrgDeptUpdateOne) AddTreeID(v int64) *OrgDeptUpdateOne {
+	_u.mutation.AddTreeID(v)
+	return _u
 }
 
 // ClearTreeID clears the value of the "tree_id" field.
-func (oduo *OrgDeptUpdateOne) ClearTreeID() *OrgDeptUpdateOne {
-	oduo.mutation.ClearTreeID()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearTreeID() *OrgDeptUpdateOne {
+	_u.mutation.ClearTreeID()
+	return _u
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (oduo *OrgDeptUpdateOne) SetTreeLevel(i int32) *OrgDeptUpdateOne {
-	oduo.mutation.ResetTreeLevel()
-	oduo.mutation.SetTreeLevel(i)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetTreeLevel(v int32) *OrgDeptUpdateOne {
+	_u.mutation.ResetTreeLevel()
+	_u.mutation.SetTreeLevel(v)
+	return _u
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableTreeLevel(i *int32) *OrgDeptUpdateOne {
-	if i != nil {
-		oduo.SetTreeLevel(*i)
+func (_u *OrgDeptUpdateOne) SetNillableTreeLevel(v *int32) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetTreeLevel(*v)
 	}
-	return oduo
+	return _u
 }
 
-// AddTreeLevel adds i to the "tree_level" field.
-func (oduo *OrgDeptUpdateOne) AddTreeLevel(i int32) *OrgDeptUpdateOne {
-	oduo.mutation.AddTreeLevel(i)
-	return oduo
+// AddTreeLevel adds value to the "tree_level" field.
+func (_u *OrgDeptUpdateOne) AddTreeLevel(v int32) *OrgDeptUpdateOne {
+	_u.mutation.AddTreeLevel(v)
+	return _u
 }
 
 // ClearTreeLevel clears the value of the "tree_level" field.
-func (oduo *OrgDeptUpdateOne) ClearTreeLevel() *OrgDeptUpdateOne {
-	oduo.mutation.ClearTreeLevel()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearTreeLevel() *OrgDeptUpdateOne {
+	_u.mutation.ClearTreeLevel()
+	return _u
 }
 
 // SetTreeLeft sets the "tree_left" field.
-func (oduo *OrgDeptUpdateOne) SetTreeLeft(i int64) *OrgDeptUpdateOne {
-	oduo.mutation.ResetTreeLeft()
-	oduo.mutation.SetTreeLeft(i)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetTreeLeft(v int64) *OrgDeptUpdateOne {
+	_u.mutation.ResetTreeLeft()
+	_u.mutation.SetTreeLeft(v)
+	return _u
 }
 
 // SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableTreeLeft(i *int64) *OrgDeptUpdateOne {
-	if i != nil {
-		oduo.SetTreeLeft(*i)
+func (_u *OrgDeptUpdateOne) SetNillableTreeLeft(v *int64) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetTreeLeft(*v)
 	}
-	return oduo
+	return _u
 }
 
-// AddTreeLeft adds i to the "tree_left" field.
-func (oduo *OrgDeptUpdateOne) AddTreeLeft(i int64) *OrgDeptUpdateOne {
-	oduo.mutation.AddTreeLeft(i)
-	return oduo
+// AddTreeLeft adds value to the "tree_left" field.
+func (_u *OrgDeptUpdateOne) AddTreeLeft(v int64) *OrgDeptUpdateOne {
+	_u.mutation.AddTreeLeft(v)
+	return _u
 }
 
 // ClearTreeLeft clears the value of the "tree_left" field.
-func (oduo *OrgDeptUpdateOne) ClearTreeLeft() *OrgDeptUpdateOne {
-	oduo.mutation.ClearTreeLeft()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearTreeLeft() *OrgDeptUpdateOne {
+	_u.mutation.ClearTreeLeft()
+	return _u
 }
 
 // SetTreeRight sets the "tree_right" field.
-func (oduo *OrgDeptUpdateOne) SetTreeRight(i int64) *OrgDeptUpdateOne {
-	oduo.mutation.ResetTreeRight()
-	oduo.mutation.SetTreeRight(i)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetTreeRight(v int64) *OrgDeptUpdateOne {
+	_u.mutation.ResetTreeRight()
+	_u.mutation.SetTreeRight(v)
+	return _u
 }
 
 // SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableTreeRight(i *int64) *OrgDeptUpdateOne {
-	if i != nil {
-		oduo.SetTreeRight(*i)
+func (_u *OrgDeptUpdateOne) SetNillableTreeRight(v *int64) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetTreeRight(*v)
 	}
-	return oduo
+	return _u
 }
 
-// AddTreeRight adds i to the "tree_right" field.
-func (oduo *OrgDeptUpdateOne) AddTreeRight(i int64) *OrgDeptUpdateOne {
-	oduo.mutation.AddTreeRight(i)
-	return oduo
+// AddTreeRight adds value to the "tree_right" field.
+func (_u *OrgDeptUpdateOne) AddTreeRight(v int64) *OrgDeptUpdateOne {
+	_u.mutation.AddTreeRight(v)
+	return _u
 }
 
 // ClearTreeRight clears the value of the "tree_right" field.
-func (oduo *OrgDeptUpdateOne) ClearTreeRight() *OrgDeptUpdateOne {
-	oduo.mutation.ClearTreeRight()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearTreeRight() *OrgDeptUpdateOne {
+	_u.mutation.ClearTreeRight()
+	return _u
 }
 
 // SetIsLeaf sets the "is_leaf" field.
-func (oduo *OrgDeptUpdateOne) SetIsLeaf(b bool) *OrgDeptUpdateOne {
-	oduo.mutation.SetIsLeaf(b)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetIsLeaf(v bool) *OrgDeptUpdateOne {
+	_u.mutation.SetIsLeaf(v)
+	return _u
 }
 
 // SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableIsLeaf(b *bool) *OrgDeptUpdateOne {
-	if b != nil {
-		oduo.SetIsLeaf(*b)
+func (_u *OrgDeptUpdateOne) SetNillableIsLeaf(v *bool) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetIsLeaf(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearIsLeaf clears the value of the "is_leaf" field.
-func (oduo *OrgDeptUpdateOne) ClearIsLeaf() *OrgDeptUpdateOne {
-	oduo.mutation.ClearIsLeaf()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearIsLeaf() *OrgDeptUpdateOne {
+	_u.mutation.ClearIsLeaf()
+	return _u
 }
 
 // SetTreePath sets the "tree_path" field.
-func (oduo *OrgDeptUpdateOne) SetTreePath(s string) *OrgDeptUpdateOne {
-	oduo.mutation.SetTreePath(s)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetTreePath(v string) *OrgDeptUpdateOne {
+	_u.mutation.SetTreePath(v)
+	return _u
 }
 
 // SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableTreePath(s *string) *OrgDeptUpdateOne {
-	if s != nil {
-		oduo.SetTreePath(*s)
+func (_u *OrgDeptUpdateOne) SetNillableTreePath(v *string) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetTreePath(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearTreePath clears the value of the "tree_path" field.
-func (oduo *OrgDeptUpdateOne) ClearTreePath() *OrgDeptUpdateOne {
-	oduo.mutation.ClearTreePath()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearTreePath() *OrgDeptUpdateOne {
+	_u.mutation.ClearTreePath()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (oduo *OrgDeptUpdateOne) SetName(s string) *OrgDeptUpdateOne {
-	oduo.mutation.SetName(s)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetName(v string) *OrgDeptUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableName(s *string) *OrgDeptUpdateOne {
-	if s != nil {
-		oduo.SetName(*s)
+func (_u *OrgDeptUpdateOne) SetNillableName(v *string) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (oduo *OrgDeptUpdateOne) ClearName() *OrgDeptUpdateOne {
-	oduo.mutation.ClearName()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearName() *OrgDeptUpdateOne {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetCode sets the "code" field.
-func (oduo *OrgDeptUpdateOne) SetCode(s string) *OrgDeptUpdateOne {
-	oduo.mutation.SetCode(s)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetCode(v string) *OrgDeptUpdateOne {
+	_u.mutation.SetCode(v)
+	return _u
 }
 
 // SetNillableCode sets the "code" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableCode(s *string) *OrgDeptUpdateOne {
-	if s != nil {
-		oduo.SetCode(*s)
+func (_u *OrgDeptUpdateOne) SetNillableCode(v *string) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetCode(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearCode clears the value of the "code" field.
-func (oduo *OrgDeptUpdateOne) ClearCode() *OrgDeptUpdateOne {
-	oduo.mutation.ClearCode()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearCode() *OrgDeptUpdateOne {
+	_u.mutation.ClearCode()
+	return _u
 }
 
 // SetMergeName sets the "merge_name" field.
-func (oduo *OrgDeptUpdateOne) SetMergeName(s string) *OrgDeptUpdateOne {
-	oduo.mutation.SetMergeName(s)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetMergeName(v string) *OrgDeptUpdateOne {
+	_u.mutation.SetMergeName(v)
+	return _u
 }
 
 // SetNillableMergeName sets the "merge_name" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableMergeName(s *string) *OrgDeptUpdateOne {
-	if s != nil {
-		oduo.SetMergeName(*s)
+func (_u *OrgDeptUpdateOne) SetNillableMergeName(v *string) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetMergeName(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearMergeName clears the value of the "merge_name" field.
-func (oduo *OrgDeptUpdateOne) ClearMergeName() *OrgDeptUpdateOne {
-	oduo.mutation.ClearMergeName()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearMergeName() *OrgDeptUpdateOne {
+	_u.mutation.ClearMergeName()
+	return _u
 }
 
 // SetOrgID sets the "org_id" field.
-func (oduo *OrgDeptUpdateOne) SetOrgID(s string) *OrgDeptUpdateOne {
-	oduo.mutation.SetOrgID(s)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetOrgID(v string) *OrgDeptUpdateOne {
+	_u.mutation.SetOrgID(v)
+	return _u
 }
 
 // SetNillableOrgID sets the "org_id" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableOrgID(s *string) *OrgDeptUpdateOne {
-	if s != nil {
-		oduo.SetOrgID(*s)
+func (_u *OrgDeptUpdateOne) SetNillableOrgID(v *string) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetOrgID(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearOrgID clears the value of the "org_id" field.
-func (oduo *OrgDeptUpdateOne) ClearOrgID() *OrgDeptUpdateOne {
-	oduo.mutation.ClearOrgID()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearOrgID() *OrgDeptUpdateOne {
+	_u.mutation.ClearOrgID()
+	return _u
 }
 
 // SetParentID sets the "parent_id" field.
-func (oduo *OrgDeptUpdateOne) SetParentID(s string) *OrgDeptUpdateOne {
-	oduo.mutation.SetParentID(s)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetParentID(v string) *OrgDeptUpdateOne {
+	_u.mutation.SetParentID(v)
+	return _u
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableParentID(s *string) *OrgDeptUpdateOne {
-	if s != nil {
-		oduo.SetParentID(*s)
+func (_u *OrgDeptUpdateOne) SetNillableParentID(v *string) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetParentID(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearParentID clears the value of the "parent_id" field.
-func (oduo *OrgDeptUpdateOne) ClearParentID() *OrgDeptUpdateOne {
-	oduo.mutation.ClearParentID()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearParentID() *OrgDeptUpdateOne {
+	_u.mutation.ClearParentID()
+	return _u
 }
 
 // SetIsReal sets the "is_real" field.
-func (oduo *OrgDeptUpdateOne) SetIsReal(b bool) *OrgDeptUpdateOne {
-	oduo.mutation.SetIsReal(b)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetIsReal(v bool) *OrgDeptUpdateOne {
+	_u.mutation.SetIsReal(v)
+	return _u
 }
 
 // SetNillableIsReal sets the "is_real" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableIsReal(b *bool) *OrgDeptUpdateOne {
-	if b != nil {
-		oduo.SetIsReal(*b)
+func (_u *OrgDeptUpdateOne) SetNillableIsReal(v *bool) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetIsReal(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearIsReal clears the value of the "is_real" field.
-func (oduo *OrgDeptUpdateOne) ClearIsReal() *OrgDeptUpdateOne {
-	oduo.mutation.ClearIsReal()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearIsReal() *OrgDeptUpdateOne {
+	_u.mutation.ClearIsReal()
+	return _u
 }
 
 // SetIsShow sets the "is_show" field.
-func (oduo *OrgDeptUpdateOne) SetIsShow(b bool) *OrgDeptUpdateOne {
-	oduo.mutation.SetIsShow(b)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetIsShow(v bool) *OrgDeptUpdateOne {
+	_u.mutation.SetIsShow(v)
+	return _u
 }
 
 // SetNillableIsShow sets the "is_show" field if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableIsShow(b *bool) *OrgDeptUpdateOne {
-	if b != nil {
-		oduo.SetIsShow(*b)
+func (_u *OrgDeptUpdateOne) SetNillableIsShow(v *bool) *OrgDeptUpdateOne {
+	if v != nil {
+		_u.SetIsShow(*v)
 	}
-	return oduo
+	return _u
 }
 
 // ClearIsShow clears the value of the "is_show" field.
-func (oduo *OrgDeptUpdateOne) ClearIsShow() *OrgDeptUpdateOne {
-	oduo.mutation.ClearIsShow()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearIsShow() *OrgDeptUpdateOne {
+	_u.mutation.ClearIsShow()
+	return _u
 }
 
 // SetParent sets the "parent" edge to the OrgDept entity.
-func (oduo *OrgDeptUpdateOne) SetParent(o *OrgDept) *OrgDeptUpdateOne {
-	return oduo.SetParentID(o.ID)
+func (_u *OrgDeptUpdateOne) SetParent(v *OrgDept) *OrgDeptUpdateOne {
+	return _u.SetParentID(v.ID)
 }
 
 // AddChildIDs adds the "children" edge to the OrgDept entity by IDs.
-func (oduo *OrgDeptUpdateOne) AddChildIDs(ids ...string) *OrgDeptUpdateOne {
-	oduo.mutation.AddChildIDs(ids...)
-	return oduo
+func (_u *OrgDeptUpdateOne) AddChildIDs(ids ...string) *OrgDeptUpdateOne {
+	_u.mutation.AddChildIDs(ids...)
+	return _u
 }
 
 // AddChildren adds the "children" edges to the OrgDept entity.
-func (oduo *OrgDeptUpdateOne) AddChildren(o ...*OrgDept) *OrgDeptUpdateOne {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_u *OrgDeptUpdateOne) AddChildren(v ...*OrgDept) *OrgDeptUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return oduo.AddChildIDs(ids...)
+	return _u.AddChildIDs(ids...)
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (oduo *OrgDeptUpdateOne) SetOrganID(id string) *OrgDeptUpdateOne {
-	oduo.mutation.SetOrganID(id)
-	return oduo
+func (_u *OrgDeptUpdateOne) SetOrganID(id string) *OrgDeptUpdateOne {
+	_u.mutation.SetOrganID(id)
+	return _u
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (oduo *OrgDeptUpdateOne) SetNillableOrganID(id *string) *OrgDeptUpdateOne {
+func (_u *OrgDeptUpdateOne) SetNillableOrganID(id *string) *OrgDeptUpdateOne {
 	if id != nil {
-		oduo = oduo.SetOrganID(*id)
+		_u = _u.SetOrganID(*id)
 	}
-	return oduo
+	return _u
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (oduo *OrgDeptUpdateOne) SetOrgan(o *OrgOrgan) *OrgDeptUpdateOne {
-	return oduo.SetOrganID(o.ID)
+func (_u *OrgDeptUpdateOne) SetOrgan(v *OrgOrgan) *OrgDeptUpdateOne {
+	return _u.SetOrganID(v.ID)
 }
 
 // AddStaffIDs adds the "staffs" edge to the OrgStaff entity by IDs.
-func (oduo *OrgDeptUpdateOne) AddStaffIDs(ids ...string) *OrgDeptUpdateOne {
-	oduo.mutation.AddStaffIDs(ids...)
-	return oduo
+func (_u *OrgDeptUpdateOne) AddStaffIDs(ids ...string) *OrgDeptUpdateOne {
+	_u.mutation.AddStaffIDs(ids...)
+	return _u
 }
 
 // AddStaffs adds the "staffs" edges to the OrgStaff entity.
-func (oduo *OrgDeptUpdateOne) AddStaffs(o ...*OrgStaff) *OrgDeptUpdateOne {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_u *OrgDeptUpdateOne) AddStaffs(v ...*OrgStaff) *OrgDeptUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return oduo.AddStaffIDs(ids...)
+	return _u.AddStaffIDs(ids...)
 }
 
 // Mutation returns the OrgDeptMutation object of the builder.
-func (oduo *OrgDeptUpdateOne) Mutation() *OrgDeptMutation {
-	return oduo.mutation
+func (_u *OrgDeptUpdateOne) Mutation() *OrgDeptMutation {
+	return _u.mutation
 }
 
 // ClearParent clears the "parent" edge to the OrgDept entity.
-func (oduo *OrgDeptUpdateOne) ClearParent() *OrgDeptUpdateOne {
-	oduo.mutation.ClearParent()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearParent() *OrgDeptUpdateOne {
+	_u.mutation.ClearParent()
+	return _u
 }
 
 // ClearChildren clears all "children" edges to the OrgDept entity.
-func (oduo *OrgDeptUpdateOne) ClearChildren() *OrgDeptUpdateOne {
-	oduo.mutation.ClearChildren()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearChildren() *OrgDeptUpdateOne {
+	_u.mutation.ClearChildren()
+	return _u
 }
 
 // RemoveChildIDs removes the "children" edge to OrgDept entities by IDs.
-func (oduo *OrgDeptUpdateOne) RemoveChildIDs(ids ...string) *OrgDeptUpdateOne {
-	oduo.mutation.RemoveChildIDs(ids...)
-	return oduo
+func (_u *OrgDeptUpdateOne) RemoveChildIDs(ids ...string) *OrgDeptUpdateOne {
+	_u.mutation.RemoveChildIDs(ids...)
+	return _u
 }
 
 // RemoveChildren removes "children" edges to OrgDept entities.
-func (oduo *OrgDeptUpdateOne) RemoveChildren(o ...*OrgDept) *OrgDeptUpdateOne {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_u *OrgDeptUpdateOne) RemoveChildren(v ...*OrgDept) *OrgDeptUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return oduo.RemoveChildIDs(ids...)
+	return _u.RemoveChildIDs(ids...)
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
-func (oduo *OrgDeptUpdateOne) ClearOrgan() *OrgDeptUpdateOne {
-	oduo.mutation.ClearOrgan()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearOrgan() *OrgDeptUpdateOne {
+	_u.mutation.ClearOrgan()
+	return _u
 }
 
 // ClearStaffs clears all "staffs" edges to the OrgStaff entity.
-func (oduo *OrgDeptUpdateOne) ClearStaffs() *OrgDeptUpdateOne {
-	oduo.mutation.ClearStaffs()
-	return oduo
+func (_u *OrgDeptUpdateOne) ClearStaffs() *OrgDeptUpdateOne {
+	_u.mutation.ClearStaffs()
+	return _u
 }
 
 // RemoveStaffIDs removes the "staffs" edge to OrgStaff entities by IDs.
-func (oduo *OrgDeptUpdateOne) RemoveStaffIDs(ids ...string) *OrgDeptUpdateOne {
-	oduo.mutation.RemoveStaffIDs(ids...)
-	return oduo
+func (_u *OrgDeptUpdateOne) RemoveStaffIDs(ids ...string) *OrgDeptUpdateOne {
+	_u.mutation.RemoveStaffIDs(ids...)
+	return _u
 }
 
 // RemoveStaffs removes "staffs" edges to OrgStaff entities.
-func (oduo *OrgDeptUpdateOne) RemoveStaffs(o ...*OrgStaff) *OrgDeptUpdateOne {
-	ids := make([]string, len(o))
-	for i := range o {
-		ids[i] = o[i].ID
+func (_u *OrgDeptUpdateOne) RemoveStaffs(v ...*OrgStaff) *OrgDeptUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return oduo.RemoveStaffIDs(ids...)
+	return _u.RemoveStaffIDs(ids...)
 }
 
 // Where appends a list predicates to the OrgDeptUpdate builder.
-func (oduo *OrgDeptUpdateOne) Where(ps ...predicate.OrgDept) *OrgDeptUpdateOne {
-	oduo.mutation.Where(ps...)
-	return oduo
+func (_u *OrgDeptUpdateOne) Where(ps ...predicate.OrgDept) *OrgDeptUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (oduo *OrgDeptUpdateOne) Select(field string, fields ...string) *OrgDeptUpdateOne {
-	oduo.fields = append([]string{field}, fields...)
-	return oduo
+func (_u *OrgDeptUpdateOne) Select(field string, fields ...string) *OrgDeptUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated OrgDept entity.
-func (oduo *OrgDeptUpdateOne) Save(ctx context.Context) (*OrgDept, error) {
-	oduo.defaults()
-	return withHooks(ctx, oduo.sqlSave, oduo.mutation, oduo.hooks)
+func (_u *OrgDeptUpdateOne) Save(ctx context.Context) (*OrgDept, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oduo *OrgDeptUpdateOne) SaveX(ctx context.Context) *OrgDept {
-	node, err := oduo.Save(ctx)
+func (_u *OrgDeptUpdateOne) SaveX(ctx context.Context) *OrgDept {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1434,54 +1434,54 @@ func (oduo *OrgDeptUpdateOne) SaveX(ctx context.Context) *OrgDept {
 }
 
 // Exec executes the query on the entity.
-func (oduo *OrgDeptUpdateOne) Exec(ctx context.Context) error {
-	_, err := oduo.Save(ctx)
+func (_u *OrgDeptUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oduo *OrgDeptUpdateOne) ExecX(ctx context.Context) {
-	if err := oduo.Exec(ctx); err != nil {
+func (_u *OrgDeptUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (oduo *OrgDeptUpdateOne) defaults() {
-	if _, ok := oduo.mutation.UpdatedAt(); !ok && !oduo.mutation.UpdatedAtCleared() {
+func (_u *OrgDeptUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orgdept.UpdateDefaultUpdatedAt()
-		oduo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (oduo *OrgDeptUpdateOne) check() error {
-	if v, ok := oduo.mutation.Memo(); ok {
+func (_u *OrgDeptUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := orgdept.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.memo": %w`, err)}
 		}
 	}
-	if v, ok := oduo.mutation.Name(); ok {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := orgdept.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.name": %w`, err)}
 		}
 	}
-	if v, ok := oduo.mutation.Code(); ok {
+	if v, ok := _u.mutation.Code(); ok {
 		if err := orgdept.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.code": %w`, err)}
 		}
 	}
-	if v, ok := oduo.mutation.MergeName(); ok {
+	if v, ok := _u.mutation.MergeName(); ok {
 		if err := orgdept.MergeNameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.merge_name": %w`, err)}
 		}
 	}
-	if v, ok := oduo.mutation.OrgID(); ok {
+	if v, ok := _u.mutation.OrgID(); ok {
 		if err := orgdept.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.org_id": %w`, err)}
 		}
 	}
-	if v, ok := oduo.mutation.ParentID(); ok {
+	if v, ok := _u.mutation.ParentID(); ok {
 		if err := orgdept.ParentIDValidator(v); err != nil {
 			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`mainent: validator failed for field "OrgDept.parent_id": %w`, err)}
 		}
@@ -1490,22 +1490,22 @@ func (oduo *OrgDeptUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (oduo *OrgDeptUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrgDeptUpdateOne {
-	oduo.modifiers = append(oduo.modifiers, modifiers...)
-	return oduo
+func (_u *OrgDeptUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrgDeptUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err error) {
-	if err := oduo.check(); err != nil {
+func (_u *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(orgdept.Table, orgdept.Columns, sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString))
-	id, ok := oduo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "OrgDept.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := oduo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, orgdept.FieldID)
 		for _, f := range fields {
@@ -1517,125 +1517,125 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 			}
 		}
 	}
-	if ps := oduo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := oduo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(orgdept.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := oduo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(orgdept.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := oduo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(orgdept.FieldSort, field.TypeInt32, value)
 	}
-	if oduo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orgdept.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := oduo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orgdept.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if oduo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orgdept.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := oduo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(orgdept.FieldDeletedAt, field.TypeTime, value)
 	}
-	if oduo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(orgdept.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := oduo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(orgdept.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := oduo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(orgdept.FieldMemo, field.TypeString, value)
 	}
-	if oduo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(orgdept.FieldMemo, field.TypeString)
 	}
-	if value, ok := oduo.mutation.TreeID(); ok {
+	if value, ok := _u.mutation.TreeID(); ok {
 		_spec.SetField(orgdept.FieldTreeID, field.TypeInt64, value)
 	}
-	if value, ok := oduo.mutation.AddedTreeID(); ok {
+	if value, ok := _u.mutation.AddedTreeID(); ok {
 		_spec.AddField(orgdept.FieldTreeID, field.TypeInt64, value)
 	}
-	if oduo.mutation.TreeIDCleared() {
+	if _u.mutation.TreeIDCleared() {
 		_spec.ClearField(orgdept.FieldTreeID, field.TypeInt64)
 	}
-	if value, ok := oduo.mutation.TreeLevel(); ok {
+	if value, ok := _u.mutation.TreeLevel(); ok {
 		_spec.SetField(orgdept.FieldTreeLevel, field.TypeInt32, value)
 	}
-	if value, ok := oduo.mutation.AddedTreeLevel(); ok {
+	if value, ok := _u.mutation.AddedTreeLevel(); ok {
 		_spec.AddField(orgdept.FieldTreeLevel, field.TypeInt32, value)
 	}
-	if oduo.mutation.TreeLevelCleared() {
+	if _u.mutation.TreeLevelCleared() {
 		_spec.ClearField(orgdept.FieldTreeLevel, field.TypeInt32)
 	}
-	if value, ok := oduo.mutation.TreeLeft(); ok {
+	if value, ok := _u.mutation.TreeLeft(); ok {
 		_spec.SetField(orgdept.FieldTreeLeft, field.TypeInt64, value)
 	}
-	if value, ok := oduo.mutation.AddedTreeLeft(); ok {
+	if value, ok := _u.mutation.AddedTreeLeft(); ok {
 		_spec.AddField(orgdept.FieldTreeLeft, field.TypeInt64, value)
 	}
-	if oduo.mutation.TreeLeftCleared() {
+	if _u.mutation.TreeLeftCleared() {
 		_spec.ClearField(orgdept.FieldTreeLeft, field.TypeInt64)
 	}
-	if value, ok := oduo.mutation.TreeRight(); ok {
+	if value, ok := _u.mutation.TreeRight(); ok {
 		_spec.SetField(orgdept.FieldTreeRight, field.TypeInt64, value)
 	}
-	if value, ok := oduo.mutation.AddedTreeRight(); ok {
+	if value, ok := _u.mutation.AddedTreeRight(); ok {
 		_spec.AddField(orgdept.FieldTreeRight, field.TypeInt64, value)
 	}
-	if oduo.mutation.TreeRightCleared() {
+	if _u.mutation.TreeRightCleared() {
 		_spec.ClearField(orgdept.FieldTreeRight, field.TypeInt64)
 	}
-	if value, ok := oduo.mutation.IsLeaf(); ok {
+	if value, ok := _u.mutation.IsLeaf(); ok {
 		_spec.SetField(orgdept.FieldIsLeaf, field.TypeBool, value)
 	}
-	if oduo.mutation.IsLeafCleared() {
+	if _u.mutation.IsLeafCleared() {
 		_spec.ClearField(orgdept.FieldIsLeaf, field.TypeBool)
 	}
-	if value, ok := oduo.mutation.TreePath(); ok {
+	if value, ok := _u.mutation.TreePath(); ok {
 		_spec.SetField(orgdept.FieldTreePath, field.TypeString, value)
 	}
-	if oduo.mutation.TreePathCleared() {
+	if _u.mutation.TreePathCleared() {
 		_spec.ClearField(orgdept.FieldTreePath, field.TypeString)
 	}
-	if value, ok := oduo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(orgdept.FieldName, field.TypeString, value)
 	}
-	if oduo.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(orgdept.FieldName, field.TypeString)
 	}
-	if value, ok := oduo.mutation.Code(); ok {
+	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(orgdept.FieldCode, field.TypeString, value)
 	}
-	if oduo.mutation.CodeCleared() {
+	if _u.mutation.CodeCleared() {
 		_spec.ClearField(orgdept.FieldCode, field.TypeString)
 	}
-	if value, ok := oduo.mutation.MergeName(); ok {
+	if value, ok := _u.mutation.MergeName(); ok {
 		_spec.SetField(orgdept.FieldMergeName, field.TypeString, value)
 	}
-	if oduo.mutation.MergeNameCleared() {
+	if _u.mutation.MergeNameCleared() {
 		_spec.ClearField(orgdept.FieldMergeName, field.TypeString)
 	}
-	if value, ok := oduo.mutation.IsReal(); ok {
+	if value, ok := _u.mutation.IsReal(); ok {
 		_spec.SetField(orgdept.FieldIsReal, field.TypeBool, value)
 	}
-	if oduo.mutation.IsRealCleared() {
+	if _u.mutation.IsRealCleared() {
 		_spec.ClearField(orgdept.FieldIsReal, field.TypeBool)
 	}
-	if value, ok := oduo.mutation.IsShow(); ok {
+	if value, ok := _u.mutation.IsShow(); ok {
 		_spec.SetField(orgdept.FieldIsShow, field.TypeBool, value)
 	}
-	if oduo.mutation.IsShowCleared() {
+	if _u.mutation.IsShowCleared() {
 		_spec.ClearField(orgdept.FieldIsShow, field.TypeBool)
 	}
-	if oduo.mutation.ParentCleared() {
+	if _u.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1648,7 +1648,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oduo.mutation.ParentIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1664,7 +1664,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if oduo.mutation.ChildrenCleared() {
+	if _u.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1677,7 +1677,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oduo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !oduo.mutation.ChildrenCleared() {
+	if nodes := _u.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !_u.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1693,7 +1693,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oduo.mutation.ChildrenIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1709,7 +1709,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if oduo.mutation.OrganCleared() {
+	if _u.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1722,7 +1722,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oduo.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1738,7 +1738,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if oduo.mutation.StaffsCleared() {
+	if _u.mutation.StaffsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1751,7 +1751,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oduo.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !oduo.mutation.StaffsCleared() {
+	if nodes := _u.mutation.RemovedStaffsIDs(); len(nodes) > 0 && !_u.mutation.StaffsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1767,7 +1767,7 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := oduo.mutation.StaffsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.StaffsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1783,11 +1783,11 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(oduo.modifiers...)
-	_node = &OrgDept{config: oduo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &OrgDept{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, oduo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orgdept.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -1795,6 +1795,6 @@ func (oduo *OrgDeptUpdateOne) sqlSave(ctx context.Context) (_node *OrgDept, err 
 		}
 		return nil, err
 	}
-	oduo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

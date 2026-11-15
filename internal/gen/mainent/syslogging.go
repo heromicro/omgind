@@ -66,7 +66,7 @@ func (*SysLogging) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysLogging fields.
-func (sl *SysLogging) assignValues(columns []string, values []any) error {
+func (_m *SysLogging) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -76,100 +76,100 @@ func (sl *SysLogging) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				sl.ID = value.String
+				_m.ID = value.String
 			}
 		case syslogging.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sl.CreatedAt = new(time.Time)
-				*sl.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case syslogging.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sl.UpdatedAt = new(time.Time)
-				*sl.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case syslogging.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				sl.DeletedAt = new(time.Time)
-				*sl.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case syslogging.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				sl.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case syslogging.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sl.Memo = new(string)
-				*sl.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case syslogging.FieldLevel:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field level", values[i])
 			} else if value.Valid {
-				sl.Level = new(string)
-				*sl.Level = value.String
+				_m.Level = new(string)
+				*_m.Level = value.String
 			}
 		case syslogging.FieldTraceID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field trace_id", values[i])
 			} else if value.Valid {
-				sl.TraceID = new(string)
-				*sl.TraceID = value.String
+				_m.TraceID = new(string)
+				*_m.TraceID = value.String
 			}
 		case syslogging.FieldUserID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				sl.UserID = new(string)
-				*sl.UserID = value.String
+				_m.UserID = new(string)
+				*_m.UserID = value.String
 			}
 		case syslogging.FieldTag:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field tag", values[i])
 			} else if value.Valid {
-				sl.Tag = new(string)
-				*sl.Tag = value.String
+				_m.Tag = new(string)
+				*_m.Tag = value.String
 			}
 		case syslogging.FieldVersion:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field version", values[i])
 			} else if value.Valid {
-				sl.Version = new(string)
-				*sl.Version = value.String
+				_m.Version = new(string)
+				*_m.Version = value.String
 			}
 		case syslogging.FieldMessage:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field message", values[i])
 			} else if value.Valid {
-				sl.Message = new(string)
-				*sl.Message = value.String
+				_m.Message = new(string)
+				*_m.Message = value.String
 			}
 		case syslogging.FieldData:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field data", values[i])
 			} else if value.Valid {
-				sl.Data = new(string)
-				*sl.Data = value.String
+				_m.Data = new(string)
+				*_m.Data = value.String
 			}
 		case syslogging.FieldErrorStack:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field error_stack", values[i])
 			} else if value.Valid {
-				sl.ErrorStack = new(string)
-				*sl.ErrorStack = value.String
+				_m.ErrorStack = new(string)
+				*_m.ErrorStack = value.String
 			}
 		default:
-			sl.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -177,92 +177,92 @@ func (sl *SysLogging) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysLogging.
 // This includes values selected through modifiers, order, etc.
-func (sl *SysLogging) Value(name string) (ent.Value, error) {
-	return sl.selectValues.Get(name)
+func (_m *SysLogging) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysLogging.
 // Note that you need to call SysLogging.Unwrap() before calling this method if this SysLogging
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (sl *SysLogging) Update() *SysLoggingUpdateOne {
-	return NewSysLoggingClient(sl.config).UpdateOne(sl)
+func (_m *SysLogging) Update() *SysLoggingUpdateOne {
+	return NewSysLoggingClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysLogging entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (sl *SysLogging) Unwrap() *SysLogging {
-	_tx, ok := sl.config.driver.(*txDriver)
+func (_m *SysLogging) Unwrap() *SysLogging {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysLogging is not a transactional entity")
 	}
-	sl.config.driver = _tx.drv
-	return sl
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (sl *SysLogging) String() string {
+func (_m *SysLogging) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysLogging(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", sl.ID))
-	if v := sl.CreatedAt; v != nil {
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sl.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sl.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sl.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
-	if v := sl.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sl.Level; v != nil {
+	if v := _m.Level; v != nil {
 		builder.WriteString("level=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sl.TraceID; v != nil {
+	if v := _m.TraceID; v != nil {
 		builder.WriteString("trace_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sl.UserID; v != nil {
+	if v := _m.UserID; v != nil {
 		builder.WriteString("user_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sl.Tag; v != nil {
+	if v := _m.Tag; v != nil {
 		builder.WriteString("tag=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sl.Version; v != nil {
+	if v := _m.Version; v != nil {
 		builder.WriteString("version=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sl.Message; v != nil {
+	if v := _m.Message; v != nil {
 		builder.WriteString("message=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sl.Data; v != nil {
+	if v := _m.Data; v != nil {
 		builder.WriteString("data=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sl.ErrorStack; v != nil {
+	if v := _m.ErrorStack; v != nil {
 		builder.WriteString("error_stack=")
 		builder.WriteString(*v)
 	}

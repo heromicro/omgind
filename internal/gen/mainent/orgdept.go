@@ -141,7 +141,7 @@ func (*OrgDept) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the OrgDept fields.
-func (od *OrgDept) assignValues(columns []string, values []any) error {
+func (_m *OrgDept) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -151,147 +151,147 @@ func (od *OrgDept) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				od.ID = value.String
+				_m.ID = value.String
 			}
 		case orgdept.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				od.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case orgdept.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				od.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case orgdept.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				od.CreatedAt = new(time.Time)
-				*od.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case orgdept.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				od.UpdatedAt = new(time.Time)
-				*od.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case orgdept.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				od.DeletedAt = new(time.Time)
-				*od.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case orgdept.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				od.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case orgdept.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				od.Memo = new(string)
-				*od.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case orgdept.FieldTreeID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_id", values[i])
 			} else if value.Valid {
-				od.TreeID = new(int64)
-				*od.TreeID = value.Int64
+				_m.TreeID = new(int64)
+				*_m.TreeID = value.Int64
 			}
 		case orgdept.FieldTreeLevel:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_level", values[i])
 			} else if value.Valid {
-				od.TreeLevel = new(int32)
-				*od.TreeLevel = int32(value.Int64)
+				_m.TreeLevel = new(int32)
+				*_m.TreeLevel = int32(value.Int64)
 			}
 		case orgdept.FieldTreeLeft:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_left", values[i])
 			} else if value.Valid {
-				od.TreeLeft = new(int64)
-				*od.TreeLeft = value.Int64
+				_m.TreeLeft = new(int64)
+				*_m.TreeLeft = value.Int64
 			}
 		case orgdept.FieldTreeRight:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_right", values[i])
 			} else if value.Valid {
-				od.TreeRight = new(int64)
-				*od.TreeRight = value.Int64
+				_m.TreeRight = new(int64)
+				*_m.TreeRight = value.Int64
 			}
 		case orgdept.FieldIsLeaf:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_leaf", values[i])
 			} else if value.Valid {
-				od.IsLeaf = new(bool)
-				*od.IsLeaf = value.Bool
+				_m.IsLeaf = new(bool)
+				*_m.IsLeaf = value.Bool
 			}
 		case orgdept.FieldTreePath:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_path", values[i])
 			} else if value.Valid {
-				od.TreePath = new(string)
-				*od.TreePath = value.String
+				_m.TreePath = new(string)
+				*_m.TreePath = value.String
 			}
 		case orgdept.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				od.Name = new(string)
-				*od.Name = value.String
+				_m.Name = new(string)
+				*_m.Name = value.String
 			}
 		case orgdept.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				od.Code = new(string)
-				*od.Code = value.String
+				_m.Code = new(string)
+				*_m.Code = value.String
 			}
 		case orgdept.FieldMergeName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field merge_name", values[i])
 			} else if value.Valid {
-				od.MergeName = new(string)
-				*od.MergeName = value.String
+				_m.MergeName = new(string)
+				*_m.MergeName = value.String
 			}
 		case orgdept.FieldOrgID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field org_id", values[i])
 			} else if value.Valid {
-				od.OrgID = new(string)
-				*od.OrgID = value.String
+				_m.OrgID = new(string)
+				*_m.OrgID = value.String
 			}
 		case orgdept.FieldParentID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field parent_id", values[i])
 			} else if value.Valid {
-				od.ParentID = new(string)
-				*od.ParentID = value.String
+				_m.ParentID = new(string)
+				*_m.ParentID = value.String
 			}
 		case orgdept.FieldIsReal:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_real", values[i])
 			} else if value.Valid {
-				od.IsReal = new(bool)
-				*od.IsReal = value.Bool
+				_m.IsReal = new(bool)
+				*_m.IsReal = value.Bool
 			}
 		case orgdept.FieldIsShow:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_show", values[i])
 			} else if value.Valid {
-				od.IsShow = new(bool)
-				*od.IsShow = value.Bool
+				_m.IsShow = new(bool)
+				*_m.IsShow = value.Bool
 			}
 		default:
-			od.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -299,143 +299,143 @@ func (od *OrgDept) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the OrgDept.
 // This includes values selected through modifiers, order, etc.
-func (od *OrgDept) Value(name string) (ent.Value, error) {
-	return od.selectValues.Get(name)
+func (_m *OrgDept) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryParent queries the "parent" edge of the OrgDept entity.
-func (od *OrgDept) QueryParent() *OrgDeptQuery {
-	return NewOrgDeptClient(od.config).QueryParent(od)
+func (_m *OrgDept) QueryParent() *OrgDeptQuery {
+	return NewOrgDeptClient(_m.config).QueryParent(_m)
 }
 
 // QueryChildren queries the "children" edge of the OrgDept entity.
-func (od *OrgDept) QueryChildren() *OrgDeptQuery {
-	return NewOrgDeptClient(od.config).QueryChildren(od)
+func (_m *OrgDept) QueryChildren() *OrgDeptQuery {
+	return NewOrgDeptClient(_m.config).QueryChildren(_m)
 }
 
 // QueryOrgan queries the "organ" edge of the OrgDept entity.
-func (od *OrgDept) QueryOrgan() *OrgOrganQuery {
-	return NewOrgDeptClient(od.config).QueryOrgan(od)
+func (_m *OrgDept) QueryOrgan() *OrgOrganQuery {
+	return NewOrgDeptClient(_m.config).QueryOrgan(_m)
 }
 
 // QueryStaffs queries the "staffs" edge of the OrgDept entity.
-func (od *OrgDept) QueryStaffs() *OrgStaffQuery {
-	return NewOrgDeptClient(od.config).QueryStaffs(od)
+func (_m *OrgDept) QueryStaffs() *OrgStaffQuery {
+	return NewOrgDeptClient(_m.config).QueryStaffs(_m)
 }
 
 // Update returns a builder for updating this OrgDept.
 // Note that you need to call OrgDept.Unwrap() before calling this method if this OrgDept
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (od *OrgDept) Update() *OrgDeptUpdateOne {
-	return NewOrgDeptClient(od.config).UpdateOne(od)
+func (_m *OrgDept) Update() *OrgDeptUpdateOne {
+	return NewOrgDeptClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the OrgDept entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (od *OrgDept) Unwrap() *OrgDept {
-	_tx, ok := od.config.driver.(*txDriver)
+func (_m *OrgDept) Unwrap() *OrgDept {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: OrgDept is not a transactional entity")
 	}
-	od.config.driver = _tx.drv
-	return od
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (od *OrgDept) String() string {
+func (_m *OrgDept) String() string {
 	var builder strings.Builder
 	builder.WriteString("OrgDept(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", od.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", od.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", od.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := od.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := od.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := od.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", od.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
-	if v := od.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := od.TreeID; v != nil {
+	if v := _m.TreeID; v != nil {
 		builder.WriteString("tree_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := od.TreeLevel; v != nil {
+	if v := _m.TreeLevel; v != nil {
 		builder.WriteString("tree_level=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := od.TreeLeft; v != nil {
+	if v := _m.TreeLeft; v != nil {
 		builder.WriteString("tree_left=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := od.TreeRight; v != nil {
+	if v := _m.TreeRight; v != nil {
 		builder.WriteString("tree_right=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := od.IsLeaf; v != nil {
+	if v := _m.IsLeaf; v != nil {
 		builder.WriteString("is_leaf=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := od.TreePath; v != nil {
+	if v := _m.TreePath; v != nil {
 		builder.WriteString("tree_path=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := od.Name; v != nil {
+	if v := _m.Name; v != nil {
 		builder.WriteString("name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := od.Code; v != nil {
+	if v := _m.Code; v != nil {
 		builder.WriteString("code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := od.MergeName; v != nil {
+	if v := _m.MergeName; v != nil {
 		builder.WriteString("merge_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := od.OrgID; v != nil {
+	if v := _m.OrgID; v != nil {
 		builder.WriteString("org_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := od.ParentID; v != nil {
+	if v := _m.ParentID; v != nil {
 		builder.WriteString("parent_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := od.IsReal; v != nil {
+	if v := _m.IsReal; v != nil {
 		builder.WriteString("is_real=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := od.IsShow; v != nil {
+	if v := _m.IsShow; v != nil {
 		builder.WriteString("is_show=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}

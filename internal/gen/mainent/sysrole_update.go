@@ -24,140 +24,140 @@ type SysRoleUpdate struct {
 }
 
 // Where appends a list predicates to the SysRoleUpdate builder.
-func (sru *SysRoleUpdate) Where(ps ...predicate.SysRole) *SysRoleUpdate {
-	sru.mutation.Where(ps...)
-	return sru
+func (_u *SysRoleUpdate) Where(ps ...predicate.SysRole) *SysRoleUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (sru *SysRoleUpdate) SetIsDel(b bool) *SysRoleUpdate {
-	sru.mutation.SetIsDel(b)
-	return sru
+func (_u *SysRoleUpdate) SetIsDel(v bool) *SysRoleUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableIsDel(b *bool) *SysRoleUpdate {
-	if b != nil {
-		sru.SetIsDel(*b)
+func (_u *SysRoleUpdate) SetNillableIsDel(v *bool) *SysRoleUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sru
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sru *SysRoleUpdate) SetIsActive(b bool) *SysRoleUpdate {
-	sru.mutation.SetIsActive(b)
-	return sru
+func (_u *SysRoleUpdate) SetIsActive(v bool) *SysRoleUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableIsActive(b *bool) *SysRoleUpdate {
-	if b != nil {
-		sru.SetIsActive(*b)
+func (_u *SysRoleUpdate) SetNillableIsActive(v *bool) *SysRoleUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sru
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sru *SysRoleUpdate) SetSort(i int32) *SysRoleUpdate {
-	sru.mutation.ResetSort()
-	sru.mutation.SetSort(i)
-	return sru
+func (_u *SysRoleUpdate) SetSort(v int32) *SysRoleUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableSort(i *int32) *SysRoleUpdate {
-	if i != nil {
-		sru.SetSort(*i)
+func (_u *SysRoleUpdate) SetNillableSort(v *int32) *SysRoleUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sru
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sru *SysRoleUpdate) AddSort(i int32) *SysRoleUpdate {
-	sru.mutation.AddSort(i)
-	return sru
+// AddSort adds value to the "sort" field.
+func (_u *SysRoleUpdate) AddSort(v int32) *SysRoleUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sru *SysRoleUpdate) SetMemo(s string) *SysRoleUpdate {
-	sru.mutation.SetMemo(s)
-	return sru
+func (_u *SysRoleUpdate) SetMemo(v string) *SysRoleUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableMemo(s *string) *SysRoleUpdate {
-	if s != nil {
-		sru.SetMemo(*s)
+func (_u *SysRoleUpdate) SetNillableMemo(v *string) *SysRoleUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sru
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sru *SysRoleUpdate) ClearMemo() *SysRoleUpdate {
-	sru.mutation.ClearMemo()
-	return sru
+func (_u *SysRoleUpdate) ClearMemo() *SysRoleUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sru *SysRoleUpdate) SetUpdatedAt(t time.Time) *SysRoleUpdate {
-	sru.mutation.SetUpdatedAt(t)
-	return sru
+func (_u *SysRoleUpdate) SetUpdatedAt(v time.Time) *SysRoleUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sru *SysRoleUpdate) ClearUpdatedAt() *SysRoleUpdate {
-	sru.mutation.ClearUpdatedAt()
-	return sru
+func (_u *SysRoleUpdate) ClearUpdatedAt() *SysRoleUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sru *SysRoleUpdate) SetDeletedAt(t time.Time) *SysRoleUpdate {
-	sru.mutation.SetDeletedAt(t)
-	return sru
+func (_u *SysRoleUpdate) SetDeletedAt(v time.Time) *SysRoleUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableDeletedAt(t *time.Time) *SysRoleUpdate {
-	if t != nil {
-		sru.SetDeletedAt(*t)
+func (_u *SysRoleUpdate) SetNillableDeletedAt(v *time.Time) *SysRoleUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sru
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sru *SysRoleUpdate) ClearDeletedAt() *SysRoleUpdate {
-	sru.mutation.ClearDeletedAt()
-	return sru
+func (_u *SysRoleUpdate) ClearDeletedAt() *SysRoleUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (sru *SysRoleUpdate) SetName(s string) *SysRoleUpdate {
-	sru.mutation.SetName(s)
-	return sru
+func (_u *SysRoleUpdate) SetName(v string) *SysRoleUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (sru *SysRoleUpdate) SetNillableName(s *string) *SysRoleUpdate {
-	if s != nil {
-		sru.SetName(*s)
+func (_u *SysRoleUpdate) SetNillableName(v *string) *SysRoleUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return sru
+	return _u
 }
 
 // Mutation returns the SysRoleMutation object of the builder.
-func (sru *SysRoleUpdate) Mutation() *SysRoleMutation {
-	return sru.mutation
+func (_u *SysRoleUpdate) Mutation() *SysRoleMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (sru *SysRoleUpdate) Save(ctx context.Context) (int, error) {
-	sru.defaults()
-	return withHooks(ctx, sru.sqlSave, sru.mutation, sru.hooks)
+func (_u *SysRoleUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sru *SysRoleUpdate) SaveX(ctx context.Context) int {
-	affected, err := sru.Save(ctx)
+func (_u *SysRoleUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -165,34 +165,34 @@ func (sru *SysRoleUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (sru *SysRoleUpdate) Exec(ctx context.Context) error {
-	_, err := sru.Save(ctx)
+func (_u *SysRoleUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sru *SysRoleUpdate) ExecX(ctx context.Context) {
-	if err := sru.Exec(ctx); err != nil {
+func (_u *SysRoleUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sru *SysRoleUpdate) defaults() {
-	if _, ok := sru.mutation.UpdatedAt(); !ok && !sru.mutation.UpdatedAtCleared() {
+func (_u *SysRoleUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysrole.UpdateDefaultUpdatedAt()
-		sru.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sru *SysRoleUpdate) check() error {
-	if v, ok := sru.mutation.Memo(); ok {
+func (_u *SysRoleUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysrole.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysRole.memo": %w`, err)}
 		}
 	}
-	if v, ok := sru.mutation.Name(); ok {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := sysrole.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysRole.name": %w`, err)}
 		}
@@ -201,61 +201,61 @@ func (sru *SysRoleUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sru *SysRoleUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysRoleUpdate {
-	sru.modifiers = append(sru.modifiers, modifiers...)
-	return sru
+func (_u *SysRoleUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysRoleUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := sru.check(); err != nil {
-		return n, err
+func (_u *SysRoleUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysrole.Table, sysrole.Columns, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
-	if ps := sru.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sru.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysrole.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sru.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysrole.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sru.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysrole.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sru.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysrole.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sru.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysrole.FieldMemo, field.TypeString, value)
 	}
-	if sru.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysrole.FieldMemo, field.TypeString)
 	}
-	if sru.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysrole.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sru.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrole.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sru.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysrole.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sru.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sru.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysrole.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sru.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysrole.FieldName, field.TypeString, value)
 	}
-	_spec.AddModifiers(sru.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, sru.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysrole.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -263,8 +263,8 @@ func (sru *SysRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	sru.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysRoleUpdateOne is the builder for updating a single SysRole entity.
@@ -277,147 +277,147 @@ type SysRoleUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sruo *SysRoleUpdateOne) SetIsDel(b bool) *SysRoleUpdateOne {
-	sruo.mutation.SetIsDel(b)
-	return sruo
+func (_u *SysRoleUpdateOne) SetIsDel(v bool) *SysRoleUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableIsDel(b *bool) *SysRoleUpdateOne {
-	if b != nil {
-		sruo.SetIsDel(*b)
+func (_u *SysRoleUpdateOne) SetNillableIsDel(v *bool) *SysRoleUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sruo
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sruo *SysRoleUpdateOne) SetIsActive(b bool) *SysRoleUpdateOne {
-	sruo.mutation.SetIsActive(b)
-	return sruo
+func (_u *SysRoleUpdateOne) SetIsActive(v bool) *SysRoleUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableIsActive(b *bool) *SysRoleUpdateOne {
-	if b != nil {
-		sruo.SetIsActive(*b)
+func (_u *SysRoleUpdateOne) SetNillableIsActive(v *bool) *SysRoleUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sruo
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sruo *SysRoleUpdateOne) SetSort(i int32) *SysRoleUpdateOne {
-	sruo.mutation.ResetSort()
-	sruo.mutation.SetSort(i)
-	return sruo
+func (_u *SysRoleUpdateOne) SetSort(v int32) *SysRoleUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableSort(i *int32) *SysRoleUpdateOne {
-	if i != nil {
-		sruo.SetSort(*i)
+func (_u *SysRoleUpdateOne) SetNillableSort(v *int32) *SysRoleUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sruo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sruo *SysRoleUpdateOne) AddSort(i int32) *SysRoleUpdateOne {
-	sruo.mutation.AddSort(i)
-	return sruo
+// AddSort adds value to the "sort" field.
+func (_u *SysRoleUpdateOne) AddSort(v int32) *SysRoleUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sruo *SysRoleUpdateOne) SetMemo(s string) *SysRoleUpdateOne {
-	sruo.mutation.SetMemo(s)
-	return sruo
+func (_u *SysRoleUpdateOne) SetMemo(v string) *SysRoleUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableMemo(s *string) *SysRoleUpdateOne {
-	if s != nil {
-		sruo.SetMemo(*s)
+func (_u *SysRoleUpdateOne) SetNillableMemo(v *string) *SysRoleUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sruo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sruo *SysRoleUpdateOne) ClearMemo() *SysRoleUpdateOne {
-	sruo.mutation.ClearMemo()
-	return sruo
+func (_u *SysRoleUpdateOne) ClearMemo() *SysRoleUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sruo *SysRoleUpdateOne) SetUpdatedAt(t time.Time) *SysRoleUpdateOne {
-	sruo.mutation.SetUpdatedAt(t)
-	return sruo
+func (_u *SysRoleUpdateOne) SetUpdatedAt(v time.Time) *SysRoleUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sruo *SysRoleUpdateOne) ClearUpdatedAt() *SysRoleUpdateOne {
-	sruo.mutation.ClearUpdatedAt()
-	return sruo
+func (_u *SysRoleUpdateOne) ClearUpdatedAt() *SysRoleUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sruo *SysRoleUpdateOne) SetDeletedAt(t time.Time) *SysRoleUpdateOne {
-	sruo.mutation.SetDeletedAt(t)
-	return sruo
+func (_u *SysRoleUpdateOne) SetDeletedAt(v time.Time) *SysRoleUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableDeletedAt(t *time.Time) *SysRoleUpdateOne {
-	if t != nil {
-		sruo.SetDeletedAt(*t)
+func (_u *SysRoleUpdateOne) SetNillableDeletedAt(v *time.Time) *SysRoleUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sruo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sruo *SysRoleUpdateOne) ClearDeletedAt() *SysRoleUpdateOne {
-	sruo.mutation.ClearDeletedAt()
-	return sruo
+func (_u *SysRoleUpdateOne) ClearDeletedAt() *SysRoleUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (sruo *SysRoleUpdateOne) SetName(s string) *SysRoleUpdateOne {
-	sruo.mutation.SetName(s)
-	return sruo
+func (_u *SysRoleUpdateOne) SetName(v string) *SysRoleUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (sruo *SysRoleUpdateOne) SetNillableName(s *string) *SysRoleUpdateOne {
-	if s != nil {
-		sruo.SetName(*s)
+func (_u *SysRoleUpdateOne) SetNillableName(v *string) *SysRoleUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return sruo
+	return _u
 }
 
 // Mutation returns the SysRoleMutation object of the builder.
-func (sruo *SysRoleUpdateOne) Mutation() *SysRoleMutation {
-	return sruo.mutation
+func (_u *SysRoleUpdateOne) Mutation() *SysRoleMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the SysRoleUpdate builder.
-func (sruo *SysRoleUpdateOne) Where(ps ...predicate.SysRole) *SysRoleUpdateOne {
-	sruo.mutation.Where(ps...)
-	return sruo
+func (_u *SysRoleUpdateOne) Where(ps ...predicate.SysRole) *SysRoleUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (sruo *SysRoleUpdateOne) Select(field string, fields ...string) *SysRoleUpdateOne {
-	sruo.fields = append([]string{field}, fields...)
-	return sruo
+func (_u *SysRoleUpdateOne) Select(field string, fields ...string) *SysRoleUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysRole entity.
-func (sruo *SysRoleUpdateOne) Save(ctx context.Context) (*SysRole, error) {
-	sruo.defaults()
-	return withHooks(ctx, sruo.sqlSave, sruo.mutation, sruo.hooks)
+func (_u *SysRoleUpdateOne) Save(ctx context.Context) (*SysRole, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sruo *SysRoleUpdateOne) SaveX(ctx context.Context) *SysRole {
-	node, err := sruo.Save(ctx)
+func (_u *SysRoleUpdateOne) SaveX(ctx context.Context) *SysRole {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -425,34 +425,34 @@ func (sruo *SysRoleUpdateOne) SaveX(ctx context.Context) *SysRole {
 }
 
 // Exec executes the query on the entity.
-func (sruo *SysRoleUpdateOne) Exec(ctx context.Context) error {
-	_, err := sruo.Save(ctx)
+func (_u *SysRoleUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sruo *SysRoleUpdateOne) ExecX(ctx context.Context) {
-	if err := sruo.Exec(ctx); err != nil {
+func (_u *SysRoleUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sruo *SysRoleUpdateOne) defaults() {
-	if _, ok := sruo.mutation.UpdatedAt(); !ok && !sruo.mutation.UpdatedAtCleared() {
+func (_u *SysRoleUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysrole.UpdateDefaultUpdatedAt()
-		sruo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sruo *SysRoleUpdateOne) check() error {
-	if v, ok := sruo.mutation.Memo(); ok {
+func (_u *SysRoleUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysrole.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysRole.memo": %w`, err)}
 		}
 	}
-	if v, ok := sruo.mutation.Name(); ok {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := sysrole.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysRole.name": %w`, err)}
 		}
@@ -461,22 +461,22 @@ func (sruo *SysRoleUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sruo *SysRoleUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysRoleUpdateOne {
-	sruo.modifiers = append(sruo.modifiers, modifiers...)
-	return sruo
+func (_u *SysRoleUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysRoleUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err error) {
-	if err := sruo.check(); err != nil {
+func (_u *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysrole.Table, sysrole.Columns, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
-	id, ok := sruo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysRole.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := sruo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysrole.FieldID)
 		for _, f := range fields {
@@ -488,54 +488,54 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 			}
 		}
 	}
-	if ps := sruo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sruo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysrole.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sruo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysrole.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sruo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysrole.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sruo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysrole.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sruo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysrole.FieldMemo, field.TypeString, value)
 	}
-	if sruo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysrole.FieldMemo, field.TypeString)
 	}
-	if sruo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysrole.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sruo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrole.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sruo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysrole.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sruo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sruo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysrole.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sruo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysrole.FieldName, field.TypeString, value)
 	}
-	_spec.AddModifiers(sruo.modifiers...)
-	_node = &SysRole{config: sruo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysRole{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, sruo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysrole.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -543,6 +543,6 @@ func (sruo *SysRoleUpdateOne) sqlSave(ctx context.Context) (_node *SysRole, err 
 		}
 		return nil, err
 	}
-	sruo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

@@ -24,115 +24,115 @@ type SysRoleMenuCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (srmc *SysRoleMenuCreate) SetIsDel(b bool) *SysRoleMenuCreate {
-	srmc.mutation.SetIsDel(b)
-	return srmc
+func (_c *SysRoleMenuCreate) SetIsDel(v bool) *SysRoleMenuCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (srmc *SysRoleMenuCreate) SetNillableIsDel(b *bool) *SysRoleMenuCreate {
-	if b != nil {
-		srmc.SetIsDel(*b)
+func (_c *SysRoleMenuCreate) SetNillableIsDel(v *bool) *SysRoleMenuCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return srmc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (srmc *SysRoleMenuCreate) SetCreatedAt(t time.Time) *SysRoleMenuCreate {
-	srmc.mutation.SetCreatedAt(t)
-	return srmc
+func (_c *SysRoleMenuCreate) SetCreatedAt(v time.Time) *SysRoleMenuCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (srmc *SysRoleMenuCreate) SetNillableCreatedAt(t *time.Time) *SysRoleMenuCreate {
-	if t != nil {
-		srmc.SetCreatedAt(*t)
+func (_c *SysRoleMenuCreate) SetNillableCreatedAt(v *time.Time) *SysRoleMenuCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return srmc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (srmc *SysRoleMenuCreate) SetUpdatedAt(t time.Time) *SysRoleMenuCreate {
-	srmc.mutation.SetUpdatedAt(t)
-	return srmc
+func (_c *SysRoleMenuCreate) SetUpdatedAt(v time.Time) *SysRoleMenuCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (srmc *SysRoleMenuCreate) SetNillableUpdatedAt(t *time.Time) *SysRoleMenuCreate {
-	if t != nil {
-		srmc.SetUpdatedAt(*t)
+func (_c *SysRoleMenuCreate) SetNillableUpdatedAt(v *time.Time) *SysRoleMenuCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return srmc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (srmc *SysRoleMenuCreate) SetDeletedAt(t time.Time) *SysRoleMenuCreate {
-	srmc.mutation.SetDeletedAt(t)
-	return srmc
+func (_c *SysRoleMenuCreate) SetDeletedAt(v time.Time) *SysRoleMenuCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (srmc *SysRoleMenuCreate) SetNillableDeletedAt(t *time.Time) *SysRoleMenuCreate {
-	if t != nil {
-		srmc.SetDeletedAt(*t)
+func (_c *SysRoleMenuCreate) SetNillableDeletedAt(v *time.Time) *SysRoleMenuCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return srmc
+	return _c
 }
 
 // SetRoleID sets the "role_id" field.
-func (srmc *SysRoleMenuCreate) SetRoleID(s string) *SysRoleMenuCreate {
-	srmc.mutation.SetRoleID(s)
-	return srmc
+func (_c *SysRoleMenuCreate) SetRoleID(v string) *SysRoleMenuCreate {
+	_c.mutation.SetRoleID(v)
+	return _c
 }
 
 // SetMenuID sets the "menu_id" field.
-func (srmc *SysRoleMenuCreate) SetMenuID(s string) *SysRoleMenuCreate {
-	srmc.mutation.SetMenuID(s)
-	return srmc
+func (_c *SysRoleMenuCreate) SetMenuID(v string) *SysRoleMenuCreate {
+	_c.mutation.SetMenuID(v)
+	return _c
 }
 
 // SetActionID sets the "action_id" field.
-func (srmc *SysRoleMenuCreate) SetActionID(s string) *SysRoleMenuCreate {
-	srmc.mutation.SetActionID(s)
-	return srmc
+func (_c *SysRoleMenuCreate) SetActionID(v string) *SysRoleMenuCreate {
+	_c.mutation.SetActionID(v)
+	return _c
 }
 
 // SetNillableActionID sets the "action_id" field if the given value is not nil.
-func (srmc *SysRoleMenuCreate) SetNillableActionID(s *string) *SysRoleMenuCreate {
-	if s != nil {
-		srmc.SetActionID(*s)
+func (_c *SysRoleMenuCreate) SetNillableActionID(v *string) *SysRoleMenuCreate {
+	if v != nil {
+		_c.SetActionID(*v)
 	}
-	return srmc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (srmc *SysRoleMenuCreate) SetID(s string) *SysRoleMenuCreate {
-	srmc.mutation.SetID(s)
-	return srmc
+func (_c *SysRoleMenuCreate) SetID(v string) *SysRoleMenuCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (srmc *SysRoleMenuCreate) SetNillableID(s *string) *SysRoleMenuCreate {
-	if s != nil {
-		srmc.SetID(*s)
+func (_c *SysRoleMenuCreate) SetNillableID(v *string) *SysRoleMenuCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return srmc
+	return _c
 }
 
 // Mutation returns the SysRoleMenuMutation object of the builder.
-func (srmc *SysRoleMenuCreate) Mutation() *SysRoleMenuMutation {
-	return srmc.mutation
+func (_c *SysRoleMenuCreate) Mutation() *SysRoleMenuMutation {
+	return _c.mutation
 }
 
 // Save creates the SysRoleMenu in the database.
-func (srmc *SysRoleMenuCreate) Save(ctx context.Context) (*SysRoleMenu, error) {
-	srmc.defaults()
-	return withHooks(ctx, srmc.sqlSave, srmc.mutation, srmc.hooks)
+func (_c *SysRoleMenuCreate) Save(ctx context.Context) (*SysRoleMenu, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (srmc *SysRoleMenuCreate) SaveX(ctx context.Context) *SysRoleMenu {
-	v, err := srmc.Save(ctx)
+func (_c *SysRoleMenuCreate) SaveX(ctx context.Context) *SysRoleMenu {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -140,65 +140,65 @@ func (srmc *SysRoleMenuCreate) SaveX(ctx context.Context) *SysRoleMenu {
 }
 
 // Exec executes the query.
-func (srmc *SysRoleMenuCreate) Exec(ctx context.Context) error {
-	_, err := srmc.Save(ctx)
+func (_c *SysRoleMenuCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (srmc *SysRoleMenuCreate) ExecX(ctx context.Context) {
-	if err := srmc.Exec(ctx); err != nil {
+func (_c *SysRoleMenuCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (srmc *SysRoleMenuCreate) defaults() {
-	if _, ok := srmc.mutation.IsDel(); !ok {
+func (_c *SysRoleMenuCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysrolemenu.DefaultIsDel
-		srmc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := srmc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysrolemenu.DefaultCreatedAt()
-		srmc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := srmc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysrolemenu.DefaultUpdatedAt()
-		srmc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := srmc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysrolemenu.DefaultID()
-		srmc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (srmc *SysRoleMenuCreate) check() error {
-	if _, ok := srmc.mutation.IsDel(); !ok {
+func (_c *SysRoleMenuCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysRoleMenu.is_del"`)}
 	}
-	if _, ok := srmc.mutation.RoleID(); !ok {
+	if _, ok := _c.mutation.RoleID(); !ok {
 		return &ValidationError{Name: "role_id", err: errors.New(`mainent: missing required field "SysRoleMenu.role_id"`)}
 	}
-	if v, ok := srmc.mutation.RoleID(); ok {
+	if v, ok := _c.mutation.RoleID(); ok {
 		if err := sysrolemenu.RoleIDValidator(v); err != nil {
 			return &ValidationError{Name: "role_id", err: fmt.Errorf(`mainent: validator failed for field "SysRoleMenu.role_id": %w`, err)}
 		}
 	}
-	if _, ok := srmc.mutation.MenuID(); !ok {
+	if _, ok := _c.mutation.MenuID(); !ok {
 		return &ValidationError{Name: "menu_id", err: errors.New(`mainent: missing required field "SysRoleMenu.menu_id"`)}
 	}
-	if v, ok := srmc.mutation.MenuID(); ok {
+	if v, ok := _c.mutation.MenuID(); ok {
 		if err := sysrolemenu.MenuIDValidator(v); err != nil {
 			return &ValidationError{Name: "menu_id", err: fmt.Errorf(`mainent: validator failed for field "SysRoleMenu.menu_id": %w`, err)}
 		}
 	}
-	if v, ok := srmc.mutation.ActionID(); ok {
+	if v, ok := _c.mutation.ActionID(); ok {
 		if err := sysrolemenu.ActionIDValidator(v); err != nil {
 			return &ValidationError{Name: "action_id", err: fmt.Errorf(`mainent: validator failed for field "SysRoleMenu.action_id": %w`, err)}
 		}
 	}
-	if v, ok := srmc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysrolemenu.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysRoleMenu.id": %w`, err)}
 		}
@@ -206,12 +206,12 @@ func (srmc *SysRoleMenuCreate) check() error {
 	return nil
 }
 
-func (srmc *SysRoleMenuCreate) sqlSave(ctx context.Context) (*SysRoleMenu, error) {
-	if err := srmc.check(); err != nil {
+func (_c *SysRoleMenuCreate) sqlSave(ctx context.Context) (*SysRoleMenu, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := srmc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, srmc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -224,46 +224,46 @@ func (srmc *SysRoleMenuCreate) sqlSave(ctx context.Context) (*SysRoleMenu, error
 			return nil, fmt.Errorf("unexpected SysRoleMenu.ID type: %T", _spec.ID.Value)
 		}
 	}
-	srmc.mutation.id = &_node.ID
-	srmc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (srmc *SysRoleMenuCreate) createSpec() (*SysRoleMenu, *sqlgraph.CreateSpec) {
+func (_c *SysRoleMenuCreate) createSpec() (*SysRoleMenu, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysRoleMenu{config: srmc.config}
+		_node = &SysRoleMenu{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysrolemenu.Table, sqlgraph.NewFieldSpec(sysrolemenu.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = srmc.conflict
-	if id, ok := srmc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := srmc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysrolemenu.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := srmc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := srmc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := srmc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrolemenu.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := srmc.mutation.RoleID(); ok {
+	if value, ok := _c.mutation.RoleID(); ok {
 		_spec.SetField(sysrolemenu.FieldRoleID, field.TypeString, value)
 		_node.RoleID = value
 	}
-	if value, ok := srmc.mutation.MenuID(); ok {
+	if value, ok := _c.mutation.MenuID(); ok {
 		_spec.SetField(sysrolemenu.FieldMenuID, field.TypeString, value)
 		_node.MenuID = value
 	}
-	if value, ok := srmc.mutation.ActionID(); ok {
+	if value, ok := _c.mutation.ActionID(); ok {
 		_spec.SetField(sysrolemenu.FieldActionID, field.TypeString, value)
 		_node.ActionID = &value
 	}
@@ -286,10 +286,10 @@ func (srmc *SysRoleMenuCreate) createSpec() (*SysRoleMenu, *sqlgraph.CreateSpec)
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (srmc *SysRoleMenuCreate) OnConflict(opts ...sql.ConflictOption) *SysRoleMenuUpsertOne {
-	srmc.conflict = opts
+func (_c *SysRoleMenuCreate) OnConflict(opts ...sql.ConflictOption) *SysRoleMenuUpsertOne {
+	_c.conflict = opts
 	return &SysRoleMenuUpsertOne{
-		create: srmc,
+		create: _c,
 	}
 }
 
@@ -299,10 +299,10 @@ func (srmc *SysRoleMenuCreate) OnConflict(opts ...sql.ConflictOption) *SysRoleMe
 //	client.SysRoleMenu.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (srmc *SysRoleMenuCreate) OnConflictColumns(columns ...string) *SysRoleMenuUpsertOne {
-	srmc.conflict = append(srmc.conflict, sql.ConflictColumns(columns...))
+func (_c *SysRoleMenuCreate) OnConflictColumns(columns ...string) *SysRoleMenuUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysRoleMenuUpsertOne{
-		create: srmc,
+		create: _c,
 	}
 }
 
@@ -612,16 +612,16 @@ type SysRoleMenuCreateBulk struct {
 }
 
 // Save creates the SysRoleMenu entities in the database.
-func (srmcb *SysRoleMenuCreateBulk) Save(ctx context.Context) ([]*SysRoleMenu, error) {
-	if srmcb.err != nil {
-		return nil, srmcb.err
+func (_c *SysRoleMenuCreateBulk) Save(ctx context.Context) ([]*SysRoleMenu, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(srmcb.builders))
-	nodes := make([]*SysRoleMenu, len(srmcb.builders))
-	mutators := make([]Mutator, len(srmcb.builders))
-	for i := range srmcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysRoleMenu, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := srmcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysRoleMenuMutation)
@@ -635,12 +635,12 @@ func (srmcb *SysRoleMenuCreateBulk) Save(ctx context.Context) ([]*SysRoleMenu, e
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, srmcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = srmcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, srmcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -660,7 +660,7 @@ func (srmcb *SysRoleMenuCreateBulk) Save(ctx context.Context) ([]*SysRoleMenu, e
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, srmcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -668,8 +668,8 @@ func (srmcb *SysRoleMenuCreateBulk) Save(ctx context.Context) ([]*SysRoleMenu, e
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (srmcb *SysRoleMenuCreateBulk) SaveX(ctx context.Context) []*SysRoleMenu {
-	v, err := srmcb.Save(ctx)
+func (_c *SysRoleMenuCreateBulk) SaveX(ctx context.Context) []*SysRoleMenu {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -677,14 +677,14 @@ func (srmcb *SysRoleMenuCreateBulk) SaveX(ctx context.Context) []*SysRoleMenu {
 }
 
 // Exec executes the query.
-func (srmcb *SysRoleMenuCreateBulk) Exec(ctx context.Context) error {
-	_, err := srmcb.Save(ctx)
+func (_c *SysRoleMenuCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (srmcb *SysRoleMenuCreateBulk) ExecX(ctx context.Context) {
-	if err := srmcb.Exec(ctx); err != nil {
+func (_c *SysRoleMenuCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -704,10 +704,10 @@ func (srmcb *SysRoleMenuCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (srmcb *SysRoleMenuCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysRoleMenuUpsertBulk {
-	srmcb.conflict = opts
+func (_c *SysRoleMenuCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysRoleMenuUpsertBulk {
+	_c.conflict = opts
 	return &SysRoleMenuUpsertBulk{
-		create: srmcb,
+		create: _c,
 	}
 }
 
@@ -717,10 +717,10 @@ func (srmcb *SysRoleMenuCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysR
 //	client.SysRoleMenu.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (srmcb *SysRoleMenuCreateBulk) OnConflictColumns(columns ...string) *SysRoleMenuUpsertBulk {
-	srmcb.conflict = append(srmcb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysRoleMenuCreateBulk) OnConflictColumns(columns ...string) *SysRoleMenuUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysRoleMenuUpsertBulk{
-		create: srmcb,
+		create: _c,
 	}
 }
 

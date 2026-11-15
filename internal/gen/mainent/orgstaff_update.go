@@ -28,603 +28,603 @@ type OrgStaffUpdate struct {
 }
 
 // Where appends a list predicates to the OrgStaffUpdate builder.
-func (osu *OrgStaffUpdate) Where(ps ...predicate.OrgStaff) *OrgStaffUpdate {
-	osu.mutation.Where(ps...)
-	return osu
+func (_u *OrgStaffUpdate) Where(ps ...predicate.OrgStaff) *OrgStaffUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (osu *OrgStaffUpdate) SetIsDel(b bool) *OrgStaffUpdate {
-	osu.mutation.SetIsDel(b)
-	return osu
+func (_u *OrgStaffUpdate) SetIsDel(v bool) *OrgStaffUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableIsDel(b *bool) *OrgStaffUpdate {
-	if b != nil {
-		osu.SetIsDel(*b)
+func (_u *OrgStaffUpdate) SetNillableIsDel(v *bool) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return osu
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (osu *OrgStaffUpdate) SetSort(i int32) *OrgStaffUpdate {
-	osu.mutation.ResetSort()
-	osu.mutation.SetSort(i)
-	return osu
+func (_u *OrgStaffUpdate) SetSort(v int32) *OrgStaffUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableSort(i *int32) *OrgStaffUpdate {
-	if i != nil {
-		osu.SetSort(*i)
+func (_u *OrgStaffUpdate) SetNillableSort(v *int32) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return osu
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (osu *OrgStaffUpdate) AddSort(i int32) *OrgStaffUpdate {
-	osu.mutation.AddSort(i)
-	return osu
+// AddSort adds value to the "sort" field.
+func (_u *OrgStaffUpdate) AddSort(v int32) *OrgStaffUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (osu *OrgStaffUpdate) SetUpdatedAt(t time.Time) *OrgStaffUpdate {
-	osu.mutation.SetUpdatedAt(t)
-	return osu
+func (_u *OrgStaffUpdate) SetUpdatedAt(v time.Time) *OrgStaffUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (osu *OrgStaffUpdate) ClearUpdatedAt() *OrgStaffUpdate {
-	osu.mutation.ClearUpdatedAt()
-	return osu
+func (_u *OrgStaffUpdate) ClearUpdatedAt() *OrgStaffUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (osu *OrgStaffUpdate) SetDeletedAt(t time.Time) *OrgStaffUpdate {
-	osu.mutation.SetDeletedAt(t)
-	return osu
+func (_u *OrgStaffUpdate) SetDeletedAt(v time.Time) *OrgStaffUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableDeletedAt(t *time.Time) *OrgStaffUpdate {
-	if t != nil {
-		osu.SetDeletedAt(*t)
+func (_u *OrgStaffUpdate) SetNillableDeletedAt(v *time.Time) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (osu *OrgStaffUpdate) ClearDeletedAt() *OrgStaffUpdate {
-	osu.mutation.ClearDeletedAt()
-	return osu
+func (_u *OrgStaffUpdate) ClearDeletedAt() *OrgStaffUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (osu *OrgStaffUpdate) SetIsActive(b bool) *OrgStaffUpdate {
-	osu.mutation.SetIsActive(b)
-	return osu
+func (_u *OrgStaffUpdate) SetIsActive(v bool) *OrgStaffUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableIsActive(b *bool) *OrgStaffUpdate {
-	if b != nil {
-		osu.SetIsActive(*b)
+func (_u *OrgStaffUpdate) SetNillableIsActive(v *bool) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return osu
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (osu *OrgStaffUpdate) SetMemo(s string) *OrgStaffUpdate {
-	osu.mutation.SetMemo(s)
-	return osu
+func (_u *OrgStaffUpdate) SetMemo(v string) *OrgStaffUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableMemo(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetMemo(*s)
+func (_u *OrgStaffUpdate) SetNillableMemo(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (osu *OrgStaffUpdate) ClearMemo() *OrgStaffUpdate {
-	osu.mutation.ClearMemo()
-	return osu
+func (_u *OrgStaffUpdate) ClearMemo() *OrgStaffUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetFirstName sets the "first_name" field.
-func (osu *OrgStaffUpdate) SetFirstName(s string) *OrgStaffUpdate {
-	osu.mutation.SetFirstName(s)
-	return osu
+func (_u *OrgStaffUpdate) SetFirstName(v string) *OrgStaffUpdate {
+	_u.mutation.SetFirstName(v)
+	return _u
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableFirstName(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetFirstName(*s)
+func (_u *OrgStaffUpdate) SetNillableFirstName(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetFirstName(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearFirstName clears the value of the "first_name" field.
-func (osu *OrgStaffUpdate) ClearFirstName() *OrgStaffUpdate {
-	osu.mutation.ClearFirstName()
-	return osu
+func (_u *OrgStaffUpdate) ClearFirstName() *OrgStaffUpdate {
+	_u.mutation.ClearFirstName()
+	return _u
 }
 
 // SetLastName sets the "last_name" field.
-func (osu *OrgStaffUpdate) SetLastName(s string) *OrgStaffUpdate {
-	osu.mutation.SetLastName(s)
-	return osu
+func (_u *OrgStaffUpdate) SetLastName(v string) *OrgStaffUpdate {
+	_u.mutation.SetLastName(v)
+	return _u
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableLastName(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetLastName(*s)
+func (_u *OrgStaffUpdate) SetNillableLastName(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetLastName(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearLastName clears the value of the "last_name" field.
-func (osu *OrgStaffUpdate) ClearLastName() *OrgStaffUpdate {
-	osu.mutation.ClearLastName()
-	return osu
+func (_u *OrgStaffUpdate) ClearLastName() *OrgStaffUpdate {
+	_u.mutation.ClearLastName()
+	return _u
 }
 
 // SetMobile sets the "mobile" field.
-func (osu *OrgStaffUpdate) SetMobile(s string) *OrgStaffUpdate {
-	osu.mutation.SetMobile(s)
-	return osu
+func (_u *OrgStaffUpdate) SetMobile(v string) *OrgStaffUpdate {
+	_u.mutation.SetMobile(v)
+	return _u
 }
 
 // SetNillableMobile sets the "mobile" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableMobile(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetMobile(*s)
+func (_u *OrgStaffUpdate) SetNillableMobile(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetMobile(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearMobile clears the value of the "mobile" field.
-func (osu *OrgStaffUpdate) ClearMobile() *OrgStaffUpdate {
-	osu.mutation.ClearMobile()
-	return osu
+func (_u *OrgStaffUpdate) ClearMobile() *OrgStaffUpdate {
+	_u.mutation.ClearMobile()
+	return _u
 }
 
 // SetGender sets the "gender" field.
-func (osu *OrgStaffUpdate) SetGender(i int32) *OrgStaffUpdate {
-	osu.mutation.ResetGender()
-	osu.mutation.SetGender(i)
-	return osu
+func (_u *OrgStaffUpdate) SetGender(v int32) *OrgStaffUpdate {
+	_u.mutation.ResetGender()
+	_u.mutation.SetGender(v)
+	return _u
 }
 
 // SetNillableGender sets the "gender" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableGender(i *int32) *OrgStaffUpdate {
-	if i != nil {
-		osu.SetGender(*i)
+func (_u *OrgStaffUpdate) SetNillableGender(v *int32) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetGender(*v)
 	}
-	return osu
+	return _u
 }
 
-// AddGender adds i to the "gender" field.
-func (osu *OrgStaffUpdate) AddGender(i int32) *OrgStaffUpdate {
-	osu.mutation.AddGender(i)
-	return osu
+// AddGender adds value to the "gender" field.
+func (_u *OrgStaffUpdate) AddGender(v int32) *OrgStaffUpdate {
+	_u.mutation.AddGender(v)
+	return _u
 }
 
 // ClearGender clears the value of the "gender" field.
-func (osu *OrgStaffUpdate) ClearGender() *OrgStaffUpdate {
-	osu.mutation.ClearGender()
-	return osu
+func (_u *OrgStaffUpdate) ClearGender() *OrgStaffUpdate {
+	_u.mutation.ClearGender()
+	return _u
 }
 
 // SetGenderDictID sets the "gender_dict_id" field.
-func (osu *OrgStaffUpdate) SetGenderDictID(s string) *OrgStaffUpdate {
-	osu.mutation.SetGenderDictID(s)
-	return osu
+func (_u *OrgStaffUpdate) SetGenderDictID(v string) *OrgStaffUpdate {
+	_u.mutation.SetGenderDictID(v)
+	return _u
 }
 
 // SetNillableGenderDictID sets the "gender_dict_id" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableGenderDictID(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetGenderDictID(*s)
+func (_u *OrgStaffUpdate) SetNillableGenderDictID(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetGenderDictID(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearGenderDictID clears the value of the "gender_dict_id" field.
-func (osu *OrgStaffUpdate) ClearGenderDictID() *OrgStaffUpdate {
-	osu.mutation.ClearGenderDictID()
-	return osu
+func (_u *OrgStaffUpdate) ClearGenderDictID() *OrgStaffUpdate {
+	_u.mutation.ClearGenderDictID()
+	return _u
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (osu *OrgStaffUpdate) SetBirthDate(t time.Time) *OrgStaffUpdate {
-	osu.mutation.SetBirthDate(t)
-	return osu
+func (_u *OrgStaffUpdate) SetBirthDate(v time.Time) *OrgStaffUpdate {
+	_u.mutation.SetBirthDate(v)
+	return _u
 }
 
 // SetNillableBirthDate sets the "birth_date" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableBirthDate(t *time.Time) *OrgStaffUpdate {
-	if t != nil {
-		osu.SetBirthDate(*t)
+func (_u *OrgStaffUpdate) SetNillableBirthDate(v *time.Time) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetBirthDate(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearBirthDate clears the value of the "birth_date" field.
-func (osu *OrgStaffUpdate) ClearBirthDate() *OrgStaffUpdate {
-	osu.mutation.ClearBirthDate()
-	return osu
+func (_u *OrgStaffUpdate) ClearBirthDate() *OrgStaffUpdate {
+	_u.mutation.ClearBirthDate()
+	return _u
 }
 
 // SetIdenNo sets the "iden_no" field.
-func (osu *OrgStaffUpdate) SetIdenNo(s string) *OrgStaffUpdate {
-	osu.mutation.SetIdenNo(s)
-	return osu
+func (_u *OrgStaffUpdate) SetIdenNo(v string) *OrgStaffUpdate {
+	_u.mutation.SetIdenNo(v)
+	return _u
 }
 
 // SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableIdenNo(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetIdenNo(*s)
+func (_u *OrgStaffUpdate) SetNillableIdenNo(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetIdenNo(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearIdenNo clears the value of the "iden_no" field.
-func (osu *OrgStaffUpdate) ClearIdenNo() *OrgStaffUpdate {
-	osu.mutation.ClearIdenNo()
-	return osu
+func (_u *OrgStaffUpdate) ClearIdenNo() *OrgStaffUpdate {
+	_u.mutation.ClearIdenNo()
+	return _u
 }
 
 // SetIdenAddrID sets the "iden_addr_id" field.
-func (osu *OrgStaffUpdate) SetIdenAddrID(s string) *OrgStaffUpdate {
-	osu.mutation.SetIdenAddrID(s)
-	return osu
+func (_u *OrgStaffUpdate) SetIdenAddrID(v string) *OrgStaffUpdate {
+	_u.mutation.SetIdenAddrID(v)
+	return _u
 }
 
 // SetNillableIdenAddrID sets the "iden_addr_id" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableIdenAddrID(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetIdenAddrID(*s)
+func (_u *OrgStaffUpdate) SetNillableIdenAddrID(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetIdenAddrID(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearIdenAddrID clears the value of the "iden_addr_id" field.
-func (osu *OrgStaffUpdate) ClearIdenAddrID() *OrgStaffUpdate {
-	osu.mutation.ClearIdenAddrID()
-	return osu
+func (_u *OrgStaffUpdate) ClearIdenAddrID() *OrgStaffUpdate {
+	_u.mutation.ClearIdenAddrID()
+	return _u
 }
 
 // SetResiAddrID sets the "resi_addr_id" field.
-func (osu *OrgStaffUpdate) SetResiAddrID(s string) *OrgStaffUpdate {
-	osu.mutation.SetResiAddrID(s)
-	return osu
+func (_u *OrgStaffUpdate) SetResiAddrID(v string) *OrgStaffUpdate {
+	_u.mutation.SetResiAddrID(v)
+	return _u
 }
 
 // SetNillableResiAddrID sets the "resi_addr_id" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableResiAddrID(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetResiAddrID(*s)
+func (_u *OrgStaffUpdate) SetNillableResiAddrID(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetResiAddrID(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearResiAddrID clears the value of the "resi_addr_id" field.
-func (osu *OrgStaffUpdate) ClearResiAddrID() *OrgStaffUpdate {
-	osu.mutation.ClearResiAddrID()
-	return osu
+func (_u *OrgStaffUpdate) ClearResiAddrID() *OrgStaffUpdate {
+	_u.mutation.ClearResiAddrID()
+	return _u
 }
 
 // SetWorkerNo sets the "worker_no" field.
-func (osu *OrgStaffUpdate) SetWorkerNo(s string) *OrgStaffUpdate {
-	osu.mutation.SetWorkerNo(s)
-	return osu
+func (_u *OrgStaffUpdate) SetWorkerNo(v string) *OrgStaffUpdate {
+	_u.mutation.SetWorkerNo(v)
+	return _u
 }
 
 // SetNillableWorkerNo sets the "worker_no" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableWorkerNo(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetWorkerNo(*s)
+func (_u *OrgStaffUpdate) SetNillableWorkerNo(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetWorkerNo(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearWorkerNo clears the value of the "worker_no" field.
-func (osu *OrgStaffUpdate) ClearWorkerNo() *OrgStaffUpdate {
-	osu.mutation.ClearWorkerNo()
-	return osu
+func (_u *OrgStaffUpdate) ClearWorkerNo() *OrgStaffUpdate {
+	_u.mutation.ClearWorkerNo()
+	return _u
 }
 
 // SetCubicle sets the "cubicle" field.
-func (osu *OrgStaffUpdate) SetCubicle(s string) *OrgStaffUpdate {
-	osu.mutation.SetCubicle(s)
-	return osu
+func (_u *OrgStaffUpdate) SetCubicle(v string) *OrgStaffUpdate {
+	_u.mutation.SetCubicle(v)
+	return _u
 }
 
 // SetNillableCubicle sets the "cubicle" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableCubicle(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetCubicle(*s)
+func (_u *OrgStaffUpdate) SetNillableCubicle(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetCubicle(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearCubicle clears the value of the "cubicle" field.
-func (osu *OrgStaffUpdate) ClearCubicle() *OrgStaffUpdate {
-	osu.mutation.ClearCubicle()
-	return osu
+func (_u *OrgStaffUpdate) ClearCubicle() *OrgStaffUpdate {
+	_u.mutation.ClearCubicle()
+	return _u
 }
 
 // SetRank sets the "rank" field.
-func (osu *OrgStaffUpdate) SetRank(s string) *OrgStaffUpdate {
-	osu.mutation.SetRank(s)
-	return osu
+func (_u *OrgStaffUpdate) SetRank(v string) *OrgStaffUpdate {
+	_u.mutation.SetRank(v)
+	return _u
 }
 
 // SetNillableRank sets the "rank" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableRank(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetRank(*s)
+func (_u *OrgStaffUpdate) SetNillableRank(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetRank(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearRank clears the value of the "rank" field.
-func (osu *OrgStaffUpdate) ClearRank() *OrgStaffUpdate {
-	osu.mutation.ClearRank()
-	return osu
+func (_u *OrgStaffUpdate) ClearRank() *OrgStaffUpdate {
+	_u.mutation.ClearRank()
+	return _u
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (osu *OrgStaffUpdate) SetEntryDate(t time.Time) *OrgStaffUpdate {
-	osu.mutation.SetEntryDate(t)
-	return osu
+func (_u *OrgStaffUpdate) SetEntryDate(v time.Time) *OrgStaffUpdate {
+	_u.mutation.SetEntryDate(v)
+	return _u
 }
 
 // SetNillableEntryDate sets the "entry_date" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableEntryDate(t *time.Time) *OrgStaffUpdate {
-	if t != nil {
-		osu.SetEntryDate(*t)
+func (_u *OrgStaffUpdate) SetNillableEntryDate(v *time.Time) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetEntryDate(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearEntryDate clears the value of the "entry_date" field.
-func (osu *OrgStaffUpdate) ClearEntryDate() *OrgStaffUpdate {
-	osu.mutation.ClearEntryDate()
-	return osu
+func (_u *OrgStaffUpdate) ClearEntryDate() *OrgStaffUpdate {
+	_u.mutation.ClearEntryDate()
+	return _u
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (osu *OrgStaffUpdate) SetRegularDate(t time.Time) *OrgStaffUpdate {
-	osu.mutation.SetRegularDate(t)
-	return osu
+func (_u *OrgStaffUpdate) SetRegularDate(v time.Time) *OrgStaffUpdate {
+	_u.mutation.SetRegularDate(v)
+	return _u
 }
 
 // SetNillableRegularDate sets the "regular_date" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableRegularDate(t *time.Time) *OrgStaffUpdate {
-	if t != nil {
-		osu.SetRegularDate(*t)
+func (_u *OrgStaffUpdate) SetNillableRegularDate(v *time.Time) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetRegularDate(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearRegularDate clears the value of the "regular_date" field.
-func (osu *OrgStaffUpdate) ClearRegularDate() *OrgStaffUpdate {
-	osu.mutation.ClearRegularDate()
-	return osu
+func (_u *OrgStaffUpdate) ClearRegularDate() *OrgStaffUpdate {
+	_u.mutation.ClearRegularDate()
+	return _u
 }
 
 // SetResignDate sets the "resign_date" field.
-func (osu *OrgStaffUpdate) SetResignDate(t time.Time) *OrgStaffUpdate {
-	osu.mutation.SetResignDate(t)
-	return osu
+func (_u *OrgStaffUpdate) SetResignDate(v time.Time) *OrgStaffUpdate {
+	_u.mutation.SetResignDate(v)
+	return _u
 }
 
 // SetNillableResignDate sets the "resign_date" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableResignDate(t *time.Time) *OrgStaffUpdate {
-	if t != nil {
-		osu.SetResignDate(*t)
+func (_u *OrgStaffUpdate) SetNillableResignDate(v *time.Time) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetResignDate(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearResignDate clears the value of the "resign_date" field.
-func (osu *OrgStaffUpdate) ClearResignDate() *OrgStaffUpdate {
-	osu.mutation.ClearResignDate()
-	return osu
+func (_u *OrgStaffUpdate) ClearResignDate() *OrgStaffUpdate {
+	_u.mutation.ClearResignDate()
+	return _u
 }
 
 // SetOrgID sets the "org_id" field.
-func (osu *OrgStaffUpdate) SetOrgID(s string) *OrgStaffUpdate {
-	osu.mutation.SetOrgID(s)
-	return osu
+func (_u *OrgStaffUpdate) SetOrgID(v string) *OrgStaffUpdate {
+	_u.mutation.SetOrgID(v)
+	return _u
 }
 
 // SetNillableOrgID sets the "org_id" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableOrgID(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetOrgID(*s)
+func (_u *OrgStaffUpdate) SetNillableOrgID(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetOrgID(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearOrgID clears the value of the "org_id" field.
-func (osu *OrgStaffUpdate) ClearOrgID() *OrgStaffUpdate {
-	osu.mutation.ClearOrgID()
-	return osu
+func (_u *OrgStaffUpdate) ClearOrgID() *OrgStaffUpdate {
+	_u.mutation.ClearOrgID()
+	return _u
 }
 
 // SetEmpyStat sets the "empy_stat" field.
-func (osu *OrgStaffUpdate) SetEmpyStat(i int32) *OrgStaffUpdate {
-	osu.mutation.ResetEmpyStat()
-	osu.mutation.SetEmpyStat(i)
-	return osu
+func (_u *OrgStaffUpdate) SetEmpyStat(v int32) *OrgStaffUpdate {
+	_u.mutation.ResetEmpyStat()
+	_u.mutation.SetEmpyStat(v)
+	return _u
 }
 
 // SetNillableEmpyStat sets the "empy_stat" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableEmpyStat(i *int32) *OrgStaffUpdate {
-	if i != nil {
-		osu.SetEmpyStat(*i)
+func (_u *OrgStaffUpdate) SetNillableEmpyStat(v *int32) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetEmpyStat(*v)
 	}
-	return osu
+	return _u
 }
 
-// AddEmpyStat adds i to the "empy_stat" field.
-func (osu *OrgStaffUpdate) AddEmpyStat(i int32) *OrgStaffUpdate {
-	osu.mutation.AddEmpyStat(i)
-	return osu
+// AddEmpyStat adds value to the "empy_stat" field.
+func (_u *OrgStaffUpdate) AddEmpyStat(v int32) *OrgStaffUpdate {
+	_u.mutation.AddEmpyStat(v)
+	return _u
 }
 
 // SetEmpystDictID sets the "empyst_dict_id" field.
-func (osu *OrgStaffUpdate) SetEmpystDictID(s string) *OrgStaffUpdate {
-	osu.mutation.SetEmpystDictID(s)
-	return osu
+func (_u *OrgStaffUpdate) SetEmpystDictID(v string) *OrgStaffUpdate {
+	_u.mutation.SetEmpystDictID(v)
+	return _u
 }
 
 // SetNillableEmpystDictID sets the "empyst_dict_id" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableEmpystDictID(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetEmpystDictID(*s)
+func (_u *OrgStaffUpdate) SetNillableEmpystDictID(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetEmpystDictID(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearEmpystDictID clears the value of the "empyst_dict_id" field.
-func (osu *OrgStaffUpdate) ClearEmpystDictID() *OrgStaffUpdate {
-	osu.mutation.ClearEmpystDictID()
-	return osu
+func (_u *OrgStaffUpdate) ClearEmpystDictID() *OrgStaffUpdate {
+	_u.mutation.ClearEmpystDictID()
+	return _u
 }
 
 // SetDeptID sets the "dept_id" field.
-func (osu *OrgStaffUpdate) SetDeptID(s string) *OrgStaffUpdate {
-	osu.mutation.SetDeptID(s)
-	return osu
+func (_u *OrgStaffUpdate) SetDeptID(v string) *OrgStaffUpdate {
+	_u.mutation.SetDeptID(v)
+	return _u
 }
 
 // SetNillableDeptID sets the "dept_id" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableDeptID(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetDeptID(*s)
+func (_u *OrgStaffUpdate) SetNillableDeptID(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetDeptID(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearDeptID clears the value of the "dept_id" field.
-func (osu *OrgStaffUpdate) ClearDeptID() *OrgStaffUpdate {
-	osu.mutation.ClearDeptID()
-	return osu
+func (_u *OrgStaffUpdate) ClearDeptID() *OrgStaffUpdate {
+	_u.mutation.ClearDeptID()
+	return _u
 }
 
 // SetPosiID sets the "posi_id" field.
-func (osu *OrgStaffUpdate) SetPosiID(s string) *OrgStaffUpdate {
-	osu.mutation.SetPosiID(s)
-	return osu
+func (_u *OrgStaffUpdate) SetPosiID(v string) *OrgStaffUpdate {
+	_u.mutation.SetPosiID(v)
+	return _u
 }
 
 // SetNillablePosiID sets the "posi_id" field if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillablePosiID(s *string) *OrgStaffUpdate {
-	if s != nil {
-		osu.SetPosiID(*s)
+func (_u *OrgStaffUpdate) SetNillablePosiID(v *string) *OrgStaffUpdate {
+	if v != nil {
+		_u.SetPosiID(*v)
 	}
-	return osu
+	return _u
 }
 
 // ClearPosiID clears the value of the "posi_id" field.
-func (osu *OrgStaffUpdate) ClearPosiID() *OrgStaffUpdate {
-	osu.mutation.ClearPosiID()
-	return osu
+func (_u *OrgStaffUpdate) ClearPosiID() *OrgStaffUpdate {
+	_u.mutation.ClearPosiID()
+	return _u
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (osu *OrgStaffUpdate) SetOrganID(id string) *OrgStaffUpdate {
-	osu.mutation.SetOrganID(id)
-	return osu
+func (_u *OrgStaffUpdate) SetOrganID(id string) *OrgStaffUpdate {
+	_u.mutation.SetOrganID(id)
+	return _u
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (osu *OrgStaffUpdate) SetNillableOrganID(id *string) *OrgStaffUpdate {
+func (_u *OrgStaffUpdate) SetNillableOrganID(id *string) *OrgStaffUpdate {
 	if id != nil {
-		osu = osu.SetOrganID(*id)
+		_u = _u.SetOrganID(*id)
 	}
-	return osu
+	return _u
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (osu *OrgStaffUpdate) SetOrgan(o *OrgOrgan) *OrgStaffUpdate {
-	return osu.SetOrganID(o.ID)
+func (_u *OrgStaffUpdate) SetOrgan(v *OrgOrgan) *OrgStaffUpdate {
+	return _u.SetOrganID(v.ID)
 }
 
 // SetIdenAddr sets the "iden_addr" edge to the SysAddress entity.
-func (osu *OrgStaffUpdate) SetIdenAddr(s *SysAddress) *OrgStaffUpdate {
-	return osu.SetIdenAddrID(s.ID)
+func (_u *OrgStaffUpdate) SetIdenAddr(v *SysAddress) *OrgStaffUpdate {
+	return _u.SetIdenAddrID(v.ID)
 }
 
 // SetResiAddr sets the "resi_addr" edge to the SysAddress entity.
-func (osu *OrgStaffUpdate) SetResiAddr(s *SysAddress) *OrgStaffUpdate {
-	return osu.SetResiAddrID(s.ID)
+func (_u *OrgStaffUpdate) SetResiAddr(v *SysAddress) *OrgStaffUpdate {
+	return _u.SetResiAddrID(v.ID)
 }
 
 // SetDept sets the "dept" edge to the OrgDept entity.
-func (osu *OrgStaffUpdate) SetDept(o *OrgDept) *OrgStaffUpdate {
-	return osu.SetDeptID(o.ID)
+func (_u *OrgStaffUpdate) SetDept(v *OrgDept) *OrgStaffUpdate {
+	return _u.SetDeptID(v.ID)
 }
 
 // SetPosi sets the "posi" edge to the OrgPosition entity.
-func (osu *OrgStaffUpdate) SetPosi(o *OrgPosition) *OrgStaffUpdate {
-	return osu.SetPosiID(o.ID)
+func (_u *OrgStaffUpdate) SetPosi(v *OrgPosition) *OrgStaffUpdate {
+	return _u.SetPosiID(v.ID)
 }
 
 // Mutation returns the OrgStaffMutation object of the builder.
-func (osu *OrgStaffUpdate) Mutation() *OrgStaffMutation {
-	return osu.mutation
+func (_u *OrgStaffUpdate) Mutation() *OrgStaffMutation {
+	return _u.mutation
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
-func (osu *OrgStaffUpdate) ClearOrgan() *OrgStaffUpdate {
-	osu.mutation.ClearOrgan()
-	return osu
+func (_u *OrgStaffUpdate) ClearOrgan() *OrgStaffUpdate {
+	_u.mutation.ClearOrgan()
+	return _u
 }
 
 // ClearIdenAddr clears the "iden_addr" edge to the SysAddress entity.
-func (osu *OrgStaffUpdate) ClearIdenAddr() *OrgStaffUpdate {
-	osu.mutation.ClearIdenAddr()
-	return osu
+func (_u *OrgStaffUpdate) ClearIdenAddr() *OrgStaffUpdate {
+	_u.mutation.ClearIdenAddr()
+	return _u
 }
 
 // ClearResiAddr clears the "resi_addr" edge to the SysAddress entity.
-func (osu *OrgStaffUpdate) ClearResiAddr() *OrgStaffUpdate {
-	osu.mutation.ClearResiAddr()
-	return osu
+func (_u *OrgStaffUpdate) ClearResiAddr() *OrgStaffUpdate {
+	_u.mutation.ClearResiAddr()
+	return _u
 }
 
 // ClearDept clears the "dept" edge to the OrgDept entity.
-func (osu *OrgStaffUpdate) ClearDept() *OrgStaffUpdate {
-	osu.mutation.ClearDept()
-	return osu
+func (_u *OrgStaffUpdate) ClearDept() *OrgStaffUpdate {
+	_u.mutation.ClearDept()
+	return _u
 }
 
 // ClearPosi clears the "posi" edge to the OrgPosition entity.
-func (osu *OrgStaffUpdate) ClearPosi() *OrgStaffUpdate {
-	osu.mutation.ClearPosi()
-	return osu
+func (_u *OrgStaffUpdate) ClearPosi() *OrgStaffUpdate {
+	_u.mutation.ClearPosi()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (osu *OrgStaffUpdate) Save(ctx context.Context) (int, error) {
-	osu.defaults()
-	return withHooks(ctx, osu.sqlSave, osu.mutation, osu.hooks)
+func (_u *OrgStaffUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (osu *OrgStaffUpdate) SaveX(ctx context.Context) int {
-	affected, err := osu.Save(ctx)
+func (_u *OrgStaffUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -632,94 +632,94 @@ func (osu *OrgStaffUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (osu *OrgStaffUpdate) Exec(ctx context.Context) error {
-	_, err := osu.Save(ctx)
+func (_u *OrgStaffUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (osu *OrgStaffUpdate) ExecX(ctx context.Context) {
-	if err := osu.Exec(ctx); err != nil {
+func (_u *OrgStaffUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (osu *OrgStaffUpdate) defaults() {
-	if _, ok := osu.mutation.UpdatedAt(); !ok && !osu.mutation.UpdatedAtCleared() {
+func (_u *OrgStaffUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orgstaff.UpdateDefaultUpdatedAt()
-		osu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (osu *OrgStaffUpdate) check() error {
-	if v, ok := osu.mutation.Memo(); ok {
+func (_u *OrgStaffUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := orgstaff.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.memo": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.FirstName(); ok {
+	if v, ok := _u.mutation.FirstName(); ok {
 		if err := orgstaff.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.first_name": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.LastName(); ok {
+	if v, ok := _u.mutation.LastName(); ok {
 		if err := orgstaff.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.last_name": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.Mobile(); ok {
+	if v, ok := _u.mutation.Mobile(); ok {
 		if err := orgstaff.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.mobile": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.GenderDictID(); ok {
+	if v, ok := _u.mutation.GenderDictID(); ok {
 		if err := orgstaff.GenderDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "gender_dict_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.gender_dict_id": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.IdenAddrID(); ok {
+	if v, ok := _u.mutation.IdenAddrID(); ok {
 		if err := orgstaff.IdenAddrIDValidator(v); err != nil {
 			return &ValidationError{Name: "iden_addr_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.iden_addr_id": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.ResiAddrID(); ok {
+	if v, ok := _u.mutation.ResiAddrID(); ok {
 		if err := orgstaff.ResiAddrIDValidator(v); err != nil {
 			return &ValidationError{Name: "resi_addr_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.resi_addr_id": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.WorkerNo(); ok {
+	if v, ok := _u.mutation.WorkerNo(); ok {
 		if err := orgstaff.WorkerNoValidator(v); err != nil {
 			return &ValidationError{Name: "worker_no", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.worker_no": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.Cubicle(); ok {
+	if v, ok := _u.mutation.Cubicle(); ok {
 		if err := orgstaff.CubicleValidator(v); err != nil {
 			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.cubicle": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.Rank(); ok {
+	if v, ok := _u.mutation.Rank(); ok {
 		if err := orgstaff.RankValidator(v); err != nil {
 			return &ValidationError{Name: "rank", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.rank": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.OrgID(); ok {
+	if v, ok := _u.mutation.OrgID(); ok {
 		if err := orgstaff.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.EmpystDictID(); ok {
+	if v, ok := _u.mutation.EmpystDictID(); ok {
 		if err := orgstaff.EmpystDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "empyst_dict_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.empyst_dict_id": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.DeptID(); ok {
+	if v, ok := _u.mutation.DeptID(); ok {
 		if err := orgstaff.DeptIDValidator(v); err != nil {
 			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.dept_id": %w`, err)}
 		}
 	}
-	if v, ok := osu.mutation.PosiID(); ok {
+	if v, ok := _u.mutation.PosiID(); ok {
 		if err := orgstaff.PosiIDValidator(v); err != nil {
 			return &ValidationError{Name: "posi_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.posi_id": %w`, err)}
 		}
@@ -728,150 +728,150 @@ func (osu *OrgStaffUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (osu *OrgStaffUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrgStaffUpdate {
-	osu.modifiers = append(osu.modifiers, modifiers...)
-	return osu
+func (_u *OrgStaffUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrgStaffUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := osu.check(); err != nil {
-		return n, err
+func (_u *OrgStaffUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(orgstaff.Table, orgstaff.Columns, sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString))
-	if ps := osu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := osu.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(orgstaff.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := osu.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(orgstaff.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := osu.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(orgstaff.FieldSort, field.TypeInt32, value)
 	}
-	if osu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orgstaff.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := osu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orgstaff.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if osu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orgstaff.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := osu.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(orgstaff.FieldDeletedAt, field.TypeTime, value)
 	}
-	if osu.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(orgstaff.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := osu.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(orgstaff.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := osu.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(orgstaff.FieldMemo, field.TypeString, value)
 	}
-	if osu.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(orgstaff.FieldMemo, field.TypeString)
 	}
-	if value, ok := osu.mutation.FirstName(); ok {
+	if value, ok := _u.mutation.FirstName(); ok {
 		_spec.SetField(orgstaff.FieldFirstName, field.TypeString, value)
 	}
-	if osu.mutation.FirstNameCleared() {
+	if _u.mutation.FirstNameCleared() {
 		_spec.ClearField(orgstaff.FieldFirstName, field.TypeString)
 	}
-	if value, ok := osu.mutation.LastName(); ok {
+	if value, ok := _u.mutation.LastName(); ok {
 		_spec.SetField(orgstaff.FieldLastName, field.TypeString, value)
 	}
-	if osu.mutation.LastNameCleared() {
+	if _u.mutation.LastNameCleared() {
 		_spec.ClearField(orgstaff.FieldLastName, field.TypeString)
 	}
-	if value, ok := osu.mutation.Mobile(); ok {
+	if value, ok := _u.mutation.Mobile(); ok {
 		_spec.SetField(orgstaff.FieldMobile, field.TypeString, value)
 	}
-	if osu.mutation.MobileCleared() {
+	if _u.mutation.MobileCleared() {
 		_spec.ClearField(orgstaff.FieldMobile, field.TypeString)
 	}
-	if value, ok := osu.mutation.Gender(); ok {
+	if value, ok := _u.mutation.Gender(); ok {
 		_spec.SetField(orgstaff.FieldGender, field.TypeInt32, value)
 	}
-	if value, ok := osu.mutation.AddedGender(); ok {
+	if value, ok := _u.mutation.AddedGender(); ok {
 		_spec.AddField(orgstaff.FieldGender, field.TypeInt32, value)
 	}
-	if osu.mutation.GenderCleared() {
+	if _u.mutation.GenderCleared() {
 		_spec.ClearField(orgstaff.FieldGender, field.TypeInt32)
 	}
-	if value, ok := osu.mutation.GenderDictID(); ok {
+	if value, ok := _u.mutation.GenderDictID(); ok {
 		_spec.SetField(orgstaff.FieldGenderDictID, field.TypeString, value)
 	}
-	if osu.mutation.GenderDictIDCleared() {
+	if _u.mutation.GenderDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldGenderDictID, field.TypeString)
 	}
-	if value, ok := osu.mutation.BirthDate(); ok {
+	if value, ok := _u.mutation.BirthDate(); ok {
 		_spec.SetField(orgstaff.FieldBirthDate, field.TypeTime, value)
 	}
-	if osu.mutation.BirthDateCleared() {
+	if _u.mutation.BirthDateCleared() {
 		_spec.ClearField(orgstaff.FieldBirthDate, field.TypeTime)
 	}
-	if value, ok := osu.mutation.IdenNo(); ok {
+	if value, ok := _u.mutation.IdenNo(); ok {
 		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
 	}
-	if osu.mutation.IdenNoCleared() {
+	if _u.mutation.IdenNoCleared() {
 		_spec.ClearField(orgstaff.FieldIdenNo, field.TypeString)
 	}
-	if value, ok := osu.mutation.WorkerNo(); ok {
+	if value, ok := _u.mutation.WorkerNo(); ok {
 		_spec.SetField(orgstaff.FieldWorkerNo, field.TypeString, value)
 	}
-	if osu.mutation.WorkerNoCleared() {
+	if _u.mutation.WorkerNoCleared() {
 		_spec.ClearField(orgstaff.FieldWorkerNo, field.TypeString)
 	}
-	if value, ok := osu.mutation.Cubicle(); ok {
+	if value, ok := _u.mutation.Cubicle(); ok {
 		_spec.SetField(orgstaff.FieldCubicle, field.TypeString, value)
 	}
-	if osu.mutation.CubicleCleared() {
+	if _u.mutation.CubicleCleared() {
 		_spec.ClearField(orgstaff.FieldCubicle, field.TypeString)
 	}
-	if value, ok := osu.mutation.Rank(); ok {
+	if value, ok := _u.mutation.Rank(); ok {
 		_spec.SetField(orgstaff.FieldRank, field.TypeString, value)
 	}
-	if osu.mutation.RankCleared() {
+	if _u.mutation.RankCleared() {
 		_spec.ClearField(orgstaff.FieldRank, field.TypeString)
 	}
-	if value, ok := osu.mutation.EntryDate(); ok {
+	if value, ok := _u.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)
 	}
-	if osu.mutation.EntryDateCleared() {
+	if _u.mutation.EntryDateCleared() {
 		_spec.ClearField(orgstaff.FieldEntryDate, field.TypeTime)
 	}
-	if value, ok := osu.mutation.RegularDate(); ok {
+	if value, ok := _u.mutation.RegularDate(); ok {
 		_spec.SetField(orgstaff.FieldRegularDate, field.TypeTime, value)
 	}
-	if osu.mutation.RegularDateCleared() {
+	if _u.mutation.RegularDateCleared() {
 		_spec.ClearField(orgstaff.FieldRegularDate, field.TypeTime)
 	}
-	if value, ok := osu.mutation.ResignDate(); ok {
+	if value, ok := _u.mutation.ResignDate(); ok {
 		_spec.SetField(orgstaff.FieldResignDate, field.TypeTime, value)
 	}
-	if osu.mutation.ResignDateCleared() {
+	if _u.mutation.ResignDateCleared() {
 		_spec.ClearField(orgstaff.FieldResignDate, field.TypeTime)
 	}
-	if value, ok := osu.mutation.EmpyStat(); ok {
+	if value, ok := _u.mutation.EmpyStat(); ok {
 		_spec.SetField(orgstaff.FieldEmpyStat, field.TypeInt32, value)
 	}
-	if value, ok := osu.mutation.AddedEmpyStat(); ok {
+	if value, ok := _u.mutation.AddedEmpyStat(); ok {
 		_spec.AddField(orgstaff.FieldEmpyStat, field.TypeInt32, value)
 	}
-	if value, ok := osu.mutation.EmpystDictID(); ok {
+	if value, ok := _u.mutation.EmpystDictID(); ok {
 		_spec.SetField(orgstaff.FieldEmpystDictID, field.TypeString, value)
 	}
-	if osu.mutation.EmpystDictIDCleared() {
+	if _u.mutation.EmpystDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldEmpystDictID, field.TypeString)
 	}
-	if osu.mutation.OrganCleared() {
+	if _u.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -884,7 +884,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osu.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -900,7 +900,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if osu.mutation.IdenAddrCleared() {
+	if _u.mutation.IdenAddrCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -913,7 +913,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osu.mutation.IdenAddrIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.IdenAddrIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -929,7 +929,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if osu.mutation.ResiAddrCleared() {
+	if _u.mutation.ResiAddrCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -942,7 +942,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osu.mutation.ResiAddrIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ResiAddrIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -958,7 +958,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if osu.mutation.DeptCleared() {
+	if _u.mutation.DeptCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -971,7 +971,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osu.mutation.DeptIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.DeptIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -987,7 +987,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if osu.mutation.PosiCleared() {
+	if _u.mutation.PosiCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1000,7 +1000,7 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osu.mutation.PosiIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.PosiIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1016,8 +1016,8 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(osu.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, osu.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orgstaff.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -1025,8 +1025,8 @@ func (osu *OrgStaffUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	osu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // OrgStaffUpdateOne is the builder for updating a single OrgStaff entity.
@@ -1039,610 +1039,610 @@ type OrgStaffUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (osuo *OrgStaffUpdateOne) SetIsDel(b bool) *OrgStaffUpdateOne {
-	osuo.mutation.SetIsDel(b)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetIsDel(v bool) *OrgStaffUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableIsDel(b *bool) *OrgStaffUpdateOne {
-	if b != nil {
-		osuo.SetIsDel(*b)
+func (_u *OrgStaffUpdateOne) SetNillableIsDel(v *bool) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return osuo
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (osuo *OrgStaffUpdateOne) SetSort(i int32) *OrgStaffUpdateOne {
-	osuo.mutation.ResetSort()
-	osuo.mutation.SetSort(i)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetSort(v int32) *OrgStaffUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableSort(i *int32) *OrgStaffUpdateOne {
-	if i != nil {
-		osuo.SetSort(*i)
+func (_u *OrgStaffUpdateOne) SetNillableSort(v *int32) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return osuo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (osuo *OrgStaffUpdateOne) AddSort(i int32) *OrgStaffUpdateOne {
-	osuo.mutation.AddSort(i)
-	return osuo
+// AddSort adds value to the "sort" field.
+func (_u *OrgStaffUpdateOne) AddSort(v int32) *OrgStaffUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (osuo *OrgStaffUpdateOne) SetUpdatedAt(t time.Time) *OrgStaffUpdateOne {
-	osuo.mutation.SetUpdatedAt(t)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetUpdatedAt(v time.Time) *OrgStaffUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (osuo *OrgStaffUpdateOne) ClearUpdatedAt() *OrgStaffUpdateOne {
-	osuo.mutation.ClearUpdatedAt()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearUpdatedAt() *OrgStaffUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (osuo *OrgStaffUpdateOne) SetDeletedAt(t time.Time) *OrgStaffUpdateOne {
-	osuo.mutation.SetDeletedAt(t)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetDeletedAt(v time.Time) *OrgStaffUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableDeletedAt(t *time.Time) *OrgStaffUpdateOne {
-	if t != nil {
-		osuo.SetDeletedAt(*t)
+func (_u *OrgStaffUpdateOne) SetNillableDeletedAt(v *time.Time) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (osuo *OrgStaffUpdateOne) ClearDeletedAt() *OrgStaffUpdateOne {
-	osuo.mutation.ClearDeletedAt()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearDeletedAt() *OrgStaffUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (osuo *OrgStaffUpdateOne) SetIsActive(b bool) *OrgStaffUpdateOne {
-	osuo.mutation.SetIsActive(b)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetIsActive(v bool) *OrgStaffUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableIsActive(b *bool) *OrgStaffUpdateOne {
-	if b != nil {
-		osuo.SetIsActive(*b)
+func (_u *OrgStaffUpdateOne) SetNillableIsActive(v *bool) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return osuo
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (osuo *OrgStaffUpdateOne) SetMemo(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetMemo(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetMemo(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableMemo(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetMemo(*s)
+func (_u *OrgStaffUpdateOne) SetNillableMemo(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (osuo *OrgStaffUpdateOne) ClearMemo() *OrgStaffUpdateOne {
-	osuo.mutation.ClearMemo()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearMemo() *OrgStaffUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetFirstName sets the "first_name" field.
-func (osuo *OrgStaffUpdateOne) SetFirstName(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetFirstName(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetFirstName(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetFirstName(v)
+	return _u
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableFirstName(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetFirstName(*s)
+func (_u *OrgStaffUpdateOne) SetNillableFirstName(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetFirstName(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearFirstName clears the value of the "first_name" field.
-func (osuo *OrgStaffUpdateOne) ClearFirstName() *OrgStaffUpdateOne {
-	osuo.mutation.ClearFirstName()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearFirstName() *OrgStaffUpdateOne {
+	_u.mutation.ClearFirstName()
+	return _u
 }
 
 // SetLastName sets the "last_name" field.
-func (osuo *OrgStaffUpdateOne) SetLastName(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetLastName(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetLastName(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetLastName(v)
+	return _u
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableLastName(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetLastName(*s)
+func (_u *OrgStaffUpdateOne) SetNillableLastName(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetLastName(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearLastName clears the value of the "last_name" field.
-func (osuo *OrgStaffUpdateOne) ClearLastName() *OrgStaffUpdateOne {
-	osuo.mutation.ClearLastName()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearLastName() *OrgStaffUpdateOne {
+	_u.mutation.ClearLastName()
+	return _u
 }
 
 // SetMobile sets the "mobile" field.
-func (osuo *OrgStaffUpdateOne) SetMobile(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetMobile(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetMobile(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetMobile(v)
+	return _u
 }
 
 // SetNillableMobile sets the "mobile" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableMobile(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetMobile(*s)
+func (_u *OrgStaffUpdateOne) SetNillableMobile(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetMobile(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearMobile clears the value of the "mobile" field.
-func (osuo *OrgStaffUpdateOne) ClearMobile() *OrgStaffUpdateOne {
-	osuo.mutation.ClearMobile()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearMobile() *OrgStaffUpdateOne {
+	_u.mutation.ClearMobile()
+	return _u
 }
 
 // SetGender sets the "gender" field.
-func (osuo *OrgStaffUpdateOne) SetGender(i int32) *OrgStaffUpdateOne {
-	osuo.mutation.ResetGender()
-	osuo.mutation.SetGender(i)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetGender(v int32) *OrgStaffUpdateOne {
+	_u.mutation.ResetGender()
+	_u.mutation.SetGender(v)
+	return _u
 }
 
 // SetNillableGender sets the "gender" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableGender(i *int32) *OrgStaffUpdateOne {
-	if i != nil {
-		osuo.SetGender(*i)
+func (_u *OrgStaffUpdateOne) SetNillableGender(v *int32) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetGender(*v)
 	}
-	return osuo
+	return _u
 }
 
-// AddGender adds i to the "gender" field.
-func (osuo *OrgStaffUpdateOne) AddGender(i int32) *OrgStaffUpdateOne {
-	osuo.mutation.AddGender(i)
-	return osuo
+// AddGender adds value to the "gender" field.
+func (_u *OrgStaffUpdateOne) AddGender(v int32) *OrgStaffUpdateOne {
+	_u.mutation.AddGender(v)
+	return _u
 }
 
 // ClearGender clears the value of the "gender" field.
-func (osuo *OrgStaffUpdateOne) ClearGender() *OrgStaffUpdateOne {
-	osuo.mutation.ClearGender()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearGender() *OrgStaffUpdateOne {
+	_u.mutation.ClearGender()
+	return _u
 }
 
 // SetGenderDictID sets the "gender_dict_id" field.
-func (osuo *OrgStaffUpdateOne) SetGenderDictID(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetGenderDictID(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetGenderDictID(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetGenderDictID(v)
+	return _u
 }
 
 // SetNillableGenderDictID sets the "gender_dict_id" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableGenderDictID(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetGenderDictID(*s)
+func (_u *OrgStaffUpdateOne) SetNillableGenderDictID(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetGenderDictID(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearGenderDictID clears the value of the "gender_dict_id" field.
-func (osuo *OrgStaffUpdateOne) ClearGenderDictID() *OrgStaffUpdateOne {
-	osuo.mutation.ClearGenderDictID()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearGenderDictID() *OrgStaffUpdateOne {
+	_u.mutation.ClearGenderDictID()
+	return _u
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (osuo *OrgStaffUpdateOne) SetBirthDate(t time.Time) *OrgStaffUpdateOne {
-	osuo.mutation.SetBirthDate(t)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetBirthDate(v time.Time) *OrgStaffUpdateOne {
+	_u.mutation.SetBirthDate(v)
+	return _u
 }
 
 // SetNillableBirthDate sets the "birth_date" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableBirthDate(t *time.Time) *OrgStaffUpdateOne {
-	if t != nil {
-		osuo.SetBirthDate(*t)
+func (_u *OrgStaffUpdateOne) SetNillableBirthDate(v *time.Time) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetBirthDate(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearBirthDate clears the value of the "birth_date" field.
-func (osuo *OrgStaffUpdateOne) ClearBirthDate() *OrgStaffUpdateOne {
-	osuo.mutation.ClearBirthDate()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearBirthDate() *OrgStaffUpdateOne {
+	_u.mutation.ClearBirthDate()
+	return _u
 }
 
 // SetIdenNo sets the "iden_no" field.
-func (osuo *OrgStaffUpdateOne) SetIdenNo(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetIdenNo(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetIdenNo(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetIdenNo(v)
+	return _u
 }
 
 // SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableIdenNo(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetIdenNo(*s)
+func (_u *OrgStaffUpdateOne) SetNillableIdenNo(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetIdenNo(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearIdenNo clears the value of the "iden_no" field.
-func (osuo *OrgStaffUpdateOne) ClearIdenNo() *OrgStaffUpdateOne {
-	osuo.mutation.ClearIdenNo()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearIdenNo() *OrgStaffUpdateOne {
+	_u.mutation.ClearIdenNo()
+	return _u
 }
 
 // SetIdenAddrID sets the "iden_addr_id" field.
-func (osuo *OrgStaffUpdateOne) SetIdenAddrID(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetIdenAddrID(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetIdenAddrID(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetIdenAddrID(v)
+	return _u
 }
 
 // SetNillableIdenAddrID sets the "iden_addr_id" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableIdenAddrID(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetIdenAddrID(*s)
+func (_u *OrgStaffUpdateOne) SetNillableIdenAddrID(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetIdenAddrID(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearIdenAddrID clears the value of the "iden_addr_id" field.
-func (osuo *OrgStaffUpdateOne) ClearIdenAddrID() *OrgStaffUpdateOne {
-	osuo.mutation.ClearIdenAddrID()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearIdenAddrID() *OrgStaffUpdateOne {
+	_u.mutation.ClearIdenAddrID()
+	return _u
 }
 
 // SetResiAddrID sets the "resi_addr_id" field.
-func (osuo *OrgStaffUpdateOne) SetResiAddrID(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetResiAddrID(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetResiAddrID(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetResiAddrID(v)
+	return _u
 }
 
 // SetNillableResiAddrID sets the "resi_addr_id" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableResiAddrID(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetResiAddrID(*s)
+func (_u *OrgStaffUpdateOne) SetNillableResiAddrID(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetResiAddrID(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearResiAddrID clears the value of the "resi_addr_id" field.
-func (osuo *OrgStaffUpdateOne) ClearResiAddrID() *OrgStaffUpdateOne {
-	osuo.mutation.ClearResiAddrID()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearResiAddrID() *OrgStaffUpdateOne {
+	_u.mutation.ClearResiAddrID()
+	return _u
 }
 
 // SetWorkerNo sets the "worker_no" field.
-func (osuo *OrgStaffUpdateOne) SetWorkerNo(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetWorkerNo(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetWorkerNo(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetWorkerNo(v)
+	return _u
 }
 
 // SetNillableWorkerNo sets the "worker_no" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableWorkerNo(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetWorkerNo(*s)
+func (_u *OrgStaffUpdateOne) SetNillableWorkerNo(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetWorkerNo(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearWorkerNo clears the value of the "worker_no" field.
-func (osuo *OrgStaffUpdateOne) ClearWorkerNo() *OrgStaffUpdateOne {
-	osuo.mutation.ClearWorkerNo()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearWorkerNo() *OrgStaffUpdateOne {
+	_u.mutation.ClearWorkerNo()
+	return _u
 }
 
 // SetCubicle sets the "cubicle" field.
-func (osuo *OrgStaffUpdateOne) SetCubicle(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetCubicle(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetCubicle(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetCubicle(v)
+	return _u
 }
 
 // SetNillableCubicle sets the "cubicle" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableCubicle(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetCubicle(*s)
+func (_u *OrgStaffUpdateOne) SetNillableCubicle(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetCubicle(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearCubicle clears the value of the "cubicle" field.
-func (osuo *OrgStaffUpdateOne) ClearCubicle() *OrgStaffUpdateOne {
-	osuo.mutation.ClearCubicle()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearCubicle() *OrgStaffUpdateOne {
+	_u.mutation.ClearCubicle()
+	return _u
 }
 
 // SetRank sets the "rank" field.
-func (osuo *OrgStaffUpdateOne) SetRank(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetRank(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetRank(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetRank(v)
+	return _u
 }
 
 // SetNillableRank sets the "rank" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableRank(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetRank(*s)
+func (_u *OrgStaffUpdateOne) SetNillableRank(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetRank(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearRank clears the value of the "rank" field.
-func (osuo *OrgStaffUpdateOne) ClearRank() *OrgStaffUpdateOne {
-	osuo.mutation.ClearRank()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearRank() *OrgStaffUpdateOne {
+	_u.mutation.ClearRank()
+	return _u
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (osuo *OrgStaffUpdateOne) SetEntryDate(t time.Time) *OrgStaffUpdateOne {
-	osuo.mutation.SetEntryDate(t)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetEntryDate(v time.Time) *OrgStaffUpdateOne {
+	_u.mutation.SetEntryDate(v)
+	return _u
 }
 
 // SetNillableEntryDate sets the "entry_date" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableEntryDate(t *time.Time) *OrgStaffUpdateOne {
-	if t != nil {
-		osuo.SetEntryDate(*t)
+func (_u *OrgStaffUpdateOne) SetNillableEntryDate(v *time.Time) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetEntryDate(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearEntryDate clears the value of the "entry_date" field.
-func (osuo *OrgStaffUpdateOne) ClearEntryDate() *OrgStaffUpdateOne {
-	osuo.mutation.ClearEntryDate()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearEntryDate() *OrgStaffUpdateOne {
+	_u.mutation.ClearEntryDate()
+	return _u
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (osuo *OrgStaffUpdateOne) SetRegularDate(t time.Time) *OrgStaffUpdateOne {
-	osuo.mutation.SetRegularDate(t)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetRegularDate(v time.Time) *OrgStaffUpdateOne {
+	_u.mutation.SetRegularDate(v)
+	return _u
 }
 
 // SetNillableRegularDate sets the "regular_date" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableRegularDate(t *time.Time) *OrgStaffUpdateOne {
-	if t != nil {
-		osuo.SetRegularDate(*t)
+func (_u *OrgStaffUpdateOne) SetNillableRegularDate(v *time.Time) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetRegularDate(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearRegularDate clears the value of the "regular_date" field.
-func (osuo *OrgStaffUpdateOne) ClearRegularDate() *OrgStaffUpdateOne {
-	osuo.mutation.ClearRegularDate()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearRegularDate() *OrgStaffUpdateOne {
+	_u.mutation.ClearRegularDate()
+	return _u
 }
 
 // SetResignDate sets the "resign_date" field.
-func (osuo *OrgStaffUpdateOne) SetResignDate(t time.Time) *OrgStaffUpdateOne {
-	osuo.mutation.SetResignDate(t)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetResignDate(v time.Time) *OrgStaffUpdateOne {
+	_u.mutation.SetResignDate(v)
+	return _u
 }
 
 // SetNillableResignDate sets the "resign_date" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableResignDate(t *time.Time) *OrgStaffUpdateOne {
-	if t != nil {
-		osuo.SetResignDate(*t)
+func (_u *OrgStaffUpdateOne) SetNillableResignDate(v *time.Time) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetResignDate(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearResignDate clears the value of the "resign_date" field.
-func (osuo *OrgStaffUpdateOne) ClearResignDate() *OrgStaffUpdateOne {
-	osuo.mutation.ClearResignDate()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearResignDate() *OrgStaffUpdateOne {
+	_u.mutation.ClearResignDate()
+	return _u
 }
 
 // SetOrgID sets the "org_id" field.
-func (osuo *OrgStaffUpdateOne) SetOrgID(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetOrgID(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetOrgID(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetOrgID(v)
+	return _u
 }
 
 // SetNillableOrgID sets the "org_id" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableOrgID(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetOrgID(*s)
+func (_u *OrgStaffUpdateOne) SetNillableOrgID(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetOrgID(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearOrgID clears the value of the "org_id" field.
-func (osuo *OrgStaffUpdateOne) ClearOrgID() *OrgStaffUpdateOne {
-	osuo.mutation.ClearOrgID()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearOrgID() *OrgStaffUpdateOne {
+	_u.mutation.ClearOrgID()
+	return _u
 }
 
 // SetEmpyStat sets the "empy_stat" field.
-func (osuo *OrgStaffUpdateOne) SetEmpyStat(i int32) *OrgStaffUpdateOne {
-	osuo.mutation.ResetEmpyStat()
-	osuo.mutation.SetEmpyStat(i)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetEmpyStat(v int32) *OrgStaffUpdateOne {
+	_u.mutation.ResetEmpyStat()
+	_u.mutation.SetEmpyStat(v)
+	return _u
 }
 
 // SetNillableEmpyStat sets the "empy_stat" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableEmpyStat(i *int32) *OrgStaffUpdateOne {
-	if i != nil {
-		osuo.SetEmpyStat(*i)
+func (_u *OrgStaffUpdateOne) SetNillableEmpyStat(v *int32) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetEmpyStat(*v)
 	}
-	return osuo
+	return _u
 }
 
-// AddEmpyStat adds i to the "empy_stat" field.
-func (osuo *OrgStaffUpdateOne) AddEmpyStat(i int32) *OrgStaffUpdateOne {
-	osuo.mutation.AddEmpyStat(i)
-	return osuo
+// AddEmpyStat adds value to the "empy_stat" field.
+func (_u *OrgStaffUpdateOne) AddEmpyStat(v int32) *OrgStaffUpdateOne {
+	_u.mutation.AddEmpyStat(v)
+	return _u
 }
 
 // SetEmpystDictID sets the "empyst_dict_id" field.
-func (osuo *OrgStaffUpdateOne) SetEmpystDictID(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetEmpystDictID(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetEmpystDictID(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetEmpystDictID(v)
+	return _u
 }
 
 // SetNillableEmpystDictID sets the "empyst_dict_id" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableEmpystDictID(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetEmpystDictID(*s)
+func (_u *OrgStaffUpdateOne) SetNillableEmpystDictID(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetEmpystDictID(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearEmpystDictID clears the value of the "empyst_dict_id" field.
-func (osuo *OrgStaffUpdateOne) ClearEmpystDictID() *OrgStaffUpdateOne {
-	osuo.mutation.ClearEmpystDictID()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearEmpystDictID() *OrgStaffUpdateOne {
+	_u.mutation.ClearEmpystDictID()
+	return _u
 }
 
 // SetDeptID sets the "dept_id" field.
-func (osuo *OrgStaffUpdateOne) SetDeptID(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetDeptID(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetDeptID(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetDeptID(v)
+	return _u
 }
 
 // SetNillableDeptID sets the "dept_id" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableDeptID(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetDeptID(*s)
+func (_u *OrgStaffUpdateOne) SetNillableDeptID(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetDeptID(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearDeptID clears the value of the "dept_id" field.
-func (osuo *OrgStaffUpdateOne) ClearDeptID() *OrgStaffUpdateOne {
-	osuo.mutation.ClearDeptID()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearDeptID() *OrgStaffUpdateOne {
+	_u.mutation.ClearDeptID()
+	return _u
 }
 
 // SetPosiID sets the "posi_id" field.
-func (osuo *OrgStaffUpdateOne) SetPosiID(s string) *OrgStaffUpdateOne {
-	osuo.mutation.SetPosiID(s)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetPosiID(v string) *OrgStaffUpdateOne {
+	_u.mutation.SetPosiID(v)
+	return _u
 }
 
 // SetNillablePosiID sets the "posi_id" field if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillablePosiID(s *string) *OrgStaffUpdateOne {
-	if s != nil {
-		osuo.SetPosiID(*s)
+func (_u *OrgStaffUpdateOne) SetNillablePosiID(v *string) *OrgStaffUpdateOne {
+	if v != nil {
+		_u.SetPosiID(*v)
 	}
-	return osuo
+	return _u
 }
 
 // ClearPosiID clears the value of the "posi_id" field.
-func (osuo *OrgStaffUpdateOne) ClearPosiID() *OrgStaffUpdateOne {
-	osuo.mutation.ClearPosiID()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearPosiID() *OrgStaffUpdateOne {
+	_u.mutation.ClearPosiID()
+	return _u
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (osuo *OrgStaffUpdateOne) SetOrganID(id string) *OrgStaffUpdateOne {
-	osuo.mutation.SetOrganID(id)
-	return osuo
+func (_u *OrgStaffUpdateOne) SetOrganID(id string) *OrgStaffUpdateOne {
+	_u.mutation.SetOrganID(id)
+	return _u
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (osuo *OrgStaffUpdateOne) SetNillableOrganID(id *string) *OrgStaffUpdateOne {
+func (_u *OrgStaffUpdateOne) SetNillableOrganID(id *string) *OrgStaffUpdateOne {
 	if id != nil {
-		osuo = osuo.SetOrganID(*id)
+		_u = _u.SetOrganID(*id)
 	}
-	return osuo
+	return _u
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (osuo *OrgStaffUpdateOne) SetOrgan(o *OrgOrgan) *OrgStaffUpdateOne {
-	return osuo.SetOrganID(o.ID)
+func (_u *OrgStaffUpdateOne) SetOrgan(v *OrgOrgan) *OrgStaffUpdateOne {
+	return _u.SetOrganID(v.ID)
 }
 
 // SetIdenAddr sets the "iden_addr" edge to the SysAddress entity.
-func (osuo *OrgStaffUpdateOne) SetIdenAddr(s *SysAddress) *OrgStaffUpdateOne {
-	return osuo.SetIdenAddrID(s.ID)
+func (_u *OrgStaffUpdateOne) SetIdenAddr(v *SysAddress) *OrgStaffUpdateOne {
+	return _u.SetIdenAddrID(v.ID)
 }
 
 // SetResiAddr sets the "resi_addr" edge to the SysAddress entity.
-func (osuo *OrgStaffUpdateOne) SetResiAddr(s *SysAddress) *OrgStaffUpdateOne {
-	return osuo.SetResiAddrID(s.ID)
+func (_u *OrgStaffUpdateOne) SetResiAddr(v *SysAddress) *OrgStaffUpdateOne {
+	return _u.SetResiAddrID(v.ID)
 }
 
 // SetDept sets the "dept" edge to the OrgDept entity.
-func (osuo *OrgStaffUpdateOne) SetDept(o *OrgDept) *OrgStaffUpdateOne {
-	return osuo.SetDeptID(o.ID)
+func (_u *OrgStaffUpdateOne) SetDept(v *OrgDept) *OrgStaffUpdateOne {
+	return _u.SetDeptID(v.ID)
 }
 
 // SetPosi sets the "posi" edge to the OrgPosition entity.
-func (osuo *OrgStaffUpdateOne) SetPosi(o *OrgPosition) *OrgStaffUpdateOne {
-	return osuo.SetPosiID(o.ID)
+func (_u *OrgStaffUpdateOne) SetPosi(v *OrgPosition) *OrgStaffUpdateOne {
+	return _u.SetPosiID(v.ID)
 }
 
 // Mutation returns the OrgStaffMutation object of the builder.
-func (osuo *OrgStaffUpdateOne) Mutation() *OrgStaffMutation {
-	return osuo.mutation
+func (_u *OrgStaffUpdateOne) Mutation() *OrgStaffMutation {
+	return _u.mutation
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
-func (osuo *OrgStaffUpdateOne) ClearOrgan() *OrgStaffUpdateOne {
-	osuo.mutation.ClearOrgan()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearOrgan() *OrgStaffUpdateOne {
+	_u.mutation.ClearOrgan()
+	return _u
 }
 
 // ClearIdenAddr clears the "iden_addr" edge to the SysAddress entity.
-func (osuo *OrgStaffUpdateOne) ClearIdenAddr() *OrgStaffUpdateOne {
-	osuo.mutation.ClearIdenAddr()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearIdenAddr() *OrgStaffUpdateOne {
+	_u.mutation.ClearIdenAddr()
+	return _u
 }
 
 // ClearResiAddr clears the "resi_addr" edge to the SysAddress entity.
-func (osuo *OrgStaffUpdateOne) ClearResiAddr() *OrgStaffUpdateOne {
-	osuo.mutation.ClearResiAddr()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearResiAddr() *OrgStaffUpdateOne {
+	_u.mutation.ClearResiAddr()
+	return _u
 }
 
 // ClearDept clears the "dept" edge to the OrgDept entity.
-func (osuo *OrgStaffUpdateOne) ClearDept() *OrgStaffUpdateOne {
-	osuo.mutation.ClearDept()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearDept() *OrgStaffUpdateOne {
+	_u.mutation.ClearDept()
+	return _u
 }
 
 // ClearPosi clears the "posi" edge to the OrgPosition entity.
-func (osuo *OrgStaffUpdateOne) ClearPosi() *OrgStaffUpdateOne {
-	osuo.mutation.ClearPosi()
-	return osuo
+func (_u *OrgStaffUpdateOne) ClearPosi() *OrgStaffUpdateOne {
+	_u.mutation.ClearPosi()
+	return _u
 }
 
 // Where appends a list predicates to the OrgStaffUpdate builder.
-func (osuo *OrgStaffUpdateOne) Where(ps ...predicate.OrgStaff) *OrgStaffUpdateOne {
-	osuo.mutation.Where(ps...)
-	return osuo
+func (_u *OrgStaffUpdateOne) Where(ps ...predicate.OrgStaff) *OrgStaffUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (osuo *OrgStaffUpdateOne) Select(field string, fields ...string) *OrgStaffUpdateOne {
-	osuo.fields = append([]string{field}, fields...)
-	return osuo
+func (_u *OrgStaffUpdateOne) Select(field string, fields ...string) *OrgStaffUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated OrgStaff entity.
-func (osuo *OrgStaffUpdateOne) Save(ctx context.Context) (*OrgStaff, error) {
-	osuo.defaults()
-	return withHooks(ctx, osuo.sqlSave, osuo.mutation, osuo.hooks)
+func (_u *OrgStaffUpdateOne) Save(ctx context.Context) (*OrgStaff, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (osuo *OrgStaffUpdateOne) SaveX(ctx context.Context) *OrgStaff {
-	node, err := osuo.Save(ctx)
+func (_u *OrgStaffUpdateOne) SaveX(ctx context.Context) *OrgStaff {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1650,94 +1650,94 @@ func (osuo *OrgStaffUpdateOne) SaveX(ctx context.Context) *OrgStaff {
 }
 
 // Exec executes the query on the entity.
-func (osuo *OrgStaffUpdateOne) Exec(ctx context.Context) error {
-	_, err := osuo.Save(ctx)
+func (_u *OrgStaffUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (osuo *OrgStaffUpdateOne) ExecX(ctx context.Context) {
-	if err := osuo.Exec(ctx); err != nil {
+func (_u *OrgStaffUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (osuo *OrgStaffUpdateOne) defaults() {
-	if _, ok := osuo.mutation.UpdatedAt(); !ok && !osuo.mutation.UpdatedAtCleared() {
+func (_u *OrgStaffUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := orgstaff.UpdateDefaultUpdatedAt()
-		osuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (osuo *OrgStaffUpdateOne) check() error {
-	if v, ok := osuo.mutation.Memo(); ok {
+func (_u *OrgStaffUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := orgstaff.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.memo": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.FirstName(); ok {
+	if v, ok := _u.mutation.FirstName(); ok {
 		if err := orgstaff.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.first_name": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.LastName(); ok {
+	if v, ok := _u.mutation.LastName(); ok {
 		if err := orgstaff.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.last_name": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.Mobile(); ok {
+	if v, ok := _u.mutation.Mobile(); ok {
 		if err := orgstaff.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.mobile": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.GenderDictID(); ok {
+	if v, ok := _u.mutation.GenderDictID(); ok {
 		if err := orgstaff.GenderDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "gender_dict_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.gender_dict_id": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.IdenAddrID(); ok {
+	if v, ok := _u.mutation.IdenAddrID(); ok {
 		if err := orgstaff.IdenAddrIDValidator(v); err != nil {
 			return &ValidationError{Name: "iden_addr_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.iden_addr_id": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.ResiAddrID(); ok {
+	if v, ok := _u.mutation.ResiAddrID(); ok {
 		if err := orgstaff.ResiAddrIDValidator(v); err != nil {
 			return &ValidationError{Name: "resi_addr_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.resi_addr_id": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.WorkerNo(); ok {
+	if v, ok := _u.mutation.WorkerNo(); ok {
 		if err := orgstaff.WorkerNoValidator(v); err != nil {
 			return &ValidationError{Name: "worker_no", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.worker_no": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.Cubicle(); ok {
+	if v, ok := _u.mutation.Cubicle(); ok {
 		if err := orgstaff.CubicleValidator(v); err != nil {
 			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.cubicle": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.Rank(); ok {
+	if v, ok := _u.mutation.Rank(); ok {
 		if err := orgstaff.RankValidator(v); err != nil {
 			return &ValidationError{Name: "rank", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.rank": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.OrgID(); ok {
+	if v, ok := _u.mutation.OrgID(); ok {
 		if err := orgstaff.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.EmpystDictID(); ok {
+	if v, ok := _u.mutation.EmpystDictID(); ok {
 		if err := orgstaff.EmpystDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "empyst_dict_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.empyst_dict_id": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.DeptID(); ok {
+	if v, ok := _u.mutation.DeptID(); ok {
 		if err := orgstaff.DeptIDValidator(v); err != nil {
 			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.dept_id": %w`, err)}
 		}
 	}
-	if v, ok := osuo.mutation.PosiID(); ok {
+	if v, ok := _u.mutation.PosiID(); ok {
 		if err := orgstaff.PosiIDValidator(v); err != nil {
 			return &ValidationError{Name: "posi_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.posi_id": %w`, err)}
 		}
@@ -1746,22 +1746,22 @@ func (osuo *OrgStaffUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (osuo *OrgStaffUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrgStaffUpdateOne {
-	osuo.modifiers = append(osuo.modifiers, modifiers...)
-	return osuo
+func (_u *OrgStaffUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *OrgStaffUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, err error) {
-	if err := osuo.check(); err != nil {
+func (_u *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(orgstaff.Table, orgstaff.Columns, sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString))
-	id, ok := osuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "OrgStaff.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := osuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, orgstaff.FieldID)
 		for _, f := range fields {
@@ -1773,140 +1773,140 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 			}
 		}
 	}
-	if ps := osuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := osuo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(orgstaff.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := osuo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(orgstaff.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := osuo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(orgstaff.FieldSort, field.TypeInt32, value)
 	}
-	if osuo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(orgstaff.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(orgstaff.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if osuo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(orgstaff.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(orgstaff.FieldDeletedAt, field.TypeTime, value)
 	}
-	if osuo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(orgstaff.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(orgstaff.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := osuo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(orgstaff.FieldMemo, field.TypeString, value)
 	}
-	if osuo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(orgstaff.FieldMemo, field.TypeString)
 	}
-	if value, ok := osuo.mutation.FirstName(); ok {
+	if value, ok := _u.mutation.FirstName(); ok {
 		_spec.SetField(orgstaff.FieldFirstName, field.TypeString, value)
 	}
-	if osuo.mutation.FirstNameCleared() {
+	if _u.mutation.FirstNameCleared() {
 		_spec.ClearField(orgstaff.FieldFirstName, field.TypeString)
 	}
-	if value, ok := osuo.mutation.LastName(); ok {
+	if value, ok := _u.mutation.LastName(); ok {
 		_spec.SetField(orgstaff.FieldLastName, field.TypeString, value)
 	}
-	if osuo.mutation.LastNameCleared() {
+	if _u.mutation.LastNameCleared() {
 		_spec.ClearField(orgstaff.FieldLastName, field.TypeString)
 	}
-	if value, ok := osuo.mutation.Mobile(); ok {
+	if value, ok := _u.mutation.Mobile(); ok {
 		_spec.SetField(orgstaff.FieldMobile, field.TypeString, value)
 	}
-	if osuo.mutation.MobileCleared() {
+	if _u.mutation.MobileCleared() {
 		_spec.ClearField(orgstaff.FieldMobile, field.TypeString)
 	}
-	if value, ok := osuo.mutation.Gender(); ok {
+	if value, ok := _u.mutation.Gender(); ok {
 		_spec.SetField(orgstaff.FieldGender, field.TypeInt32, value)
 	}
-	if value, ok := osuo.mutation.AddedGender(); ok {
+	if value, ok := _u.mutation.AddedGender(); ok {
 		_spec.AddField(orgstaff.FieldGender, field.TypeInt32, value)
 	}
-	if osuo.mutation.GenderCleared() {
+	if _u.mutation.GenderCleared() {
 		_spec.ClearField(orgstaff.FieldGender, field.TypeInt32)
 	}
-	if value, ok := osuo.mutation.GenderDictID(); ok {
+	if value, ok := _u.mutation.GenderDictID(); ok {
 		_spec.SetField(orgstaff.FieldGenderDictID, field.TypeString, value)
 	}
-	if osuo.mutation.GenderDictIDCleared() {
+	if _u.mutation.GenderDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldGenderDictID, field.TypeString)
 	}
-	if value, ok := osuo.mutation.BirthDate(); ok {
+	if value, ok := _u.mutation.BirthDate(); ok {
 		_spec.SetField(orgstaff.FieldBirthDate, field.TypeTime, value)
 	}
-	if osuo.mutation.BirthDateCleared() {
+	if _u.mutation.BirthDateCleared() {
 		_spec.ClearField(orgstaff.FieldBirthDate, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.IdenNo(); ok {
+	if value, ok := _u.mutation.IdenNo(); ok {
 		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
 	}
-	if osuo.mutation.IdenNoCleared() {
+	if _u.mutation.IdenNoCleared() {
 		_spec.ClearField(orgstaff.FieldIdenNo, field.TypeString)
 	}
-	if value, ok := osuo.mutation.WorkerNo(); ok {
+	if value, ok := _u.mutation.WorkerNo(); ok {
 		_spec.SetField(orgstaff.FieldWorkerNo, field.TypeString, value)
 	}
-	if osuo.mutation.WorkerNoCleared() {
+	if _u.mutation.WorkerNoCleared() {
 		_spec.ClearField(orgstaff.FieldWorkerNo, field.TypeString)
 	}
-	if value, ok := osuo.mutation.Cubicle(); ok {
+	if value, ok := _u.mutation.Cubicle(); ok {
 		_spec.SetField(orgstaff.FieldCubicle, field.TypeString, value)
 	}
-	if osuo.mutation.CubicleCleared() {
+	if _u.mutation.CubicleCleared() {
 		_spec.ClearField(orgstaff.FieldCubicle, field.TypeString)
 	}
-	if value, ok := osuo.mutation.Rank(); ok {
+	if value, ok := _u.mutation.Rank(); ok {
 		_spec.SetField(orgstaff.FieldRank, field.TypeString, value)
 	}
-	if osuo.mutation.RankCleared() {
+	if _u.mutation.RankCleared() {
 		_spec.ClearField(orgstaff.FieldRank, field.TypeString)
 	}
-	if value, ok := osuo.mutation.EntryDate(); ok {
+	if value, ok := _u.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)
 	}
-	if osuo.mutation.EntryDateCleared() {
+	if _u.mutation.EntryDateCleared() {
 		_spec.ClearField(orgstaff.FieldEntryDate, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.RegularDate(); ok {
+	if value, ok := _u.mutation.RegularDate(); ok {
 		_spec.SetField(orgstaff.FieldRegularDate, field.TypeTime, value)
 	}
-	if osuo.mutation.RegularDateCleared() {
+	if _u.mutation.RegularDateCleared() {
 		_spec.ClearField(orgstaff.FieldRegularDate, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.ResignDate(); ok {
+	if value, ok := _u.mutation.ResignDate(); ok {
 		_spec.SetField(orgstaff.FieldResignDate, field.TypeTime, value)
 	}
-	if osuo.mutation.ResignDateCleared() {
+	if _u.mutation.ResignDateCleared() {
 		_spec.ClearField(orgstaff.FieldResignDate, field.TypeTime)
 	}
-	if value, ok := osuo.mutation.EmpyStat(); ok {
+	if value, ok := _u.mutation.EmpyStat(); ok {
 		_spec.SetField(orgstaff.FieldEmpyStat, field.TypeInt32, value)
 	}
-	if value, ok := osuo.mutation.AddedEmpyStat(); ok {
+	if value, ok := _u.mutation.AddedEmpyStat(); ok {
 		_spec.AddField(orgstaff.FieldEmpyStat, field.TypeInt32, value)
 	}
-	if value, ok := osuo.mutation.EmpystDictID(); ok {
+	if value, ok := _u.mutation.EmpystDictID(); ok {
 		_spec.SetField(orgstaff.FieldEmpystDictID, field.TypeString, value)
 	}
-	if osuo.mutation.EmpystDictIDCleared() {
+	if _u.mutation.EmpystDictIDCleared() {
 		_spec.ClearField(orgstaff.FieldEmpystDictID, field.TypeString)
 	}
-	if osuo.mutation.OrganCleared() {
+	if _u.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1919,7 +1919,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osuo.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1935,7 +1935,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if osuo.mutation.IdenAddrCleared() {
+	if _u.mutation.IdenAddrCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -1948,7 +1948,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osuo.mutation.IdenAddrIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.IdenAddrIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -1964,7 +1964,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if osuo.mutation.ResiAddrCleared() {
+	if _u.mutation.ResiAddrCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -1977,7 +1977,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osuo.mutation.ResiAddrIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ResiAddrIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -1993,7 +1993,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if osuo.mutation.DeptCleared() {
+	if _u.mutation.DeptCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -2006,7 +2006,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osuo.mutation.DeptIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.DeptIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -2022,7 +2022,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if osuo.mutation.PosiCleared() {
+	if _u.mutation.PosiCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -2035,7 +2035,7 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := osuo.mutation.PosiIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.PosiIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -2051,11 +2051,11 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(osuo.modifiers...)
-	_node = &OrgStaff{config: osuo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &OrgStaff{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, osuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{orgstaff.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -2063,6 +2063,6 @@ func (osuo *OrgStaffUpdateOne) sqlSave(ctx context.Context) (_node *OrgStaff, er
 		}
 		return nil, err
 	}
-	osuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

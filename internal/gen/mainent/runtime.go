@@ -26,14 +26,14 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent/sysuser"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysuserrole"
 	"github.com/heromicro/omgind/internal/gen/mainent/xxxdemo"
-	"github.com/heromicro/omgind/internal/scheme/entity"
+	"github.com/heromicro/omgind/internal/scheme/entity/entgo"
 )
 
 // The init function reads all schema descriptors with runtime code
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	orgdeptMixin := entity.OrgDept{}.Mixin()
+	orgdeptMixin := entgo.OrgDept{}.Mixin()
 	orgdeptMixinFields0 := orgdeptMixin[0].Fields()
 	_ = orgdeptMixinFields0
 	orgdeptMixinFields1 := orgdeptMixin[1].Fields()
@@ -48,7 +48,7 @@ func init() {
 	_ = orgdeptMixinFields5
 	orgdeptMixinFields6 := orgdeptMixin[6].Fields()
 	_ = orgdeptMixinFields6
-	orgdeptFields := entity.OrgDept{}.Fields()
+	orgdeptFields := entgo.OrgDept{}.Fields()
 	_ = orgdeptFields
 	// orgdeptDescIsDel is the schema descriptor for is_del field.
 	orgdeptDescIsDel := orgdeptMixinFields1[0].Descriptor()
@@ -130,7 +130,7 @@ func init() {
 			return nil
 		}
 	}()
-	orgorganMixin := entity.OrgOrgan{}.Mixin()
+	orgorganMixin := entgo.OrgOrgan{}.Mixin()
 	orgorganMixinFields0 := orgorganMixin[0].Fields()
 	_ = orgorganMixinFields0
 	orgorganMixinFields1 := orgorganMixin[1].Fields()
@@ -143,7 +143,7 @@ func init() {
 	_ = orgorganMixinFields4
 	orgorganMixinFields5 := orgorganMixin[5].Fields()
 	_ = orgorganMixinFields5
-	orgorganFields := entity.OrgOrgan{}.Fields()
+	orgorganFields := entgo.OrgOrgan{}.Fields()
 	_ = orgorganFields
 	// orgorganDescIsDel is the schema descriptor for is_del field.
 	orgorganDescIsDel := orgorganMixinFields1[0].Descriptor()
@@ -217,7 +217,7 @@ func init() {
 			return nil
 		}
 	}()
-	orgpositionMixin := entity.OrgPosition{}.Mixin()
+	orgpositionMixin := entgo.OrgPosition{}.Mixin()
 	orgpositionMixinFields0 := orgpositionMixin[0].Fields()
 	_ = orgpositionMixinFields0
 	orgpositionMixinFields1 := orgpositionMixin[1].Fields()
@@ -230,7 +230,7 @@ func init() {
 	_ = orgpositionMixinFields4
 	orgpositionMixinFields5 := orgpositionMixin[5].Fields()
 	_ = orgpositionMixinFields5
-	orgpositionFields := entity.OrgPosition{}.Fields()
+	orgpositionFields := entgo.OrgPosition{}.Fields()
 	_ = orgpositionFields
 	// orgpositionDescIsDel is the schema descriptor for is_del field.
 	orgpositionDescIsDel := orgpositionMixinFields1[0].Descriptor()
@@ -292,7 +292,7 @@ func init() {
 			return nil
 		}
 	}()
-	orgstaffMixin := entity.OrgStaff{}.Mixin()
+	orgstaffMixin := entgo.OrgStaff{}.Mixin()
 	orgstaffMixinFields0 := orgstaffMixin[0].Fields()
 	_ = orgstaffMixinFields0
 	orgstaffMixinFields1 := orgstaffMixin[1].Fields()
@@ -305,7 +305,7 @@ func init() {
 	_ = orgstaffMixinFields4
 	orgstaffMixinFields5 := orgstaffMixin[5].Fields()
 	_ = orgstaffMixinFields5
-	orgstaffFields := entity.OrgStaff{}.Fields()
+	orgstaffFields := entgo.OrgStaff{}.Fields()
 	_ = orgstaffFields
 	// orgstaffDescIsDel is the schema descriptor for is_del field.
 	orgstaffDescIsDel := orgstaffMixinFields1[0].Descriptor()
@@ -411,7 +411,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysaddressMixin := entity.SysAddress{}.Mixin()
+	sysaddressMixin := entgo.SysAddress{}.Mixin()
 	sysaddressMixinFields0 := sysaddressMixin[0].Fields()
 	_ = sysaddressMixinFields0
 	sysaddressMixinFields1 := sysaddressMixin[1].Fields()
@@ -428,7 +428,7 @@ func init() {
 	_ = sysaddressMixinFields6
 	sysaddressMixinFields7 := sysaddressMixin[7].Fields()
 	_ = sysaddressMixinFields7
-	sysaddressFields := entity.SysAddress{}.Fields()
+	sysaddressFields := entgo.SysAddress{}.Fields()
 	_ = sysaddressFields
 	// sysaddressDescIsDel is the schema descriptor for is_del field.
 	sysaddressDescIsDel := sysaddressMixinFields1[0].Descriptor()
@@ -526,7 +526,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysannexMixin := entity.SysAnnex{}.Mixin()
+	sysannexMixin := entgo.SysAnnex{}.Mixin()
 	sysannexMixinFields0 := sysannexMixin[0].Fields()
 	_ = sysannexMixinFields0
 	sysannexMixinFields1 := sysannexMixin[1].Fields()
@@ -539,7 +539,7 @@ func init() {
 	_ = sysannexMixinFields4
 	sysannexMixinFields5 := sysannexMixin[5].Fields()
 	_ = sysannexMixinFields5
-	sysannexFields := entity.SysAnnex{}.Fields()
+	sysannexFields := entgo.SysAnnex{}.Fields()
 	_ = sysannexFields
 	// sysannexDescMemo is the schema descriptor for memo field.
 	sysannexDescMemo := sysannexMixinFields1[0].Descriptor()
@@ -607,7 +607,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysdictMixin := entity.SysDict{}.Mixin()
+	sysdictMixin := entgo.SysDict{}.Mixin()
 	sysdictMixinFields0 := sysdictMixin[0].Fields()
 	_ = sysdictMixinFields0
 	sysdictMixinFields1 := sysdictMixin[1].Fields()
@@ -620,7 +620,7 @@ func init() {
 	_ = sysdictMixinFields4
 	sysdictMixinFields5 := sysdictMixin[5].Fields()
 	_ = sysdictMixinFields5
-	sysdictFields := entity.SysDict{}.Fields()
+	sysdictFields := entgo.SysDict{}.Fields()
 	_ = sysdictFields
 	// sysdictDescIsDel is the schema descriptor for is_del field.
 	sysdictDescIsDel := sysdictMixinFields1[0].Descriptor()
@@ -682,7 +682,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysdictitemMixin := entity.SysDictItem{}.Mixin()
+	sysdictitemMixin := entgo.SysDictItem{}.Mixin()
 	sysdictitemMixinFields0 := sysdictitemMixin[0].Fields()
 	_ = sysdictitemMixinFields0
 	sysdictitemMixinFields1 := sysdictitemMixin[1].Fields()
@@ -695,7 +695,7 @@ func init() {
 	_ = sysdictitemMixinFields4
 	sysdictitemMixinFields5 := sysdictitemMixin[5].Fields()
 	_ = sysdictitemMixinFields5
-	sysdictitemFields := entity.SysDictItem{}.Fields()
+	sysdictitemFields := entgo.SysDictItem{}.Fields()
 	_ = sysdictitemFields
 	// sysdictitemDescIsDel is the schema descriptor for is_del field.
 	sysdictitemDescIsDel := sysdictitemMixinFields1[0].Descriptor()
@@ -753,7 +753,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysdistrictMixin := entity.SysDistrict{}.Mixin()
+	sysdistrictMixin := entgo.SysDistrict{}.Mixin()
 	sysdistrictMixinFields0 := sysdistrictMixin[0].Fields()
 	_ = sysdistrictMixinFields0
 	sysdistrictMixinFields1 := sysdistrictMixin[1].Fields()
@@ -766,7 +766,7 @@ func init() {
 	_ = sysdistrictMixinFields4
 	sysdistrictMixinFields5 := sysdistrictMixin[5].Fields()
 	_ = sysdistrictMixinFields5
-	sysdistrictFields := entity.SysDistrict{}.Fields()
+	sysdistrictFields := entgo.SysDistrict{}.Fields()
 	_ = sysdistrictFields
 	// sysdistrictDescIsDel is the schema descriptor for is_del field.
 	sysdistrictDescIsDel := sysdistrictMixinFields1[0].Descriptor()
@@ -890,7 +890,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysjwtblockMixin := entity.SysJwtBlock{}.Mixin()
+	sysjwtblockMixin := entgo.SysJwtBlock{}.Mixin()
 	sysjwtblockMixinFields0 := sysjwtblockMixin[0].Fields()
 	_ = sysjwtblockMixinFields0
 	sysjwtblockMixinFields1 := sysjwtblockMixin[1].Fields()
@@ -901,7 +901,7 @@ func init() {
 	_ = sysjwtblockMixinFields3
 	sysjwtblockMixinFields4 := sysjwtblockMixin[4].Fields()
 	_ = sysjwtblockMixinFields4
-	sysjwtblockFields := entity.SysJwtBlock{}.Fields()
+	sysjwtblockFields := entgo.SysJwtBlock{}.Fields()
 	_ = sysjwtblockFields
 	// sysjwtblockDescIsDel is the schema descriptor for is_del field.
 	sysjwtblockDescIsDel := sysjwtblockMixinFields1[0].Descriptor()
@@ -951,7 +951,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysloggingMixin := entity.SysLogging{}.Mixin()
+	sysloggingMixin := entgo.SysLogging{}.Mixin()
 	sysloggingMixinFields0 := sysloggingMixin[0].Fields()
 	_ = sysloggingMixinFields0
 	sysloggingMixinFields1 := sysloggingMixin[1].Fields()
@@ -960,7 +960,7 @@ func init() {
 	_ = sysloggingMixinFields2
 	sysloggingMixinFields3 := sysloggingMixin[3].Fields()
 	_ = sysloggingMixinFields3
-	sysloggingFields := entity.SysLogging{}.Fields()
+	sysloggingFields := entgo.SysLogging{}.Fields()
 	_ = sysloggingFields
 	// sysloggingDescCreatedAt is the schema descriptor for created_at field.
 	sysloggingDescCreatedAt := sysloggingMixinFields1[0].Descriptor()
@@ -1026,7 +1026,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysmenuMixin := entity.SysMenu{}.Mixin()
+	sysmenuMixin := entgo.SysMenu{}.Mixin()
 	sysmenuMixinFields0 := sysmenuMixin[0].Fields()
 	_ = sysmenuMixinFields0
 	sysmenuMixinFields1 := sysmenuMixin[1].Fields()
@@ -1039,7 +1039,7 @@ func init() {
 	_ = sysmenuMixinFields4
 	sysmenuMixinFields5 := sysmenuMixin[5].Fields()
 	_ = sysmenuMixinFields5
-	sysmenuFields := entity.SysMenu{}.Fields()
+	sysmenuFields := entgo.SysMenu{}.Fields()
 	_ = sysmenuFields
 	// sysmenuDescIsDel is the schema descriptor for is_del field.
 	sysmenuDescIsDel := sysmenuMixinFields1[0].Descriptor()
@@ -1139,7 +1139,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysmenuactionMixin := entity.SysMenuAction{}.Mixin()
+	sysmenuactionMixin := entgo.SysMenuAction{}.Mixin()
 	sysmenuactionMixinFields0 := sysmenuactionMixin[0].Fields()
 	_ = sysmenuactionMixinFields0
 	sysmenuactionMixinFields1 := sysmenuactionMixin[1].Fields()
@@ -1152,7 +1152,7 @@ func init() {
 	_ = sysmenuactionMixinFields4
 	sysmenuactionMixinFields5 := sysmenuactionMixin[5].Fields()
 	_ = sysmenuactionMixinFields5
-	sysmenuactionFields := entity.SysMenuAction{}.Fields()
+	sysmenuactionFields := entgo.SysMenuAction{}.Fields()
 	_ = sysmenuactionFields
 	// sysmenuactionDescIsDel is the schema descriptor for is_del field.
 	sysmenuactionDescIsDel := sysmenuactionMixinFields1[0].Descriptor()
@@ -1256,7 +1256,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysmenuactionresourceMixin := entity.SysMenuActionResource{}.Mixin()
+	sysmenuactionresourceMixin := entgo.SysMenuActionResource{}.Mixin()
 	sysmenuactionresourceMixinFields0 := sysmenuactionresourceMixin[0].Fields()
 	_ = sysmenuactionresourceMixinFields0
 	sysmenuactionresourceMixinFields1 := sysmenuactionresourceMixin[1].Fields()
@@ -1269,7 +1269,7 @@ func init() {
 	_ = sysmenuactionresourceMixinFields4
 	sysmenuactionresourceMixinFields5 := sysmenuactionresourceMixin[5].Fields()
 	_ = sysmenuactionresourceMixinFields5
-	sysmenuactionresourceFields := entity.SysMenuActionResource{}.Fields()
+	sysmenuactionresourceFields := entgo.SysMenuActionResource{}.Fields()
 	_ = sysmenuactionresourceFields
 	// sysmenuactionresourceDescIsDel is the schema descriptor for is_del field.
 	sysmenuactionresourceDescIsDel := sysmenuactionresourceMixinFields1[0].Descriptor()
@@ -1373,7 +1373,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysroleMixin := entity.SysRole{}.Mixin()
+	sysroleMixin := entgo.SysRole{}.Mixin()
 	sysroleMixinFields0 := sysroleMixin[0].Fields()
 	_ = sysroleMixinFields0
 	sysroleMixinFields1 := sysroleMixin[1].Fields()
@@ -1386,7 +1386,7 @@ func init() {
 	_ = sysroleMixinFields4
 	sysroleMixinFields5 := sysroleMixin[5].Fields()
 	_ = sysroleMixinFields5
-	sysroleFields := entity.SysRole{}.Fields()
+	sysroleFields := entgo.SysRole{}.Fields()
 	_ = sysroleFields
 	// sysroleDescIsDel is the schema descriptor for is_del field.
 	sysroleDescIsDel := sysroleMixinFields1[0].Descriptor()
@@ -1455,14 +1455,14 @@ func init() {
 			return nil
 		}
 	}()
-	sysrolemenuMixin := entity.SysRoleMenu{}.Mixin()
+	sysrolemenuMixin := entgo.SysRoleMenu{}.Mixin()
 	sysrolemenuMixinFields0 := sysrolemenuMixin[0].Fields()
 	_ = sysrolemenuMixinFields0
 	sysrolemenuMixinFields1 := sysrolemenuMixin[1].Fields()
 	_ = sysrolemenuMixinFields1
 	sysrolemenuMixinFields2 := sysrolemenuMixin[2].Fields()
 	_ = sysrolemenuMixinFields2
-	sysrolemenuFields := entity.SysRoleMenu{}.Fields()
+	sysrolemenuFields := entgo.SysRoleMenu{}.Fields()
 	_ = sysrolemenuFields
 	// sysrolemenuDescIsDel is the schema descriptor for is_del field.
 	sysrolemenuDescIsDel := sysrolemenuMixinFields1[0].Descriptor()
@@ -1538,7 +1538,7 @@ func init() {
 			return nil
 		}
 	}()
-	systeamMixin := entity.SysTeam{}.Mixin()
+	systeamMixin := entgo.SysTeam{}.Mixin()
 	systeamMixinFields0 := systeamMixin[0].Fields()
 	_ = systeamMixinFields0
 	systeamMixinFields1 := systeamMixin[1].Fields()
@@ -1551,7 +1551,7 @@ func init() {
 	_ = systeamMixinFields4
 	systeamMixinFields5 := systeamMixin[5].Fields()
 	_ = systeamMixinFields5
-	systeamFields := entity.SysTeam{}.Fields()
+	systeamFields := entgo.SysTeam{}.Fields()
 	_ = systeamFields
 	// systeamDescSort is the schema descriptor for sort field.
 	systeamDescSort := systeamMixinFields1[0].Descriptor()
@@ -1609,7 +1609,7 @@ func init() {
 			return nil
 		}
 	}()
-	systeamuserMixin := entity.SysTeamUser{}.Mixin()
+	systeamuserMixin := entgo.SysTeamUser{}.Mixin()
 	systeamuserMixinFields0 := systeamuserMixin[0].Fields()
 	_ = systeamuserMixinFields0
 	systeamuserMixinFields1 := systeamuserMixin[1].Fields()
@@ -1622,7 +1622,7 @@ func init() {
 	_ = systeamuserMixinFields4
 	systeamuserMixinFields5 := systeamuserMixin[5].Fields()
 	_ = systeamuserMixinFields5
-	systeamuserFields := entity.SysTeamUser{}.Fields()
+	systeamuserFields := entgo.SysTeamUser{}.Fields()
 	_ = systeamuserFields
 	// systeamuserDescSort is the schema descriptor for sort field.
 	systeamuserDescSort := systeamuserMixinFields1[0].Descriptor()
@@ -1680,7 +1680,7 @@ func init() {
 			return nil
 		}
 	}()
-	sysuserMixin := entity.SysUser{}.Mixin()
+	sysuserMixin := entgo.SysUser{}.Mixin()
 	sysuserMixinFields0 := sysuserMixin[0].Fields()
 	_ = sysuserMixinFields0
 	sysuserMixinFields1 := sysuserMixin[1].Fields()
@@ -1691,7 +1691,7 @@ func init() {
 	_ = sysuserMixinFields3
 	sysuserMixinFields4 := sysuserMixin[4].Fields()
 	_ = sysuserMixinFields4
-	sysuserFields := entity.SysUser{}.Fields()
+	sysuserFields := entgo.SysUser{}.Fields()
 	_ = sysuserFields
 	// sysuserDescIsDel is the schema descriptor for is_del field.
 	sysuserDescIsDel := sysuserMixinFields1[0].Descriptor()
@@ -1782,14 +1782,14 @@ func init() {
 			return nil
 		}
 	}()
-	sysuserroleMixin := entity.SysUserRole{}.Mixin()
+	sysuserroleMixin := entgo.SysUserRole{}.Mixin()
 	sysuserroleMixinFields0 := sysuserroleMixin[0].Fields()
 	_ = sysuserroleMixinFields0
 	sysuserroleMixinFields1 := sysuserroleMixin[1].Fields()
 	_ = sysuserroleMixinFields1
 	sysuserroleMixinFields2 := sysuserroleMixin[2].Fields()
 	_ = sysuserroleMixinFields2
-	sysuserroleFields := entity.SysUserRole{}.Fields()
+	sysuserroleFields := entgo.SysUserRole{}.Fields()
 	_ = sysuserroleFields
 	// sysuserroleDescIsDel is the schema descriptor for is_del field.
 	sysuserroleDescIsDel := sysuserroleMixinFields1[0].Descriptor()
@@ -1861,7 +1861,7 @@ func init() {
 			return nil
 		}
 	}()
-	xxxdemoMixin := entity.XxxDemo{}.Mixin()
+	xxxdemoMixin := entgo.XxxDemo{}.Mixin()
 	xxxdemoMixinFields0 := xxxdemoMixin[0].Fields()
 	_ = xxxdemoMixinFields0
 	xxxdemoMixinFields1 := xxxdemoMixin[1].Fields()
@@ -1874,7 +1874,7 @@ func init() {
 	_ = xxxdemoMixinFields4
 	xxxdemoMixinFields5 := xxxdemoMixin[5].Fields()
 	_ = xxxdemoMixinFields5
-	xxxdemoFields := entity.XxxDemo{}.Fields()
+	xxxdemoFields := entgo.XxxDemo{}.Fields()
 	_ = xxxdemoFields
 	// xxxdemoDescIsDel is the schema descriptor for is_del field.
 	xxxdemoDescIsDel := xxxdemoMixinFields1[0].Descriptor()

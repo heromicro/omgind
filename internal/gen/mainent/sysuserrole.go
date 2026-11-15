@@ -52,7 +52,7 @@ func (*SysUserRole) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysUserRole fields.
-func (sur *SysUserRole) assignValues(columns []string, values []any) error {
+func (_m *SysUserRole) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -62,49 +62,49 @@ func (sur *SysUserRole) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				sur.ID = value.String
+				_m.ID = value.String
 			}
 		case sysuserrole.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				sur.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysuserrole.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sur.CreatedAt = new(time.Time)
-				*sur.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysuserrole.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sur.UpdatedAt = new(time.Time)
-				*sur.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysuserrole.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				sur.DeletedAt = new(time.Time)
-				*sur.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysuserrole.FieldUserID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				sur.UserID = value.String
+				_m.UserID = value.String
 			}
 		case sysuserrole.FieldRoleID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field role_id", values[i])
 			} else if value.Valid {
-				sur.RoleID = value.String
+				_m.RoleID = value.String
 			}
 		default:
-			sur.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -112,56 +112,56 @@ func (sur *SysUserRole) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysUserRole.
 // This includes values selected through modifiers, order, etc.
-func (sur *SysUserRole) Value(name string) (ent.Value, error) {
-	return sur.selectValues.Get(name)
+func (_m *SysUserRole) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysUserRole.
 // Note that you need to call SysUserRole.Unwrap() before calling this method if this SysUserRole
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (sur *SysUserRole) Update() *SysUserRoleUpdateOne {
-	return NewSysUserRoleClient(sur.config).UpdateOne(sur)
+func (_m *SysUserRole) Update() *SysUserRoleUpdateOne {
+	return NewSysUserRoleClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysUserRole entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (sur *SysUserRole) Unwrap() *SysUserRole {
-	_tx, ok := sur.config.driver.(*txDriver)
+func (_m *SysUserRole) Unwrap() *SysUserRole {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysUserRole is not a transactional entity")
 	}
-	sur.config.driver = _tx.drv
-	return sur
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (sur *SysUserRole) String() string {
+func (_m *SysUserRole) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysUserRole(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", sur.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sur.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
-	if v := sur.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sur.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sur.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("user_id=")
-	builder.WriteString(sur.UserID)
+	builder.WriteString(_m.UserID)
 	builder.WriteString(", ")
 	builder.WriteString("role_id=")
-	builder.WriteString(sur.RoleID)
+	builder.WriteString(_m.RoleID)
 	builder.WriteByte(')')
 	return builder.String()
 }

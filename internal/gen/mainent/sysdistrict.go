@@ -144,7 +144,7 @@ func (*SysDistrict) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysDistrict fields.
-func (sd *SysDistrict) assignValues(columns []string, values []any) error {
+func (_m *SysDistrict) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -154,238 +154,238 @@ func (sd *SysDistrict) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				sd.ID = value.String
+				_m.ID = value.String
 			}
 		case sysdistrict.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				sd.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysdistrict.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				sd.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case sysdistrict.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sd.CreatedAt = new(time.Time)
-				*sd.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysdistrict.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sd.UpdatedAt = new(time.Time)
-				*sd.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysdistrict.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				sd.DeletedAt = new(time.Time)
-				*sd.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysdistrict.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sd.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case sysdistrict.FieldTreeID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_id", values[i])
 			} else if value.Valid {
-				sd.TreeID = new(int64)
-				*sd.TreeID = value.Int64
+				_m.TreeID = new(int64)
+				*_m.TreeID = value.Int64
 			}
 		case sysdistrict.FieldTreeLevel:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_level", values[i])
 			} else if value.Valid {
-				sd.TreeLevel = new(int32)
-				*sd.TreeLevel = int32(value.Int64)
+				_m.TreeLevel = new(int32)
+				*_m.TreeLevel = int32(value.Int64)
 			}
 		case sysdistrict.FieldTreeLeft:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_left", values[i])
 			} else if value.Valid {
-				sd.TreeLeft = new(int64)
-				*sd.TreeLeft = value.Int64
+				_m.TreeLeft = new(int64)
+				*_m.TreeLeft = value.Int64
 			}
 		case sysdistrict.FieldTreeRight:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_right", values[i])
 			} else if value.Valid {
-				sd.TreeRight = new(int64)
-				*sd.TreeRight = value.Int64
+				_m.TreeRight = new(int64)
+				*_m.TreeRight = value.Int64
 			}
 		case sysdistrict.FieldIsLeaf:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_leaf", values[i])
 			} else if value.Valid {
-				sd.IsLeaf = new(bool)
-				*sd.IsLeaf = value.Bool
+				_m.IsLeaf = new(bool)
+				*_m.IsLeaf = value.Bool
 			}
 		case sysdistrict.FieldTreePath:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field tree_path", values[i])
 			} else if value.Valid {
-				sd.TreePath = new(string)
-				*sd.TreePath = value.String
+				_m.TreePath = new(string)
+				*_m.TreePath = value.String
 			}
 		case sysdistrict.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				sd.Name = new(string)
-				*sd.Name = value.String
+				_m.Name = new(string)
+				*_m.Name = value.String
 			}
 		case sysdistrict.FieldNameEn:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name_en", values[i])
 			} else if value.Valid {
-				sd.NameEn = new(string)
-				*sd.NameEn = value.String
+				_m.NameEn = new(string)
+				*_m.NameEn = value.String
 			}
 		case sysdistrict.FieldSname:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field sname", values[i])
 			} else if value.Valid {
-				sd.Sname = new(string)
-				*sd.Sname = value.String
+				_m.Sname = new(string)
+				*_m.Sname = value.String
 			}
 		case sysdistrict.FieldSnameEn:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field sname_en", values[i])
 			} else if value.Valid {
-				sd.SnameEn = new(string)
-				*sd.SnameEn = value.String
+				_m.SnameEn = new(string)
+				*_m.SnameEn = value.String
 			}
 		case sysdistrict.FieldAbbr:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field abbr", values[i])
 			} else if value.Valid {
-				sd.Abbr = new(string)
-				*sd.Abbr = value.String
+				_m.Abbr = new(string)
+				*_m.Abbr = value.String
 			}
 		case sysdistrict.FieldStCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field st_code", values[i])
 			} else if value.Valid {
-				sd.StCode = new(string)
-				*sd.StCode = value.String
+				_m.StCode = new(string)
+				*_m.StCode = value.String
 			}
 		case sysdistrict.FieldInitials:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field initials", values[i])
 			} else if value.Valid {
-				sd.Initials = new(string)
-				*sd.Initials = value.String
+				_m.Initials = new(string)
+				*_m.Initials = value.String
 			}
 		case sysdistrict.FieldPinyin:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field pinyin", values[i])
 			} else if value.Valid {
-				sd.Pinyin = new(string)
-				*sd.Pinyin = value.String
+				_m.Pinyin = new(string)
+				*_m.Pinyin = value.String
 			}
 		case sysdistrict.FieldParentID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field parent_id", values[i])
 			} else if value.Valid {
-				sd.ParentID = new(string)
-				*sd.ParentID = value.String
+				_m.ParentID = new(string)
+				*_m.ParentID = value.String
 			}
 		case sysdistrict.FieldLongitude:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {
 				return fmt.Errorf("unexpected type %T for field longitude", values[i])
 			} else if value.Valid {
-				sd.Longitude = new(float64)
-				*sd.Longitude = value.Float64
+				_m.Longitude = new(float64)
+				*_m.Longitude = value.Float64
 			}
 		case sysdistrict.FieldLatitude:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {
 				return fmt.Errorf("unexpected type %T for field latitude", values[i])
 			} else if value.Valid {
-				sd.Latitude = new(float64)
-				*sd.Latitude = value.Float64
+				_m.Latitude = new(float64)
+				*_m.Latitude = value.Float64
 			}
 		case sysdistrict.FieldAreaCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field area_code", values[i])
 			} else if value.Valid {
-				sd.AreaCode = new(string)
-				*sd.AreaCode = value.String
+				_m.AreaCode = new(string)
+				*_m.AreaCode = value.String
 			}
 		case sysdistrict.FieldZipCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field zip_code", values[i])
 			} else if value.Valid {
-				sd.ZipCode = new(string)
-				*sd.ZipCode = value.String
+				_m.ZipCode = new(string)
+				*_m.ZipCode = value.String
 			}
 		case sysdistrict.FieldMergeName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field merge_name", values[i])
 			} else if value.Valid {
-				sd.MergeName = new(string)
-				*sd.MergeName = value.String
+				_m.MergeName = new(string)
+				*_m.MergeName = value.String
 			}
 		case sysdistrict.FieldMergeSname:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field merge_sname", values[i])
 			} else if value.Valid {
-				sd.MergeSname = new(string)
-				*sd.MergeSname = value.String
+				_m.MergeSname = new(string)
+				*_m.MergeSname = value.String
 			}
 		case sysdistrict.FieldExtra:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field extra", values[i])
 			} else if value.Valid {
-				sd.Extra = new(string)
-				*sd.Extra = value.String
+				_m.Extra = new(string)
+				*_m.Extra = value.String
 			}
 		case sysdistrict.FieldSuffix:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field suffix", values[i])
 			} else if value.Valid {
-				sd.Suffix = new(string)
-				*sd.Suffix = value.String
+				_m.Suffix = new(string)
+				*_m.Suffix = value.String
 			}
 		case sysdistrict.FieldIsHot:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_hot", values[i])
 			} else if value.Valid {
-				sd.IsHot = new(bool)
-				*sd.IsHot = value.Bool
+				_m.IsHot = new(bool)
+				*_m.IsHot = value.Bool
 			}
 		case sysdistrict.FieldIsReal:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_real", values[i])
 			} else if value.Valid {
-				sd.IsReal = new(bool)
-				*sd.IsReal = value.Bool
+				_m.IsReal = new(bool)
+				*_m.IsReal = value.Bool
 			}
 		case sysdistrict.FieldIsMain:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_main", values[i])
 			} else if value.Valid {
-				sd.IsMain = new(bool)
-				*sd.IsMain = value.Bool
+				_m.IsMain = new(bool)
+				*_m.IsMain = value.Bool
 			}
 		case sysdistrict.FieldIsDirect:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_direct", values[i])
 			} else if value.Valid {
-				sd.IsDirect = new(bool)
-				*sd.IsDirect = value.Bool
+				_m.IsDirect = new(bool)
+				*_m.IsDirect = value.Bool
 			}
 		default:
-			sd.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -393,198 +393,198 @@ func (sd *SysDistrict) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysDistrict.
 // This includes values selected through modifiers, order, etc.
-func (sd *SysDistrict) Value(name string) (ent.Value, error) {
-	return sd.selectValues.Get(name)
+func (_m *SysDistrict) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryParent queries the "parent" edge of the SysDistrict entity.
-func (sd *SysDistrict) QueryParent() *SysDistrictQuery {
-	return NewSysDistrictClient(sd.config).QueryParent(sd)
+func (_m *SysDistrict) QueryParent() *SysDistrictQuery {
+	return NewSysDistrictClient(_m.config).QueryParent(_m)
 }
 
 // QueryChildren queries the "children" edge of the SysDistrict entity.
-func (sd *SysDistrict) QueryChildren() *SysDistrictQuery {
-	return NewSysDistrictClient(sd.config).QueryChildren(sd)
+func (_m *SysDistrict) QueryChildren() *SysDistrictQuery {
+	return NewSysDistrictClient(_m.config).QueryChildren(_m)
 }
 
 // Update returns a builder for updating this SysDistrict.
 // Note that you need to call SysDistrict.Unwrap() before calling this method if this SysDistrict
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (sd *SysDistrict) Update() *SysDistrictUpdateOne {
-	return NewSysDistrictClient(sd.config).UpdateOne(sd)
+func (_m *SysDistrict) Update() *SysDistrictUpdateOne {
+	return NewSysDistrictClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysDistrict entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (sd *SysDistrict) Unwrap() *SysDistrict {
-	_tx, ok := sd.config.driver.(*txDriver)
+func (_m *SysDistrict) Unwrap() *SysDistrict {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysDistrict is not a transactional entity")
 	}
-	sd.config.driver = _tx.drv
-	return sd
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (sd *SysDistrict) String() string {
+func (_m *SysDistrict) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysDistrict(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", sd.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sd.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", sd.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := sd.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sd.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sd.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", sd.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
-	if v := sd.TreeID; v != nil {
+	if v := _m.TreeID; v != nil {
 		builder.WriteString("tree_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.TreeLevel; v != nil {
+	if v := _m.TreeLevel; v != nil {
 		builder.WriteString("tree_level=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.TreeLeft; v != nil {
+	if v := _m.TreeLeft; v != nil {
 		builder.WriteString("tree_left=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.TreeRight; v != nil {
+	if v := _m.TreeRight; v != nil {
 		builder.WriteString("tree_right=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.IsLeaf; v != nil {
+	if v := _m.IsLeaf; v != nil {
 		builder.WriteString("is_leaf=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.TreePath; v != nil {
+	if v := _m.TreePath; v != nil {
 		builder.WriteString("tree_path=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Name; v != nil {
+	if v := _m.Name; v != nil {
 		builder.WriteString("name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.NameEn; v != nil {
+	if v := _m.NameEn; v != nil {
 		builder.WriteString("name_en=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Sname; v != nil {
+	if v := _m.Sname; v != nil {
 		builder.WriteString("sname=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.SnameEn; v != nil {
+	if v := _m.SnameEn; v != nil {
 		builder.WriteString("sname_en=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Abbr; v != nil {
+	if v := _m.Abbr; v != nil {
 		builder.WriteString("abbr=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.StCode; v != nil {
+	if v := _m.StCode; v != nil {
 		builder.WriteString("st_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Initials; v != nil {
+	if v := _m.Initials; v != nil {
 		builder.WriteString("initials=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Pinyin; v != nil {
+	if v := _m.Pinyin; v != nil {
 		builder.WriteString("pinyin=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.ParentID; v != nil {
+	if v := _m.ParentID; v != nil {
 		builder.WriteString("parent_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Longitude; v != nil {
+	if v := _m.Longitude; v != nil {
 		builder.WriteString("longitude=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.Latitude; v != nil {
+	if v := _m.Latitude; v != nil {
 		builder.WriteString("latitude=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.AreaCode; v != nil {
+	if v := _m.AreaCode; v != nil {
 		builder.WriteString("area_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.ZipCode; v != nil {
+	if v := _m.ZipCode; v != nil {
 		builder.WriteString("zip_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.MergeName; v != nil {
+	if v := _m.MergeName; v != nil {
 		builder.WriteString("merge_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.MergeSname; v != nil {
+	if v := _m.MergeSname; v != nil {
 		builder.WriteString("merge_sname=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Extra; v != nil {
+	if v := _m.Extra; v != nil {
 		builder.WriteString("extra=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.Suffix; v != nil {
+	if v := _m.Suffix; v != nil {
 		builder.WriteString("suffix=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sd.IsHot; v != nil {
+	if v := _m.IsHot; v != nil {
 		builder.WriteString("is_hot=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.IsReal; v != nil {
+	if v := _m.IsReal; v != nil {
 		builder.WriteString("is_real=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.IsMain; v != nil {
+	if v := _m.IsMain; v != nil {
 		builder.WriteString("is_main=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := sd.IsDirect; v != nil {
+	if v := _m.IsDirect; v != nil {
 		builder.WriteString("is_direct=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}

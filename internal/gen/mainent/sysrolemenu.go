@@ -54,7 +54,7 @@ func (*SysRoleMenu) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysRoleMenu fields.
-func (srm *SysRoleMenu) assignValues(columns []string, values []any) error {
+func (_m *SysRoleMenu) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -64,56 +64,56 @@ func (srm *SysRoleMenu) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				srm.ID = value.String
+				_m.ID = value.String
 			}
 		case sysrolemenu.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				srm.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysrolemenu.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				srm.CreatedAt = new(time.Time)
-				*srm.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysrolemenu.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				srm.UpdatedAt = new(time.Time)
-				*srm.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysrolemenu.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				srm.DeletedAt = new(time.Time)
-				*srm.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysrolemenu.FieldRoleID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field role_id", values[i])
 			} else if value.Valid {
-				srm.RoleID = value.String
+				_m.RoleID = value.String
 			}
 		case sysrolemenu.FieldMenuID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field menu_id", values[i])
 			} else if value.Valid {
-				srm.MenuID = value.String
+				_m.MenuID = value.String
 			}
 		case sysrolemenu.FieldActionID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field action_id", values[i])
 			} else if value.Valid {
-				srm.ActionID = new(string)
-				*srm.ActionID = value.String
+				_m.ActionID = new(string)
+				*_m.ActionID = value.String
 			}
 		default:
-			srm.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -121,58 +121,58 @@ func (srm *SysRoleMenu) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysRoleMenu.
 // This includes values selected through modifiers, order, etc.
-func (srm *SysRoleMenu) Value(name string) (ent.Value, error) {
-	return srm.selectValues.Get(name)
+func (_m *SysRoleMenu) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysRoleMenu.
 // Note that you need to call SysRoleMenu.Unwrap() before calling this method if this SysRoleMenu
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (srm *SysRoleMenu) Update() *SysRoleMenuUpdateOne {
-	return NewSysRoleMenuClient(srm.config).UpdateOne(srm)
+func (_m *SysRoleMenu) Update() *SysRoleMenuUpdateOne {
+	return NewSysRoleMenuClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysRoleMenu entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (srm *SysRoleMenu) Unwrap() *SysRoleMenu {
-	_tx, ok := srm.config.driver.(*txDriver)
+func (_m *SysRoleMenu) Unwrap() *SysRoleMenu {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysRoleMenu is not a transactional entity")
 	}
-	srm.config.driver = _tx.drv
-	return srm
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (srm *SysRoleMenu) String() string {
+func (_m *SysRoleMenu) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysRoleMenu(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", srm.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", srm.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
-	if v := srm.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := srm.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := srm.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("role_id=")
-	builder.WriteString(srm.RoleID)
+	builder.WriteString(_m.RoleID)
 	builder.WriteString(", ")
 	builder.WriteString("menu_id=")
-	builder.WriteString(srm.MenuID)
+	builder.WriteString(_m.MenuID)
 	builder.WriteString(", ")
-	if v := srm.ActionID; v != nil {
+	if v := _m.ActionID; v != nil {
 		builder.WriteString("action_id=")
 		builder.WriteString(*v)
 	}

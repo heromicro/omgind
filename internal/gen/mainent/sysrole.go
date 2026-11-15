@@ -58,7 +58,7 @@ func (*SysRole) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysRole fields.
-func (sr *SysRole) assignValues(columns []string, values []any) error {
+func (_m *SysRole) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -68,62 +68,62 @@ func (sr *SysRole) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				sr.ID = value.String
+				_m.ID = value.String
 			}
 		case sysrole.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				sr.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysrole.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sr.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case sysrole.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				sr.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case sysrole.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sr.Memo = new(string)
-				*sr.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case sysrole.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sr.CreatedAt = new(time.Time)
-				*sr.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysrole.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sr.UpdatedAt = new(time.Time)
-				*sr.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysrole.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				sr.DeletedAt = new(time.Time)
-				*sr.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysrole.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				sr.Name = value.String
+				_m.Name = value.String
 			}
 		default:
-			sr.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -131,64 +131,64 @@ func (sr *SysRole) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysRole.
 // This includes values selected through modifiers, order, etc.
-func (sr *SysRole) Value(name string) (ent.Value, error) {
-	return sr.selectValues.Get(name)
+func (_m *SysRole) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysRole.
 // Note that you need to call SysRole.Unwrap() before calling this method if this SysRole
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (sr *SysRole) Update() *SysRoleUpdateOne {
-	return NewSysRoleClient(sr.config).UpdateOne(sr)
+func (_m *SysRole) Update() *SysRoleUpdateOne {
+	return NewSysRoleClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysRole entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (sr *SysRole) Unwrap() *SysRole {
-	_tx, ok := sr.config.driver.(*txDriver)
+func (_m *SysRole) Unwrap() *SysRole {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysRole is not a transactional entity")
 	}
-	sr.config.driver = _tx.drv
-	return sr
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (sr *SysRole) String() string {
+func (_m *SysRole) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysRole(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", sr.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sr.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", sr.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", sr.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := sr.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sr.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sr.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sr.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("name=")
-	builder.WriteString(sr.Name)
+	builder.WriteString(_m.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }

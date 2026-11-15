@@ -86,7 +86,7 @@ func (*SysDictItem) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysDictItem fields.
-func (sdi *SysDictItem) assignValues(columns []string, values []any) error {
+func (_m *SysDictItem) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -96,75 +96,75 @@ func (sdi *SysDictItem) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				sdi.ID = value.String
+				_m.ID = value.String
 			}
 		case sysdictitem.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				sdi.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysdictitem.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sdi.Memo = new(string)
-				*sdi.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case sysdictitem.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				sdi.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case sysdictitem.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sdi.CreatedAt = new(time.Time)
-				*sdi.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysdictitem.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sdi.UpdatedAt = new(time.Time)
-				*sdi.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysdictitem.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				sdi.DeletedAt = new(time.Time)
-				*sdi.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysdictitem.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sdi.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case sysdictitem.FieldLabel:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field label", values[i])
 			} else if value.Valid {
-				sdi.Label = value.String
+				_m.Label = value.String
 			}
 		case sysdictitem.FieldValue:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field value", values[i])
 			} else if value.Valid {
-				sdi.Value = int(value.Int64)
+				_m.Value = int(value.Int64)
 			}
 		case sysdictitem.FieldDictID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field dict_id", values[i])
 			} else if value.Valid {
-				sdi.DictID = new(string)
-				*sdi.DictID = value.String
+				_m.DictID = new(string)
+				*_m.DictID = value.String
 			}
 		default:
-			sdi.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -172,74 +172,74 @@ func (sdi *SysDictItem) assignValues(columns []string, values []any) error {
 
 // GetValue returns the ent.Value that was dynamically selected and assigned to the SysDictItem.
 // This includes values selected through modifiers, order, etc.
-func (sdi *SysDictItem) GetValue(name string) (ent.Value, error) {
-	return sdi.selectValues.Get(name)
+func (_m *SysDictItem) GetValue(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryDict queries the "dict" edge of the SysDictItem entity.
-func (sdi *SysDictItem) QueryDict() *SysDictQuery {
-	return NewSysDictItemClient(sdi.config).QueryDict(sdi)
+func (_m *SysDictItem) QueryDict() *SysDictQuery {
+	return NewSysDictItemClient(_m.config).QueryDict(_m)
 }
 
 // Update returns a builder for updating this SysDictItem.
 // Note that you need to call SysDictItem.Unwrap() before calling this method if this SysDictItem
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (sdi *SysDictItem) Update() *SysDictItemUpdateOne {
-	return NewSysDictItemClient(sdi.config).UpdateOne(sdi)
+func (_m *SysDictItem) Update() *SysDictItemUpdateOne {
+	return NewSysDictItemClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysDictItem entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (sdi *SysDictItem) Unwrap() *SysDictItem {
-	_tx, ok := sdi.config.driver.(*txDriver)
+func (_m *SysDictItem) Unwrap() *SysDictItem {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysDictItem is not a transactional entity")
 	}
-	sdi.config.driver = _tx.drv
-	return sdi
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (sdi *SysDictItem) String() string {
+func (_m *SysDictItem) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysDictItem(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", sdi.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sdi.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
-	if v := sdi.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", sdi.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := sdi.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sdi.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sdi.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", sdi.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("label=")
-	builder.WriteString(sdi.Label)
+	builder.WriteString(_m.Label)
 	builder.WriteString(", ")
 	builder.WriteString("value=")
-	builder.WriteString(fmt.Sprintf("%v", sdi.Value))
+	builder.WriteString(fmt.Sprintf("%v", _m.Value))
 	builder.WriteString(", ")
-	if v := sdi.DictID; v != nil {
+	if v := _m.DictID; v != nil {
 		builder.WriteString("dict_id=")
 		builder.WriteString(*v)
 	}

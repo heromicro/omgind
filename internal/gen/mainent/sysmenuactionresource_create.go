@@ -24,149 +24,149 @@ type SysMenuActionResourceCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (smarc *SysMenuActionResourceCreate) SetIsDel(b bool) *SysMenuActionResourceCreate {
-	smarc.mutation.SetIsDel(b)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetIsDel(v bool) *SysMenuActionResourceCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableIsDel(b *bool) *SysMenuActionResourceCreate {
-	if b != nil {
-		smarc.SetIsDel(*b)
+func (_c *SysMenuActionResourceCreate) SetNillableIsDel(v *bool) *SysMenuActionResourceCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return smarc
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (smarc *SysMenuActionResourceCreate) SetSort(i int32) *SysMenuActionResourceCreate {
-	smarc.mutation.SetSort(i)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetSort(v int32) *SysMenuActionResourceCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableSort(i *int32) *SysMenuActionResourceCreate {
-	if i != nil {
-		smarc.SetSort(*i)
+func (_c *SysMenuActionResourceCreate) SetNillableSort(v *int32) *SysMenuActionResourceCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return smarc
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (smarc *SysMenuActionResourceCreate) SetMemo(s string) *SysMenuActionResourceCreate {
-	smarc.mutation.SetMemo(s)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetMemo(v string) *SysMenuActionResourceCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableMemo(s *string) *SysMenuActionResourceCreate {
-	if s != nil {
-		smarc.SetMemo(*s)
+func (_c *SysMenuActionResourceCreate) SetNillableMemo(v *string) *SysMenuActionResourceCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return smarc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (smarc *SysMenuActionResourceCreate) SetCreatedAt(t time.Time) *SysMenuActionResourceCreate {
-	smarc.mutation.SetCreatedAt(t)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetCreatedAt(v time.Time) *SysMenuActionResourceCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableCreatedAt(t *time.Time) *SysMenuActionResourceCreate {
-	if t != nil {
-		smarc.SetCreatedAt(*t)
+func (_c *SysMenuActionResourceCreate) SetNillableCreatedAt(v *time.Time) *SysMenuActionResourceCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return smarc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (smarc *SysMenuActionResourceCreate) SetUpdatedAt(t time.Time) *SysMenuActionResourceCreate {
-	smarc.mutation.SetUpdatedAt(t)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetUpdatedAt(v time.Time) *SysMenuActionResourceCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableUpdatedAt(t *time.Time) *SysMenuActionResourceCreate {
-	if t != nil {
-		smarc.SetUpdatedAt(*t)
+func (_c *SysMenuActionResourceCreate) SetNillableUpdatedAt(v *time.Time) *SysMenuActionResourceCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return smarc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (smarc *SysMenuActionResourceCreate) SetDeletedAt(t time.Time) *SysMenuActionResourceCreate {
-	smarc.mutation.SetDeletedAt(t)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetDeletedAt(v time.Time) *SysMenuActionResourceCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableDeletedAt(t *time.Time) *SysMenuActionResourceCreate {
-	if t != nil {
-		smarc.SetDeletedAt(*t)
+func (_c *SysMenuActionResourceCreate) SetNillableDeletedAt(v *time.Time) *SysMenuActionResourceCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return smarc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (smarc *SysMenuActionResourceCreate) SetIsActive(b bool) *SysMenuActionResourceCreate {
-	smarc.mutation.SetIsActive(b)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetIsActive(v bool) *SysMenuActionResourceCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableIsActive(b *bool) *SysMenuActionResourceCreate {
-	if b != nil {
-		smarc.SetIsActive(*b)
+func (_c *SysMenuActionResourceCreate) SetNillableIsActive(v *bool) *SysMenuActionResourceCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return smarc
+	return _c
 }
 
 // SetMethod sets the "method" field.
-func (smarc *SysMenuActionResourceCreate) SetMethod(s string) *SysMenuActionResourceCreate {
-	smarc.mutation.SetMethod(s)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetMethod(v string) *SysMenuActionResourceCreate {
+	_c.mutation.SetMethod(v)
+	return _c
 }
 
 // SetPath sets the "path" field.
-func (smarc *SysMenuActionResourceCreate) SetPath(s string) *SysMenuActionResourceCreate {
-	smarc.mutation.SetPath(s)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetPath(v string) *SysMenuActionResourceCreate {
+	_c.mutation.SetPath(v)
+	return _c
 }
 
 // SetActionID sets the "action_id" field.
-func (smarc *SysMenuActionResourceCreate) SetActionID(s string) *SysMenuActionResourceCreate {
-	smarc.mutation.SetActionID(s)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetActionID(v string) *SysMenuActionResourceCreate {
+	_c.mutation.SetActionID(v)
+	return _c
 }
 
 // SetID sets the "id" field.
-func (smarc *SysMenuActionResourceCreate) SetID(s string) *SysMenuActionResourceCreate {
-	smarc.mutation.SetID(s)
-	return smarc
+func (_c *SysMenuActionResourceCreate) SetID(v string) *SysMenuActionResourceCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (smarc *SysMenuActionResourceCreate) SetNillableID(s *string) *SysMenuActionResourceCreate {
-	if s != nil {
-		smarc.SetID(*s)
+func (_c *SysMenuActionResourceCreate) SetNillableID(v *string) *SysMenuActionResourceCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return smarc
+	return _c
 }
 
 // Mutation returns the SysMenuActionResourceMutation object of the builder.
-func (smarc *SysMenuActionResourceCreate) Mutation() *SysMenuActionResourceMutation {
-	return smarc.mutation
+func (_c *SysMenuActionResourceCreate) Mutation() *SysMenuActionResourceMutation {
+	return _c.mutation
 }
 
 // Save creates the SysMenuActionResource in the database.
-func (smarc *SysMenuActionResourceCreate) Save(ctx context.Context) (*SysMenuActionResource, error) {
-	smarc.defaults()
-	return withHooks(ctx, smarc.sqlSave, smarc.mutation, smarc.hooks)
+func (_c *SysMenuActionResourceCreate) Save(ctx context.Context) (*SysMenuActionResource, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (smarc *SysMenuActionResourceCreate) SaveX(ctx context.Context) *SysMenuActionResource {
-	v, err := smarc.Save(ctx)
+func (_c *SysMenuActionResourceCreate) SaveX(ctx context.Context) *SysMenuActionResource {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -174,91 +174,91 @@ func (smarc *SysMenuActionResourceCreate) SaveX(ctx context.Context) *SysMenuAct
 }
 
 // Exec executes the query.
-func (smarc *SysMenuActionResourceCreate) Exec(ctx context.Context) error {
-	_, err := smarc.Save(ctx)
+func (_c *SysMenuActionResourceCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smarc *SysMenuActionResourceCreate) ExecX(ctx context.Context) {
-	if err := smarc.Exec(ctx); err != nil {
+func (_c *SysMenuActionResourceCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (smarc *SysMenuActionResourceCreate) defaults() {
-	if _, ok := smarc.mutation.IsDel(); !ok {
+func (_c *SysMenuActionResourceCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysmenuactionresource.DefaultIsDel
-		smarc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := smarc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysmenuactionresource.DefaultSort
-		smarc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := smarc.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := sysmenuactionresource.DefaultMemo
-		smarc.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := smarc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysmenuactionresource.DefaultCreatedAt()
-		smarc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := smarc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysmenuactionresource.DefaultUpdatedAt()
-		smarc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := smarc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysmenuactionresource.DefaultIsActive
-		smarc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := smarc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysmenuactionresource.DefaultID()
-		smarc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (smarc *SysMenuActionResourceCreate) check() error {
-	if _, ok := smarc.mutation.IsDel(); !ok {
+func (_c *SysMenuActionResourceCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysMenuActionResource.is_del"`)}
 	}
-	if _, ok := smarc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysMenuActionResource.sort"`)}
 	}
-	if v, ok := smarc.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysmenuactionresource.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.memo": %w`, err)}
 		}
 	}
-	if _, ok := smarc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysMenuActionResource.is_active"`)}
 	}
-	if _, ok := smarc.mutation.Method(); !ok {
+	if _, ok := _c.mutation.Method(); !ok {
 		return &ValidationError{Name: "method", err: errors.New(`mainent: missing required field "SysMenuActionResource.method"`)}
 	}
-	if v, ok := smarc.mutation.Method(); ok {
+	if v, ok := _c.mutation.Method(); ok {
 		if err := sysmenuactionresource.MethodValidator(v); err != nil {
 			return &ValidationError{Name: "method", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.method": %w`, err)}
 		}
 	}
-	if _, ok := smarc.mutation.Path(); !ok {
+	if _, ok := _c.mutation.Path(); !ok {
 		return &ValidationError{Name: "path", err: errors.New(`mainent: missing required field "SysMenuActionResource.path"`)}
 	}
-	if v, ok := smarc.mutation.Path(); ok {
+	if v, ok := _c.mutation.Path(); ok {
 		if err := sysmenuactionresource.PathValidator(v); err != nil {
 			return &ValidationError{Name: "path", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.path": %w`, err)}
 		}
 	}
-	if _, ok := smarc.mutation.ActionID(); !ok {
+	if _, ok := _c.mutation.ActionID(); !ok {
 		return &ValidationError{Name: "action_id", err: errors.New(`mainent: missing required field "SysMenuActionResource.action_id"`)}
 	}
-	if v, ok := smarc.mutation.ActionID(); ok {
+	if v, ok := _c.mutation.ActionID(); ok {
 		if err := sysmenuactionresource.ActionIDValidator(v); err != nil {
 			return &ValidationError{Name: "action_id", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.action_id": %w`, err)}
 		}
 	}
-	if v, ok := smarc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysmenuactionresource.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.id": %w`, err)}
 		}
@@ -266,12 +266,12 @@ func (smarc *SysMenuActionResourceCreate) check() error {
 	return nil
 }
 
-func (smarc *SysMenuActionResourceCreate) sqlSave(ctx context.Context) (*SysMenuActionResource, error) {
-	if err := smarc.check(); err != nil {
+func (_c *SysMenuActionResourceCreate) sqlSave(ctx context.Context) (*SysMenuActionResource, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := smarc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, smarc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -284,58 +284,58 @@ func (smarc *SysMenuActionResourceCreate) sqlSave(ctx context.Context) (*SysMenu
 			return nil, fmt.Errorf("unexpected SysMenuActionResource.ID type: %T", _spec.ID.Value)
 		}
 	}
-	smarc.mutation.id = &_node.ID
-	smarc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (smarc *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, *sqlgraph.CreateSpec) {
+func (_c *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysMenuActionResource{config: smarc.config}
+		_node = &SysMenuActionResource{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysmenuactionresource.Table, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = smarc.conflict
-	if id, ok := smarc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := smarc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysmenuactionresource.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := smarc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := smarc.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(sysmenuactionresource.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := smarc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := smarc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := smarc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := smarc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysmenuactionresource.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := smarc.mutation.Method(); ok {
+	if value, ok := _c.mutation.Method(); ok {
 		_spec.SetField(sysmenuactionresource.FieldMethod, field.TypeString, value)
 		_node.Method = value
 	}
-	if value, ok := smarc.mutation.Path(); ok {
+	if value, ok := _c.mutation.Path(); ok {
 		_spec.SetField(sysmenuactionresource.FieldPath, field.TypeString, value)
 		_node.Path = value
 	}
-	if value, ok := smarc.mutation.ActionID(); ok {
+	if value, ok := _c.mutation.ActionID(); ok {
 		_spec.SetField(sysmenuactionresource.FieldActionID, field.TypeString, value)
 		_node.ActionID = value
 	}
@@ -358,10 +358,10 @@ func (smarc *SysMenuActionResourceCreate) createSpec() (*SysMenuActionResource, 
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (smarc *SysMenuActionResourceCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuActionResourceUpsertOne {
-	smarc.conflict = opts
+func (_c *SysMenuActionResourceCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuActionResourceUpsertOne {
+	_c.conflict = opts
 	return &SysMenuActionResourceUpsertOne{
-		create: smarc,
+		create: _c,
 	}
 }
 
@@ -371,10 +371,10 @@ func (smarc *SysMenuActionResourceCreate) OnConflict(opts ...sql.ConflictOption)
 //	client.SysMenuActionResource.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (smarc *SysMenuActionResourceCreate) OnConflictColumns(columns ...string) *SysMenuActionResourceUpsertOne {
-	smarc.conflict = append(smarc.conflict, sql.ConflictColumns(columns...))
+func (_c *SysMenuActionResourceCreate) OnConflictColumns(columns ...string) *SysMenuActionResourceUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysMenuActionResourceUpsertOne{
-		create: smarc,
+		create: _c,
 	}
 }
 
@@ -775,16 +775,16 @@ type SysMenuActionResourceCreateBulk struct {
 }
 
 // Save creates the SysMenuActionResource entities in the database.
-func (smarcb *SysMenuActionResourceCreateBulk) Save(ctx context.Context) ([]*SysMenuActionResource, error) {
-	if smarcb.err != nil {
-		return nil, smarcb.err
+func (_c *SysMenuActionResourceCreateBulk) Save(ctx context.Context) ([]*SysMenuActionResource, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(smarcb.builders))
-	nodes := make([]*SysMenuActionResource, len(smarcb.builders))
-	mutators := make([]Mutator, len(smarcb.builders))
-	for i := range smarcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysMenuActionResource, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := smarcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysMenuActionResourceMutation)
@@ -798,12 +798,12 @@ func (smarcb *SysMenuActionResourceCreateBulk) Save(ctx context.Context) ([]*Sys
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, smarcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = smarcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, smarcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -823,7 +823,7 @@ func (smarcb *SysMenuActionResourceCreateBulk) Save(ctx context.Context) ([]*Sys
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, smarcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -831,8 +831,8 @@ func (smarcb *SysMenuActionResourceCreateBulk) Save(ctx context.Context) ([]*Sys
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (smarcb *SysMenuActionResourceCreateBulk) SaveX(ctx context.Context) []*SysMenuActionResource {
-	v, err := smarcb.Save(ctx)
+func (_c *SysMenuActionResourceCreateBulk) SaveX(ctx context.Context) []*SysMenuActionResource {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -840,14 +840,14 @@ func (smarcb *SysMenuActionResourceCreateBulk) SaveX(ctx context.Context) []*Sys
 }
 
 // Exec executes the query.
-func (smarcb *SysMenuActionResourceCreateBulk) Exec(ctx context.Context) error {
-	_, err := smarcb.Save(ctx)
+func (_c *SysMenuActionResourceCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smarcb *SysMenuActionResourceCreateBulk) ExecX(ctx context.Context) {
-	if err := smarcb.Exec(ctx); err != nil {
+func (_c *SysMenuActionResourceCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -867,10 +867,10 @@ func (smarcb *SysMenuActionResourceCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (smarcb *SysMenuActionResourceCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuActionResourceUpsertBulk {
-	smarcb.conflict = opts
+func (_c *SysMenuActionResourceCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuActionResourceUpsertBulk {
+	_c.conflict = opts
 	return &SysMenuActionResourceUpsertBulk{
-		create: smarcb,
+		create: _c,
 	}
 }
 
@@ -880,10 +880,10 @@ func (smarcb *SysMenuActionResourceCreateBulk) OnConflict(opts ...sql.ConflictOp
 //	client.SysMenuActionResource.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (smarcb *SysMenuActionResourceCreateBulk) OnConflictColumns(columns ...string) *SysMenuActionResourceUpsertBulk {
-	smarcb.conflict = append(smarcb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysMenuActionResourceCreateBulk) OnConflictColumns(columns ...string) *SysMenuActionResourceUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysMenuActionResourceUpsertBulk{
-		create: smarcb,
+		create: _c,
 	}
 }
 

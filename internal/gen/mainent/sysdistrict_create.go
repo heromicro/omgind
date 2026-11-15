@@ -24,515 +24,515 @@ type SysDistrictCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sdc *SysDistrictCreate) SetIsDel(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsDel(b)
-	return sdc
+func (_c *SysDistrictCreate) SetIsDel(v bool) *SysDistrictCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsDel(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsDel(*b)
+func (_c *SysDistrictCreate) SetNillableIsDel(v *bool) *SysDistrictCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (sdc *SysDistrictCreate) SetSort(i int32) *SysDistrictCreate {
-	sdc.mutation.SetSort(i)
-	return sdc
+func (_c *SysDistrictCreate) SetSort(v int32) *SysDistrictCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableSort(i *int32) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetSort(*i)
+func (_c *SysDistrictCreate) SetNillableSort(v *int32) *SysDistrictCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (sdc *SysDistrictCreate) SetCreatedAt(t time.Time) *SysDistrictCreate {
-	sdc.mutation.SetCreatedAt(t)
-	return sdc
+func (_c *SysDistrictCreate) SetCreatedAt(v time.Time) *SysDistrictCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableCreatedAt(t *time.Time) *SysDistrictCreate {
-	if t != nil {
-		sdc.SetCreatedAt(*t)
+func (_c *SysDistrictCreate) SetNillableCreatedAt(v *time.Time) *SysDistrictCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sdc *SysDistrictCreate) SetUpdatedAt(t time.Time) *SysDistrictCreate {
-	sdc.mutation.SetUpdatedAt(t)
-	return sdc
+func (_c *SysDistrictCreate) SetUpdatedAt(v time.Time) *SysDistrictCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableUpdatedAt(t *time.Time) *SysDistrictCreate {
-	if t != nil {
-		sdc.SetUpdatedAt(*t)
+func (_c *SysDistrictCreate) SetNillableUpdatedAt(v *time.Time) *SysDistrictCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sdc *SysDistrictCreate) SetDeletedAt(t time.Time) *SysDistrictCreate {
-	sdc.mutation.SetDeletedAt(t)
-	return sdc
+func (_c *SysDistrictCreate) SetDeletedAt(v time.Time) *SysDistrictCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableDeletedAt(t *time.Time) *SysDistrictCreate {
-	if t != nil {
-		sdc.SetDeletedAt(*t)
+func (_c *SysDistrictCreate) SetNillableDeletedAt(v *time.Time) *SysDistrictCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (sdc *SysDistrictCreate) SetIsActive(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsActive(b)
-	return sdc
+func (_c *SysDistrictCreate) SetIsActive(v bool) *SysDistrictCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsActive(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsActive(*b)
+func (_c *SysDistrictCreate) SetNillableIsActive(v *bool) *SysDistrictCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetTreeID sets the "tree_id" field.
-func (sdc *SysDistrictCreate) SetTreeID(i int64) *SysDistrictCreate {
-	sdc.mutation.SetTreeID(i)
-	return sdc
+func (_c *SysDistrictCreate) SetTreeID(v int64) *SysDistrictCreate {
+	_c.mutation.SetTreeID(v)
+	return _c
 }
 
 // SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeID(i *int64) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetTreeID(*i)
+func (_c *SysDistrictCreate) SetNillableTreeID(v *int64) *SysDistrictCreate {
+	if v != nil {
+		_c.SetTreeID(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (sdc *SysDistrictCreate) SetTreeLevel(i int32) *SysDistrictCreate {
-	sdc.mutation.SetTreeLevel(i)
-	return sdc
+func (_c *SysDistrictCreate) SetTreeLevel(v int32) *SysDistrictCreate {
+	_c.mutation.SetTreeLevel(v)
+	return _c
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeLevel(i *int32) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetTreeLevel(*i)
+func (_c *SysDistrictCreate) SetNillableTreeLevel(v *int32) *SysDistrictCreate {
+	if v != nil {
+		_c.SetTreeLevel(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetTreeLeft sets the "tree_left" field.
-func (sdc *SysDistrictCreate) SetTreeLeft(i int64) *SysDistrictCreate {
-	sdc.mutation.SetTreeLeft(i)
-	return sdc
+func (_c *SysDistrictCreate) SetTreeLeft(v int64) *SysDistrictCreate {
+	_c.mutation.SetTreeLeft(v)
+	return _c
 }
 
 // SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeLeft(i *int64) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetTreeLeft(*i)
+func (_c *SysDistrictCreate) SetNillableTreeLeft(v *int64) *SysDistrictCreate {
+	if v != nil {
+		_c.SetTreeLeft(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetTreeRight sets the "tree_right" field.
-func (sdc *SysDistrictCreate) SetTreeRight(i int64) *SysDistrictCreate {
-	sdc.mutation.SetTreeRight(i)
-	return sdc
+func (_c *SysDistrictCreate) SetTreeRight(v int64) *SysDistrictCreate {
+	_c.mutation.SetTreeRight(v)
+	return _c
 }
 
 // SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreeRight(i *int64) *SysDistrictCreate {
-	if i != nil {
-		sdc.SetTreeRight(*i)
+func (_c *SysDistrictCreate) SetNillableTreeRight(v *int64) *SysDistrictCreate {
+	if v != nil {
+		_c.SetTreeRight(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetIsLeaf sets the "is_leaf" field.
-func (sdc *SysDistrictCreate) SetIsLeaf(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsLeaf(b)
-	return sdc
+func (_c *SysDistrictCreate) SetIsLeaf(v bool) *SysDistrictCreate {
+	_c.mutation.SetIsLeaf(v)
+	return _c
 }
 
 // SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsLeaf(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsLeaf(*b)
+func (_c *SysDistrictCreate) SetNillableIsLeaf(v *bool) *SysDistrictCreate {
+	if v != nil {
+		_c.SetIsLeaf(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetTreePath sets the "tree_path" field.
-func (sdc *SysDistrictCreate) SetTreePath(s string) *SysDistrictCreate {
-	sdc.mutation.SetTreePath(s)
-	return sdc
+func (_c *SysDistrictCreate) SetTreePath(v string) *SysDistrictCreate {
+	_c.mutation.SetTreePath(v)
+	return _c
 }
 
 // SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableTreePath(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetTreePath(*s)
+func (_c *SysDistrictCreate) SetNillableTreePath(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetTreePath(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetName sets the "name" field.
-func (sdc *SysDistrictCreate) SetName(s string) *SysDistrictCreate {
-	sdc.mutation.SetName(s)
-	return sdc
+func (_c *SysDistrictCreate) SetName(v string) *SysDistrictCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableName(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetName(*s)
+func (_c *SysDistrictCreate) SetNillableName(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetName(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetNameEn sets the "name_en" field.
-func (sdc *SysDistrictCreate) SetNameEn(s string) *SysDistrictCreate {
-	sdc.mutation.SetNameEn(s)
-	return sdc
+func (_c *SysDistrictCreate) SetNameEn(v string) *SysDistrictCreate {
+	_c.mutation.SetNameEn(v)
+	return _c
 }
 
 // SetNillableNameEn sets the "name_en" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableNameEn(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetNameEn(*s)
+func (_c *SysDistrictCreate) SetNillableNameEn(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetNameEn(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetSname sets the "sname" field.
-func (sdc *SysDistrictCreate) SetSname(s string) *SysDistrictCreate {
-	sdc.mutation.SetSname(s)
-	return sdc
+func (_c *SysDistrictCreate) SetSname(v string) *SysDistrictCreate {
+	_c.mutation.SetSname(v)
+	return _c
 }
 
 // SetNillableSname sets the "sname" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableSname(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetSname(*s)
+func (_c *SysDistrictCreate) SetNillableSname(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetSname(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetSnameEn sets the "sname_en" field.
-func (sdc *SysDistrictCreate) SetSnameEn(s string) *SysDistrictCreate {
-	sdc.mutation.SetSnameEn(s)
-	return sdc
+func (_c *SysDistrictCreate) SetSnameEn(v string) *SysDistrictCreate {
+	_c.mutation.SetSnameEn(v)
+	return _c
 }
 
 // SetNillableSnameEn sets the "sname_en" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableSnameEn(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetSnameEn(*s)
+func (_c *SysDistrictCreate) SetNillableSnameEn(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetSnameEn(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetAbbr sets the "abbr" field.
-func (sdc *SysDistrictCreate) SetAbbr(s string) *SysDistrictCreate {
-	sdc.mutation.SetAbbr(s)
-	return sdc
+func (_c *SysDistrictCreate) SetAbbr(v string) *SysDistrictCreate {
+	_c.mutation.SetAbbr(v)
+	return _c
 }
 
 // SetNillableAbbr sets the "abbr" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableAbbr(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetAbbr(*s)
+func (_c *SysDistrictCreate) SetNillableAbbr(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetAbbr(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetStCode sets the "st_code" field.
-func (sdc *SysDistrictCreate) SetStCode(s string) *SysDistrictCreate {
-	sdc.mutation.SetStCode(s)
-	return sdc
+func (_c *SysDistrictCreate) SetStCode(v string) *SysDistrictCreate {
+	_c.mutation.SetStCode(v)
+	return _c
 }
 
 // SetNillableStCode sets the "st_code" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableStCode(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetStCode(*s)
+func (_c *SysDistrictCreate) SetNillableStCode(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetStCode(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetInitials sets the "initials" field.
-func (sdc *SysDistrictCreate) SetInitials(s string) *SysDistrictCreate {
-	sdc.mutation.SetInitials(s)
-	return sdc
+func (_c *SysDistrictCreate) SetInitials(v string) *SysDistrictCreate {
+	_c.mutation.SetInitials(v)
+	return _c
 }
 
 // SetNillableInitials sets the "initials" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableInitials(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetInitials(*s)
+func (_c *SysDistrictCreate) SetNillableInitials(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetInitials(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetPinyin sets the "pinyin" field.
-func (sdc *SysDistrictCreate) SetPinyin(s string) *SysDistrictCreate {
-	sdc.mutation.SetPinyin(s)
-	return sdc
+func (_c *SysDistrictCreate) SetPinyin(v string) *SysDistrictCreate {
+	_c.mutation.SetPinyin(v)
+	return _c
 }
 
 // SetNillablePinyin sets the "pinyin" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillablePinyin(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetPinyin(*s)
+func (_c *SysDistrictCreate) SetNillablePinyin(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetPinyin(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetParentID sets the "parent_id" field.
-func (sdc *SysDistrictCreate) SetParentID(s string) *SysDistrictCreate {
-	sdc.mutation.SetParentID(s)
-	return sdc
+func (_c *SysDistrictCreate) SetParentID(v string) *SysDistrictCreate {
+	_c.mutation.SetParentID(v)
+	return _c
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableParentID(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetParentID(*s)
+func (_c *SysDistrictCreate) SetNillableParentID(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetParentID(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetLongitude sets the "longitude" field.
-func (sdc *SysDistrictCreate) SetLongitude(f float64) *SysDistrictCreate {
-	sdc.mutation.SetLongitude(f)
-	return sdc
+func (_c *SysDistrictCreate) SetLongitude(v float64) *SysDistrictCreate {
+	_c.mutation.SetLongitude(v)
+	return _c
 }
 
 // SetNillableLongitude sets the "longitude" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableLongitude(f *float64) *SysDistrictCreate {
-	if f != nil {
-		sdc.SetLongitude(*f)
+func (_c *SysDistrictCreate) SetNillableLongitude(v *float64) *SysDistrictCreate {
+	if v != nil {
+		_c.SetLongitude(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetLatitude sets the "latitude" field.
-func (sdc *SysDistrictCreate) SetLatitude(f float64) *SysDistrictCreate {
-	sdc.mutation.SetLatitude(f)
-	return sdc
+func (_c *SysDistrictCreate) SetLatitude(v float64) *SysDistrictCreate {
+	_c.mutation.SetLatitude(v)
+	return _c
 }
 
 // SetNillableLatitude sets the "latitude" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableLatitude(f *float64) *SysDistrictCreate {
-	if f != nil {
-		sdc.SetLatitude(*f)
+func (_c *SysDistrictCreate) SetNillableLatitude(v *float64) *SysDistrictCreate {
+	if v != nil {
+		_c.SetLatitude(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetAreaCode sets the "area_code" field.
-func (sdc *SysDistrictCreate) SetAreaCode(s string) *SysDistrictCreate {
-	sdc.mutation.SetAreaCode(s)
-	return sdc
+func (_c *SysDistrictCreate) SetAreaCode(v string) *SysDistrictCreate {
+	_c.mutation.SetAreaCode(v)
+	return _c
 }
 
 // SetNillableAreaCode sets the "area_code" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableAreaCode(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetAreaCode(*s)
+func (_c *SysDistrictCreate) SetNillableAreaCode(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetAreaCode(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetZipCode sets the "zip_code" field.
-func (sdc *SysDistrictCreate) SetZipCode(s string) *SysDistrictCreate {
-	sdc.mutation.SetZipCode(s)
-	return sdc
+func (_c *SysDistrictCreate) SetZipCode(v string) *SysDistrictCreate {
+	_c.mutation.SetZipCode(v)
+	return _c
 }
 
 // SetNillableZipCode sets the "zip_code" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableZipCode(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetZipCode(*s)
+func (_c *SysDistrictCreate) SetNillableZipCode(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetZipCode(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetMergeName sets the "merge_name" field.
-func (sdc *SysDistrictCreate) SetMergeName(s string) *SysDistrictCreate {
-	sdc.mutation.SetMergeName(s)
-	return sdc
+func (_c *SysDistrictCreate) SetMergeName(v string) *SysDistrictCreate {
+	_c.mutation.SetMergeName(v)
+	return _c
 }
 
 // SetNillableMergeName sets the "merge_name" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableMergeName(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetMergeName(*s)
+func (_c *SysDistrictCreate) SetNillableMergeName(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetMergeName(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetMergeSname sets the "merge_sname" field.
-func (sdc *SysDistrictCreate) SetMergeSname(s string) *SysDistrictCreate {
-	sdc.mutation.SetMergeSname(s)
-	return sdc
+func (_c *SysDistrictCreate) SetMergeSname(v string) *SysDistrictCreate {
+	_c.mutation.SetMergeSname(v)
+	return _c
 }
 
 // SetNillableMergeSname sets the "merge_sname" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableMergeSname(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetMergeSname(*s)
+func (_c *SysDistrictCreate) SetNillableMergeSname(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetMergeSname(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetExtra sets the "extra" field.
-func (sdc *SysDistrictCreate) SetExtra(s string) *SysDistrictCreate {
-	sdc.mutation.SetExtra(s)
-	return sdc
+func (_c *SysDistrictCreate) SetExtra(v string) *SysDistrictCreate {
+	_c.mutation.SetExtra(v)
+	return _c
 }
 
 // SetNillableExtra sets the "extra" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableExtra(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetExtra(*s)
+func (_c *SysDistrictCreate) SetNillableExtra(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetExtra(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetSuffix sets the "suffix" field.
-func (sdc *SysDistrictCreate) SetSuffix(s string) *SysDistrictCreate {
-	sdc.mutation.SetSuffix(s)
-	return sdc
+func (_c *SysDistrictCreate) SetSuffix(v string) *SysDistrictCreate {
+	_c.mutation.SetSuffix(v)
+	return _c
 }
 
 // SetNillableSuffix sets the "suffix" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableSuffix(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetSuffix(*s)
+func (_c *SysDistrictCreate) SetNillableSuffix(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetSuffix(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetIsHot sets the "is_hot" field.
-func (sdc *SysDistrictCreate) SetIsHot(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsHot(b)
-	return sdc
+func (_c *SysDistrictCreate) SetIsHot(v bool) *SysDistrictCreate {
+	_c.mutation.SetIsHot(v)
+	return _c
 }
 
 // SetNillableIsHot sets the "is_hot" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsHot(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsHot(*b)
+func (_c *SysDistrictCreate) SetNillableIsHot(v *bool) *SysDistrictCreate {
+	if v != nil {
+		_c.SetIsHot(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetIsReal sets the "is_real" field.
-func (sdc *SysDistrictCreate) SetIsReal(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsReal(b)
-	return sdc
+func (_c *SysDistrictCreate) SetIsReal(v bool) *SysDistrictCreate {
+	_c.mutation.SetIsReal(v)
+	return _c
 }
 
 // SetNillableIsReal sets the "is_real" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsReal(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsReal(*b)
+func (_c *SysDistrictCreate) SetNillableIsReal(v *bool) *SysDistrictCreate {
+	if v != nil {
+		_c.SetIsReal(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetIsMain sets the "is_main" field.
-func (sdc *SysDistrictCreate) SetIsMain(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsMain(b)
-	return sdc
+func (_c *SysDistrictCreate) SetIsMain(v bool) *SysDistrictCreate {
+	_c.mutation.SetIsMain(v)
+	return _c
 }
 
 // SetNillableIsMain sets the "is_main" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsMain(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsMain(*b)
+func (_c *SysDistrictCreate) SetNillableIsMain(v *bool) *SysDistrictCreate {
+	if v != nil {
+		_c.SetIsMain(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetIsDirect sets the "is_direct" field.
-func (sdc *SysDistrictCreate) SetIsDirect(b bool) *SysDistrictCreate {
-	sdc.mutation.SetIsDirect(b)
-	return sdc
+func (_c *SysDistrictCreate) SetIsDirect(v bool) *SysDistrictCreate {
+	_c.mutation.SetIsDirect(v)
+	return _c
 }
 
 // SetNillableIsDirect sets the "is_direct" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableIsDirect(b *bool) *SysDistrictCreate {
-	if b != nil {
-		sdc.SetIsDirect(*b)
+func (_c *SysDistrictCreate) SetNillableIsDirect(v *bool) *SysDistrictCreate {
+	if v != nil {
+		_c.SetIsDirect(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (sdc *SysDistrictCreate) SetID(s string) *SysDistrictCreate {
-	sdc.mutation.SetID(s)
-	return sdc
+func (_c *SysDistrictCreate) SetID(v string) *SysDistrictCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (sdc *SysDistrictCreate) SetNillableID(s *string) *SysDistrictCreate {
-	if s != nil {
-		sdc.SetID(*s)
+func (_c *SysDistrictCreate) SetNillableID(v *string) *SysDistrictCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetParent sets the "parent" edge to the SysDistrict entity.
-func (sdc *SysDistrictCreate) SetParent(s *SysDistrict) *SysDistrictCreate {
-	return sdc.SetParentID(s.ID)
+func (_c *SysDistrictCreate) SetParent(v *SysDistrict) *SysDistrictCreate {
+	return _c.SetParentID(v.ID)
 }
 
 // AddChildIDs adds the "children" edge to the SysDistrict entity by IDs.
-func (sdc *SysDistrictCreate) AddChildIDs(ids ...string) *SysDistrictCreate {
-	sdc.mutation.AddChildIDs(ids...)
-	return sdc
+func (_c *SysDistrictCreate) AddChildIDs(ids ...string) *SysDistrictCreate {
+	_c.mutation.AddChildIDs(ids...)
+	return _c
 }
 
 // AddChildren adds the "children" edges to the SysDistrict entity.
-func (sdc *SysDistrictCreate) AddChildren(s ...*SysDistrict) *SysDistrictCreate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_c *SysDistrictCreate) AddChildren(v ...*SysDistrict) *SysDistrictCreate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sdc.AddChildIDs(ids...)
+	return _c.AddChildIDs(ids...)
 }
 
 // Mutation returns the SysDistrictMutation object of the builder.
-func (sdc *SysDistrictCreate) Mutation() *SysDistrictMutation {
-	return sdc.mutation
+func (_c *SysDistrictCreate) Mutation() *SysDistrictMutation {
+	return _c.mutation
 }
 
 // Save creates the SysDistrict in the database.
-func (sdc *SysDistrictCreate) Save(ctx context.Context) (*SysDistrict, error) {
-	sdc.defaults()
-	return withHooks(ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
+func (_c *SysDistrictCreate) Save(ctx context.Context) (*SysDistrict, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (sdc *SysDistrictCreate) SaveX(ctx context.Context) *SysDistrict {
-	v, err := sdc.Save(ctx)
+func (_c *SysDistrictCreate) SaveX(ctx context.Context) *SysDistrict {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -540,153 +540,153 @@ func (sdc *SysDistrictCreate) SaveX(ctx context.Context) *SysDistrict {
 }
 
 // Exec executes the query.
-func (sdc *SysDistrictCreate) Exec(ctx context.Context) error {
-	_, err := sdc.Save(ctx)
+func (_c *SysDistrictCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdc *SysDistrictCreate) ExecX(ctx context.Context) {
-	if err := sdc.Exec(ctx); err != nil {
+func (_c *SysDistrictCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sdc *SysDistrictCreate) defaults() {
-	if _, ok := sdc.mutation.IsDel(); !ok {
+func (_c *SysDistrictCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysdistrict.DefaultIsDel
-		sdc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := sdc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysdistrict.DefaultSort
-		sdc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := sdc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysdistrict.DefaultCreatedAt()
-		sdc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := sdc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysdistrict.DefaultUpdatedAt()
-		sdc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := sdc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysdistrict.DefaultIsActive
-		sdc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := sdc.mutation.IsLeaf(); !ok {
+	if _, ok := _c.mutation.IsLeaf(); !ok {
 		v := sysdistrict.DefaultIsLeaf
-		sdc.mutation.SetIsLeaf(v)
+		_c.mutation.SetIsLeaf(v)
 	}
-	if _, ok := sdc.mutation.IsHot(); !ok {
+	if _, ok := _c.mutation.IsHot(); !ok {
 		v := sysdistrict.DefaultIsHot
-		sdc.mutation.SetIsHot(v)
+		_c.mutation.SetIsHot(v)
 	}
-	if _, ok := sdc.mutation.IsReal(); !ok {
+	if _, ok := _c.mutation.IsReal(); !ok {
 		v := sysdistrict.DefaultIsReal
-		sdc.mutation.SetIsReal(v)
+		_c.mutation.SetIsReal(v)
 	}
-	if _, ok := sdc.mutation.IsMain(); !ok {
+	if _, ok := _c.mutation.IsMain(); !ok {
 		v := sysdistrict.DefaultIsMain
-		sdc.mutation.SetIsMain(v)
+		_c.mutation.SetIsMain(v)
 	}
-	if _, ok := sdc.mutation.IsDirect(); !ok {
+	if _, ok := _c.mutation.IsDirect(); !ok {
 		v := sysdistrict.DefaultIsDirect
-		sdc.mutation.SetIsDirect(v)
+		_c.mutation.SetIsDirect(v)
 	}
-	if _, ok := sdc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysdistrict.DefaultID()
-		sdc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sdc *SysDistrictCreate) check() error {
-	if _, ok := sdc.mutation.IsDel(); !ok {
+func (_c *SysDistrictCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysDistrict.is_del"`)}
 	}
-	if _, ok := sdc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysDistrict.sort"`)}
 	}
-	if _, ok := sdc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysDistrict.is_active"`)}
 	}
-	if v, ok := sdc.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := sysdistrict.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.name": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.NameEn(); ok {
+	if v, ok := _c.mutation.NameEn(); ok {
 		if err := sysdistrict.NameEnValidator(v); err != nil {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.name_en": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.Sname(); ok {
+	if v, ok := _c.mutation.Sname(); ok {
 		if err := sysdistrict.SnameValidator(v); err != nil {
 			return &ValidationError{Name: "sname", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.sname": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.SnameEn(); ok {
+	if v, ok := _c.mutation.SnameEn(); ok {
 		if err := sysdistrict.SnameEnValidator(v); err != nil {
 			return &ValidationError{Name: "sname_en", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.sname_en": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.Abbr(); ok {
+	if v, ok := _c.mutation.Abbr(); ok {
 		if err := sysdistrict.AbbrValidator(v); err != nil {
 			return &ValidationError{Name: "abbr", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.abbr": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.StCode(); ok {
+	if v, ok := _c.mutation.StCode(); ok {
 		if err := sysdistrict.StCodeValidator(v); err != nil {
 			return &ValidationError{Name: "st_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.st_code": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.Initials(); ok {
+	if v, ok := _c.mutation.Initials(); ok {
 		if err := sysdistrict.InitialsValidator(v); err != nil {
 			return &ValidationError{Name: "initials", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.initials": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.Pinyin(); ok {
+	if v, ok := _c.mutation.Pinyin(); ok {
 		if err := sysdistrict.PinyinValidator(v); err != nil {
 			return &ValidationError{Name: "pinyin", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.pinyin": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.ParentID(); ok {
+	if v, ok := _c.mutation.ParentID(); ok {
 		if err := sysdistrict.ParentIDValidator(v); err != nil {
 			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.parent_id": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.AreaCode(); ok {
+	if v, ok := _c.mutation.AreaCode(); ok {
 		if err := sysdistrict.AreaCodeValidator(v); err != nil {
 			return &ValidationError{Name: "area_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.area_code": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.ZipCode(); ok {
+	if v, ok := _c.mutation.ZipCode(); ok {
 		if err := sysdistrict.ZipCodeValidator(v); err != nil {
 			return &ValidationError{Name: "zip_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.zip_code": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.MergeName(); ok {
+	if v, ok := _c.mutation.MergeName(); ok {
 		if err := sysdistrict.MergeNameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.merge_name": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.MergeSname(); ok {
+	if v, ok := _c.mutation.MergeSname(); ok {
 		if err := sysdistrict.MergeSnameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_sname", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.merge_sname": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.Extra(); ok {
+	if v, ok := _c.mutation.Extra(); ok {
 		if err := sysdistrict.ExtraValidator(v); err != nil {
 			return &ValidationError{Name: "extra", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.extra": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.Suffix(); ok {
+	if v, ok := _c.mutation.Suffix(); ok {
 		if err := sysdistrict.SuffixValidator(v); err != nil {
 			return &ValidationError{Name: "suffix", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.suffix": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysdistrict.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.id": %w`, err)}
 		}
@@ -694,12 +694,12 @@ func (sdc *SysDistrictCreate) check() error {
 	return nil
 }
 
-func (sdc *SysDistrictCreate) sqlSave(ctx context.Context) (*SysDistrict, error) {
-	if err := sdc.check(); err != nil {
+func (_c *SysDistrictCreate) sqlSave(ctx context.Context) (*SysDistrict, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := sdc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, sdc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -712,150 +712,150 @@ func (sdc *SysDistrictCreate) sqlSave(ctx context.Context) (*SysDistrict, error)
 			return nil, fmt.Errorf("unexpected SysDistrict.ID type: %T", _spec.ID.Value)
 		}
 	}
-	sdc.mutation.id = &_node.ID
-	sdc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) {
+func (_c *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysDistrict{config: sdc.config}
+		_node = &SysDistrict{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysdistrict.Table, sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = sdc.conflict
-	if id, ok := sdc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := sdc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := sdc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := sdc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysdistrict.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := sdc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := sdc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := sdc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysdistrict.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := sdc.mutation.TreeID(); ok {
+	if value, ok := _c.mutation.TreeID(); ok {
 		_spec.SetField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 		_node.TreeID = &value
 	}
-	if value, ok := sdc.mutation.TreeLevel(); ok {
+	if value, ok := _c.mutation.TreeLevel(); ok {
 		_spec.SetField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 		_node.TreeLevel = &value
 	}
-	if value, ok := sdc.mutation.TreeLeft(); ok {
+	if value, ok := _c.mutation.TreeLeft(); ok {
 		_spec.SetField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 		_node.TreeLeft = &value
 	}
-	if value, ok := sdc.mutation.TreeRight(); ok {
+	if value, ok := _c.mutation.TreeRight(); ok {
 		_spec.SetField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 		_node.TreeRight = &value
 	}
-	if value, ok := sdc.mutation.IsLeaf(); ok {
+	if value, ok := _c.mutation.IsLeaf(); ok {
 		_spec.SetField(sysdistrict.FieldIsLeaf, field.TypeBool, value)
 		_node.IsLeaf = &value
 	}
-	if value, ok := sdc.mutation.TreePath(); ok {
+	if value, ok := _c.mutation.TreePath(); ok {
 		_spec.SetField(sysdistrict.FieldTreePath, field.TypeString, value)
 		_node.TreePath = &value
 	}
-	if value, ok := sdc.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(sysdistrict.FieldName, field.TypeString, value)
 		_node.Name = &value
 	}
-	if value, ok := sdc.mutation.NameEn(); ok {
+	if value, ok := _c.mutation.NameEn(); ok {
 		_spec.SetField(sysdistrict.FieldNameEn, field.TypeString, value)
 		_node.NameEn = &value
 	}
-	if value, ok := sdc.mutation.Sname(); ok {
+	if value, ok := _c.mutation.Sname(); ok {
 		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 		_node.Sname = &value
 	}
-	if value, ok := sdc.mutation.SnameEn(); ok {
+	if value, ok := _c.mutation.SnameEn(); ok {
 		_spec.SetField(sysdistrict.FieldSnameEn, field.TypeString, value)
 		_node.SnameEn = &value
 	}
-	if value, ok := sdc.mutation.Abbr(); ok {
+	if value, ok := _c.mutation.Abbr(); ok {
 		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)
 		_node.Abbr = &value
 	}
-	if value, ok := sdc.mutation.StCode(); ok {
+	if value, ok := _c.mutation.StCode(); ok {
 		_spec.SetField(sysdistrict.FieldStCode, field.TypeString, value)
 		_node.StCode = &value
 	}
-	if value, ok := sdc.mutation.Initials(); ok {
+	if value, ok := _c.mutation.Initials(); ok {
 		_spec.SetField(sysdistrict.FieldInitials, field.TypeString, value)
 		_node.Initials = &value
 	}
-	if value, ok := sdc.mutation.Pinyin(); ok {
+	if value, ok := _c.mutation.Pinyin(); ok {
 		_spec.SetField(sysdistrict.FieldPinyin, field.TypeString, value)
 		_node.Pinyin = &value
 	}
-	if value, ok := sdc.mutation.Longitude(); ok {
+	if value, ok := _c.mutation.Longitude(); ok {
 		_spec.SetField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 		_node.Longitude = &value
 	}
-	if value, ok := sdc.mutation.Latitude(); ok {
+	if value, ok := _c.mutation.Latitude(); ok {
 		_spec.SetField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 		_node.Latitude = &value
 	}
-	if value, ok := sdc.mutation.AreaCode(); ok {
+	if value, ok := _c.mutation.AreaCode(); ok {
 		_spec.SetField(sysdistrict.FieldAreaCode, field.TypeString, value)
 		_node.AreaCode = &value
 	}
-	if value, ok := sdc.mutation.ZipCode(); ok {
+	if value, ok := _c.mutation.ZipCode(); ok {
 		_spec.SetField(sysdistrict.FieldZipCode, field.TypeString, value)
 		_node.ZipCode = &value
 	}
-	if value, ok := sdc.mutation.MergeName(); ok {
+	if value, ok := _c.mutation.MergeName(); ok {
 		_spec.SetField(sysdistrict.FieldMergeName, field.TypeString, value)
 		_node.MergeName = &value
 	}
-	if value, ok := sdc.mutation.MergeSname(); ok {
+	if value, ok := _c.mutation.MergeSname(); ok {
 		_spec.SetField(sysdistrict.FieldMergeSname, field.TypeString, value)
 		_node.MergeSname = &value
 	}
-	if value, ok := sdc.mutation.Extra(); ok {
+	if value, ok := _c.mutation.Extra(); ok {
 		_spec.SetField(sysdistrict.FieldExtra, field.TypeString, value)
 		_node.Extra = &value
 	}
-	if value, ok := sdc.mutation.Suffix(); ok {
+	if value, ok := _c.mutation.Suffix(); ok {
 		_spec.SetField(sysdistrict.FieldSuffix, field.TypeString, value)
 		_node.Suffix = &value
 	}
-	if value, ok := sdc.mutation.IsHot(); ok {
+	if value, ok := _c.mutation.IsHot(); ok {
 		_spec.SetField(sysdistrict.FieldIsHot, field.TypeBool, value)
 		_node.IsHot = &value
 	}
-	if value, ok := sdc.mutation.IsReal(); ok {
+	if value, ok := _c.mutation.IsReal(); ok {
 		_spec.SetField(sysdistrict.FieldIsReal, field.TypeBool, value)
 		_node.IsReal = &value
 	}
-	if value, ok := sdc.mutation.IsMain(); ok {
+	if value, ok := _c.mutation.IsMain(); ok {
 		_spec.SetField(sysdistrict.FieldIsMain, field.TypeBool, value)
 		_node.IsMain = &value
 	}
-	if value, ok := sdc.mutation.IsDirect(); ok {
+	if value, ok := _c.mutation.IsDirect(); ok {
 		_spec.SetField(sysdistrict.FieldIsDirect, field.TypeBool, value)
 		_node.IsDirect = &value
 	}
-	if nodes := sdc.mutation.ParentIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -872,7 +872,7 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 		_node.ParentID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := sdc.mutation.ChildrenIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -907,10 +907,10 @@ func (sdc *SysDistrictCreate) createSpec() (*SysDistrict, *sqlgraph.CreateSpec) 
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sdc *SysDistrictCreate) OnConflict(opts ...sql.ConflictOption) *SysDistrictUpsertOne {
-	sdc.conflict = opts
+func (_c *SysDistrictCreate) OnConflict(opts ...sql.ConflictOption) *SysDistrictUpsertOne {
+	_c.conflict = opts
 	return &SysDistrictUpsertOne{
-		create: sdc,
+		create: _c,
 	}
 }
 
@@ -920,10 +920,10 @@ func (sdc *SysDistrictCreate) OnConflict(opts ...sql.ConflictOption) *SysDistric
 //	client.SysDistrict.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sdc *SysDistrictCreate) OnConflictColumns(columns ...string) *SysDistrictUpsertOne {
-	sdc.conflict = append(sdc.conflict, sql.ConflictColumns(columns...))
+func (_c *SysDistrictCreate) OnConflictColumns(columns ...string) *SysDistrictUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysDistrictUpsertOne{
-		create: sdc,
+		create: _c,
 	}
 }
 
@@ -2338,16 +2338,16 @@ type SysDistrictCreateBulk struct {
 }
 
 // Save creates the SysDistrict entities in the database.
-func (sdcb *SysDistrictCreateBulk) Save(ctx context.Context) ([]*SysDistrict, error) {
-	if sdcb.err != nil {
-		return nil, sdcb.err
+func (_c *SysDistrictCreateBulk) Save(ctx context.Context) ([]*SysDistrict, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(sdcb.builders))
-	nodes := make([]*SysDistrict, len(sdcb.builders))
-	mutators := make([]Mutator, len(sdcb.builders))
-	for i := range sdcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysDistrict, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := sdcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysDistrictMutation)
@@ -2361,12 +2361,12 @@ func (sdcb *SysDistrictCreateBulk) Save(ctx context.Context) ([]*SysDistrict, er
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, sdcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = sdcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, sdcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -2386,7 +2386,7 @@ func (sdcb *SysDistrictCreateBulk) Save(ctx context.Context) ([]*SysDistrict, er
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, sdcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -2394,8 +2394,8 @@ func (sdcb *SysDistrictCreateBulk) Save(ctx context.Context) ([]*SysDistrict, er
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sdcb *SysDistrictCreateBulk) SaveX(ctx context.Context) []*SysDistrict {
-	v, err := sdcb.Save(ctx)
+func (_c *SysDistrictCreateBulk) SaveX(ctx context.Context) []*SysDistrict {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -2403,14 +2403,14 @@ func (sdcb *SysDistrictCreateBulk) SaveX(ctx context.Context) []*SysDistrict {
 }
 
 // Exec executes the query.
-func (sdcb *SysDistrictCreateBulk) Exec(ctx context.Context) error {
-	_, err := sdcb.Save(ctx)
+func (_c *SysDistrictCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdcb *SysDistrictCreateBulk) ExecX(ctx context.Context) {
-	if err := sdcb.Exec(ctx); err != nil {
+func (_c *SysDistrictCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -2430,10 +2430,10 @@ func (sdcb *SysDistrictCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sdcb *SysDistrictCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDistrictUpsertBulk {
-	sdcb.conflict = opts
+func (_c *SysDistrictCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDistrictUpsertBulk {
+	_c.conflict = opts
 	return &SysDistrictUpsertBulk{
-		create: sdcb,
+		create: _c,
 	}
 }
 
@@ -2443,10 +2443,10 @@ func (sdcb *SysDistrictCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDi
 //	client.SysDistrict.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sdcb *SysDistrictCreateBulk) OnConflictColumns(columns ...string) *SysDistrictUpsertBulk {
-	sdcb.conflict = append(sdcb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysDistrictCreateBulk) OnConflictColumns(columns ...string) *SysDistrictUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysDistrictUpsertBulk{
-		create: sdcb,
+		create: _c,
 	}
 }
 

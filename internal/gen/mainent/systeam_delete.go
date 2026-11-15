@@ -20,56 +20,56 @@ type SysTeamDelete struct {
 }
 
 // Where appends a list predicates to the SysTeamDelete builder.
-func (std *SysTeamDelete) Where(ps ...predicate.SysTeam) *SysTeamDelete {
-	std.mutation.Where(ps...)
-	return std
+func (_d *SysTeamDelete) Where(ps ...predicate.SysTeam) *SysTeamDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (std *SysTeamDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, std.sqlExec, std.mutation, std.hooks)
+func (_d *SysTeamDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (std *SysTeamDelete) ExecX(ctx context.Context) int {
-	n, err := std.Exec(ctx)
+func (_d *SysTeamDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (std *SysTeamDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysTeamDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(systeam.Table, sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString))
-	if ps := std.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, std.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	std.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysTeamDeleteOne is the builder for deleting a single SysTeam entity.
 type SysTeamDeleteOne struct {
-	std *SysTeamDelete
+	_d *SysTeamDelete
 }
 
 // Where appends a list predicates to the SysTeamDelete builder.
-func (stdo *SysTeamDeleteOne) Where(ps ...predicate.SysTeam) *SysTeamDeleteOne {
-	stdo.std.mutation.Where(ps...)
-	return stdo
+func (_d *SysTeamDeleteOne) Where(ps ...predicate.SysTeam) *SysTeamDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (stdo *SysTeamDeleteOne) Exec(ctx context.Context) error {
-	n, err := stdo.std.Exec(ctx)
+func (_d *SysTeamDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (stdo *SysTeamDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (stdo *SysTeamDeleteOne) ExecX(ctx context.Context) {
-	if err := stdo.Exec(ctx); err != nil {
+func (_d *SysTeamDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

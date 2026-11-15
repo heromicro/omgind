@@ -60,7 +60,7 @@ func (*XxxDemo) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the XxxDemo fields.
-func (xd *XxxDemo) assignValues(columns []string, values []any) error {
+func (_m *XxxDemo) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -70,68 +70,68 @@ func (xd *XxxDemo) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				xd.ID = value.String
+				_m.ID = value.String
 			}
 		case xxxdemo.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				xd.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case xxxdemo.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				xd.Memo = new(string)
-				*xd.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case xxxdemo.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				xd.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case xxxdemo.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				xd.CreatedAt = new(time.Time)
-				*xd.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case xxxdemo.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				xd.UpdatedAt = new(time.Time)
-				*xd.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case xxxdemo.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				xd.DeletedAt = new(time.Time)
-				*xd.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case xxxdemo.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				xd.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case xxxdemo.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				xd.Code = value.String
+				_m.Code = value.String
 			}
 		case xxxdemo.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				xd.Name = value.String
+				_m.Name = value.String
 			}
 		default:
-			xd.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -139,67 +139,67 @@ func (xd *XxxDemo) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the XxxDemo.
 // This includes values selected through modifiers, order, etc.
-func (xd *XxxDemo) Value(name string) (ent.Value, error) {
-	return xd.selectValues.Get(name)
+func (_m *XxxDemo) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this XxxDemo.
 // Note that you need to call XxxDemo.Unwrap() before calling this method if this XxxDemo
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (xd *XxxDemo) Update() *XxxDemoUpdateOne {
-	return NewXxxDemoClient(xd.config).UpdateOne(xd)
+func (_m *XxxDemo) Update() *XxxDemoUpdateOne {
+	return NewXxxDemoClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the XxxDemo entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (xd *XxxDemo) Unwrap() *XxxDemo {
-	_tx, ok := xd.config.driver.(*txDriver)
+func (_m *XxxDemo) Unwrap() *XxxDemo {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: XxxDemo is not a transactional entity")
 	}
-	xd.config.driver = _tx.drv
-	return xd
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (xd *XxxDemo) String() string {
+func (_m *XxxDemo) String() string {
 	var builder strings.Builder
 	builder.WriteString("XxxDemo(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", xd.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", xd.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
-	if v := xd.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", xd.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := xd.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := xd.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := xd.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", xd.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("code=")
-	builder.WriteString(xd.Code)
+	builder.WriteString(_m.Code)
 	builder.WriteString(", ")
 	builder.WriteString("name=")
-	builder.WriteString(xd.Name)
+	builder.WriteString(_m.Name)
 	builder.WriteByte(')')
 	return builder.String()
 }

@@ -36,44 +36,44 @@ type SysAddressQuery struct {
 }
 
 // Where adds a new predicate for the SysAddressQuery builder.
-func (saq *SysAddressQuery) Where(ps ...predicate.SysAddress) *SysAddressQuery {
-	saq.predicates = append(saq.predicates, ps...)
-	return saq
+func (_q *SysAddressQuery) Where(ps ...predicate.SysAddress) *SysAddressQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (saq *SysAddressQuery) Limit(limit int) *SysAddressQuery {
-	saq.ctx.Limit = &limit
-	return saq
+func (_q *SysAddressQuery) Limit(limit int) *SysAddressQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (saq *SysAddressQuery) Offset(offset int) *SysAddressQuery {
-	saq.ctx.Offset = &offset
-	return saq
+func (_q *SysAddressQuery) Offset(offset int) *SysAddressQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (saq *SysAddressQuery) Unique(unique bool) *SysAddressQuery {
-	saq.ctx.Unique = &unique
-	return saq
+func (_q *SysAddressQuery) Unique(unique bool) *SysAddressQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (saq *SysAddressQuery) Order(o ...sysaddress.OrderOption) *SysAddressQuery {
-	saq.order = append(saq.order, o...)
-	return saq
+func (_q *SysAddressQuery) Order(o ...sysaddress.OrderOption) *SysAddressQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryOrgan chains the current query on the "organ" edge.
-func (saq *SysAddressQuery) QueryOrgan() *OrgOrganQuery {
-	query := (&OrgOrganClient{config: saq.config}).Query()
+func (_q *SysAddressQuery) QueryOrgan() *OrgOrganQuery {
+	query := (&OrgOrganClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := saq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := saq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -82,20 +82,20 @@ func (saq *SysAddressQuery) QueryOrgan() *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.OrganTable, sysaddress.OrganColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryStaffResi chains the current query on the "staff_resi" edge.
-func (saq *SysAddressQuery) QueryStaffResi() *OrgStaffQuery {
-	query := (&OrgStaffClient{config: saq.config}).Query()
+func (_q *SysAddressQuery) QueryStaffResi() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := saq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := saq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -104,20 +104,20 @@ func (saq *SysAddressQuery) QueryStaffResi() *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffResiTable, sysaddress.StaffResiColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryStaffIden chains the current query on the "staff_iden" edge.
-func (saq *SysAddressQuery) QueryStaffIden() *OrgStaffQuery {
-	query := (&OrgStaffClient{config: saq.config}).Query()
+func (_q *SysAddressQuery) QueryStaffIden() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := saq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := saq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -126,7 +126,7 @@ func (saq *SysAddressQuery) QueryStaffIden() *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffIdenTable, sysaddress.StaffIdenColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(saq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -134,8 +134,8 @@ func (saq *SysAddressQuery) QueryStaffIden() *OrgStaffQuery {
 
 // First returns the first SysAddress entity from the query.
 // Returns a *NotFoundError when no SysAddress was found.
-func (saq *SysAddressQuery) First(ctx context.Context) (*SysAddress, error) {
-	nodes, err := saq.Limit(1).All(setContextOp(ctx, saq.ctx, ent.OpQueryFirst))
+func (_q *SysAddressQuery) First(ctx context.Context) (*SysAddress, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -146,8 +146,8 @@ func (saq *SysAddressQuery) First(ctx context.Context) (*SysAddress, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (saq *SysAddressQuery) FirstX(ctx context.Context) *SysAddress {
-	node, err := saq.First(ctx)
+func (_q *SysAddressQuery) FirstX(ctx context.Context) *SysAddress {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -156,9 +156,9 @@ func (saq *SysAddressQuery) FirstX(ctx context.Context) *SysAddress {
 
 // FirstID returns the first SysAddress ID from the query.
 // Returns a *NotFoundError when no SysAddress ID was found.
-func (saq *SysAddressQuery) FirstID(ctx context.Context) (id string, err error) {
+func (_q *SysAddressQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = saq.Limit(1).IDs(setContextOp(ctx, saq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -169,8 +169,8 @@ func (saq *SysAddressQuery) FirstID(ctx context.Context) (id string, err error) 
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (saq *SysAddressQuery) FirstIDX(ctx context.Context) string {
-	id, err := saq.FirstID(ctx)
+func (_q *SysAddressQuery) FirstIDX(ctx context.Context) string {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -180,8 +180,8 @@ func (saq *SysAddressQuery) FirstIDX(ctx context.Context) string {
 // Only returns a single SysAddress entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one SysAddress entity is found.
 // Returns a *NotFoundError when no SysAddress entities are found.
-func (saq *SysAddressQuery) Only(ctx context.Context) (*SysAddress, error) {
-	nodes, err := saq.Limit(2).All(setContextOp(ctx, saq.ctx, ent.OpQueryOnly))
+func (_q *SysAddressQuery) Only(ctx context.Context) (*SysAddress, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -196,8 +196,8 @@ func (saq *SysAddressQuery) Only(ctx context.Context) (*SysAddress, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (saq *SysAddressQuery) OnlyX(ctx context.Context) *SysAddress {
-	node, err := saq.Only(ctx)
+func (_q *SysAddressQuery) OnlyX(ctx context.Context) *SysAddress {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -207,9 +207,9 @@ func (saq *SysAddressQuery) OnlyX(ctx context.Context) *SysAddress {
 // OnlyID is like Only, but returns the only SysAddress ID in the query.
 // Returns a *NotSingularError when more than one SysAddress ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (saq *SysAddressQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *SysAddressQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = saq.Limit(2).IDs(setContextOp(ctx, saq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -224,8 +224,8 @@ func (saq *SysAddressQuery) OnlyID(ctx context.Context) (id string, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (saq *SysAddressQuery) OnlyIDX(ctx context.Context) string {
-	id, err := saq.OnlyID(ctx)
+func (_q *SysAddressQuery) OnlyIDX(ctx context.Context) string {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -233,18 +233,18 @@ func (saq *SysAddressQuery) OnlyIDX(ctx context.Context) string {
 }
 
 // All executes the query and returns a list of SysAddresses.
-func (saq *SysAddressQuery) All(ctx context.Context) ([]*SysAddress, error) {
-	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryAll)
-	if err := saq.prepareQuery(ctx); err != nil {
+func (_q *SysAddressQuery) All(ctx context.Context) ([]*SysAddress, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*SysAddress, *SysAddressQuery]()
-	return withInterceptors[[]*SysAddress](ctx, saq, qr, saq.inters)
+	return withInterceptors[[]*SysAddress](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (saq *SysAddressQuery) AllX(ctx context.Context) []*SysAddress {
-	nodes, err := saq.All(ctx)
+func (_q *SysAddressQuery) AllX(ctx context.Context) []*SysAddress {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -252,20 +252,20 @@ func (saq *SysAddressQuery) AllX(ctx context.Context) []*SysAddress {
 }
 
 // IDs executes the query and returns a list of SysAddress IDs.
-func (saq *SysAddressQuery) IDs(ctx context.Context) (ids []string, err error) {
-	if saq.ctx.Unique == nil && saq.path != nil {
-		saq.Unique(true)
+func (_q *SysAddressQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryIDs)
-	if err = saq.Select(sysaddress.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(sysaddress.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (saq *SysAddressQuery) IDsX(ctx context.Context) []string {
-	ids, err := saq.IDs(ctx)
+func (_q *SysAddressQuery) IDsX(ctx context.Context) []string {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -273,17 +273,17 @@ func (saq *SysAddressQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (saq *SysAddressQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryCount)
-	if err := saq.prepareQuery(ctx); err != nil {
+func (_q *SysAddressQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, saq, querierCount[*SysAddressQuery](), saq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*SysAddressQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (saq *SysAddressQuery) CountX(ctx context.Context) int {
-	count, err := saq.Count(ctx)
+func (_q *SysAddressQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -291,9 +291,9 @@ func (saq *SysAddressQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (saq *SysAddressQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryExist)
-	switch _, err := saq.FirstID(ctx); {
+func (_q *SysAddressQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -304,8 +304,8 @@ func (saq *SysAddressQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (saq *SysAddressQuery) ExistX(ctx context.Context) bool {
-	exist, err := saq.Exist(ctx)
+func (_q *SysAddressQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -314,57 +314,57 @@ func (saq *SysAddressQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the SysAddressQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (saq *SysAddressQuery) Clone() *SysAddressQuery {
-	if saq == nil {
+func (_q *SysAddressQuery) Clone() *SysAddressQuery {
+	if _q == nil {
 		return nil
 	}
 	return &SysAddressQuery{
-		config:        saq.config,
-		ctx:           saq.ctx.Clone(),
-		order:         append([]sysaddress.OrderOption{}, saq.order...),
-		inters:        append([]Interceptor{}, saq.inters...),
-		predicates:    append([]predicate.SysAddress{}, saq.predicates...),
-		withOrgan:     saq.withOrgan.Clone(),
-		withStaffResi: saq.withStaffResi.Clone(),
-		withStaffIden: saq.withStaffIden.Clone(),
+		config:        _q.config,
+		ctx:           _q.ctx.Clone(),
+		order:         append([]sysaddress.OrderOption{}, _q.order...),
+		inters:        append([]Interceptor{}, _q.inters...),
+		predicates:    append([]predicate.SysAddress{}, _q.predicates...),
+		withOrgan:     _q.withOrgan.Clone(),
+		withStaffResi: _q.withStaffResi.Clone(),
+		withStaffIden: _q.withStaffIden.Clone(),
 		// clone intermediate query.
-		sql:       saq.sql.Clone(),
-		path:      saq.path,
-		modifiers: append([]func(*sql.Selector){}, saq.modifiers...),
+		sql:       _q.sql.Clone(),
+		path:      _q.path,
+		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
 }
 
 // WithOrgan tells the query-builder to eager-load the nodes that are connected to
 // the "organ" edge. The optional arguments are used to configure the query builder of the edge.
-func (saq *SysAddressQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *SysAddressQuery {
-	query := (&OrgOrganClient{config: saq.config}).Query()
+func (_q *SysAddressQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *SysAddressQuery {
+	query := (&OrgOrganClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	saq.withOrgan = query
-	return saq
+	_q.withOrgan = query
+	return _q
 }
 
 // WithStaffResi tells the query-builder to eager-load the nodes that are connected to
 // the "staff_resi" edge. The optional arguments are used to configure the query builder of the edge.
-func (saq *SysAddressQuery) WithStaffResi(opts ...func(*OrgStaffQuery)) *SysAddressQuery {
-	query := (&OrgStaffClient{config: saq.config}).Query()
+func (_q *SysAddressQuery) WithStaffResi(opts ...func(*OrgStaffQuery)) *SysAddressQuery {
+	query := (&OrgStaffClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	saq.withStaffResi = query
-	return saq
+	_q.withStaffResi = query
+	return _q
 }
 
 // WithStaffIden tells the query-builder to eager-load the nodes that are connected to
 // the "staff_iden" edge. The optional arguments are used to configure the query builder of the edge.
-func (saq *SysAddressQuery) WithStaffIden(opts ...func(*OrgStaffQuery)) *SysAddressQuery {
-	query := (&OrgStaffClient{config: saq.config}).Query()
+func (_q *SysAddressQuery) WithStaffIden(opts ...func(*OrgStaffQuery)) *SysAddressQuery {
+	query := (&OrgStaffClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	saq.withStaffIden = query
-	return saq
+	_q.withStaffIden = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -381,10 +381,10 @@ func (saq *SysAddressQuery) WithStaffIden(opts ...func(*OrgStaffQuery)) *SysAddr
 //		GroupBy(sysaddress.FieldIsDel).
 //		Aggregate(mainent.Count()).
 //		Scan(ctx, &v)
-func (saq *SysAddressQuery) GroupBy(field string, fields ...string) *SysAddressGroupBy {
-	saq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &SysAddressGroupBy{build: saq}
-	grbuild.flds = &saq.ctx.Fields
+func (_q *SysAddressQuery) GroupBy(field string, fields ...string) *SysAddressGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysAddressGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = sysaddress.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -402,90 +402,90 @@ func (saq *SysAddressQuery) GroupBy(field string, fields ...string) *SysAddressG
 //	client.SysAddress.Query().
 //		Select(sysaddress.FieldIsDel).
 //		Scan(ctx, &v)
-func (saq *SysAddressQuery) Select(fields ...string) *SysAddressSelect {
-	saq.ctx.Fields = append(saq.ctx.Fields, fields...)
-	sbuild := &SysAddressSelect{SysAddressQuery: saq}
+func (_q *SysAddressQuery) Select(fields ...string) *SysAddressSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &SysAddressSelect{SysAddressQuery: _q}
 	sbuild.label = sysaddress.Label
-	sbuild.flds, sbuild.scan = &saq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a SysAddressSelect configured with the given aggregations.
-func (saq *SysAddressQuery) Aggregate(fns ...AggregateFunc) *SysAddressSelect {
-	return saq.Select().Aggregate(fns...)
+func (_q *SysAddressQuery) Aggregate(fns ...AggregateFunc) *SysAddressSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (saq *SysAddressQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range saq.inters {
+func (_q *SysAddressQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("mainent: uninitialized interceptor (forgotten import mainent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, saq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range saq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !sysaddress.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("mainent: invalid field %q for query", f)}
 		}
 	}
-	if saq.path != nil {
-		prev, err := saq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		saq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysAddress, error) {
+func (_q *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysAddress, error) {
 	var (
 		nodes       = []*SysAddress{}
-		_spec       = saq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [3]bool{
-			saq.withOrgan != nil,
-			saq.withStaffResi != nil,
-			saq.withStaffIden != nil,
+			_q.withOrgan != nil,
+			_q.withStaffResi != nil,
+			_q.withStaffIden != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysAddress).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &SysAddress{config: saq.config}
+		node := &SysAddress{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(saq.modifiers) > 0 {
-		_spec.Modifiers = saq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, saq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := saq.withOrgan; query != nil {
-		if err := saq.loadOrgan(ctx, query, nodes, nil,
+	if query := _q.withOrgan; query != nil {
+		if err := _q.loadOrgan(ctx, query, nodes, nil,
 			func(n *SysAddress, e *OrgOrgan) { n.Edges.Organ = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := saq.withStaffResi; query != nil {
-		if err := saq.loadStaffResi(ctx, query, nodes, nil,
+	if query := _q.withStaffResi; query != nil {
+		if err := _q.loadStaffResi(ctx, query, nodes, nil,
 			func(n *SysAddress, e *OrgStaff) { n.Edges.StaffResi = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := saq.withStaffIden; query != nil {
-		if err := saq.loadStaffIden(ctx, query, nodes, nil,
+	if query := _q.withStaffIden; query != nil {
+		if err := _q.loadStaffIden(ctx, query, nodes, nil,
 			func(n *SysAddress, e *OrgStaff) { n.Edges.StaffIden = e }); err != nil {
 			return nil, err
 		}
@@ -493,7 +493,7 @@ func (saq *SysAddressQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*
 	return nodes, nil
 }
 
-func (saq *SysAddressQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgOrgan)) error {
+func (_q *SysAddressQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgOrgan)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[string]*SysAddress)
 	for i := range nodes {
@@ -523,7 +523,7 @@ func (saq *SysAddressQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery,
 	}
 	return nil
 }
-func (saq *SysAddressQuery) loadStaffResi(ctx context.Context, query *OrgStaffQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgStaff)) error {
+func (_q *SysAddressQuery) loadStaffResi(ctx context.Context, query *OrgStaffQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgStaff)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[string]*SysAddress)
 	for i := range nodes {
@@ -553,7 +553,7 @@ func (saq *SysAddressQuery) loadStaffResi(ctx context.Context, query *OrgStaffQu
 	}
 	return nil
 }
-func (saq *SysAddressQuery) loadStaffIden(ctx context.Context, query *OrgStaffQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgStaff)) error {
+func (_q *SysAddressQuery) loadStaffIden(ctx context.Context, query *OrgStaffQuery, nodes []*SysAddress, init func(*SysAddress), assign func(*SysAddress, *OrgStaff)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[string]*SysAddress)
 	for i := range nodes {
@@ -584,27 +584,27 @@ func (saq *SysAddressQuery) loadStaffIden(ctx context.Context, query *OrgStaffQu
 	return nil
 }
 
-func (saq *SysAddressQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := saq.querySpec()
-	if len(saq.modifiers) > 0 {
-		_spec.Modifiers = saq.modifiers
+func (_q *SysAddressQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = saq.ctx.Fields
-	if len(saq.ctx.Fields) > 0 {
-		_spec.Unique = saq.ctx.Unique != nil && *saq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, saq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (saq *SysAddressQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *SysAddressQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(sysaddress.Table, sysaddress.Columns, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
-	_spec.From = saq.sql
-	if unique := saq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if saq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := saq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysaddress.FieldID)
 		for i := range fields {
@@ -613,20 +613,20 @@ func (saq *SysAddressQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if ps := saq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := saq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := saq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := saq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -636,36 +636,36 @@ func (saq *SysAddressQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (saq *SysAddressQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(saq.driver.Dialect())
+func (_q *SysAddressQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(sysaddress.Table)
-	columns := saq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysaddress.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if saq.sql != nil {
-		selector = saq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if saq.ctx.Unique != nil && *saq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range saq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range saq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range saq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := saq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := saq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -674,33 +674,33 @@ func (saq *SysAddressQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (saq *SysAddressQuery) ForUpdate(opts ...sql.LockOption) *SysAddressQuery {
-	if saq.driver.Dialect() == dialect.Postgres {
-		saq.Unique(false)
+func (_q *SysAddressQuery) ForUpdate(opts ...sql.LockOption) *SysAddressQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	saq.modifiers = append(saq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return saq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (saq *SysAddressQuery) ForShare(opts ...sql.LockOption) *SysAddressQuery {
-	if saq.driver.Dialect() == dialect.Postgres {
-		saq.Unique(false)
+func (_q *SysAddressQuery) ForShare(opts ...sql.LockOption) *SysAddressQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	saq.modifiers = append(saq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return saq
+	return _q
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (saq *SysAddressQuery) Modify(modifiers ...func(s *sql.Selector)) *SysAddressSelect {
-	saq.modifiers = append(saq.modifiers, modifiers...)
-	return saq.Select()
+func (_q *SysAddressQuery) Modify(modifiers ...func(s *sql.Selector)) *SysAddressSelect {
+	_q.modifiers = append(_q.modifiers, modifiers...)
+	return _q.Select()
 }
 
 // SysAddressGroupBy is the group-by builder for SysAddress entities.
@@ -710,41 +710,41 @@ type SysAddressGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (sagb *SysAddressGroupBy) Aggregate(fns ...AggregateFunc) *SysAddressGroupBy {
-	sagb.fns = append(sagb.fns, fns...)
-	return sagb
+func (_g *SysAddressGroupBy) Aggregate(fns ...AggregateFunc) *SysAddressGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sagb *SysAddressGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sagb.build.ctx, ent.OpQueryGroupBy)
-	if err := sagb.build.prepareQuery(ctx); err != nil {
+func (_g *SysAddressGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysAddressQuery, *SysAddressGroupBy](ctx, sagb.build, sagb, sagb.build.inters, v)
+	return scanWithInterceptors[*SysAddressQuery, *SysAddressGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (sagb *SysAddressGroupBy) sqlScan(ctx context.Context, root *SysAddressQuery, v any) error {
+func (_g *SysAddressGroupBy) sqlScan(ctx context.Context, root *SysAddressQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(sagb.fns))
-	for _, fn := range sagb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*sagb.flds)+len(sagb.fns))
-		for _, f := range *sagb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*sagb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sagb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -758,27 +758,27 @@ type SysAddressSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (sas *SysAddressSelect) Aggregate(fns ...AggregateFunc) *SysAddressSelect {
-	sas.fns = append(sas.fns, fns...)
-	return sas
+func (_s *SysAddressSelect) Aggregate(fns ...AggregateFunc) *SysAddressSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sas *SysAddressSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sas.ctx, ent.OpQuerySelect)
-	if err := sas.prepareQuery(ctx); err != nil {
+func (_s *SysAddressSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysAddressQuery, *SysAddressSelect](ctx, sas.SysAddressQuery, sas, sas.inters, v)
+	return scanWithInterceptors[*SysAddressQuery, *SysAddressSelect](ctx, _s.SysAddressQuery, _s, _s.inters, v)
 }
 
-func (sas *SysAddressSelect) sqlScan(ctx context.Context, root *SysAddressQuery, v any) error {
+func (_s *SysAddressSelect) sqlScan(ctx context.Context, root *SysAddressQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(sas.fns))
-	for _, fn := range sas.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*sas.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -786,7 +786,7 @@ func (sas *SysAddressSelect) sqlScan(ctx context.Context, root *SysAddressQuery,
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sas.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -794,7 +794,7 @@ func (sas *SysAddressSelect) sqlScan(ctx context.Context, root *SysAddressQuery,
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (sas *SysAddressSelect) Modify(modifiers ...func(s *sql.Selector)) *SysAddressSelect {
-	sas.modifiers = append(sas.modifiers, modifiers...)
-	return sas
+func (_s *SysAddressSelect) Modify(modifiers ...func(s *sql.Selector)) *SysAddressSelect {
+	_s.modifiers = append(_s.modifiers, modifiers...)
+	return _s
 }

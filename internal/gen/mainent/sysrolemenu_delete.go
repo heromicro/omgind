@@ -20,56 +20,56 @@ type SysRoleMenuDelete struct {
 }
 
 // Where appends a list predicates to the SysRoleMenuDelete builder.
-func (srmd *SysRoleMenuDelete) Where(ps ...predicate.SysRoleMenu) *SysRoleMenuDelete {
-	srmd.mutation.Where(ps...)
-	return srmd
+func (_d *SysRoleMenuDelete) Where(ps ...predicate.SysRoleMenu) *SysRoleMenuDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (srmd *SysRoleMenuDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, srmd.sqlExec, srmd.mutation, srmd.hooks)
+func (_d *SysRoleMenuDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (srmd *SysRoleMenuDelete) ExecX(ctx context.Context) int {
-	n, err := srmd.Exec(ctx)
+func (_d *SysRoleMenuDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (srmd *SysRoleMenuDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysRoleMenuDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysrolemenu.Table, sqlgraph.NewFieldSpec(sysrolemenu.FieldID, field.TypeString))
-	if ps := srmd.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, srmd.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	srmd.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysRoleMenuDeleteOne is the builder for deleting a single SysRoleMenu entity.
 type SysRoleMenuDeleteOne struct {
-	srmd *SysRoleMenuDelete
+	_d *SysRoleMenuDelete
 }
 
 // Where appends a list predicates to the SysRoleMenuDelete builder.
-func (srmdo *SysRoleMenuDeleteOne) Where(ps ...predicate.SysRoleMenu) *SysRoleMenuDeleteOne {
-	srmdo.srmd.mutation.Where(ps...)
-	return srmdo
+func (_d *SysRoleMenuDeleteOne) Where(ps ...predicate.SysRoleMenu) *SysRoleMenuDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (srmdo *SysRoleMenuDeleteOne) Exec(ctx context.Context) error {
-	n, err := srmdo.srmd.Exec(ctx)
+func (_d *SysRoleMenuDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (srmdo *SysRoleMenuDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (srmdo *SysRoleMenuDeleteOne) ExecX(ctx context.Context) {
-	if err := srmdo.Exec(ctx); err != nil {
+func (_d *SysRoleMenuDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

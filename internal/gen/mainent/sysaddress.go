@@ -139,7 +139,7 @@ func (*SysAddress) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysAddress fields.
-func (sa *SysAddress) assignValues(columns []string, values []any) error {
+func (_m *SysAddress) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -149,168 +149,168 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				sa.ID = value.String
+				_m.ID = value.String
 			}
 		case sysaddress.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				sa.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysaddress.FieldUserID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field user_id", values[i])
 			} else if value.Valid {
-				sa.UserID = new(string)
-				*sa.UserID = value.String
+				_m.UserID = new(string)
+				*_m.UserID = value.String
 			}
 		case sysaddress.FieldOrgID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field org_id", values[i])
 			} else if value.Valid {
-				sa.OrgID = new(string)
-				*sa.OrgID = value.String
+				_m.OrgID = new(string)
+				*_m.OrgID = value.String
 			}
 		case sysaddress.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				sa.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case sysaddress.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sa.CreatedAt = new(time.Time)
-				*sa.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysaddress.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sa.UpdatedAt = new(time.Time)
-				*sa.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysaddress.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				sa.DeletedAt = new(time.Time)
-				*sa.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysaddress.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sa.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case sysaddress.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sa.Memo = new(string)
-				*sa.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case sysaddress.FieldCountry:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field country", values[i])
 			} else if value.Valid {
-				sa.Country = new(string)
-				*sa.Country = value.String
+				_m.Country = new(string)
+				*_m.Country = value.String
 			}
 		case sysaddress.FieldProvince:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field province", values[i])
 			} else if value.Valid {
-				sa.Province = new(string)
-				*sa.Province = value.String
+				_m.Province = new(string)
+				*_m.Province = value.String
 			}
 		case sysaddress.FieldCity:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field city", values[i])
 			} else if value.Valid {
-				sa.City = new(string)
-				*sa.City = value.String
+				_m.City = new(string)
+				*_m.City = value.String
 			}
 		case sysaddress.FieldCounty:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field county", values[i])
 			} else if value.Valid {
-				sa.County = new(string)
-				*sa.County = value.String
+				_m.County = new(string)
+				*_m.County = value.String
 			}
 		case sysaddress.FieldCountryID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field country_id", values[i])
 			} else if value.Valid {
-				sa.CountryID = new(string)
-				*sa.CountryID = value.String
+				_m.CountryID = new(string)
+				*_m.CountryID = value.String
 			}
 		case sysaddress.FieldProvinceID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field province_id", values[i])
 			} else if value.Valid {
-				sa.ProvinceID = new(string)
-				*sa.ProvinceID = value.String
+				_m.ProvinceID = new(string)
+				*_m.ProvinceID = value.String
 			}
 		case sysaddress.FieldCityID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field city_id", values[i])
 			} else if value.Valid {
-				sa.CityID = new(string)
-				*sa.CityID = value.String
+				_m.CityID = new(string)
+				*_m.CityID = value.String
 			}
 		case sysaddress.FieldCountyID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field county_id", values[i])
 			} else if value.Valid {
-				sa.CountyID = new(string)
-				*sa.CountyID = value.String
+				_m.CountyID = new(string)
+				*_m.CountyID = value.String
 			}
 		case sysaddress.FieldZipCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field zip_code", values[i])
 			} else if value.Valid {
-				sa.ZipCode = new(string)
-				*sa.ZipCode = value.String
+				_m.ZipCode = new(string)
+				*_m.ZipCode = value.String
 			}
 		case sysaddress.FieldDaddr:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field daddr", values[i])
 			} else if value.Valid {
-				sa.Daddr = new(string)
-				*sa.Daddr = value.String
+				_m.Daddr = new(string)
+				*_m.Daddr = value.String
 			}
 		case sysaddress.FieldFirstName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field first_name", values[i])
 			} else if value.Valid {
-				sa.FirstName = new(string)
-				*sa.FirstName = value.String
+				_m.FirstName = new(string)
+				*_m.FirstName = value.String
 			}
 		case sysaddress.FieldLastName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field last_name", values[i])
 			} else if value.Valid {
-				sa.LastName = new(string)
-				*sa.LastName = value.String
+				_m.LastName = new(string)
+				*_m.LastName = value.String
 			}
 		case sysaddress.FieldAreaCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field area_code", values[i])
 			} else if value.Valid {
-				sa.AreaCode = new(string)
-				*sa.AreaCode = value.String
+				_m.AreaCode = new(string)
+				*_m.AreaCode = value.String
 			}
 		case sysaddress.FieldMobile:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field mobile", values[i])
 			} else if value.Valid {
-				sa.Mobile = new(string)
-				*sa.Mobile = value.String
+				_m.Mobile = new(string)
+				*_m.Mobile = value.String
 			}
 		default:
-			sa.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -318,153 +318,153 @@ func (sa *SysAddress) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysAddress.
 // This includes values selected through modifiers, order, etc.
-func (sa *SysAddress) Value(name string) (ent.Value, error) {
-	return sa.selectValues.Get(name)
+func (_m *SysAddress) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryOrgan queries the "organ" edge of the SysAddress entity.
-func (sa *SysAddress) QueryOrgan() *OrgOrganQuery {
-	return NewSysAddressClient(sa.config).QueryOrgan(sa)
+func (_m *SysAddress) QueryOrgan() *OrgOrganQuery {
+	return NewSysAddressClient(_m.config).QueryOrgan(_m)
 }
 
 // QueryStaffResi queries the "staff_resi" edge of the SysAddress entity.
-func (sa *SysAddress) QueryStaffResi() *OrgStaffQuery {
-	return NewSysAddressClient(sa.config).QueryStaffResi(sa)
+func (_m *SysAddress) QueryStaffResi() *OrgStaffQuery {
+	return NewSysAddressClient(_m.config).QueryStaffResi(_m)
 }
 
 // QueryStaffIden queries the "staff_iden" edge of the SysAddress entity.
-func (sa *SysAddress) QueryStaffIden() *OrgStaffQuery {
-	return NewSysAddressClient(sa.config).QueryStaffIden(sa)
+func (_m *SysAddress) QueryStaffIden() *OrgStaffQuery {
+	return NewSysAddressClient(_m.config).QueryStaffIden(_m)
 }
 
 // Update returns a builder for updating this SysAddress.
 // Note that you need to call SysAddress.Unwrap() before calling this method if this SysAddress
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (sa *SysAddress) Update() *SysAddressUpdateOne {
-	return NewSysAddressClient(sa.config).UpdateOne(sa)
+func (_m *SysAddress) Update() *SysAddressUpdateOne {
+	return NewSysAddressClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysAddress entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (sa *SysAddress) Unwrap() *SysAddress {
-	_tx, ok := sa.config.driver.(*txDriver)
+func (_m *SysAddress) Unwrap() *SysAddress {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysAddress is not a transactional entity")
 	}
-	sa.config.driver = _tx.drv
-	return sa
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (sa *SysAddress) String() string {
+func (_m *SysAddress) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysAddress(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", sa.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sa.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
-	if v := sa.UserID; v != nil {
+	if v := _m.UserID; v != nil {
 		builder.WriteString("user_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.OrgID; v != nil {
+	if v := _m.OrgID; v != nil {
 		builder.WriteString("org_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", sa.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := sa.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sa.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sa.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", sa.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
-	if v := sa.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.Country; v != nil {
+	if v := _m.Country; v != nil {
 		builder.WriteString("country=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.Province; v != nil {
+	if v := _m.Province; v != nil {
 		builder.WriteString("province=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.City; v != nil {
+	if v := _m.City; v != nil {
 		builder.WriteString("city=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.County; v != nil {
+	if v := _m.County; v != nil {
 		builder.WriteString("county=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.CountryID; v != nil {
+	if v := _m.CountryID; v != nil {
 		builder.WriteString("country_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.ProvinceID; v != nil {
+	if v := _m.ProvinceID; v != nil {
 		builder.WriteString("province_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.CityID; v != nil {
+	if v := _m.CityID; v != nil {
 		builder.WriteString("city_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.CountyID; v != nil {
+	if v := _m.CountyID; v != nil {
 		builder.WriteString("county_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.ZipCode; v != nil {
+	if v := _m.ZipCode; v != nil {
 		builder.WriteString("zip_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.Daddr; v != nil {
+	if v := _m.Daddr; v != nil {
 		builder.WriteString("daddr=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.FirstName; v != nil {
+	if v := _m.FirstName; v != nil {
 		builder.WriteString("first_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.LastName; v != nil {
+	if v := _m.LastName; v != nil {
 		builder.WriteString("last_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.AreaCode; v != nil {
+	if v := _m.AreaCode; v != nil {
 		builder.WriteString("area_code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.Mobile; v != nil {
+	if v := _m.Mobile; v != nil {
 		builder.WriteString("mobile=")
 		builder.WriteString(*v)
 	}

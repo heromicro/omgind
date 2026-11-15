@@ -20,56 +20,56 @@ type SysMenuActionDelete struct {
 }
 
 // Where appends a list predicates to the SysMenuActionDelete builder.
-func (smad *SysMenuActionDelete) Where(ps ...predicate.SysMenuAction) *SysMenuActionDelete {
-	smad.mutation.Where(ps...)
-	return smad
+func (_d *SysMenuActionDelete) Where(ps ...predicate.SysMenuAction) *SysMenuActionDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (smad *SysMenuActionDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, smad.sqlExec, smad.mutation, smad.hooks)
+func (_d *SysMenuActionDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smad *SysMenuActionDelete) ExecX(ctx context.Context) int {
-	n, err := smad.Exec(ctx)
+func (_d *SysMenuActionDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (smad *SysMenuActionDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysMenuActionDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysmenuaction.Table, sqlgraph.NewFieldSpec(sysmenuaction.FieldID, field.TypeString))
-	if ps := smad.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, smad.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	smad.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysMenuActionDeleteOne is the builder for deleting a single SysMenuAction entity.
 type SysMenuActionDeleteOne struct {
-	smad *SysMenuActionDelete
+	_d *SysMenuActionDelete
 }
 
 // Where appends a list predicates to the SysMenuActionDelete builder.
-func (smado *SysMenuActionDeleteOne) Where(ps ...predicate.SysMenuAction) *SysMenuActionDeleteOne {
-	smado.smad.mutation.Where(ps...)
-	return smado
+func (_d *SysMenuActionDeleteOne) Where(ps ...predicate.SysMenuAction) *SysMenuActionDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (smado *SysMenuActionDeleteOne) Exec(ctx context.Context) error {
-	n, err := smado.smad.Exec(ctx)
+func (_d *SysMenuActionDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (smado *SysMenuActionDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smado *SysMenuActionDeleteOne) ExecX(ctx context.Context) {
-	if err := smado.Exec(ctx); err != nil {
+func (_d *SysMenuActionDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

@@ -35,44 +35,44 @@ type OrgPositionQuery struct {
 }
 
 // Where adds a new predicate for the OrgPositionQuery builder.
-func (opq *OrgPositionQuery) Where(ps ...predicate.OrgPosition) *OrgPositionQuery {
-	opq.predicates = append(opq.predicates, ps...)
-	return opq
+func (_q *OrgPositionQuery) Where(ps ...predicate.OrgPosition) *OrgPositionQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (opq *OrgPositionQuery) Limit(limit int) *OrgPositionQuery {
-	opq.ctx.Limit = &limit
-	return opq
+func (_q *OrgPositionQuery) Limit(limit int) *OrgPositionQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (opq *OrgPositionQuery) Offset(offset int) *OrgPositionQuery {
-	opq.ctx.Offset = &offset
-	return opq
+func (_q *OrgPositionQuery) Offset(offset int) *OrgPositionQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (opq *OrgPositionQuery) Unique(unique bool) *OrgPositionQuery {
-	opq.ctx.Unique = &unique
-	return opq
+func (_q *OrgPositionQuery) Unique(unique bool) *OrgPositionQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (opq *OrgPositionQuery) Order(o ...orgposition.OrderOption) *OrgPositionQuery {
-	opq.order = append(opq.order, o...)
-	return opq
+func (_q *OrgPositionQuery) Order(o ...orgposition.OrderOption) *OrgPositionQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryOrgan chains the current query on the "organ" edge.
-func (opq *OrgPositionQuery) QueryOrgan() *OrgOrganQuery {
-	query := (&OrgOrganClient{config: opq.config}).Query()
+func (_q *OrgPositionQuery) QueryOrgan() *OrgOrganQuery {
+	query := (&OrgOrganClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := opq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := opq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -81,20 +81,20 @@ func (opq *OrgPositionQuery) QueryOrgan() *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgposition.OrganTable, orgposition.OrganColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(opq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryStaffs chains the current query on the "staffs" edge.
-func (opq *OrgPositionQuery) QueryStaffs() *OrgStaffQuery {
-	query := (&OrgStaffClient{config: opq.config}).Query()
+func (_q *OrgPositionQuery) QueryStaffs() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := opq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := opq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -103,7 +103,7 @@ func (opq *OrgPositionQuery) QueryStaffs() *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgposition.StaffsTable, orgposition.StaffsColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(opq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -111,8 +111,8 @@ func (opq *OrgPositionQuery) QueryStaffs() *OrgStaffQuery {
 
 // First returns the first OrgPosition entity from the query.
 // Returns a *NotFoundError when no OrgPosition was found.
-func (opq *OrgPositionQuery) First(ctx context.Context) (*OrgPosition, error) {
-	nodes, err := opq.Limit(1).All(setContextOp(ctx, opq.ctx, ent.OpQueryFirst))
+func (_q *OrgPositionQuery) First(ctx context.Context) (*OrgPosition, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -123,8 +123,8 @@ func (opq *OrgPositionQuery) First(ctx context.Context) (*OrgPosition, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (opq *OrgPositionQuery) FirstX(ctx context.Context) *OrgPosition {
-	node, err := opq.First(ctx)
+func (_q *OrgPositionQuery) FirstX(ctx context.Context) *OrgPosition {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -133,9 +133,9 @@ func (opq *OrgPositionQuery) FirstX(ctx context.Context) *OrgPosition {
 
 // FirstID returns the first OrgPosition ID from the query.
 // Returns a *NotFoundError when no OrgPosition ID was found.
-func (opq *OrgPositionQuery) FirstID(ctx context.Context) (id string, err error) {
+func (_q *OrgPositionQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = opq.Limit(1).IDs(setContextOp(ctx, opq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -146,8 +146,8 @@ func (opq *OrgPositionQuery) FirstID(ctx context.Context) (id string, err error)
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (opq *OrgPositionQuery) FirstIDX(ctx context.Context) string {
-	id, err := opq.FirstID(ctx)
+func (_q *OrgPositionQuery) FirstIDX(ctx context.Context) string {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -157,8 +157,8 @@ func (opq *OrgPositionQuery) FirstIDX(ctx context.Context) string {
 // Only returns a single OrgPosition entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one OrgPosition entity is found.
 // Returns a *NotFoundError when no OrgPosition entities are found.
-func (opq *OrgPositionQuery) Only(ctx context.Context) (*OrgPosition, error) {
-	nodes, err := opq.Limit(2).All(setContextOp(ctx, opq.ctx, ent.OpQueryOnly))
+func (_q *OrgPositionQuery) Only(ctx context.Context) (*OrgPosition, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -173,8 +173,8 @@ func (opq *OrgPositionQuery) Only(ctx context.Context) (*OrgPosition, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (opq *OrgPositionQuery) OnlyX(ctx context.Context) *OrgPosition {
-	node, err := opq.Only(ctx)
+func (_q *OrgPositionQuery) OnlyX(ctx context.Context) *OrgPosition {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -184,9 +184,9 @@ func (opq *OrgPositionQuery) OnlyX(ctx context.Context) *OrgPosition {
 // OnlyID is like Only, but returns the only OrgPosition ID in the query.
 // Returns a *NotSingularError when more than one OrgPosition ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (opq *OrgPositionQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *OrgPositionQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = opq.Limit(2).IDs(setContextOp(ctx, opq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -201,8 +201,8 @@ func (opq *OrgPositionQuery) OnlyID(ctx context.Context) (id string, err error) 
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (opq *OrgPositionQuery) OnlyIDX(ctx context.Context) string {
-	id, err := opq.OnlyID(ctx)
+func (_q *OrgPositionQuery) OnlyIDX(ctx context.Context) string {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -210,18 +210,18 @@ func (opq *OrgPositionQuery) OnlyIDX(ctx context.Context) string {
 }
 
 // All executes the query and returns a list of OrgPositions.
-func (opq *OrgPositionQuery) All(ctx context.Context) ([]*OrgPosition, error) {
-	ctx = setContextOp(ctx, opq.ctx, ent.OpQueryAll)
-	if err := opq.prepareQuery(ctx); err != nil {
+func (_q *OrgPositionQuery) All(ctx context.Context) ([]*OrgPosition, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*OrgPosition, *OrgPositionQuery]()
-	return withInterceptors[[]*OrgPosition](ctx, opq, qr, opq.inters)
+	return withInterceptors[[]*OrgPosition](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (opq *OrgPositionQuery) AllX(ctx context.Context) []*OrgPosition {
-	nodes, err := opq.All(ctx)
+func (_q *OrgPositionQuery) AllX(ctx context.Context) []*OrgPosition {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -229,20 +229,20 @@ func (opq *OrgPositionQuery) AllX(ctx context.Context) []*OrgPosition {
 }
 
 // IDs executes the query and returns a list of OrgPosition IDs.
-func (opq *OrgPositionQuery) IDs(ctx context.Context) (ids []string, err error) {
-	if opq.ctx.Unique == nil && opq.path != nil {
-		opq.Unique(true)
+func (_q *OrgPositionQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, opq.ctx, ent.OpQueryIDs)
-	if err = opq.Select(orgposition.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(orgposition.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (opq *OrgPositionQuery) IDsX(ctx context.Context) []string {
-	ids, err := opq.IDs(ctx)
+func (_q *OrgPositionQuery) IDsX(ctx context.Context) []string {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -250,17 +250,17 @@ func (opq *OrgPositionQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (opq *OrgPositionQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, opq.ctx, ent.OpQueryCount)
-	if err := opq.prepareQuery(ctx); err != nil {
+func (_q *OrgPositionQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, opq, querierCount[*OrgPositionQuery](), opq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*OrgPositionQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (opq *OrgPositionQuery) CountX(ctx context.Context) int {
-	count, err := opq.Count(ctx)
+func (_q *OrgPositionQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -268,9 +268,9 @@ func (opq *OrgPositionQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (opq *OrgPositionQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, opq.ctx, ent.OpQueryExist)
-	switch _, err := opq.FirstID(ctx); {
+func (_q *OrgPositionQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -281,8 +281,8 @@ func (opq *OrgPositionQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (opq *OrgPositionQuery) ExistX(ctx context.Context) bool {
-	exist, err := opq.Exist(ctx)
+func (_q *OrgPositionQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -291,45 +291,45 @@ func (opq *OrgPositionQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the OrgPositionQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (opq *OrgPositionQuery) Clone() *OrgPositionQuery {
-	if opq == nil {
+func (_q *OrgPositionQuery) Clone() *OrgPositionQuery {
+	if _q == nil {
 		return nil
 	}
 	return &OrgPositionQuery{
-		config:     opq.config,
-		ctx:        opq.ctx.Clone(),
-		order:      append([]orgposition.OrderOption{}, opq.order...),
-		inters:     append([]Interceptor{}, opq.inters...),
-		predicates: append([]predicate.OrgPosition{}, opq.predicates...),
-		withOrgan:  opq.withOrgan.Clone(),
-		withStaffs: opq.withStaffs.Clone(),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]orgposition.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.OrgPosition{}, _q.predicates...),
+		withOrgan:  _q.withOrgan.Clone(),
+		withStaffs: _q.withStaffs.Clone(),
 		// clone intermediate query.
-		sql:       opq.sql.Clone(),
-		path:      opq.path,
-		modifiers: append([]func(*sql.Selector){}, opq.modifiers...),
+		sql:       _q.sql.Clone(),
+		path:      _q.path,
+		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
 }
 
 // WithOrgan tells the query-builder to eager-load the nodes that are connected to
 // the "organ" edge. The optional arguments are used to configure the query builder of the edge.
-func (opq *OrgPositionQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *OrgPositionQuery {
-	query := (&OrgOrganClient{config: opq.config}).Query()
+func (_q *OrgPositionQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *OrgPositionQuery {
+	query := (&OrgOrganClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	opq.withOrgan = query
-	return opq
+	_q.withOrgan = query
+	return _q
 }
 
 // WithStaffs tells the query-builder to eager-load the nodes that are connected to
 // the "staffs" edge. The optional arguments are used to configure the query builder of the edge.
-func (opq *OrgPositionQuery) WithStaffs(opts ...func(*OrgStaffQuery)) *OrgPositionQuery {
-	query := (&OrgStaffClient{config: opq.config}).Query()
+func (_q *OrgPositionQuery) WithStaffs(opts ...func(*OrgStaffQuery)) *OrgPositionQuery {
+	query := (&OrgStaffClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	opq.withStaffs = query
-	return opq
+	_q.withStaffs = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -346,10 +346,10 @@ func (opq *OrgPositionQuery) WithStaffs(opts ...func(*OrgStaffQuery)) *OrgPositi
 //		GroupBy(orgposition.FieldIsDel).
 //		Aggregate(mainent.Count()).
 //		Scan(ctx, &v)
-func (opq *OrgPositionQuery) GroupBy(field string, fields ...string) *OrgPositionGroupBy {
-	opq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &OrgPositionGroupBy{build: opq}
-	grbuild.flds = &opq.ctx.Fields
+func (_q *OrgPositionQuery) GroupBy(field string, fields ...string) *OrgPositionGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &OrgPositionGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = orgposition.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -367,83 +367,83 @@ func (opq *OrgPositionQuery) GroupBy(field string, fields ...string) *OrgPositio
 //	client.OrgPosition.Query().
 //		Select(orgposition.FieldIsDel).
 //		Scan(ctx, &v)
-func (opq *OrgPositionQuery) Select(fields ...string) *OrgPositionSelect {
-	opq.ctx.Fields = append(opq.ctx.Fields, fields...)
-	sbuild := &OrgPositionSelect{OrgPositionQuery: opq}
+func (_q *OrgPositionQuery) Select(fields ...string) *OrgPositionSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &OrgPositionSelect{OrgPositionQuery: _q}
 	sbuild.label = orgposition.Label
-	sbuild.flds, sbuild.scan = &opq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a OrgPositionSelect configured with the given aggregations.
-func (opq *OrgPositionQuery) Aggregate(fns ...AggregateFunc) *OrgPositionSelect {
-	return opq.Select().Aggregate(fns...)
+func (_q *OrgPositionQuery) Aggregate(fns ...AggregateFunc) *OrgPositionSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (opq *OrgPositionQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range opq.inters {
+func (_q *OrgPositionQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("mainent: uninitialized interceptor (forgotten import mainent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, opq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range opq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !orgposition.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("mainent: invalid field %q for query", f)}
 		}
 	}
-	if opq.path != nil {
-		prev, err := opq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		opq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (opq *OrgPositionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrgPosition, error) {
+func (_q *OrgPositionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrgPosition, error) {
 	var (
 		nodes       = []*OrgPosition{}
-		_spec       = opq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [2]bool{
-			opq.withOrgan != nil,
-			opq.withStaffs != nil,
+			_q.withOrgan != nil,
+			_q.withStaffs != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*OrgPosition).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &OrgPosition{config: opq.config}
+		node := &OrgPosition{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(opq.modifiers) > 0 {
-		_spec.Modifiers = opq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, opq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := opq.withOrgan; query != nil {
-		if err := opq.loadOrgan(ctx, query, nodes, nil,
+	if query := _q.withOrgan; query != nil {
+		if err := _q.loadOrgan(ctx, query, nodes, nil,
 			func(n *OrgPosition, e *OrgOrgan) { n.Edges.Organ = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := opq.withStaffs; query != nil {
-		if err := opq.loadStaffs(ctx, query, nodes,
+	if query := _q.withStaffs; query != nil {
+		if err := _q.loadStaffs(ctx, query, nodes,
 			func(n *OrgPosition) { n.Edges.Staffs = []*OrgStaff{} },
 			func(n *OrgPosition, e *OrgStaff) { n.Edges.Staffs = append(n.Edges.Staffs, e) }); err != nil {
 			return nil, err
@@ -452,7 +452,7 @@ func (opq *OrgPositionQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]
 	return nodes, nil
 }
 
-func (opq *OrgPositionQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*OrgPosition, init func(*OrgPosition), assign func(*OrgPosition, *OrgOrgan)) error {
+func (_q *OrgPositionQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*OrgPosition, init func(*OrgPosition), assign func(*OrgPosition, *OrgOrgan)) error {
 	ids := make([]string, 0, len(nodes))
 	nodeids := make(map[string][]*OrgPosition)
 	for i := range nodes {
@@ -484,7 +484,7 @@ func (opq *OrgPositionQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery
 	}
 	return nil
 }
-func (opq *OrgPositionQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, nodes []*OrgPosition, init func(*OrgPosition), assign func(*OrgPosition, *OrgStaff)) error {
+func (_q *OrgPositionQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, nodes []*OrgPosition, init func(*OrgPosition), assign func(*OrgPosition, *OrgStaff)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[string]*OrgPosition)
 	for i := range nodes {
@@ -518,27 +518,27 @@ func (opq *OrgPositionQuery) loadStaffs(ctx context.Context, query *OrgStaffQuer
 	return nil
 }
 
-func (opq *OrgPositionQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := opq.querySpec()
-	if len(opq.modifiers) > 0 {
-		_spec.Modifiers = opq.modifiers
+func (_q *OrgPositionQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = opq.ctx.Fields
-	if len(opq.ctx.Fields) > 0 {
-		_spec.Unique = opq.ctx.Unique != nil && *opq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, opq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (opq *OrgPositionQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *OrgPositionQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(orgposition.Table, orgposition.Columns, sqlgraph.NewFieldSpec(orgposition.FieldID, field.TypeString))
-	_spec.From = opq.sql
-	if unique := opq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if opq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := opq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, orgposition.FieldID)
 		for i := range fields {
@@ -546,24 +546,24 @@ func (opq *OrgPositionQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if opq.withOrgan != nil {
+		if _q.withOrgan != nil {
 			_spec.Node.AddColumnOnce(orgposition.FieldOrgID)
 		}
 	}
-	if ps := opq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := opq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := opq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := opq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -573,36 +573,36 @@ func (opq *OrgPositionQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (opq *OrgPositionQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(opq.driver.Dialect())
+func (_q *OrgPositionQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(orgposition.Table)
-	columns := opq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = orgposition.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if opq.sql != nil {
-		selector = opq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if opq.ctx.Unique != nil && *opq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range opq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range opq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range opq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := opq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := opq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -611,33 +611,33 @@ func (opq *OrgPositionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (opq *OrgPositionQuery) ForUpdate(opts ...sql.LockOption) *OrgPositionQuery {
-	if opq.driver.Dialect() == dialect.Postgres {
-		opq.Unique(false)
+func (_q *OrgPositionQuery) ForUpdate(opts ...sql.LockOption) *OrgPositionQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	opq.modifiers = append(opq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return opq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (opq *OrgPositionQuery) ForShare(opts ...sql.LockOption) *OrgPositionQuery {
-	if opq.driver.Dialect() == dialect.Postgres {
-		opq.Unique(false)
+func (_q *OrgPositionQuery) ForShare(opts ...sql.LockOption) *OrgPositionQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	opq.modifiers = append(opq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return opq
+	return _q
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (opq *OrgPositionQuery) Modify(modifiers ...func(s *sql.Selector)) *OrgPositionSelect {
-	opq.modifiers = append(opq.modifiers, modifiers...)
-	return opq.Select()
+func (_q *OrgPositionQuery) Modify(modifiers ...func(s *sql.Selector)) *OrgPositionSelect {
+	_q.modifiers = append(_q.modifiers, modifiers...)
+	return _q.Select()
 }
 
 // OrgPositionGroupBy is the group-by builder for OrgPosition entities.
@@ -647,41 +647,41 @@ type OrgPositionGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (opgb *OrgPositionGroupBy) Aggregate(fns ...AggregateFunc) *OrgPositionGroupBy {
-	opgb.fns = append(opgb.fns, fns...)
-	return opgb
+func (_g *OrgPositionGroupBy) Aggregate(fns ...AggregateFunc) *OrgPositionGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (opgb *OrgPositionGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, opgb.build.ctx, ent.OpQueryGroupBy)
-	if err := opgb.build.prepareQuery(ctx); err != nil {
+func (_g *OrgPositionGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrgPositionQuery, *OrgPositionGroupBy](ctx, opgb.build, opgb, opgb.build.inters, v)
+	return scanWithInterceptors[*OrgPositionQuery, *OrgPositionGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (opgb *OrgPositionGroupBy) sqlScan(ctx context.Context, root *OrgPositionQuery, v any) error {
+func (_g *OrgPositionGroupBy) sqlScan(ctx context.Context, root *OrgPositionQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(opgb.fns))
-	for _, fn := range opgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*opgb.flds)+len(opgb.fns))
-		for _, f := range *opgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*opgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := opgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -695,27 +695,27 @@ type OrgPositionSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (ops *OrgPositionSelect) Aggregate(fns ...AggregateFunc) *OrgPositionSelect {
-	ops.fns = append(ops.fns, fns...)
-	return ops
+func (_s *OrgPositionSelect) Aggregate(fns ...AggregateFunc) *OrgPositionSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (ops *OrgPositionSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, ops.ctx, ent.OpQuerySelect)
-	if err := ops.prepareQuery(ctx); err != nil {
+func (_s *OrgPositionSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrgPositionQuery, *OrgPositionSelect](ctx, ops.OrgPositionQuery, ops, ops.inters, v)
+	return scanWithInterceptors[*OrgPositionQuery, *OrgPositionSelect](ctx, _s.OrgPositionQuery, _s, _s.inters, v)
 }
 
-func (ops *OrgPositionSelect) sqlScan(ctx context.Context, root *OrgPositionQuery, v any) error {
+func (_s *OrgPositionSelect) sqlScan(ctx context.Context, root *OrgPositionQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(ops.fns))
-	for _, fn := range ops.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*ops.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -723,7 +723,7 @@ func (ops *OrgPositionSelect) sqlScan(ctx context.Context, root *OrgPositionQuer
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := ops.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -731,7 +731,7 @@ func (ops *OrgPositionSelect) sqlScan(ctx context.Context, root *OrgPositionQuer
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (ops *OrgPositionSelect) Modify(modifiers ...func(s *sql.Selector)) *OrgPositionSelect {
-	ops.modifiers = append(ops.modifiers, modifiers...)
-	return ops
+func (_s *OrgPositionSelect) Modify(modifiers ...func(s *sql.Selector)) *OrgPositionSelect {
+	_s.modifiers = append(_s.modifiers, modifiers...)
+	return _s
 }

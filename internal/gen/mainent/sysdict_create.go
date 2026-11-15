@@ -26,178 +26,178 @@ type SysDictCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sdc *SysDictCreate) SetIsDel(b bool) *SysDictCreate {
-	sdc.mutation.SetIsDel(b)
-	return sdc
+func (_c *SysDictCreate) SetIsDel(v bool) *SysDictCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableIsDel(b *bool) *SysDictCreate {
-	if b != nil {
-		sdc.SetIsDel(*b)
+func (_c *SysDictCreate) SetNillableIsDel(v *bool) *SysDictCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (sdc *SysDictCreate) SetMemo(s string) *SysDictCreate {
-	sdc.mutation.SetMemo(s)
-	return sdc
+func (_c *SysDictCreate) SetMemo(v string) *SysDictCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableMemo(s *string) *SysDictCreate {
-	if s != nil {
-		sdc.SetMemo(*s)
+func (_c *SysDictCreate) SetNillableMemo(v *string) *SysDictCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (sdc *SysDictCreate) SetSort(i int32) *SysDictCreate {
-	sdc.mutation.SetSort(i)
-	return sdc
+func (_c *SysDictCreate) SetSort(v int32) *SysDictCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableSort(i *int32) *SysDictCreate {
-	if i != nil {
-		sdc.SetSort(*i)
+func (_c *SysDictCreate) SetNillableSort(v *int32) *SysDictCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (sdc *SysDictCreate) SetCreatedAt(t time.Time) *SysDictCreate {
-	sdc.mutation.SetCreatedAt(t)
-	return sdc
+func (_c *SysDictCreate) SetCreatedAt(v time.Time) *SysDictCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableCreatedAt(t *time.Time) *SysDictCreate {
-	if t != nil {
-		sdc.SetCreatedAt(*t)
+func (_c *SysDictCreate) SetNillableCreatedAt(v *time.Time) *SysDictCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sdc *SysDictCreate) SetUpdatedAt(t time.Time) *SysDictCreate {
-	sdc.mutation.SetUpdatedAt(t)
-	return sdc
+func (_c *SysDictCreate) SetUpdatedAt(v time.Time) *SysDictCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableUpdatedAt(t *time.Time) *SysDictCreate {
-	if t != nil {
-		sdc.SetUpdatedAt(*t)
+func (_c *SysDictCreate) SetNillableUpdatedAt(v *time.Time) *SysDictCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sdc *SysDictCreate) SetDeletedAt(t time.Time) *SysDictCreate {
-	sdc.mutation.SetDeletedAt(t)
-	return sdc
+func (_c *SysDictCreate) SetDeletedAt(v time.Time) *SysDictCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableDeletedAt(t *time.Time) *SysDictCreate {
-	if t != nil {
-		sdc.SetDeletedAt(*t)
+func (_c *SysDictCreate) SetNillableDeletedAt(v *time.Time) *SysDictCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (sdc *SysDictCreate) SetIsActive(b bool) *SysDictCreate {
-	sdc.mutation.SetIsActive(b)
-	return sdc
+func (_c *SysDictCreate) SetIsActive(v bool) *SysDictCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableIsActive(b *bool) *SysDictCreate {
-	if b != nil {
-		sdc.SetIsActive(*b)
+func (_c *SysDictCreate) SetNillableIsActive(v *bool) *SysDictCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetNameCn sets the "name_cn" field.
-func (sdc *SysDictCreate) SetNameCn(s string) *SysDictCreate {
-	sdc.mutation.SetNameCn(s)
-	return sdc
+func (_c *SysDictCreate) SetNameCn(v string) *SysDictCreate {
+	_c.mutation.SetNameCn(v)
+	return _c
 }
 
 // SetNameEn sets the "name_en" field.
-func (sdc *SysDictCreate) SetNameEn(s string) *SysDictCreate {
-	sdc.mutation.SetNameEn(s)
-	return sdc
+func (_c *SysDictCreate) SetNameEn(v string) *SysDictCreate {
+	_c.mutation.SetNameEn(v)
+	return _c
 }
 
 // SetDictKey sets the "dict_key" field.
-func (sdc *SysDictCreate) SetDictKey(s string) *SysDictCreate {
-	sdc.mutation.SetDictKey(s)
-	return sdc
+func (_c *SysDictCreate) SetDictKey(v string) *SysDictCreate {
+	_c.mutation.SetDictKey(v)
+	return _c
 }
 
 // SetValTipe sets the "val_tipe" field.
-func (sdc *SysDictCreate) SetValTipe(evt enumtipe.DictValueTipe) *SysDictCreate {
-	sdc.mutation.SetValTipe(evt)
-	return sdc
+func (_c *SysDictCreate) SetValTipe(v enumtipe.DictValueTipe) *SysDictCreate {
+	_c.mutation.SetValTipe(v)
+	return _c
 }
 
 // SetNillableValTipe sets the "val_tipe" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableValTipe(evt *enumtipe.DictValueTipe) *SysDictCreate {
-	if evt != nil {
-		sdc.SetValTipe(*evt)
+func (_c *SysDictCreate) SetNillableValTipe(v *enumtipe.DictValueTipe) *SysDictCreate {
+	if v != nil {
+		_c.SetValTipe(*v)
 	}
-	return sdc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (sdc *SysDictCreate) SetID(s string) *SysDictCreate {
-	sdc.mutation.SetID(s)
-	return sdc
+func (_c *SysDictCreate) SetID(v string) *SysDictCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (sdc *SysDictCreate) SetNillableID(s *string) *SysDictCreate {
-	if s != nil {
-		sdc.SetID(*s)
+func (_c *SysDictCreate) SetNillableID(v *string) *SysDictCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return sdc
+	return _c
 }
 
 // AddItemIDs adds the "items" edge to the SysDictItem entity by IDs.
-func (sdc *SysDictCreate) AddItemIDs(ids ...string) *SysDictCreate {
-	sdc.mutation.AddItemIDs(ids...)
-	return sdc
+func (_c *SysDictCreate) AddItemIDs(ids ...string) *SysDictCreate {
+	_c.mutation.AddItemIDs(ids...)
+	return _c
 }
 
 // AddItems adds the "items" edges to the SysDictItem entity.
-func (sdc *SysDictCreate) AddItems(s ...*SysDictItem) *SysDictCreate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_c *SysDictCreate) AddItems(v ...*SysDictItem) *SysDictCreate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sdc.AddItemIDs(ids...)
+	return _c.AddItemIDs(ids...)
 }
 
 // Mutation returns the SysDictMutation object of the builder.
-func (sdc *SysDictCreate) Mutation() *SysDictMutation {
-	return sdc.mutation
+func (_c *SysDictCreate) Mutation() *SysDictMutation {
+	return _c.mutation
 }
 
 // Save creates the SysDict in the database.
-func (sdc *SysDictCreate) Save(ctx context.Context) (*SysDict, error) {
-	sdc.defaults()
-	return withHooks(ctx, sdc.sqlSave, sdc.mutation, sdc.hooks)
+func (_c *SysDictCreate) Save(ctx context.Context) (*SysDict, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (sdc *SysDictCreate) SaveX(ctx context.Context) *SysDict {
-	v, err := sdc.Save(ctx)
+func (_c *SysDictCreate) SaveX(ctx context.Context) *SysDict {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -205,103 +205,103 @@ func (sdc *SysDictCreate) SaveX(ctx context.Context) *SysDict {
 }
 
 // Exec executes the query.
-func (sdc *SysDictCreate) Exec(ctx context.Context) error {
-	_, err := sdc.Save(ctx)
+func (_c *SysDictCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdc *SysDictCreate) ExecX(ctx context.Context) {
-	if err := sdc.Exec(ctx); err != nil {
+func (_c *SysDictCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sdc *SysDictCreate) defaults() {
-	if _, ok := sdc.mutation.IsDel(); !ok {
+func (_c *SysDictCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysdict.DefaultIsDel
-		sdc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := sdc.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := sysdict.DefaultMemo
-		sdc.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := sdc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysdict.DefaultSort
-		sdc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := sdc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysdict.DefaultCreatedAt()
-		sdc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := sdc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysdict.DefaultUpdatedAt()
-		sdc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := sdc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysdict.DefaultIsActive
-		sdc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := sdc.mutation.ValTipe(); !ok {
+	if _, ok := _c.mutation.ValTipe(); !ok {
 		v := sysdict.DefaultValTipe
-		sdc.mutation.SetValTipe(v)
+		_c.mutation.SetValTipe(v)
 	}
-	if _, ok := sdc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysdict.DefaultID()
-		sdc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sdc *SysDictCreate) check() error {
-	if _, ok := sdc.mutation.IsDel(); !ok {
+func (_c *SysDictCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysDict.is_del"`)}
 	}
-	if v, ok := sdc.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysdict.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysDict.memo": %w`, err)}
 		}
 	}
-	if _, ok := sdc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysDict.sort"`)}
 	}
-	if _, ok := sdc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysDict.is_active"`)}
 	}
-	if _, ok := sdc.mutation.NameCn(); !ok {
+	if _, ok := _c.mutation.NameCn(); !ok {
 		return &ValidationError{Name: "name_cn", err: errors.New(`mainent: missing required field "SysDict.name_cn"`)}
 	}
-	if v, ok := sdc.mutation.NameCn(); ok {
+	if v, ok := _c.mutation.NameCn(); ok {
 		if err := sysdict.NameCnValidator(v); err != nil {
 			return &ValidationError{Name: "name_cn", err: fmt.Errorf(`mainent: validator failed for field "SysDict.name_cn": %w`, err)}
 		}
 	}
-	if _, ok := sdc.mutation.NameEn(); !ok {
+	if _, ok := _c.mutation.NameEn(); !ok {
 		return &ValidationError{Name: "name_en", err: errors.New(`mainent: missing required field "SysDict.name_en"`)}
 	}
-	if v, ok := sdc.mutation.NameEn(); ok {
+	if v, ok := _c.mutation.NameEn(); ok {
 		if err := sysdict.NameEnValidator(v); err != nil {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`mainent: validator failed for field "SysDict.name_en": %w`, err)}
 		}
 	}
-	if _, ok := sdc.mutation.DictKey(); !ok {
+	if _, ok := _c.mutation.DictKey(); !ok {
 		return &ValidationError{Name: "dict_key", err: errors.New(`mainent: missing required field "SysDict.dict_key"`)}
 	}
-	if v, ok := sdc.mutation.DictKey(); ok {
+	if v, ok := _c.mutation.DictKey(); ok {
 		if err := sysdict.DictKeyValidator(v); err != nil {
 			return &ValidationError{Name: "dict_key", err: fmt.Errorf(`mainent: validator failed for field "SysDict.dict_key": %w`, err)}
 		}
 	}
-	if _, ok := sdc.mutation.ValTipe(); !ok {
+	if _, ok := _c.mutation.ValTipe(); !ok {
 		return &ValidationError{Name: "val_tipe", err: errors.New(`mainent: missing required field "SysDict.val_tipe"`)}
 	}
-	if v, ok := sdc.mutation.ValTipe(); ok {
+	if v, ok := _c.mutation.ValTipe(); ok {
 		if err := sysdict.ValTipeValidator(v); err != nil {
 			return &ValidationError{Name: "val_tipe", err: fmt.Errorf(`mainent: validator failed for field "SysDict.val_tipe": %w`, err)}
 		}
 	}
-	if v, ok := sdc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysdict.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysDict.id": %w`, err)}
 		}
@@ -309,12 +309,12 @@ func (sdc *SysDictCreate) check() error {
 	return nil
 }
 
-func (sdc *SysDictCreate) sqlSave(ctx context.Context) (*SysDict, error) {
-	if err := sdc.check(); err != nil {
+func (_c *SysDictCreate) sqlSave(ctx context.Context) (*SysDict, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := sdc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, sdc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -327,66 +327,66 @@ func (sdc *SysDictCreate) sqlSave(ctx context.Context) (*SysDict, error) {
 			return nil, fmt.Errorf("unexpected SysDict.ID type: %T", _spec.ID.Value)
 		}
 	}
-	sdc.mutation.id = &_node.ID
-	sdc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
+func (_c *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysDict{config: sdc.config}
+		_node = &SysDict{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysdict.Table, sqlgraph.NewFieldSpec(sysdict.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = sdc.conflict
-	if id, ok := sdc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := sdc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysdict.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := sdc.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(sysdict.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := sdc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysdict.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := sdc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysdict.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := sdc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdict.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := sdc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdict.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := sdc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysdict.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := sdc.mutation.NameCn(); ok {
+	if value, ok := _c.mutation.NameCn(); ok {
 		_spec.SetField(sysdict.FieldNameCn, field.TypeString, value)
 		_node.NameCn = value
 	}
-	if value, ok := sdc.mutation.NameEn(); ok {
+	if value, ok := _c.mutation.NameEn(); ok {
 		_spec.SetField(sysdict.FieldNameEn, field.TypeString, value)
 		_node.NameEn = value
 	}
-	if value, ok := sdc.mutation.DictKey(); ok {
+	if value, ok := _c.mutation.DictKey(); ok {
 		_spec.SetField(sysdict.FieldDictKey, field.TypeString, value)
 		_node.DictKey = value
 	}
-	if value, ok := sdc.mutation.ValTipe(); ok {
+	if value, ok := _c.mutation.ValTipe(); ok {
 		_spec.SetField(sysdict.FieldValTipe, field.TypeEnum, value)
 		_node.ValTipe = value
 	}
-	if nodes := sdc.mutation.ItemsIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ItemsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -421,10 +421,10 @@ func (sdc *SysDictCreate) createSpec() (*SysDict, *sqlgraph.CreateSpec) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sdc *SysDictCreate) OnConflict(opts ...sql.ConflictOption) *SysDictUpsertOne {
-	sdc.conflict = opts
+func (_c *SysDictCreate) OnConflict(opts ...sql.ConflictOption) *SysDictUpsertOne {
+	_c.conflict = opts
 	return &SysDictUpsertOne{
-		create: sdc,
+		create: _c,
 	}
 }
 
@@ -434,10 +434,10 @@ func (sdc *SysDictCreate) OnConflict(opts ...sql.ConflictOption) *SysDictUpsertO
 //	client.SysDict.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sdc *SysDictCreate) OnConflictColumns(columns ...string) *SysDictUpsertOne {
-	sdc.conflict = append(sdc.conflict, sql.ConflictColumns(columns...))
+func (_c *SysDictCreate) OnConflictColumns(columns ...string) *SysDictUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysDictUpsertOne{
-		create: sdc,
+		create: _c,
 	}
 }
 
@@ -841,16 +841,16 @@ type SysDictCreateBulk struct {
 }
 
 // Save creates the SysDict entities in the database.
-func (sdcb *SysDictCreateBulk) Save(ctx context.Context) ([]*SysDict, error) {
-	if sdcb.err != nil {
-		return nil, sdcb.err
+func (_c *SysDictCreateBulk) Save(ctx context.Context) ([]*SysDict, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(sdcb.builders))
-	nodes := make([]*SysDict, len(sdcb.builders))
-	mutators := make([]Mutator, len(sdcb.builders))
-	for i := range sdcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysDict, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := sdcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysDictMutation)
@@ -864,12 +864,12 @@ func (sdcb *SysDictCreateBulk) Save(ctx context.Context) ([]*SysDict, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, sdcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = sdcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, sdcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -889,7 +889,7 @@ func (sdcb *SysDictCreateBulk) Save(ctx context.Context) ([]*SysDict, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, sdcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -897,8 +897,8 @@ func (sdcb *SysDictCreateBulk) Save(ctx context.Context) ([]*SysDict, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sdcb *SysDictCreateBulk) SaveX(ctx context.Context) []*SysDict {
-	v, err := sdcb.Save(ctx)
+func (_c *SysDictCreateBulk) SaveX(ctx context.Context) []*SysDict {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -906,14 +906,14 @@ func (sdcb *SysDictCreateBulk) SaveX(ctx context.Context) []*SysDict {
 }
 
 // Exec executes the query.
-func (sdcb *SysDictCreateBulk) Exec(ctx context.Context) error {
-	_, err := sdcb.Save(ctx)
+func (_c *SysDictCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdcb *SysDictCreateBulk) ExecX(ctx context.Context) {
-	if err := sdcb.Exec(ctx); err != nil {
+func (_c *SysDictCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -933,10 +933,10 @@ func (sdcb *SysDictCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sdcb *SysDictCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDictUpsertBulk {
-	sdcb.conflict = opts
+func (_c *SysDictCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDictUpsertBulk {
+	_c.conflict = opts
 	return &SysDictUpsertBulk{
-		create: sdcb,
+		create: _c,
 	}
 }
 
@@ -946,10 +946,10 @@ func (sdcb *SysDictCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDictUp
 //	client.SysDict.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sdcb *SysDictCreateBulk) OnConflictColumns(columns ...string) *SysDictUpsertBulk {
-	sdcb.conflict = append(sdcb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysDictCreateBulk) OnConflictColumns(columns ...string) *SysDictUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysDictUpsertBulk{
-		create: sdcb,
+		create: _c,
 	}
 }
 

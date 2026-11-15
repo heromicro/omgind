@@ -28,450 +28,450 @@ type OrgStaffCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (osc *OrgStaffCreate) SetIsDel(b bool) *OrgStaffCreate {
-	osc.mutation.SetIsDel(b)
-	return osc
+func (_c *OrgStaffCreate) SetIsDel(v bool) *OrgStaffCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableIsDel(b *bool) *OrgStaffCreate {
-	if b != nil {
-		osc.SetIsDel(*b)
+func (_c *OrgStaffCreate) SetNillableIsDel(v *bool) *OrgStaffCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (osc *OrgStaffCreate) SetSort(i int32) *OrgStaffCreate {
-	osc.mutation.SetSort(i)
-	return osc
+func (_c *OrgStaffCreate) SetSort(v int32) *OrgStaffCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableSort(i *int32) *OrgStaffCreate {
-	if i != nil {
-		osc.SetSort(*i)
+func (_c *OrgStaffCreate) SetNillableSort(v *int32) *OrgStaffCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (osc *OrgStaffCreate) SetCreatedAt(t time.Time) *OrgStaffCreate {
-	osc.mutation.SetCreatedAt(t)
-	return osc
+func (_c *OrgStaffCreate) SetCreatedAt(v time.Time) *OrgStaffCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableCreatedAt(t *time.Time) *OrgStaffCreate {
-	if t != nil {
-		osc.SetCreatedAt(*t)
+func (_c *OrgStaffCreate) SetNillableCreatedAt(v *time.Time) *OrgStaffCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (osc *OrgStaffCreate) SetUpdatedAt(t time.Time) *OrgStaffCreate {
-	osc.mutation.SetUpdatedAt(t)
-	return osc
+func (_c *OrgStaffCreate) SetUpdatedAt(v time.Time) *OrgStaffCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableUpdatedAt(t *time.Time) *OrgStaffCreate {
-	if t != nil {
-		osc.SetUpdatedAt(*t)
+func (_c *OrgStaffCreate) SetNillableUpdatedAt(v *time.Time) *OrgStaffCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (osc *OrgStaffCreate) SetDeletedAt(t time.Time) *OrgStaffCreate {
-	osc.mutation.SetDeletedAt(t)
-	return osc
+func (_c *OrgStaffCreate) SetDeletedAt(v time.Time) *OrgStaffCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableDeletedAt(t *time.Time) *OrgStaffCreate {
-	if t != nil {
-		osc.SetDeletedAt(*t)
+func (_c *OrgStaffCreate) SetNillableDeletedAt(v *time.Time) *OrgStaffCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (osc *OrgStaffCreate) SetIsActive(b bool) *OrgStaffCreate {
-	osc.mutation.SetIsActive(b)
-	return osc
+func (_c *OrgStaffCreate) SetIsActive(v bool) *OrgStaffCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableIsActive(b *bool) *OrgStaffCreate {
-	if b != nil {
-		osc.SetIsActive(*b)
+func (_c *OrgStaffCreate) SetNillableIsActive(v *bool) *OrgStaffCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (osc *OrgStaffCreate) SetMemo(s string) *OrgStaffCreate {
-	osc.mutation.SetMemo(s)
-	return osc
+func (_c *OrgStaffCreate) SetMemo(v string) *OrgStaffCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableMemo(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetMemo(*s)
+func (_c *OrgStaffCreate) SetNillableMemo(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetFirstName sets the "first_name" field.
-func (osc *OrgStaffCreate) SetFirstName(s string) *OrgStaffCreate {
-	osc.mutation.SetFirstName(s)
-	return osc
+func (_c *OrgStaffCreate) SetFirstName(v string) *OrgStaffCreate {
+	_c.mutation.SetFirstName(v)
+	return _c
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableFirstName(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetFirstName(*s)
+func (_c *OrgStaffCreate) SetNillableFirstName(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetFirstName(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetLastName sets the "last_name" field.
-func (osc *OrgStaffCreate) SetLastName(s string) *OrgStaffCreate {
-	osc.mutation.SetLastName(s)
-	return osc
+func (_c *OrgStaffCreate) SetLastName(v string) *OrgStaffCreate {
+	_c.mutation.SetLastName(v)
+	return _c
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableLastName(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetLastName(*s)
+func (_c *OrgStaffCreate) SetNillableLastName(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetLastName(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetMobile sets the "mobile" field.
-func (osc *OrgStaffCreate) SetMobile(s string) *OrgStaffCreate {
-	osc.mutation.SetMobile(s)
-	return osc
+func (_c *OrgStaffCreate) SetMobile(v string) *OrgStaffCreate {
+	_c.mutation.SetMobile(v)
+	return _c
 }
 
 // SetNillableMobile sets the "mobile" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableMobile(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetMobile(*s)
+func (_c *OrgStaffCreate) SetNillableMobile(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetMobile(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetGender sets the "gender" field.
-func (osc *OrgStaffCreate) SetGender(i int32) *OrgStaffCreate {
-	osc.mutation.SetGender(i)
-	return osc
+func (_c *OrgStaffCreate) SetGender(v int32) *OrgStaffCreate {
+	_c.mutation.SetGender(v)
+	return _c
 }
 
 // SetNillableGender sets the "gender" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableGender(i *int32) *OrgStaffCreate {
-	if i != nil {
-		osc.SetGender(*i)
+func (_c *OrgStaffCreate) SetNillableGender(v *int32) *OrgStaffCreate {
+	if v != nil {
+		_c.SetGender(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetGenderDictID sets the "gender_dict_id" field.
-func (osc *OrgStaffCreate) SetGenderDictID(s string) *OrgStaffCreate {
-	osc.mutation.SetGenderDictID(s)
-	return osc
+func (_c *OrgStaffCreate) SetGenderDictID(v string) *OrgStaffCreate {
+	_c.mutation.SetGenderDictID(v)
+	return _c
 }
 
 // SetNillableGenderDictID sets the "gender_dict_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableGenderDictID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetGenderDictID(*s)
+func (_c *OrgStaffCreate) SetNillableGenderDictID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetGenderDictID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetBirthDate sets the "birth_date" field.
-func (osc *OrgStaffCreate) SetBirthDate(t time.Time) *OrgStaffCreate {
-	osc.mutation.SetBirthDate(t)
-	return osc
+func (_c *OrgStaffCreate) SetBirthDate(v time.Time) *OrgStaffCreate {
+	_c.mutation.SetBirthDate(v)
+	return _c
 }
 
 // SetNillableBirthDate sets the "birth_date" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableBirthDate(t *time.Time) *OrgStaffCreate {
-	if t != nil {
-		osc.SetBirthDate(*t)
+func (_c *OrgStaffCreate) SetNillableBirthDate(v *time.Time) *OrgStaffCreate {
+	if v != nil {
+		_c.SetBirthDate(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetIdenNo sets the "iden_no" field.
-func (osc *OrgStaffCreate) SetIdenNo(s string) *OrgStaffCreate {
-	osc.mutation.SetIdenNo(s)
-	return osc
+func (_c *OrgStaffCreate) SetIdenNo(v string) *OrgStaffCreate {
+	_c.mutation.SetIdenNo(v)
+	return _c
 }
 
 // SetNillableIdenNo sets the "iden_no" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableIdenNo(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetIdenNo(*s)
+func (_c *OrgStaffCreate) SetNillableIdenNo(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetIdenNo(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetIdenAddrID sets the "iden_addr_id" field.
-func (osc *OrgStaffCreate) SetIdenAddrID(s string) *OrgStaffCreate {
-	osc.mutation.SetIdenAddrID(s)
-	return osc
+func (_c *OrgStaffCreate) SetIdenAddrID(v string) *OrgStaffCreate {
+	_c.mutation.SetIdenAddrID(v)
+	return _c
 }
 
 // SetNillableIdenAddrID sets the "iden_addr_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableIdenAddrID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetIdenAddrID(*s)
+func (_c *OrgStaffCreate) SetNillableIdenAddrID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetIdenAddrID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetResiAddrID sets the "resi_addr_id" field.
-func (osc *OrgStaffCreate) SetResiAddrID(s string) *OrgStaffCreate {
-	osc.mutation.SetResiAddrID(s)
-	return osc
+func (_c *OrgStaffCreate) SetResiAddrID(v string) *OrgStaffCreate {
+	_c.mutation.SetResiAddrID(v)
+	return _c
 }
 
 // SetNillableResiAddrID sets the "resi_addr_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableResiAddrID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetResiAddrID(*s)
+func (_c *OrgStaffCreate) SetNillableResiAddrID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetResiAddrID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetWorkerNo sets the "worker_no" field.
-func (osc *OrgStaffCreate) SetWorkerNo(s string) *OrgStaffCreate {
-	osc.mutation.SetWorkerNo(s)
-	return osc
+func (_c *OrgStaffCreate) SetWorkerNo(v string) *OrgStaffCreate {
+	_c.mutation.SetWorkerNo(v)
+	return _c
 }
 
 // SetNillableWorkerNo sets the "worker_no" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableWorkerNo(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetWorkerNo(*s)
+func (_c *OrgStaffCreate) SetNillableWorkerNo(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetWorkerNo(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetCubicle sets the "cubicle" field.
-func (osc *OrgStaffCreate) SetCubicle(s string) *OrgStaffCreate {
-	osc.mutation.SetCubicle(s)
-	return osc
+func (_c *OrgStaffCreate) SetCubicle(v string) *OrgStaffCreate {
+	_c.mutation.SetCubicle(v)
+	return _c
 }
 
 // SetNillableCubicle sets the "cubicle" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableCubicle(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetCubicle(*s)
+func (_c *OrgStaffCreate) SetNillableCubicle(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetCubicle(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetRank sets the "rank" field.
-func (osc *OrgStaffCreate) SetRank(s string) *OrgStaffCreate {
-	osc.mutation.SetRank(s)
-	return osc
+func (_c *OrgStaffCreate) SetRank(v string) *OrgStaffCreate {
+	_c.mutation.SetRank(v)
+	return _c
 }
 
 // SetNillableRank sets the "rank" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableRank(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetRank(*s)
+func (_c *OrgStaffCreate) SetNillableRank(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetRank(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetEntryDate sets the "entry_date" field.
-func (osc *OrgStaffCreate) SetEntryDate(t time.Time) *OrgStaffCreate {
-	osc.mutation.SetEntryDate(t)
-	return osc
+func (_c *OrgStaffCreate) SetEntryDate(v time.Time) *OrgStaffCreate {
+	_c.mutation.SetEntryDate(v)
+	return _c
 }
 
 // SetNillableEntryDate sets the "entry_date" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableEntryDate(t *time.Time) *OrgStaffCreate {
-	if t != nil {
-		osc.SetEntryDate(*t)
+func (_c *OrgStaffCreate) SetNillableEntryDate(v *time.Time) *OrgStaffCreate {
+	if v != nil {
+		_c.SetEntryDate(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetRegularDate sets the "regular_date" field.
-func (osc *OrgStaffCreate) SetRegularDate(t time.Time) *OrgStaffCreate {
-	osc.mutation.SetRegularDate(t)
-	return osc
+func (_c *OrgStaffCreate) SetRegularDate(v time.Time) *OrgStaffCreate {
+	_c.mutation.SetRegularDate(v)
+	return _c
 }
 
 // SetNillableRegularDate sets the "regular_date" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableRegularDate(t *time.Time) *OrgStaffCreate {
-	if t != nil {
-		osc.SetRegularDate(*t)
+func (_c *OrgStaffCreate) SetNillableRegularDate(v *time.Time) *OrgStaffCreate {
+	if v != nil {
+		_c.SetRegularDate(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetResignDate sets the "resign_date" field.
-func (osc *OrgStaffCreate) SetResignDate(t time.Time) *OrgStaffCreate {
-	osc.mutation.SetResignDate(t)
-	return osc
+func (_c *OrgStaffCreate) SetResignDate(v time.Time) *OrgStaffCreate {
+	_c.mutation.SetResignDate(v)
+	return _c
 }
 
 // SetNillableResignDate sets the "resign_date" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableResignDate(t *time.Time) *OrgStaffCreate {
-	if t != nil {
-		osc.SetResignDate(*t)
+func (_c *OrgStaffCreate) SetNillableResignDate(v *time.Time) *OrgStaffCreate {
+	if v != nil {
+		_c.SetResignDate(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetOrgID sets the "org_id" field.
-func (osc *OrgStaffCreate) SetOrgID(s string) *OrgStaffCreate {
-	osc.mutation.SetOrgID(s)
-	return osc
+func (_c *OrgStaffCreate) SetOrgID(v string) *OrgStaffCreate {
+	_c.mutation.SetOrgID(v)
+	return _c
 }
 
 // SetNillableOrgID sets the "org_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableOrgID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetOrgID(*s)
+func (_c *OrgStaffCreate) SetNillableOrgID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetOrgID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetEmpyStat sets the "empy_stat" field.
-func (osc *OrgStaffCreate) SetEmpyStat(i int32) *OrgStaffCreate {
-	osc.mutation.SetEmpyStat(i)
-	return osc
+func (_c *OrgStaffCreate) SetEmpyStat(v int32) *OrgStaffCreate {
+	_c.mutation.SetEmpyStat(v)
+	return _c
 }
 
 // SetNillableEmpyStat sets the "empy_stat" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableEmpyStat(i *int32) *OrgStaffCreate {
-	if i != nil {
-		osc.SetEmpyStat(*i)
+func (_c *OrgStaffCreate) SetNillableEmpyStat(v *int32) *OrgStaffCreate {
+	if v != nil {
+		_c.SetEmpyStat(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetEmpystDictID sets the "empyst_dict_id" field.
-func (osc *OrgStaffCreate) SetEmpystDictID(s string) *OrgStaffCreate {
-	osc.mutation.SetEmpystDictID(s)
-	return osc
+func (_c *OrgStaffCreate) SetEmpystDictID(v string) *OrgStaffCreate {
+	_c.mutation.SetEmpystDictID(v)
+	return _c
 }
 
 // SetNillableEmpystDictID sets the "empyst_dict_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableEmpystDictID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetEmpystDictID(*s)
+func (_c *OrgStaffCreate) SetNillableEmpystDictID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetEmpystDictID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetDeptID sets the "dept_id" field.
-func (osc *OrgStaffCreate) SetDeptID(s string) *OrgStaffCreate {
-	osc.mutation.SetDeptID(s)
-	return osc
+func (_c *OrgStaffCreate) SetDeptID(v string) *OrgStaffCreate {
+	_c.mutation.SetDeptID(v)
+	return _c
 }
 
 // SetNillableDeptID sets the "dept_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableDeptID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetDeptID(*s)
+func (_c *OrgStaffCreate) SetNillableDeptID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetDeptID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetPosiID sets the "posi_id" field.
-func (osc *OrgStaffCreate) SetPosiID(s string) *OrgStaffCreate {
-	osc.mutation.SetPosiID(s)
-	return osc
+func (_c *OrgStaffCreate) SetPosiID(v string) *OrgStaffCreate {
+	_c.mutation.SetPosiID(v)
+	return _c
 }
 
 // SetNillablePosiID sets the "posi_id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillablePosiID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetPosiID(*s)
+func (_c *OrgStaffCreate) SetNillablePosiID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetPosiID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (osc *OrgStaffCreate) SetID(s string) *OrgStaffCreate {
-	osc.mutation.SetID(s)
-	return osc
+func (_c *OrgStaffCreate) SetID(v string) *OrgStaffCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableID(s *string) *OrgStaffCreate {
-	if s != nil {
-		osc.SetID(*s)
+func (_c *OrgStaffCreate) SetNillableID(v *string) *OrgStaffCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return osc
+	return _c
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (osc *OrgStaffCreate) SetOrganID(id string) *OrgStaffCreate {
-	osc.mutation.SetOrganID(id)
-	return osc
+func (_c *OrgStaffCreate) SetOrganID(id string) *OrgStaffCreate {
+	_c.mutation.SetOrganID(id)
+	return _c
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (osc *OrgStaffCreate) SetNillableOrganID(id *string) *OrgStaffCreate {
+func (_c *OrgStaffCreate) SetNillableOrganID(id *string) *OrgStaffCreate {
 	if id != nil {
-		osc = osc.SetOrganID(*id)
+		_c = _c.SetOrganID(*id)
 	}
-	return osc
+	return _c
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (osc *OrgStaffCreate) SetOrgan(o *OrgOrgan) *OrgStaffCreate {
-	return osc.SetOrganID(o.ID)
+func (_c *OrgStaffCreate) SetOrgan(v *OrgOrgan) *OrgStaffCreate {
+	return _c.SetOrganID(v.ID)
 }
 
 // SetIdenAddr sets the "iden_addr" edge to the SysAddress entity.
-func (osc *OrgStaffCreate) SetIdenAddr(s *SysAddress) *OrgStaffCreate {
-	return osc.SetIdenAddrID(s.ID)
+func (_c *OrgStaffCreate) SetIdenAddr(v *SysAddress) *OrgStaffCreate {
+	return _c.SetIdenAddrID(v.ID)
 }
 
 // SetResiAddr sets the "resi_addr" edge to the SysAddress entity.
-func (osc *OrgStaffCreate) SetResiAddr(s *SysAddress) *OrgStaffCreate {
-	return osc.SetResiAddrID(s.ID)
+func (_c *OrgStaffCreate) SetResiAddr(v *SysAddress) *OrgStaffCreate {
+	return _c.SetResiAddrID(v.ID)
 }
 
 // SetDept sets the "dept" edge to the OrgDept entity.
-func (osc *OrgStaffCreate) SetDept(o *OrgDept) *OrgStaffCreate {
-	return osc.SetDeptID(o.ID)
+func (_c *OrgStaffCreate) SetDept(v *OrgDept) *OrgStaffCreate {
+	return _c.SetDeptID(v.ID)
 }
 
 // SetPosi sets the "posi" edge to the OrgPosition entity.
-func (osc *OrgStaffCreate) SetPosi(o *OrgPosition) *OrgStaffCreate {
-	return osc.SetPosiID(o.ID)
+func (_c *OrgStaffCreate) SetPosi(v *OrgPosition) *OrgStaffCreate {
+	return _c.SetPosiID(v.ID)
 }
 
 // Mutation returns the OrgStaffMutation object of the builder.
-func (osc *OrgStaffCreate) Mutation() *OrgStaffMutation {
-	return osc.mutation
+func (_c *OrgStaffCreate) Mutation() *OrgStaffMutation {
+	return _c.mutation
 }
 
 // Save creates the OrgStaff in the database.
-func (osc *OrgStaffCreate) Save(ctx context.Context) (*OrgStaff, error) {
-	osc.defaults()
-	return withHooks(ctx, osc.sqlSave, osc.mutation, osc.hooks)
+func (_c *OrgStaffCreate) Save(ctx context.Context) (*OrgStaff, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (osc *OrgStaffCreate) SaveX(ctx context.Context) *OrgStaff {
-	v, err := osc.Save(ctx)
+func (_c *OrgStaffCreate) SaveX(ctx context.Context) *OrgStaff {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -479,139 +479,139 @@ func (osc *OrgStaffCreate) SaveX(ctx context.Context) *OrgStaff {
 }
 
 // Exec executes the query.
-func (osc *OrgStaffCreate) Exec(ctx context.Context) error {
-	_, err := osc.Save(ctx)
+func (_c *OrgStaffCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (osc *OrgStaffCreate) ExecX(ctx context.Context) {
-	if err := osc.Exec(ctx); err != nil {
+func (_c *OrgStaffCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (osc *OrgStaffCreate) defaults() {
-	if _, ok := osc.mutation.IsDel(); !ok {
+func (_c *OrgStaffCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := orgstaff.DefaultIsDel
-		osc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := osc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := orgstaff.DefaultSort
-		osc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := osc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := orgstaff.DefaultCreatedAt()
-		osc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := osc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := orgstaff.DefaultUpdatedAt()
-		osc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := osc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := orgstaff.DefaultIsActive
-		osc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := osc.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := orgstaff.DefaultMemo
-		osc.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := osc.mutation.EmpyStat(); !ok {
+	if _, ok := _c.mutation.EmpyStat(); !ok {
 		v := orgstaff.DefaultEmpyStat
-		osc.mutation.SetEmpyStat(v)
+		_c.mutation.SetEmpyStat(v)
 	}
-	if _, ok := osc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := orgstaff.DefaultID()
-		osc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (osc *OrgStaffCreate) check() error {
-	if _, ok := osc.mutation.IsDel(); !ok {
+func (_c *OrgStaffCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "OrgStaff.is_del"`)}
 	}
-	if _, ok := osc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "OrgStaff.sort"`)}
 	}
-	if _, ok := osc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "OrgStaff.is_active"`)}
 	}
-	if v, ok := osc.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := orgstaff.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.memo": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.FirstName(); ok {
+	if v, ok := _c.mutation.FirstName(); ok {
 		if err := orgstaff.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.first_name": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.LastName(); ok {
+	if v, ok := _c.mutation.LastName(); ok {
 		if err := orgstaff.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.last_name": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.Mobile(); ok {
+	if v, ok := _c.mutation.Mobile(); ok {
 		if err := orgstaff.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.mobile": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.GenderDictID(); ok {
+	if v, ok := _c.mutation.GenderDictID(); ok {
 		if err := orgstaff.GenderDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "gender_dict_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.gender_dict_id": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.IdenAddrID(); ok {
+	if v, ok := _c.mutation.IdenAddrID(); ok {
 		if err := orgstaff.IdenAddrIDValidator(v); err != nil {
 			return &ValidationError{Name: "iden_addr_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.iden_addr_id": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.ResiAddrID(); ok {
+	if v, ok := _c.mutation.ResiAddrID(); ok {
 		if err := orgstaff.ResiAddrIDValidator(v); err != nil {
 			return &ValidationError{Name: "resi_addr_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.resi_addr_id": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.WorkerNo(); ok {
+	if v, ok := _c.mutation.WorkerNo(); ok {
 		if err := orgstaff.WorkerNoValidator(v); err != nil {
 			return &ValidationError{Name: "worker_no", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.worker_no": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.Cubicle(); ok {
+	if v, ok := _c.mutation.Cubicle(); ok {
 		if err := orgstaff.CubicleValidator(v); err != nil {
 			return &ValidationError{Name: "cubicle", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.cubicle": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.Rank(); ok {
+	if v, ok := _c.mutation.Rank(); ok {
 		if err := orgstaff.RankValidator(v); err != nil {
 			return &ValidationError{Name: "rank", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.rank": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.OrgID(); ok {
+	if v, ok := _c.mutation.OrgID(); ok {
 		if err := orgstaff.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.org_id": %w`, err)}
 		}
 	}
-	if _, ok := osc.mutation.EmpyStat(); !ok {
+	if _, ok := _c.mutation.EmpyStat(); !ok {
 		return &ValidationError{Name: "empy_stat", err: errors.New(`mainent: missing required field "OrgStaff.empy_stat"`)}
 	}
-	if v, ok := osc.mutation.EmpystDictID(); ok {
+	if v, ok := _c.mutation.EmpystDictID(); ok {
 		if err := orgstaff.EmpystDictIDValidator(v); err != nil {
 			return &ValidationError{Name: "empyst_dict_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.empyst_dict_id": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.DeptID(); ok {
+	if v, ok := _c.mutation.DeptID(); ok {
 		if err := orgstaff.DeptIDValidator(v); err != nil {
 			return &ValidationError{Name: "dept_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.dept_id": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.PosiID(); ok {
+	if v, ok := _c.mutation.PosiID(); ok {
 		if err := orgstaff.PosiIDValidator(v); err != nil {
 			return &ValidationError{Name: "posi_id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.posi_id": %w`, err)}
 		}
 	}
-	if v, ok := osc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := orgstaff.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "OrgStaff.id": %w`, err)}
 		}
@@ -619,12 +619,12 @@ func (osc *OrgStaffCreate) check() error {
 	return nil
 }
 
-func (osc *OrgStaffCreate) sqlSave(ctx context.Context) (*OrgStaff, error) {
-	if err := osc.check(); err != nil {
+func (_c *OrgStaffCreate) sqlSave(ctx context.Context) (*OrgStaff, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := osc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, osc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -637,110 +637,110 @@ func (osc *OrgStaffCreate) sqlSave(ctx context.Context) (*OrgStaff, error) {
 			return nil, fmt.Errorf("unexpected OrgStaff.ID type: %T", _spec.ID.Value)
 		}
 	}
-	osc.mutation.id = &_node.ID
-	osc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
+func (_c *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 	var (
-		_node = &OrgStaff{config: osc.config}
+		_node = &OrgStaff{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(orgstaff.Table, sqlgraph.NewFieldSpec(orgstaff.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = osc.conflict
-	if id, ok := osc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := osc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(orgstaff.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := osc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(orgstaff.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := osc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(orgstaff.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := osc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(orgstaff.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := osc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(orgstaff.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := osc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(orgstaff.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := osc.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(orgstaff.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := osc.mutation.FirstName(); ok {
+	if value, ok := _c.mutation.FirstName(); ok {
 		_spec.SetField(orgstaff.FieldFirstName, field.TypeString, value)
 		_node.FirstName = &value
 	}
-	if value, ok := osc.mutation.LastName(); ok {
+	if value, ok := _c.mutation.LastName(); ok {
 		_spec.SetField(orgstaff.FieldLastName, field.TypeString, value)
 		_node.LastName = &value
 	}
-	if value, ok := osc.mutation.Mobile(); ok {
+	if value, ok := _c.mutation.Mobile(); ok {
 		_spec.SetField(orgstaff.FieldMobile, field.TypeString, value)
 		_node.Mobile = &value
 	}
-	if value, ok := osc.mutation.Gender(); ok {
+	if value, ok := _c.mutation.Gender(); ok {
 		_spec.SetField(orgstaff.FieldGender, field.TypeInt32, value)
 		_node.Gender = &value
 	}
-	if value, ok := osc.mutation.GenderDictID(); ok {
+	if value, ok := _c.mutation.GenderDictID(); ok {
 		_spec.SetField(orgstaff.FieldGenderDictID, field.TypeString, value)
 		_node.GenderDictID = &value
 	}
-	if value, ok := osc.mutation.BirthDate(); ok {
+	if value, ok := _c.mutation.BirthDate(); ok {
 		_spec.SetField(orgstaff.FieldBirthDate, field.TypeTime, value)
 		_node.BirthDate = &value
 	}
-	if value, ok := osc.mutation.IdenNo(); ok {
+	if value, ok := _c.mutation.IdenNo(); ok {
 		_spec.SetField(orgstaff.FieldIdenNo, field.TypeString, value)
 		_node.IdenNo = &value
 	}
-	if value, ok := osc.mutation.WorkerNo(); ok {
+	if value, ok := _c.mutation.WorkerNo(); ok {
 		_spec.SetField(orgstaff.FieldWorkerNo, field.TypeString, value)
 		_node.WorkerNo = &value
 	}
-	if value, ok := osc.mutation.Cubicle(); ok {
+	if value, ok := _c.mutation.Cubicle(); ok {
 		_spec.SetField(orgstaff.FieldCubicle, field.TypeString, value)
 		_node.Cubicle = &value
 	}
-	if value, ok := osc.mutation.Rank(); ok {
+	if value, ok := _c.mutation.Rank(); ok {
 		_spec.SetField(orgstaff.FieldRank, field.TypeString, value)
 		_node.Rank = &value
 	}
-	if value, ok := osc.mutation.EntryDate(); ok {
+	if value, ok := _c.mutation.EntryDate(); ok {
 		_spec.SetField(orgstaff.FieldEntryDate, field.TypeTime, value)
 		_node.EntryDate = &value
 	}
-	if value, ok := osc.mutation.RegularDate(); ok {
+	if value, ok := _c.mutation.RegularDate(); ok {
 		_spec.SetField(orgstaff.FieldRegularDate, field.TypeTime, value)
 		_node.RegularDate = &value
 	}
-	if value, ok := osc.mutation.ResignDate(); ok {
+	if value, ok := _c.mutation.ResignDate(); ok {
 		_spec.SetField(orgstaff.FieldResignDate, field.TypeTime, value)
 		_node.ResignDate = &value
 	}
-	if value, ok := osc.mutation.EmpyStat(); ok {
+	if value, ok := _c.mutation.EmpyStat(); ok {
 		_spec.SetField(orgstaff.FieldEmpyStat, field.TypeInt32, value)
 		_node.EmpyStat = value
 	}
-	if value, ok := osc.mutation.EmpystDictID(); ok {
+	if value, ok := _c.mutation.EmpystDictID(); ok {
 		_spec.SetField(orgstaff.FieldEmpystDictID, field.TypeString, value)
 		_node.EmpystDictID = &value
 	}
-	if nodes := osc.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -757,7 +757,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_node.OrgID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := osc.mutation.IdenAddrIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.IdenAddrIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -774,7 +774,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_node.IdenAddrID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := osc.mutation.ResiAddrIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ResiAddrIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: true,
@@ -791,7 +791,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_node.ResiAddrID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := osc.mutation.DeptIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.DeptIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -808,7 +808,7 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 		_node.DeptID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := osc.mutation.PosiIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.PosiIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -844,10 +844,10 @@ func (osc *OrgStaffCreate) createSpec() (*OrgStaff, *sqlgraph.CreateSpec) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (osc *OrgStaffCreate) OnConflict(opts ...sql.ConflictOption) *OrgStaffUpsertOne {
-	osc.conflict = opts
+func (_c *OrgStaffCreate) OnConflict(opts ...sql.ConflictOption) *OrgStaffUpsertOne {
+	_c.conflict = opts
 	return &OrgStaffUpsertOne{
-		create: osc,
+		create: _c,
 	}
 }
 
@@ -857,10 +857,10 @@ func (osc *OrgStaffCreate) OnConflict(opts ...sql.ConflictOption) *OrgStaffUpser
 //	client.OrgStaff.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (osc *OrgStaffCreate) OnConflictColumns(columns ...string) *OrgStaffUpsertOne {
-	osc.conflict = append(osc.conflict, sql.ConflictColumns(columns...))
+func (_c *OrgStaffCreate) OnConflictColumns(columns ...string) *OrgStaffUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrgStaffUpsertOne{
-		create: osc,
+		create: _c,
 	}
 }
 
@@ -1976,16 +1976,16 @@ type OrgStaffCreateBulk struct {
 }
 
 // Save creates the OrgStaff entities in the database.
-func (oscb *OrgStaffCreateBulk) Save(ctx context.Context) ([]*OrgStaff, error) {
-	if oscb.err != nil {
-		return nil, oscb.err
+func (_c *OrgStaffCreateBulk) Save(ctx context.Context) ([]*OrgStaff, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(oscb.builders))
-	nodes := make([]*OrgStaff, len(oscb.builders))
-	mutators := make([]Mutator, len(oscb.builders))
-	for i := range oscb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*OrgStaff, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := oscb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*OrgStaffMutation)
@@ -1999,12 +1999,12 @@ func (oscb *OrgStaffCreateBulk) Save(ctx context.Context) ([]*OrgStaff, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, oscb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = oscb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, oscb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -2024,7 +2024,7 @@ func (oscb *OrgStaffCreateBulk) Save(ctx context.Context) ([]*OrgStaff, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, oscb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -2032,8 +2032,8 @@ func (oscb *OrgStaffCreateBulk) Save(ctx context.Context) ([]*OrgStaff, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (oscb *OrgStaffCreateBulk) SaveX(ctx context.Context) []*OrgStaff {
-	v, err := oscb.Save(ctx)
+func (_c *OrgStaffCreateBulk) SaveX(ctx context.Context) []*OrgStaff {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -2041,14 +2041,14 @@ func (oscb *OrgStaffCreateBulk) SaveX(ctx context.Context) []*OrgStaff {
 }
 
 // Exec executes the query.
-func (oscb *OrgStaffCreateBulk) Exec(ctx context.Context) error {
-	_, err := oscb.Save(ctx)
+func (_c *OrgStaffCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oscb *OrgStaffCreateBulk) ExecX(ctx context.Context) {
-	if err := oscb.Exec(ctx); err != nil {
+func (_c *OrgStaffCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -2068,10 +2068,10 @@ func (oscb *OrgStaffCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (oscb *OrgStaffCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrgStaffUpsertBulk {
-	oscb.conflict = opts
+func (_c *OrgStaffCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrgStaffUpsertBulk {
+	_c.conflict = opts
 	return &OrgStaffUpsertBulk{
-		create: oscb,
+		create: _c,
 	}
 }
 
@@ -2081,10 +2081,10 @@ func (oscb *OrgStaffCreateBulk) OnConflict(opts ...sql.ConflictOption) *OrgStaff
 //	client.OrgStaff.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (oscb *OrgStaffCreateBulk) OnConflictColumns(columns ...string) *OrgStaffUpsertBulk {
-	oscb.conflict = append(oscb.conflict, sql.ConflictColumns(columns...))
+func (_c *OrgStaffCreateBulk) OnConflictColumns(columns ...string) *OrgStaffUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &OrgStaffUpsertBulk{
-		create: oscb,
+		create: _c,
 	}
 }
 

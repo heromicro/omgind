@@ -175,7 +175,7 @@ func (*OrgStaff) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the OrgStaff fields.
-func (os *OrgStaff) assignValues(columns []string, values []any) error {
+func (_m *OrgStaff) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -185,195 +185,195 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				os.ID = value.String
+				_m.ID = value.String
 			}
 		case orgstaff.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				os.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case orgstaff.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				os.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case orgstaff.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				os.CreatedAt = new(time.Time)
-				*os.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case orgstaff.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				os.UpdatedAt = new(time.Time)
-				*os.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case orgstaff.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				os.DeletedAt = new(time.Time)
-				*os.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case orgstaff.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				os.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case orgstaff.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				os.Memo = new(string)
-				*os.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case orgstaff.FieldFirstName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field first_name", values[i])
 			} else if value.Valid {
-				os.FirstName = new(string)
-				*os.FirstName = value.String
+				_m.FirstName = new(string)
+				*_m.FirstName = value.String
 			}
 		case orgstaff.FieldLastName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field last_name", values[i])
 			} else if value.Valid {
-				os.LastName = new(string)
-				*os.LastName = value.String
+				_m.LastName = new(string)
+				*_m.LastName = value.String
 			}
 		case orgstaff.FieldMobile:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field mobile", values[i])
 			} else if value.Valid {
-				os.Mobile = new(string)
-				*os.Mobile = value.String
+				_m.Mobile = new(string)
+				*_m.Mobile = value.String
 			}
 		case orgstaff.FieldGender:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field gender", values[i])
 			} else if value.Valid {
-				os.Gender = new(int32)
-				*os.Gender = int32(value.Int64)
+				_m.Gender = new(int32)
+				*_m.Gender = int32(value.Int64)
 			}
 		case orgstaff.FieldGenderDictID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field gender_dict_id", values[i])
 			} else if value.Valid {
-				os.GenderDictID = new(string)
-				*os.GenderDictID = value.String
+				_m.GenderDictID = new(string)
+				*_m.GenderDictID = value.String
 			}
 		case orgstaff.FieldBirthDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field birth_date", values[i])
 			} else if value.Valid {
-				os.BirthDate = new(time.Time)
-				*os.BirthDate = value.Time
+				_m.BirthDate = new(time.Time)
+				*_m.BirthDate = value.Time
 			}
 		case orgstaff.FieldIdenNo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field iden_no", values[i])
 			} else if value.Valid {
-				os.IdenNo = new(string)
-				*os.IdenNo = value.String
+				_m.IdenNo = new(string)
+				*_m.IdenNo = value.String
 			}
 		case orgstaff.FieldIdenAddrID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field iden_addr_id", values[i])
 			} else if value.Valid {
-				os.IdenAddrID = new(string)
-				*os.IdenAddrID = value.String
+				_m.IdenAddrID = new(string)
+				*_m.IdenAddrID = value.String
 			}
 		case orgstaff.FieldResiAddrID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field resi_addr_id", values[i])
 			} else if value.Valid {
-				os.ResiAddrID = new(string)
-				*os.ResiAddrID = value.String
+				_m.ResiAddrID = new(string)
+				*_m.ResiAddrID = value.String
 			}
 		case orgstaff.FieldWorkerNo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field worker_no", values[i])
 			} else if value.Valid {
-				os.WorkerNo = new(string)
-				*os.WorkerNo = value.String
+				_m.WorkerNo = new(string)
+				*_m.WorkerNo = value.String
 			}
 		case orgstaff.FieldCubicle:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field cubicle", values[i])
 			} else if value.Valid {
-				os.Cubicle = new(string)
-				*os.Cubicle = value.String
+				_m.Cubicle = new(string)
+				*_m.Cubicle = value.String
 			}
 		case orgstaff.FieldRank:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field rank", values[i])
 			} else if value.Valid {
-				os.Rank = new(string)
-				*os.Rank = value.String
+				_m.Rank = new(string)
+				*_m.Rank = value.String
 			}
 		case orgstaff.FieldEntryDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field entry_date", values[i])
 			} else if value.Valid {
-				os.EntryDate = new(time.Time)
-				*os.EntryDate = value.Time
+				_m.EntryDate = new(time.Time)
+				*_m.EntryDate = value.Time
 			}
 		case orgstaff.FieldRegularDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field regular_date", values[i])
 			} else if value.Valid {
-				os.RegularDate = new(time.Time)
-				*os.RegularDate = value.Time
+				_m.RegularDate = new(time.Time)
+				*_m.RegularDate = value.Time
 			}
 		case orgstaff.FieldResignDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field resign_date", values[i])
 			} else if value.Valid {
-				os.ResignDate = new(time.Time)
-				*os.ResignDate = value.Time
+				_m.ResignDate = new(time.Time)
+				*_m.ResignDate = value.Time
 			}
 		case orgstaff.FieldOrgID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field org_id", values[i])
 			} else if value.Valid {
-				os.OrgID = new(string)
-				*os.OrgID = value.String
+				_m.OrgID = new(string)
+				*_m.OrgID = value.String
 			}
 		case orgstaff.FieldEmpyStat:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field empy_stat", values[i])
 			} else if value.Valid {
-				os.EmpyStat = int32(value.Int64)
+				_m.EmpyStat = int32(value.Int64)
 			}
 		case orgstaff.FieldEmpystDictID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field empyst_dict_id", values[i])
 			} else if value.Valid {
-				os.EmpystDictID = new(string)
-				*os.EmpystDictID = value.String
+				_m.EmpystDictID = new(string)
+				*_m.EmpystDictID = value.String
 			}
 		case orgstaff.FieldDeptID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field dept_id", values[i])
 			} else if value.Valid {
-				os.DeptID = new(string)
-				*os.DeptID = value.String
+				_m.DeptID = new(string)
+				*_m.DeptID = value.String
 			}
 		case orgstaff.FieldPosiID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field posi_id", values[i])
 			} else if value.Valid {
-				os.PosiID = new(string)
-				*os.PosiID = value.String
+				_m.PosiID = new(string)
+				*_m.PosiID = value.String
 			}
 		default:
-			os.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -381,181 +381,181 @@ func (os *OrgStaff) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the OrgStaff.
 // This includes values selected through modifiers, order, etc.
-func (os *OrgStaff) Value(name string) (ent.Value, error) {
-	return os.selectValues.Get(name)
+func (_m *OrgStaff) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryOrgan queries the "organ" edge of the OrgStaff entity.
-func (os *OrgStaff) QueryOrgan() *OrgOrganQuery {
-	return NewOrgStaffClient(os.config).QueryOrgan(os)
+func (_m *OrgStaff) QueryOrgan() *OrgOrganQuery {
+	return NewOrgStaffClient(_m.config).QueryOrgan(_m)
 }
 
 // QueryIdenAddr queries the "iden_addr" edge of the OrgStaff entity.
-func (os *OrgStaff) QueryIdenAddr() *SysAddressQuery {
-	return NewOrgStaffClient(os.config).QueryIdenAddr(os)
+func (_m *OrgStaff) QueryIdenAddr() *SysAddressQuery {
+	return NewOrgStaffClient(_m.config).QueryIdenAddr(_m)
 }
 
 // QueryResiAddr queries the "resi_addr" edge of the OrgStaff entity.
-func (os *OrgStaff) QueryResiAddr() *SysAddressQuery {
-	return NewOrgStaffClient(os.config).QueryResiAddr(os)
+func (_m *OrgStaff) QueryResiAddr() *SysAddressQuery {
+	return NewOrgStaffClient(_m.config).QueryResiAddr(_m)
 }
 
 // QueryDept queries the "dept" edge of the OrgStaff entity.
-func (os *OrgStaff) QueryDept() *OrgDeptQuery {
-	return NewOrgStaffClient(os.config).QueryDept(os)
+func (_m *OrgStaff) QueryDept() *OrgDeptQuery {
+	return NewOrgStaffClient(_m.config).QueryDept(_m)
 }
 
 // QueryPosi queries the "posi" edge of the OrgStaff entity.
-func (os *OrgStaff) QueryPosi() *OrgPositionQuery {
-	return NewOrgStaffClient(os.config).QueryPosi(os)
+func (_m *OrgStaff) QueryPosi() *OrgPositionQuery {
+	return NewOrgStaffClient(_m.config).QueryPosi(_m)
 }
 
 // Update returns a builder for updating this OrgStaff.
 // Note that you need to call OrgStaff.Unwrap() before calling this method if this OrgStaff
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (os *OrgStaff) Update() *OrgStaffUpdateOne {
-	return NewOrgStaffClient(os.config).UpdateOne(os)
+func (_m *OrgStaff) Update() *OrgStaffUpdateOne {
+	return NewOrgStaffClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the OrgStaff entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (os *OrgStaff) Unwrap() *OrgStaff {
-	_tx, ok := os.config.driver.(*txDriver)
+func (_m *OrgStaff) Unwrap() *OrgStaff {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: OrgStaff is not a transactional entity")
 	}
-	os.config.driver = _tx.drv
-	return os
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (os *OrgStaff) String() string {
+func (_m *OrgStaff) String() string {
 	var builder strings.Builder
 	builder.WriteString("OrgStaff(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", os.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", os.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", os.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := os.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := os.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := os.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", os.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
-	if v := os.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.FirstName; v != nil {
+	if v := _m.FirstName; v != nil {
 		builder.WriteString("first_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.LastName; v != nil {
+	if v := _m.LastName; v != nil {
 		builder.WriteString("last_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.Mobile; v != nil {
+	if v := _m.Mobile; v != nil {
 		builder.WriteString("mobile=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.Gender; v != nil {
+	if v := _m.Gender; v != nil {
 		builder.WriteString("gender=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
 	builder.WriteString(", ")
-	if v := os.GenderDictID; v != nil {
+	if v := _m.GenderDictID; v != nil {
 		builder.WriteString("gender_dict_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.BirthDate; v != nil {
+	if v := _m.BirthDate; v != nil {
 		builder.WriteString("birth_date=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := os.IdenNo; v != nil {
+	if v := _m.IdenNo; v != nil {
 		builder.WriteString("iden_no=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.IdenAddrID; v != nil {
+	if v := _m.IdenAddrID; v != nil {
 		builder.WriteString("iden_addr_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.ResiAddrID; v != nil {
+	if v := _m.ResiAddrID; v != nil {
 		builder.WriteString("resi_addr_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.WorkerNo; v != nil {
+	if v := _m.WorkerNo; v != nil {
 		builder.WriteString("worker_no=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.Cubicle; v != nil {
+	if v := _m.Cubicle; v != nil {
 		builder.WriteString("cubicle=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.Rank; v != nil {
+	if v := _m.Rank; v != nil {
 		builder.WriteString("rank=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.EntryDate; v != nil {
+	if v := _m.EntryDate; v != nil {
 		builder.WriteString("entry_date=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := os.RegularDate; v != nil {
+	if v := _m.RegularDate; v != nil {
 		builder.WriteString("regular_date=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := os.ResignDate; v != nil {
+	if v := _m.ResignDate; v != nil {
 		builder.WriteString("resign_date=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := os.OrgID; v != nil {
+	if v := _m.OrgID; v != nil {
 		builder.WriteString("org_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	builder.WriteString("empy_stat=")
-	builder.WriteString(fmt.Sprintf("%v", os.EmpyStat))
+	builder.WriteString(fmt.Sprintf("%v", _m.EmpyStat))
 	builder.WriteString(", ")
-	if v := os.EmpystDictID; v != nil {
+	if v := _m.EmpystDictID; v != nil {
 		builder.WriteString("empyst_dict_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.DeptID; v != nil {
+	if v := _m.DeptID; v != nil {
 		builder.WriteString("dept_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := os.PosiID; v != nil {
+	if v := _m.PosiID; v != nil {
 		builder.WriteString("posi_id=")
 		builder.WriteString(*v)
 	}

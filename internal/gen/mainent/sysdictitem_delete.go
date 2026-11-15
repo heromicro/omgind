@@ -20,56 +20,56 @@ type SysDictItemDelete struct {
 }
 
 // Where appends a list predicates to the SysDictItemDelete builder.
-func (sdid *SysDictItemDelete) Where(ps ...predicate.SysDictItem) *SysDictItemDelete {
-	sdid.mutation.Where(ps...)
-	return sdid
+func (_d *SysDictItemDelete) Where(ps ...predicate.SysDictItem) *SysDictItemDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (sdid *SysDictItemDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, sdid.sqlExec, sdid.mutation, sdid.hooks)
+func (_d *SysDictItemDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdid *SysDictItemDelete) ExecX(ctx context.Context) int {
-	n, err := sdid.Exec(ctx)
+func (_d *SysDictItemDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (sdid *SysDictItemDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysDictItemDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysdictitem.Table, sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString))
-	if ps := sdid.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, sdid.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	sdid.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysDictItemDeleteOne is the builder for deleting a single SysDictItem entity.
 type SysDictItemDeleteOne struct {
-	sdid *SysDictItemDelete
+	_d *SysDictItemDelete
 }
 
 // Where appends a list predicates to the SysDictItemDelete builder.
-func (sdido *SysDictItemDeleteOne) Where(ps ...predicate.SysDictItem) *SysDictItemDeleteOne {
-	sdido.sdid.mutation.Where(ps...)
-	return sdido
+func (_d *SysDictItemDeleteOne) Where(ps ...predicate.SysDictItem) *SysDictItemDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (sdido *SysDictItemDeleteOne) Exec(ctx context.Context) error {
-	n, err := sdido.sdid.Exec(ctx)
+func (_d *SysDictItemDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (sdido *SysDictItemDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdido *SysDictItemDeleteOne) ExecX(ctx context.Context) {
-	if err := sdido.Exec(ctx); err != nil {
+func (_d *SysDictItemDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

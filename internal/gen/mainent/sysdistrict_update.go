@@ -24,735 +24,735 @@ type SysDistrictUpdate struct {
 }
 
 // Where appends a list predicates to the SysDistrictUpdate builder.
-func (sdu *SysDistrictUpdate) Where(ps ...predicate.SysDistrict) *SysDistrictUpdate {
-	sdu.mutation.Where(ps...)
-	return sdu
+func (_u *SysDistrictUpdate) Where(ps ...predicate.SysDistrict) *SysDistrictUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (sdu *SysDistrictUpdate) SetIsDel(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsDel(b)
-	return sdu
+func (_u *SysDistrictUpdate) SetIsDel(v bool) *SysDistrictUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsDel(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsDel(*b)
+func (_u *SysDistrictUpdate) SetNillableIsDel(v *bool) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sdu
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sdu *SysDistrictUpdate) SetSort(i int32) *SysDistrictUpdate {
-	sdu.mutation.ResetSort()
-	sdu.mutation.SetSort(i)
-	return sdu
+func (_u *SysDistrictUpdate) SetSort(v int32) *SysDistrictUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableSort(i *int32) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetSort(*i)
+func (_u *SysDistrictUpdate) SetNillableSort(v *int32) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sdu
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sdu *SysDistrictUpdate) AddSort(i int32) *SysDistrictUpdate {
-	sdu.mutation.AddSort(i)
-	return sdu
+// AddSort adds value to the "sort" field.
+func (_u *SysDistrictUpdate) AddSort(v int32) *SysDistrictUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sdu *SysDistrictUpdate) SetUpdatedAt(t time.Time) *SysDistrictUpdate {
-	sdu.mutation.SetUpdatedAt(t)
-	return sdu
+func (_u *SysDistrictUpdate) SetUpdatedAt(v time.Time) *SysDistrictUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sdu *SysDistrictUpdate) ClearUpdatedAt() *SysDistrictUpdate {
-	sdu.mutation.ClearUpdatedAt()
-	return sdu
+func (_u *SysDistrictUpdate) ClearUpdatedAt() *SysDistrictUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sdu *SysDistrictUpdate) SetDeletedAt(t time.Time) *SysDistrictUpdate {
-	sdu.mutation.SetDeletedAt(t)
-	return sdu
+func (_u *SysDistrictUpdate) SetDeletedAt(v time.Time) *SysDistrictUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableDeletedAt(t *time.Time) *SysDistrictUpdate {
-	if t != nil {
-		sdu.SetDeletedAt(*t)
+func (_u *SysDistrictUpdate) SetNillableDeletedAt(v *time.Time) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sdu *SysDistrictUpdate) ClearDeletedAt() *SysDistrictUpdate {
-	sdu.mutation.ClearDeletedAt()
-	return sdu
+func (_u *SysDistrictUpdate) ClearDeletedAt() *SysDistrictUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sdu *SysDistrictUpdate) SetIsActive(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsActive(b)
-	return sdu
+func (_u *SysDistrictUpdate) SetIsActive(v bool) *SysDistrictUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsActive(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsActive(*b)
+func (_u *SysDistrictUpdate) SetNillableIsActive(v *bool) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sdu
+	return _u
 }
 
 // SetTreeID sets the "tree_id" field.
-func (sdu *SysDistrictUpdate) SetTreeID(i int64) *SysDistrictUpdate {
-	sdu.mutation.ResetTreeID()
-	sdu.mutation.SetTreeID(i)
-	return sdu
+func (_u *SysDistrictUpdate) SetTreeID(v int64) *SysDistrictUpdate {
+	_u.mutation.ResetTreeID()
+	_u.mutation.SetTreeID(v)
+	return _u
 }
 
 // SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeID(i *int64) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetTreeID(*i)
+func (_u *SysDistrictUpdate) SetNillableTreeID(v *int64) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetTreeID(*v)
 	}
-	return sdu
+	return _u
 }
 
-// AddTreeID adds i to the "tree_id" field.
-func (sdu *SysDistrictUpdate) AddTreeID(i int64) *SysDistrictUpdate {
-	sdu.mutation.AddTreeID(i)
-	return sdu
+// AddTreeID adds value to the "tree_id" field.
+func (_u *SysDistrictUpdate) AddTreeID(v int64) *SysDistrictUpdate {
+	_u.mutation.AddTreeID(v)
+	return _u
 }
 
 // ClearTreeID clears the value of the "tree_id" field.
-func (sdu *SysDistrictUpdate) ClearTreeID() *SysDistrictUpdate {
-	sdu.mutation.ClearTreeID()
-	return sdu
+func (_u *SysDistrictUpdate) ClearTreeID() *SysDistrictUpdate {
+	_u.mutation.ClearTreeID()
+	return _u
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (sdu *SysDistrictUpdate) SetTreeLevel(i int32) *SysDistrictUpdate {
-	sdu.mutation.ResetTreeLevel()
-	sdu.mutation.SetTreeLevel(i)
-	return sdu
+func (_u *SysDistrictUpdate) SetTreeLevel(v int32) *SysDistrictUpdate {
+	_u.mutation.ResetTreeLevel()
+	_u.mutation.SetTreeLevel(v)
+	return _u
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeLevel(i *int32) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetTreeLevel(*i)
+func (_u *SysDistrictUpdate) SetNillableTreeLevel(v *int32) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetTreeLevel(*v)
 	}
-	return sdu
+	return _u
 }
 
-// AddTreeLevel adds i to the "tree_level" field.
-func (sdu *SysDistrictUpdate) AddTreeLevel(i int32) *SysDistrictUpdate {
-	sdu.mutation.AddTreeLevel(i)
-	return sdu
+// AddTreeLevel adds value to the "tree_level" field.
+func (_u *SysDistrictUpdate) AddTreeLevel(v int32) *SysDistrictUpdate {
+	_u.mutation.AddTreeLevel(v)
+	return _u
 }
 
 // ClearTreeLevel clears the value of the "tree_level" field.
-func (sdu *SysDistrictUpdate) ClearTreeLevel() *SysDistrictUpdate {
-	sdu.mutation.ClearTreeLevel()
-	return sdu
+func (_u *SysDistrictUpdate) ClearTreeLevel() *SysDistrictUpdate {
+	_u.mutation.ClearTreeLevel()
+	return _u
 }
 
 // SetTreeLeft sets the "tree_left" field.
-func (sdu *SysDistrictUpdate) SetTreeLeft(i int64) *SysDistrictUpdate {
-	sdu.mutation.ResetTreeLeft()
-	sdu.mutation.SetTreeLeft(i)
-	return sdu
+func (_u *SysDistrictUpdate) SetTreeLeft(v int64) *SysDistrictUpdate {
+	_u.mutation.ResetTreeLeft()
+	_u.mutation.SetTreeLeft(v)
+	return _u
 }
 
 // SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeLeft(i *int64) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetTreeLeft(*i)
+func (_u *SysDistrictUpdate) SetNillableTreeLeft(v *int64) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetTreeLeft(*v)
 	}
-	return sdu
+	return _u
 }
 
-// AddTreeLeft adds i to the "tree_left" field.
-func (sdu *SysDistrictUpdate) AddTreeLeft(i int64) *SysDistrictUpdate {
-	sdu.mutation.AddTreeLeft(i)
-	return sdu
+// AddTreeLeft adds value to the "tree_left" field.
+func (_u *SysDistrictUpdate) AddTreeLeft(v int64) *SysDistrictUpdate {
+	_u.mutation.AddTreeLeft(v)
+	return _u
 }
 
 // ClearTreeLeft clears the value of the "tree_left" field.
-func (sdu *SysDistrictUpdate) ClearTreeLeft() *SysDistrictUpdate {
-	sdu.mutation.ClearTreeLeft()
-	return sdu
+func (_u *SysDistrictUpdate) ClearTreeLeft() *SysDistrictUpdate {
+	_u.mutation.ClearTreeLeft()
+	return _u
 }
 
 // SetTreeRight sets the "tree_right" field.
-func (sdu *SysDistrictUpdate) SetTreeRight(i int64) *SysDistrictUpdate {
-	sdu.mutation.ResetTreeRight()
-	sdu.mutation.SetTreeRight(i)
-	return sdu
+func (_u *SysDistrictUpdate) SetTreeRight(v int64) *SysDistrictUpdate {
+	_u.mutation.ResetTreeRight()
+	_u.mutation.SetTreeRight(v)
+	return _u
 }
 
 // SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreeRight(i *int64) *SysDistrictUpdate {
-	if i != nil {
-		sdu.SetTreeRight(*i)
+func (_u *SysDistrictUpdate) SetNillableTreeRight(v *int64) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetTreeRight(*v)
 	}
-	return sdu
+	return _u
 }
 
-// AddTreeRight adds i to the "tree_right" field.
-func (sdu *SysDistrictUpdate) AddTreeRight(i int64) *SysDistrictUpdate {
-	sdu.mutation.AddTreeRight(i)
-	return sdu
+// AddTreeRight adds value to the "tree_right" field.
+func (_u *SysDistrictUpdate) AddTreeRight(v int64) *SysDistrictUpdate {
+	_u.mutation.AddTreeRight(v)
+	return _u
 }
 
 // ClearTreeRight clears the value of the "tree_right" field.
-func (sdu *SysDistrictUpdate) ClearTreeRight() *SysDistrictUpdate {
-	sdu.mutation.ClearTreeRight()
-	return sdu
+func (_u *SysDistrictUpdate) ClearTreeRight() *SysDistrictUpdate {
+	_u.mutation.ClearTreeRight()
+	return _u
 }
 
 // SetIsLeaf sets the "is_leaf" field.
-func (sdu *SysDistrictUpdate) SetIsLeaf(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsLeaf(b)
-	return sdu
+func (_u *SysDistrictUpdate) SetIsLeaf(v bool) *SysDistrictUpdate {
+	_u.mutation.SetIsLeaf(v)
+	return _u
 }
 
 // SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsLeaf(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsLeaf(*b)
+func (_u *SysDistrictUpdate) SetNillableIsLeaf(v *bool) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetIsLeaf(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearIsLeaf clears the value of the "is_leaf" field.
-func (sdu *SysDistrictUpdate) ClearIsLeaf() *SysDistrictUpdate {
-	sdu.mutation.ClearIsLeaf()
-	return sdu
+func (_u *SysDistrictUpdate) ClearIsLeaf() *SysDistrictUpdate {
+	_u.mutation.ClearIsLeaf()
+	return _u
 }
 
 // SetTreePath sets the "tree_path" field.
-func (sdu *SysDistrictUpdate) SetTreePath(s string) *SysDistrictUpdate {
-	sdu.mutation.SetTreePath(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetTreePath(v string) *SysDistrictUpdate {
+	_u.mutation.SetTreePath(v)
+	return _u
 }
 
 // SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableTreePath(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetTreePath(*s)
+func (_u *SysDistrictUpdate) SetNillableTreePath(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetTreePath(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearTreePath clears the value of the "tree_path" field.
-func (sdu *SysDistrictUpdate) ClearTreePath() *SysDistrictUpdate {
-	sdu.mutation.ClearTreePath()
-	return sdu
+func (_u *SysDistrictUpdate) ClearTreePath() *SysDistrictUpdate {
+	_u.mutation.ClearTreePath()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (sdu *SysDistrictUpdate) SetName(s string) *SysDistrictUpdate {
-	sdu.mutation.SetName(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetName(v string) *SysDistrictUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableName(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetName(*s)
+func (_u *SysDistrictUpdate) SetNillableName(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (sdu *SysDistrictUpdate) ClearName() *SysDistrictUpdate {
-	sdu.mutation.ClearName()
-	return sdu
+func (_u *SysDistrictUpdate) ClearName() *SysDistrictUpdate {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetNameEn sets the "name_en" field.
-func (sdu *SysDistrictUpdate) SetNameEn(s string) *SysDistrictUpdate {
-	sdu.mutation.SetNameEn(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetNameEn(v string) *SysDistrictUpdate {
+	_u.mutation.SetNameEn(v)
+	return _u
 }
 
 // SetNillableNameEn sets the "name_en" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableNameEn(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetNameEn(*s)
+func (_u *SysDistrictUpdate) SetNillableNameEn(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetNameEn(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearNameEn clears the value of the "name_en" field.
-func (sdu *SysDistrictUpdate) ClearNameEn() *SysDistrictUpdate {
-	sdu.mutation.ClearNameEn()
-	return sdu
+func (_u *SysDistrictUpdate) ClearNameEn() *SysDistrictUpdate {
+	_u.mutation.ClearNameEn()
+	return _u
 }
 
 // SetSname sets the "sname" field.
-func (sdu *SysDistrictUpdate) SetSname(s string) *SysDistrictUpdate {
-	sdu.mutation.SetSname(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetSname(v string) *SysDistrictUpdate {
+	_u.mutation.SetSname(v)
+	return _u
 }
 
 // SetNillableSname sets the "sname" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableSname(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetSname(*s)
+func (_u *SysDistrictUpdate) SetNillableSname(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetSname(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearSname clears the value of the "sname" field.
-func (sdu *SysDistrictUpdate) ClearSname() *SysDistrictUpdate {
-	sdu.mutation.ClearSname()
-	return sdu
+func (_u *SysDistrictUpdate) ClearSname() *SysDistrictUpdate {
+	_u.mutation.ClearSname()
+	return _u
 }
 
 // SetSnameEn sets the "sname_en" field.
-func (sdu *SysDistrictUpdate) SetSnameEn(s string) *SysDistrictUpdate {
-	sdu.mutation.SetSnameEn(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetSnameEn(v string) *SysDistrictUpdate {
+	_u.mutation.SetSnameEn(v)
+	return _u
 }
 
 // SetNillableSnameEn sets the "sname_en" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableSnameEn(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetSnameEn(*s)
+func (_u *SysDistrictUpdate) SetNillableSnameEn(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetSnameEn(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearSnameEn clears the value of the "sname_en" field.
-func (sdu *SysDistrictUpdate) ClearSnameEn() *SysDistrictUpdate {
-	sdu.mutation.ClearSnameEn()
-	return sdu
+func (_u *SysDistrictUpdate) ClearSnameEn() *SysDistrictUpdate {
+	_u.mutation.ClearSnameEn()
+	return _u
 }
 
 // SetAbbr sets the "abbr" field.
-func (sdu *SysDistrictUpdate) SetAbbr(s string) *SysDistrictUpdate {
-	sdu.mutation.SetAbbr(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetAbbr(v string) *SysDistrictUpdate {
+	_u.mutation.SetAbbr(v)
+	return _u
 }
 
 // SetNillableAbbr sets the "abbr" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableAbbr(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetAbbr(*s)
+func (_u *SysDistrictUpdate) SetNillableAbbr(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetAbbr(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearAbbr clears the value of the "abbr" field.
-func (sdu *SysDistrictUpdate) ClearAbbr() *SysDistrictUpdate {
-	sdu.mutation.ClearAbbr()
-	return sdu
+func (_u *SysDistrictUpdate) ClearAbbr() *SysDistrictUpdate {
+	_u.mutation.ClearAbbr()
+	return _u
 }
 
 // SetStCode sets the "st_code" field.
-func (sdu *SysDistrictUpdate) SetStCode(s string) *SysDistrictUpdate {
-	sdu.mutation.SetStCode(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetStCode(v string) *SysDistrictUpdate {
+	_u.mutation.SetStCode(v)
+	return _u
 }
 
 // SetNillableStCode sets the "st_code" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableStCode(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetStCode(*s)
+func (_u *SysDistrictUpdate) SetNillableStCode(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetStCode(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearStCode clears the value of the "st_code" field.
-func (sdu *SysDistrictUpdate) ClearStCode() *SysDistrictUpdate {
-	sdu.mutation.ClearStCode()
-	return sdu
+func (_u *SysDistrictUpdate) ClearStCode() *SysDistrictUpdate {
+	_u.mutation.ClearStCode()
+	return _u
 }
 
 // SetInitials sets the "initials" field.
-func (sdu *SysDistrictUpdate) SetInitials(s string) *SysDistrictUpdate {
-	sdu.mutation.SetInitials(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetInitials(v string) *SysDistrictUpdate {
+	_u.mutation.SetInitials(v)
+	return _u
 }
 
 // SetNillableInitials sets the "initials" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableInitials(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetInitials(*s)
+func (_u *SysDistrictUpdate) SetNillableInitials(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetInitials(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearInitials clears the value of the "initials" field.
-func (sdu *SysDistrictUpdate) ClearInitials() *SysDistrictUpdate {
-	sdu.mutation.ClearInitials()
-	return sdu
+func (_u *SysDistrictUpdate) ClearInitials() *SysDistrictUpdate {
+	_u.mutation.ClearInitials()
+	return _u
 }
 
 // SetPinyin sets the "pinyin" field.
-func (sdu *SysDistrictUpdate) SetPinyin(s string) *SysDistrictUpdate {
-	sdu.mutation.SetPinyin(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetPinyin(v string) *SysDistrictUpdate {
+	_u.mutation.SetPinyin(v)
+	return _u
 }
 
 // SetNillablePinyin sets the "pinyin" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillablePinyin(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetPinyin(*s)
+func (_u *SysDistrictUpdate) SetNillablePinyin(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetPinyin(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearPinyin clears the value of the "pinyin" field.
-func (sdu *SysDistrictUpdate) ClearPinyin() *SysDistrictUpdate {
-	sdu.mutation.ClearPinyin()
-	return sdu
+func (_u *SysDistrictUpdate) ClearPinyin() *SysDistrictUpdate {
+	_u.mutation.ClearPinyin()
+	return _u
 }
 
 // SetParentID sets the "parent_id" field.
-func (sdu *SysDistrictUpdate) SetParentID(s string) *SysDistrictUpdate {
-	sdu.mutation.SetParentID(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetParentID(v string) *SysDistrictUpdate {
+	_u.mutation.SetParentID(v)
+	return _u
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableParentID(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetParentID(*s)
+func (_u *SysDistrictUpdate) SetNillableParentID(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetParentID(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearParentID clears the value of the "parent_id" field.
-func (sdu *SysDistrictUpdate) ClearParentID() *SysDistrictUpdate {
-	sdu.mutation.ClearParentID()
-	return sdu
+func (_u *SysDistrictUpdate) ClearParentID() *SysDistrictUpdate {
+	_u.mutation.ClearParentID()
+	return _u
 }
 
 // SetLongitude sets the "longitude" field.
-func (sdu *SysDistrictUpdate) SetLongitude(f float64) *SysDistrictUpdate {
-	sdu.mutation.ResetLongitude()
-	sdu.mutation.SetLongitude(f)
-	return sdu
+func (_u *SysDistrictUpdate) SetLongitude(v float64) *SysDistrictUpdate {
+	_u.mutation.ResetLongitude()
+	_u.mutation.SetLongitude(v)
+	return _u
 }
 
 // SetNillableLongitude sets the "longitude" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableLongitude(f *float64) *SysDistrictUpdate {
-	if f != nil {
-		sdu.SetLongitude(*f)
+func (_u *SysDistrictUpdate) SetNillableLongitude(v *float64) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetLongitude(*v)
 	}
-	return sdu
+	return _u
 }
 
-// AddLongitude adds f to the "longitude" field.
-func (sdu *SysDistrictUpdate) AddLongitude(f float64) *SysDistrictUpdate {
-	sdu.mutation.AddLongitude(f)
-	return sdu
+// AddLongitude adds value to the "longitude" field.
+func (_u *SysDistrictUpdate) AddLongitude(v float64) *SysDistrictUpdate {
+	_u.mutation.AddLongitude(v)
+	return _u
 }
 
 // ClearLongitude clears the value of the "longitude" field.
-func (sdu *SysDistrictUpdate) ClearLongitude() *SysDistrictUpdate {
-	sdu.mutation.ClearLongitude()
-	return sdu
+func (_u *SysDistrictUpdate) ClearLongitude() *SysDistrictUpdate {
+	_u.mutation.ClearLongitude()
+	return _u
 }
 
 // SetLatitude sets the "latitude" field.
-func (sdu *SysDistrictUpdate) SetLatitude(f float64) *SysDistrictUpdate {
-	sdu.mutation.ResetLatitude()
-	sdu.mutation.SetLatitude(f)
-	return sdu
+func (_u *SysDistrictUpdate) SetLatitude(v float64) *SysDistrictUpdate {
+	_u.mutation.ResetLatitude()
+	_u.mutation.SetLatitude(v)
+	return _u
 }
 
 // SetNillableLatitude sets the "latitude" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableLatitude(f *float64) *SysDistrictUpdate {
-	if f != nil {
-		sdu.SetLatitude(*f)
+func (_u *SysDistrictUpdate) SetNillableLatitude(v *float64) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetLatitude(*v)
 	}
-	return sdu
+	return _u
 }
 
-// AddLatitude adds f to the "latitude" field.
-func (sdu *SysDistrictUpdate) AddLatitude(f float64) *SysDistrictUpdate {
-	sdu.mutation.AddLatitude(f)
-	return sdu
+// AddLatitude adds value to the "latitude" field.
+func (_u *SysDistrictUpdate) AddLatitude(v float64) *SysDistrictUpdate {
+	_u.mutation.AddLatitude(v)
+	return _u
 }
 
 // ClearLatitude clears the value of the "latitude" field.
-func (sdu *SysDistrictUpdate) ClearLatitude() *SysDistrictUpdate {
-	sdu.mutation.ClearLatitude()
-	return sdu
+func (_u *SysDistrictUpdate) ClearLatitude() *SysDistrictUpdate {
+	_u.mutation.ClearLatitude()
+	return _u
 }
 
 // SetAreaCode sets the "area_code" field.
-func (sdu *SysDistrictUpdate) SetAreaCode(s string) *SysDistrictUpdate {
-	sdu.mutation.SetAreaCode(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetAreaCode(v string) *SysDistrictUpdate {
+	_u.mutation.SetAreaCode(v)
+	return _u
 }
 
 // SetNillableAreaCode sets the "area_code" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableAreaCode(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetAreaCode(*s)
+func (_u *SysDistrictUpdate) SetNillableAreaCode(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetAreaCode(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearAreaCode clears the value of the "area_code" field.
-func (sdu *SysDistrictUpdate) ClearAreaCode() *SysDistrictUpdate {
-	sdu.mutation.ClearAreaCode()
-	return sdu
+func (_u *SysDistrictUpdate) ClearAreaCode() *SysDistrictUpdate {
+	_u.mutation.ClearAreaCode()
+	return _u
 }
 
 // SetZipCode sets the "zip_code" field.
-func (sdu *SysDistrictUpdate) SetZipCode(s string) *SysDistrictUpdate {
-	sdu.mutation.SetZipCode(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetZipCode(v string) *SysDistrictUpdate {
+	_u.mutation.SetZipCode(v)
+	return _u
 }
 
 // SetNillableZipCode sets the "zip_code" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableZipCode(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetZipCode(*s)
+func (_u *SysDistrictUpdate) SetNillableZipCode(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetZipCode(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearZipCode clears the value of the "zip_code" field.
-func (sdu *SysDistrictUpdate) ClearZipCode() *SysDistrictUpdate {
-	sdu.mutation.ClearZipCode()
-	return sdu
+func (_u *SysDistrictUpdate) ClearZipCode() *SysDistrictUpdate {
+	_u.mutation.ClearZipCode()
+	return _u
 }
 
 // SetMergeName sets the "merge_name" field.
-func (sdu *SysDistrictUpdate) SetMergeName(s string) *SysDistrictUpdate {
-	sdu.mutation.SetMergeName(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetMergeName(v string) *SysDistrictUpdate {
+	_u.mutation.SetMergeName(v)
+	return _u
 }
 
 // SetNillableMergeName sets the "merge_name" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableMergeName(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetMergeName(*s)
+func (_u *SysDistrictUpdate) SetNillableMergeName(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetMergeName(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearMergeName clears the value of the "merge_name" field.
-func (sdu *SysDistrictUpdate) ClearMergeName() *SysDistrictUpdate {
-	sdu.mutation.ClearMergeName()
-	return sdu
+func (_u *SysDistrictUpdate) ClearMergeName() *SysDistrictUpdate {
+	_u.mutation.ClearMergeName()
+	return _u
 }
 
 // SetMergeSname sets the "merge_sname" field.
-func (sdu *SysDistrictUpdate) SetMergeSname(s string) *SysDistrictUpdate {
-	sdu.mutation.SetMergeSname(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetMergeSname(v string) *SysDistrictUpdate {
+	_u.mutation.SetMergeSname(v)
+	return _u
 }
 
 // SetNillableMergeSname sets the "merge_sname" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableMergeSname(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetMergeSname(*s)
+func (_u *SysDistrictUpdate) SetNillableMergeSname(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetMergeSname(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearMergeSname clears the value of the "merge_sname" field.
-func (sdu *SysDistrictUpdate) ClearMergeSname() *SysDistrictUpdate {
-	sdu.mutation.ClearMergeSname()
-	return sdu
+func (_u *SysDistrictUpdate) ClearMergeSname() *SysDistrictUpdate {
+	_u.mutation.ClearMergeSname()
+	return _u
 }
 
 // SetExtra sets the "extra" field.
-func (sdu *SysDistrictUpdate) SetExtra(s string) *SysDistrictUpdate {
-	sdu.mutation.SetExtra(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetExtra(v string) *SysDistrictUpdate {
+	_u.mutation.SetExtra(v)
+	return _u
 }
 
 // SetNillableExtra sets the "extra" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableExtra(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetExtra(*s)
+func (_u *SysDistrictUpdate) SetNillableExtra(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetExtra(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearExtra clears the value of the "extra" field.
-func (sdu *SysDistrictUpdate) ClearExtra() *SysDistrictUpdate {
-	sdu.mutation.ClearExtra()
-	return sdu
+func (_u *SysDistrictUpdate) ClearExtra() *SysDistrictUpdate {
+	_u.mutation.ClearExtra()
+	return _u
 }
 
 // SetSuffix sets the "suffix" field.
-func (sdu *SysDistrictUpdate) SetSuffix(s string) *SysDistrictUpdate {
-	sdu.mutation.SetSuffix(s)
-	return sdu
+func (_u *SysDistrictUpdate) SetSuffix(v string) *SysDistrictUpdate {
+	_u.mutation.SetSuffix(v)
+	return _u
 }
 
 // SetNillableSuffix sets the "suffix" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableSuffix(s *string) *SysDistrictUpdate {
-	if s != nil {
-		sdu.SetSuffix(*s)
+func (_u *SysDistrictUpdate) SetNillableSuffix(v *string) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetSuffix(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearSuffix clears the value of the "suffix" field.
-func (sdu *SysDistrictUpdate) ClearSuffix() *SysDistrictUpdate {
-	sdu.mutation.ClearSuffix()
-	return sdu
+func (_u *SysDistrictUpdate) ClearSuffix() *SysDistrictUpdate {
+	_u.mutation.ClearSuffix()
+	return _u
 }
 
 // SetIsHot sets the "is_hot" field.
-func (sdu *SysDistrictUpdate) SetIsHot(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsHot(b)
-	return sdu
+func (_u *SysDistrictUpdate) SetIsHot(v bool) *SysDistrictUpdate {
+	_u.mutation.SetIsHot(v)
+	return _u
 }
 
 // SetNillableIsHot sets the "is_hot" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsHot(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsHot(*b)
+func (_u *SysDistrictUpdate) SetNillableIsHot(v *bool) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetIsHot(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearIsHot clears the value of the "is_hot" field.
-func (sdu *SysDistrictUpdate) ClearIsHot() *SysDistrictUpdate {
-	sdu.mutation.ClearIsHot()
-	return sdu
+func (_u *SysDistrictUpdate) ClearIsHot() *SysDistrictUpdate {
+	_u.mutation.ClearIsHot()
+	return _u
 }
 
 // SetIsReal sets the "is_real" field.
-func (sdu *SysDistrictUpdate) SetIsReal(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsReal(b)
-	return sdu
+func (_u *SysDistrictUpdate) SetIsReal(v bool) *SysDistrictUpdate {
+	_u.mutation.SetIsReal(v)
+	return _u
 }
 
 // SetNillableIsReal sets the "is_real" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsReal(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsReal(*b)
+func (_u *SysDistrictUpdate) SetNillableIsReal(v *bool) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetIsReal(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearIsReal clears the value of the "is_real" field.
-func (sdu *SysDistrictUpdate) ClearIsReal() *SysDistrictUpdate {
-	sdu.mutation.ClearIsReal()
-	return sdu
+func (_u *SysDistrictUpdate) ClearIsReal() *SysDistrictUpdate {
+	_u.mutation.ClearIsReal()
+	return _u
 }
 
 // SetIsMain sets the "is_main" field.
-func (sdu *SysDistrictUpdate) SetIsMain(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsMain(b)
-	return sdu
+func (_u *SysDistrictUpdate) SetIsMain(v bool) *SysDistrictUpdate {
+	_u.mutation.SetIsMain(v)
+	return _u
 }
 
 // SetNillableIsMain sets the "is_main" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsMain(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsMain(*b)
+func (_u *SysDistrictUpdate) SetNillableIsMain(v *bool) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetIsMain(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearIsMain clears the value of the "is_main" field.
-func (sdu *SysDistrictUpdate) ClearIsMain() *SysDistrictUpdate {
-	sdu.mutation.ClearIsMain()
-	return sdu
+func (_u *SysDistrictUpdate) ClearIsMain() *SysDistrictUpdate {
+	_u.mutation.ClearIsMain()
+	return _u
 }
 
 // SetIsDirect sets the "is_direct" field.
-func (sdu *SysDistrictUpdate) SetIsDirect(b bool) *SysDistrictUpdate {
-	sdu.mutation.SetIsDirect(b)
-	return sdu
+func (_u *SysDistrictUpdate) SetIsDirect(v bool) *SysDistrictUpdate {
+	_u.mutation.SetIsDirect(v)
+	return _u
 }
 
 // SetNillableIsDirect sets the "is_direct" field if the given value is not nil.
-func (sdu *SysDistrictUpdate) SetNillableIsDirect(b *bool) *SysDistrictUpdate {
-	if b != nil {
-		sdu.SetIsDirect(*b)
+func (_u *SysDistrictUpdate) SetNillableIsDirect(v *bool) *SysDistrictUpdate {
+	if v != nil {
+		_u.SetIsDirect(*v)
 	}
-	return sdu
+	return _u
 }
 
 // ClearIsDirect clears the value of the "is_direct" field.
-func (sdu *SysDistrictUpdate) ClearIsDirect() *SysDistrictUpdate {
-	sdu.mutation.ClearIsDirect()
-	return sdu
+func (_u *SysDistrictUpdate) ClearIsDirect() *SysDistrictUpdate {
+	_u.mutation.ClearIsDirect()
+	return _u
 }
 
 // SetParent sets the "parent" edge to the SysDistrict entity.
-func (sdu *SysDistrictUpdate) SetParent(s *SysDistrict) *SysDistrictUpdate {
-	return sdu.SetParentID(s.ID)
+func (_u *SysDistrictUpdate) SetParent(v *SysDistrict) *SysDistrictUpdate {
+	return _u.SetParentID(v.ID)
 }
 
 // AddChildIDs adds the "children" edge to the SysDistrict entity by IDs.
-func (sdu *SysDistrictUpdate) AddChildIDs(ids ...string) *SysDistrictUpdate {
-	sdu.mutation.AddChildIDs(ids...)
-	return sdu
+func (_u *SysDistrictUpdate) AddChildIDs(ids ...string) *SysDistrictUpdate {
+	_u.mutation.AddChildIDs(ids...)
+	return _u
 }
 
 // AddChildren adds the "children" edges to the SysDistrict entity.
-func (sdu *SysDistrictUpdate) AddChildren(s ...*SysDistrict) *SysDistrictUpdate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysDistrictUpdate) AddChildren(v ...*SysDistrict) *SysDistrictUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sdu.AddChildIDs(ids...)
+	return _u.AddChildIDs(ids...)
 }
 
 // Mutation returns the SysDistrictMutation object of the builder.
-func (sdu *SysDistrictUpdate) Mutation() *SysDistrictMutation {
-	return sdu.mutation
+func (_u *SysDistrictUpdate) Mutation() *SysDistrictMutation {
+	return _u.mutation
 }
 
 // ClearParent clears the "parent" edge to the SysDistrict entity.
-func (sdu *SysDistrictUpdate) ClearParent() *SysDistrictUpdate {
-	sdu.mutation.ClearParent()
-	return sdu
+func (_u *SysDistrictUpdate) ClearParent() *SysDistrictUpdate {
+	_u.mutation.ClearParent()
+	return _u
 }
 
 // ClearChildren clears all "children" edges to the SysDistrict entity.
-func (sdu *SysDistrictUpdate) ClearChildren() *SysDistrictUpdate {
-	sdu.mutation.ClearChildren()
-	return sdu
+func (_u *SysDistrictUpdate) ClearChildren() *SysDistrictUpdate {
+	_u.mutation.ClearChildren()
+	return _u
 }
 
 // RemoveChildIDs removes the "children" edge to SysDistrict entities by IDs.
-func (sdu *SysDistrictUpdate) RemoveChildIDs(ids ...string) *SysDistrictUpdate {
-	sdu.mutation.RemoveChildIDs(ids...)
-	return sdu
+func (_u *SysDistrictUpdate) RemoveChildIDs(ids ...string) *SysDistrictUpdate {
+	_u.mutation.RemoveChildIDs(ids...)
+	return _u
 }
 
 // RemoveChildren removes "children" edges to SysDistrict entities.
-func (sdu *SysDistrictUpdate) RemoveChildren(s ...*SysDistrict) *SysDistrictUpdate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysDistrictUpdate) RemoveChildren(v ...*SysDistrict) *SysDistrictUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sdu.RemoveChildIDs(ids...)
+	return _u.RemoveChildIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (sdu *SysDistrictUpdate) Save(ctx context.Context) (int, error) {
-	sdu.defaults()
-	return withHooks(ctx, sdu.sqlSave, sdu.mutation, sdu.hooks)
+func (_u *SysDistrictUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sdu *SysDistrictUpdate) SaveX(ctx context.Context) int {
-	affected, err := sdu.Save(ctx)
+func (_u *SysDistrictUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -760,99 +760,99 @@ func (sdu *SysDistrictUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (sdu *SysDistrictUpdate) Exec(ctx context.Context) error {
-	_, err := sdu.Save(ctx)
+func (_u *SysDistrictUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdu *SysDistrictUpdate) ExecX(ctx context.Context) {
-	if err := sdu.Exec(ctx); err != nil {
+func (_u *SysDistrictUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sdu *SysDistrictUpdate) defaults() {
-	if _, ok := sdu.mutation.UpdatedAt(); !ok && !sdu.mutation.UpdatedAtCleared() {
+func (_u *SysDistrictUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysdistrict.UpdateDefaultUpdatedAt()
-		sdu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sdu *SysDistrictUpdate) check() error {
-	if v, ok := sdu.mutation.Name(); ok {
+func (_u *SysDistrictUpdate) check() error {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := sysdistrict.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.name": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.NameEn(); ok {
+	if v, ok := _u.mutation.NameEn(); ok {
 		if err := sysdistrict.NameEnValidator(v); err != nil {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.name_en": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.Sname(); ok {
+	if v, ok := _u.mutation.Sname(); ok {
 		if err := sysdistrict.SnameValidator(v); err != nil {
 			return &ValidationError{Name: "sname", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.sname": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.SnameEn(); ok {
+	if v, ok := _u.mutation.SnameEn(); ok {
 		if err := sysdistrict.SnameEnValidator(v); err != nil {
 			return &ValidationError{Name: "sname_en", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.sname_en": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.Abbr(); ok {
+	if v, ok := _u.mutation.Abbr(); ok {
 		if err := sysdistrict.AbbrValidator(v); err != nil {
 			return &ValidationError{Name: "abbr", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.abbr": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.StCode(); ok {
+	if v, ok := _u.mutation.StCode(); ok {
 		if err := sysdistrict.StCodeValidator(v); err != nil {
 			return &ValidationError{Name: "st_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.st_code": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.Initials(); ok {
+	if v, ok := _u.mutation.Initials(); ok {
 		if err := sysdistrict.InitialsValidator(v); err != nil {
 			return &ValidationError{Name: "initials", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.initials": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.Pinyin(); ok {
+	if v, ok := _u.mutation.Pinyin(); ok {
 		if err := sysdistrict.PinyinValidator(v); err != nil {
 			return &ValidationError{Name: "pinyin", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.pinyin": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.ParentID(); ok {
+	if v, ok := _u.mutation.ParentID(); ok {
 		if err := sysdistrict.ParentIDValidator(v); err != nil {
 			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.parent_id": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.AreaCode(); ok {
+	if v, ok := _u.mutation.AreaCode(); ok {
 		if err := sysdistrict.AreaCodeValidator(v); err != nil {
 			return &ValidationError{Name: "area_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.area_code": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.ZipCode(); ok {
+	if v, ok := _u.mutation.ZipCode(); ok {
 		if err := sysdistrict.ZipCodeValidator(v); err != nil {
 			return &ValidationError{Name: "zip_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.zip_code": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.MergeName(); ok {
+	if v, ok := _u.mutation.MergeName(); ok {
 		if err := sysdistrict.MergeNameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.merge_name": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.MergeSname(); ok {
+	if v, ok := _u.mutation.MergeSname(); ok {
 		if err := sysdistrict.MergeSnameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_sname", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.merge_sname": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.Extra(); ok {
+	if v, ok := _u.mutation.Extra(); ok {
 		if err := sysdistrict.ExtraValidator(v); err != nil {
 			return &ValidationError{Name: "extra", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.extra": %w`, err)}
 		}
 	}
-	if v, ok := sdu.mutation.Suffix(); ok {
+	if v, ok := _u.mutation.Suffix(); ok {
 		if err := sysdistrict.SuffixValidator(v); err != nil {
 			return &ValidationError{Name: "suffix", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.suffix": %w`, err)}
 		}
@@ -861,225 +861,225 @@ func (sdu *SysDistrictUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sdu *SysDistrictUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdate {
-	sdu.modifiers = append(sdu.modifiers, modifiers...)
-	return sdu
+func (_u *SysDistrictUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := sdu.check(); err != nil {
-		return n, err
+func (_u *SysDistrictUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysdistrict.Table, sysdistrict.Columns, sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString))
-	if ps := sdu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sdu.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sdu.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sdu.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
-	if sdu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysdistrict.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sdu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sdu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysdistrict.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sdu.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sdu.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysdistrict.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sdu.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysdistrict.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sdu.mutation.TreeID(); ok {
+	if value, ok := _u.mutation.TreeID(); ok {
 		_spec.SetField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 	}
-	if value, ok := sdu.mutation.AddedTreeID(); ok {
+	if value, ok := _u.mutation.AddedTreeID(); ok {
 		_spec.AddField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 	}
-	if sdu.mutation.TreeIDCleared() {
+	if _u.mutation.TreeIDCleared() {
 		_spec.ClearField(sysdistrict.FieldTreeID, field.TypeInt64)
 	}
-	if value, ok := sdu.mutation.TreeLevel(); ok {
+	if value, ok := _u.mutation.TreeLevel(); ok {
 		_spec.SetField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 	}
-	if value, ok := sdu.mutation.AddedTreeLevel(); ok {
+	if value, ok := _u.mutation.AddedTreeLevel(); ok {
 		_spec.AddField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 	}
-	if sdu.mutation.TreeLevelCleared() {
+	if _u.mutation.TreeLevelCleared() {
 		_spec.ClearField(sysdistrict.FieldTreeLevel, field.TypeInt32)
 	}
-	if value, ok := sdu.mutation.TreeLeft(); ok {
+	if value, ok := _u.mutation.TreeLeft(); ok {
 		_spec.SetField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 	}
-	if value, ok := sdu.mutation.AddedTreeLeft(); ok {
+	if value, ok := _u.mutation.AddedTreeLeft(); ok {
 		_spec.AddField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 	}
-	if sdu.mutation.TreeLeftCleared() {
+	if _u.mutation.TreeLeftCleared() {
 		_spec.ClearField(sysdistrict.FieldTreeLeft, field.TypeInt64)
 	}
-	if value, ok := sdu.mutation.TreeRight(); ok {
+	if value, ok := _u.mutation.TreeRight(); ok {
 		_spec.SetField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 	}
-	if value, ok := sdu.mutation.AddedTreeRight(); ok {
+	if value, ok := _u.mutation.AddedTreeRight(); ok {
 		_spec.AddField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 	}
-	if sdu.mutation.TreeRightCleared() {
+	if _u.mutation.TreeRightCleared() {
 		_spec.ClearField(sysdistrict.FieldTreeRight, field.TypeInt64)
 	}
-	if value, ok := sdu.mutation.IsLeaf(); ok {
+	if value, ok := _u.mutation.IsLeaf(); ok {
 		_spec.SetField(sysdistrict.FieldIsLeaf, field.TypeBool, value)
 	}
-	if sdu.mutation.IsLeafCleared() {
+	if _u.mutation.IsLeafCleared() {
 		_spec.ClearField(sysdistrict.FieldIsLeaf, field.TypeBool)
 	}
-	if value, ok := sdu.mutation.TreePath(); ok {
+	if value, ok := _u.mutation.TreePath(); ok {
 		_spec.SetField(sysdistrict.FieldTreePath, field.TypeString, value)
 	}
-	if sdu.mutation.TreePathCleared() {
+	if _u.mutation.TreePathCleared() {
 		_spec.ClearField(sysdistrict.FieldTreePath, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysdistrict.FieldName, field.TypeString, value)
 	}
-	if sdu.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(sysdistrict.FieldName, field.TypeString)
 	}
-	if value, ok := sdu.mutation.NameEn(); ok {
+	if value, ok := _u.mutation.NameEn(); ok {
 		_spec.SetField(sysdistrict.FieldNameEn, field.TypeString, value)
 	}
-	if sdu.mutation.NameEnCleared() {
+	if _u.mutation.NameEnCleared() {
 		_spec.ClearField(sysdistrict.FieldNameEn, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Sname(); ok {
+	if value, ok := _u.mutation.Sname(); ok {
 		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 	}
-	if sdu.mutation.SnameCleared() {
+	if _u.mutation.SnameCleared() {
 		_spec.ClearField(sysdistrict.FieldSname, field.TypeString)
 	}
-	if value, ok := sdu.mutation.SnameEn(); ok {
+	if value, ok := _u.mutation.SnameEn(); ok {
 		_spec.SetField(sysdistrict.FieldSnameEn, field.TypeString, value)
 	}
-	if sdu.mutation.SnameEnCleared() {
+	if _u.mutation.SnameEnCleared() {
 		_spec.ClearField(sysdistrict.FieldSnameEn, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Abbr(); ok {
+	if value, ok := _u.mutation.Abbr(); ok {
 		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)
 	}
-	if sdu.mutation.AbbrCleared() {
+	if _u.mutation.AbbrCleared() {
 		_spec.ClearField(sysdistrict.FieldAbbr, field.TypeString)
 	}
-	if value, ok := sdu.mutation.StCode(); ok {
+	if value, ok := _u.mutation.StCode(); ok {
 		_spec.SetField(sysdistrict.FieldStCode, field.TypeString, value)
 	}
-	if sdu.mutation.StCodeCleared() {
+	if _u.mutation.StCodeCleared() {
 		_spec.ClearField(sysdistrict.FieldStCode, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Initials(); ok {
+	if value, ok := _u.mutation.Initials(); ok {
 		_spec.SetField(sysdistrict.FieldInitials, field.TypeString, value)
 	}
-	if sdu.mutation.InitialsCleared() {
+	if _u.mutation.InitialsCleared() {
 		_spec.ClearField(sysdistrict.FieldInitials, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Pinyin(); ok {
+	if value, ok := _u.mutation.Pinyin(); ok {
 		_spec.SetField(sysdistrict.FieldPinyin, field.TypeString, value)
 	}
-	if sdu.mutation.PinyinCleared() {
+	if _u.mutation.PinyinCleared() {
 		_spec.ClearField(sysdistrict.FieldPinyin, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Longitude(); ok {
+	if value, ok := _u.mutation.Longitude(); ok {
 		_spec.SetField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 	}
-	if value, ok := sdu.mutation.AddedLongitude(); ok {
+	if value, ok := _u.mutation.AddedLongitude(); ok {
 		_spec.AddField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 	}
-	if sdu.mutation.LongitudeCleared() {
+	if _u.mutation.LongitudeCleared() {
 		_spec.ClearField(sysdistrict.FieldLongitude, field.TypeFloat64)
 	}
-	if value, ok := sdu.mutation.Latitude(); ok {
+	if value, ok := _u.mutation.Latitude(); ok {
 		_spec.SetField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 	}
-	if value, ok := sdu.mutation.AddedLatitude(); ok {
+	if value, ok := _u.mutation.AddedLatitude(); ok {
 		_spec.AddField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 	}
-	if sdu.mutation.LatitudeCleared() {
+	if _u.mutation.LatitudeCleared() {
 		_spec.ClearField(sysdistrict.FieldLatitude, field.TypeFloat64)
 	}
-	if value, ok := sdu.mutation.AreaCode(); ok {
+	if value, ok := _u.mutation.AreaCode(); ok {
 		_spec.SetField(sysdistrict.FieldAreaCode, field.TypeString, value)
 	}
-	if sdu.mutation.AreaCodeCleared() {
+	if _u.mutation.AreaCodeCleared() {
 		_spec.ClearField(sysdistrict.FieldAreaCode, field.TypeString)
 	}
-	if value, ok := sdu.mutation.ZipCode(); ok {
+	if value, ok := _u.mutation.ZipCode(); ok {
 		_spec.SetField(sysdistrict.FieldZipCode, field.TypeString, value)
 	}
-	if sdu.mutation.ZipCodeCleared() {
+	if _u.mutation.ZipCodeCleared() {
 		_spec.ClearField(sysdistrict.FieldZipCode, field.TypeString)
 	}
-	if value, ok := sdu.mutation.MergeName(); ok {
+	if value, ok := _u.mutation.MergeName(); ok {
 		_spec.SetField(sysdistrict.FieldMergeName, field.TypeString, value)
 	}
-	if sdu.mutation.MergeNameCleared() {
+	if _u.mutation.MergeNameCleared() {
 		_spec.ClearField(sysdistrict.FieldMergeName, field.TypeString)
 	}
-	if value, ok := sdu.mutation.MergeSname(); ok {
+	if value, ok := _u.mutation.MergeSname(); ok {
 		_spec.SetField(sysdistrict.FieldMergeSname, field.TypeString, value)
 	}
-	if sdu.mutation.MergeSnameCleared() {
+	if _u.mutation.MergeSnameCleared() {
 		_spec.ClearField(sysdistrict.FieldMergeSname, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Extra(); ok {
+	if value, ok := _u.mutation.Extra(); ok {
 		_spec.SetField(sysdistrict.FieldExtra, field.TypeString, value)
 	}
-	if sdu.mutation.ExtraCleared() {
+	if _u.mutation.ExtraCleared() {
 		_spec.ClearField(sysdistrict.FieldExtra, field.TypeString)
 	}
-	if value, ok := sdu.mutation.Suffix(); ok {
+	if value, ok := _u.mutation.Suffix(); ok {
 		_spec.SetField(sysdistrict.FieldSuffix, field.TypeString, value)
 	}
-	if sdu.mutation.SuffixCleared() {
+	if _u.mutation.SuffixCleared() {
 		_spec.ClearField(sysdistrict.FieldSuffix, field.TypeString)
 	}
-	if value, ok := sdu.mutation.IsHot(); ok {
+	if value, ok := _u.mutation.IsHot(); ok {
 		_spec.SetField(sysdistrict.FieldIsHot, field.TypeBool, value)
 	}
-	if sdu.mutation.IsHotCleared() {
+	if _u.mutation.IsHotCleared() {
 		_spec.ClearField(sysdistrict.FieldIsHot, field.TypeBool)
 	}
-	if value, ok := sdu.mutation.IsReal(); ok {
+	if value, ok := _u.mutation.IsReal(); ok {
 		_spec.SetField(sysdistrict.FieldIsReal, field.TypeBool, value)
 	}
-	if sdu.mutation.IsRealCleared() {
+	if _u.mutation.IsRealCleared() {
 		_spec.ClearField(sysdistrict.FieldIsReal, field.TypeBool)
 	}
-	if value, ok := sdu.mutation.IsMain(); ok {
+	if value, ok := _u.mutation.IsMain(); ok {
 		_spec.SetField(sysdistrict.FieldIsMain, field.TypeBool, value)
 	}
-	if sdu.mutation.IsMainCleared() {
+	if _u.mutation.IsMainCleared() {
 		_spec.ClearField(sysdistrict.FieldIsMain, field.TypeBool)
 	}
-	if value, ok := sdu.mutation.IsDirect(); ok {
+	if value, ok := _u.mutation.IsDirect(); ok {
 		_spec.SetField(sysdistrict.FieldIsDirect, field.TypeBool, value)
 	}
-	if sdu.mutation.IsDirectCleared() {
+	if _u.mutation.IsDirectCleared() {
 		_spec.ClearField(sysdistrict.FieldIsDirect, field.TypeBool)
 	}
-	if sdu.mutation.ParentCleared() {
+	if _u.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1092,7 +1092,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sdu.mutation.ParentIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -1108,7 +1108,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if sdu.mutation.ChildrenCleared() {
+	if _u.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1121,7 +1121,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sdu.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sdu.mutation.ChildrenCleared() {
+	if nodes := _u.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !_u.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1137,7 +1137,7 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sdu.mutation.ChildrenIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -1153,8 +1153,8 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(sdu.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, sdu.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdistrict.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -1162,8 +1162,8 @@ func (sdu *SysDistrictUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	sdu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysDistrictUpdateOne is the builder for updating a single SysDistrict entity.
@@ -1176,742 +1176,742 @@ type SysDistrictUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sduo *SysDistrictUpdateOne) SetIsDel(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsDel(b)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetIsDel(v bool) *SysDistrictUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsDel(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsDel(*b)
+func (_u *SysDistrictUpdateOne) SetNillableIsDel(v *bool) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sduo
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sduo *SysDistrictUpdateOne) SetSort(i int32) *SysDistrictUpdateOne {
-	sduo.mutation.ResetSort()
-	sduo.mutation.SetSort(i)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetSort(v int32) *SysDistrictUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableSort(i *int32) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetSort(*i)
+func (_u *SysDistrictUpdateOne) SetNillableSort(v *int32) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sduo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sduo *SysDistrictUpdateOne) AddSort(i int32) *SysDistrictUpdateOne {
-	sduo.mutation.AddSort(i)
-	return sduo
+// AddSort adds value to the "sort" field.
+func (_u *SysDistrictUpdateOne) AddSort(v int32) *SysDistrictUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sduo *SysDistrictUpdateOne) SetUpdatedAt(t time.Time) *SysDistrictUpdateOne {
-	sduo.mutation.SetUpdatedAt(t)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetUpdatedAt(v time.Time) *SysDistrictUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sduo *SysDistrictUpdateOne) ClearUpdatedAt() *SysDistrictUpdateOne {
-	sduo.mutation.ClearUpdatedAt()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearUpdatedAt() *SysDistrictUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sduo *SysDistrictUpdateOne) SetDeletedAt(t time.Time) *SysDistrictUpdateOne {
-	sduo.mutation.SetDeletedAt(t)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetDeletedAt(v time.Time) *SysDistrictUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableDeletedAt(t *time.Time) *SysDistrictUpdateOne {
-	if t != nil {
-		sduo.SetDeletedAt(*t)
+func (_u *SysDistrictUpdateOne) SetNillableDeletedAt(v *time.Time) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sduo *SysDistrictUpdateOne) ClearDeletedAt() *SysDistrictUpdateOne {
-	sduo.mutation.ClearDeletedAt()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearDeletedAt() *SysDistrictUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sduo *SysDistrictUpdateOne) SetIsActive(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsActive(b)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetIsActive(v bool) *SysDistrictUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsActive(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsActive(*b)
+func (_u *SysDistrictUpdateOne) SetNillableIsActive(v *bool) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sduo
+	return _u
 }
 
 // SetTreeID sets the "tree_id" field.
-func (sduo *SysDistrictUpdateOne) SetTreeID(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.ResetTreeID()
-	sduo.mutation.SetTreeID(i)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetTreeID(v int64) *SysDistrictUpdateOne {
+	_u.mutation.ResetTreeID()
+	_u.mutation.SetTreeID(v)
+	return _u
 }
 
 // SetNillableTreeID sets the "tree_id" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeID(i *int64) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetTreeID(*i)
+func (_u *SysDistrictUpdateOne) SetNillableTreeID(v *int64) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetTreeID(*v)
 	}
-	return sduo
+	return _u
 }
 
-// AddTreeID adds i to the "tree_id" field.
-func (sduo *SysDistrictUpdateOne) AddTreeID(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.AddTreeID(i)
-	return sduo
+// AddTreeID adds value to the "tree_id" field.
+func (_u *SysDistrictUpdateOne) AddTreeID(v int64) *SysDistrictUpdateOne {
+	_u.mutation.AddTreeID(v)
+	return _u
 }
 
 // ClearTreeID clears the value of the "tree_id" field.
-func (sduo *SysDistrictUpdateOne) ClearTreeID() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreeID()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearTreeID() *SysDistrictUpdateOne {
+	_u.mutation.ClearTreeID()
+	return _u
 }
 
 // SetTreeLevel sets the "tree_level" field.
-func (sduo *SysDistrictUpdateOne) SetTreeLevel(i int32) *SysDistrictUpdateOne {
-	sduo.mutation.ResetTreeLevel()
-	sduo.mutation.SetTreeLevel(i)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetTreeLevel(v int32) *SysDistrictUpdateOne {
+	_u.mutation.ResetTreeLevel()
+	_u.mutation.SetTreeLevel(v)
+	return _u
 }
 
 // SetNillableTreeLevel sets the "tree_level" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeLevel(i *int32) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetTreeLevel(*i)
+func (_u *SysDistrictUpdateOne) SetNillableTreeLevel(v *int32) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetTreeLevel(*v)
 	}
-	return sduo
+	return _u
 }
 
-// AddTreeLevel adds i to the "tree_level" field.
-func (sduo *SysDistrictUpdateOne) AddTreeLevel(i int32) *SysDistrictUpdateOne {
-	sduo.mutation.AddTreeLevel(i)
-	return sduo
+// AddTreeLevel adds value to the "tree_level" field.
+func (_u *SysDistrictUpdateOne) AddTreeLevel(v int32) *SysDistrictUpdateOne {
+	_u.mutation.AddTreeLevel(v)
+	return _u
 }
 
 // ClearTreeLevel clears the value of the "tree_level" field.
-func (sduo *SysDistrictUpdateOne) ClearTreeLevel() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreeLevel()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearTreeLevel() *SysDistrictUpdateOne {
+	_u.mutation.ClearTreeLevel()
+	return _u
 }
 
 // SetTreeLeft sets the "tree_left" field.
-func (sduo *SysDistrictUpdateOne) SetTreeLeft(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.ResetTreeLeft()
-	sduo.mutation.SetTreeLeft(i)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetTreeLeft(v int64) *SysDistrictUpdateOne {
+	_u.mutation.ResetTreeLeft()
+	_u.mutation.SetTreeLeft(v)
+	return _u
 }
 
 // SetNillableTreeLeft sets the "tree_left" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeLeft(i *int64) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetTreeLeft(*i)
+func (_u *SysDistrictUpdateOne) SetNillableTreeLeft(v *int64) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetTreeLeft(*v)
 	}
-	return sduo
+	return _u
 }
 
-// AddTreeLeft adds i to the "tree_left" field.
-func (sduo *SysDistrictUpdateOne) AddTreeLeft(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.AddTreeLeft(i)
-	return sduo
+// AddTreeLeft adds value to the "tree_left" field.
+func (_u *SysDistrictUpdateOne) AddTreeLeft(v int64) *SysDistrictUpdateOne {
+	_u.mutation.AddTreeLeft(v)
+	return _u
 }
 
 // ClearTreeLeft clears the value of the "tree_left" field.
-func (sduo *SysDistrictUpdateOne) ClearTreeLeft() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreeLeft()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearTreeLeft() *SysDistrictUpdateOne {
+	_u.mutation.ClearTreeLeft()
+	return _u
 }
 
 // SetTreeRight sets the "tree_right" field.
-func (sduo *SysDistrictUpdateOne) SetTreeRight(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.ResetTreeRight()
-	sduo.mutation.SetTreeRight(i)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetTreeRight(v int64) *SysDistrictUpdateOne {
+	_u.mutation.ResetTreeRight()
+	_u.mutation.SetTreeRight(v)
+	return _u
 }
 
 // SetNillableTreeRight sets the "tree_right" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreeRight(i *int64) *SysDistrictUpdateOne {
-	if i != nil {
-		sduo.SetTreeRight(*i)
+func (_u *SysDistrictUpdateOne) SetNillableTreeRight(v *int64) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetTreeRight(*v)
 	}
-	return sduo
+	return _u
 }
 
-// AddTreeRight adds i to the "tree_right" field.
-func (sduo *SysDistrictUpdateOne) AddTreeRight(i int64) *SysDistrictUpdateOne {
-	sduo.mutation.AddTreeRight(i)
-	return sduo
+// AddTreeRight adds value to the "tree_right" field.
+func (_u *SysDistrictUpdateOne) AddTreeRight(v int64) *SysDistrictUpdateOne {
+	_u.mutation.AddTreeRight(v)
+	return _u
 }
 
 // ClearTreeRight clears the value of the "tree_right" field.
-func (sduo *SysDistrictUpdateOne) ClearTreeRight() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreeRight()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearTreeRight() *SysDistrictUpdateOne {
+	_u.mutation.ClearTreeRight()
+	return _u
 }
 
 // SetIsLeaf sets the "is_leaf" field.
-func (sduo *SysDistrictUpdateOne) SetIsLeaf(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsLeaf(b)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetIsLeaf(v bool) *SysDistrictUpdateOne {
+	_u.mutation.SetIsLeaf(v)
+	return _u
 }
 
 // SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsLeaf(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsLeaf(*b)
+func (_u *SysDistrictUpdateOne) SetNillableIsLeaf(v *bool) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetIsLeaf(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearIsLeaf clears the value of the "is_leaf" field.
-func (sduo *SysDistrictUpdateOne) ClearIsLeaf() *SysDistrictUpdateOne {
-	sduo.mutation.ClearIsLeaf()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearIsLeaf() *SysDistrictUpdateOne {
+	_u.mutation.ClearIsLeaf()
+	return _u
 }
 
 // SetTreePath sets the "tree_path" field.
-func (sduo *SysDistrictUpdateOne) SetTreePath(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetTreePath(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetTreePath(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetTreePath(v)
+	return _u
 }
 
 // SetNillableTreePath sets the "tree_path" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableTreePath(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetTreePath(*s)
+func (_u *SysDistrictUpdateOne) SetNillableTreePath(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetTreePath(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearTreePath clears the value of the "tree_path" field.
-func (sduo *SysDistrictUpdateOne) ClearTreePath() *SysDistrictUpdateOne {
-	sduo.mutation.ClearTreePath()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearTreePath() *SysDistrictUpdateOne {
+	_u.mutation.ClearTreePath()
+	return _u
 }
 
 // SetName sets the "name" field.
-func (sduo *SysDistrictUpdateOne) SetName(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetName(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetName(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableName(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetName(*s)
+func (_u *SysDistrictUpdateOne) SetNillableName(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (sduo *SysDistrictUpdateOne) ClearName() *SysDistrictUpdateOne {
-	sduo.mutation.ClearName()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearName() *SysDistrictUpdateOne {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetNameEn sets the "name_en" field.
-func (sduo *SysDistrictUpdateOne) SetNameEn(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetNameEn(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetNameEn(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetNameEn(v)
+	return _u
 }
 
 // SetNillableNameEn sets the "name_en" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableNameEn(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetNameEn(*s)
+func (_u *SysDistrictUpdateOne) SetNillableNameEn(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetNameEn(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearNameEn clears the value of the "name_en" field.
-func (sduo *SysDistrictUpdateOne) ClearNameEn() *SysDistrictUpdateOne {
-	sduo.mutation.ClearNameEn()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearNameEn() *SysDistrictUpdateOne {
+	_u.mutation.ClearNameEn()
+	return _u
 }
 
 // SetSname sets the "sname" field.
-func (sduo *SysDistrictUpdateOne) SetSname(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetSname(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetSname(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetSname(v)
+	return _u
 }
 
 // SetNillableSname sets the "sname" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableSname(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetSname(*s)
+func (_u *SysDistrictUpdateOne) SetNillableSname(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetSname(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearSname clears the value of the "sname" field.
-func (sduo *SysDistrictUpdateOne) ClearSname() *SysDistrictUpdateOne {
-	sduo.mutation.ClearSname()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearSname() *SysDistrictUpdateOne {
+	_u.mutation.ClearSname()
+	return _u
 }
 
 // SetSnameEn sets the "sname_en" field.
-func (sduo *SysDistrictUpdateOne) SetSnameEn(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetSnameEn(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetSnameEn(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetSnameEn(v)
+	return _u
 }
 
 // SetNillableSnameEn sets the "sname_en" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableSnameEn(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetSnameEn(*s)
+func (_u *SysDistrictUpdateOne) SetNillableSnameEn(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetSnameEn(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearSnameEn clears the value of the "sname_en" field.
-func (sduo *SysDistrictUpdateOne) ClearSnameEn() *SysDistrictUpdateOne {
-	sduo.mutation.ClearSnameEn()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearSnameEn() *SysDistrictUpdateOne {
+	_u.mutation.ClearSnameEn()
+	return _u
 }
 
 // SetAbbr sets the "abbr" field.
-func (sduo *SysDistrictUpdateOne) SetAbbr(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetAbbr(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetAbbr(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetAbbr(v)
+	return _u
 }
 
 // SetNillableAbbr sets the "abbr" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableAbbr(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetAbbr(*s)
+func (_u *SysDistrictUpdateOne) SetNillableAbbr(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetAbbr(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearAbbr clears the value of the "abbr" field.
-func (sduo *SysDistrictUpdateOne) ClearAbbr() *SysDistrictUpdateOne {
-	sduo.mutation.ClearAbbr()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearAbbr() *SysDistrictUpdateOne {
+	_u.mutation.ClearAbbr()
+	return _u
 }
 
 // SetStCode sets the "st_code" field.
-func (sduo *SysDistrictUpdateOne) SetStCode(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetStCode(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetStCode(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetStCode(v)
+	return _u
 }
 
 // SetNillableStCode sets the "st_code" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableStCode(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetStCode(*s)
+func (_u *SysDistrictUpdateOne) SetNillableStCode(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetStCode(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearStCode clears the value of the "st_code" field.
-func (sduo *SysDistrictUpdateOne) ClearStCode() *SysDistrictUpdateOne {
-	sduo.mutation.ClearStCode()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearStCode() *SysDistrictUpdateOne {
+	_u.mutation.ClearStCode()
+	return _u
 }
 
 // SetInitials sets the "initials" field.
-func (sduo *SysDistrictUpdateOne) SetInitials(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetInitials(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetInitials(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetInitials(v)
+	return _u
 }
 
 // SetNillableInitials sets the "initials" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableInitials(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetInitials(*s)
+func (_u *SysDistrictUpdateOne) SetNillableInitials(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetInitials(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearInitials clears the value of the "initials" field.
-func (sduo *SysDistrictUpdateOne) ClearInitials() *SysDistrictUpdateOne {
-	sduo.mutation.ClearInitials()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearInitials() *SysDistrictUpdateOne {
+	_u.mutation.ClearInitials()
+	return _u
 }
 
 // SetPinyin sets the "pinyin" field.
-func (sduo *SysDistrictUpdateOne) SetPinyin(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetPinyin(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetPinyin(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetPinyin(v)
+	return _u
 }
 
 // SetNillablePinyin sets the "pinyin" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillablePinyin(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetPinyin(*s)
+func (_u *SysDistrictUpdateOne) SetNillablePinyin(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetPinyin(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearPinyin clears the value of the "pinyin" field.
-func (sduo *SysDistrictUpdateOne) ClearPinyin() *SysDistrictUpdateOne {
-	sduo.mutation.ClearPinyin()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearPinyin() *SysDistrictUpdateOne {
+	_u.mutation.ClearPinyin()
+	return _u
 }
 
 // SetParentID sets the "parent_id" field.
-func (sduo *SysDistrictUpdateOne) SetParentID(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetParentID(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetParentID(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetParentID(v)
+	return _u
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableParentID(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetParentID(*s)
+func (_u *SysDistrictUpdateOne) SetNillableParentID(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetParentID(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearParentID clears the value of the "parent_id" field.
-func (sduo *SysDistrictUpdateOne) ClearParentID() *SysDistrictUpdateOne {
-	sduo.mutation.ClearParentID()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearParentID() *SysDistrictUpdateOne {
+	_u.mutation.ClearParentID()
+	return _u
 }
 
 // SetLongitude sets the "longitude" field.
-func (sduo *SysDistrictUpdateOne) SetLongitude(f float64) *SysDistrictUpdateOne {
-	sduo.mutation.ResetLongitude()
-	sduo.mutation.SetLongitude(f)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetLongitude(v float64) *SysDistrictUpdateOne {
+	_u.mutation.ResetLongitude()
+	_u.mutation.SetLongitude(v)
+	return _u
 }
 
 // SetNillableLongitude sets the "longitude" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableLongitude(f *float64) *SysDistrictUpdateOne {
-	if f != nil {
-		sduo.SetLongitude(*f)
+func (_u *SysDistrictUpdateOne) SetNillableLongitude(v *float64) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetLongitude(*v)
 	}
-	return sduo
+	return _u
 }
 
-// AddLongitude adds f to the "longitude" field.
-func (sduo *SysDistrictUpdateOne) AddLongitude(f float64) *SysDistrictUpdateOne {
-	sduo.mutation.AddLongitude(f)
-	return sduo
+// AddLongitude adds value to the "longitude" field.
+func (_u *SysDistrictUpdateOne) AddLongitude(v float64) *SysDistrictUpdateOne {
+	_u.mutation.AddLongitude(v)
+	return _u
 }
 
 // ClearLongitude clears the value of the "longitude" field.
-func (sduo *SysDistrictUpdateOne) ClearLongitude() *SysDistrictUpdateOne {
-	sduo.mutation.ClearLongitude()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearLongitude() *SysDistrictUpdateOne {
+	_u.mutation.ClearLongitude()
+	return _u
 }
 
 // SetLatitude sets the "latitude" field.
-func (sduo *SysDistrictUpdateOne) SetLatitude(f float64) *SysDistrictUpdateOne {
-	sduo.mutation.ResetLatitude()
-	sduo.mutation.SetLatitude(f)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetLatitude(v float64) *SysDistrictUpdateOne {
+	_u.mutation.ResetLatitude()
+	_u.mutation.SetLatitude(v)
+	return _u
 }
 
 // SetNillableLatitude sets the "latitude" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableLatitude(f *float64) *SysDistrictUpdateOne {
-	if f != nil {
-		sduo.SetLatitude(*f)
+func (_u *SysDistrictUpdateOne) SetNillableLatitude(v *float64) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetLatitude(*v)
 	}
-	return sduo
+	return _u
 }
 
-// AddLatitude adds f to the "latitude" field.
-func (sduo *SysDistrictUpdateOne) AddLatitude(f float64) *SysDistrictUpdateOne {
-	sduo.mutation.AddLatitude(f)
-	return sduo
+// AddLatitude adds value to the "latitude" field.
+func (_u *SysDistrictUpdateOne) AddLatitude(v float64) *SysDistrictUpdateOne {
+	_u.mutation.AddLatitude(v)
+	return _u
 }
 
 // ClearLatitude clears the value of the "latitude" field.
-func (sduo *SysDistrictUpdateOne) ClearLatitude() *SysDistrictUpdateOne {
-	sduo.mutation.ClearLatitude()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearLatitude() *SysDistrictUpdateOne {
+	_u.mutation.ClearLatitude()
+	return _u
 }
 
 // SetAreaCode sets the "area_code" field.
-func (sduo *SysDistrictUpdateOne) SetAreaCode(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetAreaCode(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetAreaCode(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetAreaCode(v)
+	return _u
 }
 
 // SetNillableAreaCode sets the "area_code" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableAreaCode(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetAreaCode(*s)
+func (_u *SysDistrictUpdateOne) SetNillableAreaCode(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetAreaCode(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearAreaCode clears the value of the "area_code" field.
-func (sduo *SysDistrictUpdateOne) ClearAreaCode() *SysDistrictUpdateOne {
-	sduo.mutation.ClearAreaCode()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearAreaCode() *SysDistrictUpdateOne {
+	_u.mutation.ClearAreaCode()
+	return _u
 }
 
 // SetZipCode sets the "zip_code" field.
-func (sduo *SysDistrictUpdateOne) SetZipCode(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetZipCode(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetZipCode(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetZipCode(v)
+	return _u
 }
 
 // SetNillableZipCode sets the "zip_code" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableZipCode(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetZipCode(*s)
+func (_u *SysDistrictUpdateOne) SetNillableZipCode(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetZipCode(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearZipCode clears the value of the "zip_code" field.
-func (sduo *SysDistrictUpdateOne) ClearZipCode() *SysDistrictUpdateOne {
-	sduo.mutation.ClearZipCode()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearZipCode() *SysDistrictUpdateOne {
+	_u.mutation.ClearZipCode()
+	return _u
 }
 
 // SetMergeName sets the "merge_name" field.
-func (sduo *SysDistrictUpdateOne) SetMergeName(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetMergeName(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetMergeName(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetMergeName(v)
+	return _u
 }
 
 // SetNillableMergeName sets the "merge_name" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableMergeName(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetMergeName(*s)
+func (_u *SysDistrictUpdateOne) SetNillableMergeName(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetMergeName(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearMergeName clears the value of the "merge_name" field.
-func (sduo *SysDistrictUpdateOne) ClearMergeName() *SysDistrictUpdateOne {
-	sduo.mutation.ClearMergeName()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearMergeName() *SysDistrictUpdateOne {
+	_u.mutation.ClearMergeName()
+	return _u
 }
 
 // SetMergeSname sets the "merge_sname" field.
-func (sduo *SysDistrictUpdateOne) SetMergeSname(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetMergeSname(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetMergeSname(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetMergeSname(v)
+	return _u
 }
 
 // SetNillableMergeSname sets the "merge_sname" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableMergeSname(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetMergeSname(*s)
+func (_u *SysDistrictUpdateOne) SetNillableMergeSname(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetMergeSname(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearMergeSname clears the value of the "merge_sname" field.
-func (sduo *SysDistrictUpdateOne) ClearMergeSname() *SysDistrictUpdateOne {
-	sduo.mutation.ClearMergeSname()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearMergeSname() *SysDistrictUpdateOne {
+	_u.mutation.ClearMergeSname()
+	return _u
 }
 
 // SetExtra sets the "extra" field.
-func (sduo *SysDistrictUpdateOne) SetExtra(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetExtra(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetExtra(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetExtra(v)
+	return _u
 }
 
 // SetNillableExtra sets the "extra" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableExtra(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetExtra(*s)
+func (_u *SysDistrictUpdateOne) SetNillableExtra(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetExtra(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearExtra clears the value of the "extra" field.
-func (sduo *SysDistrictUpdateOne) ClearExtra() *SysDistrictUpdateOne {
-	sduo.mutation.ClearExtra()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearExtra() *SysDistrictUpdateOne {
+	_u.mutation.ClearExtra()
+	return _u
 }
 
 // SetSuffix sets the "suffix" field.
-func (sduo *SysDistrictUpdateOne) SetSuffix(s string) *SysDistrictUpdateOne {
-	sduo.mutation.SetSuffix(s)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetSuffix(v string) *SysDistrictUpdateOne {
+	_u.mutation.SetSuffix(v)
+	return _u
 }
 
 // SetNillableSuffix sets the "suffix" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableSuffix(s *string) *SysDistrictUpdateOne {
-	if s != nil {
-		sduo.SetSuffix(*s)
+func (_u *SysDistrictUpdateOne) SetNillableSuffix(v *string) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetSuffix(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearSuffix clears the value of the "suffix" field.
-func (sduo *SysDistrictUpdateOne) ClearSuffix() *SysDistrictUpdateOne {
-	sduo.mutation.ClearSuffix()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearSuffix() *SysDistrictUpdateOne {
+	_u.mutation.ClearSuffix()
+	return _u
 }
 
 // SetIsHot sets the "is_hot" field.
-func (sduo *SysDistrictUpdateOne) SetIsHot(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsHot(b)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetIsHot(v bool) *SysDistrictUpdateOne {
+	_u.mutation.SetIsHot(v)
+	return _u
 }
 
 // SetNillableIsHot sets the "is_hot" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsHot(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsHot(*b)
+func (_u *SysDistrictUpdateOne) SetNillableIsHot(v *bool) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetIsHot(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearIsHot clears the value of the "is_hot" field.
-func (sduo *SysDistrictUpdateOne) ClearIsHot() *SysDistrictUpdateOne {
-	sduo.mutation.ClearIsHot()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearIsHot() *SysDistrictUpdateOne {
+	_u.mutation.ClearIsHot()
+	return _u
 }
 
 // SetIsReal sets the "is_real" field.
-func (sduo *SysDistrictUpdateOne) SetIsReal(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsReal(b)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetIsReal(v bool) *SysDistrictUpdateOne {
+	_u.mutation.SetIsReal(v)
+	return _u
 }
 
 // SetNillableIsReal sets the "is_real" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsReal(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsReal(*b)
+func (_u *SysDistrictUpdateOne) SetNillableIsReal(v *bool) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetIsReal(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearIsReal clears the value of the "is_real" field.
-func (sduo *SysDistrictUpdateOne) ClearIsReal() *SysDistrictUpdateOne {
-	sduo.mutation.ClearIsReal()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearIsReal() *SysDistrictUpdateOne {
+	_u.mutation.ClearIsReal()
+	return _u
 }
 
 // SetIsMain sets the "is_main" field.
-func (sduo *SysDistrictUpdateOne) SetIsMain(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsMain(b)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetIsMain(v bool) *SysDistrictUpdateOne {
+	_u.mutation.SetIsMain(v)
+	return _u
 }
 
 // SetNillableIsMain sets the "is_main" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsMain(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsMain(*b)
+func (_u *SysDistrictUpdateOne) SetNillableIsMain(v *bool) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetIsMain(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearIsMain clears the value of the "is_main" field.
-func (sduo *SysDistrictUpdateOne) ClearIsMain() *SysDistrictUpdateOne {
-	sduo.mutation.ClearIsMain()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearIsMain() *SysDistrictUpdateOne {
+	_u.mutation.ClearIsMain()
+	return _u
 }
 
 // SetIsDirect sets the "is_direct" field.
-func (sduo *SysDistrictUpdateOne) SetIsDirect(b bool) *SysDistrictUpdateOne {
-	sduo.mutation.SetIsDirect(b)
-	return sduo
+func (_u *SysDistrictUpdateOne) SetIsDirect(v bool) *SysDistrictUpdateOne {
+	_u.mutation.SetIsDirect(v)
+	return _u
 }
 
 // SetNillableIsDirect sets the "is_direct" field if the given value is not nil.
-func (sduo *SysDistrictUpdateOne) SetNillableIsDirect(b *bool) *SysDistrictUpdateOne {
-	if b != nil {
-		sduo.SetIsDirect(*b)
+func (_u *SysDistrictUpdateOne) SetNillableIsDirect(v *bool) *SysDistrictUpdateOne {
+	if v != nil {
+		_u.SetIsDirect(*v)
 	}
-	return sduo
+	return _u
 }
 
 // ClearIsDirect clears the value of the "is_direct" field.
-func (sduo *SysDistrictUpdateOne) ClearIsDirect() *SysDistrictUpdateOne {
-	sduo.mutation.ClearIsDirect()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearIsDirect() *SysDistrictUpdateOne {
+	_u.mutation.ClearIsDirect()
+	return _u
 }
 
 // SetParent sets the "parent" edge to the SysDistrict entity.
-func (sduo *SysDistrictUpdateOne) SetParent(s *SysDistrict) *SysDistrictUpdateOne {
-	return sduo.SetParentID(s.ID)
+func (_u *SysDistrictUpdateOne) SetParent(v *SysDistrict) *SysDistrictUpdateOne {
+	return _u.SetParentID(v.ID)
 }
 
 // AddChildIDs adds the "children" edge to the SysDistrict entity by IDs.
-func (sduo *SysDistrictUpdateOne) AddChildIDs(ids ...string) *SysDistrictUpdateOne {
-	sduo.mutation.AddChildIDs(ids...)
-	return sduo
+func (_u *SysDistrictUpdateOne) AddChildIDs(ids ...string) *SysDistrictUpdateOne {
+	_u.mutation.AddChildIDs(ids...)
+	return _u
 }
 
 // AddChildren adds the "children" edges to the SysDistrict entity.
-func (sduo *SysDistrictUpdateOne) AddChildren(s ...*SysDistrict) *SysDistrictUpdateOne {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysDistrictUpdateOne) AddChildren(v ...*SysDistrict) *SysDistrictUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sduo.AddChildIDs(ids...)
+	return _u.AddChildIDs(ids...)
 }
 
 // Mutation returns the SysDistrictMutation object of the builder.
-func (sduo *SysDistrictUpdateOne) Mutation() *SysDistrictMutation {
-	return sduo.mutation
+func (_u *SysDistrictUpdateOne) Mutation() *SysDistrictMutation {
+	return _u.mutation
 }
 
 // ClearParent clears the "parent" edge to the SysDistrict entity.
-func (sduo *SysDistrictUpdateOne) ClearParent() *SysDistrictUpdateOne {
-	sduo.mutation.ClearParent()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearParent() *SysDistrictUpdateOne {
+	_u.mutation.ClearParent()
+	return _u
 }
 
 // ClearChildren clears all "children" edges to the SysDistrict entity.
-func (sduo *SysDistrictUpdateOne) ClearChildren() *SysDistrictUpdateOne {
-	sduo.mutation.ClearChildren()
-	return sduo
+func (_u *SysDistrictUpdateOne) ClearChildren() *SysDistrictUpdateOne {
+	_u.mutation.ClearChildren()
+	return _u
 }
 
 // RemoveChildIDs removes the "children" edge to SysDistrict entities by IDs.
-func (sduo *SysDistrictUpdateOne) RemoveChildIDs(ids ...string) *SysDistrictUpdateOne {
-	sduo.mutation.RemoveChildIDs(ids...)
-	return sduo
+func (_u *SysDistrictUpdateOne) RemoveChildIDs(ids ...string) *SysDistrictUpdateOne {
+	_u.mutation.RemoveChildIDs(ids...)
+	return _u
 }
 
 // RemoveChildren removes "children" edges to SysDistrict entities.
-func (sduo *SysDistrictUpdateOne) RemoveChildren(s ...*SysDistrict) *SysDistrictUpdateOne {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysDistrictUpdateOne) RemoveChildren(v ...*SysDistrict) *SysDistrictUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return sduo.RemoveChildIDs(ids...)
+	return _u.RemoveChildIDs(ids...)
 }
 
 // Where appends a list predicates to the SysDistrictUpdate builder.
-func (sduo *SysDistrictUpdateOne) Where(ps ...predicate.SysDistrict) *SysDistrictUpdateOne {
-	sduo.mutation.Where(ps...)
-	return sduo
+func (_u *SysDistrictUpdateOne) Where(ps ...predicate.SysDistrict) *SysDistrictUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (sduo *SysDistrictUpdateOne) Select(field string, fields ...string) *SysDistrictUpdateOne {
-	sduo.fields = append([]string{field}, fields...)
-	return sduo
+func (_u *SysDistrictUpdateOne) Select(field string, fields ...string) *SysDistrictUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysDistrict entity.
-func (sduo *SysDistrictUpdateOne) Save(ctx context.Context) (*SysDistrict, error) {
-	sduo.defaults()
-	return withHooks(ctx, sduo.sqlSave, sduo.mutation, sduo.hooks)
+func (_u *SysDistrictUpdateOne) Save(ctx context.Context) (*SysDistrict, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sduo *SysDistrictUpdateOne) SaveX(ctx context.Context) *SysDistrict {
-	node, err := sduo.Save(ctx)
+func (_u *SysDistrictUpdateOne) SaveX(ctx context.Context) *SysDistrict {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1919,99 +1919,99 @@ func (sduo *SysDistrictUpdateOne) SaveX(ctx context.Context) *SysDistrict {
 }
 
 // Exec executes the query on the entity.
-func (sduo *SysDistrictUpdateOne) Exec(ctx context.Context) error {
-	_, err := sduo.Save(ctx)
+func (_u *SysDistrictUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sduo *SysDistrictUpdateOne) ExecX(ctx context.Context) {
-	if err := sduo.Exec(ctx); err != nil {
+func (_u *SysDistrictUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sduo *SysDistrictUpdateOne) defaults() {
-	if _, ok := sduo.mutation.UpdatedAt(); !ok && !sduo.mutation.UpdatedAtCleared() {
+func (_u *SysDistrictUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysdistrict.UpdateDefaultUpdatedAt()
-		sduo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sduo *SysDistrictUpdateOne) check() error {
-	if v, ok := sduo.mutation.Name(); ok {
+func (_u *SysDistrictUpdateOne) check() error {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := sysdistrict.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.name": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.NameEn(); ok {
+	if v, ok := _u.mutation.NameEn(); ok {
 		if err := sysdistrict.NameEnValidator(v); err != nil {
 			return &ValidationError{Name: "name_en", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.name_en": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.Sname(); ok {
+	if v, ok := _u.mutation.Sname(); ok {
 		if err := sysdistrict.SnameValidator(v); err != nil {
 			return &ValidationError{Name: "sname", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.sname": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.SnameEn(); ok {
+	if v, ok := _u.mutation.SnameEn(); ok {
 		if err := sysdistrict.SnameEnValidator(v); err != nil {
 			return &ValidationError{Name: "sname_en", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.sname_en": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.Abbr(); ok {
+	if v, ok := _u.mutation.Abbr(); ok {
 		if err := sysdistrict.AbbrValidator(v); err != nil {
 			return &ValidationError{Name: "abbr", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.abbr": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.StCode(); ok {
+	if v, ok := _u.mutation.StCode(); ok {
 		if err := sysdistrict.StCodeValidator(v); err != nil {
 			return &ValidationError{Name: "st_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.st_code": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.Initials(); ok {
+	if v, ok := _u.mutation.Initials(); ok {
 		if err := sysdistrict.InitialsValidator(v); err != nil {
 			return &ValidationError{Name: "initials", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.initials": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.Pinyin(); ok {
+	if v, ok := _u.mutation.Pinyin(); ok {
 		if err := sysdistrict.PinyinValidator(v); err != nil {
 			return &ValidationError{Name: "pinyin", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.pinyin": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.ParentID(); ok {
+	if v, ok := _u.mutation.ParentID(); ok {
 		if err := sysdistrict.ParentIDValidator(v); err != nil {
 			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.parent_id": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.AreaCode(); ok {
+	if v, ok := _u.mutation.AreaCode(); ok {
 		if err := sysdistrict.AreaCodeValidator(v); err != nil {
 			return &ValidationError{Name: "area_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.area_code": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.ZipCode(); ok {
+	if v, ok := _u.mutation.ZipCode(); ok {
 		if err := sysdistrict.ZipCodeValidator(v); err != nil {
 			return &ValidationError{Name: "zip_code", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.zip_code": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.MergeName(); ok {
+	if v, ok := _u.mutation.MergeName(); ok {
 		if err := sysdistrict.MergeNameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_name", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.merge_name": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.MergeSname(); ok {
+	if v, ok := _u.mutation.MergeSname(); ok {
 		if err := sysdistrict.MergeSnameValidator(v); err != nil {
 			return &ValidationError{Name: "merge_sname", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.merge_sname": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.Extra(); ok {
+	if v, ok := _u.mutation.Extra(); ok {
 		if err := sysdistrict.ExtraValidator(v); err != nil {
 			return &ValidationError{Name: "extra", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.extra": %w`, err)}
 		}
 	}
-	if v, ok := sduo.mutation.Suffix(); ok {
+	if v, ok := _u.mutation.Suffix(); ok {
 		if err := sysdistrict.SuffixValidator(v); err != nil {
 			return &ValidationError{Name: "suffix", err: fmt.Errorf(`mainent: validator failed for field "SysDistrict.suffix": %w`, err)}
 		}
@@ -2020,22 +2020,22 @@ func (sduo *SysDistrictUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sduo *SysDistrictUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdateOne {
-	sduo.modifiers = append(sduo.modifiers, modifiers...)
-	return sduo
+func (_u *SysDistrictUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysDistrictUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistrict, err error) {
-	if err := sduo.check(); err != nil {
+func (_u *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistrict, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysdistrict.Table, sysdistrict.Columns, sqlgraph.NewFieldSpec(sysdistrict.FieldID, field.TypeString))
-	id, ok := sduo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysDistrict.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := sduo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysdistrict.FieldID)
 		for _, f := range fields {
@@ -2047,215 +2047,215 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 			}
 		}
 	}
-	if ps := sduo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sduo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysdistrict.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sduo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sduo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysdistrict.FieldSort, field.TypeInt32, value)
 	}
-	if sduo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysdistrict.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sduo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdistrict.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sduo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysdistrict.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sduo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdistrict.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sduo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysdistrict.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sduo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysdistrict.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sduo.mutation.TreeID(); ok {
+	if value, ok := _u.mutation.TreeID(); ok {
 		_spec.SetField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 	}
-	if value, ok := sduo.mutation.AddedTreeID(); ok {
+	if value, ok := _u.mutation.AddedTreeID(); ok {
 		_spec.AddField(sysdistrict.FieldTreeID, field.TypeInt64, value)
 	}
-	if sduo.mutation.TreeIDCleared() {
+	if _u.mutation.TreeIDCleared() {
 		_spec.ClearField(sysdistrict.FieldTreeID, field.TypeInt64)
 	}
-	if value, ok := sduo.mutation.TreeLevel(); ok {
+	if value, ok := _u.mutation.TreeLevel(); ok {
 		_spec.SetField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 	}
-	if value, ok := sduo.mutation.AddedTreeLevel(); ok {
+	if value, ok := _u.mutation.AddedTreeLevel(); ok {
 		_spec.AddField(sysdistrict.FieldTreeLevel, field.TypeInt32, value)
 	}
-	if sduo.mutation.TreeLevelCleared() {
+	if _u.mutation.TreeLevelCleared() {
 		_spec.ClearField(sysdistrict.FieldTreeLevel, field.TypeInt32)
 	}
-	if value, ok := sduo.mutation.TreeLeft(); ok {
+	if value, ok := _u.mutation.TreeLeft(); ok {
 		_spec.SetField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 	}
-	if value, ok := sduo.mutation.AddedTreeLeft(); ok {
+	if value, ok := _u.mutation.AddedTreeLeft(); ok {
 		_spec.AddField(sysdistrict.FieldTreeLeft, field.TypeInt64, value)
 	}
-	if sduo.mutation.TreeLeftCleared() {
+	if _u.mutation.TreeLeftCleared() {
 		_spec.ClearField(sysdistrict.FieldTreeLeft, field.TypeInt64)
 	}
-	if value, ok := sduo.mutation.TreeRight(); ok {
+	if value, ok := _u.mutation.TreeRight(); ok {
 		_spec.SetField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 	}
-	if value, ok := sduo.mutation.AddedTreeRight(); ok {
+	if value, ok := _u.mutation.AddedTreeRight(); ok {
 		_spec.AddField(sysdistrict.FieldTreeRight, field.TypeInt64, value)
 	}
-	if sduo.mutation.TreeRightCleared() {
+	if _u.mutation.TreeRightCleared() {
 		_spec.ClearField(sysdistrict.FieldTreeRight, field.TypeInt64)
 	}
-	if value, ok := sduo.mutation.IsLeaf(); ok {
+	if value, ok := _u.mutation.IsLeaf(); ok {
 		_spec.SetField(sysdistrict.FieldIsLeaf, field.TypeBool, value)
 	}
-	if sduo.mutation.IsLeafCleared() {
+	if _u.mutation.IsLeafCleared() {
 		_spec.ClearField(sysdistrict.FieldIsLeaf, field.TypeBool)
 	}
-	if value, ok := sduo.mutation.TreePath(); ok {
+	if value, ok := _u.mutation.TreePath(); ok {
 		_spec.SetField(sysdistrict.FieldTreePath, field.TypeString, value)
 	}
-	if sduo.mutation.TreePathCleared() {
+	if _u.mutation.TreePathCleared() {
 		_spec.ClearField(sysdistrict.FieldTreePath, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysdistrict.FieldName, field.TypeString, value)
 	}
-	if sduo.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(sysdistrict.FieldName, field.TypeString)
 	}
-	if value, ok := sduo.mutation.NameEn(); ok {
+	if value, ok := _u.mutation.NameEn(); ok {
 		_spec.SetField(sysdistrict.FieldNameEn, field.TypeString, value)
 	}
-	if sduo.mutation.NameEnCleared() {
+	if _u.mutation.NameEnCleared() {
 		_spec.ClearField(sysdistrict.FieldNameEn, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Sname(); ok {
+	if value, ok := _u.mutation.Sname(); ok {
 		_spec.SetField(sysdistrict.FieldSname, field.TypeString, value)
 	}
-	if sduo.mutation.SnameCleared() {
+	if _u.mutation.SnameCleared() {
 		_spec.ClearField(sysdistrict.FieldSname, field.TypeString)
 	}
-	if value, ok := sduo.mutation.SnameEn(); ok {
+	if value, ok := _u.mutation.SnameEn(); ok {
 		_spec.SetField(sysdistrict.FieldSnameEn, field.TypeString, value)
 	}
-	if sduo.mutation.SnameEnCleared() {
+	if _u.mutation.SnameEnCleared() {
 		_spec.ClearField(sysdistrict.FieldSnameEn, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Abbr(); ok {
+	if value, ok := _u.mutation.Abbr(); ok {
 		_spec.SetField(sysdistrict.FieldAbbr, field.TypeString, value)
 	}
-	if sduo.mutation.AbbrCleared() {
+	if _u.mutation.AbbrCleared() {
 		_spec.ClearField(sysdistrict.FieldAbbr, field.TypeString)
 	}
-	if value, ok := sduo.mutation.StCode(); ok {
+	if value, ok := _u.mutation.StCode(); ok {
 		_spec.SetField(sysdistrict.FieldStCode, field.TypeString, value)
 	}
-	if sduo.mutation.StCodeCleared() {
+	if _u.mutation.StCodeCleared() {
 		_spec.ClearField(sysdistrict.FieldStCode, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Initials(); ok {
+	if value, ok := _u.mutation.Initials(); ok {
 		_spec.SetField(sysdistrict.FieldInitials, field.TypeString, value)
 	}
-	if sduo.mutation.InitialsCleared() {
+	if _u.mutation.InitialsCleared() {
 		_spec.ClearField(sysdistrict.FieldInitials, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Pinyin(); ok {
+	if value, ok := _u.mutation.Pinyin(); ok {
 		_spec.SetField(sysdistrict.FieldPinyin, field.TypeString, value)
 	}
-	if sduo.mutation.PinyinCleared() {
+	if _u.mutation.PinyinCleared() {
 		_spec.ClearField(sysdistrict.FieldPinyin, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Longitude(); ok {
+	if value, ok := _u.mutation.Longitude(); ok {
 		_spec.SetField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 	}
-	if value, ok := sduo.mutation.AddedLongitude(); ok {
+	if value, ok := _u.mutation.AddedLongitude(); ok {
 		_spec.AddField(sysdistrict.FieldLongitude, field.TypeFloat64, value)
 	}
-	if sduo.mutation.LongitudeCleared() {
+	if _u.mutation.LongitudeCleared() {
 		_spec.ClearField(sysdistrict.FieldLongitude, field.TypeFloat64)
 	}
-	if value, ok := sduo.mutation.Latitude(); ok {
+	if value, ok := _u.mutation.Latitude(); ok {
 		_spec.SetField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 	}
-	if value, ok := sduo.mutation.AddedLatitude(); ok {
+	if value, ok := _u.mutation.AddedLatitude(); ok {
 		_spec.AddField(sysdistrict.FieldLatitude, field.TypeFloat64, value)
 	}
-	if sduo.mutation.LatitudeCleared() {
+	if _u.mutation.LatitudeCleared() {
 		_spec.ClearField(sysdistrict.FieldLatitude, field.TypeFloat64)
 	}
-	if value, ok := sduo.mutation.AreaCode(); ok {
+	if value, ok := _u.mutation.AreaCode(); ok {
 		_spec.SetField(sysdistrict.FieldAreaCode, field.TypeString, value)
 	}
-	if sduo.mutation.AreaCodeCleared() {
+	if _u.mutation.AreaCodeCleared() {
 		_spec.ClearField(sysdistrict.FieldAreaCode, field.TypeString)
 	}
-	if value, ok := sduo.mutation.ZipCode(); ok {
+	if value, ok := _u.mutation.ZipCode(); ok {
 		_spec.SetField(sysdistrict.FieldZipCode, field.TypeString, value)
 	}
-	if sduo.mutation.ZipCodeCleared() {
+	if _u.mutation.ZipCodeCleared() {
 		_spec.ClearField(sysdistrict.FieldZipCode, field.TypeString)
 	}
-	if value, ok := sduo.mutation.MergeName(); ok {
+	if value, ok := _u.mutation.MergeName(); ok {
 		_spec.SetField(sysdistrict.FieldMergeName, field.TypeString, value)
 	}
-	if sduo.mutation.MergeNameCleared() {
+	if _u.mutation.MergeNameCleared() {
 		_spec.ClearField(sysdistrict.FieldMergeName, field.TypeString)
 	}
-	if value, ok := sduo.mutation.MergeSname(); ok {
+	if value, ok := _u.mutation.MergeSname(); ok {
 		_spec.SetField(sysdistrict.FieldMergeSname, field.TypeString, value)
 	}
-	if sduo.mutation.MergeSnameCleared() {
+	if _u.mutation.MergeSnameCleared() {
 		_spec.ClearField(sysdistrict.FieldMergeSname, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Extra(); ok {
+	if value, ok := _u.mutation.Extra(); ok {
 		_spec.SetField(sysdistrict.FieldExtra, field.TypeString, value)
 	}
-	if sduo.mutation.ExtraCleared() {
+	if _u.mutation.ExtraCleared() {
 		_spec.ClearField(sysdistrict.FieldExtra, field.TypeString)
 	}
-	if value, ok := sduo.mutation.Suffix(); ok {
+	if value, ok := _u.mutation.Suffix(); ok {
 		_spec.SetField(sysdistrict.FieldSuffix, field.TypeString, value)
 	}
-	if sduo.mutation.SuffixCleared() {
+	if _u.mutation.SuffixCleared() {
 		_spec.ClearField(sysdistrict.FieldSuffix, field.TypeString)
 	}
-	if value, ok := sduo.mutation.IsHot(); ok {
+	if value, ok := _u.mutation.IsHot(); ok {
 		_spec.SetField(sysdistrict.FieldIsHot, field.TypeBool, value)
 	}
-	if sduo.mutation.IsHotCleared() {
+	if _u.mutation.IsHotCleared() {
 		_spec.ClearField(sysdistrict.FieldIsHot, field.TypeBool)
 	}
-	if value, ok := sduo.mutation.IsReal(); ok {
+	if value, ok := _u.mutation.IsReal(); ok {
 		_spec.SetField(sysdistrict.FieldIsReal, field.TypeBool, value)
 	}
-	if sduo.mutation.IsRealCleared() {
+	if _u.mutation.IsRealCleared() {
 		_spec.ClearField(sysdistrict.FieldIsReal, field.TypeBool)
 	}
-	if value, ok := sduo.mutation.IsMain(); ok {
+	if value, ok := _u.mutation.IsMain(); ok {
 		_spec.SetField(sysdistrict.FieldIsMain, field.TypeBool, value)
 	}
-	if sduo.mutation.IsMainCleared() {
+	if _u.mutation.IsMainCleared() {
 		_spec.ClearField(sysdistrict.FieldIsMain, field.TypeBool)
 	}
-	if value, ok := sduo.mutation.IsDirect(); ok {
+	if value, ok := _u.mutation.IsDirect(); ok {
 		_spec.SetField(sysdistrict.FieldIsDirect, field.TypeBool, value)
 	}
-	if sduo.mutation.IsDirectCleared() {
+	if _u.mutation.IsDirectCleared() {
 		_spec.ClearField(sysdistrict.FieldIsDirect, field.TypeBool)
 	}
-	if sduo.mutation.ParentCleared() {
+	if _u.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -2268,7 +2268,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sduo.mutation.ParentIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -2284,7 +2284,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if sduo.mutation.ChildrenCleared() {
+	if _u.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -2297,7 +2297,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sduo.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !sduo.mutation.ChildrenCleared() {
+	if nodes := _u.mutation.RemovedChildrenIDs(); len(nodes) > 0 && !_u.mutation.ChildrenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -2313,7 +2313,7 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sduo.mutation.ChildrenIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -2329,11 +2329,11 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(sduo.modifiers...)
-	_node = &SysDistrict{config: sduo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysDistrict{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, sduo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysdistrict.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -2341,6 +2341,6 @@ func (sduo *SysDistrictUpdateOne) sqlSave(ctx context.Context) (_node *SysDistri
 		}
 		return nil, err
 	}
-	sduo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

@@ -24,215 +24,215 @@ type SysLoggingCreate struct {
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (slc *SysLoggingCreate) SetCreatedAt(t time.Time) *SysLoggingCreate {
-	slc.mutation.SetCreatedAt(t)
-	return slc
+func (_c *SysLoggingCreate) SetCreatedAt(v time.Time) *SysLoggingCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableCreatedAt(t *time.Time) *SysLoggingCreate {
-	if t != nil {
-		slc.SetCreatedAt(*t)
+func (_c *SysLoggingCreate) SetNillableCreatedAt(v *time.Time) *SysLoggingCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (slc *SysLoggingCreate) SetUpdatedAt(t time.Time) *SysLoggingCreate {
-	slc.mutation.SetUpdatedAt(t)
-	return slc
+func (_c *SysLoggingCreate) SetUpdatedAt(v time.Time) *SysLoggingCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableUpdatedAt(t *time.Time) *SysLoggingCreate {
-	if t != nil {
-		slc.SetUpdatedAt(*t)
+func (_c *SysLoggingCreate) SetNillableUpdatedAt(v *time.Time) *SysLoggingCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (slc *SysLoggingCreate) SetDeletedAt(t time.Time) *SysLoggingCreate {
-	slc.mutation.SetDeletedAt(t)
-	return slc
+func (_c *SysLoggingCreate) SetDeletedAt(v time.Time) *SysLoggingCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableDeletedAt(t *time.Time) *SysLoggingCreate {
-	if t != nil {
-		slc.SetDeletedAt(*t)
+func (_c *SysLoggingCreate) SetNillableDeletedAt(v *time.Time) *SysLoggingCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetIsDel sets the "is_del" field.
-func (slc *SysLoggingCreate) SetIsDel(b bool) *SysLoggingCreate {
-	slc.mutation.SetIsDel(b)
-	return slc
+func (_c *SysLoggingCreate) SetIsDel(v bool) *SysLoggingCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableIsDel(b *bool) *SysLoggingCreate {
-	if b != nil {
-		slc.SetIsDel(*b)
+func (_c *SysLoggingCreate) SetNillableIsDel(v *bool) *SysLoggingCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (slc *SysLoggingCreate) SetMemo(s string) *SysLoggingCreate {
-	slc.mutation.SetMemo(s)
-	return slc
+func (_c *SysLoggingCreate) SetMemo(v string) *SysLoggingCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableMemo(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetMemo(*s)
+func (_c *SysLoggingCreate) SetNillableMemo(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetLevel sets the "level" field.
-func (slc *SysLoggingCreate) SetLevel(s string) *SysLoggingCreate {
-	slc.mutation.SetLevel(s)
-	return slc
+func (_c *SysLoggingCreate) SetLevel(v string) *SysLoggingCreate {
+	_c.mutation.SetLevel(v)
+	return _c
 }
 
 // SetNillableLevel sets the "level" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableLevel(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetLevel(*s)
+func (_c *SysLoggingCreate) SetNillableLevel(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetLevel(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetTraceID sets the "trace_id" field.
-func (slc *SysLoggingCreate) SetTraceID(s string) *SysLoggingCreate {
-	slc.mutation.SetTraceID(s)
-	return slc
+func (_c *SysLoggingCreate) SetTraceID(v string) *SysLoggingCreate {
+	_c.mutation.SetTraceID(v)
+	return _c
 }
 
 // SetNillableTraceID sets the "trace_id" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableTraceID(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetTraceID(*s)
+func (_c *SysLoggingCreate) SetNillableTraceID(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetTraceID(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetUserID sets the "user_id" field.
-func (slc *SysLoggingCreate) SetUserID(s string) *SysLoggingCreate {
-	slc.mutation.SetUserID(s)
-	return slc
+func (_c *SysLoggingCreate) SetUserID(v string) *SysLoggingCreate {
+	_c.mutation.SetUserID(v)
+	return _c
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableUserID(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetUserID(*s)
+func (_c *SysLoggingCreate) SetNillableUserID(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetUserID(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetTag sets the "tag" field.
-func (slc *SysLoggingCreate) SetTag(s string) *SysLoggingCreate {
-	slc.mutation.SetTag(s)
-	return slc
+func (_c *SysLoggingCreate) SetTag(v string) *SysLoggingCreate {
+	_c.mutation.SetTag(v)
+	return _c
 }
 
 // SetNillableTag sets the "tag" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableTag(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetTag(*s)
+func (_c *SysLoggingCreate) SetNillableTag(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetTag(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetVersion sets the "version" field.
-func (slc *SysLoggingCreate) SetVersion(s string) *SysLoggingCreate {
-	slc.mutation.SetVersion(s)
-	return slc
+func (_c *SysLoggingCreate) SetVersion(v string) *SysLoggingCreate {
+	_c.mutation.SetVersion(v)
+	return _c
 }
 
 // SetNillableVersion sets the "version" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableVersion(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetVersion(*s)
+func (_c *SysLoggingCreate) SetNillableVersion(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetVersion(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetMessage sets the "message" field.
-func (slc *SysLoggingCreate) SetMessage(s string) *SysLoggingCreate {
-	slc.mutation.SetMessage(s)
-	return slc
+func (_c *SysLoggingCreate) SetMessage(v string) *SysLoggingCreate {
+	_c.mutation.SetMessage(v)
+	return _c
 }
 
 // SetNillableMessage sets the "message" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableMessage(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetMessage(*s)
+func (_c *SysLoggingCreate) SetNillableMessage(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetMessage(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetData sets the "data" field.
-func (slc *SysLoggingCreate) SetData(s string) *SysLoggingCreate {
-	slc.mutation.SetData(s)
-	return slc
+func (_c *SysLoggingCreate) SetData(v string) *SysLoggingCreate {
+	_c.mutation.SetData(v)
+	return _c
 }
 
 // SetNillableData sets the "data" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableData(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetData(*s)
+func (_c *SysLoggingCreate) SetNillableData(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetData(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetErrorStack sets the "error_stack" field.
-func (slc *SysLoggingCreate) SetErrorStack(s string) *SysLoggingCreate {
-	slc.mutation.SetErrorStack(s)
-	return slc
+func (_c *SysLoggingCreate) SetErrorStack(v string) *SysLoggingCreate {
+	_c.mutation.SetErrorStack(v)
+	return _c
 }
 
 // SetNillableErrorStack sets the "error_stack" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableErrorStack(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetErrorStack(*s)
+func (_c *SysLoggingCreate) SetNillableErrorStack(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetErrorStack(*v)
 	}
-	return slc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (slc *SysLoggingCreate) SetID(s string) *SysLoggingCreate {
-	slc.mutation.SetID(s)
-	return slc
+func (_c *SysLoggingCreate) SetID(v string) *SysLoggingCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (slc *SysLoggingCreate) SetNillableID(s *string) *SysLoggingCreate {
-	if s != nil {
-		slc.SetID(*s)
+func (_c *SysLoggingCreate) SetNillableID(v *string) *SysLoggingCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return slc
+	return _c
 }
 
 // Mutation returns the SysLoggingMutation object of the builder.
-func (slc *SysLoggingCreate) Mutation() *SysLoggingMutation {
-	return slc.mutation
+func (_c *SysLoggingCreate) Mutation() *SysLoggingMutation {
+	return _c.mutation
 }
 
 // Save creates the SysLogging in the database.
-func (slc *SysLoggingCreate) Save(ctx context.Context) (*SysLogging, error) {
-	slc.defaults()
-	return withHooks(ctx, slc.sqlSave, slc.mutation, slc.hooks)
+func (_c *SysLoggingCreate) Save(ctx context.Context) (*SysLogging, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (slc *SysLoggingCreate) SaveX(ctx context.Context) *SysLogging {
-	v, err := slc.Save(ctx)
+func (_c *SysLoggingCreate) SaveX(ctx context.Context) *SysLogging {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -240,83 +240,83 @@ func (slc *SysLoggingCreate) SaveX(ctx context.Context) *SysLogging {
 }
 
 // Exec executes the query.
-func (slc *SysLoggingCreate) Exec(ctx context.Context) error {
-	_, err := slc.Save(ctx)
+func (_c *SysLoggingCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (slc *SysLoggingCreate) ExecX(ctx context.Context) {
-	if err := slc.Exec(ctx); err != nil {
+func (_c *SysLoggingCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (slc *SysLoggingCreate) defaults() {
-	if _, ok := slc.mutation.CreatedAt(); !ok {
+func (_c *SysLoggingCreate) defaults() {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := syslogging.DefaultCreatedAt()
-		slc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := slc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := syslogging.DefaultUpdatedAt()
-		slc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := slc.mutation.IsDel(); !ok {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := syslogging.DefaultIsDel
-		slc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := slc.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := syslogging.DefaultMemo
-		slc.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := slc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := syslogging.DefaultID()
-		slc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (slc *SysLoggingCreate) check() error {
-	if _, ok := slc.mutation.IsDel(); !ok {
+func (_c *SysLoggingCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysLogging.is_del"`)}
 	}
-	if v, ok := slc.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := syslogging.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.memo": %w`, err)}
 		}
 	}
-	if v, ok := slc.mutation.Level(); ok {
+	if v, ok := _c.mutation.Level(); ok {
 		if err := syslogging.LevelValidator(v); err != nil {
 			return &ValidationError{Name: "level", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.level": %w`, err)}
 		}
 	}
-	if v, ok := slc.mutation.TraceID(); ok {
+	if v, ok := _c.mutation.TraceID(); ok {
 		if err := syslogging.TraceIDValidator(v); err != nil {
 			return &ValidationError{Name: "trace_id", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.trace_id": %w`, err)}
 		}
 	}
-	if v, ok := slc.mutation.UserID(); ok {
+	if v, ok := _c.mutation.UserID(); ok {
 		if err := syslogging.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.user_id": %w`, err)}
 		}
 	}
-	if v, ok := slc.mutation.Tag(); ok {
+	if v, ok := _c.mutation.Tag(); ok {
 		if err := syslogging.TagValidator(v); err != nil {
 			return &ValidationError{Name: "tag", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.tag": %w`, err)}
 		}
 	}
-	if v, ok := slc.mutation.Version(); ok {
+	if v, ok := _c.mutation.Version(); ok {
 		if err := syslogging.VersionValidator(v); err != nil {
 			return &ValidationError{Name: "version", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.version": %w`, err)}
 		}
 	}
-	if v, ok := slc.mutation.Message(); ok {
+	if v, ok := _c.mutation.Message(); ok {
 		if err := syslogging.MessageValidator(v); err != nil {
 			return &ValidationError{Name: "message", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.message": %w`, err)}
 		}
 	}
-	if v, ok := slc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := syslogging.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysLogging.id": %w`, err)}
 		}
@@ -324,12 +324,12 @@ func (slc *SysLoggingCreate) check() error {
 	return nil
 }
 
-func (slc *SysLoggingCreate) sqlSave(ctx context.Context) (*SysLogging, error) {
-	if err := slc.check(); err != nil {
+func (_c *SysLoggingCreate) sqlSave(ctx context.Context) (*SysLogging, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := slc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, slc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -342,70 +342,70 @@ func (slc *SysLoggingCreate) sqlSave(ctx context.Context) (*SysLogging, error) {
 			return nil, fmt.Errorf("unexpected SysLogging.ID type: %T", _spec.ID.Value)
 		}
 	}
-	slc.mutation.id = &_node.ID
-	slc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
+func (_c *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysLogging{config: slc.config}
+		_node = &SysLogging{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(syslogging.Table, sqlgraph.NewFieldSpec(syslogging.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = slc.conflict
-	if id, ok := slc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := slc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(syslogging.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := slc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(syslogging.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := slc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(syslogging.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := slc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(syslogging.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := slc.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(syslogging.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := slc.mutation.Level(); ok {
+	if value, ok := _c.mutation.Level(); ok {
 		_spec.SetField(syslogging.FieldLevel, field.TypeString, value)
 		_node.Level = &value
 	}
-	if value, ok := slc.mutation.TraceID(); ok {
+	if value, ok := _c.mutation.TraceID(); ok {
 		_spec.SetField(syslogging.FieldTraceID, field.TypeString, value)
 		_node.TraceID = &value
 	}
-	if value, ok := slc.mutation.UserID(); ok {
+	if value, ok := _c.mutation.UserID(); ok {
 		_spec.SetField(syslogging.FieldUserID, field.TypeString, value)
 		_node.UserID = &value
 	}
-	if value, ok := slc.mutation.Tag(); ok {
+	if value, ok := _c.mutation.Tag(); ok {
 		_spec.SetField(syslogging.FieldTag, field.TypeString, value)
 		_node.Tag = &value
 	}
-	if value, ok := slc.mutation.Version(); ok {
+	if value, ok := _c.mutation.Version(); ok {
 		_spec.SetField(syslogging.FieldVersion, field.TypeString, value)
 		_node.Version = &value
 	}
-	if value, ok := slc.mutation.Message(); ok {
+	if value, ok := _c.mutation.Message(); ok {
 		_spec.SetField(syslogging.FieldMessage, field.TypeString, value)
 		_node.Message = &value
 	}
-	if value, ok := slc.mutation.Data(); ok {
+	if value, ok := _c.mutation.Data(); ok {
 		_spec.SetField(syslogging.FieldData, field.TypeString, value)
 		_node.Data = &value
 	}
-	if value, ok := slc.mutation.ErrorStack(); ok {
+	if value, ok := _c.mutation.ErrorStack(); ok {
 		_spec.SetField(syslogging.FieldErrorStack, field.TypeString, value)
 		_node.ErrorStack = &value
 	}
@@ -428,10 +428,10 @@ func (slc *SysLoggingCreate) createSpec() (*SysLogging, *sqlgraph.CreateSpec) {
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (slc *SysLoggingCreate) OnConflict(opts ...sql.ConflictOption) *SysLoggingUpsertOne {
-	slc.conflict = opts
+func (_c *SysLoggingCreate) OnConflict(opts ...sql.ConflictOption) *SysLoggingUpsertOne {
+	_c.conflict = opts
 	return &SysLoggingUpsertOne{
-		create: slc,
+		create: _c,
 	}
 }
 
@@ -441,10 +441,10 @@ func (slc *SysLoggingCreate) OnConflict(opts ...sql.ConflictOption) *SysLoggingU
 //	client.SysLogging.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (slc *SysLoggingCreate) OnConflictColumns(columns ...string) *SysLoggingUpsertOne {
-	slc.conflict = append(slc.conflict, sql.ConflictColumns(columns...))
+func (_c *SysLoggingCreate) OnConflictColumns(columns ...string) *SysLoggingUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysLoggingUpsertOne{
-		create: slc,
+		create: _c,
 	}
 }
 
@@ -978,16 +978,16 @@ type SysLoggingCreateBulk struct {
 }
 
 // Save creates the SysLogging entities in the database.
-func (slcb *SysLoggingCreateBulk) Save(ctx context.Context) ([]*SysLogging, error) {
-	if slcb.err != nil {
-		return nil, slcb.err
+func (_c *SysLoggingCreateBulk) Save(ctx context.Context) ([]*SysLogging, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(slcb.builders))
-	nodes := make([]*SysLogging, len(slcb.builders))
-	mutators := make([]Mutator, len(slcb.builders))
-	for i := range slcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysLogging, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := slcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysLoggingMutation)
@@ -1001,12 +1001,12 @@ func (slcb *SysLoggingCreateBulk) Save(ctx context.Context) ([]*SysLogging, erro
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, slcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = slcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, slcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1026,7 +1026,7 @@ func (slcb *SysLoggingCreateBulk) Save(ctx context.Context) ([]*SysLogging, erro
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, slcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1034,8 +1034,8 @@ func (slcb *SysLoggingCreateBulk) Save(ctx context.Context) ([]*SysLogging, erro
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (slcb *SysLoggingCreateBulk) SaveX(ctx context.Context) []*SysLogging {
-	v, err := slcb.Save(ctx)
+func (_c *SysLoggingCreateBulk) SaveX(ctx context.Context) []*SysLogging {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1043,14 +1043,14 @@ func (slcb *SysLoggingCreateBulk) SaveX(ctx context.Context) []*SysLogging {
 }
 
 // Exec executes the query.
-func (slcb *SysLoggingCreateBulk) Exec(ctx context.Context) error {
-	_, err := slcb.Save(ctx)
+func (_c *SysLoggingCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (slcb *SysLoggingCreateBulk) ExecX(ctx context.Context) {
-	if err := slcb.Exec(ctx); err != nil {
+func (_c *SysLoggingCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1070,10 +1070,10 @@ func (slcb *SysLoggingCreateBulk) ExecX(ctx context.Context) {
 //			SetCreatedAt(v+v).
 //		}).
 //		Exec(ctx)
-func (slcb *SysLoggingCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysLoggingUpsertBulk {
-	slcb.conflict = opts
+func (_c *SysLoggingCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysLoggingUpsertBulk {
+	_c.conflict = opts
 	return &SysLoggingUpsertBulk{
-		create: slcb,
+		create: _c,
 	}
 }
 
@@ -1083,10 +1083,10 @@ func (slcb *SysLoggingCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysLog
 //	client.SysLogging.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (slcb *SysLoggingCreateBulk) OnConflictColumns(columns ...string) *SysLoggingUpsertBulk {
-	slcb.conflict = append(slcb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysLoggingCreateBulk) OnConflictColumns(columns ...string) *SysLoggingUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysLoggingUpsertBulk{
-		create: slcb,
+		create: _c,
 	}
 }
 

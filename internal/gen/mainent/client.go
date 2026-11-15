@@ -426,8 +426,8 @@ func (c *OrgDeptClient) Update() *OrgDeptUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrgDeptClient) UpdateOne(od *OrgDept) *OrgDeptUpdateOne {
-	mutation := newOrgDeptMutation(c.config, OpUpdateOne, withOrgDept(od))
+func (c *OrgDeptClient) UpdateOne(_m *OrgDept) *OrgDeptUpdateOne {
+	mutation := newOrgDeptMutation(c.config, OpUpdateOne, withOrgDept(_m))
 	return &OrgDeptUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -444,8 +444,8 @@ func (c *OrgDeptClient) Delete() *OrgDeptDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrgDeptClient) DeleteOne(od *OrgDept) *OrgDeptDeleteOne {
-	return c.DeleteOneID(od.ID)
+func (c *OrgDeptClient) DeleteOne(_m *OrgDept) *OrgDeptDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -480,64 +480,64 @@ func (c *OrgDeptClient) GetX(ctx context.Context, id string) *OrgDept {
 }
 
 // QueryParent queries the parent edge of a OrgDept.
-func (c *OrgDeptClient) QueryParent(od *OrgDept) *OrgDeptQuery {
+func (c *OrgDeptClient) QueryParent(_m *OrgDept) *OrgDeptQuery {
 	query := (&OrgDeptClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := od.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgdept.Table, orgdept.FieldID, id),
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.ParentTable, orgdept.ParentColumn),
 		)
-		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryChildren queries the children edge of a OrgDept.
-func (c *OrgDeptClient) QueryChildren(od *OrgDept) *OrgDeptQuery {
+func (c *OrgDeptClient) QueryChildren(_m *OrgDept) *OrgDeptQuery {
 	query := (&OrgDeptClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := od.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgdept.Table, orgdept.FieldID, id),
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.ChildrenTable, orgdept.ChildrenColumn),
 		)
-		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryOrgan queries the organ edge of a OrgDept.
-func (c *OrgDeptClient) QueryOrgan(od *OrgDept) *OrgOrganQuery {
+func (c *OrgDeptClient) QueryOrgan(_m *OrgDept) *OrgOrganQuery {
 	query := (&OrgOrganClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := od.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgdept.Table, orgdept.FieldID, id),
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.OrganTable, orgdept.OrganColumn),
 		)
-		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryStaffs queries the staffs edge of a OrgDept.
-func (c *OrgDeptClient) QueryStaffs(od *OrgDept) *OrgStaffQuery {
+func (c *OrgDeptClient) QueryStaffs(_m *OrgDept) *OrgStaffQuery {
 	query := (&OrgStaffClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := od.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgdept.Table, orgdept.FieldID, id),
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.StaffsTable, orgdept.StaffsColumn),
 		)
-		fromV = sqlgraph.Neighbors(od.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -623,8 +623,8 @@ func (c *OrgOrganClient) Update() *OrgOrganUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrgOrganClient) UpdateOne(oo *OrgOrgan) *OrgOrganUpdateOne {
-	mutation := newOrgOrganMutation(c.config, OpUpdateOne, withOrgOrgan(oo))
+func (c *OrgOrganClient) UpdateOne(_m *OrgOrgan) *OrgOrganUpdateOne {
+	mutation := newOrgOrganMutation(c.config, OpUpdateOne, withOrgOrgan(_m))
 	return &OrgOrganUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -641,8 +641,8 @@ func (c *OrgOrganClient) Delete() *OrgOrganDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrgOrganClient) DeleteOne(oo *OrgOrgan) *OrgOrganDeleteOne {
-	return c.DeleteOneID(oo.ID)
+func (c *OrgOrganClient) DeleteOne(_m *OrgOrgan) *OrgOrganDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -677,64 +677,64 @@ func (c *OrgOrganClient) GetX(ctx context.Context, id string) *OrgOrgan {
 }
 
 // QueryHaddr queries the haddr edge of a OrgOrgan.
-func (c *OrgOrganClient) QueryHaddr(oo *OrgOrgan) *SysAddressQuery {
+func (c *OrgOrganClient) QueryHaddr(_m *OrgOrgan) *SysAddressQuery {
 	query := (&SysAddressClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := oo.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgorgan.HaddrTable, orgorgan.HaddrColumn),
 		)
-		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryDepts queries the depts edge of a OrgOrgan.
-func (c *OrgOrganClient) QueryDepts(oo *OrgOrgan) *OrgDeptQuery {
+func (c *OrgOrganClient) QueryDepts(_m *OrgOrgan) *OrgDeptQuery {
 	query := (&OrgDeptClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := oo.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.DeptsTable, orgorgan.DeptsColumn),
 		)
-		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryStaffs queries the staffs edge of a OrgOrgan.
-func (c *OrgOrganClient) QueryStaffs(oo *OrgOrgan) *OrgStaffQuery {
+func (c *OrgOrganClient) QueryStaffs(_m *OrgOrgan) *OrgStaffQuery {
 	query := (&OrgStaffClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := oo.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.StaffsTable, orgorgan.StaffsColumn),
 		)
-		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryPositions queries the positions edge of a OrgOrgan.
-func (c *OrgOrganClient) QueryPositions(oo *OrgOrgan) *OrgPositionQuery {
+func (c *OrgOrganClient) QueryPositions(_m *OrgOrgan) *OrgPositionQuery {
 	query := (&OrgPositionClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := oo.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgorgan.Table, orgorgan.FieldID, id),
 			sqlgraph.To(orgposition.Table, orgposition.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgorgan.PositionsTable, orgorgan.PositionsColumn),
 		)
-		fromV = sqlgraph.Neighbors(oo.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -820,8 +820,8 @@ func (c *OrgPositionClient) Update() *OrgPositionUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrgPositionClient) UpdateOne(op *OrgPosition) *OrgPositionUpdateOne {
-	mutation := newOrgPositionMutation(c.config, OpUpdateOne, withOrgPosition(op))
+func (c *OrgPositionClient) UpdateOne(_m *OrgPosition) *OrgPositionUpdateOne {
+	mutation := newOrgPositionMutation(c.config, OpUpdateOne, withOrgPosition(_m))
 	return &OrgPositionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -838,8 +838,8 @@ func (c *OrgPositionClient) Delete() *OrgPositionDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrgPositionClient) DeleteOne(op *OrgPosition) *OrgPositionDeleteOne {
-	return c.DeleteOneID(op.ID)
+func (c *OrgPositionClient) DeleteOne(_m *OrgPosition) *OrgPositionDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -874,32 +874,32 @@ func (c *OrgPositionClient) GetX(ctx context.Context, id string) *OrgPosition {
 }
 
 // QueryOrgan queries the organ edge of a OrgPosition.
-func (c *OrgPositionClient) QueryOrgan(op *OrgPosition) *OrgOrganQuery {
+func (c *OrgPositionClient) QueryOrgan(_m *OrgPosition) *OrgOrganQuery {
 	query := (&OrgOrganClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := op.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgposition.Table, orgposition.FieldID, id),
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgposition.OrganTable, orgposition.OrganColumn),
 		)
-		fromV = sqlgraph.Neighbors(op.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryStaffs queries the staffs edge of a OrgPosition.
-func (c *OrgPositionClient) QueryStaffs(op *OrgPosition) *OrgStaffQuery {
+func (c *OrgPositionClient) QueryStaffs(_m *OrgPosition) *OrgStaffQuery {
 	query := (&OrgStaffClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := op.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgposition.Table, orgposition.FieldID, id),
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgposition.StaffsTable, orgposition.StaffsColumn),
 		)
-		fromV = sqlgraph.Neighbors(op.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -985,8 +985,8 @@ func (c *OrgStaffClient) Update() *OrgStaffUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *OrgStaffClient) UpdateOne(os *OrgStaff) *OrgStaffUpdateOne {
-	mutation := newOrgStaffMutation(c.config, OpUpdateOne, withOrgStaff(os))
+func (c *OrgStaffClient) UpdateOne(_m *OrgStaff) *OrgStaffUpdateOne {
+	mutation := newOrgStaffMutation(c.config, OpUpdateOne, withOrgStaff(_m))
 	return &OrgStaffUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -1003,8 +1003,8 @@ func (c *OrgStaffClient) Delete() *OrgStaffDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *OrgStaffClient) DeleteOne(os *OrgStaff) *OrgStaffDeleteOne {
-	return c.DeleteOneID(os.ID)
+func (c *OrgStaffClient) DeleteOne(_m *OrgStaff) *OrgStaffDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -1039,80 +1039,80 @@ func (c *OrgStaffClient) GetX(ctx context.Context, id string) *OrgStaff {
 }
 
 // QueryOrgan queries the organ edge of a OrgStaff.
-func (c *OrgStaffClient) QueryOrgan(os *OrgStaff) *OrgOrganQuery {
+func (c *OrgStaffClient) QueryOrgan(_m *OrgStaff) *OrgOrganQuery {
 	query := (&OrgOrganClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := os.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.OrganTable, orgstaff.OrganColumn),
 		)
-		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryIdenAddr queries the iden_addr edge of a OrgStaff.
-func (c *OrgStaffClient) QueryIdenAddr(os *OrgStaff) *SysAddressQuery {
+func (c *OrgStaffClient) QueryIdenAddr(_m *OrgStaff) *SysAddressQuery {
 	query := (&SysAddressClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := os.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.IdenAddrTable, orgstaff.IdenAddrColumn),
 		)
-		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryResiAddr queries the resi_addr edge of a OrgStaff.
-func (c *OrgStaffClient) QueryResiAddr(os *OrgStaff) *SysAddressQuery {
+func (c *OrgStaffClient) QueryResiAddr(_m *OrgStaff) *SysAddressQuery {
 	query := (&SysAddressClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := os.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
 			sqlgraph.To(sysaddress.Table, sysaddress.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, orgstaff.ResiAddrTable, orgstaff.ResiAddrColumn),
 		)
-		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryDept queries the dept edge of a OrgStaff.
-func (c *OrgStaffClient) QueryDept(os *OrgStaff) *OrgDeptQuery {
+func (c *OrgStaffClient) QueryDept(_m *OrgStaff) *OrgDeptQuery {
 	query := (&OrgDeptClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := os.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.DeptTable, orgstaff.DeptColumn),
 		)
-		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryPosi queries the posi edge of a OrgStaff.
-func (c *OrgStaffClient) QueryPosi(os *OrgStaff) *OrgPositionQuery {
+func (c *OrgStaffClient) QueryPosi(_m *OrgStaff) *OrgPositionQuery {
 	query := (&OrgPositionClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := os.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(orgstaff.Table, orgstaff.FieldID, id),
 			sqlgraph.To(orgposition.Table, orgposition.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgstaff.PosiTable, orgstaff.PosiColumn),
 		)
-		fromV = sqlgraph.Neighbors(os.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -1198,8 +1198,8 @@ func (c *SysAddressClient) Update() *SysAddressUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysAddressClient) UpdateOne(sa *SysAddress) *SysAddressUpdateOne {
-	mutation := newSysAddressMutation(c.config, OpUpdateOne, withSysAddress(sa))
+func (c *SysAddressClient) UpdateOne(_m *SysAddress) *SysAddressUpdateOne {
+	mutation := newSysAddressMutation(c.config, OpUpdateOne, withSysAddress(_m))
 	return &SysAddressUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -1216,8 +1216,8 @@ func (c *SysAddressClient) Delete() *SysAddressDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysAddressClient) DeleteOne(sa *SysAddress) *SysAddressDeleteOne {
-	return c.DeleteOneID(sa.ID)
+func (c *SysAddressClient) DeleteOne(_m *SysAddress) *SysAddressDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -1252,48 +1252,48 @@ func (c *SysAddressClient) GetX(ctx context.Context, id string) *SysAddress {
 }
 
 // QueryOrgan queries the organ edge of a SysAddress.
-func (c *SysAddressClient) QueryOrgan(sa *SysAddress) *OrgOrganQuery {
+func (c *SysAddressClient) QueryOrgan(_m *SysAddress) *OrgOrganQuery {
 	query := (&OrgOrganClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sa.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, id),
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.OrganTable, sysaddress.OrganColumn),
 		)
-		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryStaffResi queries the staff_resi edge of a SysAddress.
-func (c *SysAddressClient) QueryStaffResi(sa *SysAddress) *OrgStaffQuery {
+func (c *SysAddressClient) QueryStaffResi(_m *SysAddress) *OrgStaffQuery {
 	query := (&OrgStaffClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sa.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, id),
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffResiTable, sysaddress.StaffResiColumn),
 		)
-		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryStaffIden queries the staff_iden edge of a SysAddress.
-func (c *SysAddressClient) QueryStaffIden(sa *SysAddress) *OrgStaffQuery {
+func (c *SysAddressClient) QueryStaffIden(_m *SysAddress) *OrgStaffQuery {
 	query := (&OrgStaffClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sa.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysaddress.Table, sysaddress.FieldID, id),
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, false, sysaddress.StaffIdenTable, sysaddress.StaffIdenColumn),
 		)
-		fromV = sqlgraph.Neighbors(sa.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -1379,8 +1379,8 @@ func (c *SysAnnexClient) Update() *SysAnnexUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysAnnexClient) UpdateOne(sa *SysAnnex) *SysAnnexUpdateOne {
-	mutation := newSysAnnexMutation(c.config, OpUpdateOne, withSysAnnex(sa))
+func (c *SysAnnexClient) UpdateOne(_m *SysAnnex) *SysAnnexUpdateOne {
+	mutation := newSysAnnexMutation(c.config, OpUpdateOne, withSysAnnex(_m))
 	return &SysAnnexUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -1397,8 +1397,8 @@ func (c *SysAnnexClient) Delete() *SysAnnexDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysAnnexClient) DeleteOne(sa *SysAnnex) *SysAnnexDeleteOne {
-	return c.DeleteOneID(sa.ID)
+func (c *SysAnnexClient) DeleteOne(_m *SysAnnex) *SysAnnexDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -1512,8 +1512,8 @@ func (c *SysDictClient) Update() *SysDictUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysDictClient) UpdateOne(sd *SysDict) *SysDictUpdateOne {
-	mutation := newSysDictMutation(c.config, OpUpdateOne, withSysDict(sd))
+func (c *SysDictClient) UpdateOne(_m *SysDict) *SysDictUpdateOne {
+	mutation := newSysDictMutation(c.config, OpUpdateOne, withSysDict(_m))
 	return &SysDictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -1530,8 +1530,8 @@ func (c *SysDictClient) Delete() *SysDictDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysDictClient) DeleteOne(sd *SysDict) *SysDictDeleteOne {
-	return c.DeleteOneID(sd.ID)
+func (c *SysDictClient) DeleteOne(_m *SysDict) *SysDictDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -1566,16 +1566,16 @@ func (c *SysDictClient) GetX(ctx context.Context, id string) *SysDict {
 }
 
 // QueryItems queries the items edge of a SysDict.
-func (c *SysDictClient) QueryItems(sd *SysDict) *SysDictItemQuery {
+func (c *SysDictClient) QueryItems(_m *SysDict) *SysDictItemQuery {
 	query := (&SysDictItemClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sd.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysdict.Table, sysdict.FieldID, id),
 			sqlgraph.To(sysdictitem.Table, sysdictitem.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdict.ItemsTable, sysdict.ItemsColumn),
 		)
-		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -1661,8 +1661,8 @@ func (c *SysDictItemClient) Update() *SysDictItemUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysDictItemClient) UpdateOne(sdi *SysDictItem) *SysDictItemUpdateOne {
-	mutation := newSysDictItemMutation(c.config, OpUpdateOne, withSysDictItem(sdi))
+func (c *SysDictItemClient) UpdateOne(_m *SysDictItem) *SysDictItemUpdateOne {
+	mutation := newSysDictItemMutation(c.config, OpUpdateOne, withSysDictItem(_m))
 	return &SysDictItemUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -1679,8 +1679,8 @@ func (c *SysDictItemClient) Delete() *SysDictItemDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysDictItemClient) DeleteOne(sdi *SysDictItem) *SysDictItemDeleteOne {
-	return c.DeleteOneID(sdi.ID)
+func (c *SysDictItemClient) DeleteOne(_m *SysDictItem) *SysDictItemDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -1715,16 +1715,16 @@ func (c *SysDictItemClient) GetX(ctx context.Context, id string) *SysDictItem {
 }
 
 // QueryDict queries the dict edge of a SysDictItem.
-func (c *SysDictItemClient) QueryDict(sdi *SysDictItem) *SysDictQuery {
+func (c *SysDictItemClient) QueryDict(_m *SysDictItem) *SysDictQuery {
 	query := (&SysDictClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sdi.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysdictitem.Table, sysdictitem.FieldID, id),
 			sqlgraph.To(sysdict.Table, sysdict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdictitem.DictTable, sysdictitem.DictColumn),
 		)
-		fromV = sqlgraph.Neighbors(sdi.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -1810,8 +1810,8 @@ func (c *SysDistrictClient) Update() *SysDistrictUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysDistrictClient) UpdateOne(sd *SysDistrict) *SysDistrictUpdateOne {
-	mutation := newSysDistrictMutation(c.config, OpUpdateOne, withSysDistrict(sd))
+func (c *SysDistrictClient) UpdateOne(_m *SysDistrict) *SysDistrictUpdateOne {
+	mutation := newSysDistrictMutation(c.config, OpUpdateOne, withSysDistrict(_m))
 	return &SysDistrictUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -1828,8 +1828,8 @@ func (c *SysDistrictClient) Delete() *SysDistrictDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysDistrictClient) DeleteOne(sd *SysDistrict) *SysDistrictDeleteOne {
-	return c.DeleteOneID(sd.ID)
+func (c *SysDistrictClient) DeleteOne(_m *SysDistrict) *SysDistrictDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -1864,32 +1864,32 @@ func (c *SysDistrictClient) GetX(ctx context.Context, id string) *SysDistrict {
 }
 
 // QueryParent queries the parent edge of a SysDistrict.
-func (c *SysDistrictClient) QueryParent(sd *SysDistrict) *SysDistrictQuery {
+func (c *SysDistrictClient) QueryParent(_m *SysDistrict) *SysDistrictQuery {
 	query := (&SysDistrictClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sd.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysdistrict.Table, sysdistrict.FieldID, id),
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdistrict.ParentTable, sysdistrict.ParentColumn),
 		)
-		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryChildren queries the children edge of a SysDistrict.
-func (c *SysDistrictClient) QueryChildren(sd *SysDistrict) *SysDistrictQuery {
+func (c *SysDistrictClient) QueryChildren(_m *SysDistrict) *SysDistrictQuery {
 	query := (&SysDistrictClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sd.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysdistrict.Table, sysdistrict.FieldID, id),
 			sqlgraph.To(sysdistrict.Table, sysdistrict.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysdistrict.ChildrenTable, sysdistrict.ChildrenColumn),
 		)
-		fromV = sqlgraph.Neighbors(sd.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -1975,8 +1975,8 @@ func (c *SysJwtBlockClient) Update() *SysJwtBlockUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysJwtBlockClient) UpdateOne(sjb *SysJwtBlock) *SysJwtBlockUpdateOne {
-	mutation := newSysJwtBlockMutation(c.config, OpUpdateOne, withSysJwtBlock(sjb))
+func (c *SysJwtBlockClient) UpdateOne(_m *SysJwtBlock) *SysJwtBlockUpdateOne {
+	mutation := newSysJwtBlockMutation(c.config, OpUpdateOne, withSysJwtBlock(_m))
 	return &SysJwtBlockUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -1993,8 +1993,8 @@ func (c *SysJwtBlockClient) Delete() *SysJwtBlockDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysJwtBlockClient) DeleteOne(sjb *SysJwtBlock) *SysJwtBlockDeleteOne {
-	return c.DeleteOneID(sjb.ID)
+func (c *SysJwtBlockClient) DeleteOne(_m *SysJwtBlock) *SysJwtBlockDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -2108,8 +2108,8 @@ func (c *SysLoggingClient) Update() *SysLoggingUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysLoggingClient) UpdateOne(sl *SysLogging) *SysLoggingUpdateOne {
-	mutation := newSysLoggingMutation(c.config, OpUpdateOne, withSysLogging(sl))
+func (c *SysLoggingClient) UpdateOne(_m *SysLogging) *SysLoggingUpdateOne {
+	mutation := newSysLoggingMutation(c.config, OpUpdateOne, withSysLogging(_m))
 	return &SysLoggingUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -2126,8 +2126,8 @@ func (c *SysLoggingClient) Delete() *SysLoggingDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysLoggingClient) DeleteOne(sl *SysLogging) *SysLoggingDeleteOne {
-	return c.DeleteOneID(sl.ID)
+func (c *SysLoggingClient) DeleteOne(_m *SysLogging) *SysLoggingDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -2241,8 +2241,8 @@ func (c *SysMenuClient) Update() *SysMenuUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysMenuClient) UpdateOne(sm *SysMenu) *SysMenuUpdateOne {
-	mutation := newSysMenuMutation(c.config, OpUpdateOne, withSysMenu(sm))
+func (c *SysMenuClient) UpdateOne(_m *SysMenu) *SysMenuUpdateOne {
+	mutation := newSysMenuMutation(c.config, OpUpdateOne, withSysMenu(_m))
 	return &SysMenuUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -2259,8 +2259,8 @@ func (c *SysMenuClient) Delete() *SysMenuDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysMenuClient) DeleteOne(sm *SysMenu) *SysMenuDeleteOne {
-	return c.DeleteOneID(sm.ID)
+func (c *SysMenuClient) DeleteOne(_m *SysMenu) *SysMenuDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -2295,32 +2295,32 @@ func (c *SysMenuClient) GetX(ctx context.Context, id string) *SysMenu {
 }
 
 // QueryParent queries the parent edge of a SysMenu.
-func (c *SysMenuClient) QueryParent(sm *SysMenu) *SysMenuQuery {
+func (c *SysMenuClient) QueryParent(_m *SysMenu) *SysMenuQuery {
 	query := (&SysMenuClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sm.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysmenu.Table, sysmenu.FieldID, id),
 			sqlgraph.To(sysmenu.Table, sysmenu.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysmenu.ParentTable, sysmenu.ParentColumn),
 		)
-		fromV = sqlgraph.Neighbors(sm.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryChildren queries the children edge of a SysMenu.
-func (c *SysMenuClient) QueryChildren(sm *SysMenu) *SysMenuQuery {
+func (c *SysMenuClient) QueryChildren(_m *SysMenu) *SysMenuQuery {
 	query := (&SysMenuClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := sm.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysmenu.Table, sysmenu.FieldID, id),
 			sqlgraph.To(sysmenu.Table, sysmenu.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, sysmenu.ChildrenTable, sysmenu.ChildrenColumn),
 		)
-		fromV = sqlgraph.Neighbors(sm.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -2406,8 +2406,8 @@ func (c *SysMenuActionClient) Update() *SysMenuActionUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysMenuActionClient) UpdateOne(sma *SysMenuAction) *SysMenuActionUpdateOne {
-	mutation := newSysMenuActionMutation(c.config, OpUpdateOne, withSysMenuAction(sma))
+func (c *SysMenuActionClient) UpdateOne(_m *SysMenuAction) *SysMenuActionUpdateOne {
+	mutation := newSysMenuActionMutation(c.config, OpUpdateOne, withSysMenuAction(_m))
 	return &SysMenuActionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -2424,8 +2424,8 @@ func (c *SysMenuActionClient) Delete() *SysMenuActionDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysMenuActionClient) DeleteOne(sma *SysMenuAction) *SysMenuActionDeleteOne {
-	return c.DeleteOneID(sma.ID)
+func (c *SysMenuActionClient) DeleteOne(_m *SysMenuAction) *SysMenuActionDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -2539,8 +2539,8 @@ func (c *SysMenuActionResourceClient) Update() *SysMenuActionResourceUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysMenuActionResourceClient) UpdateOne(smar *SysMenuActionResource) *SysMenuActionResourceUpdateOne {
-	mutation := newSysMenuActionResourceMutation(c.config, OpUpdateOne, withSysMenuActionResource(smar))
+func (c *SysMenuActionResourceClient) UpdateOne(_m *SysMenuActionResource) *SysMenuActionResourceUpdateOne {
+	mutation := newSysMenuActionResourceMutation(c.config, OpUpdateOne, withSysMenuActionResource(_m))
 	return &SysMenuActionResourceUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -2557,8 +2557,8 @@ func (c *SysMenuActionResourceClient) Delete() *SysMenuActionResourceDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysMenuActionResourceClient) DeleteOne(smar *SysMenuActionResource) *SysMenuActionResourceDeleteOne {
-	return c.DeleteOneID(smar.ID)
+func (c *SysMenuActionResourceClient) DeleteOne(_m *SysMenuActionResource) *SysMenuActionResourceDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -2672,8 +2672,8 @@ func (c *SysRoleClient) Update() *SysRoleUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysRoleClient) UpdateOne(sr *SysRole) *SysRoleUpdateOne {
-	mutation := newSysRoleMutation(c.config, OpUpdateOne, withSysRole(sr))
+func (c *SysRoleClient) UpdateOne(_m *SysRole) *SysRoleUpdateOne {
+	mutation := newSysRoleMutation(c.config, OpUpdateOne, withSysRole(_m))
 	return &SysRoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -2690,8 +2690,8 @@ func (c *SysRoleClient) Delete() *SysRoleDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysRoleClient) DeleteOne(sr *SysRole) *SysRoleDeleteOne {
-	return c.DeleteOneID(sr.ID)
+func (c *SysRoleClient) DeleteOne(_m *SysRole) *SysRoleDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -2805,8 +2805,8 @@ func (c *SysRoleMenuClient) Update() *SysRoleMenuUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysRoleMenuClient) UpdateOne(srm *SysRoleMenu) *SysRoleMenuUpdateOne {
-	mutation := newSysRoleMenuMutation(c.config, OpUpdateOne, withSysRoleMenu(srm))
+func (c *SysRoleMenuClient) UpdateOne(_m *SysRoleMenu) *SysRoleMenuUpdateOne {
+	mutation := newSysRoleMenuMutation(c.config, OpUpdateOne, withSysRoleMenu(_m))
 	return &SysRoleMenuUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -2823,8 +2823,8 @@ func (c *SysRoleMenuClient) Delete() *SysRoleMenuDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysRoleMenuClient) DeleteOne(srm *SysRoleMenu) *SysRoleMenuDeleteOne {
-	return c.DeleteOneID(srm.ID)
+func (c *SysRoleMenuClient) DeleteOne(_m *SysRoleMenu) *SysRoleMenuDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -2938,8 +2938,8 @@ func (c *SysTeamClient) Update() *SysTeamUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysTeamClient) UpdateOne(st *SysTeam) *SysTeamUpdateOne {
-	mutation := newSysTeamMutation(c.config, OpUpdateOne, withSysTeam(st))
+func (c *SysTeamClient) UpdateOne(_m *SysTeam) *SysTeamUpdateOne {
+	mutation := newSysTeamMutation(c.config, OpUpdateOne, withSysTeam(_m))
 	return &SysTeamUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -2956,8 +2956,8 @@ func (c *SysTeamClient) Delete() *SysTeamDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysTeamClient) DeleteOne(st *SysTeam) *SysTeamDeleteOne {
-	return c.DeleteOneID(st.ID)
+func (c *SysTeamClient) DeleteOne(_m *SysTeam) *SysTeamDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -2992,32 +2992,32 @@ func (c *SysTeamClient) GetX(ctx context.Context, id string) *SysTeam {
 }
 
 // QueryUsers queries the users edge of a SysTeam.
-func (c *SysTeamClient) QueryUsers(st *SysTeam) *SysUserQuery {
+func (c *SysTeamClient) QueryUsers(_m *SysTeam) *SysUserQuery {
 	query := (&SysUserClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := st.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(systeam.Table, systeam.FieldID, id),
 			sqlgraph.To(sysuser.Table, sysuser.FieldID),
 			sqlgraph.Edge(sqlgraph.M2M, false, systeam.UsersTable, systeam.UsersPrimaryKey...),
 		)
-		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryTeamUsers queries the team_users edge of a SysTeam.
-func (c *SysTeamClient) QueryTeamUsers(st *SysTeam) *SysTeamUserQuery {
+func (c *SysTeamClient) QueryTeamUsers(_m *SysTeam) *SysTeamUserQuery {
 	query := (&SysTeamUserClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := st.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(systeam.Table, systeam.FieldID, id),
 			sqlgraph.To(systeamuser.Table, systeamuser.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, true, systeam.TeamUsersTable, systeam.TeamUsersColumn),
 		)
-		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -3103,8 +3103,8 @@ func (c *SysTeamUserClient) Update() *SysTeamUserUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysTeamUserClient) UpdateOne(stu *SysTeamUser) *SysTeamUserUpdateOne {
-	mutation := newSysTeamUserMutation(c.config, OpUpdateOne, withSysTeamUser(stu))
+func (c *SysTeamUserClient) UpdateOne(_m *SysTeamUser) *SysTeamUserUpdateOne {
+	mutation := newSysTeamUserMutation(c.config, OpUpdateOne, withSysTeamUser(_m))
 	return &SysTeamUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -3121,8 +3121,8 @@ func (c *SysTeamUserClient) Delete() *SysTeamUserDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysTeamUserClient) DeleteOne(stu *SysTeamUser) *SysTeamUserDeleteOne {
-	return c.DeleteOneID(stu.ID)
+func (c *SysTeamUserClient) DeleteOne(_m *SysTeamUser) *SysTeamUserDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -3157,32 +3157,32 @@ func (c *SysTeamUserClient) GetX(ctx context.Context, id string) *SysTeamUser {
 }
 
 // QueryUser queries the user edge of a SysTeamUser.
-func (c *SysTeamUserClient) QueryUser(stu *SysTeamUser) *SysUserQuery {
+func (c *SysTeamUserClient) QueryUser(_m *SysTeamUser) *SysUserQuery {
 	query := (&SysUserClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := stu.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(systeamuser.Table, systeamuser.FieldID, id),
 			sqlgraph.To(sysuser.Table, sysuser.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, false, systeamuser.UserTable, systeamuser.UserColumn),
 		)
-		fromV = sqlgraph.Neighbors(stu.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryTeam queries the team edge of a SysTeamUser.
-func (c *SysTeamUserClient) QueryTeam(stu *SysTeamUser) *SysTeamQuery {
+func (c *SysTeamUserClient) QueryTeam(_m *SysTeamUser) *SysTeamQuery {
 	query := (&SysTeamClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := stu.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(systeamuser.Table, systeamuser.FieldID, id),
 			sqlgraph.To(systeam.Table, systeam.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, false, systeamuser.TeamTable, systeamuser.TeamColumn),
 		)
-		fromV = sqlgraph.Neighbors(stu.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -3268,8 +3268,8 @@ func (c *SysUserClient) Update() *SysUserUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysUserClient) UpdateOne(su *SysUser) *SysUserUpdateOne {
-	mutation := newSysUserMutation(c.config, OpUpdateOne, withSysUser(su))
+func (c *SysUserClient) UpdateOne(_m *SysUser) *SysUserUpdateOne {
+	mutation := newSysUserMutation(c.config, OpUpdateOne, withSysUser(_m))
 	return &SysUserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -3286,8 +3286,8 @@ func (c *SysUserClient) Delete() *SysUserDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysUserClient) DeleteOne(su *SysUser) *SysUserDeleteOne {
-	return c.DeleteOneID(su.ID)
+func (c *SysUserClient) DeleteOne(_m *SysUser) *SysUserDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -3322,32 +3322,32 @@ func (c *SysUserClient) GetX(ctx context.Context, id string) *SysUser {
 }
 
 // QueryTeams queries the teams edge of a SysUser.
-func (c *SysUserClient) QueryTeams(su *SysUser) *SysTeamQuery {
+func (c *SysUserClient) QueryTeams(_m *SysUser) *SysTeamQuery {
 	query := (&SysTeamClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := su.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysuser.Table, sysuser.FieldID, id),
 			sqlgraph.To(systeam.Table, systeam.FieldID),
 			sqlgraph.Edge(sqlgraph.M2M, true, sysuser.TeamsTable, sysuser.TeamsPrimaryKey...),
 		)
-		fromV = sqlgraph.Neighbors(su.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
 }
 
 // QueryTeamUsers queries the team_users edge of a SysUser.
-func (c *SysUserClient) QueryTeamUsers(su *SysUser) *SysTeamUserQuery {
+func (c *SysUserClient) QueryTeamUsers(_m *SysUser) *SysTeamUserQuery {
 	query := (&SysTeamUserClient{config: c.config}).Query()
 	query.path = func(context.Context) (fromV *sql.Selector, _ error) {
-		id := su.ID
+		id := _m.ID
 		step := sqlgraph.NewStep(
 			sqlgraph.From(sysuser.Table, sysuser.FieldID, id),
 			sqlgraph.To(systeamuser.Table, systeamuser.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, true, sysuser.TeamUsersTable, sysuser.TeamUsersColumn),
 		)
-		fromV = sqlgraph.Neighbors(su.driver.Dialect(), step)
+		fromV = sqlgraph.Neighbors(_m.driver.Dialect(), step)
 		return fromV, nil
 	}
 	return query
@@ -3433,8 +3433,8 @@ func (c *SysUserRoleClient) Update() *SysUserRoleUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SysUserRoleClient) UpdateOne(sur *SysUserRole) *SysUserRoleUpdateOne {
-	mutation := newSysUserRoleMutation(c.config, OpUpdateOne, withSysUserRole(sur))
+func (c *SysUserRoleClient) UpdateOne(_m *SysUserRole) *SysUserRoleUpdateOne {
+	mutation := newSysUserRoleMutation(c.config, OpUpdateOne, withSysUserRole(_m))
 	return &SysUserRoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -3451,8 +3451,8 @@ func (c *SysUserRoleClient) Delete() *SysUserRoleDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SysUserRoleClient) DeleteOne(sur *SysUserRole) *SysUserRoleDeleteOne {
-	return c.DeleteOneID(sur.ID)
+func (c *SysUserRoleClient) DeleteOne(_m *SysUserRole) *SysUserRoleDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -3566,8 +3566,8 @@ func (c *XxxDemoClient) Update() *XxxDemoUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *XxxDemoClient) UpdateOne(xd *XxxDemo) *XxxDemoUpdateOne {
-	mutation := newXxxDemoMutation(c.config, OpUpdateOne, withXxxDemo(xd))
+func (c *XxxDemoClient) UpdateOne(_m *XxxDemo) *XxxDemoUpdateOne {
+	mutation := newXxxDemoMutation(c.config, OpUpdateOne, withXxxDemo(_m))
 	return &XxxDemoUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -3584,8 +3584,8 @@ func (c *XxxDemoClient) Delete() *XxxDemoDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *XxxDemoClient) DeleteOne(xd *XxxDemo) *XxxDemoDeleteOne {
-	return c.DeleteOneID(xd.ID)
+func (c *XxxDemoClient) DeleteOne(_m *XxxDemo) *XxxDemoDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.

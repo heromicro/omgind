@@ -32,44 +32,44 @@ type SysDictItemQuery struct {
 }
 
 // Where adds a new predicate for the SysDictItemQuery builder.
-func (sdiq *SysDictItemQuery) Where(ps ...predicate.SysDictItem) *SysDictItemQuery {
-	sdiq.predicates = append(sdiq.predicates, ps...)
-	return sdiq
+func (_q *SysDictItemQuery) Where(ps ...predicate.SysDictItem) *SysDictItemQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (sdiq *SysDictItemQuery) Limit(limit int) *SysDictItemQuery {
-	sdiq.ctx.Limit = &limit
-	return sdiq
+func (_q *SysDictItemQuery) Limit(limit int) *SysDictItemQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (sdiq *SysDictItemQuery) Offset(offset int) *SysDictItemQuery {
-	sdiq.ctx.Offset = &offset
-	return sdiq
+func (_q *SysDictItemQuery) Offset(offset int) *SysDictItemQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (sdiq *SysDictItemQuery) Unique(unique bool) *SysDictItemQuery {
-	sdiq.ctx.Unique = &unique
-	return sdiq
+func (_q *SysDictItemQuery) Unique(unique bool) *SysDictItemQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (sdiq *SysDictItemQuery) Order(o ...sysdictitem.OrderOption) *SysDictItemQuery {
-	sdiq.order = append(sdiq.order, o...)
-	return sdiq
+func (_q *SysDictItemQuery) Order(o ...sysdictitem.OrderOption) *SysDictItemQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryDict chains the current query on the "dict" edge.
-func (sdiq *SysDictItemQuery) QueryDict() *SysDictQuery {
-	query := (&SysDictClient{config: sdiq.config}).Query()
+func (_q *SysDictItemQuery) QueryDict() *SysDictQuery {
+	query := (&SysDictClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := sdiq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := sdiq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -78,7 +78,7 @@ func (sdiq *SysDictItemQuery) QueryDict() *SysDictQuery {
 			sqlgraph.To(sysdict.Table, sysdict.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, sysdictitem.DictTable, sysdictitem.DictColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(sdiq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -86,8 +86,8 @@ func (sdiq *SysDictItemQuery) QueryDict() *SysDictQuery {
 
 // First returns the first SysDictItem entity from the query.
 // Returns a *NotFoundError when no SysDictItem was found.
-func (sdiq *SysDictItemQuery) First(ctx context.Context) (*SysDictItem, error) {
-	nodes, err := sdiq.Limit(1).All(setContextOp(ctx, sdiq.ctx, ent.OpQueryFirst))
+func (_q *SysDictItemQuery) First(ctx context.Context) (*SysDictItem, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -98,8 +98,8 @@ func (sdiq *SysDictItemQuery) First(ctx context.Context) (*SysDictItem, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (sdiq *SysDictItemQuery) FirstX(ctx context.Context) *SysDictItem {
-	node, err := sdiq.First(ctx)
+func (_q *SysDictItemQuery) FirstX(ctx context.Context) *SysDictItem {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -108,9 +108,9 @@ func (sdiq *SysDictItemQuery) FirstX(ctx context.Context) *SysDictItem {
 
 // FirstID returns the first SysDictItem ID from the query.
 // Returns a *NotFoundError when no SysDictItem ID was found.
-func (sdiq *SysDictItemQuery) FirstID(ctx context.Context) (id string, err error) {
+func (_q *SysDictItemQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdiq.Limit(1).IDs(setContextOp(ctx, sdiq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -121,8 +121,8 @@ func (sdiq *SysDictItemQuery) FirstID(ctx context.Context) (id string, err error
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (sdiq *SysDictItemQuery) FirstIDX(ctx context.Context) string {
-	id, err := sdiq.FirstID(ctx)
+func (_q *SysDictItemQuery) FirstIDX(ctx context.Context) string {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -132,8 +132,8 @@ func (sdiq *SysDictItemQuery) FirstIDX(ctx context.Context) string {
 // Only returns a single SysDictItem entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one SysDictItem entity is found.
 // Returns a *NotFoundError when no SysDictItem entities are found.
-func (sdiq *SysDictItemQuery) Only(ctx context.Context) (*SysDictItem, error) {
-	nodes, err := sdiq.Limit(2).All(setContextOp(ctx, sdiq.ctx, ent.OpQueryOnly))
+func (_q *SysDictItemQuery) Only(ctx context.Context) (*SysDictItem, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -148,8 +148,8 @@ func (sdiq *SysDictItemQuery) Only(ctx context.Context) (*SysDictItem, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (sdiq *SysDictItemQuery) OnlyX(ctx context.Context) *SysDictItem {
-	node, err := sdiq.Only(ctx)
+func (_q *SysDictItemQuery) OnlyX(ctx context.Context) *SysDictItem {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -159,9 +159,9 @@ func (sdiq *SysDictItemQuery) OnlyX(ctx context.Context) *SysDictItem {
 // OnlyID is like Only, but returns the only SysDictItem ID in the query.
 // Returns a *NotSingularError when more than one SysDictItem ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (sdiq *SysDictItemQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *SysDictItemQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = sdiq.Limit(2).IDs(setContextOp(ctx, sdiq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -176,8 +176,8 @@ func (sdiq *SysDictItemQuery) OnlyID(ctx context.Context) (id string, err error)
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (sdiq *SysDictItemQuery) OnlyIDX(ctx context.Context) string {
-	id, err := sdiq.OnlyID(ctx)
+func (_q *SysDictItemQuery) OnlyIDX(ctx context.Context) string {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -185,18 +185,18 @@ func (sdiq *SysDictItemQuery) OnlyIDX(ctx context.Context) string {
 }
 
 // All executes the query and returns a list of SysDictItems.
-func (sdiq *SysDictItemQuery) All(ctx context.Context) ([]*SysDictItem, error) {
-	ctx = setContextOp(ctx, sdiq.ctx, ent.OpQueryAll)
-	if err := sdiq.prepareQuery(ctx); err != nil {
+func (_q *SysDictItemQuery) All(ctx context.Context) ([]*SysDictItem, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*SysDictItem, *SysDictItemQuery]()
-	return withInterceptors[[]*SysDictItem](ctx, sdiq, qr, sdiq.inters)
+	return withInterceptors[[]*SysDictItem](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (sdiq *SysDictItemQuery) AllX(ctx context.Context) []*SysDictItem {
-	nodes, err := sdiq.All(ctx)
+func (_q *SysDictItemQuery) AllX(ctx context.Context) []*SysDictItem {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -204,20 +204,20 @@ func (sdiq *SysDictItemQuery) AllX(ctx context.Context) []*SysDictItem {
 }
 
 // IDs executes the query and returns a list of SysDictItem IDs.
-func (sdiq *SysDictItemQuery) IDs(ctx context.Context) (ids []string, err error) {
-	if sdiq.ctx.Unique == nil && sdiq.path != nil {
-		sdiq.Unique(true)
+func (_q *SysDictItemQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, sdiq.ctx, ent.OpQueryIDs)
-	if err = sdiq.Select(sysdictitem.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(sysdictitem.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (sdiq *SysDictItemQuery) IDsX(ctx context.Context) []string {
-	ids, err := sdiq.IDs(ctx)
+func (_q *SysDictItemQuery) IDsX(ctx context.Context) []string {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -225,17 +225,17 @@ func (sdiq *SysDictItemQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (sdiq *SysDictItemQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, sdiq.ctx, ent.OpQueryCount)
-	if err := sdiq.prepareQuery(ctx); err != nil {
+func (_q *SysDictItemQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, sdiq, querierCount[*SysDictItemQuery](), sdiq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*SysDictItemQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (sdiq *SysDictItemQuery) CountX(ctx context.Context) int {
-	count, err := sdiq.Count(ctx)
+func (_q *SysDictItemQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -243,9 +243,9 @@ func (sdiq *SysDictItemQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (sdiq *SysDictItemQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, sdiq.ctx, ent.OpQueryExist)
-	switch _, err := sdiq.FirstID(ctx); {
+func (_q *SysDictItemQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -256,8 +256,8 @@ func (sdiq *SysDictItemQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (sdiq *SysDictItemQuery) ExistX(ctx context.Context) bool {
-	exist, err := sdiq.Exist(ctx)
+func (_q *SysDictItemQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -266,33 +266,33 @@ func (sdiq *SysDictItemQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the SysDictItemQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (sdiq *SysDictItemQuery) Clone() *SysDictItemQuery {
-	if sdiq == nil {
+func (_q *SysDictItemQuery) Clone() *SysDictItemQuery {
+	if _q == nil {
 		return nil
 	}
 	return &SysDictItemQuery{
-		config:     sdiq.config,
-		ctx:        sdiq.ctx.Clone(),
-		order:      append([]sysdictitem.OrderOption{}, sdiq.order...),
-		inters:     append([]Interceptor{}, sdiq.inters...),
-		predicates: append([]predicate.SysDictItem{}, sdiq.predicates...),
-		withDict:   sdiq.withDict.Clone(),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]sysdictitem.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.SysDictItem{}, _q.predicates...),
+		withDict:   _q.withDict.Clone(),
 		// clone intermediate query.
-		sql:       sdiq.sql.Clone(),
-		path:      sdiq.path,
-		modifiers: append([]func(*sql.Selector){}, sdiq.modifiers...),
+		sql:       _q.sql.Clone(),
+		path:      _q.path,
+		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
 }
 
 // WithDict tells the query-builder to eager-load the nodes that are connected to
 // the "dict" edge. The optional arguments are used to configure the query builder of the edge.
-func (sdiq *SysDictItemQuery) WithDict(opts ...func(*SysDictQuery)) *SysDictItemQuery {
-	query := (&SysDictClient{config: sdiq.config}).Query()
+func (_q *SysDictItemQuery) WithDict(opts ...func(*SysDictQuery)) *SysDictItemQuery {
+	query := (&SysDictClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	sdiq.withDict = query
-	return sdiq
+	_q.withDict = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -309,10 +309,10 @@ func (sdiq *SysDictItemQuery) WithDict(opts ...func(*SysDictQuery)) *SysDictItem
 //		GroupBy(sysdictitem.FieldIsDel).
 //		Aggregate(mainent.Count()).
 //		Scan(ctx, &v)
-func (sdiq *SysDictItemQuery) GroupBy(field string, fields ...string) *SysDictItemGroupBy {
-	sdiq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &SysDictItemGroupBy{build: sdiq}
-	grbuild.flds = &sdiq.ctx.Fields
+func (_q *SysDictItemQuery) GroupBy(field string, fields ...string) *SysDictItemGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysDictItemGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = sysdictitem.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -330,76 +330,76 @@ func (sdiq *SysDictItemQuery) GroupBy(field string, fields ...string) *SysDictIt
 //	client.SysDictItem.Query().
 //		Select(sysdictitem.FieldIsDel).
 //		Scan(ctx, &v)
-func (sdiq *SysDictItemQuery) Select(fields ...string) *SysDictItemSelect {
-	sdiq.ctx.Fields = append(sdiq.ctx.Fields, fields...)
-	sbuild := &SysDictItemSelect{SysDictItemQuery: sdiq}
+func (_q *SysDictItemQuery) Select(fields ...string) *SysDictItemSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &SysDictItemSelect{SysDictItemQuery: _q}
 	sbuild.label = sysdictitem.Label
-	sbuild.flds, sbuild.scan = &sdiq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a SysDictItemSelect configured with the given aggregations.
-func (sdiq *SysDictItemQuery) Aggregate(fns ...AggregateFunc) *SysDictItemSelect {
-	return sdiq.Select().Aggregate(fns...)
+func (_q *SysDictItemQuery) Aggregate(fns ...AggregateFunc) *SysDictItemSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (sdiq *SysDictItemQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range sdiq.inters {
+func (_q *SysDictItemQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("mainent: uninitialized interceptor (forgotten import mainent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, sdiq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range sdiq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !sysdictitem.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("mainent: invalid field %q for query", f)}
 		}
 	}
-	if sdiq.path != nil {
-		prev, err := sdiq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		sdiq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (sdiq *SysDictItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysDictItem, error) {
+func (_q *SysDictItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysDictItem, error) {
 	var (
 		nodes       = []*SysDictItem{}
-		_spec       = sdiq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [1]bool{
-			sdiq.withDict != nil,
+			_q.withDict != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysDictItem).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &SysDictItem{config: sdiq.config}
+		node := &SysDictItem{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(sdiq.modifiers) > 0 {
-		_spec.Modifiers = sdiq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, sdiq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := sdiq.withDict; query != nil {
-		if err := sdiq.loadDict(ctx, query, nodes, nil,
+	if query := _q.withDict; query != nil {
+		if err := _q.loadDict(ctx, query, nodes, nil,
 			func(n *SysDictItem, e *SysDict) { n.Edges.Dict = e }); err != nil {
 			return nil, err
 		}
@@ -407,7 +407,7 @@ func (sdiq *SysDictItemQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 	return nodes, nil
 }
 
-func (sdiq *SysDictItemQuery) loadDict(ctx context.Context, query *SysDictQuery, nodes []*SysDictItem, init func(*SysDictItem), assign func(*SysDictItem, *SysDict)) error {
+func (_q *SysDictItemQuery) loadDict(ctx context.Context, query *SysDictQuery, nodes []*SysDictItem, init func(*SysDictItem), assign func(*SysDictItem, *SysDict)) error {
 	ids := make([]string, 0, len(nodes))
 	nodeids := make(map[string][]*SysDictItem)
 	for i := range nodes {
@@ -440,27 +440,27 @@ func (sdiq *SysDictItemQuery) loadDict(ctx context.Context, query *SysDictQuery,
 	return nil
 }
 
-func (sdiq *SysDictItemQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := sdiq.querySpec()
-	if len(sdiq.modifiers) > 0 {
-		_spec.Modifiers = sdiq.modifiers
+func (_q *SysDictItemQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = sdiq.ctx.Fields
-	if len(sdiq.ctx.Fields) > 0 {
-		_spec.Unique = sdiq.ctx.Unique != nil && *sdiq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, sdiq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (sdiq *SysDictItemQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *SysDictItemQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(sysdictitem.Table, sysdictitem.Columns, sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString))
-	_spec.From = sdiq.sql
-	if unique := sdiq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if sdiq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := sdiq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysdictitem.FieldID)
 		for i := range fields {
@@ -468,24 +468,24 @@ func (sdiq *SysDictItemQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if sdiq.withDict != nil {
+		if _q.withDict != nil {
 			_spec.Node.AddColumnOnce(sysdictitem.FieldDictID)
 		}
 	}
-	if ps := sdiq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := sdiq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := sdiq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := sdiq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -495,36 +495,36 @@ func (sdiq *SysDictItemQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (sdiq *SysDictItemQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(sdiq.driver.Dialect())
+func (_q *SysDictItemQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(sysdictitem.Table)
-	columns := sdiq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysdictitem.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if sdiq.sql != nil {
-		selector = sdiq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if sdiq.ctx.Unique != nil && *sdiq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range sdiq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range sdiq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range sdiq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := sdiq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := sdiq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -533,33 +533,33 @@ func (sdiq *SysDictItemQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (sdiq *SysDictItemQuery) ForUpdate(opts ...sql.LockOption) *SysDictItemQuery {
-	if sdiq.driver.Dialect() == dialect.Postgres {
-		sdiq.Unique(false)
+func (_q *SysDictItemQuery) ForUpdate(opts ...sql.LockOption) *SysDictItemQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	sdiq.modifiers = append(sdiq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return sdiq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (sdiq *SysDictItemQuery) ForShare(opts ...sql.LockOption) *SysDictItemQuery {
-	if sdiq.driver.Dialect() == dialect.Postgres {
-		sdiq.Unique(false)
+func (_q *SysDictItemQuery) ForShare(opts ...sql.LockOption) *SysDictItemQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	sdiq.modifiers = append(sdiq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return sdiq
+	return _q
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (sdiq *SysDictItemQuery) Modify(modifiers ...func(s *sql.Selector)) *SysDictItemSelect {
-	sdiq.modifiers = append(sdiq.modifiers, modifiers...)
-	return sdiq.Select()
+func (_q *SysDictItemQuery) Modify(modifiers ...func(s *sql.Selector)) *SysDictItemSelect {
+	_q.modifiers = append(_q.modifiers, modifiers...)
+	return _q.Select()
 }
 
 // SysDictItemGroupBy is the group-by builder for SysDictItem entities.
@@ -569,41 +569,41 @@ type SysDictItemGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (sdigb *SysDictItemGroupBy) Aggregate(fns ...AggregateFunc) *SysDictItemGroupBy {
-	sdigb.fns = append(sdigb.fns, fns...)
-	return sdigb
+func (_g *SysDictItemGroupBy) Aggregate(fns ...AggregateFunc) *SysDictItemGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sdigb *SysDictItemGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sdigb.build.ctx, ent.OpQueryGroupBy)
-	if err := sdigb.build.prepareQuery(ctx); err != nil {
+func (_g *SysDictItemGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysDictItemQuery, *SysDictItemGroupBy](ctx, sdigb.build, sdigb, sdigb.build.inters, v)
+	return scanWithInterceptors[*SysDictItemQuery, *SysDictItemGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (sdigb *SysDictItemGroupBy) sqlScan(ctx context.Context, root *SysDictItemQuery, v any) error {
+func (_g *SysDictItemGroupBy) sqlScan(ctx context.Context, root *SysDictItemQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(sdigb.fns))
-	for _, fn := range sdigb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*sdigb.flds)+len(sdigb.fns))
-		for _, f := range *sdigb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*sdigb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sdigb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -617,27 +617,27 @@ type SysDictItemSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (sdis *SysDictItemSelect) Aggregate(fns ...AggregateFunc) *SysDictItemSelect {
-	sdis.fns = append(sdis.fns, fns...)
-	return sdis
+func (_s *SysDictItemSelect) Aggregate(fns ...AggregateFunc) *SysDictItemSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sdis *SysDictItemSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sdis.ctx, ent.OpQuerySelect)
-	if err := sdis.prepareQuery(ctx); err != nil {
+func (_s *SysDictItemSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysDictItemQuery, *SysDictItemSelect](ctx, sdis.SysDictItemQuery, sdis, sdis.inters, v)
+	return scanWithInterceptors[*SysDictItemQuery, *SysDictItemSelect](ctx, _s.SysDictItemQuery, _s, _s.inters, v)
 }
 
-func (sdis *SysDictItemSelect) sqlScan(ctx context.Context, root *SysDictItemQuery, v any) error {
+func (_s *SysDictItemSelect) sqlScan(ctx context.Context, root *SysDictItemQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(sdis.fns))
-	for _, fn := range sdis.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*sdis.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -645,7 +645,7 @@ func (sdis *SysDictItemSelect) sqlScan(ctx context.Context, root *SysDictItemQue
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sdis.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -653,7 +653,7 @@ func (sdis *SysDictItemSelect) sqlScan(ctx context.Context, root *SysDictItemQue
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (sdis *SysDictItemSelect) Modify(modifiers ...func(s *sql.Selector)) *SysDictItemSelect {
-	sdis.modifiers = append(sdis.modifiers, modifiers...)
-	return sdis
+func (_s *SysDictItemSelect) Modify(modifiers ...func(s *sql.Selector)) *SysDictItemSelect {
+	_s.modifiers = append(_s.modifiers, modifiers...)
+	return _s
 }

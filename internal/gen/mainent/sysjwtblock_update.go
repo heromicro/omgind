@@ -24,119 +24,119 @@ type SysJwtBlockUpdate struct {
 }
 
 // Where appends a list predicates to the SysJwtBlockUpdate builder.
-func (sjbu *SysJwtBlockUpdate) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockUpdate {
-	sjbu.mutation.Where(ps...)
-	return sjbu
+func (_u *SysJwtBlockUpdate) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (sjbu *SysJwtBlockUpdate) SetIsDel(b bool) *SysJwtBlockUpdate {
-	sjbu.mutation.SetIsDel(b)
-	return sjbu
+func (_u *SysJwtBlockUpdate) SetIsDel(v bool) *SysJwtBlockUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sjbu *SysJwtBlockUpdate) SetNillableIsDel(b *bool) *SysJwtBlockUpdate {
-	if b != nil {
-		sjbu.SetIsDel(*b)
+func (_u *SysJwtBlockUpdate) SetNillableIsDel(v *bool) *SysJwtBlockUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sjbu
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sjbu *SysJwtBlockUpdate) SetMemo(s string) *SysJwtBlockUpdate {
-	sjbu.mutation.SetMemo(s)
-	return sjbu
+func (_u *SysJwtBlockUpdate) SetMemo(v string) *SysJwtBlockUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sjbu *SysJwtBlockUpdate) SetNillableMemo(s *string) *SysJwtBlockUpdate {
-	if s != nil {
-		sjbu.SetMemo(*s)
+func (_u *SysJwtBlockUpdate) SetNillableMemo(v *string) *SysJwtBlockUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sjbu
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sjbu *SysJwtBlockUpdate) ClearMemo() *SysJwtBlockUpdate {
-	sjbu.mutation.ClearMemo()
-	return sjbu
+func (_u *SysJwtBlockUpdate) ClearMemo() *SysJwtBlockUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sjbu *SysJwtBlockUpdate) SetUpdatedAt(t time.Time) *SysJwtBlockUpdate {
-	sjbu.mutation.SetUpdatedAt(t)
-	return sjbu
+func (_u *SysJwtBlockUpdate) SetUpdatedAt(v time.Time) *SysJwtBlockUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sjbu *SysJwtBlockUpdate) ClearUpdatedAt() *SysJwtBlockUpdate {
-	sjbu.mutation.ClearUpdatedAt()
-	return sjbu
+func (_u *SysJwtBlockUpdate) ClearUpdatedAt() *SysJwtBlockUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sjbu *SysJwtBlockUpdate) SetDeletedAt(t time.Time) *SysJwtBlockUpdate {
-	sjbu.mutation.SetDeletedAt(t)
-	return sjbu
+func (_u *SysJwtBlockUpdate) SetDeletedAt(v time.Time) *SysJwtBlockUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sjbu *SysJwtBlockUpdate) SetNillableDeletedAt(t *time.Time) *SysJwtBlockUpdate {
-	if t != nil {
-		sjbu.SetDeletedAt(*t)
+func (_u *SysJwtBlockUpdate) SetNillableDeletedAt(v *time.Time) *SysJwtBlockUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sjbu
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sjbu *SysJwtBlockUpdate) ClearDeletedAt() *SysJwtBlockUpdate {
-	sjbu.mutation.ClearDeletedAt()
-	return sjbu
+func (_u *SysJwtBlockUpdate) ClearDeletedAt() *SysJwtBlockUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sjbu *SysJwtBlockUpdate) SetIsActive(b bool) *SysJwtBlockUpdate {
-	sjbu.mutation.SetIsActive(b)
-	return sjbu
+func (_u *SysJwtBlockUpdate) SetIsActive(v bool) *SysJwtBlockUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sjbu *SysJwtBlockUpdate) SetNillableIsActive(b *bool) *SysJwtBlockUpdate {
-	if b != nil {
-		sjbu.SetIsActive(*b)
+func (_u *SysJwtBlockUpdate) SetNillableIsActive(v *bool) *SysJwtBlockUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sjbu
+	return _u
 }
 
 // SetJwt sets the "jwt" field.
-func (sjbu *SysJwtBlockUpdate) SetJwt(s string) *SysJwtBlockUpdate {
-	sjbu.mutation.SetJwt(s)
-	return sjbu
+func (_u *SysJwtBlockUpdate) SetJwt(v string) *SysJwtBlockUpdate {
+	_u.mutation.SetJwt(v)
+	return _u
 }
 
 // SetNillableJwt sets the "jwt" field if the given value is not nil.
-func (sjbu *SysJwtBlockUpdate) SetNillableJwt(s *string) *SysJwtBlockUpdate {
-	if s != nil {
-		sjbu.SetJwt(*s)
+func (_u *SysJwtBlockUpdate) SetNillableJwt(v *string) *SysJwtBlockUpdate {
+	if v != nil {
+		_u.SetJwt(*v)
 	}
-	return sjbu
+	return _u
 }
 
 // Mutation returns the SysJwtBlockMutation object of the builder.
-func (sjbu *SysJwtBlockUpdate) Mutation() *SysJwtBlockMutation {
-	return sjbu.mutation
+func (_u *SysJwtBlockUpdate) Mutation() *SysJwtBlockMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (sjbu *SysJwtBlockUpdate) Save(ctx context.Context) (int, error) {
-	sjbu.defaults()
-	return withHooks(ctx, sjbu.sqlSave, sjbu.mutation, sjbu.hooks)
+func (_u *SysJwtBlockUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sjbu *SysJwtBlockUpdate) SaveX(ctx context.Context) int {
-	affected, err := sjbu.Save(ctx)
+func (_u *SysJwtBlockUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -144,34 +144,34 @@ func (sjbu *SysJwtBlockUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (sjbu *SysJwtBlockUpdate) Exec(ctx context.Context) error {
-	_, err := sjbu.Save(ctx)
+func (_u *SysJwtBlockUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sjbu *SysJwtBlockUpdate) ExecX(ctx context.Context) {
-	if err := sjbu.Exec(ctx); err != nil {
+func (_u *SysJwtBlockUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sjbu *SysJwtBlockUpdate) defaults() {
-	if _, ok := sjbu.mutation.UpdatedAt(); !ok && !sjbu.mutation.UpdatedAtCleared() {
+func (_u *SysJwtBlockUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysjwtblock.UpdateDefaultUpdatedAt()
-		sjbu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sjbu *SysJwtBlockUpdate) check() error {
-	if v, ok := sjbu.mutation.Memo(); ok {
+func (_u *SysJwtBlockUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysjwtblock.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysJwtBlock.memo": %w`, err)}
 		}
 	}
-	if v, ok := sjbu.mutation.Jwt(); ok {
+	if v, ok := _u.mutation.Jwt(); ok {
 		if err := sysjwtblock.JwtValidator(v); err != nil {
 			return &ValidationError{Name: "jwt", err: fmt.Errorf(`mainent: validator failed for field "SysJwtBlock.jwt": %w`, err)}
 		}
@@ -180,55 +180,55 @@ func (sjbu *SysJwtBlockUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sjbu *SysJwtBlockUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysJwtBlockUpdate {
-	sjbu.modifiers = append(sjbu.modifiers, modifiers...)
-	return sjbu
+func (_u *SysJwtBlockUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysJwtBlockUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := sjbu.check(); err != nil {
-		return n, err
+func (_u *SysJwtBlockUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysjwtblock.Table, sysjwtblock.Columns, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
-	if ps := sjbu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sjbu.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysjwtblock.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sjbu.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysjwtblock.FieldMemo, field.TypeString, value)
 	}
-	if sjbu.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysjwtblock.FieldMemo, field.TypeString)
 	}
-	if sjbu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysjwtblock.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sjbu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sjbu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysjwtblock.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sjbu.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sjbu.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysjwtblock.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sjbu.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysjwtblock.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sjbu.mutation.Jwt(); ok {
+	if value, ok := _u.mutation.Jwt(); ok {
 		_spec.SetField(sysjwtblock.FieldJwt, field.TypeString, value)
 	}
-	_spec.AddModifiers(sjbu.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, sjbu.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysjwtblock.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -236,8 +236,8 @@ func (sjbu *SysJwtBlockUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	sjbu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysJwtBlockUpdateOne is the builder for updating a single SysJwtBlock entity.
@@ -250,126 +250,126 @@ type SysJwtBlockUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sjbuo *SysJwtBlockUpdateOne) SetIsDel(b bool) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.SetIsDel(b)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) SetIsDel(v bool) *SysJwtBlockUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sjbuo *SysJwtBlockUpdateOne) SetNillableIsDel(b *bool) *SysJwtBlockUpdateOne {
-	if b != nil {
-		sjbuo.SetIsDel(*b)
+func (_u *SysJwtBlockUpdateOne) SetNillableIsDel(v *bool) *SysJwtBlockUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sjbuo
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sjbuo *SysJwtBlockUpdateOne) SetMemo(s string) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.SetMemo(s)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) SetMemo(v string) *SysJwtBlockUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sjbuo *SysJwtBlockUpdateOne) SetNillableMemo(s *string) *SysJwtBlockUpdateOne {
-	if s != nil {
-		sjbuo.SetMemo(*s)
+func (_u *SysJwtBlockUpdateOne) SetNillableMemo(v *string) *SysJwtBlockUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sjbuo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sjbuo *SysJwtBlockUpdateOne) ClearMemo() *SysJwtBlockUpdateOne {
-	sjbuo.mutation.ClearMemo()
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) ClearMemo() *SysJwtBlockUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sjbuo *SysJwtBlockUpdateOne) SetUpdatedAt(t time.Time) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.SetUpdatedAt(t)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) SetUpdatedAt(v time.Time) *SysJwtBlockUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sjbuo *SysJwtBlockUpdateOne) ClearUpdatedAt() *SysJwtBlockUpdateOne {
-	sjbuo.mutation.ClearUpdatedAt()
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) ClearUpdatedAt() *SysJwtBlockUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sjbuo *SysJwtBlockUpdateOne) SetDeletedAt(t time.Time) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.SetDeletedAt(t)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) SetDeletedAt(v time.Time) *SysJwtBlockUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sjbuo *SysJwtBlockUpdateOne) SetNillableDeletedAt(t *time.Time) *SysJwtBlockUpdateOne {
-	if t != nil {
-		sjbuo.SetDeletedAt(*t)
+func (_u *SysJwtBlockUpdateOne) SetNillableDeletedAt(v *time.Time) *SysJwtBlockUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sjbuo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sjbuo *SysJwtBlockUpdateOne) ClearDeletedAt() *SysJwtBlockUpdateOne {
-	sjbuo.mutation.ClearDeletedAt()
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) ClearDeletedAt() *SysJwtBlockUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sjbuo *SysJwtBlockUpdateOne) SetIsActive(b bool) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.SetIsActive(b)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) SetIsActive(v bool) *SysJwtBlockUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sjbuo *SysJwtBlockUpdateOne) SetNillableIsActive(b *bool) *SysJwtBlockUpdateOne {
-	if b != nil {
-		sjbuo.SetIsActive(*b)
+func (_u *SysJwtBlockUpdateOne) SetNillableIsActive(v *bool) *SysJwtBlockUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sjbuo
+	return _u
 }
 
 // SetJwt sets the "jwt" field.
-func (sjbuo *SysJwtBlockUpdateOne) SetJwt(s string) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.SetJwt(s)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) SetJwt(v string) *SysJwtBlockUpdateOne {
+	_u.mutation.SetJwt(v)
+	return _u
 }
 
 // SetNillableJwt sets the "jwt" field if the given value is not nil.
-func (sjbuo *SysJwtBlockUpdateOne) SetNillableJwt(s *string) *SysJwtBlockUpdateOne {
-	if s != nil {
-		sjbuo.SetJwt(*s)
+func (_u *SysJwtBlockUpdateOne) SetNillableJwt(v *string) *SysJwtBlockUpdateOne {
+	if v != nil {
+		_u.SetJwt(*v)
 	}
-	return sjbuo
+	return _u
 }
 
 // Mutation returns the SysJwtBlockMutation object of the builder.
-func (sjbuo *SysJwtBlockUpdateOne) Mutation() *SysJwtBlockMutation {
-	return sjbuo.mutation
+func (_u *SysJwtBlockUpdateOne) Mutation() *SysJwtBlockMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the SysJwtBlockUpdate builder.
-func (sjbuo *SysJwtBlockUpdateOne) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockUpdateOne {
-	sjbuo.mutation.Where(ps...)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (sjbuo *SysJwtBlockUpdateOne) Select(field string, fields ...string) *SysJwtBlockUpdateOne {
-	sjbuo.fields = append([]string{field}, fields...)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) Select(field string, fields ...string) *SysJwtBlockUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysJwtBlock entity.
-func (sjbuo *SysJwtBlockUpdateOne) Save(ctx context.Context) (*SysJwtBlock, error) {
-	sjbuo.defaults()
-	return withHooks(ctx, sjbuo.sqlSave, sjbuo.mutation, sjbuo.hooks)
+func (_u *SysJwtBlockUpdateOne) Save(ctx context.Context) (*SysJwtBlock, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sjbuo *SysJwtBlockUpdateOne) SaveX(ctx context.Context) *SysJwtBlock {
-	node, err := sjbuo.Save(ctx)
+func (_u *SysJwtBlockUpdateOne) SaveX(ctx context.Context) *SysJwtBlock {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -377,34 +377,34 @@ func (sjbuo *SysJwtBlockUpdateOne) SaveX(ctx context.Context) *SysJwtBlock {
 }
 
 // Exec executes the query on the entity.
-func (sjbuo *SysJwtBlockUpdateOne) Exec(ctx context.Context) error {
-	_, err := sjbuo.Save(ctx)
+func (_u *SysJwtBlockUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sjbuo *SysJwtBlockUpdateOne) ExecX(ctx context.Context) {
-	if err := sjbuo.Exec(ctx); err != nil {
+func (_u *SysJwtBlockUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sjbuo *SysJwtBlockUpdateOne) defaults() {
-	if _, ok := sjbuo.mutation.UpdatedAt(); !ok && !sjbuo.mutation.UpdatedAtCleared() {
+func (_u *SysJwtBlockUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysjwtblock.UpdateDefaultUpdatedAt()
-		sjbuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sjbuo *SysJwtBlockUpdateOne) check() error {
-	if v, ok := sjbuo.mutation.Memo(); ok {
+func (_u *SysJwtBlockUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysjwtblock.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysJwtBlock.memo": %w`, err)}
 		}
 	}
-	if v, ok := sjbuo.mutation.Jwt(); ok {
+	if v, ok := _u.mutation.Jwt(); ok {
 		if err := sysjwtblock.JwtValidator(v); err != nil {
 			return &ValidationError{Name: "jwt", err: fmt.Errorf(`mainent: validator failed for field "SysJwtBlock.jwt": %w`, err)}
 		}
@@ -413,22 +413,22 @@ func (sjbuo *SysJwtBlockUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sjbuo *SysJwtBlockUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysJwtBlockUpdateOne {
-	sjbuo.modifiers = append(sjbuo.modifiers, modifiers...)
-	return sjbuo
+func (_u *SysJwtBlockUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysJwtBlockUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBlock, err error) {
-	if err := sjbuo.check(); err != nil {
+func (_u *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBlock, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysjwtblock.Table, sysjwtblock.Columns, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
-	id, ok := sjbuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysJwtBlock.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := sjbuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysjwtblock.FieldID)
 		for _, f := range fields {
@@ -440,48 +440,48 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 			}
 		}
 	}
-	if ps := sjbuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sjbuo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysjwtblock.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sjbuo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysjwtblock.FieldMemo, field.TypeString, value)
 	}
-	if sjbuo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysjwtblock.FieldMemo, field.TypeString)
 	}
-	if sjbuo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysjwtblock.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sjbuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sjbuo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysjwtblock.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sjbuo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysjwtblock.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sjbuo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysjwtblock.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sjbuo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysjwtblock.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sjbuo.mutation.Jwt(); ok {
+	if value, ok := _u.mutation.Jwt(); ok {
 		_spec.SetField(sysjwtblock.FieldJwt, field.TypeString, value)
 	}
-	_spec.AddModifiers(sjbuo.modifiers...)
-	_node = &SysJwtBlock{config: sjbuo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysJwtBlock{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, sjbuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysjwtblock.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -489,6 +489,6 @@ func (sjbuo *SysJwtBlockUpdateOne) sqlSave(ctx context.Context) (_node *SysJwtBl
 		}
 		return nil, err
 	}
-	sjbuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

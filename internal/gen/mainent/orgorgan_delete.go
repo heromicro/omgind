@@ -20,56 +20,56 @@ type OrgOrganDelete struct {
 }
 
 // Where appends a list predicates to the OrgOrganDelete builder.
-func (ood *OrgOrganDelete) Where(ps ...predicate.OrgOrgan) *OrgOrganDelete {
-	ood.mutation.Where(ps...)
-	return ood
+func (_d *OrgOrganDelete) Where(ps ...predicate.OrgOrgan) *OrgOrganDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (ood *OrgOrganDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, ood.sqlExec, ood.mutation, ood.hooks)
+func (_d *OrgOrganDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (ood *OrgOrganDelete) ExecX(ctx context.Context) int {
-	n, err := ood.Exec(ctx)
+func (_d *OrgOrganDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (ood *OrgOrganDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *OrgOrganDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(orgorgan.Table, sqlgraph.NewFieldSpec(orgorgan.FieldID, field.TypeString))
-	if ps := ood.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, ood.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	ood.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // OrgOrganDeleteOne is the builder for deleting a single OrgOrgan entity.
 type OrgOrganDeleteOne struct {
-	ood *OrgOrganDelete
+	_d *OrgOrganDelete
 }
 
 // Where appends a list predicates to the OrgOrganDelete builder.
-func (oodo *OrgOrganDeleteOne) Where(ps ...predicate.OrgOrgan) *OrgOrganDeleteOne {
-	oodo.ood.mutation.Where(ps...)
-	return oodo
+func (_d *OrgOrganDeleteOne) Where(ps ...predicate.OrgOrgan) *OrgOrganDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (oodo *OrgOrganDeleteOne) Exec(ctx context.Context) error {
-	n, err := oodo.ood.Exec(ctx)
+func (_d *OrgOrganDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (oodo *OrgOrganDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (oodo *OrgOrganDeleteOne) ExecX(ctx context.Context) {
-	if err := oodo.Exec(ctx); err != nil {
+func (_d *OrgOrganDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

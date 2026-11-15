@@ -26,412 +26,412 @@ type SysAddressCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sac *SysAddressCreate) SetIsDel(b bool) *SysAddressCreate {
-	sac.mutation.SetIsDel(b)
-	return sac
+func (_c *SysAddressCreate) SetIsDel(v bool) *SysAddressCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableIsDel(b *bool) *SysAddressCreate {
-	if b != nil {
-		sac.SetIsDel(*b)
+func (_c *SysAddressCreate) SetNillableIsDel(v *bool) *SysAddressCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetUserID sets the "user_id" field.
-func (sac *SysAddressCreate) SetUserID(s string) *SysAddressCreate {
-	sac.mutation.SetUserID(s)
-	return sac
+func (_c *SysAddressCreate) SetUserID(v string) *SysAddressCreate {
+	_c.mutation.SetUserID(v)
+	return _c
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableUserID(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetUserID(*s)
+func (_c *SysAddressCreate) SetNillableUserID(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetUserID(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetOrgID sets the "org_id" field.
-func (sac *SysAddressCreate) SetOrgID(s string) *SysAddressCreate {
-	sac.mutation.SetOrgID(s)
-	return sac
+func (_c *SysAddressCreate) SetOrgID(v string) *SysAddressCreate {
+	_c.mutation.SetOrgID(v)
+	return _c
 }
 
 // SetNillableOrgID sets the "org_id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableOrgID(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetOrgID(*s)
+func (_c *SysAddressCreate) SetNillableOrgID(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetOrgID(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (sac *SysAddressCreate) SetSort(i int32) *SysAddressCreate {
-	sac.mutation.SetSort(i)
-	return sac
+func (_c *SysAddressCreate) SetSort(v int32) *SysAddressCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableSort(i *int32) *SysAddressCreate {
-	if i != nil {
-		sac.SetSort(*i)
+func (_c *SysAddressCreate) SetNillableSort(v *int32) *SysAddressCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (sac *SysAddressCreate) SetCreatedAt(t time.Time) *SysAddressCreate {
-	sac.mutation.SetCreatedAt(t)
-	return sac
+func (_c *SysAddressCreate) SetCreatedAt(v time.Time) *SysAddressCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableCreatedAt(t *time.Time) *SysAddressCreate {
-	if t != nil {
-		sac.SetCreatedAt(*t)
+func (_c *SysAddressCreate) SetNillableCreatedAt(v *time.Time) *SysAddressCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sac *SysAddressCreate) SetUpdatedAt(t time.Time) *SysAddressCreate {
-	sac.mutation.SetUpdatedAt(t)
-	return sac
+func (_c *SysAddressCreate) SetUpdatedAt(v time.Time) *SysAddressCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableUpdatedAt(t *time.Time) *SysAddressCreate {
-	if t != nil {
-		sac.SetUpdatedAt(*t)
+func (_c *SysAddressCreate) SetNillableUpdatedAt(v *time.Time) *SysAddressCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sac *SysAddressCreate) SetDeletedAt(t time.Time) *SysAddressCreate {
-	sac.mutation.SetDeletedAt(t)
-	return sac
+func (_c *SysAddressCreate) SetDeletedAt(v time.Time) *SysAddressCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableDeletedAt(t *time.Time) *SysAddressCreate {
-	if t != nil {
-		sac.SetDeletedAt(*t)
+func (_c *SysAddressCreate) SetNillableDeletedAt(v *time.Time) *SysAddressCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (sac *SysAddressCreate) SetIsActive(b bool) *SysAddressCreate {
-	sac.mutation.SetIsActive(b)
-	return sac
+func (_c *SysAddressCreate) SetIsActive(v bool) *SysAddressCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableIsActive(b *bool) *SysAddressCreate {
-	if b != nil {
-		sac.SetIsActive(*b)
+func (_c *SysAddressCreate) SetNillableIsActive(v *bool) *SysAddressCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (sac *SysAddressCreate) SetMemo(s string) *SysAddressCreate {
-	sac.mutation.SetMemo(s)
-	return sac
+func (_c *SysAddressCreate) SetMemo(v string) *SysAddressCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableMemo(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetMemo(*s)
+func (_c *SysAddressCreate) SetNillableMemo(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetCountry sets the "country" field.
-func (sac *SysAddressCreate) SetCountry(s string) *SysAddressCreate {
-	sac.mutation.SetCountry(s)
-	return sac
+func (_c *SysAddressCreate) SetCountry(v string) *SysAddressCreate {
+	_c.mutation.SetCountry(v)
+	return _c
 }
 
 // SetNillableCountry sets the "country" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableCountry(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetCountry(*s)
+func (_c *SysAddressCreate) SetNillableCountry(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetCountry(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetProvince sets the "province" field.
-func (sac *SysAddressCreate) SetProvince(s string) *SysAddressCreate {
-	sac.mutation.SetProvince(s)
-	return sac
+func (_c *SysAddressCreate) SetProvince(v string) *SysAddressCreate {
+	_c.mutation.SetProvince(v)
+	return _c
 }
 
 // SetNillableProvince sets the "province" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableProvince(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetProvince(*s)
+func (_c *SysAddressCreate) SetNillableProvince(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetProvince(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetCity sets the "city" field.
-func (sac *SysAddressCreate) SetCity(s string) *SysAddressCreate {
-	sac.mutation.SetCity(s)
-	return sac
+func (_c *SysAddressCreate) SetCity(v string) *SysAddressCreate {
+	_c.mutation.SetCity(v)
+	return _c
 }
 
 // SetNillableCity sets the "city" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableCity(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetCity(*s)
+func (_c *SysAddressCreate) SetNillableCity(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetCity(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetCounty sets the "county" field.
-func (sac *SysAddressCreate) SetCounty(s string) *SysAddressCreate {
-	sac.mutation.SetCounty(s)
-	return sac
+func (_c *SysAddressCreate) SetCounty(v string) *SysAddressCreate {
+	_c.mutation.SetCounty(v)
+	return _c
 }
 
 // SetNillableCounty sets the "county" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableCounty(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetCounty(*s)
+func (_c *SysAddressCreate) SetNillableCounty(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetCounty(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetCountryID sets the "country_id" field.
-func (sac *SysAddressCreate) SetCountryID(s string) *SysAddressCreate {
-	sac.mutation.SetCountryID(s)
-	return sac
+func (_c *SysAddressCreate) SetCountryID(v string) *SysAddressCreate {
+	_c.mutation.SetCountryID(v)
+	return _c
 }
 
 // SetNillableCountryID sets the "country_id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableCountryID(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetCountryID(*s)
+func (_c *SysAddressCreate) SetNillableCountryID(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetCountryID(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetProvinceID sets the "province_id" field.
-func (sac *SysAddressCreate) SetProvinceID(s string) *SysAddressCreate {
-	sac.mutation.SetProvinceID(s)
-	return sac
+func (_c *SysAddressCreate) SetProvinceID(v string) *SysAddressCreate {
+	_c.mutation.SetProvinceID(v)
+	return _c
 }
 
 // SetNillableProvinceID sets the "province_id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableProvinceID(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetProvinceID(*s)
+func (_c *SysAddressCreate) SetNillableProvinceID(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetProvinceID(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetCityID sets the "city_id" field.
-func (sac *SysAddressCreate) SetCityID(s string) *SysAddressCreate {
-	sac.mutation.SetCityID(s)
-	return sac
+func (_c *SysAddressCreate) SetCityID(v string) *SysAddressCreate {
+	_c.mutation.SetCityID(v)
+	return _c
 }
 
 // SetNillableCityID sets the "city_id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableCityID(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetCityID(*s)
+func (_c *SysAddressCreate) SetNillableCityID(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetCityID(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetCountyID sets the "county_id" field.
-func (sac *SysAddressCreate) SetCountyID(s string) *SysAddressCreate {
-	sac.mutation.SetCountyID(s)
-	return sac
+func (_c *SysAddressCreate) SetCountyID(v string) *SysAddressCreate {
+	_c.mutation.SetCountyID(v)
+	return _c
 }
 
 // SetNillableCountyID sets the "county_id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableCountyID(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetCountyID(*s)
+func (_c *SysAddressCreate) SetNillableCountyID(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetCountyID(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetZipCode sets the "zip_code" field.
-func (sac *SysAddressCreate) SetZipCode(s string) *SysAddressCreate {
-	sac.mutation.SetZipCode(s)
-	return sac
+func (_c *SysAddressCreate) SetZipCode(v string) *SysAddressCreate {
+	_c.mutation.SetZipCode(v)
+	return _c
 }
 
 // SetNillableZipCode sets the "zip_code" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableZipCode(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetZipCode(*s)
+func (_c *SysAddressCreate) SetNillableZipCode(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetZipCode(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetDaddr sets the "daddr" field.
-func (sac *SysAddressCreate) SetDaddr(s string) *SysAddressCreate {
-	sac.mutation.SetDaddr(s)
-	return sac
+func (_c *SysAddressCreate) SetDaddr(v string) *SysAddressCreate {
+	_c.mutation.SetDaddr(v)
+	return _c
 }
 
 // SetNillableDaddr sets the "daddr" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableDaddr(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetDaddr(*s)
+func (_c *SysAddressCreate) SetNillableDaddr(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetDaddr(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetFirstName sets the "first_name" field.
-func (sac *SysAddressCreate) SetFirstName(s string) *SysAddressCreate {
-	sac.mutation.SetFirstName(s)
-	return sac
+func (_c *SysAddressCreate) SetFirstName(v string) *SysAddressCreate {
+	_c.mutation.SetFirstName(v)
+	return _c
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableFirstName(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetFirstName(*s)
+func (_c *SysAddressCreate) SetNillableFirstName(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetFirstName(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetLastName sets the "last_name" field.
-func (sac *SysAddressCreate) SetLastName(s string) *SysAddressCreate {
-	sac.mutation.SetLastName(s)
-	return sac
+func (_c *SysAddressCreate) SetLastName(v string) *SysAddressCreate {
+	_c.mutation.SetLastName(v)
+	return _c
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableLastName(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetLastName(*s)
+func (_c *SysAddressCreate) SetNillableLastName(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetLastName(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetAreaCode sets the "area_code" field.
-func (sac *SysAddressCreate) SetAreaCode(s string) *SysAddressCreate {
-	sac.mutation.SetAreaCode(s)
-	return sac
+func (_c *SysAddressCreate) SetAreaCode(v string) *SysAddressCreate {
+	_c.mutation.SetAreaCode(v)
+	return _c
 }
 
 // SetNillableAreaCode sets the "area_code" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableAreaCode(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetAreaCode(*s)
+func (_c *SysAddressCreate) SetNillableAreaCode(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetAreaCode(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetMobile sets the "mobile" field.
-func (sac *SysAddressCreate) SetMobile(s string) *SysAddressCreate {
-	sac.mutation.SetMobile(s)
-	return sac
+func (_c *SysAddressCreate) SetMobile(v string) *SysAddressCreate {
+	_c.mutation.SetMobile(v)
+	return _c
 }
 
 // SetNillableMobile sets the "mobile" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableMobile(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetMobile(*s)
+func (_c *SysAddressCreate) SetNillableMobile(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetMobile(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetID sets the "id" field.
-func (sac *SysAddressCreate) SetID(s string) *SysAddressCreate {
-	sac.mutation.SetID(s)
-	return sac
+func (_c *SysAddressCreate) SetID(v string) *SysAddressCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableID(s *string) *SysAddressCreate {
-	if s != nil {
-		sac.SetID(*s)
+func (_c *SysAddressCreate) SetNillableID(v *string) *SysAddressCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return sac
+	return _c
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (sac *SysAddressCreate) SetOrganID(id string) *SysAddressCreate {
-	sac.mutation.SetOrganID(id)
-	return sac
+func (_c *SysAddressCreate) SetOrganID(id string) *SysAddressCreate {
+	_c.mutation.SetOrganID(id)
+	return _c
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableOrganID(id *string) *SysAddressCreate {
+func (_c *SysAddressCreate) SetNillableOrganID(id *string) *SysAddressCreate {
 	if id != nil {
-		sac = sac.SetOrganID(*id)
+		_c = _c.SetOrganID(*id)
 	}
-	return sac
+	return _c
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (sac *SysAddressCreate) SetOrgan(o *OrgOrgan) *SysAddressCreate {
-	return sac.SetOrganID(o.ID)
+func (_c *SysAddressCreate) SetOrgan(v *OrgOrgan) *SysAddressCreate {
+	return _c.SetOrganID(v.ID)
 }
 
 // SetStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID.
-func (sac *SysAddressCreate) SetStaffResiID(id string) *SysAddressCreate {
-	sac.mutation.SetStaffResiID(id)
-	return sac
+func (_c *SysAddressCreate) SetStaffResiID(id string) *SysAddressCreate {
+	_c.mutation.SetStaffResiID(id)
+	return _c
 }
 
 // SetNillableStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableStaffResiID(id *string) *SysAddressCreate {
+func (_c *SysAddressCreate) SetNillableStaffResiID(id *string) *SysAddressCreate {
 	if id != nil {
-		sac = sac.SetStaffResiID(*id)
+		_c = _c.SetStaffResiID(*id)
 	}
-	return sac
+	return _c
 }
 
 // SetStaffResi sets the "staff_resi" edge to the OrgStaff entity.
-func (sac *SysAddressCreate) SetStaffResi(o *OrgStaff) *SysAddressCreate {
-	return sac.SetStaffResiID(o.ID)
+func (_c *SysAddressCreate) SetStaffResi(v *OrgStaff) *SysAddressCreate {
+	return _c.SetStaffResiID(v.ID)
 }
 
 // SetStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID.
-func (sac *SysAddressCreate) SetStaffIdenID(id string) *SysAddressCreate {
-	sac.mutation.SetStaffIdenID(id)
-	return sac
+func (_c *SysAddressCreate) SetStaffIdenID(id string) *SysAddressCreate {
+	_c.mutation.SetStaffIdenID(id)
+	return _c
 }
 
 // SetNillableStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sac *SysAddressCreate) SetNillableStaffIdenID(id *string) *SysAddressCreate {
+func (_c *SysAddressCreate) SetNillableStaffIdenID(id *string) *SysAddressCreate {
 	if id != nil {
-		sac = sac.SetStaffIdenID(*id)
+		_c = _c.SetStaffIdenID(*id)
 	}
-	return sac
+	return _c
 }
 
 // SetStaffIden sets the "staff_iden" edge to the OrgStaff entity.
-func (sac *SysAddressCreate) SetStaffIden(o *OrgStaff) *SysAddressCreate {
-	return sac.SetStaffIdenID(o.ID)
+func (_c *SysAddressCreate) SetStaffIden(v *OrgStaff) *SysAddressCreate {
+	return _c.SetStaffIdenID(v.ID)
 }
 
 // Mutation returns the SysAddressMutation object of the builder.
-func (sac *SysAddressCreate) Mutation() *SysAddressMutation {
-	return sac.mutation
+func (_c *SysAddressCreate) Mutation() *SysAddressMutation {
+	return _c.mutation
 }
 
 // Save creates the SysAddress in the database.
-func (sac *SysAddressCreate) Save(ctx context.Context) (*SysAddress, error) {
-	sac.defaults()
-	return withHooks(ctx, sac.sqlSave, sac.mutation, sac.hooks)
+func (_c *SysAddressCreate) Save(ctx context.Context) (*SysAddress, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (sac *SysAddressCreate) SaveX(ctx context.Context) *SysAddress {
-	v, err := sac.Save(ctx)
+func (_c *SysAddressCreate) SaveX(ctx context.Context) *SysAddress {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -439,127 +439,127 @@ func (sac *SysAddressCreate) SaveX(ctx context.Context) *SysAddress {
 }
 
 // Exec executes the query.
-func (sac *SysAddressCreate) Exec(ctx context.Context) error {
-	_, err := sac.Save(ctx)
+func (_c *SysAddressCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sac *SysAddressCreate) ExecX(ctx context.Context) {
-	if err := sac.Exec(ctx); err != nil {
+func (_c *SysAddressCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sac *SysAddressCreate) defaults() {
-	if _, ok := sac.mutation.IsDel(); !ok {
+func (_c *SysAddressCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysaddress.DefaultIsDel
-		sac.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := sac.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysaddress.DefaultSort
-		sac.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := sac.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysaddress.DefaultCreatedAt()
-		sac.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := sac.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysaddress.DefaultUpdatedAt()
-		sac.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := sac.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysaddress.DefaultIsActive
-		sac.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := sac.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := sysaddress.DefaultMemo
-		sac.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := sac.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysaddress.DefaultID()
-		sac.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sac *SysAddressCreate) check() error {
-	if _, ok := sac.mutation.IsDel(); !ok {
+func (_c *SysAddressCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysAddress.is_del"`)}
 	}
-	if v, ok := sac.mutation.UserID(); ok {
+	if v, ok := _c.mutation.UserID(); ok {
 		if err := sysaddress.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.user_id": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.OrgID(); ok {
+	if v, ok := _c.mutation.OrgID(); ok {
 		if err := sysaddress.OrgIDValidator(v); err != nil {
 			return &ValidationError{Name: "org_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.org_id": %w`, err)}
 		}
 	}
-	if _, ok := sac.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysAddress.sort"`)}
 	}
-	if _, ok := sac.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysAddress.is_active"`)}
 	}
-	if v, ok := sac.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysaddress.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.memo": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.CountryID(); ok {
+	if v, ok := _c.mutation.CountryID(); ok {
 		if err := sysaddress.CountryIDValidator(v); err != nil {
 			return &ValidationError{Name: "country_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.country_id": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.ProvinceID(); ok {
+	if v, ok := _c.mutation.ProvinceID(); ok {
 		if err := sysaddress.ProvinceIDValidator(v); err != nil {
 			return &ValidationError{Name: "province_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.province_id": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.CityID(); ok {
+	if v, ok := _c.mutation.CityID(); ok {
 		if err := sysaddress.CityIDValidator(v); err != nil {
 			return &ValidationError{Name: "city_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.city_id": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.CountyID(); ok {
+	if v, ok := _c.mutation.CountyID(); ok {
 		if err := sysaddress.CountyIDValidator(v); err != nil {
 			return &ValidationError{Name: "county_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.county_id": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.ZipCode(); ok {
+	if v, ok := _c.mutation.ZipCode(); ok {
 		if err := sysaddress.ZipCodeValidator(v); err != nil {
 			return &ValidationError{Name: "zip_code", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.zip_code": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.Daddr(); ok {
+	if v, ok := _c.mutation.Daddr(); ok {
 		if err := sysaddress.DaddrValidator(v); err != nil {
 			return &ValidationError{Name: "daddr", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.daddr": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.FirstName(); ok {
+	if v, ok := _c.mutation.FirstName(); ok {
 		if err := sysaddress.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.first_name": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.LastName(); ok {
+	if v, ok := _c.mutation.LastName(); ok {
 		if err := sysaddress.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.last_name": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.AreaCode(); ok {
+	if v, ok := _c.mutation.AreaCode(); ok {
 		if err := sysaddress.AreaCodeValidator(v); err != nil {
 			return &ValidationError{Name: "area_code", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.area_code": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.Mobile(); ok {
+	if v, ok := _c.mutation.Mobile(); ok {
 		if err := sysaddress.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.mobile": %w`, err)}
 		}
 	}
-	if v, ok := sac.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysaddress.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.id": %w`, err)}
 		}
@@ -567,12 +567,12 @@ func (sac *SysAddressCreate) check() error {
 	return nil
 }
 
-func (sac *SysAddressCreate) sqlSave(ctx context.Context) (*SysAddress, error) {
-	if err := sac.check(); err != nil {
+func (_c *SysAddressCreate) sqlSave(ctx context.Context) (*SysAddress, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := sac.createSpec()
-	if err := sqlgraph.CreateNode(ctx, sac.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -585,114 +585,114 @@ func (sac *SysAddressCreate) sqlSave(ctx context.Context) (*SysAddress, error) {
 			return nil, fmt.Errorf("unexpected SysAddress.ID type: %T", _spec.ID.Value)
 		}
 	}
-	sac.mutation.id = &_node.ID
-	sac.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
+func (_c *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysAddress{config: sac.config}
+		_node = &SysAddress{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysaddress.Table, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = sac.conflict
-	if id, ok := sac.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := sac.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := sac.mutation.UserID(); ok {
+	if value, ok := _c.mutation.UserID(); ok {
 		_spec.SetField(sysaddress.FieldUserID, field.TypeString, value)
 		_node.UserID = &value
 	}
-	if value, ok := sac.mutation.OrgID(); ok {
+	if value, ok := _c.mutation.OrgID(); ok {
 		_spec.SetField(sysaddress.FieldOrgID, field.TypeString, value)
 		_node.OrgID = &value
 	}
-	if value, ok := sac.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := sac.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysaddress.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := sac.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := sac.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := sac.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysaddress.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := sac.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(sysaddress.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := sac.mutation.Country(); ok {
+	if value, ok := _c.mutation.Country(); ok {
 		_spec.SetField(sysaddress.FieldCountry, field.TypeString, value)
 		_node.Country = &value
 	}
-	if value, ok := sac.mutation.Province(); ok {
+	if value, ok := _c.mutation.Province(); ok {
 		_spec.SetField(sysaddress.FieldProvince, field.TypeString, value)
 		_node.Province = &value
 	}
-	if value, ok := sac.mutation.City(); ok {
+	if value, ok := _c.mutation.City(); ok {
 		_spec.SetField(sysaddress.FieldCity, field.TypeString, value)
 		_node.City = &value
 	}
-	if value, ok := sac.mutation.County(); ok {
+	if value, ok := _c.mutation.County(); ok {
 		_spec.SetField(sysaddress.FieldCounty, field.TypeString, value)
 		_node.County = &value
 	}
-	if value, ok := sac.mutation.CountryID(); ok {
+	if value, ok := _c.mutation.CountryID(); ok {
 		_spec.SetField(sysaddress.FieldCountryID, field.TypeString, value)
 		_node.CountryID = &value
 	}
-	if value, ok := sac.mutation.ProvinceID(); ok {
+	if value, ok := _c.mutation.ProvinceID(); ok {
 		_spec.SetField(sysaddress.FieldProvinceID, field.TypeString, value)
 		_node.ProvinceID = &value
 	}
-	if value, ok := sac.mutation.CityID(); ok {
+	if value, ok := _c.mutation.CityID(); ok {
 		_spec.SetField(sysaddress.FieldCityID, field.TypeString, value)
 		_node.CityID = &value
 	}
-	if value, ok := sac.mutation.CountyID(); ok {
+	if value, ok := _c.mutation.CountyID(); ok {
 		_spec.SetField(sysaddress.FieldCountyID, field.TypeString, value)
 		_node.CountyID = &value
 	}
-	if value, ok := sac.mutation.ZipCode(); ok {
+	if value, ok := _c.mutation.ZipCode(); ok {
 		_spec.SetField(sysaddress.FieldZipCode, field.TypeString, value)
 		_node.ZipCode = &value
 	}
-	if value, ok := sac.mutation.Daddr(); ok {
+	if value, ok := _c.mutation.Daddr(); ok {
 		_spec.SetField(sysaddress.FieldDaddr, field.TypeString, value)
 		_node.Daddr = &value
 	}
-	if value, ok := sac.mutation.FirstName(); ok {
+	if value, ok := _c.mutation.FirstName(); ok {
 		_spec.SetField(sysaddress.FieldFirstName, field.TypeString, value)
 		_node.FirstName = &value
 	}
-	if value, ok := sac.mutation.LastName(); ok {
+	if value, ok := _c.mutation.LastName(); ok {
 		_spec.SetField(sysaddress.FieldLastName, field.TypeString, value)
 		_node.LastName = &value
 	}
-	if value, ok := sac.mutation.AreaCode(); ok {
+	if value, ok := _c.mutation.AreaCode(); ok {
 		_spec.SetField(sysaddress.FieldAreaCode, field.TypeString, value)
 		_node.AreaCode = &value
 	}
-	if value, ok := sac.mutation.Mobile(); ok {
+	if value, ok := _c.mutation.Mobile(); ok {
 		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
 		_node.Mobile = &value
 	}
-	if nodes := sac.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -708,7 +708,7 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := sac.mutation.StaffResiIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.StaffResiIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -724,7 +724,7 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := sac.mutation.StaffIdenIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.StaffIdenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -759,10 +759,10 @@ func (sac *SysAddressCreate) createSpec() (*SysAddress, *sqlgraph.CreateSpec) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sac *SysAddressCreate) OnConflict(opts ...sql.ConflictOption) *SysAddressUpsertOne {
-	sac.conflict = opts
+func (_c *SysAddressCreate) OnConflict(opts ...sql.ConflictOption) *SysAddressUpsertOne {
+	_c.conflict = opts
 	return &SysAddressUpsertOne{
-		create: sac,
+		create: _c,
 	}
 }
 
@@ -772,10 +772,10 @@ func (sac *SysAddressCreate) OnConflict(opts ...sql.ConflictOption) *SysAddressU
 //	client.SysAddress.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sac *SysAddressCreate) OnConflictColumns(columns ...string) *SysAddressUpsertOne {
-	sac.conflict = append(sac.conflict, sql.ConflictColumns(columns...))
+func (_c *SysAddressCreate) OnConflictColumns(columns ...string) *SysAddressUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysAddressUpsertOne{
-		create: sac,
+		create: _c,
 	}
 }
 
@@ -1686,16 +1686,16 @@ type SysAddressCreateBulk struct {
 }
 
 // Save creates the SysAddress entities in the database.
-func (sacb *SysAddressCreateBulk) Save(ctx context.Context) ([]*SysAddress, error) {
-	if sacb.err != nil {
-		return nil, sacb.err
+func (_c *SysAddressCreateBulk) Save(ctx context.Context) ([]*SysAddress, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(sacb.builders))
-	nodes := make([]*SysAddress, len(sacb.builders))
-	mutators := make([]Mutator, len(sacb.builders))
-	for i := range sacb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysAddress, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := sacb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysAddressMutation)
@@ -1709,12 +1709,12 @@ func (sacb *SysAddressCreateBulk) Save(ctx context.Context) ([]*SysAddress, erro
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, sacb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = sacb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, sacb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1734,7 +1734,7 @@ func (sacb *SysAddressCreateBulk) Save(ctx context.Context) ([]*SysAddress, erro
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, sacb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1742,8 +1742,8 @@ func (sacb *SysAddressCreateBulk) Save(ctx context.Context) ([]*SysAddress, erro
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sacb *SysAddressCreateBulk) SaveX(ctx context.Context) []*SysAddress {
-	v, err := sacb.Save(ctx)
+func (_c *SysAddressCreateBulk) SaveX(ctx context.Context) []*SysAddress {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1751,14 +1751,14 @@ func (sacb *SysAddressCreateBulk) SaveX(ctx context.Context) []*SysAddress {
 }
 
 // Exec executes the query.
-func (sacb *SysAddressCreateBulk) Exec(ctx context.Context) error {
-	_, err := sacb.Save(ctx)
+func (_c *SysAddressCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sacb *SysAddressCreateBulk) ExecX(ctx context.Context) {
-	if err := sacb.Exec(ctx); err != nil {
+func (_c *SysAddressCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1778,10 +1778,10 @@ func (sacb *SysAddressCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sacb *SysAddressCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysAddressUpsertBulk {
-	sacb.conflict = opts
+func (_c *SysAddressCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysAddressUpsertBulk {
+	_c.conflict = opts
 	return &SysAddressUpsertBulk{
-		create: sacb,
+		create: _c,
 	}
 }
 
@@ -1791,10 +1791,10 @@ func (sacb *SysAddressCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysAdd
 //	client.SysAddress.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sacb *SysAddressCreateBulk) OnConflictColumns(columns ...string) *SysAddressUpsertBulk {
-	sacb.conflict = append(sacb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysAddressCreateBulk) OnConflictColumns(columns ...string) *SysAddressUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysAddressUpsertBulk{
-		create: sacb,
+		create: _c,
 	}
 }
 

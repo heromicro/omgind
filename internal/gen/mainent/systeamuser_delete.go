@@ -20,56 +20,56 @@ type SysTeamUserDelete struct {
 }
 
 // Where appends a list predicates to the SysTeamUserDelete builder.
-func (stud *SysTeamUserDelete) Where(ps ...predicate.SysTeamUser) *SysTeamUserDelete {
-	stud.mutation.Where(ps...)
-	return stud
+func (_d *SysTeamUserDelete) Where(ps ...predicate.SysTeamUser) *SysTeamUserDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (stud *SysTeamUserDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, stud.sqlExec, stud.mutation, stud.hooks)
+func (_d *SysTeamUserDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (stud *SysTeamUserDelete) ExecX(ctx context.Context) int {
-	n, err := stud.Exec(ctx)
+func (_d *SysTeamUserDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (stud *SysTeamUserDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysTeamUserDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(systeamuser.Table, sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString))
-	if ps := stud.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, stud.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	stud.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysTeamUserDeleteOne is the builder for deleting a single SysTeamUser entity.
 type SysTeamUserDeleteOne struct {
-	stud *SysTeamUserDelete
+	_d *SysTeamUserDelete
 }
 
 // Where appends a list predicates to the SysTeamUserDelete builder.
-func (studo *SysTeamUserDeleteOne) Where(ps ...predicate.SysTeamUser) *SysTeamUserDeleteOne {
-	studo.stud.mutation.Where(ps...)
-	return studo
+func (_d *SysTeamUserDeleteOne) Where(ps ...predicate.SysTeamUser) *SysTeamUserDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (studo *SysTeamUserDeleteOne) Exec(ctx context.Context) error {
-	n, err := studo.stud.Exec(ctx)
+func (_d *SysTeamUserDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (studo *SysTeamUserDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (studo *SysTeamUserDeleteOne) ExecX(ctx context.Context) {
-	if err := studo.Exec(ctx); err != nil {
+func (_d *SysTeamUserDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

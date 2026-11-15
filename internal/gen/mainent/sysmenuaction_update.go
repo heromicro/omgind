@@ -24,168 +24,168 @@ type SysMenuActionUpdate struct {
 }
 
 // Where appends a list predicates to the SysMenuActionUpdate builder.
-func (smau *SysMenuActionUpdate) Where(ps ...predicate.SysMenuAction) *SysMenuActionUpdate {
-	smau.mutation.Where(ps...)
-	return smau
+func (_u *SysMenuActionUpdate) Where(ps ...predicate.SysMenuAction) *SysMenuActionUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (smau *SysMenuActionUpdate) SetIsDel(b bool) *SysMenuActionUpdate {
-	smau.mutation.SetIsDel(b)
-	return smau
+func (_u *SysMenuActionUpdate) SetIsDel(v bool) *SysMenuActionUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (smau *SysMenuActionUpdate) SetNillableIsDel(b *bool) *SysMenuActionUpdate {
-	if b != nil {
-		smau.SetIsDel(*b)
+func (_u *SysMenuActionUpdate) SetNillableIsDel(v *bool) *SysMenuActionUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return smau
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (smau *SysMenuActionUpdate) SetSort(i int32) *SysMenuActionUpdate {
-	smau.mutation.ResetSort()
-	smau.mutation.SetSort(i)
-	return smau
+func (_u *SysMenuActionUpdate) SetSort(v int32) *SysMenuActionUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (smau *SysMenuActionUpdate) SetNillableSort(i *int32) *SysMenuActionUpdate {
-	if i != nil {
-		smau.SetSort(*i)
+func (_u *SysMenuActionUpdate) SetNillableSort(v *int32) *SysMenuActionUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return smau
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (smau *SysMenuActionUpdate) AddSort(i int32) *SysMenuActionUpdate {
-	smau.mutation.AddSort(i)
-	return smau
+// AddSort adds value to the "sort" field.
+func (_u *SysMenuActionUpdate) AddSort(v int32) *SysMenuActionUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (smau *SysMenuActionUpdate) SetIsActive(b bool) *SysMenuActionUpdate {
-	smau.mutation.SetIsActive(b)
-	return smau
+func (_u *SysMenuActionUpdate) SetIsActive(v bool) *SysMenuActionUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (smau *SysMenuActionUpdate) SetNillableIsActive(b *bool) *SysMenuActionUpdate {
-	if b != nil {
-		smau.SetIsActive(*b)
+func (_u *SysMenuActionUpdate) SetNillableIsActive(v *bool) *SysMenuActionUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return smau
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (smau *SysMenuActionUpdate) SetMemo(s string) *SysMenuActionUpdate {
-	smau.mutation.SetMemo(s)
-	return smau
+func (_u *SysMenuActionUpdate) SetMemo(v string) *SysMenuActionUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (smau *SysMenuActionUpdate) SetNillableMemo(s *string) *SysMenuActionUpdate {
-	if s != nil {
-		smau.SetMemo(*s)
+func (_u *SysMenuActionUpdate) SetNillableMemo(v *string) *SysMenuActionUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return smau
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (smau *SysMenuActionUpdate) ClearMemo() *SysMenuActionUpdate {
-	smau.mutation.ClearMemo()
-	return smau
+func (_u *SysMenuActionUpdate) ClearMemo() *SysMenuActionUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (smau *SysMenuActionUpdate) SetUpdatedAt(t time.Time) *SysMenuActionUpdate {
-	smau.mutation.SetUpdatedAt(t)
-	return smau
+func (_u *SysMenuActionUpdate) SetUpdatedAt(v time.Time) *SysMenuActionUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (smau *SysMenuActionUpdate) ClearUpdatedAt() *SysMenuActionUpdate {
-	smau.mutation.ClearUpdatedAt()
-	return smau
+func (_u *SysMenuActionUpdate) ClearUpdatedAt() *SysMenuActionUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (smau *SysMenuActionUpdate) SetDeletedAt(t time.Time) *SysMenuActionUpdate {
-	smau.mutation.SetDeletedAt(t)
-	return smau
+func (_u *SysMenuActionUpdate) SetDeletedAt(v time.Time) *SysMenuActionUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (smau *SysMenuActionUpdate) SetNillableDeletedAt(t *time.Time) *SysMenuActionUpdate {
-	if t != nil {
-		smau.SetDeletedAt(*t)
+func (_u *SysMenuActionUpdate) SetNillableDeletedAt(v *time.Time) *SysMenuActionUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return smau
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (smau *SysMenuActionUpdate) ClearDeletedAt() *SysMenuActionUpdate {
-	smau.mutation.ClearDeletedAt()
-	return smau
+func (_u *SysMenuActionUpdate) ClearDeletedAt() *SysMenuActionUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetMenuID sets the "menu_id" field.
-func (smau *SysMenuActionUpdate) SetMenuID(s string) *SysMenuActionUpdate {
-	smau.mutation.SetMenuID(s)
-	return smau
+func (_u *SysMenuActionUpdate) SetMenuID(v string) *SysMenuActionUpdate {
+	_u.mutation.SetMenuID(v)
+	return _u
 }
 
 // SetNillableMenuID sets the "menu_id" field if the given value is not nil.
-func (smau *SysMenuActionUpdate) SetNillableMenuID(s *string) *SysMenuActionUpdate {
-	if s != nil {
-		smau.SetMenuID(*s)
+func (_u *SysMenuActionUpdate) SetNillableMenuID(v *string) *SysMenuActionUpdate {
+	if v != nil {
+		_u.SetMenuID(*v)
 	}
-	return smau
+	return _u
 }
 
 // SetCode sets the "code" field.
-func (smau *SysMenuActionUpdate) SetCode(s string) *SysMenuActionUpdate {
-	smau.mutation.SetCode(s)
-	return smau
+func (_u *SysMenuActionUpdate) SetCode(v string) *SysMenuActionUpdate {
+	_u.mutation.SetCode(v)
+	return _u
 }
 
 // SetNillableCode sets the "code" field if the given value is not nil.
-func (smau *SysMenuActionUpdate) SetNillableCode(s *string) *SysMenuActionUpdate {
-	if s != nil {
-		smau.SetCode(*s)
+func (_u *SysMenuActionUpdate) SetNillableCode(v *string) *SysMenuActionUpdate {
+	if v != nil {
+		_u.SetCode(*v)
 	}
-	return smau
+	return _u
 }
 
 // SetName sets the "name" field.
-func (smau *SysMenuActionUpdate) SetName(s string) *SysMenuActionUpdate {
-	smau.mutation.SetName(s)
-	return smau
+func (_u *SysMenuActionUpdate) SetName(v string) *SysMenuActionUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (smau *SysMenuActionUpdate) SetNillableName(s *string) *SysMenuActionUpdate {
-	if s != nil {
-		smau.SetName(*s)
+func (_u *SysMenuActionUpdate) SetNillableName(v *string) *SysMenuActionUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return smau
+	return _u
 }
 
 // Mutation returns the SysMenuActionMutation object of the builder.
-func (smau *SysMenuActionUpdate) Mutation() *SysMenuActionMutation {
-	return smau.mutation
+func (_u *SysMenuActionUpdate) Mutation() *SysMenuActionMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (smau *SysMenuActionUpdate) Save(ctx context.Context) (int, error) {
-	smau.defaults()
-	return withHooks(ctx, smau.sqlSave, smau.mutation, smau.hooks)
+func (_u *SysMenuActionUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (smau *SysMenuActionUpdate) SaveX(ctx context.Context) int {
-	affected, err := smau.Save(ctx)
+func (_u *SysMenuActionUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -193,44 +193,44 @@ func (smau *SysMenuActionUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (smau *SysMenuActionUpdate) Exec(ctx context.Context) error {
-	_, err := smau.Save(ctx)
+func (_u *SysMenuActionUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smau *SysMenuActionUpdate) ExecX(ctx context.Context) {
-	if err := smau.Exec(ctx); err != nil {
+func (_u *SysMenuActionUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (smau *SysMenuActionUpdate) defaults() {
-	if _, ok := smau.mutation.UpdatedAt(); !ok && !smau.mutation.UpdatedAtCleared() {
+func (_u *SysMenuActionUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysmenuaction.UpdateDefaultUpdatedAt()
-		smau.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (smau *SysMenuActionUpdate) check() error {
-	if v, ok := smau.mutation.Memo(); ok {
+func (_u *SysMenuActionUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysmenuaction.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.memo": %w`, err)}
 		}
 	}
-	if v, ok := smau.mutation.MenuID(); ok {
+	if v, ok := _u.mutation.MenuID(); ok {
 		if err := sysmenuaction.MenuIDValidator(v); err != nil {
 			return &ValidationError{Name: "menu_id", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.menu_id": %w`, err)}
 		}
 	}
-	if v, ok := smau.mutation.Code(); ok {
+	if v, ok := _u.mutation.Code(); ok {
 		if err := sysmenuaction.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.code": %w`, err)}
 		}
 	}
-	if v, ok := smau.mutation.Name(); ok {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := sysmenuaction.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.name": %w`, err)}
 		}
@@ -239,67 +239,67 @@ func (smau *SysMenuActionUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (smau *SysMenuActionUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionUpdate {
-	smau.modifiers = append(smau.modifiers, modifiers...)
-	return smau
+func (_u *SysMenuActionUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (smau *SysMenuActionUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := smau.check(); err != nil {
-		return n, err
+func (_u *SysMenuActionUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysmenuaction.Table, sysmenuaction.Columns, sqlgraph.NewFieldSpec(sysmenuaction.FieldID, field.TypeString))
-	if ps := smau.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := smau.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysmenuaction.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := smau.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysmenuaction.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := smau.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysmenuaction.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := smau.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysmenuaction.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := smau.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysmenuaction.FieldMemo, field.TypeString, value)
 	}
-	if smau.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysmenuaction.FieldMemo, field.TypeString)
 	}
-	if smau.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysmenuaction.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := smau.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if smau.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysmenuaction.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := smau.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldDeletedAt, field.TypeTime, value)
 	}
-	if smau.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysmenuaction.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := smau.mutation.MenuID(); ok {
+	if value, ok := _u.mutation.MenuID(); ok {
 		_spec.SetField(sysmenuaction.FieldMenuID, field.TypeString, value)
 	}
-	if value, ok := smau.mutation.Code(); ok {
+	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(sysmenuaction.FieldCode, field.TypeString, value)
 	}
-	if value, ok := smau.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysmenuaction.FieldName, field.TypeString, value)
 	}
-	_spec.AddModifiers(smau.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, smau.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenuaction.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -307,8 +307,8 @@ func (smau *SysMenuActionUpdate) sqlSave(ctx context.Context) (n int, err error)
 		}
 		return 0, err
 	}
-	smau.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysMenuActionUpdateOne is the builder for updating a single SysMenuAction entity.
@@ -321,175 +321,175 @@ type SysMenuActionUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (smauo *SysMenuActionUpdateOne) SetIsDel(b bool) *SysMenuActionUpdateOne {
-	smauo.mutation.SetIsDel(b)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetIsDel(v bool) *SysMenuActionUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (smauo *SysMenuActionUpdateOne) SetNillableIsDel(b *bool) *SysMenuActionUpdateOne {
-	if b != nil {
-		smauo.SetIsDel(*b)
+func (_u *SysMenuActionUpdateOne) SetNillableIsDel(v *bool) *SysMenuActionUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return smauo
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (smauo *SysMenuActionUpdateOne) SetSort(i int32) *SysMenuActionUpdateOne {
-	smauo.mutation.ResetSort()
-	smauo.mutation.SetSort(i)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetSort(v int32) *SysMenuActionUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (smauo *SysMenuActionUpdateOne) SetNillableSort(i *int32) *SysMenuActionUpdateOne {
-	if i != nil {
-		smauo.SetSort(*i)
+func (_u *SysMenuActionUpdateOne) SetNillableSort(v *int32) *SysMenuActionUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return smauo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (smauo *SysMenuActionUpdateOne) AddSort(i int32) *SysMenuActionUpdateOne {
-	smauo.mutation.AddSort(i)
-	return smauo
+// AddSort adds value to the "sort" field.
+func (_u *SysMenuActionUpdateOne) AddSort(v int32) *SysMenuActionUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (smauo *SysMenuActionUpdateOne) SetIsActive(b bool) *SysMenuActionUpdateOne {
-	smauo.mutation.SetIsActive(b)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetIsActive(v bool) *SysMenuActionUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (smauo *SysMenuActionUpdateOne) SetNillableIsActive(b *bool) *SysMenuActionUpdateOne {
-	if b != nil {
-		smauo.SetIsActive(*b)
+func (_u *SysMenuActionUpdateOne) SetNillableIsActive(v *bool) *SysMenuActionUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return smauo
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (smauo *SysMenuActionUpdateOne) SetMemo(s string) *SysMenuActionUpdateOne {
-	smauo.mutation.SetMemo(s)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetMemo(v string) *SysMenuActionUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (smauo *SysMenuActionUpdateOne) SetNillableMemo(s *string) *SysMenuActionUpdateOne {
-	if s != nil {
-		smauo.SetMemo(*s)
+func (_u *SysMenuActionUpdateOne) SetNillableMemo(v *string) *SysMenuActionUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return smauo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (smauo *SysMenuActionUpdateOne) ClearMemo() *SysMenuActionUpdateOne {
-	smauo.mutation.ClearMemo()
-	return smauo
+func (_u *SysMenuActionUpdateOne) ClearMemo() *SysMenuActionUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (smauo *SysMenuActionUpdateOne) SetUpdatedAt(t time.Time) *SysMenuActionUpdateOne {
-	smauo.mutation.SetUpdatedAt(t)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetUpdatedAt(v time.Time) *SysMenuActionUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (smauo *SysMenuActionUpdateOne) ClearUpdatedAt() *SysMenuActionUpdateOne {
-	smauo.mutation.ClearUpdatedAt()
-	return smauo
+func (_u *SysMenuActionUpdateOne) ClearUpdatedAt() *SysMenuActionUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (smauo *SysMenuActionUpdateOne) SetDeletedAt(t time.Time) *SysMenuActionUpdateOne {
-	smauo.mutation.SetDeletedAt(t)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetDeletedAt(v time.Time) *SysMenuActionUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (smauo *SysMenuActionUpdateOne) SetNillableDeletedAt(t *time.Time) *SysMenuActionUpdateOne {
-	if t != nil {
-		smauo.SetDeletedAt(*t)
+func (_u *SysMenuActionUpdateOne) SetNillableDeletedAt(v *time.Time) *SysMenuActionUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return smauo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (smauo *SysMenuActionUpdateOne) ClearDeletedAt() *SysMenuActionUpdateOne {
-	smauo.mutation.ClearDeletedAt()
-	return smauo
+func (_u *SysMenuActionUpdateOne) ClearDeletedAt() *SysMenuActionUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetMenuID sets the "menu_id" field.
-func (smauo *SysMenuActionUpdateOne) SetMenuID(s string) *SysMenuActionUpdateOne {
-	smauo.mutation.SetMenuID(s)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetMenuID(v string) *SysMenuActionUpdateOne {
+	_u.mutation.SetMenuID(v)
+	return _u
 }
 
 // SetNillableMenuID sets the "menu_id" field if the given value is not nil.
-func (smauo *SysMenuActionUpdateOne) SetNillableMenuID(s *string) *SysMenuActionUpdateOne {
-	if s != nil {
-		smauo.SetMenuID(*s)
+func (_u *SysMenuActionUpdateOne) SetNillableMenuID(v *string) *SysMenuActionUpdateOne {
+	if v != nil {
+		_u.SetMenuID(*v)
 	}
-	return smauo
+	return _u
 }
 
 // SetCode sets the "code" field.
-func (smauo *SysMenuActionUpdateOne) SetCode(s string) *SysMenuActionUpdateOne {
-	smauo.mutation.SetCode(s)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetCode(v string) *SysMenuActionUpdateOne {
+	_u.mutation.SetCode(v)
+	return _u
 }
 
 // SetNillableCode sets the "code" field if the given value is not nil.
-func (smauo *SysMenuActionUpdateOne) SetNillableCode(s *string) *SysMenuActionUpdateOne {
-	if s != nil {
-		smauo.SetCode(*s)
+func (_u *SysMenuActionUpdateOne) SetNillableCode(v *string) *SysMenuActionUpdateOne {
+	if v != nil {
+		_u.SetCode(*v)
 	}
-	return smauo
+	return _u
 }
 
 // SetName sets the "name" field.
-func (smauo *SysMenuActionUpdateOne) SetName(s string) *SysMenuActionUpdateOne {
-	smauo.mutation.SetName(s)
-	return smauo
+func (_u *SysMenuActionUpdateOne) SetName(v string) *SysMenuActionUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (smauo *SysMenuActionUpdateOne) SetNillableName(s *string) *SysMenuActionUpdateOne {
-	if s != nil {
-		smauo.SetName(*s)
+func (_u *SysMenuActionUpdateOne) SetNillableName(v *string) *SysMenuActionUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return smauo
+	return _u
 }
 
 // Mutation returns the SysMenuActionMutation object of the builder.
-func (smauo *SysMenuActionUpdateOne) Mutation() *SysMenuActionMutation {
-	return smauo.mutation
+func (_u *SysMenuActionUpdateOne) Mutation() *SysMenuActionMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the SysMenuActionUpdate builder.
-func (smauo *SysMenuActionUpdateOne) Where(ps ...predicate.SysMenuAction) *SysMenuActionUpdateOne {
-	smauo.mutation.Where(ps...)
-	return smauo
+func (_u *SysMenuActionUpdateOne) Where(ps ...predicate.SysMenuAction) *SysMenuActionUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (smauo *SysMenuActionUpdateOne) Select(field string, fields ...string) *SysMenuActionUpdateOne {
-	smauo.fields = append([]string{field}, fields...)
-	return smauo
+func (_u *SysMenuActionUpdateOne) Select(field string, fields ...string) *SysMenuActionUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysMenuAction entity.
-func (smauo *SysMenuActionUpdateOne) Save(ctx context.Context) (*SysMenuAction, error) {
-	smauo.defaults()
-	return withHooks(ctx, smauo.sqlSave, smauo.mutation, smauo.hooks)
+func (_u *SysMenuActionUpdateOne) Save(ctx context.Context) (*SysMenuAction, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (smauo *SysMenuActionUpdateOne) SaveX(ctx context.Context) *SysMenuAction {
-	node, err := smauo.Save(ctx)
+func (_u *SysMenuActionUpdateOne) SaveX(ctx context.Context) *SysMenuAction {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -497,44 +497,44 @@ func (smauo *SysMenuActionUpdateOne) SaveX(ctx context.Context) *SysMenuAction {
 }
 
 // Exec executes the query on the entity.
-func (smauo *SysMenuActionUpdateOne) Exec(ctx context.Context) error {
-	_, err := smauo.Save(ctx)
+func (_u *SysMenuActionUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smauo *SysMenuActionUpdateOne) ExecX(ctx context.Context) {
-	if err := smauo.Exec(ctx); err != nil {
+func (_u *SysMenuActionUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (smauo *SysMenuActionUpdateOne) defaults() {
-	if _, ok := smauo.mutation.UpdatedAt(); !ok && !smauo.mutation.UpdatedAtCleared() {
+func (_u *SysMenuActionUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysmenuaction.UpdateDefaultUpdatedAt()
-		smauo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (smauo *SysMenuActionUpdateOne) check() error {
-	if v, ok := smauo.mutation.Memo(); ok {
+func (_u *SysMenuActionUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysmenuaction.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.memo": %w`, err)}
 		}
 	}
-	if v, ok := smauo.mutation.MenuID(); ok {
+	if v, ok := _u.mutation.MenuID(); ok {
 		if err := sysmenuaction.MenuIDValidator(v); err != nil {
 			return &ValidationError{Name: "menu_id", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.menu_id": %w`, err)}
 		}
 	}
-	if v, ok := smauo.mutation.Code(); ok {
+	if v, ok := _u.mutation.Code(); ok {
 		if err := sysmenuaction.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.code": %w`, err)}
 		}
 	}
-	if v, ok := smauo.mutation.Name(); ok {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := sysmenuaction.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.name": %w`, err)}
 		}
@@ -543,22 +543,22 @@ func (smauo *SysMenuActionUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (smauo *SysMenuActionUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionUpdateOne {
-	smauo.modifiers = append(smauo.modifiers, modifiers...)
-	return smauo
+func (_u *SysMenuActionUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (smauo *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMenuAction, err error) {
-	if err := smauo.check(); err != nil {
+func (_u *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMenuAction, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysmenuaction.Table, sysmenuaction.Columns, sqlgraph.NewFieldSpec(sysmenuaction.FieldID, field.TypeString))
-	id, ok := smauo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysMenuAction.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := smauo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysmenuaction.FieldID)
 		for _, f := range fields {
@@ -570,60 +570,60 @@ func (smauo *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMen
 			}
 		}
 	}
-	if ps := smauo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := smauo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysmenuaction.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := smauo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysmenuaction.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := smauo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysmenuaction.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := smauo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysmenuaction.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := smauo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysmenuaction.FieldMemo, field.TypeString, value)
 	}
-	if smauo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysmenuaction.FieldMemo, field.TypeString)
 	}
-	if smauo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysmenuaction.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := smauo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if smauo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysmenuaction.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := smauo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldDeletedAt, field.TypeTime, value)
 	}
-	if smauo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysmenuaction.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := smauo.mutation.MenuID(); ok {
+	if value, ok := _u.mutation.MenuID(); ok {
 		_spec.SetField(sysmenuaction.FieldMenuID, field.TypeString, value)
 	}
-	if value, ok := smauo.mutation.Code(); ok {
+	if value, ok := _u.mutation.Code(); ok {
 		_spec.SetField(sysmenuaction.FieldCode, field.TypeString, value)
 	}
-	if value, ok := smauo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysmenuaction.FieldName, field.TypeString, value)
 	}
-	_spec.AddModifiers(smauo.modifiers...)
-	_node = &SysMenuAction{config: smauo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysMenuAction{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, smauo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenuaction.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -631,6 +631,6 @@ func (smauo *SysMenuActionUpdateOne) sqlSave(ctx context.Context) (_node *SysMen
 		}
 		return nil, err
 	}
-	smauo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

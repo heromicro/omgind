@@ -24,149 +24,149 @@ type SysMenuActionCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (smac *SysMenuActionCreate) SetIsDel(b bool) *SysMenuActionCreate {
-	smac.mutation.SetIsDel(b)
-	return smac
+func (_c *SysMenuActionCreate) SetIsDel(v bool) *SysMenuActionCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableIsDel(b *bool) *SysMenuActionCreate {
-	if b != nil {
-		smac.SetIsDel(*b)
+func (_c *SysMenuActionCreate) SetNillableIsDel(v *bool) *SysMenuActionCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return smac
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (smac *SysMenuActionCreate) SetSort(i int32) *SysMenuActionCreate {
-	smac.mutation.SetSort(i)
-	return smac
+func (_c *SysMenuActionCreate) SetSort(v int32) *SysMenuActionCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableSort(i *int32) *SysMenuActionCreate {
-	if i != nil {
-		smac.SetSort(*i)
+func (_c *SysMenuActionCreate) SetNillableSort(v *int32) *SysMenuActionCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return smac
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (smac *SysMenuActionCreate) SetIsActive(b bool) *SysMenuActionCreate {
-	smac.mutation.SetIsActive(b)
-	return smac
+func (_c *SysMenuActionCreate) SetIsActive(v bool) *SysMenuActionCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableIsActive(b *bool) *SysMenuActionCreate {
-	if b != nil {
-		smac.SetIsActive(*b)
+func (_c *SysMenuActionCreate) SetNillableIsActive(v *bool) *SysMenuActionCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return smac
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (smac *SysMenuActionCreate) SetMemo(s string) *SysMenuActionCreate {
-	smac.mutation.SetMemo(s)
-	return smac
+func (_c *SysMenuActionCreate) SetMemo(v string) *SysMenuActionCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableMemo(s *string) *SysMenuActionCreate {
-	if s != nil {
-		smac.SetMemo(*s)
+func (_c *SysMenuActionCreate) SetNillableMemo(v *string) *SysMenuActionCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return smac
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (smac *SysMenuActionCreate) SetCreatedAt(t time.Time) *SysMenuActionCreate {
-	smac.mutation.SetCreatedAt(t)
-	return smac
+func (_c *SysMenuActionCreate) SetCreatedAt(v time.Time) *SysMenuActionCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableCreatedAt(t *time.Time) *SysMenuActionCreate {
-	if t != nil {
-		smac.SetCreatedAt(*t)
+func (_c *SysMenuActionCreate) SetNillableCreatedAt(v *time.Time) *SysMenuActionCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return smac
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (smac *SysMenuActionCreate) SetUpdatedAt(t time.Time) *SysMenuActionCreate {
-	smac.mutation.SetUpdatedAt(t)
-	return smac
+func (_c *SysMenuActionCreate) SetUpdatedAt(v time.Time) *SysMenuActionCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableUpdatedAt(t *time.Time) *SysMenuActionCreate {
-	if t != nil {
-		smac.SetUpdatedAt(*t)
+func (_c *SysMenuActionCreate) SetNillableUpdatedAt(v *time.Time) *SysMenuActionCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return smac
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (smac *SysMenuActionCreate) SetDeletedAt(t time.Time) *SysMenuActionCreate {
-	smac.mutation.SetDeletedAt(t)
-	return smac
+func (_c *SysMenuActionCreate) SetDeletedAt(v time.Time) *SysMenuActionCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableDeletedAt(t *time.Time) *SysMenuActionCreate {
-	if t != nil {
-		smac.SetDeletedAt(*t)
+func (_c *SysMenuActionCreate) SetNillableDeletedAt(v *time.Time) *SysMenuActionCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return smac
+	return _c
 }
 
 // SetMenuID sets the "menu_id" field.
-func (smac *SysMenuActionCreate) SetMenuID(s string) *SysMenuActionCreate {
-	smac.mutation.SetMenuID(s)
-	return smac
+func (_c *SysMenuActionCreate) SetMenuID(v string) *SysMenuActionCreate {
+	_c.mutation.SetMenuID(v)
+	return _c
 }
 
 // SetCode sets the "code" field.
-func (smac *SysMenuActionCreate) SetCode(s string) *SysMenuActionCreate {
-	smac.mutation.SetCode(s)
-	return smac
+func (_c *SysMenuActionCreate) SetCode(v string) *SysMenuActionCreate {
+	_c.mutation.SetCode(v)
+	return _c
 }
 
 // SetName sets the "name" field.
-func (smac *SysMenuActionCreate) SetName(s string) *SysMenuActionCreate {
-	smac.mutation.SetName(s)
-	return smac
+func (_c *SysMenuActionCreate) SetName(v string) *SysMenuActionCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetID sets the "id" field.
-func (smac *SysMenuActionCreate) SetID(s string) *SysMenuActionCreate {
-	smac.mutation.SetID(s)
-	return smac
+func (_c *SysMenuActionCreate) SetID(v string) *SysMenuActionCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (smac *SysMenuActionCreate) SetNillableID(s *string) *SysMenuActionCreate {
-	if s != nil {
-		smac.SetID(*s)
+func (_c *SysMenuActionCreate) SetNillableID(v *string) *SysMenuActionCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return smac
+	return _c
 }
 
 // Mutation returns the SysMenuActionMutation object of the builder.
-func (smac *SysMenuActionCreate) Mutation() *SysMenuActionMutation {
-	return smac.mutation
+func (_c *SysMenuActionCreate) Mutation() *SysMenuActionMutation {
+	return _c.mutation
 }
 
 // Save creates the SysMenuAction in the database.
-func (smac *SysMenuActionCreate) Save(ctx context.Context) (*SysMenuAction, error) {
-	smac.defaults()
-	return withHooks(ctx, smac.sqlSave, smac.mutation, smac.hooks)
+func (_c *SysMenuActionCreate) Save(ctx context.Context) (*SysMenuAction, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (smac *SysMenuActionCreate) SaveX(ctx context.Context) *SysMenuAction {
-	v, err := smac.Save(ctx)
+func (_c *SysMenuActionCreate) SaveX(ctx context.Context) *SysMenuAction {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -174,91 +174,91 @@ func (smac *SysMenuActionCreate) SaveX(ctx context.Context) *SysMenuAction {
 }
 
 // Exec executes the query.
-func (smac *SysMenuActionCreate) Exec(ctx context.Context) error {
-	_, err := smac.Save(ctx)
+func (_c *SysMenuActionCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smac *SysMenuActionCreate) ExecX(ctx context.Context) {
-	if err := smac.Exec(ctx); err != nil {
+func (_c *SysMenuActionCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (smac *SysMenuActionCreate) defaults() {
-	if _, ok := smac.mutation.IsDel(); !ok {
+func (_c *SysMenuActionCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysmenuaction.DefaultIsDel
-		smac.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := smac.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysmenuaction.DefaultSort
-		smac.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := smac.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysmenuaction.DefaultIsActive
-		smac.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := smac.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := sysmenuaction.DefaultMemo
-		smac.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := smac.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysmenuaction.DefaultCreatedAt()
-		smac.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := smac.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysmenuaction.DefaultUpdatedAt()
-		smac.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := smac.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysmenuaction.DefaultID()
-		smac.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (smac *SysMenuActionCreate) check() error {
-	if _, ok := smac.mutation.IsDel(); !ok {
+func (_c *SysMenuActionCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysMenuAction.is_del"`)}
 	}
-	if _, ok := smac.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysMenuAction.sort"`)}
 	}
-	if _, ok := smac.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysMenuAction.is_active"`)}
 	}
-	if v, ok := smac.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysmenuaction.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.memo": %w`, err)}
 		}
 	}
-	if _, ok := smac.mutation.MenuID(); !ok {
+	if _, ok := _c.mutation.MenuID(); !ok {
 		return &ValidationError{Name: "menu_id", err: errors.New(`mainent: missing required field "SysMenuAction.menu_id"`)}
 	}
-	if v, ok := smac.mutation.MenuID(); ok {
+	if v, ok := _c.mutation.MenuID(); ok {
 		if err := sysmenuaction.MenuIDValidator(v); err != nil {
 			return &ValidationError{Name: "menu_id", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.menu_id": %w`, err)}
 		}
 	}
-	if _, ok := smac.mutation.Code(); !ok {
+	if _, ok := _c.mutation.Code(); !ok {
 		return &ValidationError{Name: "code", err: errors.New(`mainent: missing required field "SysMenuAction.code"`)}
 	}
-	if v, ok := smac.mutation.Code(); ok {
+	if v, ok := _c.mutation.Code(); ok {
 		if err := sysmenuaction.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.code": %w`, err)}
 		}
 	}
-	if _, ok := smac.mutation.Name(); !ok {
+	if _, ok := _c.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`mainent: missing required field "SysMenuAction.name"`)}
 	}
-	if v, ok := smac.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := sysmenuaction.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.name": %w`, err)}
 		}
 	}
-	if v, ok := smac.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysmenuaction.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysMenuAction.id": %w`, err)}
 		}
@@ -266,12 +266,12 @@ func (smac *SysMenuActionCreate) check() error {
 	return nil
 }
 
-func (smac *SysMenuActionCreate) sqlSave(ctx context.Context) (*SysMenuAction, error) {
-	if err := smac.check(); err != nil {
+func (_c *SysMenuActionCreate) sqlSave(ctx context.Context) (*SysMenuAction, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := smac.createSpec()
-	if err := sqlgraph.CreateNode(ctx, smac.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -284,58 +284,58 @@ func (smac *SysMenuActionCreate) sqlSave(ctx context.Context) (*SysMenuAction, e
 			return nil, fmt.Errorf("unexpected SysMenuAction.ID type: %T", _spec.ID.Value)
 		}
 	}
-	smac.mutation.id = &_node.ID
-	smac.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (smac *SysMenuActionCreate) createSpec() (*SysMenuAction, *sqlgraph.CreateSpec) {
+func (_c *SysMenuActionCreate) createSpec() (*SysMenuAction, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysMenuAction{config: smac.config}
+		_node = &SysMenuAction{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysmenuaction.Table, sqlgraph.NewFieldSpec(sysmenuaction.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = smac.conflict
-	if id, ok := smac.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := smac.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysmenuaction.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := smac.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysmenuaction.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := smac.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysmenuaction.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := smac.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(sysmenuaction.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := smac.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := smac.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := smac.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuaction.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := smac.mutation.MenuID(); ok {
+	if value, ok := _c.mutation.MenuID(); ok {
 		_spec.SetField(sysmenuaction.FieldMenuID, field.TypeString, value)
 		_node.MenuID = value
 	}
-	if value, ok := smac.mutation.Code(); ok {
+	if value, ok := _c.mutation.Code(); ok {
 		_spec.SetField(sysmenuaction.FieldCode, field.TypeString, value)
 		_node.Code = value
 	}
-	if value, ok := smac.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(sysmenuaction.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
@@ -358,10 +358,10 @@ func (smac *SysMenuActionCreate) createSpec() (*SysMenuAction, *sqlgraph.CreateS
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (smac *SysMenuActionCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuActionUpsertOne {
-	smac.conflict = opts
+func (_c *SysMenuActionCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuActionUpsertOne {
+	_c.conflict = opts
 	return &SysMenuActionUpsertOne{
-		create: smac,
+		create: _c,
 	}
 }
 
@@ -371,10 +371,10 @@ func (smac *SysMenuActionCreate) OnConflict(opts ...sql.ConflictOption) *SysMenu
 //	client.SysMenuAction.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (smac *SysMenuActionCreate) OnConflictColumns(columns ...string) *SysMenuActionUpsertOne {
-	smac.conflict = append(smac.conflict, sql.ConflictColumns(columns...))
+func (_c *SysMenuActionCreate) OnConflictColumns(columns ...string) *SysMenuActionUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysMenuActionUpsertOne{
-		create: smac,
+		create: _c,
 	}
 }
 
@@ -775,16 +775,16 @@ type SysMenuActionCreateBulk struct {
 }
 
 // Save creates the SysMenuAction entities in the database.
-func (smacb *SysMenuActionCreateBulk) Save(ctx context.Context) ([]*SysMenuAction, error) {
-	if smacb.err != nil {
-		return nil, smacb.err
+func (_c *SysMenuActionCreateBulk) Save(ctx context.Context) ([]*SysMenuAction, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(smacb.builders))
-	nodes := make([]*SysMenuAction, len(smacb.builders))
-	mutators := make([]Mutator, len(smacb.builders))
-	for i := range smacb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysMenuAction, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := smacb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysMenuActionMutation)
@@ -798,12 +798,12 @@ func (smacb *SysMenuActionCreateBulk) Save(ctx context.Context) ([]*SysMenuActio
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, smacb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = smacb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, smacb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -823,7 +823,7 @@ func (smacb *SysMenuActionCreateBulk) Save(ctx context.Context) ([]*SysMenuActio
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, smacb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -831,8 +831,8 @@ func (smacb *SysMenuActionCreateBulk) Save(ctx context.Context) ([]*SysMenuActio
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (smacb *SysMenuActionCreateBulk) SaveX(ctx context.Context) []*SysMenuAction {
-	v, err := smacb.Save(ctx)
+func (_c *SysMenuActionCreateBulk) SaveX(ctx context.Context) []*SysMenuAction {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -840,14 +840,14 @@ func (smacb *SysMenuActionCreateBulk) SaveX(ctx context.Context) []*SysMenuActio
 }
 
 // Exec executes the query.
-func (smacb *SysMenuActionCreateBulk) Exec(ctx context.Context) error {
-	_, err := smacb.Save(ctx)
+func (_c *SysMenuActionCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smacb *SysMenuActionCreateBulk) ExecX(ctx context.Context) {
-	if err := smacb.Exec(ctx); err != nil {
+func (_c *SysMenuActionCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -867,10 +867,10 @@ func (smacb *SysMenuActionCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (smacb *SysMenuActionCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuActionUpsertBulk {
-	smacb.conflict = opts
+func (_c *SysMenuActionCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuActionUpsertBulk {
+	_c.conflict = opts
 	return &SysMenuActionUpsertBulk{
-		create: smacb,
+		create: _c,
 	}
 }
 
@@ -880,10 +880,10 @@ func (smacb *SysMenuActionCreateBulk) OnConflict(opts ...sql.ConflictOption) *Sy
 //	client.SysMenuAction.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (smacb *SysMenuActionCreateBulk) OnConflictColumns(columns ...string) *SysMenuActionUpsertBulk {
-	smacb.conflict = append(smacb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysMenuActionCreateBulk) OnConflictColumns(columns ...string) *SysMenuActionUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysMenuActionUpsertBulk{
-		create: smacb,
+		create: _c,
 	}
 }
 

@@ -20,56 +20,56 @@ type SysRoleDelete struct {
 }
 
 // Where appends a list predicates to the SysRoleDelete builder.
-func (srd *SysRoleDelete) Where(ps ...predicate.SysRole) *SysRoleDelete {
-	srd.mutation.Where(ps...)
-	return srd
+func (_d *SysRoleDelete) Where(ps ...predicate.SysRole) *SysRoleDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (srd *SysRoleDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, srd.sqlExec, srd.mutation, srd.hooks)
+func (_d *SysRoleDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (srd *SysRoleDelete) ExecX(ctx context.Context) int {
-	n, err := srd.Exec(ctx)
+func (_d *SysRoleDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (srd *SysRoleDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysRoleDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysrole.Table, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
-	if ps := srd.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, srd.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	srd.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysRoleDeleteOne is the builder for deleting a single SysRole entity.
 type SysRoleDeleteOne struct {
-	srd *SysRoleDelete
+	_d *SysRoleDelete
 }
 
 // Where appends a list predicates to the SysRoleDelete builder.
-func (srdo *SysRoleDeleteOne) Where(ps ...predicate.SysRole) *SysRoleDeleteOne {
-	srdo.srd.mutation.Where(ps...)
-	return srdo
+func (_d *SysRoleDeleteOne) Where(ps ...predicate.SysRole) *SysRoleDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (srdo *SysRoleDeleteOne) Exec(ctx context.Context) error {
-	n, err := srdo.srd.Exec(ctx)
+func (_d *SysRoleDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (srdo *SysRoleDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (srdo *SysRoleDeleteOne) ExecX(ctx context.Context) {
-	if err := srdo.Exec(ctx); err != nil {
+func (_d *SysRoleDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

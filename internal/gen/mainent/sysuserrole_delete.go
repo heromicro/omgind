@@ -20,56 +20,56 @@ type SysUserRoleDelete struct {
 }
 
 // Where appends a list predicates to the SysUserRoleDelete builder.
-func (surd *SysUserRoleDelete) Where(ps ...predicate.SysUserRole) *SysUserRoleDelete {
-	surd.mutation.Where(ps...)
-	return surd
+func (_d *SysUserRoleDelete) Where(ps ...predicate.SysUserRole) *SysUserRoleDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (surd *SysUserRoleDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, surd.sqlExec, surd.mutation, surd.hooks)
+func (_d *SysUserRoleDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (surd *SysUserRoleDelete) ExecX(ctx context.Context) int {
-	n, err := surd.Exec(ctx)
+func (_d *SysUserRoleDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (surd *SysUserRoleDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysUserRoleDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysuserrole.Table, sqlgraph.NewFieldSpec(sysuserrole.FieldID, field.TypeString))
-	if ps := surd.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, surd.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	surd.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysUserRoleDeleteOne is the builder for deleting a single SysUserRole entity.
 type SysUserRoleDeleteOne struct {
-	surd *SysUserRoleDelete
+	_d *SysUserRoleDelete
 }
 
 // Where appends a list predicates to the SysUserRoleDelete builder.
-func (surdo *SysUserRoleDeleteOne) Where(ps ...predicate.SysUserRole) *SysUserRoleDeleteOne {
-	surdo.surd.mutation.Where(ps...)
-	return surdo
+func (_d *SysUserRoleDeleteOne) Where(ps ...predicate.SysUserRole) *SysUserRoleDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (surdo *SysUserRoleDeleteOne) Exec(ctx context.Context) error {
-	n, err := surdo.surd.Exec(ctx)
+func (_d *SysUserRoleDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (surdo *SysUserRoleDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (surdo *SysUserRoleDeleteOne) ExecX(ctx context.Context) {
-	if err := surdo.Exec(ctx); err != nil {
+func (_d *SysUserRoleDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

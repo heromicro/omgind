@@ -26,294 +26,294 @@ type SysUserUpdate struct {
 }
 
 // Where appends a list predicates to the SysUserUpdate builder.
-func (suu *SysUserUpdate) Where(ps ...predicate.SysUser) *SysUserUpdate {
-	suu.mutation.Where(ps...)
-	return suu
+func (_u *SysUserUpdate) Where(ps ...predicate.SysUser) *SysUserUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (suu *SysUserUpdate) SetIsDel(b bool) *SysUserUpdate {
-	suu.mutation.SetIsDel(b)
-	return suu
+func (_u *SysUserUpdate) SetIsDel(v bool) *SysUserUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableIsDel(b *bool) *SysUserUpdate {
-	if b != nil {
-		suu.SetIsDel(*b)
+func (_u *SysUserUpdate) SetNillableIsDel(v *bool) *SysUserUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return suu
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (suu *SysUserUpdate) SetSort(i int32) *SysUserUpdate {
-	suu.mutation.ResetSort()
-	suu.mutation.SetSort(i)
-	return suu
+func (_u *SysUserUpdate) SetSort(v int32) *SysUserUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableSort(i *int32) *SysUserUpdate {
-	if i != nil {
-		suu.SetSort(*i)
+func (_u *SysUserUpdate) SetNillableSort(v *int32) *SysUserUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return suu
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (suu *SysUserUpdate) AddSort(i int32) *SysUserUpdate {
-	suu.mutation.AddSort(i)
-	return suu
+// AddSort adds value to the "sort" field.
+func (_u *SysUserUpdate) AddSort(v int32) *SysUserUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (suu *SysUserUpdate) SetUpdatedAt(t time.Time) *SysUserUpdate {
-	suu.mutation.SetUpdatedAt(t)
-	return suu
+func (_u *SysUserUpdate) SetUpdatedAt(v time.Time) *SysUserUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (suu *SysUserUpdate) ClearUpdatedAt() *SysUserUpdate {
-	suu.mutation.ClearUpdatedAt()
-	return suu
+func (_u *SysUserUpdate) ClearUpdatedAt() *SysUserUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (suu *SysUserUpdate) SetDeletedAt(t time.Time) *SysUserUpdate {
-	suu.mutation.SetDeletedAt(t)
-	return suu
+func (_u *SysUserUpdate) SetDeletedAt(v time.Time) *SysUserUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableDeletedAt(t *time.Time) *SysUserUpdate {
-	if t != nil {
-		suu.SetDeletedAt(*t)
+func (_u *SysUserUpdate) SetNillableDeletedAt(v *time.Time) *SysUserUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return suu
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (suu *SysUserUpdate) ClearDeletedAt() *SysUserUpdate {
-	suu.mutation.ClearDeletedAt()
-	return suu
+func (_u *SysUserUpdate) ClearDeletedAt() *SysUserUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (suu *SysUserUpdate) SetIsActive(b bool) *SysUserUpdate {
-	suu.mutation.SetIsActive(b)
-	return suu
+func (_u *SysUserUpdate) SetIsActive(v bool) *SysUserUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableIsActive(b *bool) *SysUserUpdate {
-	if b != nil {
-		suu.SetIsActive(*b)
+func (_u *SysUserUpdate) SetNillableIsActive(v *bool) *SysUserUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return suu
+	return _u
 }
 
 // SetRealName sets the "real_name" field.
-func (suu *SysUserUpdate) SetRealName(s string) *SysUserUpdate {
-	suu.mutation.SetRealName(s)
-	return suu
+func (_u *SysUserUpdate) SetRealName(v string) *SysUserUpdate {
+	_u.mutation.SetRealName(v)
+	return _u
 }
 
 // SetNillableRealName sets the "real_name" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableRealName(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetRealName(*s)
+func (_u *SysUserUpdate) SetNillableRealName(v *string) *SysUserUpdate {
+	if v != nil {
+		_u.SetRealName(*v)
 	}
-	return suu
+	return _u
 }
 
 // ClearRealName clears the value of the "real_name" field.
-func (suu *SysUserUpdate) ClearRealName() *SysUserUpdate {
-	suu.mutation.ClearRealName()
-	return suu
+func (_u *SysUserUpdate) ClearRealName() *SysUserUpdate {
+	_u.mutation.ClearRealName()
+	return _u
 }
 
 // SetFirstName sets the "first_name" field.
-func (suu *SysUserUpdate) SetFirstName(s string) *SysUserUpdate {
-	suu.mutation.SetFirstName(s)
-	return suu
+func (_u *SysUserUpdate) SetFirstName(v string) *SysUserUpdate {
+	_u.mutation.SetFirstName(v)
+	return _u
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableFirstName(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetFirstName(*s)
+func (_u *SysUserUpdate) SetNillableFirstName(v *string) *SysUserUpdate {
+	if v != nil {
+		_u.SetFirstName(*v)
 	}
-	return suu
+	return _u
 }
 
 // ClearFirstName clears the value of the "first_name" field.
-func (suu *SysUserUpdate) ClearFirstName() *SysUserUpdate {
-	suu.mutation.ClearFirstName()
-	return suu
+func (_u *SysUserUpdate) ClearFirstName() *SysUserUpdate {
+	_u.mutation.ClearFirstName()
+	return _u
 }
 
 // SetLastName sets the "last_name" field.
-func (suu *SysUserUpdate) SetLastName(s string) *SysUserUpdate {
-	suu.mutation.SetLastName(s)
-	return suu
+func (_u *SysUserUpdate) SetLastName(v string) *SysUserUpdate {
+	_u.mutation.SetLastName(v)
+	return _u
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableLastName(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetLastName(*s)
+func (_u *SysUserUpdate) SetNillableLastName(v *string) *SysUserUpdate {
+	if v != nil {
+		_u.SetLastName(*v)
 	}
-	return suu
+	return _u
 }
 
 // ClearLastName clears the value of the "last_name" field.
-func (suu *SysUserUpdate) ClearLastName() *SysUserUpdate {
-	suu.mutation.ClearLastName()
-	return suu
+func (_u *SysUserUpdate) ClearLastName() *SysUserUpdate {
+	_u.mutation.ClearLastName()
+	return _u
 }
 
 // SetPassword sets the "password" field.
-func (suu *SysUserUpdate) SetPassword(s string) *SysUserUpdate {
-	suu.mutation.SetPassword(s)
-	return suu
+func (_u *SysUserUpdate) SetPassword(v string) *SysUserUpdate {
+	_u.mutation.SetPassword(v)
+	return _u
 }
 
 // SetNillablePassword sets the "password" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillablePassword(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetPassword(*s)
+func (_u *SysUserUpdate) SetNillablePassword(v *string) *SysUserUpdate {
+	if v != nil {
+		_u.SetPassword(*v)
 	}
-	return suu
+	return _u
 }
 
 // SetEmail sets the "email" field.
-func (suu *SysUserUpdate) SetEmail(s string) *SysUserUpdate {
-	suu.mutation.SetEmail(s)
-	return suu
+func (_u *SysUserUpdate) SetEmail(v string) *SysUserUpdate {
+	_u.mutation.SetEmail(v)
+	return _u
 }
 
 // SetNillableEmail sets the "email" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableEmail(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetEmail(*s)
+func (_u *SysUserUpdate) SetNillableEmail(v *string) *SysUserUpdate {
+	if v != nil {
+		_u.SetEmail(*v)
 	}
-	return suu
+	return _u
 }
 
 // SetMobile sets the "mobile" field.
-func (suu *SysUserUpdate) SetMobile(s string) *SysUserUpdate {
-	suu.mutation.SetMobile(s)
-	return suu
+func (_u *SysUserUpdate) SetMobile(v string) *SysUserUpdate {
+	_u.mutation.SetMobile(v)
+	return _u
 }
 
 // SetNillableMobile sets the "mobile" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableMobile(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetMobile(*s)
+func (_u *SysUserUpdate) SetNillableMobile(v *string) *SysUserUpdate {
+	if v != nil {
+		_u.SetMobile(*v)
 	}
-	return suu
+	return _u
 }
 
 // SetSalt sets the "salt" field.
-func (suu *SysUserUpdate) SetSalt(s string) *SysUserUpdate {
-	suu.mutation.SetSalt(s)
-	return suu
+func (_u *SysUserUpdate) SetSalt(v string) *SysUserUpdate {
+	_u.mutation.SetSalt(v)
+	return _u
 }
 
 // SetNillableSalt sets the "salt" field if the given value is not nil.
-func (suu *SysUserUpdate) SetNillableSalt(s *string) *SysUserUpdate {
-	if s != nil {
-		suu.SetSalt(*s)
+func (_u *SysUserUpdate) SetNillableSalt(v *string) *SysUserUpdate {
+	if v != nil {
+		_u.SetSalt(*v)
 	}
-	return suu
+	return _u
 }
 
 // AddTeamIDs adds the "teams" edge to the SysTeam entity by IDs.
-func (suu *SysUserUpdate) AddTeamIDs(ids ...string) *SysUserUpdate {
-	suu.mutation.AddTeamIDs(ids...)
-	return suu
+func (_u *SysUserUpdate) AddTeamIDs(ids ...string) *SysUserUpdate {
+	_u.mutation.AddTeamIDs(ids...)
+	return _u
 }
 
 // AddTeams adds the "teams" edges to the SysTeam entity.
-func (suu *SysUserUpdate) AddTeams(s ...*SysTeam) *SysUserUpdate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysUserUpdate) AddTeams(v ...*SysTeam) *SysUserUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suu.AddTeamIDs(ids...)
+	return _u.AddTeamIDs(ids...)
 }
 
 // AddTeamUserIDs adds the "team_users" edge to the SysTeamUser entity by IDs.
-func (suu *SysUserUpdate) AddTeamUserIDs(ids ...string) *SysUserUpdate {
-	suu.mutation.AddTeamUserIDs(ids...)
-	return suu
+func (_u *SysUserUpdate) AddTeamUserIDs(ids ...string) *SysUserUpdate {
+	_u.mutation.AddTeamUserIDs(ids...)
+	return _u
 }
 
 // AddTeamUsers adds the "team_users" edges to the SysTeamUser entity.
-func (suu *SysUserUpdate) AddTeamUsers(s ...*SysTeamUser) *SysUserUpdate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysUserUpdate) AddTeamUsers(v ...*SysTeamUser) *SysUserUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suu.AddTeamUserIDs(ids...)
+	return _u.AddTeamUserIDs(ids...)
 }
 
 // Mutation returns the SysUserMutation object of the builder.
-func (suu *SysUserUpdate) Mutation() *SysUserMutation {
-	return suu.mutation
+func (_u *SysUserUpdate) Mutation() *SysUserMutation {
+	return _u.mutation
 }
 
 // ClearTeams clears all "teams" edges to the SysTeam entity.
-func (suu *SysUserUpdate) ClearTeams() *SysUserUpdate {
-	suu.mutation.ClearTeams()
-	return suu
+func (_u *SysUserUpdate) ClearTeams() *SysUserUpdate {
+	_u.mutation.ClearTeams()
+	return _u
 }
 
 // RemoveTeamIDs removes the "teams" edge to SysTeam entities by IDs.
-func (suu *SysUserUpdate) RemoveTeamIDs(ids ...string) *SysUserUpdate {
-	suu.mutation.RemoveTeamIDs(ids...)
-	return suu
+func (_u *SysUserUpdate) RemoveTeamIDs(ids ...string) *SysUserUpdate {
+	_u.mutation.RemoveTeamIDs(ids...)
+	return _u
 }
 
 // RemoveTeams removes "teams" edges to SysTeam entities.
-func (suu *SysUserUpdate) RemoveTeams(s ...*SysTeam) *SysUserUpdate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysUserUpdate) RemoveTeams(v ...*SysTeam) *SysUserUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suu.RemoveTeamIDs(ids...)
+	return _u.RemoveTeamIDs(ids...)
 }
 
 // ClearTeamUsers clears all "team_users" edges to the SysTeamUser entity.
-func (suu *SysUserUpdate) ClearTeamUsers() *SysUserUpdate {
-	suu.mutation.ClearTeamUsers()
-	return suu
+func (_u *SysUserUpdate) ClearTeamUsers() *SysUserUpdate {
+	_u.mutation.ClearTeamUsers()
+	return _u
 }
 
 // RemoveTeamUserIDs removes the "team_users" edge to SysTeamUser entities by IDs.
-func (suu *SysUserUpdate) RemoveTeamUserIDs(ids ...string) *SysUserUpdate {
-	suu.mutation.RemoveTeamUserIDs(ids...)
-	return suu
+func (_u *SysUserUpdate) RemoveTeamUserIDs(ids ...string) *SysUserUpdate {
+	_u.mutation.RemoveTeamUserIDs(ids...)
+	return _u
 }
 
 // RemoveTeamUsers removes "team_users" edges to SysTeamUser entities.
-func (suu *SysUserUpdate) RemoveTeamUsers(s ...*SysTeamUser) *SysUserUpdate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysUserUpdate) RemoveTeamUsers(v ...*SysTeamUser) *SysUserUpdate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suu.RemoveTeamUserIDs(ids...)
+	return _u.RemoveTeamUserIDs(ids...)
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (suu *SysUserUpdate) Save(ctx context.Context) (int, error) {
-	suu.defaults()
-	return withHooks(ctx, suu.sqlSave, suu.mutation, suu.hooks)
+func (_u *SysUserUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (suu *SysUserUpdate) SaveX(ctx context.Context) int {
-	affected, err := suu.Save(ctx)
+func (_u *SysUserUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -321,54 +321,54 @@ func (suu *SysUserUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (suu *SysUserUpdate) Exec(ctx context.Context) error {
-	_, err := suu.Save(ctx)
+func (_u *SysUserUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (suu *SysUserUpdate) ExecX(ctx context.Context) {
-	if err := suu.Exec(ctx); err != nil {
+func (_u *SysUserUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (suu *SysUserUpdate) defaults() {
-	if _, ok := suu.mutation.UpdatedAt(); !ok && !suu.mutation.UpdatedAtCleared() {
+func (_u *SysUserUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysuser.UpdateDefaultUpdatedAt()
-		suu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (suu *SysUserUpdate) check() error {
-	if v, ok := suu.mutation.RealName(); ok {
+func (_u *SysUserUpdate) check() error {
+	if v, ok := _u.mutation.RealName(); ok {
 		if err := sysuser.RealNameValidator(v); err != nil {
 			return &ValidationError{Name: "real_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.real_name": %w`, err)}
 		}
 	}
-	if v, ok := suu.mutation.FirstName(); ok {
+	if v, ok := _u.mutation.FirstName(); ok {
 		if err := sysuser.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.first_name": %w`, err)}
 		}
 	}
-	if v, ok := suu.mutation.LastName(); ok {
+	if v, ok := _u.mutation.LastName(); ok {
 		if err := sysuser.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.last_name": %w`, err)}
 		}
 	}
-	if v, ok := suu.mutation.Password(); ok {
+	if v, ok := _u.mutation.Password(); ok {
 		if err := sysuser.PasswordValidator(v); err != nil {
 			return &ValidationError{Name: "password", err: fmt.Errorf(`mainent: validator failed for field "SysUser.password": %w`, err)}
 		}
 	}
-	if v, ok := suu.mutation.Email(); ok {
+	if v, ok := _u.mutation.Email(); ok {
 		if err := sysuser.EmailValidator(v); err != nil {
 			return &ValidationError{Name: "email", err: fmt.Errorf(`mainent: validator failed for field "SysUser.email": %w`, err)}
 		}
 	}
-	if v, ok := suu.mutation.Mobile(); ok {
+	if v, ok := _u.mutation.Mobile(); ok {
 		if err := sysuser.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "SysUser.mobile": %w`, err)}
 		}
@@ -377,81 +377,81 @@ func (suu *SysUserUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (suu *SysUserUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdate {
-	suu.modifiers = append(suu.modifiers, modifiers...)
-	return suu
+func (_u *SysUserUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := suu.check(); err != nil {
-		return n, err
+func (_u *SysUserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysuser.Table, sysuser.Columns, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
-	if ps := suu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := suu.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysuser.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := suu.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysuser.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := suu.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysuser.FieldSort, field.TypeInt32, value)
 	}
-	if suu.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysuser.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := suu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if suu.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysuser.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := suu.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)
 	}
-	if suu.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysuser.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := suu.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysuser.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := suu.mutation.RealName(); ok {
+	if value, ok := _u.mutation.RealName(); ok {
 		_spec.SetField(sysuser.FieldRealName, field.TypeString, value)
 	}
-	if suu.mutation.RealNameCleared() {
+	if _u.mutation.RealNameCleared() {
 		_spec.ClearField(sysuser.FieldRealName, field.TypeString)
 	}
-	if value, ok := suu.mutation.FirstName(); ok {
+	if value, ok := _u.mutation.FirstName(); ok {
 		_spec.SetField(sysuser.FieldFirstName, field.TypeString, value)
 	}
-	if suu.mutation.FirstNameCleared() {
+	if _u.mutation.FirstNameCleared() {
 		_spec.ClearField(sysuser.FieldFirstName, field.TypeString)
 	}
-	if value, ok := suu.mutation.LastName(); ok {
+	if value, ok := _u.mutation.LastName(); ok {
 		_spec.SetField(sysuser.FieldLastName, field.TypeString, value)
 	}
-	if suu.mutation.LastNameCleared() {
+	if _u.mutation.LastNameCleared() {
 		_spec.ClearField(sysuser.FieldLastName, field.TypeString)
 	}
-	if value, ok := suu.mutation.Password(); ok {
+	if value, ok := _u.mutation.Password(); ok {
 		_spec.SetField(sysuser.FieldPassword, field.TypeString, value)
 	}
-	if value, ok := suu.mutation.Email(); ok {
+	if value, ok := _u.mutation.Email(); ok {
 		_spec.SetField(sysuser.FieldEmail, field.TypeString, value)
 	}
-	if value, ok := suu.mutation.Mobile(); ok {
+	if value, ok := _u.mutation.Mobile(); ok {
 		_spec.SetField(sysuser.FieldMobile, field.TypeString, value)
 	}
-	if value, ok := suu.mutation.Salt(); ok {
+	if value, ok := _u.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 	}
-	if suu.mutation.TeamsCleared() {
+	if _u.mutation.TeamsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: true,
@@ -462,7 +462,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
 			},
 		}
-		createE := &SysTeamUserCreate{config: suu.config, mutation: newSysTeamUserMutation(suu.config, OpCreate)}
+		createE := &SysTeamUserCreate{config: _u.config, mutation: newSysTeamUserMutation(_u.config, OpCreate)}
 		createE.defaults()
 		_, specE := createE.createSpec()
 		edge.Target.Fields = specE.Fields
@@ -471,7 +471,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suu.mutation.RemovedTeamsIDs(); len(nodes) > 0 && !suu.mutation.TeamsCleared() {
+	if nodes := _u.mutation.RemovedTeamsIDs(); len(nodes) > 0 && !_u.mutation.TeamsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: true,
@@ -485,7 +485,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		createE := &SysTeamUserCreate{config: suu.config, mutation: newSysTeamUserMutation(suu.config, OpCreate)}
+		createE := &SysTeamUserCreate{config: _u.config, mutation: newSysTeamUserMutation(_u.config, OpCreate)}
 		createE.defaults()
 		_, specE := createE.createSpec()
 		edge.Target.Fields = specE.Fields
@@ -494,7 +494,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suu.mutation.TeamsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.TeamsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: true,
@@ -508,7 +508,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		createE := &SysTeamUserCreate{config: suu.config, mutation: newSysTeamUserMutation(suu.config, OpCreate)}
+		createE := &SysTeamUserCreate{config: _u.config, mutation: newSysTeamUserMutation(_u.config, OpCreate)}
 		createE.defaults()
 		_, specE := createE.createSpec()
 		edge.Target.Fields = specE.Fields
@@ -517,7 +517,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if suu.mutation.TeamUsersCleared() {
+	if _u.mutation.TeamUsersCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -530,7 +530,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suu.mutation.RemovedTeamUsersIDs(); len(nodes) > 0 && !suu.mutation.TeamUsersCleared() {
+	if nodes := _u.mutation.RemovedTeamUsersIDs(); len(nodes) > 0 && !_u.mutation.TeamUsersCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -546,7 +546,7 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suu.mutation.TeamUsersIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.TeamUsersIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -562,8 +562,8 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(suu.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, suu.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysuser.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -571,8 +571,8 @@ func (suu *SysUserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	suu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysUserUpdateOne is the builder for updating a single SysUser entity.
@@ -585,301 +585,301 @@ type SysUserUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (suuo *SysUserUpdateOne) SetIsDel(b bool) *SysUserUpdateOne {
-	suuo.mutation.SetIsDel(b)
-	return suuo
+func (_u *SysUserUpdateOne) SetIsDel(v bool) *SysUserUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableIsDel(b *bool) *SysUserUpdateOne {
-	if b != nil {
-		suuo.SetIsDel(*b)
+func (_u *SysUserUpdateOne) SetNillableIsDel(v *bool) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return suuo
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (suuo *SysUserUpdateOne) SetSort(i int32) *SysUserUpdateOne {
-	suuo.mutation.ResetSort()
-	suuo.mutation.SetSort(i)
-	return suuo
+func (_u *SysUserUpdateOne) SetSort(v int32) *SysUserUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableSort(i *int32) *SysUserUpdateOne {
-	if i != nil {
-		suuo.SetSort(*i)
+func (_u *SysUserUpdateOne) SetNillableSort(v *int32) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return suuo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (suuo *SysUserUpdateOne) AddSort(i int32) *SysUserUpdateOne {
-	suuo.mutation.AddSort(i)
-	return suuo
+// AddSort adds value to the "sort" field.
+func (_u *SysUserUpdateOne) AddSort(v int32) *SysUserUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (suuo *SysUserUpdateOne) SetUpdatedAt(t time.Time) *SysUserUpdateOne {
-	suuo.mutation.SetUpdatedAt(t)
-	return suuo
+func (_u *SysUserUpdateOne) SetUpdatedAt(v time.Time) *SysUserUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (suuo *SysUserUpdateOne) ClearUpdatedAt() *SysUserUpdateOne {
-	suuo.mutation.ClearUpdatedAt()
-	return suuo
+func (_u *SysUserUpdateOne) ClearUpdatedAt() *SysUserUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (suuo *SysUserUpdateOne) SetDeletedAt(t time.Time) *SysUserUpdateOne {
-	suuo.mutation.SetDeletedAt(t)
-	return suuo
+func (_u *SysUserUpdateOne) SetDeletedAt(v time.Time) *SysUserUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableDeletedAt(t *time.Time) *SysUserUpdateOne {
-	if t != nil {
-		suuo.SetDeletedAt(*t)
+func (_u *SysUserUpdateOne) SetNillableDeletedAt(v *time.Time) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return suuo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (suuo *SysUserUpdateOne) ClearDeletedAt() *SysUserUpdateOne {
-	suuo.mutation.ClearDeletedAt()
-	return suuo
+func (_u *SysUserUpdateOne) ClearDeletedAt() *SysUserUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (suuo *SysUserUpdateOne) SetIsActive(b bool) *SysUserUpdateOne {
-	suuo.mutation.SetIsActive(b)
-	return suuo
+func (_u *SysUserUpdateOne) SetIsActive(v bool) *SysUserUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableIsActive(b *bool) *SysUserUpdateOne {
-	if b != nil {
-		suuo.SetIsActive(*b)
+func (_u *SysUserUpdateOne) SetNillableIsActive(v *bool) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return suuo
+	return _u
 }
 
 // SetRealName sets the "real_name" field.
-func (suuo *SysUserUpdateOne) SetRealName(s string) *SysUserUpdateOne {
-	suuo.mutation.SetRealName(s)
-	return suuo
+func (_u *SysUserUpdateOne) SetRealName(v string) *SysUserUpdateOne {
+	_u.mutation.SetRealName(v)
+	return _u
 }
 
 // SetNillableRealName sets the "real_name" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableRealName(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetRealName(*s)
+func (_u *SysUserUpdateOne) SetNillableRealName(v *string) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetRealName(*v)
 	}
-	return suuo
+	return _u
 }
 
 // ClearRealName clears the value of the "real_name" field.
-func (suuo *SysUserUpdateOne) ClearRealName() *SysUserUpdateOne {
-	suuo.mutation.ClearRealName()
-	return suuo
+func (_u *SysUserUpdateOne) ClearRealName() *SysUserUpdateOne {
+	_u.mutation.ClearRealName()
+	return _u
 }
 
 // SetFirstName sets the "first_name" field.
-func (suuo *SysUserUpdateOne) SetFirstName(s string) *SysUserUpdateOne {
-	suuo.mutation.SetFirstName(s)
-	return suuo
+func (_u *SysUserUpdateOne) SetFirstName(v string) *SysUserUpdateOne {
+	_u.mutation.SetFirstName(v)
+	return _u
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableFirstName(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetFirstName(*s)
+func (_u *SysUserUpdateOne) SetNillableFirstName(v *string) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetFirstName(*v)
 	}
-	return suuo
+	return _u
 }
 
 // ClearFirstName clears the value of the "first_name" field.
-func (suuo *SysUserUpdateOne) ClearFirstName() *SysUserUpdateOne {
-	suuo.mutation.ClearFirstName()
-	return suuo
+func (_u *SysUserUpdateOne) ClearFirstName() *SysUserUpdateOne {
+	_u.mutation.ClearFirstName()
+	return _u
 }
 
 // SetLastName sets the "last_name" field.
-func (suuo *SysUserUpdateOne) SetLastName(s string) *SysUserUpdateOne {
-	suuo.mutation.SetLastName(s)
-	return suuo
+func (_u *SysUserUpdateOne) SetLastName(v string) *SysUserUpdateOne {
+	_u.mutation.SetLastName(v)
+	return _u
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableLastName(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetLastName(*s)
+func (_u *SysUserUpdateOne) SetNillableLastName(v *string) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetLastName(*v)
 	}
-	return suuo
+	return _u
 }
 
 // ClearLastName clears the value of the "last_name" field.
-func (suuo *SysUserUpdateOne) ClearLastName() *SysUserUpdateOne {
-	suuo.mutation.ClearLastName()
-	return suuo
+func (_u *SysUserUpdateOne) ClearLastName() *SysUserUpdateOne {
+	_u.mutation.ClearLastName()
+	return _u
 }
 
 // SetPassword sets the "password" field.
-func (suuo *SysUserUpdateOne) SetPassword(s string) *SysUserUpdateOne {
-	suuo.mutation.SetPassword(s)
-	return suuo
+func (_u *SysUserUpdateOne) SetPassword(v string) *SysUserUpdateOne {
+	_u.mutation.SetPassword(v)
+	return _u
 }
 
 // SetNillablePassword sets the "password" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillablePassword(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetPassword(*s)
+func (_u *SysUserUpdateOne) SetNillablePassword(v *string) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetPassword(*v)
 	}
-	return suuo
+	return _u
 }
 
 // SetEmail sets the "email" field.
-func (suuo *SysUserUpdateOne) SetEmail(s string) *SysUserUpdateOne {
-	suuo.mutation.SetEmail(s)
-	return suuo
+func (_u *SysUserUpdateOne) SetEmail(v string) *SysUserUpdateOne {
+	_u.mutation.SetEmail(v)
+	return _u
 }
 
 // SetNillableEmail sets the "email" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableEmail(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetEmail(*s)
+func (_u *SysUserUpdateOne) SetNillableEmail(v *string) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetEmail(*v)
 	}
-	return suuo
+	return _u
 }
 
 // SetMobile sets the "mobile" field.
-func (suuo *SysUserUpdateOne) SetMobile(s string) *SysUserUpdateOne {
-	suuo.mutation.SetMobile(s)
-	return suuo
+func (_u *SysUserUpdateOne) SetMobile(v string) *SysUserUpdateOne {
+	_u.mutation.SetMobile(v)
+	return _u
 }
 
 // SetNillableMobile sets the "mobile" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableMobile(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetMobile(*s)
+func (_u *SysUserUpdateOne) SetNillableMobile(v *string) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetMobile(*v)
 	}
-	return suuo
+	return _u
 }
 
 // SetSalt sets the "salt" field.
-func (suuo *SysUserUpdateOne) SetSalt(s string) *SysUserUpdateOne {
-	suuo.mutation.SetSalt(s)
-	return suuo
+func (_u *SysUserUpdateOne) SetSalt(v string) *SysUserUpdateOne {
+	_u.mutation.SetSalt(v)
+	return _u
 }
 
 // SetNillableSalt sets the "salt" field if the given value is not nil.
-func (suuo *SysUserUpdateOne) SetNillableSalt(s *string) *SysUserUpdateOne {
-	if s != nil {
-		suuo.SetSalt(*s)
+func (_u *SysUserUpdateOne) SetNillableSalt(v *string) *SysUserUpdateOne {
+	if v != nil {
+		_u.SetSalt(*v)
 	}
-	return suuo
+	return _u
 }
 
 // AddTeamIDs adds the "teams" edge to the SysTeam entity by IDs.
-func (suuo *SysUserUpdateOne) AddTeamIDs(ids ...string) *SysUserUpdateOne {
-	suuo.mutation.AddTeamIDs(ids...)
-	return suuo
+func (_u *SysUserUpdateOne) AddTeamIDs(ids ...string) *SysUserUpdateOne {
+	_u.mutation.AddTeamIDs(ids...)
+	return _u
 }
 
 // AddTeams adds the "teams" edges to the SysTeam entity.
-func (suuo *SysUserUpdateOne) AddTeams(s ...*SysTeam) *SysUserUpdateOne {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysUserUpdateOne) AddTeams(v ...*SysTeam) *SysUserUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suuo.AddTeamIDs(ids...)
+	return _u.AddTeamIDs(ids...)
 }
 
 // AddTeamUserIDs adds the "team_users" edge to the SysTeamUser entity by IDs.
-func (suuo *SysUserUpdateOne) AddTeamUserIDs(ids ...string) *SysUserUpdateOne {
-	suuo.mutation.AddTeamUserIDs(ids...)
-	return suuo
+func (_u *SysUserUpdateOne) AddTeamUserIDs(ids ...string) *SysUserUpdateOne {
+	_u.mutation.AddTeamUserIDs(ids...)
+	return _u
 }
 
 // AddTeamUsers adds the "team_users" edges to the SysTeamUser entity.
-func (suuo *SysUserUpdateOne) AddTeamUsers(s ...*SysTeamUser) *SysUserUpdateOne {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysUserUpdateOne) AddTeamUsers(v ...*SysTeamUser) *SysUserUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suuo.AddTeamUserIDs(ids...)
+	return _u.AddTeamUserIDs(ids...)
 }
 
 // Mutation returns the SysUserMutation object of the builder.
-func (suuo *SysUserUpdateOne) Mutation() *SysUserMutation {
-	return suuo.mutation
+func (_u *SysUserUpdateOne) Mutation() *SysUserMutation {
+	return _u.mutation
 }
 
 // ClearTeams clears all "teams" edges to the SysTeam entity.
-func (suuo *SysUserUpdateOne) ClearTeams() *SysUserUpdateOne {
-	suuo.mutation.ClearTeams()
-	return suuo
+func (_u *SysUserUpdateOne) ClearTeams() *SysUserUpdateOne {
+	_u.mutation.ClearTeams()
+	return _u
 }
 
 // RemoveTeamIDs removes the "teams" edge to SysTeam entities by IDs.
-func (suuo *SysUserUpdateOne) RemoveTeamIDs(ids ...string) *SysUserUpdateOne {
-	suuo.mutation.RemoveTeamIDs(ids...)
-	return suuo
+func (_u *SysUserUpdateOne) RemoveTeamIDs(ids ...string) *SysUserUpdateOne {
+	_u.mutation.RemoveTeamIDs(ids...)
+	return _u
 }
 
 // RemoveTeams removes "teams" edges to SysTeam entities.
-func (suuo *SysUserUpdateOne) RemoveTeams(s ...*SysTeam) *SysUserUpdateOne {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysUserUpdateOne) RemoveTeams(v ...*SysTeam) *SysUserUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suuo.RemoveTeamIDs(ids...)
+	return _u.RemoveTeamIDs(ids...)
 }
 
 // ClearTeamUsers clears all "team_users" edges to the SysTeamUser entity.
-func (suuo *SysUserUpdateOne) ClearTeamUsers() *SysUserUpdateOne {
-	suuo.mutation.ClearTeamUsers()
-	return suuo
+func (_u *SysUserUpdateOne) ClearTeamUsers() *SysUserUpdateOne {
+	_u.mutation.ClearTeamUsers()
+	return _u
 }
 
 // RemoveTeamUserIDs removes the "team_users" edge to SysTeamUser entities by IDs.
-func (suuo *SysUserUpdateOne) RemoveTeamUserIDs(ids ...string) *SysUserUpdateOne {
-	suuo.mutation.RemoveTeamUserIDs(ids...)
-	return suuo
+func (_u *SysUserUpdateOne) RemoveTeamUserIDs(ids ...string) *SysUserUpdateOne {
+	_u.mutation.RemoveTeamUserIDs(ids...)
+	return _u
 }
 
 // RemoveTeamUsers removes "team_users" edges to SysTeamUser entities.
-func (suuo *SysUserUpdateOne) RemoveTeamUsers(s ...*SysTeamUser) *SysUserUpdateOne {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_u *SysUserUpdateOne) RemoveTeamUsers(v ...*SysTeamUser) *SysUserUpdateOne {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suuo.RemoveTeamUserIDs(ids...)
+	return _u.RemoveTeamUserIDs(ids...)
 }
 
 // Where appends a list predicates to the SysUserUpdate builder.
-func (suuo *SysUserUpdateOne) Where(ps ...predicate.SysUser) *SysUserUpdateOne {
-	suuo.mutation.Where(ps...)
-	return suuo
+func (_u *SysUserUpdateOne) Where(ps ...predicate.SysUser) *SysUserUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (suuo *SysUserUpdateOne) Select(field string, fields ...string) *SysUserUpdateOne {
-	suuo.fields = append([]string{field}, fields...)
-	return suuo
+func (_u *SysUserUpdateOne) Select(field string, fields ...string) *SysUserUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysUser entity.
-func (suuo *SysUserUpdateOne) Save(ctx context.Context) (*SysUser, error) {
-	suuo.defaults()
-	return withHooks(ctx, suuo.sqlSave, suuo.mutation, suuo.hooks)
+func (_u *SysUserUpdateOne) Save(ctx context.Context) (*SysUser, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (suuo *SysUserUpdateOne) SaveX(ctx context.Context) *SysUser {
-	node, err := suuo.Save(ctx)
+func (_u *SysUserUpdateOne) SaveX(ctx context.Context) *SysUser {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -887,54 +887,54 @@ func (suuo *SysUserUpdateOne) SaveX(ctx context.Context) *SysUser {
 }
 
 // Exec executes the query on the entity.
-func (suuo *SysUserUpdateOne) Exec(ctx context.Context) error {
-	_, err := suuo.Save(ctx)
+func (_u *SysUserUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (suuo *SysUserUpdateOne) ExecX(ctx context.Context) {
-	if err := suuo.Exec(ctx); err != nil {
+func (_u *SysUserUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (suuo *SysUserUpdateOne) defaults() {
-	if _, ok := suuo.mutation.UpdatedAt(); !ok && !suuo.mutation.UpdatedAtCleared() {
+func (_u *SysUserUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysuser.UpdateDefaultUpdatedAt()
-		suuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (suuo *SysUserUpdateOne) check() error {
-	if v, ok := suuo.mutation.RealName(); ok {
+func (_u *SysUserUpdateOne) check() error {
+	if v, ok := _u.mutation.RealName(); ok {
 		if err := sysuser.RealNameValidator(v); err != nil {
 			return &ValidationError{Name: "real_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.real_name": %w`, err)}
 		}
 	}
-	if v, ok := suuo.mutation.FirstName(); ok {
+	if v, ok := _u.mutation.FirstName(); ok {
 		if err := sysuser.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.first_name": %w`, err)}
 		}
 	}
-	if v, ok := suuo.mutation.LastName(); ok {
+	if v, ok := _u.mutation.LastName(); ok {
 		if err := sysuser.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.last_name": %w`, err)}
 		}
 	}
-	if v, ok := suuo.mutation.Password(); ok {
+	if v, ok := _u.mutation.Password(); ok {
 		if err := sysuser.PasswordValidator(v); err != nil {
 			return &ValidationError{Name: "password", err: fmt.Errorf(`mainent: validator failed for field "SysUser.password": %w`, err)}
 		}
 	}
-	if v, ok := suuo.mutation.Email(); ok {
+	if v, ok := _u.mutation.Email(); ok {
 		if err := sysuser.EmailValidator(v); err != nil {
 			return &ValidationError{Name: "email", err: fmt.Errorf(`mainent: validator failed for field "SysUser.email": %w`, err)}
 		}
 	}
-	if v, ok := suuo.mutation.Mobile(); ok {
+	if v, ok := _u.mutation.Mobile(); ok {
 		if err := sysuser.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "SysUser.mobile": %w`, err)}
 		}
@@ -943,22 +943,22 @@ func (suuo *SysUserUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (suuo *SysUserUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdateOne {
-	suuo.modifiers = append(suuo.modifiers, modifiers...)
-	return suuo
+func (_u *SysUserUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysUserUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err error) {
-	if err := suuo.check(); err != nil {
+func (_u *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysuser.Table, sysuser.Columns, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
-	id, ok := suuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysUser.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := suuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysuser.FieldID)
 		for _, f := range fields {
@@ -970,71 +970,71 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 			}
 		}
 	}
-	if ps := suuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := suuo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysuser.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := suuo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysuser.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := suuo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysuser.FieldSort, field.TypeInt32, value)
 	}
-	if suuo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysuser.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := suuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if suuo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysuser.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := suuo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)
 	}
-	if suuo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysuser.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := suuo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysuser.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := suuo.mutation.RealName(); ok {
+	if value, ok := _u.mutation.RealName(); ok {
 		_spec.SetField(sysuser.FieldRealName, field.TypeString, value)
 	}
-	if suuo.mutation.RealNameCleared() {
+	if _u.mutation.RealNameCleared() {
 		_spec.ClearField(sysuser.FieldRealName, field.TypeString)
 	}
-	if value, ok := suuo.mutation.FirstName(); ok {
+	if value, ok := _u.mutation.FirstName(); ok {
 		_spec.SetField(sysuser.FieldFirstName, field.TypeString, value)
 	}
-	if suuo.mutation.FirstNameCleared() {
+	if _u.mutation.FirstNameCleared() {
 		_spec.ClearField(sysuser.FieldFirstName, field.TypeString)
 	}
-	if value, ok := suuo.mutation.LastName(); ok {
+	if value, ok := _u.mutation.LastName(); ok {
 		_spec.SetField(sysuser.FieldLastName, field.TypeString, value)
 	}
-	if suuo.mutation.LastNameCleared() {
+	if _u.mutation.LastNameCleared() {
 		_spec.ClearField(sysuser.FieldLastName, field.TypeString)
 	}
-	if value, ok := suuo.mutation.Password(); ok {
+	if value, ok := _u.mutation.Password(); ok {
 		_spec.SetField(sysuser.FieldPassword, field.TypeString, value)
 	}
-	if value, ok := suuo.mutation.Email(); ok {
+	if value, ok := _u.mutation.Email(); ok {
 		_spec.SetField(sysuser.FieldEmail, field.TypeString, value)
 	}
-	if value, ok := suuo.mutation.Mobile(); ok {
+	if value, ok := _u.mutation.Mobile(); ok {
 		_spec.SetField(sysuser.FieldMobile, field.TypeString, value)
 	}
-	if value, ok := suuo.mutation.Salt(); ok {
+	if value, ok := _u.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 	}
-	if suuo.mutation.TeamsCleared() {
+	if _u.mutation.TeamsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: true,
@@ -1045,7 +1045,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 				IDSpec: sqlgraph.NewFieldSpec(systeam.FieldID, field.TypeString),
 			},
 		}
-		createE := &SysTeamUserCreate{config: suuo.config, mutation: newSysTeamUserMutation(suuo.config, OpCreate)}
+		createE := &SysTeamUserCreate{config: _u.config, mutation: newSysTeamUserMutation(_u.config, OpCreate)}
 		createE.defaults()
 		_, specE := createE.createSpec()
 		edge.Target.Fields = specE.Fields
@@ -1054,7 +1054,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suuo.mutation.RemovedTeamsIDs(); len(nodes) > 0 && !suuo.mutation.TeamsCleared() {
+	if nodes := _u.mutation.RemovedTeamsIDs(); len(nodes) > 0 && !_u.mutation.TeamsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: true,
@@ -1068,7 +1068,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		createE := &SysTeamUserCreate{config: suuo.config, mutation: newSysTeamUserMutation(suuo.config, OpCreate)}
+		createE := &SysTeamUserCreate{config: _u.config, mutation: newSysTeamUserMutation(_u.config, OpCreate)}
 		createE.defaults()
 		_, specE := createE.createSpec()
 		edge.Target.Fields = specE.Fields
@@ -1077,7 +1077,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suuo.mutation.TeamsIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.TeamsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: true,
@@ -1091,7 +1091,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		createE := &SysTeamUserCreate{config: suuo.config, mutation: newSysTeamUserMutation(suuo.config, OpCreate)}
+		createE := &SysTeamUserCreate{config: _u.config, mutation: newSysTeamUserMutation(_u.config, OpCreate)}
 		createE.defaults()
 		_, specE := createE.createSpec()
 		edge.Target.Fields = specE.Fields
@@ -1100,7 +1100,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if suuo.mutation.TeamUsersCleared() {
+	if _u.mutation.TeamUsersCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -1113,7 +1113,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suuo.mutation.RemovedTeamUsersIDs(); len(nodes) > 0 && !suuo.mutation.TeamUsersCleared() {
+	if nodes := _u.mutation.RemovedTeamUsersIDs(); len(nodes) > 0 && !_u.mutation.TeamUsersCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -1129,7 +1129,7 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := suuo.mutation.TeamUsersIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.TeamUsersIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -1145,11 +1145,11 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(suuo.modifiers...)
-	_node = &SysUser{config: suuo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysUser{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, suuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysuser.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -1157,6 +1157,6 @@ func (suuo *SysUserUpdateOne) sqlSave(ctx context.Context) (_node *SysUser, err 
 		}
 		return nil, err
 	}
-	suuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

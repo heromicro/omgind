@@ -20,56 +20,56 @@ type SysUserDelete struct {
 }
 
 // Where appends a list predicates to the SysUserDelete builder.
-func (sud *SysUserDelete) Where(ps ...predicate.SysUser) *SysUserDelete {
-	sud.mutation.Where(ps...)
-	return sud
+func (_d *SysUserDelete) Where(ps ...predicate.SysUser) *SysUserDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (sud *SysUserDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, sud.sqlExec, sud.mutation, sud.hooks)
+func (_d *SysUserDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sud *SysUserDelete) ExecX(ctx context.Context) int {
-	n, err := sud.Exec(ctx)
+func (_d *SysUserDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (sud *SysUserDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysUserDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysuser.Table, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
-	if ps := sud.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, sud.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	sud.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysUserDeleteOne is the builder for deleting a single SysUser entity.
 type SysUserDeleteOne struct {
-	sud *SysUserDelete
+	_d *SysUserDelete
 }
 
 // Where appends a list predicates to the SysUserDelete builder.
-func (sudo *SysUserDeleteOne) Where(ps ...predicate.SysUser) *SysUserDeleteOne {
-	sudo.sud.mutation.Where(ps...)
-	return sudo
+func (_d *SysUserDeleteOne) Where(ps ...predicate.SysUser) *SysUserDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (sudo *SysUserDeleteOne) Exec(ctx context.Context) error {
-	n, err := sudo.sud.Exec(ctx)
+func (_d *SysUserDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (sudo *SysUserDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sudo *SysUserDeleteOne) ExecX(ctx context.Context) {
-	if err := sudo.Exec(ctx); err != nil {
+func (_d *SysUserDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

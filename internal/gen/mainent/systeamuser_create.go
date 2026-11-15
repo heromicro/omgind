@@ -26,153 +26,153 @@ type SysTeamUserCreate struct {
 }
 
 // SetSort sets the "sort" field.
-func (stuc *SysTeamUserCreate) SetSort(i int32) *SysTeamUserCreate {
-	stuc.mutation.SetSort(i)
-	return stuc
+func (_c *SysTeamUserCreate) SetSort(v int32) *SysTeamUserCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (stuc *SysTeamUserCreate) SetNillableSort(i *int32) *SysTeamUserCreate {
-	if i != nil {
-		stuc.SetSort(*i)
+func (_c *SysTeamUserCreate) SetNillableSort(v *int32) *SysTeamUserCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return stuc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (stuc *SysTeamUserCreate) SetCreatedAt(t time.Time) *SysTeamUserCreate {
-	stuc.mutation.SetCreatedAt(t)
-	return stuc
+func (_c *SysTeamUserCreate) SetCreatedAt(v time.Time) *SysTeamUserCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (stuc *SysTeamUserCreate) SetNillableCreatedAt(t *time.Time) *SysTeamUserCreate {
-	if t != nil {
-		stuc.SetCreatedAt(*t)
+func (_c *SysTeamUserCreate) SetNillableCreatedAt(v *time.Time) *SysTeamUserCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return stuc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (stuc *SysTeamUserCreate) SetUpdatedAt(t time.Time) *SysTeamUserCreate {
-	stuc.mutation.SetUpdatedAt(t)
-	return stuc
+func (_c *SysTeamUserCreate) SetUpdatedAt(v time.Time) *SysTeamUserCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (stuc *SysTeamUserCreate) SetNillableUpdatedAt(t *time.Time) *SysTeamUserCreate {
-	if t != nil {
-		stuc.SetUpdatedAt(*t)
+func (_c *SysTeamUserCreate) SetNillableUpdatedAt(v *time.Time) *SysTeamUserCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return stuc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (stuc *SysTeamUserCreate) SetDeletedAt(t time.Time) *SysTeamUserCreate {
-	stuc.mutation.SetDeletedAt(t)
-	return stuc
+func (_c *SysTeamUserCreate) SetDeletedAt(v time.Time) *SysTeamUserCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (stuc *SysTeamUserCreate) SetNillableDeletedAt(t *time.Time) *SysTeamUserCreate {
-	if t != nil {
-		stuc.SetDeletedAt(*t)
+func (_c *SysTeamUserCreate) SetNillableDeletedAt(v *time.Time) *SysTeamUserCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return stuc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (stuc *SysTeamUserCreate) SetIsActive(b bool) *SysTeamUserCreate {
-	stuc.mutation.SetIsActive(b)
-	return stuc
+func (_c *SysTeamUserCreate) SetIsActive(v bool) *SysTeamUserCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (stuc *SysTeamUserCreate) SetNillableIsActive(b *bool) *SysTeamUserCreate {
-	if b != nil {
-		stuc.SetIsActive(*b)
+func (_c *SysTeamUserCreate) SetNillableIsActive(v *bool) *SysTeamUserCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return stuc
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (stuc *SysTeamUserCreate) SetMemo(s string) *SysTeamUserCreate {
-	stuc.mutation.SetMemo(s)
-	return stuc
+func (_c *SysTeamUserCreate) SetMemo(v string) *SysTeamUserCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (stuc *SysTeamUserCreate) SetNillableMemo(s *string) *SysTeamUserCreate {
-	if s != nil {
-		stuc.SetMemo(*s)
+func (_c *SysTeamUserCreate) SetNillableMemo(v *string) *SysTeamUserCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return stuc
+	return _c
 }
 
 // SetIsDel sets the "is_del" field.
-func (stuc *SysTeamUserCreate) SetIsDel(b bool) *SysTeamUserCreate {
-	stuc.mutation.SetIsDel(b)
-	return stuc
+func (_c *SysTeamUserCreate) SetIsDel(v bool) *SysTeamUserCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (stuc *SysTeamUserCreate) SetNillableIsDel(b *bool) *SysTeamUserCreate {
-	if b != nil {
-		stuc.SetIsDel(*b)
+func (_c *SysTeamUserCreate) SetNillableIsDel(v *bool) *SysTeamUserCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return stuc
+	return _c
 }
 
 // SetTeamID sets the "team_id" field.
-func (stuc *SysTeamUserCreate) SetTeamID(s string) *SysTeamUserCreate {
-	stuc.mutation.SetTeamID(s)
-	return stuc
+func (_c *SysTeamUserCreate) SetTeamID(v string) *SysTeamUserCreate {
+	_c.mutation.SetTeamID(v)
+	return _c
 }
 
 // SetUserID sets the "user_id" field.
-func (stuc *SysTeamUserCreate) SetUserID(s string) *SysTeamUserCreate {
-	stuc.mutation.SetUserID(s)
-	return stuc
+func (_c *SysTeamUserCreate) SetUserID(v string) *SysTeamUserCreate {
+	_c.mutation.SetUserID(v)
+	return _c
 }
 
 // SetID sets the "id" field.
-func (stuc *SysTeamUserCreate) SetID(s string) *SysTeamUserCreate {
-	stuc.mutation.SetID(s)
-	return stuc
+func (_c *SysTeamUserCreate) SetID(v string) *SysTeamUserCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (stuc *SysTeamUserCreate) SetNillableID(s *string) *SysTeamUserCreate {
-	if s != nil {
-		stuc.SetID(*s)
+func (_c *SysTeamUserCreate) SetNillableID(v *string) *SysTeamUserCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return stuc
+	return _c
 }
 
 // SetUser sets the "user" edge to the SysUser entity.
-func (stuc *SysTeamUserCreate) SetUser(s *SysUser) *SysTeamUserCreate {
-	return stuc.SetUserID(s.ID)
+func (_c *SysTeamUserCreate) SetUser(v *SysUser) *SysTeamUserCreate {
+	return _c.SetUserID(v.ID)
 }
 
 // SetTeam sets the "team" edge to the SysTeam entity.
-func (stuc *SysTeamUserCreate) SetTeam(s *SysTeam) *SysTeamUserCreate {
-	return stuc.SetTeamID(s.ID)
+func (_c *SysTeamUserCreate) SetTeam(v *SysTeam) *SysTeamUserCreate {
+	return _c.SetTeamID(v.ID)
 }
 
 // Mutation returns the SysTeamUserMutation object of the builder.
-func (stuc *SysTeamUserCreate) Mutation() *SysTeamUserMutation {
-	return stuc.mutation
+func (_c *SysTeamUserCreate) Mutation() *SysTeamUserMutation {
+	return _c.mutation
 }
 
 // Save creates the SysTeamUser in the database.
-func (stuc *SysTeamUserCreate) Save(ctx context.Context) (*SysTeamUser, error) {
-	stuc.defaults()
-	return withHooks(ctx, stuc.sqlSave, stuc.mutation, stuc.hooks)
+func (_c *SysTeamUserCreate) Save(ctx context.Context) (*SysTeamUser, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (stuc *SysTeamUserCreate) SaveX(ctx context.Context) *SysTeamUser {
-	v, err := stuc.Save(ctx)
+func (_c *SysTeamUserCreate) SaveX(ctx context.Context) *SysTeamUser {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -180,102 +180,102 @@ func (stuc *SysTeamUserCreate) SaveX(ctx context.Context) *SysTeamUser {
 }
 
 // Exec executes the query.
-func (stuc *SysTeamUserCreate) Exec(ctx context.Context) error {
-	_, err := stuc.Save(ctx)
+func (_c *SysTeamUserCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (stuc *SysTeamUserCreate) ExecX(ctx context.Context) {
-	if err := stuc.Exec(ctx); err != nil {
+func (_c *SysTeamUserCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (stuc *SysTeamUserCreate) defaults() {
-	if _, ok := stuc.mutation.Sort(); !ok {
+func (_c *SysTeamUserCreate) defaults() {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := systeamuser.DefaultSort
-		stuc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := stuc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := systeamuser.DefaultCreatedAt()
-		stuc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := stuc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := systeamuser.DefaultUpdatedAt()
-		stuc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := stuc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := systeamuser.DefaultIsActive
-		stuc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := stuc.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := systeamuser.DefaultMemo
-		stuc.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := stuc.mutation.IsDel(); !ok {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := systeamuser.DefaultIsDel
-		stuc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := stuc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := systeamuser.DefaultID()
-		stuc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (stuc *SysTeamUserCreate) check() error {
-	if _, ok := stuc.mutation.Sort(); !ok {
+func (_c *SysTeamUserCreate) check() error {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysTeamUser.sort"`)}
 	}
-	if _, ok := stuc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysTeamUser.is_active"`)}
 	}
-	if v, ok := stuc.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := systeamuser.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysTeamUser.memo": %w`, err)}
 		}
 	}
-	if _, ok := stuc.mutation.IsDel(); !ok {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysTeamUser.is_del"`)}
 	}
-	if _, ok := stuc.mutation.TeamID(); !ok {
+	if _, ok := _c.mutation.TeamID(); !ok {
 		return &ValidationError{Name: "team_id", err: errors.New(`mainent: missing required field "SysTeamUser.team_id"`)}
 	}
-	if v, ok := stuc.mutation.TeamID(); ok {
+	if v, ok := _c.mutation.TeamID(); ok {
 		if err := systeamuser.TeamIDValidator(v); err != nil {
 			return &ValidationError{Name: "team_id", err: fmt.Errorf(`mainent: validator failed for field "SysTeamUser.team_id": %w`, err)}
 		}
 	}
-	if _, ok := stuc.mutation.UserID(); !ok {
+	if _, ok := _c.mutation.UserID(); !ok {
 		return &ValidationError{Name: "user_id", err: errors.New(`mainent: missing required field "SysTeamUser.user_id"`)}
 	}
-	if v, ok := stuc.mutation.UserID(); ok {
+	if v, ok := _c.mutation.UserID(); ok {
 		if err := systeamuser.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysTeamUser.user_id": %w`, err)}
 		}
 	}
-	if v, ok := stuc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := systeamuser.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysTeamUser.id": %w`, err)}
 		}
 	}
-	if len(stuc.mutation.UserIDs()) == 0 {
+	if len(_c.mutation.UserIDs()) == 0 {
 		return &ValidationError{Name: "user", err: errors.New(`mainent: missing required edge "SysTeamUser.user"`)}
 	}
-	if len(stuc.mutation.TeamIDs()) == 0 {
+	if len(_c.mutation.TeamIDs()) == 0 {
 		return &ValidationError{Name: "team", err: errors.New(`mainent: missing required edge "SysTeamUser.team"`)}
 	}
 	return nil
 }
 
-func (stuc *SysTeamUserCreate) sqlSave(ctx context.Context) (*SysTeamUser, error) {
-	if err := stuc.check(); err != nil {
+func (_c *SysTeamUserCreate) sqlSave(ctx context.Context) (*SysTeamUser, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := stuc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, stuc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -288,50 +288,50 @@ func (stuc *SysTeamUserCreate) sqlSave(ctx context.Context) (*SysTeamUser, error
 			return nil, fmt.Errorf("unexpected SysTeamUser.ID type: %T", _spec.ID.Value)
 		}
 	}
-	stuc.mutation.id = &_node.ID
-	stuc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (stuc *SysTeamUserCreate) createSpec() (*SysTeamUser, *sqlgraph.CreateSpec) {
+func (_c *SysTeamUserCreate) createSpec() (*SysTeamUser, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysTeamUser{config: stuc.config}
+		_node = &SysTeamUser{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(systeamuser.Table, sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = stuc.conflict
-	if id, ok := stuc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := stuc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(systeamuser.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := stuc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(systeamuser.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := stuc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(systeamuser.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := stuc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(systeamuser.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := stuc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(systeamuser.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := stuc.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(systeamuser.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := stuc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(systeamuser.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if nodes := stuc.mutation.UserIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.UserIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: false,
@@ -348,7 +348,7 @@ func (stuc *SysTeamUserCreate) createSpec() (*SysTeamUser, *sqlgraph.CreateSpec)
 		_node.UserID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := stuc.mutation.TeamIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.TeamIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: false,
@@ -384,10 +384,10 @@ func (stuc *SysTeamUserCreate) createSpec() (*SysTeamUser, *sqlgraph.CreateSpec)
 //			SetSort(v+v).
 //		}).
 //		Exec(ctx)
-func (stuc *SysTeamUserCreate) OnConflict(opts ...sql.ConflictOption) *SysTeamUserUpsertOne {
-	stuc.conflict = opts
+func (_c *SysTeamUserCreate) OnConflict(opts ...sql.ConflictOption) *SysTeamUserUpsertOne {
+	_c.conflict = opts
 	return &SysTeamUserUpsertOne{
-		create: stuc,
+		create: _c,
 	}
 }
 
@@ -397,10 +397,10 @@ func (stuc *SysTeamUserCreate) OnConflict(opts ...sql.ConflictOption) *SysTeamUs
 //	client.SysTeamUser.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (stuc *SysTeamUserCreate) OnConflictColumns(columns ...string) *SysTeamUserUpsertOne {
-	stuc.conflict = append(stuc.conflict, sql.ConflictColumns(columns...))
+func (_c *SysTeamUserCreate) OnConflictColumns(columns ...string) *SysTeamUserUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysTeamUserUpsertOne{
-		create: stuc,
+		create: _c,
 	}
 }
 
@@ -775,16 +775,16 @@ type SysTeamUserCreateBulk struct {
 }
 
 // Save creates the SysTeamUser entities in the database.
-func (stucb *SysTeamUserCreateBulk) Save(ctx context.Context) ([]*SysTeamUser, error) {
-	if stucb.err != nil {
-		return nil, stucb.err
+func (_c *SysTeamUserCreateBulk) Save(ctx context.Context) ([]*SysTeamUser, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(stucb.builders))
-	nodes := make([]*SysTeamUser, len(stucb.builders))
-	mutators := make([]Mutator, len(stucb.builders))
-	for i := range stucb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysTeamUser, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := stucb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysTeamUserMutation)
@@ -798,12 +798,12 @@ func (stucb *SysTeamUserCreateBulk) Save(ctx context.Context) ([]*SysTeamUser, e
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, stucb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = stucb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, stucb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -823,7 +823,7 @@ func (stucb *SysTeamUserCreateBulk) Save(ctx context.Context) ([]*SysTeamUser, e
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, stucb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -831,8 +831,8 @@ func (stucb *SysTeamUserCreateBulk) Save(ctx context.Context) ([]*SysTeamUser, e
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (stucb *SysTeamUserCreateBulk) SaveX(ctx context.Context) []*SysTeamUser {
-	v, err := stucb.Save(ctx)
+func (_c *SysTeamUserCreateBulk) SaveX(ctx context.Context) []*SysTeamUser {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -840,14 +840,14 @@ func (stucb *SysTeamUserCreateBulk) SaveX(ctx context.Context) []*SysTeamUser {
 }
 
 // Exec executes the query.
-func (stucb *SysTeamUserCreateBulk) Exec(ctx context.Context) error {
-	_, err := stucb.Save(ctx)
+func (_c *SysTeamUserCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (stucb *SysTeamUserCreateBulk) ExecX(ctx context.Context) {
-	if err := stucb.Exec(ctx); err != nil {
+func (_c *SysTeamUserCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -867,10 +867,10 @@ func (stucb *SysTeamUserCreateBulk) ExecX(ctx context.Context) {
 //			SetSort(v+v).
 //		}).
 //		Exec(ctx)
-func (stucb *SysTeamUserCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysTeamUserUpsertBulk {
-	stucb.conflict = opts
+func (_c *SysTeamUserCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysTeamUserUpsertBulk {
+	_c.conflict = opts
 	return &SysTeamUserUpsertBulk{
-		create: stucb,
+		create: _c,
 	}
 }
 
@@ -880,10 +880,10 @@ func (stucb *SysTeamUserCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysT
 //	client.SysTeamUser.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (stucb *SysTeamUserCreateBulk) OnConflictColumns(columns ...string) *SysTeamUserUpsertBulk {
-	stucb.conflict = append(stucb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysTeamUserCreateBulk) OnConflictColumns(columns ...string) *SysTeamUserUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysTeamUserUpsertBulk{
-		create: stucb,
+		create: _c,
 	}
 }
 

@@ -26,501 +26,501 @@ type SysAddressUpdate struct {
 }
 
 // Where appends a list predicates to the SysAddressUpdate builder.
-func (sau *SysAddressUpdate) Where(ps ...predicate.SysAddress) *SysAddressUpdate {
-	sau.mutation.Where(ps...)
-	return sau
+func (_u *SysAddressUpdate) Where(ps ...predicate.SysAddress) *SysAddressUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (sau *SysAddressUpdate) SetIsDel(b bool) *SysAddressUpdate {
-	sau.mutation.SetIsDel(b)
-	return sau
+func (_u *SysAddressUpdate) SetIsDel(v bool) *SysAddressUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableIsDel(b *bool) *SysAddressUpdate {
-	if b != nil {
-		sau.SetIsDel(*b)
+func (_u *SysAddressUpdate) SetNillableIsDel(v *bool) *SysAddressUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sau
+	return _u
 }
 
 // SetUserID sets the "user_id" field.
-func (sau *SysAddressUpdate) SetUserID(s string) *SysAddressUpdate {
-	sau.mutation.SetUserID(s)
-	return sau
+func (_u *SysAddressUpdate) SetUserID(v string) *SysAddressUpdate {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableUserID(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetUserID(*s)
+func (_u *SysAddressUpdate) SetNillableUserID(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearUserID clears the value of the "user_id" field.
-func (sau *SysAddressUpdate) ClearUserID() *SysAddressUpdate {
-	sau.mutation.ClearUserID()
-	return sau
+func (_u *SysAddressUpdate) ClearUserID() *SysAddressUpdate {
+	_u.mutation.ClearUserID()
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sau *SysAddressUpdate) SetSort(i int32) *SysAddressUpdate {
-	sau.mutation.ResetSort()
-	sau.mutation.SetSort(i)
-	return sau
+func (_u *SysAddressUpdate) SetSort(v int32) *SysAddressUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableSort(i *int32) *SysAddressUpdate {
-	if i != nil {
-		sau.SetSort(*i)
+func (_u *SysAddressUpdate) SetNillableSort(v *int32) *SysAddressUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sau
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sau *SysAddressUpdate) AddSort(i int32) *SysAddressUpdate {
-	sau.mutation.AddSort(i)
-	return sau
+// AddSort adds value to the "sort" field.
+func (_u *SysAddressUpdate) AddSort(v int32) *SysAddressUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sau *SysAddressUpdate) SetUpdatedAt(t time.Time) *SysAddressUpdate {
-	sau.mutation.SetUpdatedAt(t)
-	return sau
+func (_u *SysAddressUpdate) SetUpdatedAt(v time.Time) *SysAddressUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sau *SysAddressUpdate) ClearUpdatedAt() *SysAddressUpdate {
-	sau.mutation.ClearUpdatedAt()
-	return sau
+func (_u *SysAddressUpdate) ClearUpdatedAt() *SysAddressUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sau *SysAddressUpdate) SetDeletedAt(t time.Time) *SysAddressUpdate {
-	sau.mutation.SetDeletedAt(t)
-	return sau
+func (_u *SysAddressUpdate) SetDeletedAt(v time.Time) *SysAddressUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableDeletedAt(t *time.Time) *SysAddressUpdate {
-	if t != nil {
-		sau.SetDeletedAt(*t)
+func (_u *SysAddressUpdate) SetNillableDeletedAt(v *time.Time) *SysAddressUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sau *SysAddressUpdate) ClearDeletedAt() *SysAddressUpdate {
-	sau.mutation.ClearDeletedAt()
-	return sau
+func (_u *SysAddressUpdate) ClearDeletedAt() *SysAddressUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sau *SysAddressUpdate) SetIsActive(b bool) *SysAddressUpdate {
-	sau.mutation.SetIsActive(b)
-	return sau
+func (_u *SysAddressUpdate) SetIsActive(v bool) *SysAddressUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableIsActive(b *bool) *SysAddressUpdate {
-	if b != nil {
-		sau.SetIsActive(*b)
+func (_u *SysAddressUpdate) SetNillableIsActive(v *bool) *SysAddressUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sau
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sau *SysAddressUpdate) SetMemo(s string) *SysAddressUpdate {
-	sau.mutation.SetMemo(s)
-	return sau
+func (_u *SysAddressUpdate) SetMemo(v string) *SysAddressUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableMemo(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetMemo(*s)
+func (_u *SysAddressUpdate) SetNillableMemo(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sau *SysAddressUpdate) ClearMemo() *SysAddressUpdate {
-	sau.mutation.ClearMemo()
-	return sau
+func (_u *SysAddressUpdate) ClearMemo() *SysAddressUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetCountry sets the "country" field.
-func (sau *SysAddressUpdate) SetCountry(s string) *SysAddressUpdate {
-	sau.mutation.SetCountry(s)
-	return sau
+func (_u *SysAddressUpdate) SetCountry(v string) *SysAddressUpdate {
+	_u.mutation.SetCountry(v)
+	return _u
 }
 
 // SetNillableCountry sets the "country" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableCountry(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetCountry(*s)
+func (_u *SysAddressUpdate) SetNillableCountry(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetCountry(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearCountry clears the value of the "country" field.
-func (sau *SysAddressUpdate) ClearCountry() *SysAddressUpdate {
-	sau.mutation.ClearCountry()
-	return sau
+func (_u *SysAddressUpdate) ClearCountry() *SysAddressUpdate {
+	_u.mutation.ClearCountry()
+	return _u
 }
 
 // SetProvince sets the "province" field.
-func (sau *SysAddressUpdate) SetProvince(s string) *SysAddressUpdate {
-	sau.mutation.SetProvince(s)
-	return sau
+func (_u *SysAddressUpdate) SetProvince(v string) *SysAddressUpdate {
+	_u.mutation.SetProvince(v)
+	return _u
 }
 
 // SetNillableProvince sets the "province" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableProvince(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetProvince(*s)
+func (_u *SysAddressUpdate) SetNillableProvince(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetProvince(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearProvince clears the value of the "province" field.
-func (sau *SysAddressUpdate) ClearProvince() *SysAddressUpdate {
-	sau.mutation.ClearProvince()
-	return sau
+func (_u *SysAddressUpdate) ClearProvince() *SysAddressUpdate {
+	_u.mutation.ClearProvince()
+	return _u
 }
 
 // SetCity sets the "city" field.
-func (sau *SysAddressUpdate) SetCity(s string) *SysAddressUpdate {
-	sau.mutation.SetCity(s)
-	return sau
+func (_u *SysAddressUpdate) SetCity(v string) *SysAddressUpdate {
+	_u.mutation.SetCity(v)
+	return _u
 }
 
 // SetNillableCity sets the "city" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableCity(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetCity(*s)
+func (_u *SysAddressUpdate) SetNillableCity(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetCity(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearCity clears the value of the "city" field.
-func (sau *SysAddressUpdate) ClearCity() *SysAddressUpdate {
-	sau.mutation.ClearCity()
-	return sau
+func (_u *SysAddressUpdate) ClearCity() *SysAddressUpdate {
+	_u.mutation.ClearCity()
+	return _u
 }
 
 // SetCounty sets the "county" field.
-func (sau *SysAddressUpdate) SetCounty(s string) *SysAddressUpdate {
-	sau.mutation.SetCounty(s)
-	return sau
+func (_u *SysAddressUpdate) SetCounty(v string) *SysAddressUpdate {
+	_u.mutation.SetCounty(v)
+	return _u
 }
 
 // SetNillableCounty sets the "county" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableCounty(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetCounty(*s)
+func (_u *SysAddressUpdate) SetNillableCounty(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetCounty(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearCounty clears the value of the "county" field.
-func (sau *SysAddressUpdate) ClearCounty() *SysAddressUpdate {
-	sau.mutation.ClearCounty()
-	return sau
+func (_u *SysAddressUpdate) ClearCounty() *SysAddressUpdate {
+	_u.mutation.ClearCounty()
+	return _u
 }
 
 // SetCountryID sets the "country_id" field.
-func (sau *SysAddressUpdate) SetCountryID(s string) *SysAddressUpdate {
-	sau.mutation.SetCountryID(s)
-	return sau
+func (_u *SysAddressUpdate) SetCountryID(v string) *SysAddressUpdate {
+	_u.mutation.SetCountryID(v)
+	return _u
 }
 
 // SetNillableCountryID sets the "country_id" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableCountryID(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetCountryID(*s)
+func (_u *SysAddressUpdate) SetNillableCountryID(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetCountryID(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearCountryID clears the value of the "country_id" field.
-func (sau *SysAddressUpdate) ClearCountryID() *SysAddressUpdate {
-	sau.mutation.ClearCountryID()
-	return sau
+func (_u *SysAddressUpdate) ClearCountryID() *SysAddressUpdate {
+	_u.mutation.ClearCountryID()
+	return _u
 }
 
 // SetProvinceID sets the "province_id" field.
-func (sau *SysAddressUpdate) SetProvinceID(s string) *SysAddressUpdate {
-	sau.mutation.SetProvinceID(s)
-	return sau
+func (_u *SysAddressUpdate) SetProvinceID(v string) *SysAddressUpdate {
+	_u.mutation.SetProvinceID(v)
+	return _u
 }
 
 // SetNillableProvinceID sets the "province_id" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableProvinceID(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetProvinceID(*s)
+func (_u *SysAddressUpdate) SetNillableProvinceID(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetProvinceID(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearProvinceID clears the value of the "province_id" field.
-func (sau *SysAddressUpdate) ClearProvinceID() *SysAddressUpdate {
-	sau.mutation.ClearProvinceID()
-	return sau
+func (_u *SysAddressUpdate) ClearProvinceID() *SysAddressUpdate {
+	_u.mutation.ClearProvinceID()
+	return _u
 }
 
 // SetCityID sets the "city_id" field.
-func (sau *SysAddressUpdate) SetCityID(s string) *SysAddressUpdate {
-	sau.mutation.SetCityID(s)
-	return sau
+func (_u *SysAddressUpdate) SetCityID(v string) *SysAddressUpdate {
+	_u.mutation.SetCityID(v)
+	return _u
 }
 
 // SetNillableCityID sets the "city_id" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableCityID(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetCityID(*s)
+func (_u *SysAddressUpdate) SetNillableCityID(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetCityID(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearCityID clears the value of the "city_id" field.
-func (sau *SysAddressUpdate) ClearCityID() *SysAddressUpdate {
-	sau.mutation.ClearCityID()
-	return sau
+func (_u *SysAddressUpdate) ClearCityID() *SysAddressUpdate {
+	_u.mutation.ClearCityID()
+	return _u
 }
 
 // SetCountyID sets the "county_id" field.
-func (sau *SysAddressUpdate) SetCountyID(s string) *SysAddressUpdate {
-	sau.mutation.SetCountyID(s)
-	return sau
+func (_u *SysAddressUpdate) SetCountyID(v string) *SysAddressUpdate {
+	_u.mutation.SetCountyID(v)
+	return _u
 }
 
 // SetNillableCountyID sets the "county_id" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableCountyID(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetCountyID(*s)
+func (_u *SysAddressUpdate) SetNillableCountyID(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetCountyID(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearCountyID clears the value of the "county_id" field.
-func (sau *SysAddressUpdate) ClearCountyID() *SysAddressUpdate {
-	sau.mutation.ClearCountyID()
-	return sau
+func (_u *SysAddressUpdate) ClearCountyID() *SysAddressUpdate {
+	_u.mutation.ClearCountyID()
+	return _u
 }
 
 // SetZipCode sets the "zip_code" field.
-func (sau *SysAddressUpdate) SetZipCode(s string) *SysAddressUpdate {
-	sau.mutation.SetZipCode(s)
-	return sau
+func (_u *SysAddressUpdate) SetZipCode(v string) *SysAddressUpdate {
+	_u.mutation.SetZipCode(v)
+	return _u
 }
 
 // SetNillableZipCode sets the "zip_code" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableZipCode(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetZipCode(*s)
+func (_u *SysAddressUpdate) SetNillableZipCode(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetZipCode(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearZipCode clears the value of the "zip_code" field.
-func (sau *SysAddressUpdate) ClearZipCode() *SysAddressUpdate {
-	sau.mutation.ClearZipCode()
-	return sau
+func (_u *SysAddressUpdate) ClearZipCode() *SysAddressUpdate {
+	_u.mutation.ClearZipCode()
+	return _u
 }
 
 // SetDaddr sets the "daddr" field.
-func (sau *SysAddressUpdate) SetDaddr(s string) *SysAddressUpdate {
-	sau.mutation.SetDaddr(s)
-	return sau
+func (_u *SysAddressUpdate) SetDaddr(v string) *SysAddressUpdate {
+	_u.mutation.SetDaddr(v)
+	return _u
 }
 
 // SetNillableDaddr sets the "daddr" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableDaddr(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetDaddr(*s)
+func (_u *SysAddressUpdate) SetNillableDaddr(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetDaddr(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearDaddr clears the value of the "daddr" field.
-func (sau *SysAddressUpdate) ClearDaddr() *SysAddressUpdate {
-	sau.mutation.ClearDaddr()
-	return sau
+func (_u *SysAddressUpdate) ClearDaddr() *SysAddressUpdate {
+	_u.mutation.ClearDaddr()
+	return _u
 }
 
 // SetFirstName sets the "first_name" field.
-func (sau *SysAddressUpdate) SetFirstName(s string) *SysAddressUpdate {
-	sau.mutation.SetFirstName(s)
-	return sau
+func (_u *SysAddressUpdate) SetFirstName(v string) *SysAddressUpdate {
+	_u.mutation.SetFirstName(v)
+	return _u
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableFirstName(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetFirstName(*s)
+func (_u *SysAddressUpdate) SetNillableFirstName(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetFirstName(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearFirstName clears the value of the "first_name" field.
-func (sau *SysAddressUpdate) ClearFirstName() *SysAddressUpdate {
-	sau.mutation.ClearFirstName()
-	return sau
+func (_u *SysAddressUpdate) ClearFirstName() *SysAddressUpdate {
+	_u.mutation.ClearFirstName()
+	return _u
 }
 
 // SetLastName sets the "last_name" field.
-func (sau *SysAddressUpdate) SetLastName(s string) *SysAddressUpdate {
-	sau.mutation.SetLastName(s)
-	return sau
+func (_u *SysAddressUpdate) SetLastName(v string) *SysAddressUpdate {
+	_u.mutation.SetLastName(v)
+	return _u
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableLastName(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetLastName(*s)
+func (_u *SysAddressUpdate) SetNillableLastName(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetLastName(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearLastName clears the value of the "last_name" field.
-func (sau *SysAddressUpdate) ClearLastName() *SysAddressUpdate {
-	sau.mutation.ClearLastName()
-	return sau
+func (_u *SysAddressUpdate) ClearLastName() *SysAddressUpdate {
+	_u.mutation.ClearLastName()
+	return _u
 }
 
 // SetAreaCode sets the "area_code" field.
-func (sau *SysAddressUpdate) SetAreaCode(s string) *SysAddressUpdate {
-	sau.mutation.SetAreaCode(s)
-	return sau
+func (_u *SysAddressUpdate) SetAreaCode(v string) *SysAddressUpdate {
+	_u.mutation.SetAreaCode(v)
+	return _u
 }
 
 // SetNillableAreaCode sets the "area_code" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableAreaCode(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetAreaCode(*s)
+func (_u *SysAddressUpdate) SetNillableAreaCode(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetAreaCode(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearAreaCode clears the value of the "area_code" field.
-func (sau *SysAddressUpdate) ClearAreaCode() *SysAddressUpdate {
-	sau.mutation.ClearAreaCode()
-	return sau
+func (_u *SysAddressUpdate) ClearAreaCode() *SysAddressUpdate {
+	_u.mutation.ClearAreaCode()
+	return _u
 }
 
 // SetMobile sets the "mobile" field.
-func (sau *SysAddressUpdate) SetMobile(s string) *SysAddressUpdate {
-	sau.mutation.SetMobile(s)
-	return sau
+func (_u *SysAddressUpdate) SetMobile(v string) *SysAddressUpdate {
+	_u.mutation.SetMobile(v)
+	return _u
 }
 
 // SetNillableMobile sets the "mobile" field if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableMobile(s *string) *SysAddressUpdate {
-	if s != nil {
-		sau.SetMobile(*s)
+func (_u *SysAddressUpdate) SetNillableMobile(v *string) *SysAddressUpdate {
+	if v != nil {
+		_u.SetMobile(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearMobile clears the value of the "mobile" field.
-func (sau *SysAddressUpdate) ClearMobile() *SysAddressUpdate {
-	sau.mutation.ClearMobile()
-	return sau
+func (_u *SysAddressUpdate) ClearMobile() *SysAddressUpdate {
+	_u.mutation.ClearMobile()
+	return _u
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (sau *SysAddressUpdate) SetOrganID(id string) *SysAddressUpdate {
-	sau.mutation.SetOrganID(id)
-	return sau
+func (_u *SysAddressUpdate) SetOrganID(id string) *SysAddressUpdate {
+	_u.mutation.SetOrganID(id)
+	return _u
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableOrganID(id *string) *SysAddressUpdate {
+func (_u *SysAddressUpdate) SetNillableOrganID(id *string) *SysAddressUpdate {
 	if id != nil {
-		sau = sau.SetOrganID(*id)
+		_u = _u.SetOrganID(*id)
 	}
-	return sau
+	return _u
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (sau *SysAddressUpdate) SetOrgan(o *OrgOrgan) *SysAddressUpdate {
-	return sau.SetOrganID(o.ID)
+func (_u *SysAddressUpdate) SetOrgan(v *OrgOrgan) *SysAddressUpdate {
+	return _u.SetOrganID(v.ID)
 }
 
 // SetStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID.
-func (sau *SysAddressUpdate) SetStaffResiID(id string) *SysAddressUpdate {
-	sau.mutation.SetStaffResiID(id)
-	return sau
+func (_u *SysAddressUpdate) SetStaffResiID(id string) *SysAddressUpdate {
+	_u.mutation.SetStaffResiID(id)
+	return _u
 }
 
 // SetNillableStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableStaffResiID(id *string) *SysAddressUpdate {
+func (_u *SysAddressUpdate) SetNillableStaffResiID(id *string) *SysAddressUpdate {
 	if id != nil {
-		sau = sau.SetStaffResiID(*id)
+		_u = _u.SetStaffResiID(*id)
 	}
-	return sau
+	return _u
 }
 
 // SetStaffResi sets the "staff_resi" edge to the OrgStaff entity.
-func (sau *SysAddressUpdate) SetStaffResi(o *OrgStaff) *SysAddressUpdate {
-	return sau.SetStaffResiID(o.ID)
+func (_u *SysAddressUpdate) SetStaffResi(v *OrgStaff) *SysAddressUpdate {
+	return _u.SetStaffResiID(v.ID)
 }
 
 // SetStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID.
-func (sau *SysAddressUpdate) SetStaffIdenID(id string) *SysAddressUpdate {
-	sau.mutation.SetStaffIdenID(id)
-	return sau
+func (_u *SysAddressUpdate) SetStaffIdenID(id string) *SysAddressUpdate {
+	_u.mutation.SetStaffIdenID(id)
+	return _u
 }
 
 // SetNillableStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sau *SysAddressUpdate) SetNillableStaffIdenID(id *string) *SysAddressUpdate {
+func (_u *SysAddressUpdate) SetNillableStaffIdenID(id *string) *SysAddressUpdate {
 	if id != nil {
-		sau = sau.SetStaffIdenID(*id)
+		_u = _u.SetStaffIdenID(*id)
 	}
-	return sau
+	return _u
 }
 
 // SetStaffIden sets the "staff_iden" edge to the OrgStaff entity.
-func (sau *SysAddressUpdate) SetStaffIden(o *OrgStaff) *SysAddressUpdate {
-	return sau.SetStaffIdenID(o.ID)
+func (_u *SysAddressUpdate) SetStaffIden(v *OrgStaff) *SysAddressUpdate {
+	return _u.SetStaffIdenID(v.ID)
 }
 
 // Mutation returns the SysAddressMutation object of the builder.
-func (sau *SysAddressUpdate) Mutation() *SysAddressMutation {
-	return sau.mutation
+func (_u *SysAddressUpdate) Mutation() *SysAddressMutation {
+	return _u.mutation
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
-func (sau *SysAddressUpdate) ClearOrgan() *SysAddressUpdate {
-	sau.mutation.ClearOrgan()
-	return sau
+func (_u *SysAddressUpdate) ClearOrgan() *SysAddressUpdate {
+	_u.mutation.ClearOrgan()
+	return _u
 }
 
 // ClearStaffResi clears the "staff_resi" edge to the OrgStaff entity.
-func (sau *SysAddressUpdate) ClearStaffResi() *SysAddressUpdate {
-	sau.mutation.ClearStaffResi()
-	return sau
+func (_u *SysAddressUpdate) ClearStaffResi() *SysAddressUpdate {
+	_u.mutation.ClearStaffResi()
+	return _u
 }
 
 // ClearStaffIden clears the "staff_iden" edge to the OrgStaff entity.
-func (sau *SysAddressUpdate) ClearStaffIden() *SysAddressUpdate {
-	sau.mutation.ClearStaffIden()
-	return sau
+func (_u *SysAddressUpdate) ClearStaffIden() *SysAddressUpdate {
+	_u.mutation.ClearStaffIden()
+	return _u
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (sau *SysAddressUpdate) Save(ctx context.Context) (int, error) {
-	sau.defaults()
-	return withHooks(ctx, sau.sqlSave, sau.mutation, sau.hooks)
+func (_u *SysAddressUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sau *SysAddressUpdate) SaveX(ctx context.Context) int {
-	affected, err := sau.Save(ctx)
+func (_u *SysAddressUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -528,84 +528,84 @@ func (sau *SysAddressUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (sau *SysAddressUpdate) Exec(ctx context.Context) error {
-	_, err := sau.Save(ctx)
+func (_u *SysAddressUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sau *SysAddressUpdate) ExecX(ctx context.Context) {
-	if err := sau.Exec(ctx); err != nil {
+func (_u *SysAddressUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sau *SysAddressUpdate) defaults() {
-	if _, ok := sau.mutation.UpdatedAt(); !ok && !sau.mutation.UpdatedAtCleared() {
+func (_u *SysAddressUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysaddress.UpdateDefaultUpdatedAt()
-		sau.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sau *SysAddressUpdate) check() error {
-	if v, ok := sau.mutation.UserID(); ok {
+func (_u *SysAddressUpdate) check() error {
+	if v, ok := _u.mutation.UserID(); ok {
 		if err := sysaddress.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.user_id": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.Memo(); ok {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysaddress.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.memo": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.CountryID(); ok {
+	if v, ok := _u.mutation.CountryID(); ok {
 		if err := sysaddress.CountryIDValidator(v); err != nil {
 			return &ValidationError{Name: "country_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.country_id": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.ProvinceID(); ok {
+	if v, ok := _u.mutation.ProvinceID(); ok {
 		if err := sysaddress.ProvinceIDValidator(v); err != nil {
 			return &ValidationError{Name: "province_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.province_id": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.CityID(); ok {
+	if v, ok := _u.mutation.CityID(); ok {
 		if err := sysaddress.CityIDValidator(v); err != nil {
 			return &ValidationError{Name: "city_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.city_id": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.CountyID(); ok {
+	if v, ok := _u.mutation.CountyID(); ok {
 		if err := sysaddress.CountyIDValidator(v); err != nil {
 			return &ValidationError{Name: "county_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.county_id": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.ZipCode(); ok {
+	if v, ok := _u.mutation.ZipCode(); ok {
 		if err := sysaddress.ZipCodeValidator(v); err != nil {
 			return &ValidationError{Name: "zip_code", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.zip_code": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.Daddr(); ok {
+	if v, ok := _u.mutation.Daddr(); ok {
 		if err := sysaddress.DaddrValidator(v); err != nil {
 			return &ValidationError{Name: "daddr", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.daddr": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.FirstName(); ok {
+	if v, ok := _u.mutation.FirstName(); ok {
 		if err := sysaddress.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.first_name": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.LastName(); ok {
+	if v, ok := _u.mutation.LastName(); ok {
 		if err := sysaddress.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.last_name": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.AreaCode(); ok {
+	if v, ok := _u.mutation.AreaCode(); ok {
 		if err := sysaddress.AreaCodeValidator(v); err != nil {
 			return &ValidationError{Name: "area_code", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.area_code": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.Mobile(); ok {
+	if v, ok := _u.mutation.Mobile(); ok {
 		if err := sysaddress.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.mobile": %w`, err)}
 		}
@@ -614,150 +614,150 @@ func (sau *SysAddressUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sau *SysAddressUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAddressUpdate {
-	sau.modifiers = append(sau.modifiers, modifiers...)
-	return sau
+func (_u *SysAddressUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAddressUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := sau.check(); err != nil {
-		return n, err
+func (_u *SysAddressUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysaddress.Table, sysaddress.Columns, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
-	if ps := sau.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sau.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sau.mutation.UserID(); ok {
+	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(sysaddress.FieldUserID, field.TypeString, value)
 	}
-	if sau.mutation.UserIDCleared() {
+	if _u.mutation.UserIDCleared() {
 		_spec.ClearField(sysaddress.FieldUserID, field.TypeString)
 	}
-	if sau.mutation.OrgIDCleared() {
+	if _u.mutation.OrgIDCleared() {
 		_spec.ClearField(sysaddress.FieldOrgID, field.TypeString)
 	}
-	if value, ok := sau.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sau.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
-	if sau.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysaddress.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sau.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sau.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysaddress.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sau.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sau.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysaddress.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sau.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysaddress.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sau.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysaddress.FieldMemo, field.TypeString, value)
 	}
-	if sau.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysaddress.FieldMemo, field.TypeString)
 	}
-	if value, ok := sau.mutation.Country(); ok {
+	if value, ok := _u.mutation.Country(); ok {
 		_spec.SetField(sysaddress.FieldCountry, field.TypeString, value)
 	}
-	if sau.mutation.CountryCleared() {
+	if _u.mutation.CountryCleared() {
 		_spec.ClearField(sysaddress.FieldCountry, field.TypeString)
 	}
-	if value, ok := sau.mutation.Province(); ok {
+	if value, ok := _u.mutation.Province(); ok {
 		_spec.SetField(sysaddress.FieldProvince, field.TypeString, value)
 	}
-	if sau.mutation.ProvinceCleared() {
+	if _u.mutation.ProvinceCleared() {
 		_spec.ClearField(sysaddress.FieldProvince, field.TypeString)
 	}
-	if value, ok := sau.mutation.City(); ok {
+	if value, ok := _u.mutation.City(); ok {
 		_spec.SetField(sysaddress.FieldCity, field.TypeString, value)
 	}
-	if sau.mutation.CityCleared() {
+	if _u.mutation.CityCleared() {
 		_spec.ClearField(sysaddress.FieldCity, field.TypeString)
 	}
-	if value, ok := sau.mutation.County(); ok {
+	if value, ok := _u.mutation.County(); ok {
 		_spec.SetField(sysaddress.FieldCounty, field.TypeString, value)
 	}
-	if sau.mutation.CountyCleared() {
+	if _u.mutation.CountyCleared() {
 		_spec.ClearField(sysaddress.FieldCounty, field.TypeString)
 	}
-	if value, ok := sau.mutation.CountryID(); ok {
+	if value, ok := _u.mutation.CountryID(); ok {
 		_spec.SetField(sysaddress.FieldCountryID, field.TypeString, value)
 	}
-	if sau.mutation.CountryIDCleared() {
+	if _u.mutation.CountryIDCleared() {
 		_spec.ClearField(sysaddress.FieldCountryID, field.TypeString)
 	}
-	if value, ok := sau.mutation.ProvinceID(); ok {
+	if value, ok := _u.mutation.ProvinceID(); ok {
 		_spec.SetField(sysaddress.FieldProvinceID, field.TypeString, value)
 	}
-	if sau.mutation.ProvinceIDCleared() {
+	if _u.mutation.ProvinceIDCleared() {
 		_spec.ClearField(sysaddress.FieldProvinceID, field.TypeString)
 	}
-	if value, ok := sau.mutation.CityID(); ok {
+	if value, ok := _u.mutation.CityID(); ok {
 		_spec.SetField(sysaddress.FieldCityID, field.TypeString, value)
 	}
-	if sau.mutation.CityIDCleared() {
+	if _u.mutation.CityIDCleared() {
 		_spec.ClearField(sysaddress.FieldCityID, field.TypeString)
 	}
-	if value, ok := sau.mutation.CountyID(); ok {
+	if value, ok := _u.mutation.CountyID(); ok {
 		_spec.SetField(sysaddress.FieldCountyID, field.TypeString, value)
 	}
-	if sau.mutation.CountyIDCleared() {
+	if _u.mutation.CountyIDCleared() {
 		_spec.ClearField(sysaddress.FieldCountyID, field.TypeString)
 	}
-	if value, ok := sau.mutation.ZipCode(); ok {
+	if value, ok := _u.mutation.ZipCode(); ok {
 		_spec.SetField(sysaddress.FieldZipCode, field.TypeString, value)
 	}
-	if sau.mutation.ZipCodeCleared() {
+	if _u.mutation.ZipCodeCleared() {
 		_spec.ClearField(sysaddress.FieldZipCode, field.TypeString)
 	}
-	if value, ok := sau.mutation.Daddr(); ok {
+	if value, ok := _u.mutation.Daddr(); ok {
 		_spec.SetField(sysaddress.FieldDaddr, field.TypeString, value)
 	}
-	if sau.mutation.DaddrCleared() {
+	if _u.mutation.DaddrCleared() {
 		_spec.ClearField(sysaddress.FieldDaddr, field.TypeString)
 	}
-	if value, ok := sau.mutation.FirstName(); ok {
+	if value, ok := _u.mutation.FirstName(); ok {
 		_spec.SetField(sysaddress.FieldFirstName, field.TypeString, value)
 	}
-	if sau.mutation.FirstNameCleared() {
+	if _u.mutation.FirstNameCleared() {
 		_spec.ClearField(sysaddress.FieldFirstName, field.TypeString)
 	}
-	if value, ok := sau.mutation.LastName(); ok {
+	if value, ok := _u.mutation.LastName(); ok {
 		_spec.SetField(sysaddress.FieldLastName, field.TypeString, value)
 	}
-	if sau.mutation.LastNameCleared() {
+	if _u.mutation.LastNameCleared() {
 		_spec.ClearField(sysaddress.FieldLastName, field.TypeString)
 	}
-	if value, ok := sau.mutation.AreaCode(); ok {
+	if value, ok := _u.mutation.AreaCode(); ok {
 		_spec.SetField(sysaddress.FieldAreaCode, field.TypeString, value)
 	}
-	if sau.mutation.AreaCodeCleared() {
+	if _u.mutation.AreaCodeCleared() {
 		_spec.ClearField(sysaddress.FieldAreaCode, field.TypeString)
 	}
-	if value, ok := sau.mutation.Mobile(); ok {
+	if value, ok := _u.mutation.Mobile(); ok {
 		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
 	}
-	if sau.mutation.MobileCleared() {
+	if _u.mutation.MobileCleared() {
 		_spec.ClearField(sysaddress.FieldMobile, field.TypeString)
 	}
-	if sau.mutation.OrganCleared() {
+	if _u.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -770,7 +770,7 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sau.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -786,7 +786,7 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if sau.mutation.StaffResiCleared() {
+	if _u.mutation.StaffResiCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -799,7 +799,7 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sau.mutation.StaffResiIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.StaffResiIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -815,7 +815,7 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if sau.mutation.StaffIdenCleared() {
+	if _u.mutation.StaffIdenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -828,7 +828,7 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sau.mutation.StaffIdenIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.StaffIdenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -844,8 +844,8 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(sau.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, sau.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysaddress.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -853,8 +853,8 @@ func (sau *SysAddressUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	sau.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysAddressUpdateOne is the builder for updating a single SysAddress entity.
@@ -867,508 +867,508 @@ type SysAddressUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sauo *SysAddressUpdateOne) SetIsDel(b bool) *SysAddressUpdateOne {
-	sauo.mutation.SetIsDel(b)
-	return sauo
+func (_u *SysAddressUpdateOne) SetIsDel(v bool) *SysAddressUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableIsDel(b *bool) *SysAddressUpdateOne {
-	if b != nil {
-		sauo.SetIsDel(*b)
+func (_u *SysAddressUpdateOne) SetNillableIsDel(v *bool) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sauo
+	return _u
 }
 
 // SetUserID sets the "user_id" field.
-func (sauo *SysAddressUpdateOne) SetUserID(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetUserID(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetUserID(v string) *SysAddressUpdateOne {
+	_u.mutation.SetUserID(v)
+	return _u
 }
 
 // SetNillableUserID sets the "user_id" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableUserID(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetUserID(*s)
+func (_u *SysAddressUpdateOne) SetNillableUserID(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetUserID(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearUserID clears the value of the "user_id" field.
-func (sauo *SysAddressUpdateOne) ClearUserID() *SysAddressUpdateOne {
-	sauo.mutation.ClearUserID()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearUserID() *SysAddressUpdateOne {
+	_u.mutation.ClearUserID()
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sauo *SysAddressUpdateOne) SetSort(i int32) *SysAddressUpdateOne {
-	sauo.mutation.ResetSort()
-	sauo.mutation.SetSort(i)
-	return sauo
+func (_u *SysAddressUpdateOne) SetSort(v int32) *SysAddressUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableSort(i *int32) *SysAddressUpdateOne {
-	if i != nil {
-		sauo.SetSort(*i)
+func (_u *SysAddressUpdateOne) SetNillableSort(v *int32) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sauo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sauo *SysAddressUpdateOne) AddSort(i int32) *SysAddressUpdateOne {
-	sauo.mutation.AddSort(i)
-	return sauo
+// AddSort adds value to the "sort" field.
+func (_u *SysAddressUpdateOne) AddSort(v int32) *SysAddressUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sauo *SysAddressUpdateOne) SetUpdatedAt(t time.Time) *SysAddressUpdateOne {
-	sauo.mutation.SetUpdatedAt(t)
-	return sauo
+func (_u *SysAddressUpdateOne) SetUpdatedAt(v time.Time) *SysAddressUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sauo *SysAddressUpdateOne) ClearUpdatedAt() *SysAddressUpdateOne {
-	sauo.mutation.ClearUpdatedAt()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearUpdatedAt() *SysAddressUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sauo *SysAddressUpdateOne) SetDeletedAt(t time.Time) *SysAddressUpdateOne {
-	sauo.mutation.SetDeletedAt(t)
-	return sauo
+func (_u *SysAddressUpdateOne) SetDeletedAt(v time.Time) *SysAddressUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableDeletedAt(t *time.Time) *SysAddressUpdateOne {
-	if t != nil {
-		sauo.SetDeletedAt(*t)
+func (_u *SysAddressUpdateOne) SetNillableDeletedAt(v *time.Time) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sauo *SysAddressUpdateOne) ClearDeletedAt() *SysAddressUpdateOne {
-	sauo.mutation.ClearDeletedAt()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearDeletedAt() *SysAddressUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sauo *SysAddressUpdateOne) SetIsActive(b bool) *SysAddressUpdateOne {
-	sauo.mutation.SetIsActive(b)
-	return sauo
+func (_u *SysAddressUpdateOne) SetIsActive(v bool) *SysAddressUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableIsActive(b *bool) *SysAddressUpdateOne {
-	if b != nil {
-		sauo.SetIsActive(*b)
+func (_u *SysAddressUpdateOne) SetNillableIsActive(v *bool) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sauo
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sauo *SysAddressUpdateOne) SetMemo(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetMemo(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetMemo(v string) *SysAddressUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableMemo(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetMemo(*s)
+func (_u *SysAddressUpdateOne) SetNillableMemo(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sauo *SysAddressUpdateOne) ClearMemo() *SysAddressUpdateOne {
-	sauo.mutation.ClearMemo()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearMemo() *SysAddressUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetCountry sets the "country" field.
-func (sauo *SysAddressUpdateOne) SetCountry(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetCountry(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetCountry(v string) *SysAddressUpdateOne {
+	_u.mutation.SetCountry(v)
+	return _u
 }
 
 // SetNillableCountry sets the "country" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableCountry(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetCountry(*s)
+func (_u *SysAddressUpdateOne) SetNillableCountry(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetCountry(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearCountry clears the value of the "country" field.
-func (sauo *SysAddressUpdateOne) ClearCountry() *SysAddressUpdateOne {
-	sauo.mutation.ClearCountry()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearCountry() *SysAddressUpdateOne {
+	_u.mutation.ClearCountry()
+	return _u
 }
 
 // SetProvince sets the "province" field.
-func (sauo *SysAddressUpdateOne) SetProvince(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetProvince(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetProvince(v string) *SysAddressUpdateOne {
+	_u.mutation.SetProvince(v)
+	return _u
 }
 
 // SetNillableProvince sets the "province" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableProvince(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetProvince(*s)
+func (_u *SysAddressUpdateOne) SetNillableProvince(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetProvince(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearProvince clears the value of the "province" field.
-func (sauo *SysAddressUpdateOne) ClearProvince() *SysAddressUpdateOne {
-	sauo.mutation.ClearProvince()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearProvince() *SysAddressUpdateOne {
+	_u.mutation.ClearProvince()
+	return _u
 }
 
 // SetCity sets the "city" field.
-func (sauo *SysAddressUpdateOne) SetCity(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetCity(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetCity(v string) *SysAddressUpdateOne {
+	_u.mutation.SetCity(v)
+	return _u
 }
 
 // SetNillableCity sets the "city" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableCity(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetCity(*s)
+func (_u *SysAddressUpdateOne) SetNillableCity(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetCity(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearCity clears the value of the "city" field.
-func (sauo *SysAddressUpdateOne) ClearCity() *SysAddressUpdateOne {
-	sauo.mutation.ClearCity()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearCity() *SysAddressUpdateOne {
+	_u.mutation.ClearCity()
+	return _u
 }
 
 // SetCounty sets the "county" field.
-func (sauo *SysAddressUpdateOne) SetCounty(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetCounty(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetCounty(v string) *SysAddressUpdateOne {
+	_u.mutation.SetCounty(v)
+	return _u
 }
 
 // SetNillableCounty sets the "county" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableCounty(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetCounty(*s)
+func (_u *SysAddressUpdateOne) SetNillableCounty(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetCounty(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearCounty clears the value of the "county" field.
-func (sauo *SysAddressUpdateOne) ClearCounty() *SysAddressUpdateOne {
-	sauo.mutation.ClearCounty()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearCounty() *SysAddressUpdateOne {
+	_u.mutation.ClearCounty()
+	return _u
 }
 
 // SetCountryID sets the "country_id" field.
-func (sauo *SysAddressUpdateOne) SetCountryID(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetCountryID(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetCountryID(v string) *SysAddressUpdateOne {
+	_u.mutation.SetCountryID(v)
+	return _u
 }
 
 // SetNillableCountryID sets the "country_id" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableCountryID(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetCountryID(*s)
+func (_u *SysAddressUpdateOne) SetNillableCountryID(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetCountryID(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearCountryID clears the value of the "country_id" field.
-func (sauo *SysAddressUpdateOne) ClearCountryID() *SysAddressUpdateOne {
-	sauo.mutation.ClearCountryID()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearCountryID() *SysAddressUpdateOne {
+	_u.mutation.ClearCountryID()
+	return _u
 }
 
 // SetProvinceID sets the "province_id" field.
-func (sauo *SysAddressUpdateOne) SetProvinceID(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetProvinceID(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetProvinceID(v string) *SysAddressUpdateOne {
+	_u.mutation.SetProvinceID(v)
+	return _u
 }
 
 // SetNillableProvinceID sets the "province_id" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableProvinceID(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetProvinceID(*s)
+func (_u *SysAddressUpdateOne) SetNillableProvinceID(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetProvinceID(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearProvinceID clears the value of the "province_id" field.
-func (sauo *SysAddressUpdateOne) ClearProvinceID() *SysAddressUpdateOne {
-	sauo.mutation.ClearProvinceID()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearProvinceID() *SysAddressUpdateOne {
+	_u.mutation.ClearProvinceID()
+	return _u
 }
 
 // SetCityID sets the "city_id" field.
-func (sauo *SysAddressUpdateOne) SetCityID(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetCityID(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetCityID(v string) *SysAddressUpdateOne {
+	_u.mutation.SetCityID(v)
+	return _u
 }
 
 // SetNillableCityID sets the "city_id" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableCityID(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetCityID(*s)
+func (_u *SysAddressUpdateOne) SetNillableCityID(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetCityID(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearCityID clears the value of the "city_id" field.
-func (sauo *SysAddressUpdateOne) ClearCityID() *SysAddressUpdateOne {
-	sauo.mutation.ClearCityID()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearCityID() *SysAddressUpdateOne {
+	_u.mutation.ClearCityID()
+	return _u
 }
 
 // SetCountyID sets the "county_id" field.
-func (sauo *SysAddressUpdateOne) SetCountyID(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetCountyID(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetCountyID(v string) *SysAddressUpdateOne {
+	_u.mutation.SetCountyID(v)
+	return _u
 }
 
 // SetNillableCountyID sets the "county_id" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableCountyID(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetCountyID(*s)
+func (_u *SysAddressUpdateOne) SetNillableCountyID(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetCountyID(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearCountyID clears the value of the "county_id" field.
-func (sauo *SysAddressUpdateOne) ClearCountyID() *SysAddressUpdateOne {
-	sauo.mutation.ClearCountyID()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearCountyID() *SysAddressUpdateOne {
+	_u.mutation.ClearCountyID()
+	return _u
 }
 
 // SetZipCode sets the "zip_code" field.
-func (sauo *SysAddressUpdateOne) SetZipCode(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetZipCode(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetZipCode(v string) *SysAddressUpdateOne {
+	_u.mutation.SetZipCode(v)
+	return _u
 }
 
 // SetNillableZipCode sets the "zip_code" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableZipCode(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetZipCode(*s)
+func (_u *SysAddressUpdateOne) SetNillableZipCode(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetZipCode(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearZipCode clears the value of the "zip_code" field.
-func (sauo *SysAddressUpdateOne) ClearZipCode() *SysAddressUpdateOne {
-	sauo.mutation.ClearZipCode()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearZipCode() *SysAddressUpdateOne {
+	_u.mutation.ClearZipCode()
+	return _u
 }
 
 // SetDaddr sets the "daddr" field.
-func (sauo *SysAddressUpdateOne) SetDaddr(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetDaddr(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetDaddr(v string) *SysAddressUpdateOne {
+	_u.mutation.SetDaddr(v)
+	return _u
 }
 
 // SetNillableDaddr sets the "daddr" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableDaddr(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetDaddr(*s)
+func (_u *SysAddressUpdateOne) SetNillableDaddr(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetDaddr(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearDaddr clears the value of the "daddr" field.
-func (sauo *SysAddressUpdateOne) ClearDaddr() *SysAddressUpdateOne {
-	sauo.mutation.ClearDaddr()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearDaddr() *SysAddressUpdateOne {
+	_u.mutation.ClearDaddr()
+	return _u
 }
 
 // SetFirstName sets the "first_name" field.
-func (sauo *SysAddressUpdateOne) SetFirstName(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetFirstName(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetFirstName(v string) *SysAddressUpdateOne {
+	_u.mutation.SetFirstName(v)
+	return _u
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableFirstName(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetFirstName(*s)
+func (_u *SysAddressUpdateOne) SetNillableFirstName(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetFirstName(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearFirstName clears the value of the "first_name" field.
-func (sauo *SysAddressUpdateOne) ClearFirstName() *SysAddressUpdateOne {
-	sauo.mutation.ClearFirstName()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearFirstName() *SysAddressUpdateOne {
+	_u.mutation.ClearFirstName()
+	return _u
 }
 
 // SetLastName sets the "last_name" field.
-func (sauo *SysAddressUpdateOne) SetLastName(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetLastName(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetLastName(v string) *SysAddressUpdateOne {
+	_u.mutation.SetLastName(v)
+	return _u
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableLastName(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetLastName(*s)
+func (_u *SysAddressUpdateOne) SetNillableLastName(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetLastName(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearLastName clears the value of the "last_name" field.
-func (sauo *SysAddressUpdateOne) ClearLastName() *SysAddressUpdateOne {
-	sauo.mutation.ClearLastName()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearLastName() *SysAddressUpdateOne {
+	_u.mutation.ClearLastName()
+	return _u
 }
 
 // SetAreaCode sets the "area_code" field.
-func (sauo *SysAddressUpdateOne) SetAreaCode(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetAreaCode(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetAreaCode(v string) *SysAddressUpdateOne {
+	_u.mutation.SetAreaCode(v)
+	return _u
 }
 
 // SetNillableAreaCode sets the "area_code" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableAreaCode(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetAreaCode(*s)
+func (_u *SysAddressUpdateOne) SetNillableAreaCode(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetAreaCode(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearAreaCode clears the value of the "area_code" field.
-func (sauo *SysAddressUpdateOne) ClearAreaCode() *SysAddressUpdateOne {
-	sauo.mutation.ClearAreaCode()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearAreaCode() *SysAddressUpdateOne {
+	_u.mutation.ClearAreaCode()
+	return _u
 }
 
 // SetMobile sets the "mobile" field.
-func (sauo *SysAddressUpdateOne) SetMobile(s string) *SysAddressUpdateOne {
-	sauo.mutation.SetMobile(s)
-	return sauo
+func (_u *SysAddressUpdateOne) SetMobile(v string) *SysAddressUpdateOne {
+	_u.mutation.SetMobile(v)
+	return _u
 }
 
 // SetNillableMobile sets the "mobile" field if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableMobile(s *string) *SysAddressUpdateOne {
-	if s != nil {
-		sauo.SetMobile(*s)
+func (_u *SysAddressUpdateOne) SetNillableMobile(v *string) *SysAddressUpdateOne {
+	if v != nil {
+		_u.SetMobile(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearMobile clears the value of the "mobile" field.
-func (sauo *SysAddressUpdateOne) ClearMobile() *SysAddressUpdateOne {
-	sauo.mutation.ClearMobile()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearMobile() *SysAddressUpdateOne {
+	_u.mutation.ClearMobile()
+	return _u
 }
 
 // SetOrganID sets the "organ" edge to the OrgOrgan entity by ID.
-func (sauo *SysAddressUpdateOne) SetOrganID(id string) *SysAddressUpdateOne {
-	sauo.mutation.SetOrganID(id)
-	return sauo
+func (_u *SysAddressUpdateOne) SetOrganID(id string) *SysAddressUpdateOne {
+	_u.mutation.SetOrganID(id)
+	return _u
 }
 
 // SetNillableOrganID sets the "organ" edge to the OrgOrgan entity by ID if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableOrganID(id *string) *SysAddressUpdateOne {
+func (_u *SysAddressUpdateOne) SetNillableOrganID(id *string) *SysAddressUpdateOne {
 	if id != nil {
-		sauo = sauo.SetOrganID(*id)
+		_u = _u.SetOrganID(*id)
 	}
-	return sauo
+	return _u
 }
 
 // SetOrgan sets the "organ" edge to the OrgOrgan entity.
-func (sauo *SysAddressUpdateOne) SetOrgan(o *OrgOrgan) *SysAddressUpdateOne {
-	return sauo.SetOrganID(o.ID)
+func (_u *SysAddressUpdateOne) SetOrgan(v *OrgOrgan) *SysAddressUpdateOne {
+	return _u.SetOrganID(v.ID)
 }
 
 // SetStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID.
-func (sauo *SysAddressUpdateOne) SetStaffResiID(id string) *SysAddressUpdateOne {
-	sauo.mutation.SetStaffResiID(id)
-	return sauo
+func (_u *SysAddressUpdateOne) SetStaffResiID(id string) *SysAddressUpdateOne {
+	_u.mutation.SetStaffResiID(id)
+	return _u
 }
 
 // SetNillableStaffResiID sets the "staff_resi" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableStaffResiID(id *string) *SysAddressUpdateOne {
+func (_u *SysAddressUpdateOne) SetNillableStaffResiID(id *string) *SysAddressUpdateOne {
 	if id != nil {
-		sauo = sauo.SetStaffResiID(*id)
+		_u = _u.SetStaffResiID(*id)
 	}
-	return sauo
+	return _u
 }
 
 // SetStaffResi sets the "staff_resi" edge to the OrgStaff entity.
-func (sauo *SysAddressUpdateOne) SetStaffResi(o *OrgStaff) *SysAddressUpdateOne {
-	return sauo.SetStaffResiID(o.ID)
+func (_u *SysAddressUpdateOne) SetStaffResi(v *OrgStaff) *SysAddressUpdateOne {
+	return _u.SetStaffResiID(v.ID)
 }
 
 // SetStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID.
-func (sauo *SysAddressUpdateOne) SetStaffIdenID(id string) *SysAddressUpdateOne {
-	sauo.mutation.SetStaffIdenID(id)
-	return sauo
+func (_u *SysAddressUpdateOne) SetStaffIdenID(id string) *SysAddressUpdateOne {
+	_u.mutation.SetStaffIdenID(id)
+	return _u
 }
 
 // SetNillableStaffIdenID sets the "staff_iden" edge to the OrgStaff entity by ID if the given value is not nil.
-func (sauo *SysAddressUpdateOne) SetNillableStaffIdenID(id *string) *SysAddressUpdateOne {
+func (_u *SysAddressUpdateOne) SetNillableStaffIdenID(id *string) *SysAddressUpdateOne {
 	if id != nil {
-		sauo = sauo.SetStaffIdenID(*id)
+		_u = _u.SetStaffIdenID(*id)
 	}
-	return sauo
+	return _u
 }
 
 // SetStaffIden sets the "staff_iden" edge to the OrgStaff entity.
-func (sauo *SysAddressUpdateOne) SetStaffIden(o *OrgStaff) *SysAddressUpdateOne {
-	return sauo.SetStaffIdenID(o.ID)
+func (_u *SysAddressUpdateOne) SetStaffIden(v *OrgStaff) *SysAddressUpdateOne {
+	return _u.SetStaffIdenID(v.ID)
 }
 
 // Mutation returns the SysAddressMutation object of the builder.
-func (sauo *SysAddressUpdateOne) Mutation() *SysAddressMutation {
-	return sauo.mutation
+func (_u *SysAddressUpdateOne) Mutation() *SysAddressMutation {
+	return _u.mutation
 }
 
 // ClearOrgan clears the "organ" edge to the OrgOrgan entity.
-func (sauo *SysAddressUpdateOne) ClearOrgan() *SysAddressUpdateOne {
-	sauo.mutation.ClearOrgan()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearOrgan() *SysAddressUpdateOne {
+	_u.mutation.ClearOrgan()
+	return _u
 }
 
 // ClearStaffResi clears the "staff_resi" edge to the OrgStaff entity.
-func (sauo *SysAddressUpdateOne) ClearStaffResi() *SysAddressUpdateOne {
-	sauo.mutation.ClearStaffResi()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearStaffResi() *SysAddressUpdateOne {
+	_u.mutation.ClearStaffResi()
+	return _u
 }
 
 // ClearStaffIden clears the "staff_iden" edge to the OrgStaff entity.
-func (sauo *SysAddressUpdateOne) ClearStaffIden() *SysAddressUpdateOne {
-	sauo.mutation.ClearStaffIden()
-	return sauo
+func (_u *SysAddressUpdateOne) ClearStaffIden() *SysAddressUpdateOne {
+	_u.mutation.ClearStaffIden()
+	return _u
 }
 
 // Where appends a list predicates to the SysAddressUpdate builder.
-func (sauo *SysAddressUpdateOne) Where(ps ...predicate.SysAddress) *SysAddressUpdateOne {
-	sauo.mutation.Where(ps...)
-	return sauo
+func (_u *SysAddressUpdateOne) Where(ps ...predicate.SysAddress) *SysAddressUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (sauo *SysAddressUpdateOne) Select(field string, fields ...string) *SysAddressUpdateOne {
-	sauo.fields = append([]string{field}, fields...)
-	return sauo
+func (_u *SysAddressUpdateOne) Select(field string, fields ...string) *SysAddressUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysAddress entity.
-func (sauo *SysAddressUpdateOne) Save(ctx context.Context) (*SysAddress, error) {
-	sauo.defaults()
-	return withHooks(ctx, sauo.sqlSave, sauo.mutation, sauo.hooks)
+func (_u *SysAddressUpdateOne) Save(ctx context.Context) (*SysAddress, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sauo *SysAddressUpdateOne) SaveX(ctx context.Context) *SysAddress {
-	node, err := sauo.Save(ctx)
+func (_u *SysAddressUpdateOne) SaveX(ctx context.Context) *SysAddress {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1376,84 +1376,84 @@ func (sauo *SysAddressUpdateOne) SaveX(ctx context.Context) *SysAddress {
 }
 
 // Exec executes the query on the entity.
-func (sauo *SysAddressUpdateOne) Exec(ctx context.Context) error {
-	_, err := sauo.Save(ctx)
+func (_u *SysAddressUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sauo *SysAddressUpdateOne) ExecX(ctx context.Context) {
-	if err := sauo.Exec(ctx); err != nil {
+func (_u *SysAddressUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sauo *SysAddressUpdateOne) defaults() {
-	if _, ok := sauo.mutation.UpdatedAt(); !ok && !sauo.mutation.UpdatedAtCleared() {
+func (_u *SysAddressUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysaddress.UpdateDefaultUpdatedAt()
-		sauo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sauo *SysAddressUpdateOne) check() error {
-	if v, ok := sauo.mutation.UserID(); ok {
+func (_u *SysAddressUpdateOne) check() error {
+	if v, ok := _u.mutation.UserID(); ok {
 		if err := sysaddress.UserIDValidator(v); err != nil {
 			return &ValidationError{Name: "user_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.user_id": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.Memo(); ok {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysaddress.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.memo": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.CountryID(); ok {
+	if v, ok := _u.mutation.CountryID(); ok {
 		if err := sysaddress.CountryIDValidator(v); err != nil {
 			return &ValidationError{Name: "country_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.country_id": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.ProvinceID(); ok {
+	if v, ok := _u.mutation.ProvinceID(); ok {
 		if err := sysaddress.ProvinceIDValidator(v); err != nil {
 			return &ValidationError{Name: "province_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.province_id": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.CityID(); ok {
+	if v, ok := _u.mutation.CityID(); ok {
 		if err := sysaddress.CityIDValidator(v); err != nil {
 			return &ValidationError{Name: "city_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.city_id": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.CountyID(); ok {
+	if v, ok := _u.mutation.CountyID(); ok {
 		if err := sysaddress.CountyIDValidator(v); err != nil {
 			return &ValidationError{Name: "county_id", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.county_id": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.ZipCode(); ok {
+	if v, ok := _u.mutation.ZipCode(); ok {
 		if err := sysaddress.ZipCodeValidator(v); err != nil {
 			return &ValidationError{Name: "zip_code", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.zip_code": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.Daddr(); ok {
+	if v, ok := _u.mutation.Daddr(); ok {
 		if err := sysaddress.DaddrValidator(v); err != nil {
 			return &ValidationError{Name: "daddr", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.daddr": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.FirstName(); ok {
+	if v, ok := _u.mutation.FirstName(); ok {
 		if err := sysaddress.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.first_name": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.LastName(); ok {
+	if v, ok := _u.mutation.LastName(); ok {
 		if err := sysaddress.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.last_name": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.AreaCode(); ok {
+	if v, ok := _u.mutation.AreaCode(); ok {
 		if err := sysaddress.AreaCodeValidator(v); err != nil {
 			return &ValidationError{Name: "area_code", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.area_code": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.Mobile(); ok {
+	if v, ok := _u.mutation.Mobile(); ok {
 		if err := sysaddress.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "SysAddress.mobile": %w`, err)}
 		}
@@ -1462,22 +1462,22 @@ func (sauo *SysAddressUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sauo *SysAddressUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAddressUpdateOne {
-	sauo.modifiers = append(sauo.modifiers, modifiers...)
-	return sauo
+func (_u *SysAddressUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAddressUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress, err error) {
-	if err := sauo.check(); err != nil {
+func (_u *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysaddress.Table, sysaddress.Columns, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
-	id, ok := sauo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysAddress.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := sauo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysaddress.FieldID)
 		for _, f := range fields {
@@ -1489,140 +1489,140 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 			}
 		}
 	}
-	if ps := sauo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sauo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysaddress.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sauo.mutation.UserID(); ok {
+	if value, ok := _u.mutation.UserID(); ok {
 		_spec.SetField(sysaddress.FieldUserID, field.TypeString, value)
 	}
-	if sauo.mutation.UserIDCleared() {
+	if _u.mutation.UserIDCleared() {
 		_spec.ClearField(sysaddress.FieldUserID, field.TypeString)
 	}
-	if sauo.mutation.OrgIDCleared() {
+	if _u.mutation.OrgIDCleared() {
 		_spec.ClearField(sysaddress.FieldOrgID, field.TypeString)
 	}
-	if value, ok := sauo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sauo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysaddress.FieldSort, field.TypeInt32, value)
 	}
-	if sauo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysaddress.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sauo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysaddress.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sauo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysaddress.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sauo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysaddress.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sauo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysaddress.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sauo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysaddress.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sauo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysaddress.FieldMemo, field.TypeString, value)
 	}
-	if sauo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysaddress.FieldMemo, field.TypeString)
 	}
-	if value, ok := sauo.mutation.Country(); ok {
+	if value, ok := _u.mutation.Country(); ok {
 		_spec.SetField(sysaddress.FieldCountry, field.TypeString, value)
 	}
-	if sauo.mutation.CountryCleared() {
+	if _u.mutation.CountryCleared() {
 		_spec.ClearField(sysaddress.FieldCountry, field.TypeString)
 	}
-	if value, ok := sauo.mutation.Province(); ok {
+	if value, ok := _u.mutation.Province(); ok {
 		_spec.SetField(sysaddress.FieldProvince, field.TypeString, value)
 	}
-	if sauo.mutation.ProvinceCleared() {
+	if _u.mutation.ProvinceCleared() {
 		_spec.ClearField(sysaddress.FieldProvince, field.TypeString)
 	}
-	if value, ok := sauo.mutation.City(); ok {
+	if value, ok := _u.mutation.City(); ok {
 		_spec.SetField(sysaddress.FieldCity, field.TypeString, value)
 	}
-	if sauo.mutation.CityCleared() {
+	if _u.mutation.CityCleared() {
 		_spec.ClearField(sysaddress.FieldCity, field.TypeString)
 	}
-	if value, ok := sauo.mutation.County(); ok {
+	if value, ok := _u.mutation.County(); ok {
 		_spec.SetField(sysaddress.FieldCounty, field.TypeString, value)
 	}
-	if sauo.mutation.CountyCleared() {
+	if _u.mutation.CountyCleared() {
 		_spec.ClearField(sysaddress.FieldCounty, field.TypeString)
 	}
-	if value, ok := sauo.mutation.CountryID(); ok {
+	if value, ok := _u.mutation.CountryID(); ok {
 		_spec.SetField(sysaddress.FieldCountryID, field.TypeString, value)
 	}
-	if sauo.mutation.CountryIDCleared() {
+	if _u.mutation.CountryIDCleared() {
 		_spec.ClearField(sysaddress.FieldCountryID, field.TypeString)
 	}
-	if value, ok := sauo.mutation.ProvinceID(); ok {
+	if value, ok := _u.mutation.ProvinceID(); ok {
 		_spec.SetField(sysaddress.FieldProvinceID, field.TypeString, value)
 	}
-	if sauo.mutation.ProvinceIDCleared() {
+	if _u.mutation.ProvinceIDCleared() {
 		_spec.ClearField(sysaddress.FieldProvinceID, field.TypeString)
 	}
-	if value, ok := sauo.mutation.CityID(); ok {
+	if value, ok := _u.mutation.CityID(); ok {
 		_spec.SetField(sysaddress.FieldCityID, field.TypeString, value)
 	}
-	if sauo.mutation.CityIDCleared() {
+	if _u.mutation.CityIDCleared() {
 		_spec.ClearField(sysaddress.FieldCityID, field.TypeString)
 	}
-	if value, ok := sauo.mutation.CountyID(); ok {
+	if value, ok := _u.mutation.CountyID(); ok {
 		_spec.SetField(sysaddress.FieldCountyID, field.TypeString, value)
 	}
-	if sauo.mutation.CountyIDCleared() {
+	if _u.mutation.CountyIDCleared() {
 		_spec.ClearField(sysaddress.FieldCountyID, field.TypeString)
 	}
-	if value, ok := sauo.mutation.ZipCode(); ok {
+	if value, ok := _u.mutation.ZipCode(); ok {
 		_spec.SetField(sysaddress.FieldZipCode, field.TypeString, value)
 	}
-	if sauo.mutation.ZipCodeCleared() {
+	if _u.mutation.ZipCodeCleared() {
 		_spec.ClearField(sysaddress.FieldZipCode, field.TypeString)
 	}
-	if value, ok := sauo.mutation.Daddr(); ok {
+	if value, ok := _u.mutation.Daddr(); ok {
 		_spec.SetField(sysaddress.FieldDaddr, field.TypeString, value)
 	}
-	if sauo.mutation.DaddrCleared() {
+	if _u.mutation.DaddrCleared() {
 		_spec.ClearField(sysaddress.FieldDaddr, field.TypeString)
 	}
-	if value, ok := sauo.mutation.FirstName(); ok {
+	if value, ok := _u.mutation.FirstName(); ok {
 		_spec.SetField(sysaddress.FieldFirstName, field.TypeString, value)
 	}
-	if sauo.mutation.FirstNameCleared() {
+	if _u.mutation.FirstNameCleared() {
 		_spec.ClearField(sysaddress.FieldFirstName, field.TypeString)
 	}
-	if value, ok := sauo.mutation.LastName(); ok {
+	if value, ok := _u.mutation.LastName(); ok {
 		_spec.SetField(sysaddress.FieldLastName, field.TypeString, value)
 	}
-	if sauo.mutation.LastNameCleared() {
+	if _u.mutation.LastNameCleared() {
 		_spec.ClearField(sysaddress.FieldLastName, field.TypeString)
 	}
-	if value, ok := sauo.mutation.AreaCode(); ok {
+	if value, ok := _u.mutation.AreaCode(); ok {
 		_spec.SetField(sysaddress.FieldAreaCode, field.TypeString, value)
 	}
-	if sauo.mutation.AreaCodeCleared() {
+	if _u.mutation.AreaCodeCleared() {
 		_spec.ClearField(sysaddress.FieldAreaCode, field.TypeString)
 	}
-	if value, ok := sauo.mutation.Mobile(); ok {
+	if value, ok := _u.mutation.Mobile(); ok {
 		_spec.SetField(sysaddress.FieldMobile, field.TypeString, value)
 	}
-	if sauo.mutation.MobileCleared() {
+	if _u.mutation.MobileCleared() {
 		_spec.ClearField(sysaddress.FieldMobile, field.TypeString)
 	}
-	if sauo.mutation.OrganCleared() {
+	if _u.mutation.OrganCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -1635,7 +1635,7 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sauo.mutation.OrganIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.OrganIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -1651,7 +1651,7 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if sauo.mutation.StaffResiCleared() {
+	if _u.mutation.StaffResiCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -1664,7 +1664,7 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sauo.mutation.StaffResiIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.StaffResiIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -1680,7 +1680,7 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	if sauo.mutation.StaffIdenCleared() {
+	if _u.mutation.StaffIdenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -1693,7 +1693,7 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
-	if nodes := sauo.mutation.StaffIdenIDs(); len(nodes) > 0 {
+	if nodes := _u.mutation.StaffIdenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2O,
 			Inverse: false,
@@ -1709,11 +1709,11 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
-	_spec.AddModifiers(sauo.modifiers...)
-	_node = &SysAddress{config: sauo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysAddress{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, sauo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysaddress.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -1721,6 +1721,6 @@ func (sauo *SysAddressUpdateOne) sqlSave(ctx context.Context) (_node *SysAddress
 		}
 		return nil, err
 	}
-	sauo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

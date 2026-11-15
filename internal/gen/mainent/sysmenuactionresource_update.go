@@ -24,168 +24,168 @@ type SysMenuActionResourceUpdate struct {
 }
 
 // Where appends a list predicates to the SysMenuActionResourceUpdate builder.
-func (smaru *SysMenuActionResourceUpdate) Where(ps ...predicate.SysMenuActionResource) *SysMenuActionResourceUpdate {
-	smaru.mutation.Where(ps...)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) Where(ps ...predicate.SysMenuActionResource) *SysMenuActionResourceUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (smaru *SysMenuActionResourceUpdate) SetIsDel(b bool) *SysMenuActionResourceUpdate {
-	smaru.mutation.SetIsDel(b)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetIsDel(v bool) *SysMenuActionResourceUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillableIsDel(b *bool) *SysMenuActionResourceUpdate {
-	if b != nil {
-		smaru.SetIsDel(*b)
+func (_u *SysMenuActionResourceUpdate) SetNillableIsDel(v *bool) *SysMenuActionResourceUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return smaru
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (smaru *SysMenuActionResourceUpdate) SetSort(i int32) *SysMenuActionResourceUpdate {
-	smaru.mutation.ResetSort()
-	smaru.mutation.SetSort(i)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetSort(v int32) *SysMenuActionResourceUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillableSort(i *int32) *SysMenuActionResourceUpdate {
-	if i != nil {
-		smaru.SetSort(*i)
+func (_u *SysMenuActionResourceUpdate) SetNillableSort(v *int32) *SysMenuActionResourceUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return smaru
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (smaru *SysMenuActionResourceUpdate) AddSort(i int32) *SysMenuActionResourceUpdate {
-	smaru.mutation.AddSort(i)
-	return smaru
+// AddSort adds value to the "sort" field.
+func (_u *SysMenuActionResourceUpdate) AddSort(v int32) *SysMenuActionResourceUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (smaru *SysMenuActionResourceUpdate) SetMemo(s string) *SysMenuActionResourceUpdate {
-	smaru.mutation.SetMemo(s)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetMemo(v string) *SysMenuActionResourceUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillableMemo(s *string) *SysMenuActionResourceUpdate {
-	if s != nil {
-		smaru.SetMemo(*s)
+func (_u *SysMenuActionResourceUpdate) SetNillableMemo(v *string) *SysMenuActionResourceUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return smaru
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (smaru *SysMenuActionResourceUpdate) ClearMemo() *SysMenuActionResourceUpdate {
-	smaru.mutation.ClearMemo()
-	return smaru
+func (_u *SysMenuActionResourceUpdate) ClearMemo() *SysMenuActionResourceUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (smaru *SysMenuActionResourceUpdate) SetUpdatedAt(t time.Time) *SysMenuActionResourceUpdate {
-	smaru.mutation.SetUpdatedAt(t)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetUpdatedAt(v time.Time) *SysMenuActionResourceUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (smaru *SysMenuActionResourceUpdate) ClearUpdatedAt() *SysMenuActionResourceUpdate {
-	smaru.mutation.ClearUpdatedAt()
-	return smaru
+func (_u *SysMenuActionResourceUpdate) ClearUpdatedAt() *SysMenuActionResourceUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (smaru *SysMenuActionResourceUpdate) SetDeletedAt(t time.Time) *SysMenuActionResourceUpdate {
-	smaru.mutation.SetDeletedAt(t)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetDeletedAt(v time.Time) *SysMenuActionResourceUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillableDeletedAt(t *time.Time) *SysMenuActionResourceUpdate {
-	if t != nil {
-		smaru.SetDeletedAt(*t)
+func (_u *SysMenuActionResourceUpdate) SetNillableDeletedAt(v *time.Time) *SysMenuActionResourceUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return smaru
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (smaru *SysMenuActionResourceUpdate) ClearDeletedAt() *SysMenuActionResourceUpdate {
-	smaru.mutation.ClearDeletedAt()
-	return smaru
+func (_u *SysMenuActionResourceUpdate) ClearDeletedAt() *SysMenuActionResourceUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (smaru *SysMenuActionResourceUpdate) SetIsActive(b bool) *SysMenuActionResourceUpdate {
-	smaru.mutation.SetIsActive(b)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetIsActive(v bool) *SysMenuActionResourceUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillableIsActive(b *bool) *SysMenuActionResourceUpdate {
-	if b != nil {
-		smaru.SetIsActive(*b)
+func (_u *SysMenuActionResourceUpdate) SetNillableIsActive(v *bool) *SysMenuActionResourceUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return smaru
+	return _u
 }
 
 // SetMethod sets the "method" field.
-func (smaru *SysMenuActionResourceUpdate) SetMethod(s string) *SysMenuActionResourceUpdate {
-	smaru.mutation.SetMethod(s)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetMethod(v string) *SysMenuActionResourceUpdate {
+	_u.mutation.SetMethod(v)
+	return _u
 }
 
 // SetNillableMethod sets the "method" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillableMethod(s *string) *SysMenuActionResourceUpdate {
-	if s != nil {
-		smaru.SetMethod(*s)
+func (_u *SysMenuActionResourceUpdate) SetNillableMethod(v *string) *SysMenuActionResourceUpdate {
+	if v != nil {
+		_u.SetMethod(*v)
 	}
-	return smaru
+	return _u
 }
 
 // SetPath sets the "path" field.
-func (smaru *SysMenuActionResourceUpdate) SetPath(s string) *SysMenuActionResourceUpdate {
-	smaru.mutation.SetPath(s)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetPath(v string) *SysMenuActionResourceUpdate {
+	_u.mutation.SetPath(v)
+	return _u
 }
 
 // SetNillablePath sets the "path" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillablePath(s *string) *SysMenuActionResourceUpdate {
-	if s != nil {
-		smaru.SetPath(*s)
+func (_u *SysMenuActionResourceUpdate) SetNillablePath(v *string) *SysMenuActionResourceUpdate {
+	if v != nil {
+		_u.SetPath(*v)
 	}
-	return smaru
+	return _u
 }
 
 // SetActionID sets the "action_id" field.
-func (smaru *SysMenuActionResourceUpdate) SetActionID(s string) *SysMenuActionResourceUpdate {
-	smaru.mutation.SetActionID(s)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) SetActionID(v string) *SysMenuActionResourceUpdate {
+	_u.mutation.SetActionID(v)
+	return _u
 }
 
 // SetNillableActionID sets the "action_id" field if the given value is not nil.
-func (smaru *SysMenuActionResourceUpdate) SetNillableActionID(s *string) *SysMenuActionResourceUpdate {
-	if s != nil {
-		smaru.SetActionID(*s)
+func (_u *SysMenuActionResourceUpdate) SetNillableActionID(v *string) *SysMenuActionResourceUpdate {
+	if v != nil {
+		_u.SetActionID(*v)
 	}
-	return smaru
+	return _u
 }
 
 // Mutation returns the SysMenuActionResourceMutation object of the builder.
-func (smaru *SysMenuActionResourceUpdate) Mutation() *SysMenuActionResourceMutation {
-	return smaru.mutation
+func (_u *SysMenuActionResourceUpdate) Mutation() *SysMenuActionResourceMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (smaru *SysMenuActionResourceUpdate) Save(ctx context.Context) (int, error) {
-	smaru.defaults()
-	return withHooks(ctx, smaru.sqlSave, smaru.mutation, smaru.hooks)
+func (_u *SysMenuActionResourceUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (smaru *SysMenuActionResourceUpdate) SaveX(ctx context.Context) int {
-	affected, err := smaru.Save(ctx)
+func (_u *SysMenuActionResourceUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -193,44 +193,44 @@ func (smaru *SysMenuActionResourceUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (smaru *SysMenuActionResourceUpdate) Exec(ctx context.Context) error {
-	_, err := smaru.Save(ctx)
+func (_u *SysMenuActionResourceUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smaru *SysMenuActionResourceUpdate) ExecX(ctx context.Context) {
-	if err := smaru.Exec(ctx); err != nil {
+func (_u *SysMenuActionResourceUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (smaru *SysMenuActionResourceUpdate) defaults() {
-	if _, ok := smaru.mutation.UpdatedAt(); !ok && !smaru.mutation.UpdatedAtCleared() {
+func (_u *SysMenuActionResourceUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysmenuactionresource.UpdateDefaultUpdatedAt()
-		smaru.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (smaru *SysMenuActionResourceUpdate) check() error {
-	if v, ok := smaru.mutation.Memo(); ok {
+func (_u *SysMenuActionResourceUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysmenuactionresource.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.memo": %w`, err)}
 		}
 	}
-	if v, ok := smaru.mutation.Method(); ok {
+	if v, ok := _u.mutation.Method(); ok {
 		if err := sysmenuactionresource.MethodValidator(v); err != nil {
 			return &ValidationError{Name: "method", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.method": %w`, err)}
 		}
 	}
-	if v, ok := smaru.mutation.Path(); ok {
+	if v, ok := _u.mutation.Path(); ok {
 		if err := sysmenuactionresource.PathValidator(v); err != nil {
 			return &ValidationError{Name: "path", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.path": %w`, err)}
 		}
 	}
-	if v, ok := smaru.mutation.ActionID(); ok {
+	if v, ok := _u.mutation.ActionID(); ok {
 		if err := sysmenuactionresource.ActionIDValidator(v); err != nil {
 			return &ValidationError{Name: "action_id", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.action_id": %w`, err)}
 		}
@@ -239,67 +239,67 @@ func (smaru *SysMenuActionResourceUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (smaru *SysMenuActionResourceUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionResourceUpdate {
-	smaru.modifiers = append(smaru.modifiers, modifiers...)
-	return smaru
+func (_u *SysMenuActionResourceUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionResourceUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := smaru.check(); err != nil {
-		return n, err
+func (_u *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysmenuactionresource.Table, sysmenuactionresource.Columns, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
-	if ps := smaru.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := smaru.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysmenuactionresource.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := smaru.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := smaru.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := smaru.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysmenuactionresource.FieldMemo, field.TypeString, value)
 	}
-	if smaru.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldMemo, field.TypeString)
 	}
-	if smaru.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := smaru.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if smaru.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := smaru.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldDeletedAt, field.TypeTime, value)
 	}
-	if smaru.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := smaru.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysmenuactionresource.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := smaru.mutation.Method(); ok {
+	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(sysmenuactionresource.FieldMethod, field.TypeString, value)
 	}
-	if value, ok := smaru.mutation.Path(); ok {
+	if value, ok := _u.mutation.Path(); ok {
 		_spec.SetField(sysmenuactionresource.FieldPath, field.TypeString, value)
 	}
-	if value, ok := smaru.mutation.ActionID(); ok {
+	if value, ok := _u.mutation.ActionID(); ok {
 		_spec.SetField(sysmenuactionresource.FieldActionID, field.TypeString, value)
 	}
-	_spec.AddModifiers(smaru.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, smaru.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenuactionresource.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -307,8 +307,8 @@ func (smaru *SysMenuActionResourceUpdate) sqlSave(ctx context.Context) (n int, e
 		}
 		return 0, err
 	}
-	smaru.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysMenuActionResourceUpdateOne is the builder for updating a single SysMenuActionResource entity.
@@ -321,175 +321,175 @@ type SysMenuActionResourceUpdateOne struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetIsDel(b bool) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.SetIsDel(b)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetIsDel(v bool) *SysMenuActionResourceUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillableIsDel(b *bool) *SysMenuActionResourceUpdateOne {
-	if b != nil {
-		smaruo.SetIsDel(*b)
+func (_u *SysMenuActionResourceUpdateOne) SetNillableIsDel(v *bool) *SysMenuActionResourceUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return smaruo
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetSort(i int32) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.ResetSort()
-	smaruo.mutation.SetSort(i)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetSort(v int32) *SysMenuActionResourceUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillableSort(i *int32) *SysMenuActionResourceUpdateOne {
-	if i != nil {
-		smaruo.SetSort(*i)
+func (_u *SysMenuActionResourceUpdateOne) SetNillableSort(v *int32) *SysMenuActionResourceUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return smaruo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (smaruo *SysMenuActionResourceUpdateOne) AddSort(i int32) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.AddSort(i)
-	return smaruo
+// AddSort adds value to the "sort" field.
+func (_u *SysMenuActionResourceUpdateOne) AddSort(v int32) *SysMenuActionResourceUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetMemo(s string) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.SetMemo(s)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetMemo(v string) *SysMenuActionResourceUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillableMemo(s *string) *SysMenuActionResourceUpdateOne {
-	if s != nil {
-		smaruo.SetMemo(*s)
+func (_u *SysMenuActionResourceUpdateOne) SetNillableMemo(v *string) *SysMenuActionResourceUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return smaruo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (smaruo *SysMenuActionResourceUpdateOne) ClearMemo() *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.ClearMemo()
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) ClearMemo() *SysMenuActionResourceUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetUpdatedAt(t time.Time) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.SetUpdatedAt(t)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetUpdatedAt(v time.Time) *SysMenuActionResourceUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (smaruo *SysMenuActionResourceUpdateOne) ClearUpdatedAt() *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.ClearUpdatedAt()
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) ClearUpdatedAt() *SysMenuActionResourceUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetDeletedAt(t time.Time) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.SetDeletedAt(t)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetDeletedAt(v time.Time) *SysMenuActionResourceUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillableDeletedAt(t *time.Time) *SysMenuActionResourceUpdateOne {
-	if t != nil {
-		smaruo.SetDeletedAt(*t)
+func (_u *SysMenuActionResourceUpdateOne) SetNillableDeletedAt(v *time.Time) *SysMenuActionResourceUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return smaruo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (smaruo *SysMenuActionResourceUpdateOne) ClearDeletedAt() *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.ClearDeletedAt()
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) ClearDeletedAt() *SysMenuActionResourceUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetIsActive(b bool) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.SetIsActive(b)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetIsActive(v bool) *SysMenuActionResourceUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillableIsActive(b *bool) *SysMenuActionResourceUpdateOne {
-	if b != nil {
-		smaruo.SetIsActive(*b)
+func (_u *SysMenuActionResourceUpdateOne) SetNillableIsActive(v *bool) *SysMenuActionResourceUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return smaruo
+	return _u
 }
 
 // SetMethod sets the "method" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetMethod(s string) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.SetMethod(s)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetMethod(v string) *SysMenuActionResourceUpdateOne {
+	_u.mutation.SetMethod(v)
+	return _u
 }
 
 // SetNillableMethod sets the "method" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillableMethod(s *string) *SysMenuActionResourceUpdateOne {
-	if s != nil {
-		smaruo.SetMethod(*s)
+func (_u *SysMenuActionResourceUpdateOne) SetNillableMethod(v *string) *SysMenuActionResourceUpdateOne {
+	if v != nil {
+		_u.SetMethod(*v)
 	}
-	return smaruo
+	return _u
 }
 
 // SetPath sets the "path" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetPath(s string) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.SetPath(s)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetPath(v string) *SysMenuActionResourceUpdateOne {
+	_u.mutation.SetPath(v)
+	return _u
 }
 
 // SetNillablePath sets the "path" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillablePath(s *string) *SysMenuActionResourceUpdateOne {
-	if s != nil {
-		smaruo.SetPath(*s)
+func (_u *SysMenuActionResourceUpdateOne) SetNillablePath(v *string) *SysMenuActionResourceUpdateOne {
+	if v != nil {
+		_u.SetPath(*v)
 	}
-	return smaruo
+	return _u
 }
 
 // SetActionID sets the "action_id" field.
-func (smaruo *SysMenuActionResourceUpdateOne) SetActionID(s string) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.SetActionID(s)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) SetActionID(v string) *SysMenuActionResourceUpdateOne {
+	_u.mutation.SetActionID(v)
+	return _u
 }
 
 // SetNillableActionID sets the "action_id" field if the given value is not nil.
-func (smaruo *SysMenuActionResourceUpdateOne) SetNillableActionID(s *string) *SysMenuActionResourceUpdateOne {
-	if s != nil {
-		smaruo.SetActionID(*s)
+func (_u *SysMenuActionResourceUpdateOne) SetNillableActionID(v *string) *SysMenuActionResourceUpdateOne {
+	if v != nil {
+		_u.SetActionID(*v)
 	}
-	return smaruo
+	return _u
 }
 
 // Mutation returns the SysMenuActionResourceMutation object of the builder.
-func (smaruo *SysMenuActionResourceUpdateOne) Mutation() *SysMenuActionResourceMutation {
-	return smaruo.mutation
+func (_u *SysMenuActionResourceUpdateOne) Mutation() *SysMenuActionResourceMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the SysMenuActionResourceUpdate builder.
-func (smaruo *SysMenuActionResourceUpdateOne) Where(ps ...predicate.SysMenuActionResource) *SysMenuActionResourceUpdateOne {
-	smaruo.mutation.Where(ps...)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) Where(ps ...predicate.SysMenuActionResource) *SysMenuActionResourceUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (smaruo *SysMenuActionResourceUpdateOne) Select(field string, fields ...string) *SysMenuActionResourceUpdateOne {
-	smaruo.fields = append([]string{field}, fields...)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) Select(field string, fields ...string) *SysMenuActionResourceUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysMenuActionResource entity.
-func (smaruo *SysMenuActionResourceUpdateOne) Save(ctx context.Context) (*SysMenuActionResource, error) {
-	smaruo.defaults()
-	return withHooks(ctx, smaruo.sqlSave, smaruo.mutation, smaruo.hooks)
+func (_u *SysMenuActionResourceUpdateOne) Save(ctx context.Context) (*SysMenuActionResource, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (smaruo *SysMenuActionResourceUpdateOne) SaveX(ctx context.Context) *SysMenuActionResource {
-	node, err := smaruo.Save(ctx)
+func (_u *SysMenuActionResourceUpdateOne) SaveX(ctx context.Context) *SysMenuActionResource {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -497,44 +497,44 @@ func (smaruo *SysMenuActionResourceUpdateOne) SaveX(ctx context.Context) *SysMen
 }
 
 // Exec executes the query on the entity.
-func (smaruo *SysMenuActionResourceUpdateOne) Exec(ctx context.Context) error {
-	_, err := smaruo.Save(ctx)
+func (_u *SysMenuActionResourceUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smaruo *SysMenuActionResourceUpdateOne) ExecX(ctx context.Context) {
-	if err := smaruo.Exec(ctx); err != nil {
+func (_u *SysMenuActionResourceUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (smaruo *SysMenuActionResourceUpdateOne) defaults() {
-	if _, ok := smaruo.mutation.UpdatedAt(); !ok && !smaruo.mutation.UpdatedAtCleared() {
+func (_u *SysMenuActionResourceUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysmenuactionresource.UpdateDefaultUpdatedAt()
-		smaruo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (smaruo *SysMenuActionResourceUpdateOne) check() error {
-	if v, ok := smaruo.mutation.Memo(); ok {
+func (_u *SysMenuActionResourceUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysmenuactionresource.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.memo": %w`, err)}
 		}
 	}
-	if v, ok := smaruo.mutation.Method(); ok {
+	if v, ok := _u.mutation.Method(); ok {
 		if err := sysmenuactionresource.MethodValidator(v); err != nil {
 			return &ValidationError{Name: "method", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.method": %w`, err)}
 		}
 	}
-	if v, ok := smaruo.mutation.Path(); ok {
+	if v, ok := _u.mutation.Path(); ok {
 		if err := sysmenuactionresource.PathValidator(v); err != nil {
 			return &ValidationError{Name: "path", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.path": %w`, err)}
 		}
 	}
-	if v, ok := smaruo.mutation.ActionID(); ok {
+	if v, ok := _u.mutation.ActionID(); ok {
 		if err := sysmenuactionresource.ActionIDValidator(v); err != nil {
 			return &ValidationError{Name: "action_id", err: fmt.Errorf(`mainent: validator failed for field "SysMenuActionResource.action_id": %w`, err)}
 		}
@@ -543,22 +543,22 @@ func (smaruo *SysMenuActionResourceUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (smaruo *SysMenuActionResourceUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionResourceUpdateOne {
-	smaruo.modifiers = append(smaruo.modifiers, modifiers...)
-	return smaruo
+func (_u *SysMenuActionResourceUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysMenuActionResourceUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_node *SysMenuActionResource, err error) {
-	if err := smaruo.check(); err != nil {
+func (_u *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_node *SysMenuActionResource, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysmenuactionresource.Table, sysmenuactionresource.Columns, sqlgraph.NewFieldSpec(sysmenuactionresource.FieldID, field.TypeString))
-	id, ok := smaruo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysMenuActionResource.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := smaruo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysmenuactionresource.FieldID)
 		for _, f := range fields {
@@ -570,60 +570,60 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 			}
 		}
 	}
-	if ps := smaruo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := smaruo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysmenuactionresource.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := smaruo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := smaruo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysmenuactionresource.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := smaruo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysmenuactionresource.FieldMemo, field.TypeString, value)
 	}
-	if smaruo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldMemo, field.TypeString)
 	}
-	if smaruo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := smaruo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if smaruo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := smaruo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenuactionresource.FieldDeletedAt, field.TypeTime, value)
 	}
-	if smaruo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysmenuactionresource.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := smaruo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysmenuactionresource.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := smaruo.mutation.Method(); ok {
+	if value, ok := _u.mutation.Method(); ok {
 		_spec.SetField(sysmenuactionresource.FieldMethod, field.TypeString, value)
 	}
-	if value, ok := smaruo.mutation.Path(); ok {
+	if value, ok := _u.mutation.Path(); ok {
 		_spec.SetField(sysmenuactionresource.FieldPath, field.TypeString, value)
 	}
-	if value, ok := smaruo.mutation.ActionID(); ok {
+	if value, ok := _u.mutation.ActionID(); ok {
 		_spec.SetField(sysmenuactionresource.FieldActionID, field.TypeString, value)
 	}
-	_spec.AddModifiers(smaruo.modifiers...)
-	_node = &SysMenuActionResource{config: smaruo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysMenuActionResource{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, smaruo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysmenuactionresource.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -631,6 +631,6 @@ func (smaruo *SysMenuActionResourceUpdateOne) sqlSave(ctx context.Context) (_nod
 		}
 		return nil, err
 	}
-	smaruo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

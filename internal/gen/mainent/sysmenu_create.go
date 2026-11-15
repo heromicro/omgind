@@ -24,245 +24,245 @@ type SysMenuCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (smc *SysMenuCreate) SetIsDel(b bool) *SysMenuCreate {
-	smc.mutation.SetIsDel(b)
-	return smc
+func (_c *SysMenuCreate) SetIsDel(v bool) *SysMenuCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableIsDel(b *bool) *SysMenuCreate {
-	if b != nil {
-		smc.SetIsDel(*b)
+func (_c *SysMenuCreate) SetNillableIsDel(v *bool) *SysMenuCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (smc *SysMenuCreate) SetMemo(s string) *SysMenuCreate {
-	smc.mutation.SetMemo(s)
-	return smc
+func (_c *SysMenuCreate) SetMemo(v string) *SysMenuCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableMemo(s *string) *SysMenuCreate {
-	if s != nil {
-		smc.SetMemo(*s)
+func (_c *SysMenuCreate) SetNillableMemo(v *string) *SysMenuCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (smc *SysMenuCreate) SetSort(i int32) *SysMenuCreate {
-	smc.mutation.SetSort(i)
-	return smc
+func (_c *SysMenuCreate) SetSort(v int32) *SysMenuCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableSort(i *int32) *SysMenuCreate {
-	if i != nil {
-		smc.SetSort(*i)
+func (_c *SysMenuCreate) SetNillableSort(v *int32) *SysMenuCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (smc *SysMenuCreate) SetCreatedAt(t time.Time) *SysMenuCreate {
-	smc.mutation.SetCreatedAt(t)
-	return smc
+func (_c *SysMenuCreate) SetCreatedAt(v time.Time) *SysMenuCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableCreatedAt(t *time.Time) *SysMenuCreate {
-	if t != nil {
-		smc.SetCreatedAt(*t)
+func (_c *SysMenuCreate) SetNillableCreatedAt(v *time.Time) *SysMenuCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (smc *SysMenuCreate) SetUpdatedAt(t time.Time) *SysMenuCreate {
-	smc.mutation.SetUpdatedAt(t)
-	return smc
+func (_c *SysMenuCreate) SetUpdatedAt(v time.Time) *SysMenuCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableUpdatedAt(t *time.Time) *SysMenuCreate {
-	if t != nil {
-		smc.SetUpdatedAt(*t)
+func (_c *SysMenuCreate) SetNillableUpdatedAt(v *time.Time) *SysMenuCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (smc *SysMenuCreate) SetDeletedAt(t time.Time) *SysMenuCreate {
-	smc.mutation.SetDeletedAt(t)
-	return smc
+func (_c *SysMenuCreate) SetDeletedAt(v time.Time) *SysMenuCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableDeletedAt(t *time.Time) *SysMenuCreate {
-	if t != nil {
-		smc.SetDeletedAt(*t)
+func (_c *SysMenuCreate) SetNillableDeletedAt(v *time.Time) *SysMenuCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (smc *SysMenuCreate) SetIsActive(b bool) *SysMenuCreate {
-	smc.mutation.SetIsActive(b)
-	return smc
+func (_c *SysMenuCreate) SetIsActive(v bool) *SysMenuCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableIsActive(b *bool) *SysMenuCreate {
-	if b != nil {
-		smc.SetIsActive(*b)
+func (_c *SysMenuCreate) SetNillableIsActive(v *bool) *SysMenuCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetName sets the "name" field.
-func (smc *SysMenuCreate) SetName(s string) *SysMenuCreate {
-	smc.mutation.SetName(s)
-	return smc
+func (_c *SysMenuCreate) SetName(v string) *SysMenuCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetIcon sets the "icon" field.
-func (smc *SysMenuCreate) SetIcon(s string) *SysMenuCreate {
-	smc.mutation.SetIcon(s)
-	return smc
+func (_c *SysMenuCreate) SetIcon(v string) *SysMenuCreate {
+	_c.mutation.SetIcon(v)
+	return _c
 }
 
 // SetRouter sets the "router" field.
-func (smc *SysMenuCreate) SetRouter(s string) *SysMenuCreate {
-	smc.mutation.SetRouter(s)
-	return smc
+func (_c *SysMenuCreate) SetRouter(v string) *SysMenuCreate {
+	_c.mutation.SetRouter(v)
+	return _c
 }
 
 // SetIsShow sets the "is_show" field.
-func (smc *SysMenuCreate) SetIsShow(b bool) *SysMenuCreate {
-	smc.mutation.SetIsShow(b)
-	return smc
+func (_c *SysMenuCreate) SetIsShow(v bool) *SysMenuCreate {
+	_c.mutation.SetIsShow(v)
+	return _c
 }
 
 // SetNillableIsShow sets the "is_show" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableIsShow(b *bool) *SysMenuCreate {
-	if b != nil {
-		smc.SetIsShow(*b)
+func (_c *SysMenuCreate) SetNillableIsShow(v *bool) *SysMenuCreate {
+	if v != nil {
+		_c.SetIsShow(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetParentID sets the "parent_id" field.
-func (smc *SysMenuCreate) SetParentID(s string) *SysMenuCreate {
-	smc.mutation.SetParentID(s)
-	return smc
+func (_c *SysMenuCreate) SetParentID(v string) *SysMenuCreate {
+	_c.mutation.SetParentID(v)
+	return _c
 }
 
 // SetNillableParentID sets the "parent_id" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableParentID(s *string) *SysMenuCreate {
-	if s != nil {
-		smc.SetParentID(*s)
+func (_c *SysMenuCreate) SetNillableParentID(v *string) *SysMenuCreate {
+	if v != nil {
+		_c.SetParentID(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetParentPath sets the "parent_path" field.
-func (smc *SysMenuCreate) SetParentPath(s string) *SysMenuCreate {
-	smc.mutation.SetParentPath(s)
-	return smc
+func (_c *SysMenuCreate) SetParentPath(v string) *SysMenuCreate {
+	_c.mutation.SetParentPath(v)
+	return _c
 }
 
 // SetNillableParentPath sets the "parent_path" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableParentPath(s *string) *SysMenuCreate {
-	if s != nil {
-		smc.SetParentPath(*s)
+func (_c *SysMenuCreate) SetNillableParentPath(v *string) *SysMenuCreate {
+	if v != nil {
+		_c.SetParentPath(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetLevel sets the "level" field.
-func (smc *SysMenuCreate) SetLevel(i int32) *SysMenuCreate {
-	smc.mutation.SetLevel(i)
-	return smc
+func (_c *SysMenuCreate) SetLevel(v int32) *SysMenuCreate {
+	_c.mutation.SetLevel(v)
+	return _c
 }
 
 // SetIsLeaf sets the "is_leaf" field.
-func (smc *SysMenuCreate) SetIsLeaf(b bool) *SysMenuCreate {
-	smc.mutation.SetIsLeaf(b)
-	return smc
+func (_c *SysMenuCreate) SetIsLeaf(v bool) *SysMenuCreate {
+	_c.mutation.SetIsLeaf(v)
+	return _c
 }
 
 // SetNillableIsLeaf sets the "is_leaf" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableIsLeaf(b *bool) *SysMenuCreate {
-	if b != nil {
-		smc.SetIsLeaf(*b)
+func (_c *SysMenuCreate) SetNillableIsLeaf(v *bool) *SysMenuCreate {
+	if v != nil {
+		_c.SetIsLeaf(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetOpenBlank sets the "open_blank" field.
-func (smc *SysMenuCreate) SetOpenBlank(b bool) *SysMenuCreate {
-	smc.mutation.SetOpenBlank(b)
-	return smc
+func (_c *SysMenuCreate) SetOpenBlank(v bool) *SysMenuCreate {
+	_c.mutation.SetOpenBlank(v)
+	return _c
 }
 
 // SetNillableOpenBlank sets the "open_blank" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableOpenBlank(b *bool) *SysMenuCreate {
-	if b != nil {
-		smc.SetOpenBlank(*b)
+func (_c *SysMenuCreate) SetNillableOpenBlank(v *bool) *SysMenuCreate {
+	if v != nil {
+		_c.SetOpenBlank(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (smc *SysMenuCreate) SetID(s string) *SysMenuCreate {
-	smc.mutation.SetID(s)
-	return smc
+func (_c *SysMenuCreate) SetID(v string) *SysMenuCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (smc *SysMenuCreate) SetNillableID(s *string) *SysMenuCreate {
-	if s != nil {
-		smc.SetID(*s)
+func (_c *SysMenuCreate) SetNillableID(v *string) *SysMenuCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return smc
+	return _c
 }
 
 // SetParent sets the "parent" edge to the SysMenu entity.
-func (smc *SysMenuCreate) SetParent(s *SysMenu) *SysMenuCreate {
-	return smc.SetParentID(s.ID)
+func (_c *SysMenuCreate) SetParent(v *SysMenu) *SysMenuCreate {
+	return _c.SetParentID(v.ID)
 }
 
 // AddChildIDs adds the "children" edge to the SysMenu entity by IDs.
-func (smc *SysMenuCreate) AddChildIDs(ids ...string) *SysMenuCreate {
-	smc.mutation.AddChildIDs(ids...)
-	return smc
+func (_c *SysMenuCreate) AddChildIDs(ids ...string) *SysMenuCreate {
+	_c.mutation.AddChildIDs(ids...)
+	return _c
 }
 
 // AddChildren adds the "children" edges to the SysMenu entity.
-func (smc *SysMenuCreate) AddChildren(s ...*SysMenu) *SysMenuCreate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_c *SysMenuCreate) AddChildren(v ...*SysMenu) *SysMenuCreate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return smc.AddChildIDs(ids...)
+	return _c.AddChildIDs(ids...)
 }
 
 // Mutation returns the SysMenuMutation object of the builder.
-func (smc *SysMenuCreate) Mutation() *SysMenuMutation {
-	return smc.mutation
+func (_c *SysMenuCreate) Mutation() *SysMenuMutation {
+	return _c.mutation
 }
 
 // Save creates the SysMenu in the database.
-func (smc *SysMenuCreate) Save(ctx context.Context) (*SysMenu, error) {
-	smc.defaults()
-	return withHooks(ctx, smc.sqlSave, smc.mutation, smc.hooks)
+func (_c *SysMenuCreate) Save(ctx context.Context) (*SysMenu, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (smc *SysMenuCreate) SaveX(ctx context.Context) *SysMenu {
-	v, err := smc.Save(ctx)
+func (_c *SysMenuCreate) SaveX(ctx context.Context) *SysMenu {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -270,124 +270,124 @@ func (smc *SysMenuCreate) SaveX(ctx context.Context) *SysMenu {
 }
 
 // Exec executes the query.
-func (smc *SysMenuCreate) Exec(ctx context.Context) error {
-	_, err := smc.Save(ctx)
+func (_c *SysMenuCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smc *SysMenuCreate) ExecX(ctx context.Context) {
-	if err := smc.Exec(ctx); err != nil {
+func (_c *SysMenuCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (smc *SysMenuCreate) defaults() {
-	if _, ok := smc.mutation.IsDel(); !ok {
+func (_c *SysMenuCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysmenu.DefaultIsDel
-		smc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := smc.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := sysmenu.DefaultMemo
-		smc.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := smc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysmenu.DefaultSort
-		smc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := smc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysmenu.DefaultCreatedAt()
-		smc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := smc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysmenu.DefaultUpdatedAt()
-		smc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := smc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysmenu.DefaultIsActive
-		smc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := smc.mutation.IsShow(); !ok {
+	if _, ok := _c.mutation.IsShow(); !ok {
 		v := sysmenu.DefaultIsShow
-		smc.mutation.SetIsShow(v)
+		_c.mutation.SetIsShow(v)
 	}
-	if _, ok := smc.mutation.IsLeaf(); !ok {
+	if _, ok := _c.mutation.IsLeaf(); !ok {
 		v := sysmenu.DefaultIsLeaf
-		smc.mutation.SetIsLeaf(v)
+		_c.mutation.SetIsLeaf(v)
 	}
-	if _, ok := smc.mutation.OpenBlank(); !ok {
+	if _, ok := _c.mutation.OpenBlank(); !ok {
 		v := sysmenu.DefaultOpenBlank
-		smc.mutation.SetOpenBlank(v)
+		_c.mutation.SetOpenBlank(v)
 	}
-	if _, ok := smc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysmenu.DefaultID()
-		smc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (smc *SysMenuCreate) check() error {
-	if _, ok := smc.mutation.IsDel(); !ok {
+func (_c *SysMenuCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysMenu.is_del"`)}
 	}
-	if v, ok := smc.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysmenu.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysMenu.memo": %w`, err)}
 		}
 	}
-	if _, ok := smc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysMenu.sort"`)}
 	}
-	if _, ok := smc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysMenu.is_active"`)}
 	}
-	if _, ok := smc.mutation.Name(); !ok {
+	if _, ok := _c.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`mainent: missing required field "SysMenu.name"`)}
 	}
-	if v, ok := smc.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := sysmenu.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysMenu.name": %w`, err)}
 		}
 	}
-	if _, ok := smc.mutation.Icon(); !ok {
+	if _, ok := _c.mutation.Icon(); !ok {
 		return &ValidationError{Name: "icon", err: errors.New(`mainent: missing required field "SysMenu.icon"`)}
 	}
-	if v, ok := smc.mutation.Icon(); ok {
+	if v, ok := _c.mutation.Icon(); ok {
 		if err := sysmenu.IconValidator(v); err != nil {
 			return &ValidationError{Name: "icon", err: fmt.Errorf(`mainent: validator failed for field "SysMenu.icon": %w`, err)}
 		}
 	}
-	if _, ok := smc.mutation.Router(); !ok {
+	if _, ok := _c.mutation.Router(); !ok {
 		return &ValidationError{Name: "router", err: errors.New(`mainent: missing required field "SysMenu.router"`)}
 	}
-	if v, ok := smc.mutation.Router(); ok {
+	if v, ok := _c.mutation.Router(); ok {
 		if err := sysmenu.RouterValidator(v); err != nil {
 			return &ValidationError{Name: "router", err: fmt.Errorf(`mainent: validator failed for field "SysMenu.router": %w`, err)}
 		}
 	}
-	if _, ok := smc.mutation.IsShow(); !ok {
+	if _, ok := _c.mutation.IsShow(); !ok {
 		return &ValidationError{Name: "is_show", err: errors.New(`mainent: missing required field "SysMenu.is_show"`)}
 	}
-	if v, ok := smc.mutation.ParentID(); ok {
+	if v, ok := _c.mutation.ParentID(); ok {
 		if err := sysmenu.ParentIDValidator(v); err != nil {
 			return &ValidationError{Name: "parent_id", err: fmt.Errorf(`mainent: validator failed for field "SysMenu.parent_id": %w`, err)}
 		}
 	}
-	if v, ok := smc.mutation.ParentPath(); ok {
+	if v, ok := _c.mutation.ParentPath(); ok {
 		if err := sysmenu.ParentPathValidator(v); err != nil {
 			return &ValidationError{Name: "parent_path", err: fmt.Errorf(`mainent: validator failed for field "SysMenu.parent_path": %w`, err)}
 		}
 	}
-	if _, ok := smc.mutation.Level(); !ok {
+	if _, ok := _c.mutation.Level(); !ok {
 		return &ValidationError{Name: "level", err: errors.New(`mainent: missing required field "SysMenu.level"`)}
 	}
-	if v, ok := smc.mutation.Level(); ok {
+	if v, ok := _c.mutation.Level(); ok {
 		if err := sysmenu.LevelValidator(v); err != nil {
 			return &ValidationError{Name: "level", err: fmt.Errorf(`mainent: validator failed for field "SysMenu.level": %w`, err)}
 		}
 	}
-	if v, ok := smc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysmenu.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysMenu.id": %w`, err)}
 		}
@@ -395,12 +395,12 @@ func (smc *SysMenuCreate) check() error {
 	return nil
 }
 
-func (smc *SysMenuCreate) sqlSave(ctx context.Context) (*SysMenu, error) {
-	if err := smc.check(); err != nil {
+func (_c *SysMenuCreate) sqlSave(ctx context.Context) (*SysMenu, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := smc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, smc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -413,82 +413,82 @@ func (smc *SysMenuCreate) sqlSave(ctx context.Context) (*SysMenu, error) {
 			return nil, fmt.Errorf("unexpected SysMenu.ID type: %T", _spec.ID.Value)
 		}
 	}
-	smc.mutation.id = &_node.ID
-	smc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
+func (_c *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysMenu{config: smc.config}
+		_node = &SysMenu{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysmenu.Table, sqlgraph.NewFieldSpec(sysmenu.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = smc.conflict
-	if id, ok := smc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := smc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysmenu.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := smc.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(sysmenu.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := smc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysmenu.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := smc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysmenu.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := smc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysmenu.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := smc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysmenu.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := smc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysmenu.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := smc.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(sysmenu.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
-	if value, ok := smc.mutation.Icon(); ok {
+	if value, ok := _c.mutation.Icon(); ok {
 		_spec.SetField(sysmenu.FieldIcon, field.TypeString, value)
 		_node.Icon = value
 	}
-	if value, ok := smc.mutation.Router(); ok {
+	if value, ok := _c.mutation.Router(); ok {
 		_spec.SetField(sysmenu.FieldRouter, field.TypeString, value)
 		_node.Router = value
 	}
-	if value, ok := smc.mutation.IsShow(); ok {
+	if value, ok := _c.mutation.IsShow(); ok {
 		_spec.SetField(sysmenu.FieldIsShow, field.TypeBool, value)
 		_node.IsShow = value
 	}
-	if value, ok := smc.mutation.ParentPath(); ok {
+	if value, ok := _c.mutation.ParentPath(); ok {
 		_spec.SetField(sysmenu.FieldParentPath, field.TypeString, value)
 		_node.ParentPath = &value
 	}
-	if value, ok := smc.mutation.Level(); ok {
+	if value, ok := _c.mutation.Level(); ok {
 		_spec.SetField(sysmenu.FieldLevel, field.TypeInt32, value)
 		_node.Level = value
 	}
-	if value, ok := smc.mutation.IsLeaf(); ok {
+	if value, ok := _c.mutation.IsLeaf(); ok {
 		_spec.SetField(sysmenu.FieldIsLeaf, field.TypeBool, value)
 		_node.IsLeaf = &value
 	}
-	if value, ok := smc.mutation.OpenBlank(); ok {
+	if value, ok := _c.mutation.OpenBlank(); ok {
 		_spec.SetField(sysmenu.FieldOpenBlank, field.TypeBool, value)
 		_node.OpenBlank = &value
 	}
-	if nodes := smc.mutation.ParentIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -505,7 +505,7 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 		_node.ParentID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := smc.mutation.ChildrenIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.ChildrenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: false,
@@ -540,10 +540,10 @@ func (smc *SysMenuCreate) createSpec() (*SysMenu, *sqlgraph.CreateSpec) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (smc *SysMenuCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuUpsertOne {
-	smc.conflict = opts
+func (_c *SysMenuCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuUpsertOne {
+	_c.conflict = opts
 	return &SysMenuUpsertOne{
-		create: smc,
+		create: _c,
 	}
 }
 
@@ -553,10 +553,10 @@ func (smc *SysMenuCreate) OnConflict(opts ...sql.ConflictOption) *SysMenuUpsertO
 //	client.SysMenu.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (smc *SysMenuCreate) OnConflictColumns(columns ...string) *SysMenuUpsertOne {
-	smc.conflict = append(smc.conflict, sql.ConflictColumns(columns...))
+func (_c *SysMenuCreate) OnConflictColumns(columns ...string) *SysMenuUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysMenuUpsertOne{
-		create: smc,
+		create: _c,
 	}
 }
 
@@ -1178,16 +1178,16 @@ type SysMenuCreateBulk struct {
 }
 
 // Save creates the SysMenu entities in the database.
-func (smcb *SysMenuCreateBulk) Save(ctx context.Context) ([]*SysMenu, error) {
-	if smcb.err != nil {
-		return nil, smcb.err
+func (_c *SysMenuCreateBulk) Save(ctx context.Context) ([]*SysMenu, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(smcb.builders))
-	nodes := make([]*SysMenu, len(smcb.builders))
-	mutators := make([]Mutator, len(smcb.builders))
-	for i := range smcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysMenu, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := smcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysMenuMutation)
@@ -1201,12 +1201,12 @@ func (smcb *SysMenuCreateBulk) Save(ctx context.Context) ([]*SysMenu, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, smcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = smcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, smcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1226,7 +1226,7 @@ func (smcb *SysMenuCreateBulk) Save(ctx context.Context) ([]*SysMenu, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, smcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1234,8 +1234,8 @@ func (smcb *SysMenuCreateBulk) Save(ctx context.Context) ([]*SysMenu, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (smcb *SysMenuCreateBulk) SaveX(ctx context.Context) []*SysMenu {
-	v, err := smcb.Save(ctx)
+func (_c *SysMenuCreateBulk) SaveX(ctx context.Context) []*SysMenu {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1243,14 +1243,14 @@ func (smcb *SysMenuCreateBulk) SaveX(ctx context.Context) []*SysMenu {
 }
 
 // Exec executes the query.
-func (smcb *SysMenuCreateBulk) Exec(ctx context.Context) error {
-	_, err := smcb.Save(ctx)
+func (_c *SysMenuCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (smcb *SysMenuCreateBulk) ExecX(ctx context.Context) {
-	if err := smcb.Exec(ctx); err != nil {
+func (_c *SysMenuCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1270,10 +1270,10 @@ func (smcb *SysMenuCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (smcb *SysMenuCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuUpsertBulk {
-	smcb.conflict = opts
+func (_c *SysMenuCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuUpsertBulk {
+	_c.conflict = opts
 	return &SysMenuUpsertBulk{
-		create: smcb,
+		create: _c,
 	}
 }
 
@@ -1283,10 +1283,10 @@ func (smcb *SysMenuCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysMenuUp
 //	client.SysMenu.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (smcb *SysMenuCreateBulk) OnConflictColumns(columns ...string) *SysMenuUpsertBulk {
-	smcb.conflict = append(smcb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysMenuCreateBulk) OnConflictColumns(columns ...string) *SysMenuUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysMenuUpsertBulk{
-		create: smcb,
+		create: _c,
 	}
 }
 

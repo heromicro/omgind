@@ -20,56 +20,56 @@ type SysJwtBlockDelete struct {
 }
 
 // Where appends a list predicates to the SysJwtBlockDelete builder.
-func (sjbd *SysJwtBlockDelete) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockDelete {
-	sjbd.mutation.Where(ps...)
-	return sjbd
+func (_d *SysJwtBlockDelete) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (sjbd *SysJwtBlockDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, sjbd.sqlExec, sjbd.mutation, sjbd.hooks)
+func (_d *SysJwtBlockDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sjbd *SysJwtBlockDelete) ExecX(ctx context.Context) int {
-	n, err := sjbd.Exec(ctx)
+func (_d *SysJwtBlockDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (sjbd *SysJwtBlockDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysJwtBlockDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysjwtblock.Table, sqlgraph.NewFieldSpec(sysjwtblock.FieldID, field.TypeString))
-	if ps := sjbd.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, sjbd.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	sjbd.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysJwtBlockDeleteOne is the builder for deleting a single SysJwtBlock entity.
 type SysJwtBlockDeleteOne struct {
-	sjbd *SysJwtBlockDelete
+	_d *SysJwtBlockDelete
 }
 
 // Where appends a list predicates to the SysJwtBlockDelete builder.
-func (sjbdo *SysJwtBlockDeleteOne) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockDeleteOne {
-	sjbdo.sjbd.mutation.Where(ps...)
-	return sjbdo
+func (_d *SysJwtBlockDeleteOne) Where(ps ...predicate.SysJwtBlock) *SysJwtBlockDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (sjbdo *SysJwtBlockDeleteOne) Exec(ctx context.Context) error {
-	n, err := sjbdo.sjbd.Exec(ctx)
+func (_d *SysJwtBlockDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (sjbdo *SysJwtBlockDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sjbdo *SysJwtBlockDeleteOne) ExecX(ctx context.Context) {
-	if err := sjbdo.Exec(ctx); err != nil {
+func (_d *SysJwtBlockDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

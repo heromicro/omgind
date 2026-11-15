@@ -26,227 +26,227 @@ type SysUserCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (suc *SysUserCreate) SetIsDel(b bool) *SysUserCreate {
-	suc.mutation.SetIsDel(b)
-	return suc
+func (_c *SysUserCreate) SetIsDel(v bool) *SysUserCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableIsDel(b *bool) *SysUserCreate {
-	if b != nil {
-		suc.SetIsDel(*b)
+func (_c *SysUserCreate) SetNillableIsDel(v *bool) *SysUserCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (suc *SysUserCreate) SetSort(i int32) *SysUserCreate {
-	suc.mutation.SetSort(i)
-	return suc
+func (_c *SysUserCreate) SetSort(v int32) *SysUserCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableSort(i *int32) *SysUserCreate {
-	if i != nil {
-		suc.SetSort(*i)
+func (_c *SysUserCreate) SetNillableSort(v *int32) *SysUserCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (suc *SysUserCreate) SetCreatedAt(t time.Time) *SysUserCreate {
-	suc.mutation.SetCreatedAt(t)
-	return suc
+func (_c *SysUserCreate) SetCreatedAt(v time.Time) *SysUserCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableCreatedAt(t *time.Time) *SysUserCreate {
-	if t != nil {
-		suc.SetCreatedAt(*t)
+func (_c *SysUserCreate) SetNillableCreatedAt(v *time.Time) *SysUserCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (suc *SysUserCreate) SetUpdatedAt(t time.Time) *SysUserCreate {
-	suc.mutation.SetUpdatedAt(t)
-	return suc
+func (_c *SysUserCreate) SetUpdatedAt(v time.Time) *SysUserCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableUpdatedAt(t *time.Time) *SysUserCreate {
-	if t != nil {
-		suc.SetUpdatedAt(*t)
+func (_c *SysUserCreate) SetNillableUpdatedAt(v *time.Time) *SysUserCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (suc *SysUserCreate) SetDeletedAt(t time.Time) *SysUserCreate {
-	suc.mutation.SetDeletedAt(t)
-	return suc
+func (_c *SysUserCreate) SetDeletedAt(v time.Time) *SysUserCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableDeletedAt(t *time.Time) *SysUserCreate {
-	if t != nil {
-		suc.SetDeletedAt(*t)
+func (_c *SysUserCreate) SetNillableDeletedAt(v *time.Time) *SysUserCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (suc *SysUserCreate) SetIsActive(b bool) *SysUserCreate {
-	suc.mutation.SetIsActive(b)
-	return suc
+func (_c *SysUserCreate) SetIsActive(v bool) *SysUserCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableIsActive(b *bool) *SysUserCreate {
-	if b != nil {
-		suc.SetIsActive(*b)
+func (_c *SysUserCreate) SetNillableIsActive(v *bool) *SysUserCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetUserName sets the "user_name" field.
-func (suc *SysUserCreate) SetUserName(s string) *SysUserCreate {
-	suc.mutation.SetUserName(s)
-	return suc
+func (_c *SysUserCreate) SetUserName(v string) *SysUserCreate {
+	_c.mutation.SetUserName(v)
+	return _c
 }
 
 // SetRealName sets the "real_name" field.
-func (suc *SysUserCreate) SetRealName(s string) *SysUserCreate {
-	suc.mutation.SetRealName(s)
-	return suc
+func (_c *SysUserCreate) SetRealName(v string) *SysUserCreate {
+	_c.mutation.SetRealName(v)
+	return _c
 }
 
 // SetNillableRealName sets the "real_name" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableRealName(s *string) *SysUserCreate {
-	if s != nil {
-		suc.SetRealName(*s)
+func (_c *SysUserCreate) SetNillableRealName(v *string) *SysUserCreate {
+	if v != nil {
+		_c.SetRealName(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetFirstName sets the "first_name" field.
-func (suc *SysUserCreate) SetFirstName(s string) *SysUserCreate {
-	suc.mutation.SetFirstName(s)
-	return suc
+func (_c *SysUserCreate) SetFirstName(v string) *SysUserCreate {
+	_c.mutation.SetFirstName(v)
+	return _c
 }
 
 // SetNillableFirstName sets the "first_name" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableFirstName(s *string) *SysUserCreate {
-	if s != nil {
-		suc.SetFirstName(*s)
+func (_c *SysUserCreate) SetNillableFirstName(v *string) *SysUserCreate {
+	if v != nil {
+		_c.SetFirstName(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetLastName sets the "last_name" field.
-func (suc *SysUserCreate) SetLastName(s string) *SysUserCreate {
-	suc.mutation.SetLastName(s)
-	return suc
+func (_c *SysUserCreate) SetLastName(v string) *SysUserCreate {
+	_c.mutation.SetLastName(v)
+	return _c
 }
 
 // SetNillableLastName sets the "last_name" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableLastName(s *string) *SysUserCreate {
-	if s != nil {
-		suc.SetLastName(*s)
+func (_c *SysUserCreate) SetNillableLastName(v *string) *SysUserCreate {
+	if v != nil {
+		_c.SetLastName(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetPassword sets the "password" field.
-func (suc *SysUserCreate) SetPassword(s string) *SysUserCreate {
-	suc.mutation.SetPassword(s)
-	return suc
+func (_c *SysUserCreate) SetPassword(v string) *SysUserCreate {
+	_c.mutation.SetPassword(v)
+	return _c
 }
 
 // SetEmail sets the "email" field.
-func (suc *SysUserCreate) SetEmail(s string) *SysUserCreate {
-	suc.mutation.SetEmail(s)
-	return suc
+func (_c *SysUserCreate) SetEmail(v string) *SysUserCreate {
+	_c.mutation.SetEmail(v)
+	return _c
 }
 
 // SetMobile sets the "mobile" field.
-func (suc *SysUserCreate) SetMobile(s string) *SysUserCreate {
-	suc.mutation.SetMobile(s)
-	return suc
+func (_c *SysUserCreate) SetMobile(v string) *SysUserCreate {
+	_c.mutation.SetMobile(v)
+	return _c
 }
 
 // SetSalt sets the "salt" field.
-func (suc *SysUserCreate) SetSalt(s string) *SysUserCreate {
-	suc.mutation.SetSalt(s)
-	return suc
+func (_c *SysUserCreate) SetSalt(v string) *SysUserCreate {
+	_c.mutation.SetSalt(v)
+	return _c
 }
 
 // SetNillableSalt sets the "salt" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableSalt(s *string) *SysUserCreate {
-	if s != nil {
-		suc.SetSalt(*s)
+func (_c *SysUserCreate) SetNillableSalt(v *string) *SysUserCreate {
+	if v != nil {
+		_c.SetSalt(*v)
 	}
-	return suc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (suc *SysUserCreate) SetID(s string) *SysUserCreate {
-	suc.mutation.SetID(s)
-	return suc
+func (_c *SysUserCreate) SetID(v string) *SysUserCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (suc *SysUserCreate) SetNillableID(s *string) *SysUserCreate {
-	if s != nil {
-		suc.SetID(*s)
+func (_c *SysUserCreate) SetNillableID(v *string) *SysUserCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return suc
+	return _c
 }
 
 // AddTeamIDs adds the "teams" edge to the SysTeam entity by IDs.
-func (suc *SysUserCreate) AddTeamIDs(ids ...string) *SysUserCreate {
-	suc.mutation.AddTeamIDs(ids...)
-	return suc
+func (_c *SysUserCreate) AddTeamIDs(ids ...string) *SysUserCreate {
+	_c.mutation.AddTeamIDs(ids...)
+	return _c
 }
 
 // AddTeams adds the "teams" edges to the SysTeam entity.
-func (suc *SysUserCreate) AddTeams(s ...*SysTeam) *SysUserCreate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_c *SysUserCreate) AddTeams(v ...*SysTeam) *SysUserCreate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suc.AddTeamIDs(ids...)
+	return _c.AddTeamIDs(ids...)
 }
 
 // AddTeamUserIDs adds the "team_users" edge to the SysTeamUser entity by IDs.
-func (suc *SysUserCreate) AddTeamUserIDs(ids ...string) *SysUserCreate {
-	suc.mutation.AddTeamUserIDs(ids...)
-	return suc
+func (_c *SysUserCreate) AddTeamUserIDs(ids ...string) *SysUserCreate {
+	_c.mutation.AddTeamUserIDs(ids...)
+	return _c
 }
 
 // AddTeamUsers adds the "team_users" edges to the SysTeamUser entity.
-func (suc *SysUserCreate) AddTeamUsers(s ...*SysTeamUser) *SysUserCreate {
-	ids := make([]string, len(s))
-	for i := range s {
-		ids[i] = s[i].ID
+func (_c *SysUserCreate) AddTeamUsers(v ...*SysTeamUser) *SysUserCreate {
+	ids := make([]string, len(v))
+	for i := range v {
+		ids[i] = v[i].ID
 	}
-	return suc.AddTeamUserIDs(ids...)
+	return _c.AddTeamUserIDs(ids...)
 }
 
 // Mutation returns the SysUserMutation object of the builder.
-func (suc *SysUserCreate) Mutation() *SysUserMutation {
-	return suc.mutation
+func (_c *SysUserCreate) Mutation() *SysUserMutation {
+	return _c.mutation
 }
 
 // Save creates the SysUser in the database.
-func (suc *SysUserCreate) Save(ctx context.Context) (*SysUser, error) {
-	suc.defaults()
-	return withHooks(ctx, suc.sqlSave, suc.mutation, suc.hooks)
+func (_c *SysUserCreate) Save(ctx context.Context) (*SysUser, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (suc *SysUserCreate) SaveX(ctx context.Context) *SysUser {
-	v, err := suc.Save(ctx)
+func (_c *SysUserCreate) SaveX(ctx context.Context) *SysUser {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -254,112 +254,112 @@ func (suc *SysUserCreate) SaveX(ctx context.Context) *SysUser {
 }
 
 // Exec executes the query.
-func (suc *SysUserCreate) Exec(ctx context.Context) error {
-	_, err := suc.Save(ctx)
+func (_c *SysUserCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (suc *SysUserCreate) ExecX(ctx context.Context) {
-	if err := suc.Exec(ctx); err != nil {
+func (_c *SysUserCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (suc *SysUserCreate) defaults() {
-	if _, ok := suc.mutation.IsDel(); !ok {
+func (_c *SysUserCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysuser.DefaultIsDel
-		suc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := suc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysuser.DefaultSort
-		suc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := suc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysuser.DefaultCreatedAt()
-		suc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := suc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysuser.DefaultUpdatedAt()
-		suc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := suc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysuser.DefaultIsActive
-		suc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := suc.mutation.Salt(); !ok {
+	if _, ok := _c.mutation.Salt(); !ok {
 		v := sysuser.DefaultSalt()
-		suc.mutation.SetSalt(v)
+		_c.mutation.SetSalt(v)
 	}
-	if _, ok := suc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysuser.DefaultID()
-		suc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (suc *SysUserCreate) check() error {
-	if _, ok := suc.mutation.IsDel(); !ok {
+func (_c *SysUserCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysUser.is_del"`)}
 	}
-	if _, ok := suc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysUser.sort"`)}
 	}
-	if _, ok := suc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysUser.is_active"`)}
 	}
-	if _, ok := suc.mutation.UserName(); !ok {
+	if _, ok := _c.mutation.UserName(); !ok {
 		return &ValidationError{Name: "user_name", err: errors.New(`mainent: missing required field "SysUser.user_name"`)}
 	}
-	if v, ok := suc.mutation.UserName(); ok {
+	if v, ok := _c.mutation.UserName(); ok {
 		if err := sysuser.UserNameValidator(v); err != nil {
 			return &ValidationError{Name: "user_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.user_name": %w`, err)}
 		}
 	}
-	if v, ok := suc.mutation.RealName(); ok {
+	if v, ok := _c.mutation.RealName(); ok {
 		if err := sysuser.RealNameValidator(v); err != nil {
 			return &ValidationError{Name: "real_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.real_name": %w`, err)}
 		}
 	}
-	if v, ok := suc.mutation.FirstName(); ok {
+	if v, ok := _c.mutation.FirstName(); ok {
 		if err := sysuser.FirstNameValidator(v); err != nil {
 			return &ValidationError{Name: "first_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.first_name": %w`, err)}
 		}
 	}
-	if v, ok := suc.mutation.LastName(); ok {
+	if v, ok := _c.mutation.LastName(); ok {
 		if err := sysuser.LastNameValidator(v); err != nil {
 			return &ValidationError{Name: "last_name", err: fmt.Errorf(`mainent: validator failed for field "SysUser.last_name": %w`, err)}
 		}
 	}
-	if _, ok := suc.mutation.Password(); !ok {
+	if _, ok := _c.mutation.Password(); !ok {
 		return &ValidationError{Name: "password", err: errors.New(`mainent: missing required field "SysUser.password"`)}
 	}
-	if v, ok := suc.mutation.Password(); ok {
+	if v, ok := _c.mutation.Password(); ok {
 		if err := sysuser.PasswordValidator(v); err != nil {
 			return &ValidationError{Name: "password", err: fmt.Errorf(`mainent: validator failed for field "SysUser.password": %w`, err)}
 		}
 	}
-	if _, ok := suc.mutation.Email(); !ok {
+	if _, ok := _c.mutation.Email(); !ok {
 		return &ValidationError{Name: "email", err: errors.New(`mainent: missing required field "SysUser.email"`)}
 	}
-	if v, ok := suc.mutation.Email(); ok {
+	if v, ok := _c.mutation.Email(); ok {
 		if err := sysuser.EmailValidator(v); err != nil {
 			return &ValidationError{Name: "email", err: fmt.Errorf(`mainent: validator failed for field "SysUser.email": %w`, err)}
 		}
 	}
-	if _, ok := suc.mutation.Mobile(); !ok {
+	if _, ok := _c.mutation.Mobile(); !ok {
 		return &ValidationError{Name: "mobile", err: errors.New(`mainent: missing required field "SysUser.mobile"`)}
 	}
-	if v, ok := suc.mutation.Mobile(); ok {
+	if v, ok := _c.mutation.Mobile(); ok {
 		if err := sysuser.MobileValidator(v); err != nil {
 			return &ValidationError{Name: "mobile", err: fmt.Errorf(`mainent: validator failed for field "SysUser.mobile": %w`, err)}
 		}
 	}
-	if _, ok := suc.mutation.Salt(); !ok {
+	if _, ok := _c.mutation.Salt(); !ok {
 		return &ValidationError{Name: "salt", err: errors.New(`mainent: missing required field "SysUser.salt"`)}
 	}
-	if v, ok := suc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysuser.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysUser.id": %w`, err)}
 		}
@@ -367,12 +367,12 @@ func (suc *SysUserCreate) check() error {
 	return nil
 }
 
-func (suc *SysUserCreate) sqlSave(ctx context.Context) (*SysUser, error) {
-	if err := suc.check(); err != nil {
+func (_c *SysUserCreate) sqlSave(ctx context.Context) (*SysUser, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := suc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, suc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -385,78 +385,78 @@ func (suc *SysUserCreate) sqlSave(ctx context.Context) (*SysUser, error) {
 			return nil, fmt.Errorf("unexpected SysUser.ID type: %T", _spec.ID.Value)
 		}
 	}
-	suc.mutation.id = &_node.ID
-	suc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
+func (_c *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysUser{config: suc.config}
+		_node = &SysUser{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysuser.Table, sqlgraph.NewFieldSpec(sysuser.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = suc.conflict
-	if id, ok := suc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := suc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysuser.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := suc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysuser.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := suc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysuser.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := suc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysuser.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := suc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysuser.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := suc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysuser.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := suc.mutation.UserName(); ok {
+	if value, ok := _c.mutation.UserName(); ok {
 		_spec.SetField(sysuser.FieldUserName, field.TypeString, value)
 		_node.UserName = value
 	}
-	if value, ok := suc.mutation.RealName(); ok {
+	if value, ok := _c.mutation.RealName(); ok {
 		_spec.SetField(sysuser.FieldRealName, field.TypeString, value)
 		_node.RealName = &value
 	}
-	if value, ok := suc.mutation.FirstName(); ok {
+	if value, ok := _c.mutation.FirstName(); ok {
 		_spec.SetField(sysuser.FieldFirstName, field.TypeString, value)
 		_node.FirstName = &value
 	}
-	if value, ok := suc.mutation.LastName(); ok {
+	if value, ok := _c.mutation.LastName(); ok {
 		_spec.SetField(sysuser.FieldLastName, field.TypeString, value)
 		_node.LastName = &value
 	}
-	if value, ok := suc.mutation.Password(); ok {
+	if value, ok := _c.mutation.Password(); ok {
 		_spec.SetField(sysuser.FieldPassword, field.TypeString, value)
 		_node.Password = value
 	}
-	if value, ok := suc.mutation.Email(); ok {
+	if value, ok := _c.mutation.Email(); ok {
 		_spec.SetField(sysuser.FieldEmail, field.TypeString, value)
 		_node.Email = value
 	}
-	if value, ok := suc.mutation.Mobile(); ok {
+	if value, ok := _c.mutation.Mobile(); ok {
 		_spec.SetField(sysuser.FieldMobile, field.TypeString, value)
 		_node.Mobile = value
 	}
-	if value, ok := suc.mutation.Salt(); ok {
+	if value, ok := _c.mutation.Salt(); ok {
 		_spec.SetField(sysuser.FieldSalt, field.TypeString, value)
 		_node.Salt = value
 	}
-	if nodes := suc.mutation.TeamsIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.TeamsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2M,
 			Inverse: true,
@@ -470,7 +470,7 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		createE := &SysTeamUserCreate{config: suc.config, mutation: newSysTeamUserMutation(suc.config, OpCreate)}
+		createE := &SysTeamUserCreate{config: _c.config, mutation: newSysTeamUserMutation(_c.config, OpCreate)}
 		createE.defaults()
 		_, specE := createE.createSpec()
 		edge.Target.Fields = specE.Fields
@@ -479,7 +479,7 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
-	if nodes := suc.mutation.TeamUsersIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.TeamUsersIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
 			Inverse: true,
@@ -514,10 +514,10 @@ func (suc *SysUserCreate) createSpec() (*SysUser, *sqlgraph.CreateSpec) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (suc *SysUserCreate) OnConflict(opts ...sql.ConflictOption) *SysUserUpsertOne {
-	suc.conflict = opts
+func (_c *SysUserCreate) OnConflict(opts ...sql.ConflictOption) *SysUserUpsertOne {
+	_c.conflict = opts
 	return &SysUserUpsertOne{
-		create: suc,
+		create: _c,
 	}
 }
 
@@ -527,10 +527,10 @@ func (suc *SysUserCreate) OnConflict(opts ...sql.ConflictOption) *SysUserUpsertO
 //	client.SysUser.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (suc *SysUserCreate) OnConflictColumns(columns ...string) *SysUserUpsertOne {
-	suc.conflict = append(suc.conflict, sql.ConflictColumns(columns...))
+func (_c *SysUserCreate) OnConflictColumns(columns ...string) *SysUserUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysUserUpsertOne{
-		create: suc,
+		create: _c,
 	}
 }
 
@@ -1038,16 +1038,16 @@ type SysUserCreateBulk struct {
 }
 
 // Save creates the SysUser entities in the database.
-func (sucb *SysUserCreateBulk) Save(ctx context.Context) ([]*SysUser, error) {
-	if sucb.err != nil {
-		return nil, sucb.err
+func (_c *SysUserCreateBulk) Save(ctx context.Context) ([]*SysUser, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(sucb.builders))
-	nodes := make([]*SysUser, len(sucb.builders))
-	mutators := make([]Mutator, len(sucb.builders))
-	for i := range sucb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysUser, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := sucb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysUserMutation)
@@ -1061,12 +1061,12 @@ func (sucb *SysUserCreateBulk) Save(ctx context.Context) ([]*SysUser, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, sucb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = sucb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, sucb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -1086,7 +1086,7 @@ func (sucb *SysUserCreateBulk) Save(ctx context.Context) ([]*SysUser, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, sucb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -1094,8 +1094,8 @@ func (sucb *SysUserCreateBulk) Save(ctx context.Context) ([]*SysUser, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sucb *SysUserCreateBulk) SaveX(ctx context.Context) []*SysUser {
-	v, err := sucb.Save(ctx)
+func (_c *SysUserCreateBulk) SaveX(ctx context.Context) []*SysUser {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -1103,14 +1103,14 @@ func (sucb *SysUserCreateBulk) SaveX(ctx context.Context) []*SysUser {
 }
 
 // Exec executes the query.
-func (sucb *SysUserCreateBulk) Exec(ctx context.Context) error {
-	_, err := sucb.Save(ctx)
+func (_c *SysUserCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sucb *SysUserCreateBulk) ExecX(ctx context.Context) {
-	if err := sucb.Exec(ctx); err != nil {
+func (_c *SysUserCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -1130,10 +1130,10 @@ func (sucb *SysUserCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sucb *SysUserCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysUserUpsertBulk {
-	sucb.conflict = opts
+func (_c *SysUserCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysUserUpsertBulk {
+	_c.conflict = opts
 	return &SysUserUpsertBulk{
-		create: sucb,
+		create: _c,
 	}
 }
 
@@ -1143,10 +1143,10 @@ func (sucb *SysUserCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysUserUp
 //	client.SysUser.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sucb *SysUserCreateBulk) OnConflictColumns(columns ...string) *SysUserUpsertBulk {
-	sucb.conflict = append(sucb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysUserCreateBulk) OnConflictColumns(columns ...string) *SysUserUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysUserUpsertBulk{
-		create: sucb,
+		create: _c,
 	}
 }
 

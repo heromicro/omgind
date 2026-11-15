@@ -24,166 +24,166 @@ type SysAnnexUpdate struct {
 }
 
 // Where appends a list predicates to the SysAnnexUpdate builder.
-func (sau *SysAnnexUpdate) Where(ps ...predicate.SysAnnex) *SysAnnexUpdate {
-	sau.mutation.Where(ps...)
-	return sau
+func (_u *SysAnnexUpdate) Where(ps ...predicate.SysAnnex) *SysAnnexUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetMemo sets the "memo" field.
-func (sau *SysAnnexUpdate) SetMemo(s string) *SysAnnexUpdate {
-	sau.mutation.SetMemo(s)
-	return sau
+func (_u *SysAnnexUpdate) SetMemo(v string) *SysAnnexUpdate {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sau *SysAnnexUpdate) SetNillableMemo(s *string) *SysAnnexUpdate {
-	if s != nil {
-		sau.SetMemo(*s)
+func (_u *SysAnnexUpdate) SetNillableMemo(v *string) *SysAnnexUpdate {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sau *SysAnnexUpdate) ClearMemo() *SysAnnexUpdate {
-	sau.mutation.ClearMemo()
-	return sau
+func (_u *SysAnnexUpdate) ClearMemo() *SysAnnexUpdate {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sau *SysAnnexUpdate) SetSort(i int32) *SysAnnexUpdate {
-	sau.mutation.ResetSort()
-	sau.mutation.SetSort(i)
-	return sau
+func (_u *SysAnnexUpdate) SetSort(v int32) *SysAnnexUpdate {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sau *SysAnnexUpdate) SetNillableSort(i *int32) *SysAnnexUpdate {
-	if i != nil {
-		sau.SetSort(*i)
+func (_u *SysAnnexUpdate) SetNillableSort(v *int32) *SysAnnexUpdate {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sau
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sau *SysAnnexUpdate) AddSort(i int32) *SysAnnexUpdate {
-	sau.mutation.AddSort(i)
-	return sau
+// AddSort adds value to the "sort" field.
+func (_u *SysAnnexUpdate) AddSort(v int32) *SysAnnexUpdate {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sau *SysAnnexUpdate) SetUpdatedAt(t time.Time) *SysAnnexUpdate {
-	sau.mutation.SetUpdatedAt(t)
-	return sau
+func (_u *SysAnnexUpdate) SetUpdatedAt(v time.Time) *SysAnnexUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sau *SysAnnexUpdate) ClearUpdatedAt() *SysAnnexUpdate {
-	sau.mutation.ClearUpdatedAt()
-	return sau
+func (_u *SysAnnexUpdate) ClearUpdatedAt() *SysAnnexUpdate {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sau *SysAnnexUpdate) SetDeletedAt(t time.Time) *SysAnnexUpdate {
-	sau.mutation.SetDeletedAt(t)
-	return sau
+func (_u *SysAnnexUpdate) SetDeletedAt(v time.Time) *SysAnnexUpdate {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sau *SysAnnexUpdate) SetNillableDeletedAt(t *time.Time) *SysAnnexUpdate {
-	if t != nil {
-		sau.SetDeletedAt(*t)
+func (_u *SysAnnexUpdate) SetNillableDeletedAt(v *time.Time) *SysAnnexUpdate {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sau *SysAnnexUpdate) ClearDeletedAt() *SysAnnexUpdate {
-	sau.mutation.ClearDeletedAt()
-	return sau
+func (_u *SysAnnexUpdate) ClearDeletedAt() *SysAnnexUpdate {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sau *SysAnnexUpdate) SetIsActive(b bool) *SysAnnexUpdate {
-	sau.mutation.SetIsActive(b)
-	return sau
+func (_u *SysAnnexUpdate) SetIsActive(v bool) *SysAnnexUpdate {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sau *SysAnnexUpdate) SetNillableIsActive(b *bool) *SysAnnexUpdate {
-	if b != nil {
-		sau.SetIsActive(*b)
+func (_u *SysAnnexUpdate) SetNillableIsActive(v *bool) *SysAnnexUpdate {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sau
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (sau *SysAnnexUpdate) SetIsDel(b bool) *SysAnnexUpdate {
-	sau.mutation.SetIsDel(b)
-	return sau
+func (_u *SysAnnexUpdate) SetIsDel(v bool) *SysAnnexUpdate {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sau *SysAnnexUpdate) SetNillableIsDel(b *bool) *SysAnnexUpdate {
-	if b != nil {
-		sau.SetIsDel(*b)
+func (_u *SysAnnexUpdate) SetNillableIsDel(v *bool) *SysAnnexUpdate {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sau
+	return _u
 }
 
 // SetName sets the "name" field.
-func (sau *SysAnnexUpdate) SetName(s string) *SysAnnexUpdate {
-	sau.mutation.SetName(s)
-	return sau
+func (_u *SysAnnexUpdate) SetName(v string) *SysAnnexUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (sau *SysAnnexUpdate) SetNillableName(s *string) *SysAnnexUpdate {
-	if s != nil {
-		sau.SetName(*s)
+func (_u *SysAnnexUpdate) SetNillableName(v *string) *SysAnnexUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (sau *SysAnnexUpdate) ClearName() *SysAnnexUpdate {
-	sau.mutation.ClearName()
-	return sau
+func (_u *SysAnnexUpdate) ClearName() *SysAnnexUpdate {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetFilePath sets the "file_path" field.
-func (sau *SysAnnexUpdate) SetFilePath(s string) *SysAnnexUpdate {
-	sau.mutation.SetFilePath(s)
-	return sau
+func (_u *SysAnnexUpdate) SetFilePath(v string) *SysAnnexUpdate {
+	_u.mutation.SetFilePath(v)
+	return _u
 }
 
 // SetNillableFilePath sets the "file_path" field if the given value is not nil.
-func (sau *SysAnnexUpdate) SetNillableFilePath(s *string) *SysAnnexUpdate {
-	if s != nil {
-		sau.SetFilePath(*s)
+func (_u *SysAnnexUpdate) SetNillableFilePath(v *string) *SysAnnexUpdate {
+	if v != nil {
+		_u.SetFilePath(*v)
 	}
-	return sau
+	return _u
 }
 
 // ClearFilePath clears the value of the "file_path" field.
-func (sau *SysAnnexUpdate) ClearFilePath() *SysAnnexUpdate {
-	sau.mutation.ClearFilePath()
-	return sau
+func (_u *SysAnnexUpdate) ClearFilePath() *SysAnnexUpdate {
+	_u.mutation.ClearFilePath()
+	return _u
 }
 
 // Mutation returns the SysAnnexMutation object of the builder.
-func (sau *SysAnnexUpdate) Mutation() *SysAnnexMutation {
-	return sau.mutation
+func (_u *SysAnnexUpdate) Mutation() *SysAnnexMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (sau *SysAnnexUpdate) Save(ctx context.Context) (int, error) {
-	sau.defaults()
-	return withHooks(ctx, sau.sqlSave, sau.mutation, sau.hooks)
+func (_u *SysAnnexUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sau *SysAnnexUpdate) SaveX(ctx context.Context) int {
-	affected, err := sau.Save(ctx)
+func (_u *SysAnnexUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -191,34 +191,34 @@ func (sau *SysAnnexUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (sau *SysAnnexUpdate) Exec(ctx context.Context) error {
-	_, err := sau.Save(ctx)
+func (_u *SysAnnexUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sau *SysAnnexUpdate) ExecX(ctx context.Context) {
-	if err := sau.Exec(ctx); err != nil {
+func (_u *SysAnnexUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sau *SysAnnexUpdate) defaults() {
-	if _, ok := sau.mutation.UpdatedAt(); !ok && !sau.mutation.UpdatedAtCleared() {
+func (_u *SysAnnexUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysannex.UpdateDefaultUpdatedAt()
-		sau.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sau *SysAnnexUpdate) check() error {
-	if v, ok := sau.mutation.Memo(); ok {
+func (_u *SysAnnexUpdate) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysannex.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysAnnex.memo": %w`, err)}
 		}
 	}
-	if v, ok := sau.mutation.Name(); ok {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := sysannex.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysAnnex.name": %w`, err)}
 		}
@@ -227,70 +227,70 @@ func (sau *SysAnnexUpdate) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sau *SysAnnexUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAnnexUpdate {
-	sau.modifiers = append(sau.modifiers, modifiers...)
-	return sau
+func (_u *SysAnnexUpdate) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAnnexUpdate {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sau *SysAnnexUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := sau.check(); err != nil {
-		return n, err
+func (_u *SysAnnexUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysannex.Table, sysannex.Columns, sqlgraph.NewFieldSpec(sysannex.FieldID, field.TypeString))
-	if ps := sau.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sau.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysannex.FieldMemo, field.TypeString, value)
 	}
-	if sau.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysannex.FieldMemo, field.TypeString)
 	}
-	if value, ok := sau.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysannex.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sau.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysannex.FieldSort, field.TypeInt32, value)
 	}
-	if sau.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysannex.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sau.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysannex.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sau.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysannex.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sau.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysannex.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sau.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysannex.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sau.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysannex.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sau.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysannex.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sau.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysannex.FieldName, field.TypeString, value)
 	}
-	if sau.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(sysannex.FieldName, field.TypeString)
 	}
-	if value, ok := sau.mutation.FilePath(); ok {
+	if value, ok := _u.mutation.FilePath(); ok {
 		_spec.SetField(sysannex.FieldFilePath, field.TypeString, value)
 	}
-	if sau.mutation.FilePathCleared() {
+	if _u.mutation.FilePathCleared() {
 		_spec.ClearField(sysannex.FieldFilePath, field.TypeString)
 	}
-	_spec.AddModifiers(sau.modifiers...)
-	if n, err = sqlgraph.UpdateNodes(ctx, sau.driver, _spec); err != nil {
+	_spec.AddModifiers(_u.modifiers...)
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysannex.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -298,8 +298,8 @@ func (sau *SysAnnexUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	sau.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // SysAnnexUpdateOne is the builder for updating a single SysAnnex entity.
@@ -312,173 +312,173 @@ type SysAnnexUpdateOne struct {
 }
 
 // SetMemo sets the "memo" field.
-func (sauo *SysAnnexUpdateOne) SetMemo(s string) *SysAnnexUpdateOne {
-	sauo.mutation.SetMemo(s)
-	return sauo
+func (_u *SysAnnexUpdateOne) SetMemo(v string) *SysAnnexUpdateOne {
+	_u.mutation.SetMemo(v)
+	return _u
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sauo *SysAnnexUpdateOne) SetNillableMemo(s *string) *SysAnnexUpdateOne {
-	if s != nil {
-		sauo.SetMemo(*s)
+func (_u *SysAnnexUpdateOne) SetNillableMemo(v *string) *SysAnnexUpdateOne {
+	if v != nil {
+		_u.SetMemo(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearMemo clears the value of the "memo" field.
-func (sauo *SysAnnexUpdateOne) ClearMemo() *SysAnnexUpdateOne {
-	sauo.mutation.ClearMemo()
-	return sauo
+func (_u *SysAnnexUpdateOne) ClearMemo() *SysAnnexUpdateOne {
+	_u.mutation.ClearMemo()
+	return _u
 }
 
 // SetSort sets the "sort" field.
-func (sauo *SysAnnexUpdateOne) SetSort(i int32) *SysAnnexUpdateOne {
-	sauo.mutation.ResetSort()
-	sauo.mutation.SetSort(i)
-	return sauo
+func (_u *SysAnnexUpdateOne) SetSort(v int32) *SysAnnexUpdateOne {
+	_u.mutation.ResetSort()
+	_u.mutation.SetSort(v)
+	return _u
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sauo *SysAnnexUpdateOne) SetNillableSort(i *int32) *SysAnnexUpdateOne {
-	if i != nil {
-		sauo.SetSort(*i)
+func (_u *SysAnnexUpdateOne) SetNillableSort(v *int32) *SysAnnexUpdateOne {
+	if v != nil {
+		_u.SetSort(*v)
 	}
-	return sauo
+	return _u
 }
 
-// AddSort adds i to the "sort" field.
-func (sauo *SysAnnexUpdateOne) AddSort(i int32) *SysAnnexUpdateOne {
-	sauo.mutation.AddSort(i)
-	return sauo
+// AddSort adds value to the "sort" field.
+func (_u *SysAnnexUpdateOne) AddSort(v int32) *SysAnnexUpdateOne {
+	_u.mutation.AddSort(v)
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sauo *SysAnnexUpdateOne) SetUpdatedAt(t time.Time) *SysAnnexUpdateOne {
-	sauo.mutation.SetUpdatedAt(t)
-	return sauo
+func (_u *SysAnnexUpdateOne) SetUpdatedAt(v time.Time) *SysAnnexUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // ClearUpdatedAt clears the value of the "updated_at" field.
-func (sauo *SysAnnexUpdateOne) ClearUpdatedAt() *SysAnnexUpdateOne {
-	sauo.mutation.ClearUpdatedAt()
-	return sauo
+func (_u *SysAnnexUpdateOne) ClearUpdatedAt() *SysAnnexUpdateOne {
+	_u.mutation.ClearUpdatedAt()
+	return _u
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sauo *SysAnnexUpdateOne) SetDeletedAt(t time.Time) *SysAnnexUpdateOne {
-	sauo.mutation.SetDeletedAt(t)
-	return sauo
+func (_u *SysAnnexUpdateOne) SetDeletedAt(v time.Time) *SysAnnexUpdateOne {
+	_u.mutation.SetDeletedAt(v)
+	return _u
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sauo *SysAnnexUpdateOne) SetNillableDeletedAt(t *time.Time) *SysAnnexUpdateOne {
-	if t != nil {
-		sauo.SetDeletedAt(*t)
+func (_u *SysAnnexUpdateOne) SetNillableDeletedAt(v *time.Time) *SysAnnexUpdateOne {
+	if v != nil {
+		_u.SetDeletedAt(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearDeletedAt clears the value of the "deleted_at" field.
-func (sauo *SysAnnexUpdateOne) ClearDeletedAt() *SysAnnexUpdateOne {
-	sauo.mutation.ClearDeletedAt()
-	return sauo
+func (_u *SysAnnexUpdateOne) ClearDeletedAt() *SysAnnexUpdateOne {
+	_u.mutation.ClearDeletedAt()
+	return _u
 }
 
 // SetIsActive sets the "is_active" field.
-func (sauo *SysAnnexUpdateOne) SetIsActive(b bool) *SysAnnexUpdateOne {
-	sauo.mutation.SetIsActive(b)
-	return sauo
+func (_u *SysAnnexUpdateOne) SetIsActive(v bool) *SysAnnexUpdateOne {
+	_u.mutation.SetIsActive(v)
+	return _u
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sauo *SysAnnexUpdateOne) SetNillableIsActive(b *bool) *SysAnnexUpdateOne {
-	if b != nil {
-		sauo.SetIsActive(*b)
+func (_u *SysAnnexUpdateOne) SetNillableIsActive(v *bool) *SysAnnexUpdateOne {
+	if v != nil {
+		_u.SetIsActive(*v)
 	}
-	return sauo
+	return _u
 }
 
 // SetIsDel sets the "is_del" field.
-func (sauo *SysAnnexUpdateOne) SetIsDel(b bool) *SysAnnexUpdateOne {
-	sauo.mutation.SetIsDel(b)
-	return sauo
+func (_u *SysAnnexUpdateOne) SetIsDel(v bool) *SysAnnexUpdateOne {
+	_u.mutation.SetIsDel(v)
+	return _u
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sauo *SysAnnexUpdateOne) SetNillableIsDel(b *bool) *SysAnnexUpdateOne {
-	if b != nil {
-		sauo.SetIsDel(*b)
+func (_u *SysAnnexUpdateOne) SetNillableIsDel(v *bool) *SysAnnexUpdateOne {
+	if v != nil {
+		_u.SetIsDel(*v)
 	}
-	return sauo
+	return _u
 }
 
 // SetName sets the "name" field.
-func (sauo *SysAnnexUpdateOne) SetName(s string) *SysAnnexUpdateOne {
-	sauo.mutation.SetName(s)
-	return sauo
+func (_u *SysAnnexUpdateOne) SetName(v string) *SysAnnexUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (sauo *SysAnnexUpdateOne) SetNillableName(s *string) *SysAnnexUpdateOne {
-	if s != nil {
-		sauo.SetName(*s)
+func (_u *SysAnnexUpdateOne) SetNillableName(v *string) *SysAnnexUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearName clears the value of the "name" field.
-func (sauo *SysAnnexUpdateOne) ClearName() *SysAnnexUpdateOne {
-	sauo.mutation.ClearName()
-	return sauo
+func (_u *SysAnnexUpdateOne) ClearName() *SysAnnexUpdateOne {
+	_u.mutation.ClearName()
+	return _u
 }
 
 // SetFilePath sets the "file_path" field.
-func (sauo *SysAnnexUpdateOne) SetFilePath(s string) *SysAnnexUpdateOne {
-	sauo.mutation.SetFilePath(s)
-	return sauo
+func (_u *SysAnnexUpdateOne) SetFilePath(v string) *SysAnnexUpdateOne {
+	_u.mutation.SetFilePath(v)
+	return _u
 }
 
 // SetNillableFilePath sets the "file_path" field if the given value is not nil.
-func (sauo *SysAnnexUpdateOne) SetNillableFilePath(s *string) *SysAnnexUpdateOne {
-	if s != nil {
-		sauo.SetFilePath(*s)
+func (_u *SysAnnexUpdateOne) SetNillableFilePath(v *string) *SysAnnexUpdateOne {
+	if v != nil {
+		_u.SetFilePath(*v)
 	}
-	return sauo
+	return _u
 }
 
 // ClearFilePath clears the value of the "file_path" field.
-func (sauo *SysAnnexUpdateOne) ClearFilePath() *SysAnnexUpdateOne {
-	sauo.mutation.ClearFilePath()
-	return sauo
+func (_u *SysAnnexUpdateOne) ClearFilePath() *SysAnnexUpdateOne {
+	_u.mutation.ClearFilePath()
+	return _u
 }
 
 // Mutation returns the SysAnnexMutation object of the builder.
-func (sauo *SysAnnexUpdateOne) Mutation() *SysAnnexMutation {
-	return sauo.mutation
+func (_u *SysAnnexUpdateOne) Mutation() *SysAnnexMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the SysAnnexUpdate builder.
-func (sauo *SysAnnexUpdateOne) Where(ps ...predicate.SysAnnex) *SysAnnexUpdateOne {
-	sauo.mutation.Where(ps...)
-	return sauo
+func (_u *SysAnnexUpdateOne) Where(ps ...predicate.SysAnnex) *SysAnnexUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (sauo *SysAnnexUpdateOne) Select(field string, fields ...string) *SysAnnexUpdateOne {
-	sauo.fields = append([]string{field}, fields...)
-	return sauo
+func (_u *SysAnnexUpdateOne) Select(field string, fields ...string) *SysAnnexUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated SysAnnex entity.
-func (sauo *SysAnnexUpdateOne) Save(ctx context.Context) (*SysAnnex, error) {
-	sauo.defaults()
-	return withHooks(ctx, sauo.sqlSave, sauo.mutation, sauo.hooks)
+func (_u *SysAnnexUpdateOne) Save(ctx context.Context) (*SysAnnex, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sauo *SysAnnexUpdateOne) SaveX(ctx context.Context) *SysAnnex {
-	node, err := sauo.Save(ctx)
+func (_u *SysAnnexUpdateOne) SaveX(ctx context.Context) *SysAnnex {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -486,34 +486,34 @@ func (sauo *SysAnnexUpdateOne) SaveX(ctx context.Context) *SysAnnex {
 }
 
 // Exec executes the query on the entity.
-func (sauo *SysAnnexUpdateOne) Exec(ctx context.Context) error {
-	_, err := sauo.Save(ctx)
+func (_u *SysAnnexUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sauo *SysAnnexUpdateOne) ExecX(ctx context.Context) {
-	if err := sauo.Exec(ctx); err != nil {
+func (_u *SysAnnexUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sauo *SysAnnexUpdateOne) defaults() {
-	if _, ok := sauo.mutation.UpdatedAt(); !ok && !sauo.mutation.UpdatedAtCleared() {
+func (_u *SysAnnexUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok && !_u.mutation.UpdatedAtCleared() {
 		v := sysannex.UpdateDefaultUpdatedAt()
-		sauo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sauo *SysAnnexUpdateOne) check() error {
-	if v, ok := sauo.mutation.Memo(); ok {
+func (_u *SysAnnexUpdateOne) check() error {
+	if v, ok := _u.mutation.Memo(); ok {
 		if err := sysannex.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysAnnex.memo": %w`, err)}
 		}
 	}
-	if v, ok := sauo.mutation.Name(); ok {
+	if v, ok := _u.mutation.Name(); ok {
 		if err := sysannex.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysAnnex.name": %w`, err)}
 		}
@@ -522,22 +522,22 @@ func (sauo *SysAnnexUpdateOne) check() error {
 }
 
 // Modify adds a statement modifier for attaching custom logic to the UPDATE statement.
-func (sauo *SysAnnexUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAnnexUpdateOne {
-	sauo.modifiers = append(sauo.modifiers, modifiers...)
-	return sauo
+func (_u *SysAnnexUpdateOne) Modify(modifiers ...func(u *sql.UpdateBuilder)) *SysAnnexUpdateOne {
+	_u.modifiers = append(_u.modifiers, modifiers...)
+	return _u
 }
 
-func (sauo *SysAnnexUpdateOne) sqlSave(ctx context.Context) (_node *SysAnnex, err error) {
-	if err := sauo.check(); err != nil {
+func (_u *SysAnnexUpdateOne) sqlSave(ctx context.Context) (_node *SysAnnex, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(sysannex.Table, sysannex.Columns, sqlgraph.NewFieldSpec(sysannex.FieldID, field.TypeString))
-	id, ok := sauo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`mainent: missing "SysAnnex.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := sauo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysannex.FieldID)
 		for _, f := range fields {
@@ -549,63 +549,63 @@ func (sauo *SysAnnexUpdateOne) sqlSave(ctx context.Context) (_node *SysAnnex, er
 			}
 		}
 	}
-	if ps := sauo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := sauo.mutation.Memo(); ok {
+	if value, ok := _u.mutation.Memo(); ok {
 		_spec.SetField(sysannex.FieldMemo, field.TypeString, value)
 	}
-	if sauo.mutation.MemoCleared() {
+	if _u.mutation.MemoCleared() {
 		_spec.ClearField(sysannex.FieldMemo, field.TypeString)
 	}
-	if value, ok := sauo.mutation.Sort(); ok {
+	if value, ok := _u.mutation.Sort(); ok {
 		_spec.SetField(sysannex.FieldSort, field.TypeInt32, value)
 	}
-	if value, ok := sauo.mutation.AddedSort(); ok {
+	if value, ok := _u.mutation.AddedSort(); ok {
 		_spec.AddField(sysannex.FieldSort, field.TypeInt32, value)
 	}
-	if sauo.mutation.CreatedAtCleared() {
+	if _u.mutation.CreatedAtCleared() {
 		_spec.ClearField(sysannex.FieldCreatedAt, field.TypeTime)
 	}
-	if value, ok := sauo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysannex.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if sauo.mutation.UpdatedAtCleared() {
+	if _u.mutation.UpdatedAtCleared() {
 		_spec.ClearField(sysannex.FieldUpdatedAt, field.TypeTime)
 	}
-	if value, ok := sauo.mutation.DeletedAt(); ok {
+	if value, ok := _u.mutation.DeletedAt(); ok {
 		_spec.SetField(sysannex.FieldDeletedAt, field.TypeTime, value)
 	}
-	if sauo.mutation.DeletedAtCleared() {
+	if _u.mutation.DeletedAtCleared() {
 		_spec.ClearField(sysannex.FieldDeletedAt, field.TypeTime)
 	}
-	if value, ok := sauo.mutation.IsActive(); ok {
+	if value, ok := _u.mutation.IsActive(); ok {
 		_spec.SetField(sysannex.FieldIsActive, field.TypeBool, value)
 	}
-	if value, ok := sauo.mutation.IsDel(); ok {
+	if value, ok := _u.mutation.IsDel(); ok {
 		_spec.SetField(sysannex.FieldIsDel, field.TypeBool, value)
 	}
-	if value, ok := sauo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(sysannex.FieldName, field.TypeString, value)
 	}
-	if sauo.mutation.NameCleared() {
+	if _u.mutation.NameCleared() {
 		_spec.ClearField(sysannex.FieldName, field.TypeString)
 	}
-	if value, ok := sauo.mutation.FilePath(); ok {
+	if value, ok := _u.mutation.FilePath(); ok {
 		_spec.SetField(sysannex.FieldFilePath, field.TypeString, value)
 	}
-	if sauo.mutation.FilePathCleared() {
+	if _u.mutation.FilePathCleared() {
 		_spec.ClearField(sysannex.FieldFilePath, field.TypeString)
 	}
-	_spec.AddModifiers(sauo.modifiers...)
-	_node = &SysAnnex{config: sauo.config}
+	_spec.AddModifiers(_u.modifiers...)
+	_node = &SysAnnex{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, sauo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{sysannex.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -613,6 +613,6 @@ func (sauo *SysAnnexUpdateOne) sqlSave(ctx context.Context) (_node *SysAnnex, er
 		}
 		return nil, err
 	}
-	sauo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

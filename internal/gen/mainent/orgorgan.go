@@ -125,7 +125,7 @@ func (*OrgOrgan) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the OrgOrgan fields.
-func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
+func (_m *OrgOrgan) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -135,98 +135,98 @@ func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				oo.ID = value.String
+				_m.ID = value.String
 			}
 		case orgorgan.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				oo.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case orgorgan.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				oo.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case orgorgan.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				oo.CreatedAt = new(time.Time)
-				*oo.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case orgorgan.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				oo.UpdatedAt = new(time.Time)
-				*oo.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case orgorgan.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				oo.DeletedAt = new(time.Time)
-				*oo.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case orgorgan.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				oo.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case orgorgan.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				oo.Memo = new(string)
-				*oo.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case orgorgan.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				oo.Name = new(string)
-				*oo.Name = value.String
+				_m.Name = new(string)
+				*_m.Name = value.String
 			}
 		case orgorgan.FieldSname:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field sname", values[i])
 			} else if value.Valid {
-				oo.Sname = new(string)
-				*oo.Sname = value.String
+				_m.Sname = new(string)
+				*_m.Sname = value.String
 			}
 		case orgorgan.FieldCode:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field code", values[i])
 			} else if value.Valid {
-				oo.Code = new(string)
-				*oo.Code = value.String
+				_m.Code = new(string)
+				*_m.Code = value.String
 			}
 		case orgorgan.FieldIdenNo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field iden_no", values[i])
 			} else if value.Valid {
-				oo.IdenNo = new(string)
-				*oo.IdenNo = value.String
+				_m.IdenNo = new(string)
+				*_m.IdenNo = value.String
 			}
 		case orgorgan.FieldOwnerID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field owner_id", values[i])
 			} else if value.Valid {
-				oo.OwnerID = new(string)
-				*oo.OwnerID = value.String
+				_m.OwnerID = new(string)
+				*_m.OwnerID = value.String
 			}
 		case orgorgan.FieldHaddrID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field haddr_id", values[i])
 			} else if value.Valid {
-				oo.HaddrID = new(string)
-				*oo.HaddrID = value.String
+				_m.HaddrID = new(string)
+				*_m.HaddrID = value.String
 			}
 		default:
-			oo.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -234,108 +234,108 @@ func (oo *OrgOrgan) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the OrgOrgan.
 // This includes values selected through modifiers, order, etc.
-func (oo *OrgOrgan) Value(name string) (ent.Value, error) {
-	return oo.selectValues.Get(name)
+func (_m *OrgOrgan) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryHaddr queries the "haddr" edge of the OrgOrgan entity.
-func (oo *OrgOrgan) QueryHaddr() *SysAddressQuery {
-	return NewOrgOrganClient(oo.config).QueryHaddr(oo)
+func (_m *OrgOrgan) QueryHaddr() *SysAddressQuery {
+	return NewOrgOrganClient(_m.config).QueryHaddr(_m)
 }
 
 // QueryDepts queries the "depts" edge of the OrgOrgan entity.
-func (oo *OrgOrgan) QueryDepts() *OrgDeptQuery {
-	return NewOrgOrganClient(oo.config).QueryDepts(oo)
+func (_m *OrgOrgan) QueryDepts() *OrgDeptQuery {
+	return NewOrgOrganClient(_m.config).QueryDepts(_m)
 }
 
 // QueryStaffs queries the "staffs" edge of the OrgOrgan entity.
-func (oo *OrgOrgan) QueryStaffs() *OrgStaffQuery {
-	return NewOrgOrganClient(oo.config).QueryStaffs(oo)
+func (_m *OrgOrgan) QueryStaffs() *OrgStaffQuery {
+	return NewOrgOrganClient(_m.config).QueryStaffs(_m)
 }
 
 // QueryPositions queries the "positions" edge of the OrgOrgan entity.
-func (oo *OrgOrgan) QueryPositions() *OrgPositionQuery {
-	return NewOrgOrganClient(oo.config).QueryPositions(oo)
+func (_m *OrgOrgan) QueryPositions() *OrgPositionQuery {
+	return NewOrgOrganClient(_m.config).QueryPositions(_m)
 }
 
 // Update returns a builder for updating this OrgOrgan.
 // Note that you need to call OrgOrgan.Unwrap() before calling this method if this OrgOrgan
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (oo *OrgOrgan) Update() *OrgOrganUpdateOne {
-	return NewOrgOrganClient(oo.config).UpdateOne(oo)
+func (_m *OrgOrgan) Update() *OrgOrganUpdateOne {
+	return NewOrgOrganClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the OrgOrgan entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (oo *OrgOrgan) Unwrap() *OrgOrgan {
-	_tx, ok := oo.config.driver.(*txDriver)
+func (_m *OrgOrgan) Unwrap() *OrgOrgan {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: OrgOrgan is not a transactional entity")
 	}
-	oo.config.driver = _tx.drv
-	return oo
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (oo *OrgOrgan) String() string {
+func (_m *OrgOrgan) String() string {
 	var builder strings.Builder
 	builder.WriteString("OrgOrgan(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", oo.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", oo.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", oo.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := oo.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := oo.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := oo.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", oo.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
-	if v := oo.Memo; v != nil {
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := oo.Name; v != nil {
+	if v := _m.Name; v != nil {
 		builder.WriteString("name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := oo.Sname; v != nil {
+	if v := _m.Sname; v != nil {
 		builder.WriteString("sname=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := oo.Code; v != nil {
+	if v := _m.Code; v != nil {
 		builder.WriteString("code=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := oo.IdenNo; v != nil {
+	if v := _m.IdenNo; v != nil {
 		builder.WriteString("iden_no=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := oo.OwnerID; v != nil {
+	if v := _m.OwnerID; v != nil {
 		builder.WriteString("owner_id=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := oo.HaddrID; v != nil {
+	if v := _m.HaddrID; v != nil {
 		builder.WriteString("haddr_id=")
 		builder.WriteString(*v)
 	}

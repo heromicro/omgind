@@ -24,137 +24,137 @@ type SysRoleCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (src *SysRoleCreate) SetIsDel(b bool) *SysRoleCreate {
-	src.mutation.SetIsDel(b)
-	return src
+func (_c *SysRoleCreate) SetIsDel(v bool) *SysRoleCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableIsDel(b *bool) *SysRoleCreate {
-	if b != nil {
-		src.SetIsDel(*b)
+func (_c *SysRoleCreate) SetNillableIsDel(v *bool) *SysRoleCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return src
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (src *SysRoleCreate) SetIsActive(b bool) *SysRoleCreate {
-	src.mutation.SetIsActive(b)
-	return src
+func (_c *SysRoleCreate) SetIsActive(v bool) *SysRoleCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableIsActive(b *bool) *SysRoleCreate {
-	if b != nil {
-		src.SetIsActive(*b)
+func (_c *SysRoleCreate) SetNillableIsActive(v *bool) *SysRoleCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return src
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (src *SysRoleCreate) SetSort(i int32) *SysRoleCreate {
-	src.mutation.SetSort(i)
-	return src
+func (_c *SysRoleCreate) SetSort(v int32) *SysRoleCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableSort(i *int32) *SysRoleCreate {
-	if i != nil {
-		src.SetSort(*i)
+func (_c *SysRoleCreate) SetNillableSort(v *int32) *SysRoleCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return src
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (src *SysRoleCreate) SetMemo(s string) *SysRoleCreate {
-	src.mutation.SetMemo(s)
-	return src
+func (_c *SysRoleCreate) SetMemo(v string) *SysRoleCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableMemo(s *string) *SysRoleCreate {
-	if s != nil {
-		src.SetMemo(*s)
+func (_c *SysRoleCreate) SetNillableMemo(v *string) *SysRoleCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return src
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (src *SysRoleCreate) SetCreatedAt(t time.Time) *SysRoleCreate {
-	src.mutation.SetCreatedAt(t)
-	return src
+func (_c *SysRoleCreate) SetCreatedAt(v time.Time) *SysRoleCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableCreatedAt(t *time.Time) *SysRoleCreate {
-	if t != nil {
-		src.SetCreatedAt(*t)
+func (_c *SysRoleCreate) SetNillableCreatedAt(v *time.Time) *SysRoleCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return src
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (src *SysRoleCreate) SetUpdatedAt(t time.Time) *SysRoleCreate {
-	src.mutation.SetUpdatedAt(t)
-	return src
+func (_c *SysRoleCreate) SetUpdatedAt(v time.Time) *SysRoleCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableUpdatedAt(t *time.Time) *SysRoleCreate {
-	if t != nil {
-		src.SetUpdatedAt(*t)
+func (_c *SysRoleCreate) SetNillableUpdatedAt(v *time.Time) *SysRoleCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return src
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (src *SysRoleCreate) SetDeletedAt(t time.Time) *SysRoleCreate {
-	src.mutation.SetDeletedAt(t)
-	return src
+func (_c *SysRoleCreate) SetDeletedAt(v time.Time) *SysRoleCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableDeletedAt(t *time.Time) *SysRoleCreate {
-	if t != nil {
-		src.SetDeletedAt(*t)
+func (_c *SysRoleCreate) SetNillableDeletedAt(v *time.Time) *SysRoleCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return src
+	return _c
 }
 
 // SetName sets the "name" field.
-func (src *SysRoleCreate) SetName(s string) *SysRoleCreate {
-	src.mutation.SetName(s)
-	return src
+func (_c *SysRoleCreate) SetName(v string) *SysRoleCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetID sets the "id" field.
-func (src *SysRoleCreate) SetID(s string) *SysRoleCreate {
-	src.mutation.SetID(s)
-	return src
+func (_c *SysRoleCreate) SetID(v string) *SysRoleCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (src *SysRoleCreate) SetNillableID(s *string) *SysRoleCreate {
-	if s != nil {
-		src.SetID(*s)
+func (_c *SysRoleCreate) SetNillableID(v *string) *SysRoleCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return src
+	return _c
 }
 
 // Mutation returns the SysRoleMutation object of the builder.
-func (src *SysRoleCreate) Mutation() *SysRoleMutation {
-	return src.mutation
+func (_c *SysRoleCreate) Mutation() *SysRoleMutation {
+	return _c.mutation
 }
 
 // Save creates the SysRole in the database.
-func (src *SysRoleCreate) Save(ctx context.Context) (*SysRole, error) {
-	src.defaults()
-	return withHooks(ctx, src.sqlSave, src.mutation, src.hooks)
+func (_c *SysRoleCreate) Save(ctx context.Context) (*SysRole, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (src *SysRoleCreate) SaveX(ctx context.Context) *SysRole {
-	v, err := src.Save(ctx)
+func (_c *SysRoleCreate) SaveX(ctx context.Context) *SysRole {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -162,75 +162,75 @@ func (src *SysRoleCreate) SaveX(ctx context.Context) *SysRole {
 }
 
 // Exec executes the query.
-func (src *SysRoleCreate) Exec(ctx context.Context) error {
-	_, err := src.Save(ctx)
+func (_c *SysRoleCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (src *SysRoleCreate) ExecX(ctx context.Context) {
-	if err := src.Exec(ctx); err != nil {
+func (_c *SysRoleCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (src *SysRoleCreate) defaults() {
-	if _, ok := src.mutation.IsDel(); !ok {
+func (_c *SysRoleCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysrole.DefaultIsDel
-		src.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := src.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysrole.DefaultIsActive
-		src.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := src.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysrole.DefaultSort
-		src.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := src.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := sysrole.DefaultMemo
-		src.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := src.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysrole.DefaultCreatedAt()
-		src.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := src.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysrole.DefaultUpdatedAt()
-		src.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := src.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysrole.DefaultID()
-		src.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (src *SysRoleCreate) check() error {
-	if _, ok := src.mutation.IsDel(); !ok {
+func (_c *SysRoleCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysRole.is_del"`)}
 	}
-	if _, ok := src.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysRole.is_active"`)}
 	}
-	if _, ok := src.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysRole.sort"`)}
 	}
-	if v, ok := src.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysrole.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysRole.memo": %w`, err)}
 		}
 	}
-	if _, ok := src.mutation.Name(); !ok {
+	if _, ok := _c.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`mainent: missing required field "SysRole.name"`)}
 	}
-	if v, ok := src.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := sysrole.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "SysRole.name": %w`, err)}
 		}
 	}
-	if v, ok := src.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysrole.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysRole.id": %w`, err)}
 		}
@@ -238,12 +238,12 @@ func (src *SysRoleCreate) check() error {
 	return nil
 }
 
-func (src *SysRoleCreate) sqlSave(ctx context.Context) (*SysRole, error) {
-	if err := src.check(); err != nil {
+func (_c *SysRoleCreate) sqlSave(ctx context.Context) (*SysRole, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := src.createSpec()
-	if err := sqlgraph.CreateNode(ctx, src.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -256,50 +256,50 @@ func (src *SysRoleCreate) sqlSave(ctx context.Context) (*SysRole, error) {
 			return nil, fmt.Errorf("unexpected SysRole.ID type: %T", _spec.ID.Value)
 		}
 	}
-	src.mutation.id = &_node.ID
-	src.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
+func (_c *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysRole{config: src.config}
+		_node = &SysRole{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysrole.Table, sqlgraph.NewFieldSpec(sysrole.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = src.conflict
-	if id, ok := src.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := src.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysrole.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := src.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysrole.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := src.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysrole.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := src.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(sysrole.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := src.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysrole.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := src.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysrole.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := src.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysrole.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := src.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(sysrole.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
@@ -322,10 +322,10 @@ func (src *SysRoleCreate) createSpec() (*SysRole, *sqlgraph.CreateSpec) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (src *SysRoleCreate) OnConflict(opts ...sql.ConflictOption) *SysRoleUpsertOne {
-	src.conflict = opts
+func (_c *SysRoleCreate) OnConflict(opts ...sql.ConflictOption) *SysRoleUpsertOne {
+	_c.conflict = opts
 	return &SysRoleUpsertOne{
-		create: src,
+		create: _c,
 	}
 }
 
@@ -335,10 +335,10 @@ func (src *SysRoleCreate) OnConflict(opts ...sql.ConflictOption) *SysRoleUpsertO
 //	client.SysRole.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (src *SysRoleCreate) OnConflictColumns(columns ...string) *SysRoleUpsertOne {
-	src.conflict = append(src.conflict, sql.ConflictColumns(columns...))
+func (_c *SysRoleCreate) OnConflictColumns(columns ...string) *SysRoleUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysRoleUpsertOne{
-		create: src,
+		create: _c,
 	}
 }
 
@@ -687,16 +687,16 @@ type SysRoleCreateBulk struct {
 }
 
 // Save creates the SysRole entities in the database.
-func (srcb *SysRoleCreateBulk) Save(ctx context.Context) ([]*SysRole, error) {
-	if srcb.err != nil {
-		return nil, srcb.err
+func (_c *SysRoleCreateBulk) Save(ctx context.Context) ([]*SysRole, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(srcb.builders))
-	nodes := make([]*SysRole, len(srcb.builders))
-	mutators := make([]Mutator, len(srcb.builders))
-	for i := range srcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysRole, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := srcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysRoleMutation)
@@ -710,12 +710,12 @@ func (srcb *SysRoleCreateBulk) Save(ctx context.Context) ([]*SysRole, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, srcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = srcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, srcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -735,7 +735,7 @@ func (srcb *SysRoleCreateBulk) Save(ctx context.Context) ([]*SysRole, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, srcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -743,8 +743,8 @@ func (srcb *SysRoleCreateBulk) Save(ctx context.Context) ([]*SysRole, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (srcb *SysRoleCreateBulk) SaveX(ctx context.Context) []*SysRole {
-	v, err := srcb.Save(ctx)
+func (_c *SysRoleCreateBulk) SaveX(ctx context.Context) []*SysRole {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -752,14 +752,14 @@ func (srcb *SysRoleCreateBulk) SaveX(ctx context.Context) []*SysRole {
 }
 
 // Exec executes the query.
-func (srcb *SysRoleCreateBulk) Exec(ctx context.Context) error {
-	_, err := srcb.Save(ctx)
+func (_c *SysRoleCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (srcb *SysRoleCreateBulk) ExecX(ctx context.Context) {
-	if err := srcb.Exec(ctx); err != nil {
+func (_c *SysRoleCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -779,10 +779,10 @@ func (srcb *SysRoleCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (srcb *SysRoleCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysRoleUpsertBulk {
-	srcb.conflict = opts
+func (_c *SysRoleCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysRoleUpsertBulk {
+	_c.conflict = opts
 	return &SysRoleUpsertBulk{
-		create: srcb,
+		create: _c,
 	}
 }
 
@@ -792,10 +792,10 @@ func (srcb *SysRoleCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysRoleUp
 //	client.SysRole.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (srcb *SysRoleCreateBulk) OnConflictColumns(columns ...string) *SysRoleUpsertBulk {
-	srcb.conflict = append(srcb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysRoleCreateBulk) OnConflictColumns(columns ...string) *SysRoleUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysRoleUpsertBulk{
-		create: srcb,
+		create: _c,
 	}
 }
 

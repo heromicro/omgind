@@ -20,56 +20,56 @@ type SysAddressDelete struct {
 }
 
 // Where appends a list predicates to the SysAddressDelete builder.
-func (sad *SysAddressDelete) Where(ps ...predicate.SysAddress) *SysAddressDelete {
-	sad.mutation.Where(ps...)
-	return sad
+func (_d *SysAddressDelete) Where(ps ...predicate.SysAddress) *SysAddressDelete {
+	_d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query and returns how many vertices were deleted.
-func (sad *SysAddressDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks(ctx, sad.sqlExec, sad.mutation, sad.hooks)
+func (_d *SysAddressDelete) Exec(ctx context.Context) (int, error) {
+	return withHooks(ctx, _d.sqlExec, _d.mutation, _d.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sad *SysAddressDelete) ExecX(ctx context.Context) int {
-	n, err := sad.Exec(ctx)
+func (_d *SysAddressDelete) ExecX(ctx context.Context) int {
+	n, err := _d.Exec(ctx)
 	if err != nil {
 		panic(err)
 	}
 	return n
 }
 
-func (sad *SysAddressDelete) sqlExec(ctx context.Context) (int, error) {
+func (_d *SysAddressDelete) sqlExec(ctx context.Context) (int, error) {
 	_spec := sqlgraph.NewDeleteSpec(sysaddress.Table, sqlgraph.NewFieldSpec(sysaddress.FieldID, field.TypeString))
-	if ps := sad.mutation.predicates; len(ps) > 0 {
+	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	affected, err := sqlgraph.DeleteNodes(ctx, sad.driver, _spec)
+	affected, err := sqlgraph.DeleteNodes(ctx, _d.driver, _spec)
 	if err != nil && sqlgraph.IsConstraintError(err) {
 		err = &ConstraintError{msg: err.Error(), wrap: err}
 	}
-	sad.mutation.done = true
+	_d.mutation.done = true
 	return affected, err
 }
 
 // SysAddressDeleteOne is the builder for deleting a single SysAddress entity.
 type SysAddressDeleteOne struct {
-	sad *SysAddressDelete
+	_d *SysAddressDelete
 }
 
 // Where appends a list predicates to the SysAddressDelete builder.
-func (sado *SysAddressDeleteOne) Where(ps ...predicate.SysAddress) *SysAddressDeleteOne {
-	sado.sad.mutation.Where(ps...)
-	return sado
+func (_d *SysAddressDeleteOne) Where(ps ...predicate.SysAddress) *SysAddressDeleteOne {
+	_d._d.mutation.Where(ps...)
+	return _d
 }
 
 // Exec executes the deletion query.
-func (sado *SysAddressDeleteOne) Exec(ctx context.Context) error {
-	n, err := sado.sad.Exec(ctx)
+func (_d *SysAddressDeleteOne) Exec(ctx context.Context) error {
+	n, err := _d._d.Exec(ctx)
 	switch {
 	case err != nil:
 		return err
@@ -81,8 +81,8 @@ func (sado *SysAddressDeleteOne) Exec(ctx context.Context) error {
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sado *SysAddressDeleteOne) ExecX(ctx context.Context) {
-	if err := sado.Exec(ctx); err != nil {
+func (_d *SysAddressDeleteOne) ExecX(ctx context.Context) {
+	if err := _d.Exec(ctx); err != nil {
 		panic(err)
 	}
 }

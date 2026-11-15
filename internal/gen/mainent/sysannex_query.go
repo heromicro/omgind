@@ -30,40 +30,40 @@ type SysAnnexQuery struct {
 }
 
 // Where adds a new predicate for the SysAnnexQuery builder.
-func (saq *SysAnnexQuery) Where(ps ...predicate.SysAnnex) *SysAnnexQuery {
-	saq.predicates = append(saq.predicates, ps...)
-	return saq
+func (_q *SysAnnexQuery) Where(ps ...predicate.SysAnnex) *SysAnnexQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (saq *SysAnnexQuery) Limit(limit int) *SysAnnexQuery {
-	saq.ctx.Limit = &limit
-	return saq
+func (_q *SysAnnexQuery) Limit(limit int) *SysAnnexQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (saq *SysAnnexQuery) Offset(offset int) *SysAnnexQuery {
-	saq.ctx.Offset = &offset
-	return saq
+func (_q *SysAnnexQuery) Offset(offset int) *SysAnnexQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (saq *SysAnnexQuery) Unique(unique bool) *SysAnnexQuery {
-	saq.ctx.Unique = &unique
-	return saq
+func (_q *SysAnnexQuery) Unique(unique bool) *SysAnnexQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (saq *SysAnnexQuery) Order(o ...sysannex.OrderOption) *SysAnnexQuery {
-	saq.order = append(saq.order, o...)
-	return saq
+func (_q *SysAnnexQuery) Order(o ...sysannex.OrderOption) *SysAnnexQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // First returns the first SysAnnex entity from the query.
 // Returns a *NotFoundError when no SysAnnex was found.
-func (saq *SysAnnexQuery) First(ctx context.Context) (*SysAnnex, error) {
-	nodes, err := saq.Limit(1).All(setContextOp(ctx, saq.ctx, ent.OpQueryFirst))
+func (_q *SysAnnexQuery) First(ctx context.Context) (*SysAnnex, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -74,8 +74,8 @@ func (saq *SysAnnexQuery) First(ctx context.Context) (*SysAnnex, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (saq *SysAnnexQuery) FirstX(ctx context.Context) *SysAnnex {
-	node, err := saq.First(ctx)
+func (_q *SysAnnexQuery) FirstX(ctx context.Context) *SysAnnex {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -84,9 +84,9 @@ func (saq *SysAnnexQuery) FirstX(ctx context.Context) *SysAnnex {
 
 // FirstID returns the first SysAnnex ID from the query.
 // Returns a *NotFoundError when no SysAnnex ID was found.
-func (saq *SysAnnexQuery) FirstID(ctx context.Context) (id string, err error) {
+func (_q *SysAnnexQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = saq.Limit(1).IDs(setContextOp(ctx, saq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -97,8 +97,8 @@ func (saq *SysAnnexQuery) FirstID(ctx context.Context) (id string, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (saq *SysAnnexQuery) FirstIDX(ctx context.Context) string {
-	id, err := saq.FirstID(ctx)
+func (_q *SysAnnexQuery) FirstIDX(ctx context.Context) string {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -108,8 +108,8 @@ func (saq *SysAnnexQuery) FirstIDX(ctx context.Context) string {
 // Only returns a single SysAnnex entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one SysAnnex entity is found.
 // Returns a *NotFoundError when no SysAnnex entities are found.
-func (saq *SysAnnexQuery) Only(ctx context.Context) (*SysAnnex, error) {
-	nodes, err := saq.Limit(2).All(setContextOp(ctx, saq.ctx, ent.OpQueryOnly))
+func (_q *SysAnnexQuery) Only(ctx context.Context) (*SysAnnex, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -124,8 +124,8 @@ func (saq *SysAnnexQuery) Only(ctx context.Context) (*SysAnnex, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (saq *SysAnnexQuery) OnlyX(ctx context.Context) *SysAnnex {
-	node, err := saq.Only(ctx)
+func (_q *SysAnnexQuery) OnlyX(ctx context.Context) *SysAnnex {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -135,9 +135,9 @@ func (saq *SysAnnexQuery) OnlyX(ctx context.Context) *SysAnnex {
 // OnlyID is like Only, but returns the only SysAnnex ID in the query.
 // Returns a *NotSingularError when more than one SysAnnex ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (saq *SysAnnexQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *SysAnnexQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = saq.Limit(2).IDs(setContextOp(ctx, saq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -152,8 +152,8 @@ func (saq *SysAnnexQuery) OnlyID(ctx context.Context) (id string, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (saq *SysAnnexQuery) OnlyIDX(ctx context.Context) string {
-	id, err := saq.OnlyID(ctx)
+func (_q *SysAnnexQuery) OnlyIDX(ctx context.Context) string {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -161,18 +161,18 @@ func (saq *SysAnnexQuery) OnlyIDX(ctx context.Context) string {
 }
 
 // All executes the query and returns a list of SysAnnexes.
-func (saq *SysAnnexQuery) All(ctx context.Context) ([]*SysAnnex, error) {
-	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryAll)
-	if err := saq.prepareQuery(ctx); err != nil {
+func (_q *SysAnnexQuery) All(ctx context.Context) ([]*SysAnnex, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*SysAnnex, *SysAnnexQuery]()
-	return withInterceptors[[]*SysAnnex](ctx, saq, qr, saq.inters)
+	return withInterceptors[[]*SysAnnex](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (saq *SysAnnexQuery) AllX(ctx context.Context) []*SysAnnex {
-	nodes, err := saq.All(ctx)
+func (_q *SysAnnexQuery) AllX(ctx context.Context) []*SysAnnex {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -180,20 +180,20 @@ func (saq *SysAnnexQuery) AllX(ctx context.Context) []*SysAnnex {
 }
 
 // IDs executes the query and returns a list of SysAnnex IDs.
-func (saq *SysAnnexQuery) IDs(ctx context.Context) (ids []string, err error) {
-	if saq.ctx.Unique == nil && saq.path != nil {
-		saq.Unique(true)
+func (_q *SysAnnexQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryIDs)
-	if err = saq.Select(sysannex.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(sysannex.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (saq *SysAnnexQuery) IDsX(ctx context.Context) []string {
-	ids, err := saq.IDs(ctx)
+func (_q *SysAnnexQuery) IDsX(ctx context.Context) []string {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -201,17 +201,17 @@ func (saq *SysAnnexQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (saq *SysAnnexQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryCount)
-	if err := saq.prepareQuery(ctx); err != nil {
+func (_q *SysAnnexQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, saq, querierCount[*SysAnnexQuery](), saq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*SysAnnexQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (saq *SysAnnexQuery) CountX(ctx context.Context) int {
-	count, err := saq.Count(ctx)
+func (_q *SysAnnexQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -219,9 +219,9 @@ func (saq *SysAnnexQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (saq *SysAnnexQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, saq.ctx, ent.OpQueryExist)
-	switch _, err := saq.FirstID(ctx); {
+func (_q *SysAnnexQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -232,8 +232,8 @@ func (saq *SysAnnexQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (saq *SysAnnexQuery) ExistX(ctx context.Context) bool {
-	exist, err := saq.Exist(ctx)
+func (_q *SysAnnexQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -242,20 +242,20 @@ func (saq *SysAnnexQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the SysAnnexQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (saq *SysAnnexQuery) Clone() *SysAnnexQuery {
-	if saq == nil {
+func (_q *SysAnnexQuery) Clone() *SysAnnexQuery {
+	if _q == nil {
 		return nil
 	}
 	return &SysAnnexQuery{
-		config:     saq.config,
-		ctx:        saq.ctx.Clone(),
-		order:      append([]sysannex.OrderOption{}, saq.order...),
-		inters:     append([]Interceptor{}, saq.inters...),
-		predicates: append([]predicate.SysAnnex{}, saq.predicates...),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]sysannex.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.SysAnnex{}, _q.predicates...),
 		// clone intermediate query.
-		sql:       saq.sql.Clone(),
-		path:      saq.path,
-		modifiers: append([]func(*sql.Selector){}, saq.modifiers...),
+		sql:       _q.sql.Clone(),
+		path:      _q.path,
+		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
 }
 
@@ -273,10 +273,10 @@ func (saq *SysAnnexQuery) Clone() *SysAnnexQuery {
 //		GroupBy(sysannex.FieldMemo).
 //		Aggregate(mainent.Count()).
 //		Scan(ctx, &v)
-func (saq *SysAnnexQuery) GroupBy(field string, fields ...string) *SysAnnexGroupBy {
-	saq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &SysAnnexGroupBy{build: saq}
-	grbuild.flds = &saq.ctx.Fields
+func (_q *SysAnnexQuery) GroupBy(field string, fields ...string) *SysAnnexGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysAnnexGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = sysannex.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -294,65 +294,65 @@ func (saq *SysAnnexQuery) GroupBy(field string, fields ...string) *SysAnnexGroup
 //	client.SysAnnex.Query().
 //		Select(sysannex.FieldMemo).
 //		Scan(ctx, &v)
-func (saq *SysAnnexQuery) Select(fields ...string) *SysAnnexSelect {
-	saq.ctx.Fields = append(saq.ctx.Fields, fields...)
-	sbuild := &SysAnnexSelect{SysAnnexQuery: saq}
+func (_q *SysAnnexQuery) Select(fields ...string) *SysAnnexSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &SysAnnexSelect{SysAnnexQuery: _q}
 	sbuild.label = sysannex.Label
-	sbuild.flds, sbuild.scan = &saq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a SysAnnexSelect configured with the given aggregations.
-func (saq *SysAnnexQuery) Aggregate(fns ...AggregateFunc) *SysAnnexSelect {
-	return saq.Select().Aggregate(fns...)
+func (_q *SysAnnexQuery) Aggregate(fns ...AggregateFunc) *SysAnnexSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (saq *SysAnnexQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range saq.inters {
+func (_q *SysAnnexQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("mainent: uninitialized interceptor (forgotten import mainent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, saq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range saq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !sysannex.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("mainent: invalid field %q for query", f)}
 		}
 	}
-	if saq.path != nil {
-		prev, err := saq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		saq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (saq *SysAnnexQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysAnnex, error) {
+func (_q *SysAnnexQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysAnnex, error) {
 	var (
 		nodes = []*SysAnnex{}
-		_spec = saq.querySpec()
+		_spec = _q.querySpec()
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysAnnex).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &SysAnnex{config: saq.config}
+		node := &SysAnnex{config: _q.config}
 		nodes = append(nodes, node)
 		return node.assignValues(columns, values)
 	}
-	if len(saq.modifiers) > 0 {
-		_spec.Modifiers = saq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, saq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
@@ -361,27 +361,27 @@ func (saq *SysAnnexQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Sy
 	return nodes, nil
 }
 
-func (saq *SysAnnexQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := saq.querySpec()
-	if len(saq.modifiers) > 0 {
-		_spec.Modifiers = saq.modifiers
+func (_q *SysAnnexQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = saq.ctx.Fields
-	if len(saq.ctx.Fields) > 0 {
-		_spec.Unique = saq.ctx.Unique != nil && *saq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, saq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (saq *SysAnnexQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *SysAnnexQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(sysannex.Table, sysannex.Columns, sqlgraph.NewFieldSpec(sysannex.FieldID, field.TypeString))
-	_spec.From = saq.sql
-	if unique := saq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if saq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := saq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, sysannex.FieldID)
 		for i := range fields {
@@ -390,20 +390,20 @@ func (saq *SysAnnexQuery) querySpec() *sqlgraph.QuerySpec {
 			}
 		}
 	}
-	if ps := saq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := saq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := saq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := saq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -413,36 +413,36 @@ func (saq *SysAnnexQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (saq *SysAnnexQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(saq.driver.Dialect())
+func (_q *SysAnnexQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(sysannex.Table)
-	columns := saq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = sysannex.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if saq.sql != nil {
-		selector = saq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if saq.ctx.Unique != nil && *saq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range saq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range saq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range saq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := saq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := saq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -451,33 +451,33 @@ func (saq *SysAnnexQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (saq *SysAnnexQuery) ForUpdate(opts ...sql.LockOption) *SysAnnexQuery {
-	if saq.driver.Dialect() == dialect.Postgres {
-		saq.Unique(false)
+func (_q *SysAnnexQuery) ForUpdate(opts ...sql.LockOption) *SysAnnexQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	saq.modifiers = append(saq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return saq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (saq *SysAnnexQuery) ForShare(opts ...sql.LockOption) *SysAnnexQuery {
-	if saq.driver.Dialect() == dialect.Postgres {
-		saq.Unique(false)
+func (_q *SysAnnexQuery) ForShare(opts ...sql.LockOption) *SysAnnexQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	saq.modifiers = append(saq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return saq
+	return _q
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (saq *SysAnnexQuery) Modify(modifiers ...func(s *sql.Selector)) *SysAnnexSelect {
-	saq.modifiers = append(saq.modifiers, modifiers...)
-	return saq.Select()
+func (_q *SysAnnexQuery) Modify(modifiers ...func(s *sql.Selector)) *SysAnnexSelect {
+	_q.modifiers = append(_q.modifiers, modifiers...)
+	return _q.Select()
 }
 
 // SysAnnexGroupBy is the group-by builder for SysAnnex entities.
@@ -487,41 +487,41 @@ type SysAnnexGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (sagb *SysAnnexGroupBy) Aggregate(fns ...AggregateFunc) *SysAnnexGroupBy {
-	sagb.fns = append(sagb.fns, fns...)
-	return sagb
+func (_g *SysAnnexGroupBy) Aggregate(fns ...AggregateFunc) *SysAnnexGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sagb *SysAnnexGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sagb.build.ctx, ent.OpQueryGroupBy)
-	if err := sagb.build.prepareQuery(ctx); err != nil {
+func (_g *SysAnnexGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysAnnexQuery, *SysAnnexGroupBy](ctx, sagb.build, sagb, sagb.build.inters, v)
+	return scanWithInterceptors[*SysAnnexQuery, *SysAnnexGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (sagb *SysAnnexGroupBy) sqlScan(ctx context.Context, root *SysAnnexQuery, v any) error {
+func (_g *SysAnnexGroupBy) sqlScan(ctx context.Context, root *SysAnnexQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(sagb.fns))
-	for _, fn := range sagb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*sagb.flds)+len(sagb.fns))
-		for _, f := range *sagb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*sagb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sagb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -535,27 +535,27 @@ type SysAnnexSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (sas *SysAnnexSelect) Aggregate(fns ...AggregateFunc) *SysAnnexSelect {
-	sas.fns = append(sas.fns, fns...)
-	return sas
+func (_s *SysAnnexSelect) Aggregate(fns ...AggregateFunc) *SysAnnexSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (sas *SysAnnexSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, sas.ctx, ent.OpQuerySelect)
-	if err := sas.prepareQuery(ctx); err != nil {
+func (_s *SysAnnexSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysAnnexQuery, *SysAnnexSelect](ctx, sas.SysAnnexQuery, sas, sas.inters, v)
+	return scanWithInterceptors[*SysAnnexQuery, *SysAnnexSelect](ctx, _s.SysAnnexQuery, _s, _s.inters, v)
 }
 
-func (sas *SysAnnexSelect) sqlScan(ctx context.Context, root *SysAnnexQuery, v any) error {
+func (_s *SysAnnexSelect) sqlScan(ctx context.Context, root *SysAnnexQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(sas.fns))
-	for _, fn := range sas.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*sas.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -563,7 +563,7 @@ func (sas *SysAnnexSelect) sqlScan(ctx context.Context, root *SysAnnexQuery, v a
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := sas.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -571,7 +571,7 @@ func (sas *SysAnnexSelect) sqlScan(ctx context.Context, root *SysAnnexQuery, v a
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (sas *SysAnnexSelect) Modify(modifiers ...func(s *sql.Selector)) *SysAnnexSelect {
-	sas.modifiers = append(sas.modifiers, modifiers...)
-	return sas
+func (_s *SysAnnexSelect) Modify(modifiers ...func(s *sql.Selector)) *SysAnnexSelect {
+	_s.modifiers = append(_s.modifiers, modifiers...)
+	return _s
 }

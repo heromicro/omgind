@@ -102,7 +102,7 @@ func (*SysUser) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysUser fields.
-func (su *SysUser) assignValues(columns []string, values []any) error {
+func (_m *SysUser) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -112,100 +112,100 @@ func (su *SysUser) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				su.ID = value.String
+				_m.ID = value.String
 			}
 		case sysuser.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				su.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysuser.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				su.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case sysuser.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				su.CreatedAt = new(time.Time)
-				*su.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysuser.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				su.UpdatedAt = new(time.Time)
-				*su.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysuser.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				su.DeletedAt = new(time.Time)
-				*su.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysuser.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				su.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case sysuser.FieldUserName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field user_name", values[i])
 			} else if value.Valid {
-				su.UserName = value.String
+				_m.UserName = value.String
 			}
 		case sysuser.FieldRealName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field real_name", values[i])
 			} else if value.Valid {
-				su.RealName = new(string)
-				*su.RealName = value.String
+				_m.RealName = new(string)
+				*_m.RealName = value.String
 			}
 		case sysuser.FieldFirstName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field first_name", values[i])
 			} else if value.Valid {
-				su.FirstName = new(string)
-				*su.FirstName = value.String
+				_m.FirstName = new(string)
+				*_m.FirstName = value.String
 			}
 		case sysuser.FieldLastName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field last_name", values[i])
 			} else if value.Valid {
-				su.LastName = new(string)
-				*su.LastName = value.String
+				_m.LastName = new(string)
+				*_m.LastName = value.String
 			}
 		case sysuser.FieldPassword:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field password", values[i])
 			} else if value.Valid {
-				su.Password = value.String
+				_m.Password = value.String
 			}
 		case sysuser.FieldEmail:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field email", values[i])
 			} else if value.Valid {
-				su.Email = value.String
+				_m.Email = value.String
 			}
 		case sysuser.FieldMobile:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field mobile", values[i])
 			} else if value.Valid {
-				su.Mobile = value.String
+				_m.Mobile = value.String
 			}
 		case sysuser.FieldSalt:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field salt", values[i])
 			} else if value.Valid {
-				su.Salt = value.String
+				_m.Salt = value.String
 			}
 		default:
-			su.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -213,81 +213,81 @@ func (su *SysUser) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysUser.
 // This includes values selected through modifiers, order, etc.
-func (su *SysUser) Value(name string) (ent.Value, error) {
-	return su.selectValues.Get(name)
+func (_m *SysUser) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // QueryTeams queries the "teams" edge of the SysUser entity.
-func (su *SysUser) QueryTeams() *SysTeamQuery {
-	return NewSysUserClient(su.config).QueryTeams(su)
+func (_m *SysUser) QueryTeams() *SysTeamQuery {
+	return NewSysUserClient(_m.config).QueryTeams(_m)
 }
 
 // QueryTeamUsers queries the "team_users" edge of the SysUser entity.
-func (su *SysUser) QueryTeamUsers() *SysTeamUserQuery {
-	return NewSysUserClient(su.config).QueryTeamUsers(su)
+func (_m *SysUser) QueryTeamUsers() *SysTeamUserQuery {
+	return NewSysUserClient(_m.config).QueryTeamUsers(_m)
 }
 
 // Update returns a builder for updating this SysUser.
 // Note that you need to call SysUser.Unwrap() before calling this method if this SysUser
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (su *SysUser) Update() *SysUserUpdateOne {
-	return NewSysUserClient(su.config).UpdateOne(su)
+func (_m *SysUser) Update() *SysUserUpdateOne {
+	return NewSysUserClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysUser entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (su *SysUser) Unwrap() *SysUser {
-	_tx, ok := su.config.driver.(*txDriver)
+func (_m *SysUser) Unwrap() *SysUser {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysUser is not a transactional entity")
 	}
-	su.config.driver = _tx.drv
-	return su
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (su *SysUser) String() string {
+func (_m *SysUser) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysUser(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", su.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", su.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", su.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := su.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := su.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := su.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", su.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("user_name=")
-	builder.WriteString(su.UserName)
+	builder.WriteString(_m.UserName)
 	builder.WriteString(", ")
-	if v := su.RealName; v != nil {
+	if v := _m.RealName; v != nil {
 		builder.WriteString("real_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := su.FirstName; v != nil {
+	if v := _m.FirstName; v != nil {
 		builder.WriteString("first_name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := su.LastName; v != nil {
+	if v := _m.LastName; v != nil {
 		builder.WriteString("last_name=")
 		builder.WriteString(*v)
 	}
@@ -295,13 +295,13 @@ func (su *SysUser) String() string {
 	builder.WriteString("password=<sensitive>")
 	builder.WriteString(", ")
 	builder.WriteString("email=")
-	builder.WriteString(su.Email)
+	builder.WriteString(_m.Email)
 	builder.WriteString(", ")
 	builder.WriteString("mobile=")
-	builder.WriteString(su.Mobile)
+	builder.WriteString(_m.Mobile)
 	builder.WriteString(", ")
 	builder.WriteString("salt=")
-	builder.WriteString(su.Salt)
+	builder.WriteString(_m.Salt)
 	builder.WriteByte(')')
 	return builder.String()
 }

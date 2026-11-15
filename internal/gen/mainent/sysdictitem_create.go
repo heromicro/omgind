@@ -25,162 +25,162 @@ type SysDictItemCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (sdic *SysDictItemCreate) SetIsDel(b bool) *SysDictItemCreate {
-	sdic.mutation.SetIsDel(b)
-	return sdic
+func (_c *SysDictItemCreate) SetIsDel(v bool) *SysDictItemCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableIsDel(b *bool) *SysDictItemCreate {
-	if b != nil {
-		sdic.SetIsDel(*b)
+func (_c *SysDictItemCreate) SetNillableIsDel(v *bool) *SysDictItemCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (sdic *SysDictItemCreate) SetMemo(s string) *SysDictItemCreate {
-	sdic.mutation.SetMemo(s)
-	return sdic
+func (_c *SysDictItemCreate) SetMemo(v string) *SysDictItemCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableMemo(s *string) *SysDictItemCreate {
-	if s != nil {
-		sdic.SetMemo(*s)
+func (_c *SysDictItemCreate) SetNillableMemo(v *string) *SysDictItemCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (sdic *SysDictItemCreate) SetSort(i int32) *SysDictItemCreate {
-	sdic.mutation.SetSort(i)
-	return sdic
+func (_c *SysDictItemCreate) SetSort(v int32) *SysDictItemCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableSort(i *int32) *SysDictItemCreate {
-	if i != nil {
-		sdic.SetSort(*i)
+func (_c *SysDictItemCreate) SetNillableSort(v *int32) *SysDictItemCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (sdic *SysDictItemCreate) SetCreatedAt(t time.Time) *SysDictItemCreate {
-	sdic.mutation.SetCreatedAt(t)
-	return sdic
+func (_c *SysDictItemCreate) SetCreatedAt(v time.Time) *SysDictItemCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableCreatedAt(t *time.Time) *SysDictItemCreate {
-	if t != nil {
-		sdic.SetCreatedAt(*t)
+func (_c *SysDictItemCreate) SetNillableCreatedAt(v *time.Time) *SysDictItemCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (sdic *SysDictItemCreate) SetUpdatedAt(t time.Time) *SysDictItemCreate {
-	sdic.mutation.SetUpdatedAt(t)
-	return sdic
+func (_c *SysDictItemCreate) SetUpdatedAt(v time.Time) *SysDictItemCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableUpdatedAt(t *time.Time) *SysDictItemCreate {
-	if t != nil {
-		sdic.SetUpdatedAt(*t)
+func (_c *SysDictItemCreate) SetNillableUpdatedAt(v *time.Time) *SysDictItemCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (sdic *SysDictItemCreate) SetDeletedAt(t time.Time) *SysDictItemCreate {
-	sdic.mutation.SetDeletedAt(t)
-	return sdic
+func (_c *SysDictItemCreate) SetDeletedAt(v time.Time) *SysDictItemCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableDeletedAt(t *time.Time) *SysDictItemCreate {
-	if t != nil {
-		sdic.SetDeletedAt(*t)
+func (_c *SysDictItemCreate) SetNillableDeletedAt(v *time.Time) *SysDictItemCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (sdic *SysDictItemCreate) SetIsActive(b bool) *SysDictItemCreate {
-	sdic.mutation.SetIsActive(b)
-	return sdic
+func (_c *SysDictItemCreate) SetIsActive(v bool) *SysDictItemCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableIsActive(b *bool) *SysDictItemCreate {
-	if b != nil {
-		sdic.SetIsActive(*b)
+func (_c *SysDictItemCreate) SetNillableIsActive(v *bool) *SysDictItemCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetLabel sets the "label" field.
-func (sdic *SysDictItemCreate) SetLabel(s string) *SysDictItemCreate {
-	sdic.mutation.SetLabel(s)
-	return sdic
+func (_c *SysDictItemCreate) SetLabel(v string) *SysDictItemCreate {
+	_c.mutation.SetLabel(v)
+	return _c
 }
 
 // SetValue sets the "value" field.
-func (sdic *SysDictItemCreate) SetValue(i int) *SysDictItemCreate {
-	sdic.mutation.SetValue(i)
-	return sdic
+func (_c *SysDictItemCreate) SetValue(v int) *SysDictItemCreate {
+	_c.mutation.SetValue(v)
+	return _c
 }
 
 // SetDictID sets the "dict_id" field.
-func (sdic *SysDictItemCreate) SetDictID(s string) *SysDictItemCreate {
-	sdic.mutation.SetDictID(s)
-	return sdic
+func (_c *SysDictItemCreate) SetDictID(v string) *SysDictItemCreate {
+	_c.mutation.SetDictID(v)
+	return _c
 }
 
 // SetNillableDictID sets the "dict_id" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableDictID(s *string) *SysDictItemCreate {
-	if s != nil {
-		sdic.SetDictID(*s)
+func (_c *SysDictItemCreate) SetNillableDictID(v *string) *SysDictItemCreate {
+	if v != nil {
+		_c.SetDictID(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetID sets the "id" field.
-func (sdic *SysDictItemCreate) SetID(s string) *SysDictItemCreate {
-	sdic.mutation.SetID(s)
-	return sdic
+func (_c *SysDictItemCreate) SetID(v string) *SysDictItemCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (sdic *SysDictItemCreate) SetNillableID(s *string) *SysDictItemCreate {
-	if s != nil {
-		sdic.SetID(*s)
+func (_c *SysDictItemCreate) SetNillableID(v *string) *SysDictItemCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return sdic
+	return _c
 }
 
 // SetDict sets the "dict" edge to the SysDict entity.
-func (sdic *SysDictItemCreate) SetDict(s *SysDict) *SysDictItemCreate {
-	return sdic.SetDictID(s.ID)
+func (_c *SysDictItemCreate) SetDict(v *SysDict) *SysDictItemCreate {
+	return _c.SetDictID(v.ID)
 }
 
 // Mutation returns the SysDictItemMutation object of the builder.
-func (sdic *SysDictItemCreate) Mutation() *SysDictItemMutation {
-	return sdic.mutation
+func (_c *SysDictItemCreate) Mutation() *SysDictItemMutation {
+	return _c.mutation
 }
 
 // Save creates the SysDictItem in the database.
-func (sdic *SysDictItemCreate) Save(ctx context.Context) (*SysDictItem, error) {
-	sdic.defaults()
-	return withHooks(ctx, sdic.sqlSave, sdic.mutation, sdic.hooks)
+func (_c *SysDictItemCreate) Save(ctx context.Context) (*SysDictItem, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (sdic *SysDictItemCreate) SaveX(ctx context.Context) *SysDictItem {
-	v, err := sdic.Save(ctx)
+func (_c *SysDictItemCreate) SaveX(ctx context.Context) *SysDictItem {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -188,83 +188,83 @@ func (sdic *SysDictItemCreate) SaveX(ctx context.Context) *SysDictItem {
 }
 
 // Exec executes the query.
-func (sdic *SysDictItemCreate) Exec(ctx context.Context) error {
-	_, err := sdic.Save(ctx)
+func (_c *SysDictItemCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdic *SysDictItemCreate) ExecX(ctx context.Context) {
-	if err := sdic.Exec(ctx); err != nil {
+func (_c *SysDictItemCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (sdic *SysDictItemCreate) defaults() {
-	if _, ok := sdic.mutation.IsDel(); !ok {
+func (_c *SysDictItemCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := sysdictitem.DefaultIsDel
-		sdic.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := sdic.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := sysdictitem.DefaultMemo
-		sdic.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := sdic.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := sysdictitem.DefaultSort
-		sdic.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := sdic.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := sysdictitem.DefaultCreatedAt()
-		sdic.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := sdic.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := sysdictitem.DefaultUpdatedAt()
-		sdic.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := sdic.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := sysdictitem.DefaultIsActive
-		sdic.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := sdic.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := sysdictitem.DefaultID()
-		sdic.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (sdic *SysDictItemCreate) check() error {
-	if _, ok := sdic.mutation.IsDel(); !ok {
+func (_c *SysDictItemCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "SysDictItem.is_del"`)}
 	}
-	if v, ok := sdic.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := sysdictitem.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "SysDictItem.memo": %w`, err)}
 		}
 	}
-	if _, ok := sdic.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "SysDictItem.sort"`)}
 	}
-	if _, ok := sdic.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "SysDictItem.is_active"`)}
 	}
-	if _, ok := sdic.mutation.Label(); !ok {
+	if _, ok := _c.mutation.Label(); !ok {
 		return &ValidationError{Name: "label", err: errors.New(`mainent: missing required field "SysDictItem.label"`)}
 	}
-	if v, ok := sdic.mutation.Label(); ok {
+	if v, ok := _c.mutation.Label(); ok {
 		if err := sysdictitem.LabelValidator(v); err != nil {
 			return &ValidationError{Name: "label", err: fmt.Errorf(`mainent: validator failed for field "SysDictItem.label": %w`, err)}
 		}
 	}
-	if _, ok := sdic.mutation.Value(); !ok {
+	if _, ok := _c.mutation.Value(); !ok {
 		return &ValidationError{Name: "value", err: errors.New(`mainent: missing required field "SysDictItem.value"`)}
 	}
-	if v, ok := sdic.mutation.DictID(); ok {
+	if v, ok := _c.mutation.DictID(); ok {
 		if err := sysdictitem.DictIDValidator(v); err != nil {
 			return &ValidationError{Name: "dict_id", err: fmt.Errorf(`mainent: validator failed for field "SysDictItem.dict_id": %w`, err)}
 		}
 	}
-	if v, ok := sdic.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := sysdictitem.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "SysDictItem.id": %w`, err)}
 		}
@@ -272,12 +272,12 @@ func (sdic *SysDictItemCreate) check() error {
 	return nil
 }
 
-func (sdic *SysDictItemCreate) sqlSave(ctx context.Context) (*SysDictItem, error) {
-	if err := sdic.check(); err != nil {
+func (_c *SysDictItemCreate) sqlSave(ctx context.Context) (*SysDictItem, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := sdic.createSpec()
-	if err := sqlgraph.CreateNode(ctx, sdic.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -290,58 +290,58 @@ func (sdic *SysDictItemCreate) sqlSave(ctx context.Context) (*SysDictItem, error
 			return nil, fmt.Errorf("unexpected SysDictItem.ID type: %T", _spec.ID.Value)
 		}
 	}
-	sdic.mutation.id = &_node.ID
-	sdic.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (sdic *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec) {
+func (_c *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec) {
 	var (
-		_node = &SysDictItem{config: sdic.config}
+		_node = &SysDictItem{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(sysdictitem.Table, sqlgraph.NewFieldSpec(sysdictitem.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = sdic.conflict
-	if id, ok := sdic.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := sdic.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(sysdictitem.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := sdic.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(sysdictitem.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := sdic.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(sysdictitem.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := sdic.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(sysdictitem.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := sdic.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(sysdictitem.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := sdic.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(sysdictitem.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := sdic.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(sysdictitem.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := sdic.mutation.Label(); ok {
+	if value, ok := _c.mutation.Label(); ok {
 		_spec.SetField(sysdictitem.FieldLabel, field.TypeString, value)
 		_node.Label = value
 	}
-	if value, ok := sdic.mutation.Value(); ok {
+	if value, ok := _c.mutation.Value(); ok {
 		_spec.SetField(sysdictitem.FieldValue, field.TypeInt, value)
 		_node.Value = value
 	}
-	if nodes := sdic.mutation.DictIDs(); len(nodes) > 0 {
+	if nodes := _c.mutation.DictIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
 			Inverse: true,
@@ -377,10 +377,10 @@ func (sdic *SysDictItemCreate) createSpec() (*SysDictItem, *sqlgraph.CreateSpec)
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sdic *SysDictItemCreate) OnConflict(opts ...sql.ConflictOption) *SysDictItemUpsertOne {
-	sdic.conflict = opts
+func (_c *SysDictItemCreate) OnConflict(opts ...sql.ConflictOption) *SysDictItemUpsertOne {
+	_c.conflict = opts
 	return &SysDictItemUpsertOne{
-		create: sdic,
+		create: _c,
 	}
 }
 
@@ -390,10 +390,10 @@ func (sdic *SysDictItemCreate) OnConflict(opts ...sql.ConflictOption) *SysDictIt
 //	client.SysDictItem.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sdic *SysDictItemCreate) OnConflictColumns(columns ...string) *SysDictItemUpsertOne {
-	sdic.conflict = append(sdic.conflict, sql.ConflictColumns(columns...))
+func (_c *SysDictItemCreate) OnConflictColumns(columns ...string) *SysDictItemUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysDictItemUpsertOne{
-		create: sdic,
+		create: _c,
 	}
 }
 
@@ -820,16 +820,16 @@ type SysDictItemCreateBulk struct {
 }
 
 // Save creates the SysDictItem entities in the database.
-func (sdicb *SysDictItemCreateBulk) Save(ctx context.Context) ([]*SysDictItem, error) {
-	if sdicb.err != nil {
-		return nil, sdicb.err
+func (_c *SysDictItemCreateBulk) Save(ctx context.Context) ([]*SysDictItem, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(sdicb.builders))
-	nodes := make([]*SysDictItem, len(sdicb.builders))
-	mutators := make([]Mutator, len(sdicb.builders))
-	for i := range sdicb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*SysDictItem, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := sdicb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SysDictItemMutation)
@@ -843,12 +843,12 @@ func (sdicb *SysDictItemCreateBulk) Save(ctx context.Context) ([]*SysDictItem, e
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, sdicb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = sdicb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, sdicb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -868,7 +868,7 @@ func (sdicb *SysDictItemCreateBulk) Save(ctx context.Context) ([]*SysDictItem, e
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, sdicb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -876,8 +876,8 @@ func (sdicb *SysDictItemCreateBulk) Save(ctx context.Context) ([]*SysDictItem, e
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (sdicb *SysDictItemCreateBulk) SaveX(ctx context.Context) []*SysDictItem {
-	v, err := sdicb.Save(ctx)
+func (_c *SysDictItemCreateBulk) SaveX(ctx context.Context) []*SysDictItem {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -885,14 +885,14 @@ func (sdicb *SysDictItemCreateBulk) SaveX(ctx context.Context) []*SysDictItem {
 }
 
 // Exec executes the query.
-func (sdicb *SysDictItemCreateBulk) Exec(ctx context.Context) error {
-	_, err := sdicb.Save(ctx)
+func (_c *SysDictItemCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (sdicb *SysDictItemCreateBulk) ExecX(ctx context.Context) {
-	if err := sdicb.Exec(ctx); err != nil {
+func (_c *SysDictItemCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -912,10 +912,10 @@ func (sdicb *SysDictItemCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (sdicb *SysDictItemCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDictItemUpsertBulk {
-	sdicb.conflict = opts
+func (_c *SysDictItemCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysDictItemUpsertBulk {
+	_c.conflict = opts
 	return &SysDictItemUpsertBulk{
-		create: sdicb,
+		create: _c,
 	}
 }
 
@@ -925,10 +925,10 @@ func (sdicb *SysDictItemCreateBulk) OnConflict(opts ...sql.ConflictOption) *SysD
 //	client.SysDictItem.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (sdicb *SysDictItemCreateBulk) OnConflictColumns(columns ...string) *SysDictItemUpsertBulk {
-	sdicb.conflict = append(sdicb.conflict, sql.ConflictColumns(columns...))
+func (_c *SysDictItemCreateBulk) OnConflictColumns(columns ...string) *SysDictItemUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &SysDictItemUpsertBulk{
-		create: sdicb,
+		create: _c,
 	}
 }
 

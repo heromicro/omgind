@@ -34,44 +34,44 @@ type SysTeamUserQuery struct {
 }
 
 // Where adds a new predicate for the SysTeamUserQuery builder.
-func (stuq *SysTeamUserQuery) Where(ps ...predicate.SysTeamUser) *SysTeamUserQuery {
-	stuq.predicates = append(stuq.predicates, ps...)
-	return stuq
+func (_q *SysTeamUserQuery) Where(ps ...predicate.SysTeamUser) *SysTeamUserQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (stuq *SysTeamUserQuery) Limit(limit int) *SysTeamUserQuery {
-	stuq.ctx.Limit = &limit
-	return stuq
+func (_q *SysTeamUserQuery) Limit(limit int) *SysTeamUserQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (stuq *SysTeamUserQuery) Offset(offset int) *SysTeamUserQuery {
-	stuq.ctx.Offset = &offset
-	return stuq
+func (_q *SysTeamUserQuery) Offset(offset int) *SysTeamUserQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (stuq *SysTeamUserQuery) Unique(unique bool) *SysTeamUserQuery {
-	stuq.ctx.Unique = &unique
-	return stuq
+func (_q *SysTeamUserQuery) Unique(unique bool) *SysTeamUserQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (stuq *SysTeamUserQuery) Order(o ...systeamuser.OrderOption) *SysTeamUserQuery {
-	stuq.order = append(stuq.order, o...)
-	return stuq
+func (_q *SysTeamUserQuery) Order(o ...systeamuser.OrderOption) *SysTeamUserQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryUser chains the current query on the "user" edge.
-func (stuq *SysTeamUserQuery) QueryUser() *SysUserQuery {
-	query := (&SysUserClient{config: stuq.config}).Query()
+func (_q *SysTeamUserQuery) QueryUser() *SysUserQuery {
+	query := (&SysUserClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := stuq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := stuq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -80,20 +80,20 @@ func (stuq *SysTeamUserQuery) QueryUser() *SysUserQuery {
 			sqlgraph.To(sysuser.Table, sysuser.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, false, systeamuser.UserTable, systeamuser.UserColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(stuq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryTeam chains the current query on the "team" edge.
-func (stuq *SysTeamUserQuery) QueryTeam() *SysTeamQuery {
-	query := (&SysTeamClient{config: stuq.config}).Query()
+func (_q *SysTeamUserQuery) QueryTeam() *SysTeamQuery {
+	query := (&SysTeamClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := stuq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := stuq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -102,7 +102,7 @@ func (stuq *SysTeamUserQuery) QueryTeam() *SysTeamQuery {
 			sqlgraph.To(systeam.Table, systeam.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, false, systeamuser.TeamTable, systeamuser.TeamColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(stuq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -110,8 +110,8 @@ func (stuq *SysTeamUserQuery) QueryTeam() *SysTeamQuery {
 
 // First returns the first SysTeamUser entity from the query.
 // Returns a *NotFoundError when no SysTeamUser was found.
-func (stuq *SysTeamUserQuery) First(ctx context.Context) (*SysTeamUser, error) {
-	nodes, err := stuq.Limit(1).All(setContextOp(ctx, stuq.ctx, ent.OpQueryFirst))
+func (_q *SysTeamUserQuery) First(ctx context.Context) (*SysTeamUser, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -122,8 +122,8 @@ func (stuq *SysTeamUserQuery) First(ctx context.Context) (*SysTeamUser, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (stuq *SysTeamUserQuery) FirstX(ctx context.Context) *SysTeamUser {
-	node, err := stuq.First(ctx)
+func (_q *SysTeamUserQuery) FirstX(ctx context.Context) *SysTeamUser {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -132,9 +132,9 @@ func (stuq *SysTeamUserQuery) FirstX(ctx context.Context) *SysTeamUser {
 
 // FirstID returns the first SysTeamUser ID from the query.
 // Returns a *NotFoundError when no SysTeamUser ID was found.
-func (stuq *SysTeamUserQuery) FirstID(ctx context.Context) (id string, err error) {
+func (_q *SysTeamUserQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = stuq.Limit(1).IDs(setContextOp(ctx, stuq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -145,8 +145,8 @@ func (stuq *SysTeamUserQuery) FirstID(ctx context.Context) (id string, err error
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (stuq *SysTeamUserQuery) FirstIDX(ctx context.Context) string {
-	id, err := stuq.FirstID(ctx)
+func (_q *SysTeamUserQuery) FirstIDX(ctx context.Context) string {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -156,8 +156,8 @@ func (stuq *SysTeamUserQuery) FirstIDX(ctx context.Context) string {
 // Only returns a single SysTeamUser entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one SysTeamUser entity is found.
 // Returns a *NotFoundError when no SysTeamUser entities are found.
-func (stuq *SysTeamUserQuery) Only(ctx context.Context) (*SysTeamUser, error) {
-	nodes, err := stuq.Limit(2).All(setContextOp(ctx, stuq.ctx, ent.OpQueryOnly))
+func (_q *SysTeamUserQuery) Only(ctx context.Context) (*SysTeamUser, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -172,8 +172,8 @@ func (stuq *SysTeamUserQuery) Only(ctx context.Context) (*SysTeamUser, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (stuq *SysTeamUserQuery) OnlyX(ctx context.Context) *SysTeamUser {
-	node, err := stuq.Only(ctx)
+func (_q *SysTeamUserQuery) OnlyX(ctx context.Context) *SysTeamUser {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -183,9 +183,9 @@ func (stuq *SysTeamUserQuery) OnlyX(ctx context.Context) *SysTeamUser {
 // OnlyID is like Only, but returns the only SysTeamUser ID in the query.
 // Returns a *NotSingularError when more than one SysTeamUser ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (stuq *SysTeamUserQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *SysTeamUserQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = stuq.Limit(2).IDs(setContextOp(ctx, stuq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -200,8 +200,8 @@ func (stuq *SysTeamUserQuery) OnlyID(ctx context.Context) (id string, err error)
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (stuq *SysTeamUserQuery) OnlyIDX(ctx context.Context) string {
-	id, err := stuq.OnlyID(ctx)
+func (_q *SysTeamUserQuery) OnlyIDX(ctx context.Context) string {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -209,18 +209,18 @@ func (stuq *SysTeamUserQuery) OnlyIDX(ctx context.Context) string {
 }
 
 // All executes the query and returns a list of SysTeamUsers.
-func (stuq *SysTeamUserQuery) All(ctx context.Context) ([]*SysTeamUser, error) {
-	ctx = setContextOp(ctx, stuq.ctx, ent.OpQueryAll)
-	if err := stuq.prepareQuery(ctx); err != nil {
+func (_q *SysTeamUserQuery) All(ctx context.Context) ([]*SysTeamUser, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*SysTeamUser, *SysTeamUserQuery]()
-	return withInterceptors[[]*SysTeamUser](ctx, stuq, qr, stuq.inters)
+	return withInterceptors[[]*SysTeamUser](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (stuq *SysTeamUserQuery) AllX(ctx context.Context) []*SysTeamUser {
-	nodes, err := stuq.All(ctx)
+func (_q *SysTeamUserQuery) AllX(ctx context.Context) []*SysTeamUser {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -228,20 +228,20 @@ func (stuq *SysTeamUserQuery) AllX(ctx context.Context) []*SysTeamUser {
 }
 
 // IDs executes the query and returns a list of SysTeamUser IDs.
-func (stuq *SysTeamUserQuery) IDs(ctx context.Context) (ids []string, err error) {
-	if stuq.ctx.Unique == nil && stuq.path != nil {
-		stuq.Unique(true)
+func (_q *SysTeamUserQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, stuq.ctx, ent.OpQueryIDs)
-	if err = stuq.Select(systeamuser.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(systeamuser.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (stuq *SysTeamUserQuery) IDsX(ctx context.Context) []string {
-	ids, err := stuq.IDs(ctx)
+func (_q *SysTeamUserQuery) IDsX(ctx context.Context) []string {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -249,17 +249,17 @@ func (stuq *SysTeamUserQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (stuq *SysTeamUserQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, stuq.ctx, ent.OpQueryCount)
-	if err := stuq.prepareQuery(ctx); err != nil {
+func (_q *SysTeamUserQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, stuq, querierCount[*SysTeamUserQuery](), stuq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*SysTeamUserQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (stuq *SysTeamUserQuery) CountX(ctx context.Context) int {
-	count, err := stuq.Count(ctx)
+func (_q *SysTeamUserQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -267,9 +267,9 @@ func (stuq *SysTeamUserQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (stuq *SysTeamUserQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, stuq.ctx, ent.OpQueryExist)
-	switch _, err := stuq.FirstID(ctx); {
+func (_q *SysTeamUserQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -280,8 +280,8 @@ func (stuq *SysTeamUserQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (stuq *SysTeamUserQuery) ExistX(ctx context.Context) bool {
-	exist, err := stuq.Exist(ctx)
+func (_q *SysTeamUserQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -290,45 +290,45 @@ func (stuq *SysTeamUserQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the SysTeamUserQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (stuq *SysTeamUserQuery) Clone() *SysTeamUserQuery {
-	if stuq == nil {
+func (_q *SysTeamUserQuery) Clone() *SysTeamUserQuery {
+	if _q == nil {
 		return nil
 	}
 	return &SysTeamUserQuery{
-		config:     stuq.config,
-		ctx:        stuq.ctx.Clone(),
-		order:      append([]systeamuser.OrderOption{}, stuq.order...),
-		inters:     append([]Interceptor{}, stuq.inters...),
-		predicates: append([]predicate.SysTeamUser{}, stuq.predicates...),
-		withUser:   stuq.withUser.Clone(),
-		withTeam:   stuq.withTeam.Clone(),
+		config:     _q.config,
+		ctx:        _q.ctx.Clone(),
+		order:      append([]systeamuser.OrderOption{}, _q.order...),
+		inters:     append([]Interceptor{}, _q.inters...),
+		predicates: append([]predicate.SysTeamUser{}, _q.predicates...),
+		withUser:   _q.withUser.Clone(),
+		withTeam:   _q.withTeam.Clone(),
 		// clone intermediate query.
-		sql:       stuq.sql.Clone(),
-		path:      stuq.path,
-		modifiers: append([]func(*sql.Selector){}, stuq.modifiers...),
+		sql:       _q.sql.Clone(),
+		path:      _q.path,
+		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
 }
 
 // WithUser tells the query-builder to eager-load the nodes that are connected to
 // the "user" edge. The optional arguments are used to configure the query builder of the edge.
-func (stuq *SysTeamUserQuery) WithUser(opts ...func(*SysUserQuery)) *SysTeamUserQuery {
-	query := (&SysUserClient{config: stuq.config}).Query()
+func (_q *SysTeamUserQuery) WithUser(opts ...func(*SysUserQuery)) *SysTeamUserQuery {
+	query := (&SysUserClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	stuq.withUser = query
-	return stuq
+	_q.withUser = query
+	return _q
 }
 
 // WithTeam tells the query-builder to eager-load the nodes that are connected to
 // the "team" edge. The optional arguments are used to configure the query builder of the edge.
-func (stuq *SysTeamUserQuery) WithTeam(opts ...func(*SysTeamQuery)) *SysTeamUserQuery {
-	query := (&SysTeamClient{config: stuq.config}).Query()
+func (_q *SysTeamUserQuery) WithTeam(opts ...func(*SysTeamQuery)) *SysTeamUserQuery {
+	query := (&SysTeamClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	stuq.withTeam = query
-	return stuq
+	_q.withTeam = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -345,10 +345,10 @@ func (stuq *SysTeamUserQuery) WithTeam(opts ...func(*SysTeamQuery)) *SysTeamUser
 //		GroupBy(systeamuser.FieldSort).
 //		Aggregate(mainent.Count()).
 //		Scan(ctx, &v)
-func (stuq *SysTeamUserQuery) GroupBy(field string, fields ...string) *SysTeamUserGroupBy {
-	stuq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &SysTeamUserGroupBy{build: stuq}
-	grbuild.flds = &stuq.ctx.Fields
+func (_q *SysTeamUserQuery) GroupBy(field string, fields ...string) *SysTeamUserGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &SysTeamUserGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = systeamuser.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -366,83 +366,83 @@ func (stuq *SysTeamUserQuery) GroupBy(field string, fields ...string) *SysTeamUs
 //	client.SysTeamUser.Query().
 //		Select(systeamuser.FieldSort).
 //		Scan(ctx, &v)
-func (stuq *SysTeamUserQuery) Select(fields ...string) *SysTeamUserSelect {
-	stuq.ctx.Fields = append(stuq.ctx.Fields, fields...)
-	sbuild := &SysTeamUserSelect{SysTeamUserQuery: stuq}
+func (_q *SysTeamUserQuery) Select(fields ...string) *SysTeamUserSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &SysTeamUserSelect{SysTeamUserQuery: _q}
 	sbuild.label = systeamuser.Label
-	sbuild.flds, sbuild.scan = &stuq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a SysTeamUserSelect configured with the given aggregations.
-func (stuq *SysTeamUserQuery) Aggregate(fns ...AggregateFunc) *SysTeamUserSelect {
-	return stuq.Select().Aggregate(fns...)
+func (_q *SysTeamUserQuery) Aggregate(fns ...AggregateFunc) *SysTeamUserSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (stuq *SysTeamUserQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range stuq.inters {
+func (_q *SysTeamUserQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("mainent: uninitialized interceptor (forgotten import mainent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, stuq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range stuq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !systeamuser.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("mainent: invalid field %q for query", f)}
 		}
 	}
-	if stuq.path != nil {
-		prev, err := stuq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		stuq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (stuq *SysTeamUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysTeamUser, error) {
+func (_q *SysTeamUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*SysTeamUser, error) {
 	var (
 		nodes       = []*SysTeamUser{}
-		_spec       = stuq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [2]bool{
-			stuq.withUser != nil,
-			stuq.withTeam != nil,
+			_q.withUser != nil,
+			_q.withTeam != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*SysTeamUser).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &SysTeamUser{config: stuq.config}
+		node := &SysTeamUser{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(stuq.modifiers) > 0 {
-		_spec.Modifiers = stuq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, stuq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := stuq.withUser; query != nil {
-		if err := stuq.loadUser(ctx, query, nodes, nil,
+	if query := _q.withUser; query != nil {
+		if err := _q.loadUser(ctx, query, nodes, nil,
 			func(n *SysTeamUser, e *SysUser) { n.Edges.User = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := stuq.withTeam; query != nil {
-		if err := stuq.loadTeam(ctx, query, nodes, nil,
+	if query := _q.withTeam; query != nil {
+		if err := _q.loadTeam(ctx, query, nodes, nil,
 			func(n *SysTeamUser, e *SysTeam) { n.Edges.Team = e }); err != nil {
 			return nil, err
 		}
@@ -450,7 +450,7 @@ func (stuq *SysTeamUserQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([
 	return nodes, nil
 }
 
-func (stuq *SysTeamUserQuery) loadUser(ctx context.Context, query *SysUserQuery, nodes []*SysTeamUser, init func(*SysTeamUser), assign func(*SysTeamUser, *SysUser)) error {
+func (_q *SysTeamUserQuery) loadUser(ctx context.Context, query *SysUserQuery, nodes []*SysTeamUser, init func(*SysTeamUser), assign func(*SysTeamUser, *SysUser)) error {
 	ids := make([]string, 0, len(nodes))
 	nodeids := make(map[string][]*SysTeamUser)
 	for i := range nodes {
@@ -479,7 +479,7 @@ func (stuq *SysTeamUserQuery) loadUser(ctx context.Context, query *SysUserQuery,
 	}
 	return nil
 }
-func (stuq *SysTeamUserQuery) loadTeam(ctx context.Context, query *SysTeamQuery, nodes []*SysTeamUser, init func(*SysTeamUser), assign func(*SysTeamUser, *SysTeam)) error {
+func (_q *SysTeamUserQuery) loadTeam(ctx context.Context, query *SysTeamQuery, nodes []*SysTeamUser, init func(*SysTeamUser), assign func(*SysTeamUser, *SysTeam)) error {
 	ids := make([]string, 0, len(nodes))
 	nodeids := make(map[string][]*SysTeamUser)
 	for i := range nodes {
@@ -509,27 +509,27 @@ func (stuq *SysTeamUserQuery) loadTeam(ctx context.Context, query *SysTeamQuery,
 	return nil
 }
 
-func (stuq *SysTeamUserQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := stuq.querySpec()
-	if len(stuq.modifiers) > 0 {
-		_spec.Modifiers = stuq.modifiers
+func (_q *SysTeamUserQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = stuq.ctx.Fields
-	if len(stuq.ctx.Fields) > 0 {
-		_spec.Unique = stuq.ctx.Unique != nil && *stuq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, stuq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (stuq *SysTeamUserQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *SysTeamUserQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(systeamuser.Table, systeamuser.Columns, sqlgraph.NewFieldSpec(systeamuser.FieldID, field.TypeString))
-	_spec.From = stuq.sql
-	if unique := stuq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if stuq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := stuq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, systeamuser.FieldID)
 		for i := range fields {
@@ -537,27 +537,27 @@ func (stuq *SysTeamUserQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if stuq.withUser != nil {
+		if _q.withUser != nil {
 			_spec.Node.AddColumnOnce(systeamuser.FieldUserID)
 		}
-		if stuq.withTeam != nil {
+		if _q.withTeam != nil {
 			_spec.Node.AddColumnOnce(systeamuser.FieldTeamID)
 		}
 	}
-	if ps := stuq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := stuq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := stuq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := stuq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -567,36 +567,36 @@ func (stuq *SysTeamUserQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (stuq *SysTeamUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(stuq.driver.Dialect())
+func (_q *SysTeamUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(systeamuser.Table)
-	columns := stuq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = systeamuser.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if stuq.sql != nil {
-		selector = stuq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if stuq.ctx.Unique != nil && *stuq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range stuq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range stuq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range stuq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := stuq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := stuq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -605,33 +605,33 @@ func (stuq *SysTeamUserQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (stuq *SysTeamUserQuery) ForUpdate(opts ...sql.LockOption) *SysTeamUserQuery {
-	if stuq.driver.Dialect() == dialect.Postgres {
-		stuq.Unique(false)
+func (_q *SysTeamUserQuery) ForUpdate(opts ...sql.LockOption) *SysTeamUserQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	stuq.modifiers = append(stuq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return stuq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (stuq *SysTeamUserQuery) ForShare(opts ...sql.LockOption) *SysTeamUserQuery {
-	if stuq.driver.Dialect() == dialect.Postgres {
-		stuq.Unique(false)
+func (_q *SysTeamUserQuery) ForShare(opts ...sql.LockOption) *SysTeamUserQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	stuq.modifiers = append(stuq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return stuq
+	return _q
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (stuq *SysTeamUserQuery) Modify(modifiers ...func(s *sql.Selector)) *SysTeamUserSelect {
-	stuq.modifiers = append(stuq.modifiers, modifiers...)
-	return stuq.Select()
+func (_q *SysTeamUserQuery) Modify(modifiers ...func(s *sql.Selector)) *SysTeamUserSelect {
+	_q.modifiers = append(_q.modifiers, modifiers...)
+	return _q.Select()
 }
 
 // SysTeamUserGroupBy is the group-by builder for SysTeamUser entities.
@@ -641,41 +641,41 @@ type SysTeamUserGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (stugb *SysTeamUserGroupBy) Aggregate(fns ...AggregateFunc) *SysTeamUserGroupBy {
-	stugb.fns = append(stugb.fns, fns...)
-	return stugb
+func (_g *SysTeamUserGroupBy) Aggregate(fns ...AggregateFunc) *SysTeamUserGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (stugb *SysTeamUserGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, stugb.build.ctx, ent.OpQueryGroupBy)
-	if err := stugb.build.prepareQuery(ctx); err != nil {
+func (_g *SysTeamUserGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysTeamUserQuery, *SysTeamUserGroupBy](ctx, stugb.build, stugb, stugb.build.inters, v)
+	return scanWithInterceptors[*SysTeamUserQuery, *SysTeamUserGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (stugb *SysTeamUserGroupBy) sqlScan(ctx context.Context, root *SysTeamUserQuery, v any) error {
+func (_g *SysTeamUserGroupBy) sqlScan(ctx context.Context, root *SysTeamUserQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(stugb.fns))
-	for _, fn := range stugb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*stugb.flds)+len(stugb.fns))
-		for _, f := range *stugb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*stugb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := stugb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -689,27 +689,27 @@ type SysTeamUserSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (stus *SysTeamUserSelect) Aggregate(fns ...AggregateFunc) *SysTeamUserSelect {
-	stus.fns = append(stus.fns, fns...)
-	return stus
+func (_s *SysTeamUserSelect) Aggregate(fns ...AggregateFunc) *SysTeamUserSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (stus *SysTeamUserSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, stus.ctx, ent.OpQuerySelect)
-	if err := stus.prepareQuery(ctx); err != nil {
+func (_s *SysTeamUserSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*SysTeamUserQuery, *SysTeamUserSelect](ctx, stus.SysTeamUserQuery, stus, stus.inters, v)
+	return scanWithInterceptors[*SysTeamUserQuery, *SysTeamUserSelect](ctx, _s.SysTeamUserQuery, _s, _s.inters, v)
 }
 
-func (stus *SysTeamUserSelect) sqlScan(ctx context.Context, root *SysTeamUserQuery, v any) error {
+func (_s *SysTeamUserSelect) sqlScan(ctx context.Context, root *SysTeamUserQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(stus.fns))
-	for _, fn := range stus.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*stus.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -717,7 +717,7 @@ func (stus *SysTeamUserSelect) sqlScan(ctx context.Context, root *SysTeamUserQue
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := stus.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -725,7 +725,7 @@ func (stus *SysTeamUserSelect) sqlScan(ctx context.Context, root *SysTeamUserQue
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (stus *SysTeamUserSelect) Modify(modifiers ...func(s *sql.Selector)) *SysTeamUserSelect {
-	stus.modifiers = append(stus.modifiers, modifiers...)
-	return stus
+func (_s *SysTeamUserSelect) Modify(modifiers ...func(s *sql.Selector)) *SysTeamUserSelect {
+	_s.modifiers = append(_s.modifiers, modifiers...)
+	return _s
 }

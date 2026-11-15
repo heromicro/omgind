@@ -37,44 +37,44 @@ type OrgDeptQuery struct {
 }
 
 // Where adds a new predicate for the OrgDeptQuery builder.
-func (odq *OrgDeptQuery) Where(ps ...predicate.OrgDept) *OrgDeptQuery {
-	odq.predicates = append(odq.predicates, ps...)
-	return odq
+func (_q *OrgDeptQuery) Where(ps ...predicate.OrgDept) *OrgDeptQuery {
+	_q.predicates = append(_q.predicates, ps...)
+	return _q
 }
 
 // Limit the number of records to be returned by this query.
-func (odq *OrgDeptQuery) Limit(limit int) *OrgDeptQuery {
-	odq.ctx.Limit = &limit
-	return odq
+func (_q *OrgDeptQuery) Limit(limit int) *OrgDeptQuery {
+	_q.ctx.Limit = &limit
+	return _q
 }
 
 // Offset to start from.
-func (odq *OrgDeptQuery) Offset(offset int) *OrgDeptQuery {
-	odq.ctx.Offset = &offset
-	return odq
+func (_q *OrgDeptQuery) Offset(offset int) *OrgDeptQuery {
+	_q.ctx.Offset = &offset
+	return _q
 }
 
 // Unique configures the query builder to filter duplicate records on query.
 // By default, unique is set to true, and can be disabled using this method.
-func (odq *OrgDeptQuery) Unique(unique bool) *OrgDeptQuery {
-	odq.ctx.Unique = &unique
-	return odq
+func (_q *OrgDeptQuery) Unique(unique bool) *OrgDeptQuery {
+	_q.ctx.Unique = &unique
+	return _q
 }
 
 // Order specifies how the records should be ordered.
-func (odq *OrgDeptQuery) Order(o ...orgdept.OrderOption) *OrgDeptQuery {
-	odq.order = append(odq.order, o...)
-	return odq
+func (_q *OrgDeptQuery) Order(o ...orgdept.OrderOption) *OrgDeptQuery {
+	_q.order = append(_q.order, o...)
+	return _q
 }
 
 // QueryParent chains the current query on the "parent" edge.
-func (odq *OrgDeptQuery) QueryParent() *OrgDeptQuery {
-	query := (&OrgDeptClient{config: odq.config}).Query()
+func (_q *OrgDeptQuery) QueryParent() *OrgDeptQuery {
+	query := (&OrgDeptClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := odq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := odq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -83,20 +83,20 @@ func (odq *OrgDeptQuery) QueryParent() *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.ParentTable, orgdept.ParentColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryChildren chains the current query on the "children" edge.
-func (odq *OrgDeptQuery) QueryChildren() *OrgDeptQuery {
-	query := (&OrgDeptClient{config: odq.config}).Query()
+func (_q *OrgDeptQuery) QueryChildren() *OrgDeptQuery {
+	query := (&OrgDeptClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := odq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := odq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -105,20 +105,20 @@ func (odq *OrgDeptQuery) QueryChildren() *OrgDeptQuery {
 			sqlgraph.To(orgdept.Table, orgdept.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.ChildrenTable, orgdept.ChildrenColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryOrgan chains the current query on the "organ" edge.
-func (odq *OrgDeptQuery) QueryOrgan() *OrgOrganQuery {
-	query := (&OrgOrganClient{config: odq.config}).Query()
+func (_q *OrgDeptQuery) QueryOrgan() *OrgOrganQuery {
+	query := (&OrgOrganClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := odq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := odq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -127,20 +127,20 @@ func (odq *OrgDeptQuery) QueryOrgan() *OrgOrganQuery {
 			sqlgraph.To(orgorgan.Table, orgorgan.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, orgdept.OrganTable, orgdept.OrganColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
 }
 
 // QueryStaffs chains the current query on the "staffs" edge.
-func (odq *OrgDeptQuery) QueryStaffs() *OrgStaffQuery {
-	query := (&OrgStaffClient{config: odq.config}).Query()
+func (_q *OrgDeptQuery) QueryStaffs() *OrgStaffQuery {
+	query := (&OrgStaffClient{config: _q.config}).Query()
 	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
-		if err := odq.prepareQuery(ctx); err != nil {
+		if err := _q.prepareQuery(ctx); err != nil {
 			return nil, err
 		}
-		selector := odq.sqlQuery(ctx)
+		selector := _q.sqlQuery(ctx)
 		if err := selector.Err(); err != nil {
 			return nil, err
 		}
@@ -149,7 +149,7 @@ func (odq *OrgDeptQuery) QueryStaffs() *OrgStaffQuery {
 			sqlgraph.To(orgstaff.Table, orgstaff.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, orgdept.StaffsTable, orgdept.StaffsColumn),
 		)
-		fromU = sqlgraph.SetNeighbors(odq.driver.Dialect(), step)
+		fromU = sqlgraph.SetNeighbors(_q.driver.Dialect(), step)
 		return fromU, nil
 	}
 	return query
@@ -157,8 +157,8 @@ func (odq *OrgDeptQuery) QueryStaffs() *OrgStaffQuery {
 
 // First returns the first OrgDept entity from the query.
 // Returns a *NotFoundError when no OrgDept was found.
-func (odq *OrgDeptQuery) First(ctx context.Context) (*OrgDept, error) {
-	nodes, err := odq.Limit(1).All(setContextOp(ctx, odq.ctx, ent.OpQueryFirst))
+func (_q *OrgDeptQuery) First(ctx context.Context) (*OrgDept, error) {
+	nodes, err := _q.Limit(1).All(setContextOp(ctx, _q.ctx, ent.OpQueryFirst))
 	if err != nil {
 		return nil, err
 	}
@@ -169,8 +169,8 @@ func (odq *OrgDeptQuery) First(ctx context.Context) (*OrgDept, error) {
 }
 
 // FirstX is like First, but panics if an error occurs.
-func (odq *OrgDeptQuery) FirstX(ctx context.Context) *OrgDept {
-	node, err := odq.First(ctx)
+func (_q *OrgDeptQuery) FirstX(ctx context.Context) *OrgDept {
+	node, err := _q.First(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -179,9 +179,9 @@ func (odq *OrgDeptQuery) FirstX(ctx context.Context) *OrgDept {
 
 // FirstID returns the first OrgDept ID from the query.
 // Returns a *NotFoundError when no OrgDept ID was found.
-func (odq *OrgDeptQuery) FirstID(ctx context.Context) (id string, err error) {
+func (_q *OrgDeptQuery) FirstID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = odq.Limit(1).IDs(setContextOp(ctx, odq.ctx, ent.OpQueryFirstID)); err != nil {
+	if ids, err = _q.Limit(1).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryFirstID)); err != nil {
 		return
 	}
 	if len(ids) == 0 {
@@ -192,8 +192,8 @@ func (odq *OrgDeptQuery) FirstID(ctx context.Context) (id string, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (odq *OrgDeptQuery) FirstIDX(ctx context.Context) string {
-	id, err := odq.FirstID(ctx)
+func (_q *OrgDeptQuery) FirstIDX(ctx context.Context) string {
+	id, err := _q.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
 	}
@@ -203,8 +203,8 @@ func (odq *OrgDeptQuery) FirstIDX(ctx context.Context) string {
 // Only returns a single OrgDept entity found by the query, ensuring it only returns one.
 // Returns a *NotSingularError when more than one OrgDept entity is found.
 // Returns a *NotFoundError when no OrgDept entities are found.
-func (odq *OrgDeptQuery) Only(ctx context.Context) (*OrgDept, error) {
-	nodes, err := odq.Limit(2).All(setContextOp(ctx, odq.ctx, ent.OpQueryOnly))
+func (_q *OrgDeptQuery) Only(ctx context.Context) (*OrgDept, error) {
+	nodes, err := _q.Limit(2).All(setContextOp(ctx, _q.ctx, ent.OpQueryOnly))
 	if err != nil {
 		return nil, err
 	}
@@ -219,8 +219,8 @@ func (odq *OrgDeptQuery) Only(ctx context.Context) (*OrgDept, error) {
 }
 
 // OnlyX is like Only, but panics if an error occurs.
-func (odq *OrgDeptQuery) OnlyX(ctx context.Context) *OrgDept {
-	node, err := odq.Only(ctx)
+func (_q *OrgDeptQuery) OnlyX(ctx context.Context) *OrgDept {
+	node, err := _q.Only(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -230,9 +230,9 @@ func (odq *OrgDeptQuery) OnlyX(ctx context.Context) *OrgDept {
 // OnlyID is like Only, but returns the only OrgDept ID in the query.
 // Returns a *NotSingularError when more than one OrgDept ID is found.
 // Returns a *NotFoundError when no entities are found.
-func (odq *OrgDeptQuery) OnlyID(ctx context.Context) (id string, err error) {
+func (_q *OrgDeptQuery) OnlyID(ctx context.Context) (id string, err error) {
 	var ids []string
-	if ids, err = odq.Limit(2).IDs(setContextOp(ctx, odq.ctx, ent.OpQueryOnlyID)); err != nil {
+	if ids, err = _q.Limit(2).IDs(setContextOp(ctx, _q.ctx, ent.OpQueryOnlyID)); err != nil {
 		return
 	}
 	switch len(ids) {
@@ -247,8 +247,8 @@ func (odq *OrgDeptQuery) OnlyID(ctx context.Context) (id string, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (odq *OrgDeptQuery) OnlyIDX(ctx context.Context) string {
-	id, err := odq.OnlyID(ctx)
+func (_q *OrgDeptQuery) OnlyIDX(ctx context.Context) string {
+	id, err := _q.OnlyID(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -256,18 +256,18 @@ func (odq *OrgDeptQuery) OnlyIDX(ctx context.Context) string {
 }
 
 // All executes the query and returns a list of OrgDepts.
-func (odq *OrgDeptQuery) All(ctx context.Context) ([]*OrgDept, error) {
-	ctx = setContextOp(ctx, odq.ctx, ent.OpQueryAll)
-	if err := odq.prepareQuery(ctx); err != nil {
+func (_q *OrgDeptQuery) All(ctx context.Context) ([]*OrgDept, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryAll)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return nil, err
 	}
 	qr := querierAll[[]*OrgDept, *OrgDeptQuery]()
-	return withInterceptors[[]*OrgDept](ctx, odq, qr, odq.inters)
+	return withInterceptors[[]*OrgDept](ctx, _q, qr, _q.inters)
 }
 
 // AllX is like All, but panics if an error occurs.
-func (odq *OrgDeptQuery) AllX(ctx context.Context) []*OrgDept {
-	nodes, err := odq.All(ctx)
+func (_q *OrgDeptQuery) AllX(ctx context.Context) []*OrgDept {
+	nodes, err := _q.All(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -275,20 +275,20 @@ func (odq *OrgDeptQuery) AllX(ctx context.Context) []*OrgDept {
 }
 
 // IDs executes the query and returns a list of OrgDept IDs.
-func (odq *OrgDeptQuery) IDs(ctx context.Context) (ids []string, err error) {
-	if odq.ctx.Unique == nil && odq.path != nil {
-		odq.Unique(true)
+func (_q *OrgDeptQuery) IDs(ctx context.Context) (ids []string, err error) {
+	if _q.ctx.Unique == nil && _q.path != nil {
+		_q.Unique(true)
 	}
-	ctx = setContextOp(ctx, odq.ctx, ent.OpQueryIDs)
-	if err = odq.Select(orgdept.FieldID).Scan(ctx, &ids); err != nil {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryIDs)
+	if err = _q.Select(orgdept.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (odq *OrgDeptQuery) IDsX(ctx context.Context) []string {
-	ids, err := odq.IDs(ctx)
+func (_q *OrgDeptQuery) IDsX(ctx context.Context) []string {
+	ids, err := _q.IDs(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -296,17 +296,17 @@ func (odq *OrgDeptQuery) IDsX(ctx context.Context) []string {
 }
 
 // Count returns the count of the given query.
-func (odq *OrgDeptQuery) Count(ctx context.Context) (int, error) {
-	ctx = setContextOp(ctx, odq.ctx, ent.OpQueryCount)
-	if err := odq.prepareQuery(ctx); err != nil {
+func (_q *OrgDeptQuery) Count(ctx context.Context) (int, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryCount)
+	if err := _q.prepareQuery(ctx); err != nil {
 		return 0, err
 	}
-	return withInterceptors[int](ctx, odq, querierCount[*OrgDeptQuery](), odq.inters)
+	return withInterceptors[int](ctx, _q, querierCount[*OrgDeptQuery](), _q.inters)
 }
 
 // CountX is like Count, but panics if an error occurs.
-func (odq *OrgDeptQuery) CountX(ctx context.Context) int {
-	count, err := odq.Count(ctx)
+func (_q *OrgDeptQuery) CountX(ctx context.Context) int {
+	count, err := _q.Count(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -314,9 +314,9 @@ func (odq *OrgDeptQuery) CountX(ctx context.Context) int {
 }
 
 // Exist returns true if the query has elements in the graph.
-func (odq *OrgDeptQuery) Exist(ctx context.Context) (bool, error) {
-	ctx = setContextOp(ctx, odq.ctx, ent.OpQueryExist)
-	switch _, err := odq.FirstID(ctx); {
+func (_q *OrgDeptQuery) Exist(ctx context.Context) (bool, error) {
+	ctx = setContextOp(ctx, _q.ctx, ent.OpQueryExist)
+	switch _, err := _q.FirstID(ctx); {
 	case IsNotFound(err):
 		return false, nil
 	case err != nil:
@@ -327,8 +327,8 @@ func (odq *OrgDeptQuery) Exist(ctx context.Context) (bool, error) {
 }
 
 // ExistX is like Exist, but panics if an error occurs.
-func (odq *OrgDeptQuery) ExistX(ctx context.Context) bool {
-	exist, err := odq.Exist(ctx)
+func (_q *OrgDeptQuery) ExistX(ctx context.Context) bool {
+	exist, err := _q.Exist(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -337,69 +337,69 @@ func (odq *OrgDeptQuery) ExistX(ctx context.Context) bool {
 
 // Clone returns a duplicate of the OrgDeptQuery builder, including all associated steps. It can be
 // used to prepare common query builders and use them differently after the clone is made.
-func (odq *OrgDeptQuery) Clone() *OrgDeptQuery {
-	if odq == nil {
+func (_q *OrgDeptQuery) Clone() *OrgDeptQuery {
+	if _q == nil {
 		return nil
 	}
 	return &OrgDeptQuery{
-		config:       odq.config,
-		ctx:          odq.ctx.Clone(),
-		order:        append([]orgdept.OrderOption{}, odq.order...),
-		inters:       append([]Interceptor{}, odq.inters...),
-		predicates:   append([]predicate.OrgDept{}, odq.predicates...),
-		withParent:   odq.withParent.Clone(),
-		withChildren: odq.withChildren.Clone(),
-		withOrgan:    odq.withOrgan.Clone(),
-		withStaffs:   odq.withStaffs.Clone(),
+		config:       _q.config,
+		ctx:          _q.ctx.Clone(),
+		order:        append([]orgdept.OrderOption{}, _q.order...),
+		inters:       append([]Interceptor{}, _q.inters...),
+		predicates:   append([]predicate.OrgDept{}, _q.predicates...),
+		withParent:   _q.withParent.Clone(),
+		withChildren: _q.withChildren.Clone(),
+		withOrgan:    _q.withOrgan.Clone(),
+		withStaffs:   _q.withStaffs.Clone(),
 		// clone intermediate query.
-		sql:       odq.sql.Clone(),
-		path:      odq.path,
-		modifiers: append([]func(*sql.Selector){}, odq.modifiers...),
+		sql:       _q.sql.Clone(),
+		path:      _q.path,
+		modifiers: append([]func(*sql.Selector){}, _q.modifiers...),
 	}
 }
 
 // WithParent tells the query-builder to eager-load the nodes that are connected to
 // the "parent" edge. The optional arguments are used to configure the query builder of the edge.
-func (odq *OrgDeptQuery) WithParent(opts ...func(*OrgDeptQuery)) *OrgDeptQuery {
-	query := (&OrgDeptClient{config: odq.config}).Query()
+func (_q *OrgDeptQuery) WithParent(opts ...func(*OrgDeptQuery)) *OrgDeptQuery {
+	query := (&OrgDeptClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	odq.withParent = query
-	return odq
+	_q.withParent = query
+	return _q
 }
 
 // WithChildren tells the query-builder to eager-load the nodes that are connected to
 // the "children" edge. The optional arguments are used to configure the query builder of the edge.
-func (odq *OrgDeptQuery) WithChildren(opts ...func(*OrgDeptQuery)) *OrgDeptQuery {
-	query := (&OrgDeptClient{config: odq.config}).Query()
+func (_q *OrgDeptQuery) WithChildren(opts ...func(*OrgDeptQuery)) *OrgDeptQuery {
+	query := (&OrgDeptClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	odq.withChildren = query
-	return odq
+	_q.withChildren = query
+	return _q
 }
 
 // WithOrgan tells the query-builder to eager-load the nodes that are connected to
 // the "organ" edge. The optional arguments are used to configure the query builder of the edge.
-func (odq *OrgDeptQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *OrgDeptQuery {
-	query := (&OrgOrganClient{config: odq.config}).Query()
+func (_q *OrgDeptQuery) WithOrgan(opts ...func(*OrgOrganQuery)) *OrgDeptQuery {
+	query := (&OrgOrganClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	odq.withOrgan = query
-	return odq
+	_q.withOrgan = query
+	return _q
 }
 
 // WithStaffs tells the query-builder to eager-load the nodes that are connected to
 // the "staffs" edge. The optional arguments are used to configure the query builder of the edge.
-func (odq *OrgDeptQuery) WithStaffs(opts ...func(*OrgStaffQuery)) *OrgDeptQuery {
-	query := (&OrgStaffClient{config: odq.config}).Query()
+func (_q *OrgDeptQuery) WithStaffs(opts ...func(*OrgStaffQuery)) *OrgDeptQuery {
+	query := (&OrgStaffClient{config: _q.config}).Query()
 	for _, opt := range opts {
 		opt(query)
 	}
-	odq.withStaffs = query
-	return odq
+	_q.withStaffs = query
+	return _q
 }
 
 // GroupBy is used to group vertices by one or more fields/columns.
@@ -416,10 +416,10 @@ func (odq *OrgDeptQuery) WithStaffs(opts ...func(*OrgStaffQuery)) *OrgDeptQuery 
 //		GroupBy(orgdept.FieldIsDel).
 //		Aggregate(mainent.Count()).
 //		Scan(ctx, &v)
-func (odq *OrgDeptQuery) GroupBy(field string, fields ...string) *OrgDeptGroupBy {
-	odq.ctx.Fields = append([]string{field}, fields...)
-	grbuild := &OrgDeptGroupBy{build: odq}
-	grbuild.flds = &odq.ctx.Fields
+func (_q *OrgDeptQuery) GroupBy(field string, fields ...string) *OrgDeptGroupBy {
+	_q.ctx.Fields = append([]string{field}, fields...)
+	grbuild := &OrgDeptGroupBy{build: _q}
+	grbuild.flds = &_q.ctx.Fields
 	grbuild.label = orgdept.Label
 	grbuild.scan = grbuild.Scan
 	return grbuild
@@ -437,98 +437,98 @@ func (odq *OrgDeptQuery) GroupBy(field string, fields ...string) *OrgDeptGroupBy
 //	client.OrgDept.Query().
 //		Select(orgdept.FieldIsDel).
 //		Scan(ctx, &v)
-func (odq *OrgDeptQuery) Select(fields ...string) *OrgDeptSelect {
-	odq.ctx.Fields = append(odq.ctx.Fields, fields...)
-	sbuild := &OrgDeptSelect{OrgDeptQuery: odq}
+func (_q *OrgDeptQuery) Select(fields ...string) *OrgDeptSelect {
+	_q.ctx.Fields = append(_q.ctx.Fields, fields...)
+	sbuild := &OrgDeptSelect{OrgDeptQuery: _q}
 	sbuild.label = orgdept.Label
-	sbuild.flds, sbuild.scan = &odq.ctx.Fields, sbuild.Scan
+	sbuild.flds, sbuild.scan = &_q.ctx.Fields, sbuild.Scan
 	return sbuild
 }
 
 // Aggregate returns a OrgDeptSelect configured with the given aggregations.
-func (odq *OrgDeptQuery) Aggregate(fns ...AggregateFunc) *OrgDeptSelect {
-	return odq.Select().Aggregate(fns...)
+func (_q *OrgDeptQuery) Aggregate(fns ...AggregateFunc) *OrgDeptSelect {
+	return _q.Select().Aggregate(fns...)
 }
 
-func (odq *OrgDeptQuery) prepareQuery(ctx context.Context) error {
-	for _, inter := range odq.inters {
+func (_q *OrgDeptQuery) prepareQuery(ctx context.Context) error {
+	for _, inter := range _q.inters {
 		if inter == nil {
 			return fmt.Errorf("mainent: uninitialized interceptor (forgotten import mainent/runtime?)")
 		}
 		if trv, ok := inter.(Traverser); ok {
-			if err := trv.Traverse(ctx, odq); err != nil {
+			if err := trv.Traverse(ctx, _q); err != nil {
 				return err
 			}
 		}
 	}
-	for _, f := range odq.ctx.Fields {
+	for _, f := range _q.ctx.Fields {
 		if !orgdept.ValidColumn(f) {
 			return &ValidationError{Name: f, err: fmt.Errorf("mainent: invalid field %q for query", f)}
 		}
 	}
-	if odq.path != nil {
-		prev, err := odq.path(ctx)
+	if _q.path != nil {
+		prev, err := _q.path(ctx)
 		if err != nil {
 			return err
 		}
-		odq.sql = prev
+		_q.sql = prev
 	}
 	return nil
 }
 
-func (odq *OrgDeptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrgDept, error) {
+func (_q *OrgDeptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*OrgDept, error) {
 	var (
 		nodes       = []*OrgDept{}
-		_spec       = odq.querySpec()
+		_spec       = _q.querySpec()
 		loadedTypes = [4]bool{
-			odq.withParent != nil,
-			odq.withChildren != nil,
-			odq.withOrgan != nil,
-			odq.withStaffs != nil,
+			_q.withParent != nil,
+			_q.withChildren != nil,
+			_q.withOrgan != nil,
+			_q.withStaffs != nil,
 		}
 	)
 	_spec.ScanValues = func(columns []string) ([]any, error) {
 		return (*OrgDept).scanValues(nil, columns)
 	}
 	_spec.Assign = func(columns []string, values []any) error {
-		node := &OrgDept{config: odq.config}
+		node := &OrgDept{config: _q.config}
 		nodes = append(nodes, node)
 		node.Edges.loadedTypes = loadedTypes
 		return node.assignValues(columns, values)
 	}
-	if len(odq.modifiers) > 0 {
-		_spec.Modifiers = odq.modifiers
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
 	for i := range hooks {
 		hooks[i](ctx, _spec)
 	}
-	if err := sqlgraph.QueryNodes(ctx, odq.driver, _spec); err != nil {
+	if err := sqlgraph.QueryNodes(ctx, _q.driver, _spec); err != nil {
 		return nil, err
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
 	}
-	if query := odq.withParent; query != nil {
-		if err := odq.loadParent(ctx, query, nodes, nil,
+	if query := _q.withParent; query != nil {
+		if err := _q.loadParent(ctx, query, nodes, nil,
 			func(n *OrgDept, e *OrgDept) { n.Edges.Parent = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := odq.withChildren; query != nil {
-		if err := odq.loadChildren(ctx, query, nodes,
+	if query := _q.withChildren; query != nil {
+		if err := _q.loadChildren(ctx, query, nodes,
 			func(n *OrgDept) { n.Edges.Children = []*OrgDept{} },
 			func(n *OrgDept, e *OrgDept) { n.Edges.Children = append(n.Edges.Children, e) }); err != nil {
 			return nil, err
 		}
 	}
-	if query := odq.withOrgan; query != nil {
-		if err := odq.loadOrgan(ctx, query, nodes, nil,
+	if query := _q.withOrgan; query != nil {
+		if err := _q.loadOrgan(ctx, query, nodes, nil,
 			func(n *OrgDept, e *OrgOrgan) { n.Edges.Organ = e }); err != nil {
 			return nil, err
 		}
 	}
-	if query := odq.withStaffs; query != nil {
-		if err := odq.loadStaffs(ctx, query, nodes,
+	if query := _q.withStaffs; query != nil {
+		if err := _q.loadStaffs(ctx, query, nodes,
 			func(n *OrgDept) { n.Edges.Staffs = []*OrgStaff{} },
 			func(n *OrgDept, e *OrgStaff) { n.Edges.Staffs = append(n.Edges.Staffs, e) }); err != nil {
 			return nil, err
@@ -537,7 +537,7 @@ func (odq *OrgDeptQuery) sqlAll(ctx context.Context, hooks ...queryHook) ([]*Org
 	return nodes, nil
 }
 
-func (odq *OrgDeptQuery) loadParent(ctx context.Context, query *OrgDeptQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgDept)) error {
+func (_q *OrgDeptQuery) loadParent(ctx context.Context, query *OrgDeptQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgDept)) error {
 	ids := make([]string, 0, len(nodes))
 	nodeids := make(map[string][]*OrgDept)
 	for i := range nodes {
@@ -569,7 +569,7 @@ func (odq *OrgDeptQuery) loadParent(ctx context.Context, query *OrgDeptQuery, no
 	}
 	return nil
 }
-func (odq *OrgDeptQuery) loadChildren(ctx context.Context, query *OrgDeptQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgDept)) error {
+func (_q *OrgDeptQuery) loadChildren(ctx context.Context, query *OrgDeptQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgDept)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[string]*OrgDept)
 	for i := range nodes {
@@ -602,7 +602,7 @@ func (odq *OrgDeptQuery) loadChildren(ctx context.Context, query *OrgDeptQuery, 
 	}
 	return nil
 }
-func (odq *OrgDeptQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgOrgan)) error {
+func (_q *OrgDeptQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgOrgan)) error {
 	ids := make([]string, 0, len(nodes))
 	nodeids := make(map[string][]*OrgDept)
 	for i := range nodes {
@@ -634,7 +634,7 @@ func (odq *OrgDeptQuery) loadOrgan(ctx context.Context, query *OrgOrganQuery, no
 	}
 	return nil
 }
-func (odq *OrgDeptQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgStaff)) error {
+func (_q *OrgDeptQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, nodes []*OrgDept, init func(*OrgDept), assign func(*OrgDept, *OrgStaff)) error {
 	fks := make([]driver.Value, 0, len(nodes))
 	nodeids := make(map[string]*OrgDept)
 	for i := range nodes {
@@ -668,27 +668,27 @@ func (odq *OrgDeptQuery) loadStaffs(ctx context.Context, query *OrgStaffQuery, n
 	return nil
 }
 
-func (odq *OrgDeptQuery) sqlCount(ctx context.Context) (int, error) {
-	_spec := odq.querySpec()
-	if len(odq.modifiers) > 0 {
-		_spec.Modifiers = odq.modifiers
+func (_q *OrgDeptQuery) sqlCount(ctx context.Context) (int, error) {
+	_spec := _q.querySpec()
+	if len(_q.modifiers) > 0 {
+		_spec.Modifiers = _q.modifiers
 	}
-	_spec.Node.Columns = odq.ctx.Fields
-	if len(odq.ctx.Fields) > 0 {
-		_spec.Unique = odq.ctx.Unique != nil && *odq.ctx.Unique
+	_spec.Node.Columns = _q.ctx.Fields
+	if len(_q.ctx.Fields) > 0 {
+		_spec.Unique = _q.ctx.Unique != nil && *_q.ctx.Unique
 	}
-	return sqlgraph.CountNodes(ctx, odq.driver, _spec)
+	return sqlgraph.CountNodes(ctx, _q.driver, _spec)
 }
 
-func (odq *OrgDeptQuery) querySpec() *sqlgraph.QuerySpec {
+func (_q *OrgDeptQuery) querySpec() *sqlgraph.QuerySpec {
 	_spec := sqlgraph.NewQuerySpec(orgdept.Table, orgdept.Columns, sqlgraph.NewFieldSpec(orgdept.FieldID, field.TypeString))
-	_spec.From = odq.sql
-	if unique := odq.ctx.Unique; unique != nil {
+	_spec.From = _q.sql
+	if unique := _q.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
-	} else if odq.path != nil {
+	} else if _q.path != nil {
 		_spec.Unique = true
 	}
-	if fields := odq.ctx.Fields; len(fields) > 0 {
+	if fields := _q.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, orgdept.FieldID)
 		for i := range fields {
@@ -696,27 +696,27 @@ func (odq *OrgDeptQuery) querySpec() *sqlgraph.QuerySpec {
 				_spec.Node.Columns = append(_spec.Node.Columns, fields[i])
 			}
 		}
-		if odq.withParent != nil {
+		if _q.withParent != nil {
 			_spec.Node.AddColumnOnce(orgdept.FieldParentID)
 		}
-		if odq.withOrgan != nil {
+		if _q.withOrgan != nil {
 			_spec.Node.AddColumnOnce(orgdept.FieldOrgID)
 		}
 	}
-	if ps := odq.predicates; len(ps) > 0 {
+	if ps := _q.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if limit := odq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		_spec.Limit = *limit
 	}
-	if offset := odq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		_spec.Offset = *offset
 	}
-	if ps := odq.order; len(ps) > 0 {
+	if ps := _q.order; len(ps) > 0 {
 		_spec.Order = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
@@ -726,36 +726,36 @@ func (odq *OrgDeptQuery) querySpec() *sqlgraph.QuerySpec {
 	return _spec
 }
 
-func (odq *OrgDeptQuery) sqlQuery(ctx context.Context) *sql.Selector {
-	builder := sql.Dialect(odq.driver.Dialect())
+func (_q *OrgDeptQuery) sqlQuery(ctx context.Context) *sql.Selector {
+	builder := sql.Dialect(_q.driver.Dialect())
 	t1 := builder.Table(orgdept.Table)
-	columns := odq.ctx.Fields
+	columns := _q.ctx.Fields
 	if len(columns) == 0 {
 		columns = orgdept.Columns
 	}
 	selector := builder.Select(t1.Columns(columns...)...).From(t1)
-	if odq.sql != nil {
-		selector = odq.sql
+	if _q.sql != nil {
+		selector = _q.sql
 		selector.Select(selector.Columns(columns...)...)
 	}
-	if odq.ctx.Unique != nil && *odq.ctx.Unique {
+	if _q.ctx.Unique != nil && *_q.ctx.Unique {
 		selector.Distinct()
 	}
-	for _, m := range odq.modifiers {
+	for _, m := range _q.modifiers {
 		m(selector)
 	}
-	for _, p := range odq.predicates {
+	for _, p := range _q.predicates {
 		p(selector)
 	}
-	for _, p := range odq.order {
+	for _, p := range _q.order {
 		p(selector)
 	}
-	if offset := odq.ctx.Offset; offset != nil {
+	if offset := _q.ctx.Offset; offset != nil {
 		// limit is mandatory for offset clause. We start
 		// with default value, and override it below if needed.
 		selector.Offset(*offset).Limit(math.MaxInt32)
 	}
-	if limit := odq.ctx.Limit; limit != nil {
+	if limit := _q.ctx.Limit; limit != nil {
 		selector.Limit(*limit)
 	}
 	return selector
@@ -764,33 +764,33 @@ func (odq *OrgDeptQuery) sqlQuery(ctx context.Context) *sql.Selector {
 // ForUpdate locks the selected rows against concurrent updates, and prevent them from being
 // updated, deleted or "selected ... for update" by other sessions, until the transaction is
 // either committed or rolled-back.
-func (odq *OrgDeptQuery) ForUpdate(opts ...sql.LockOption) *OrgDeptQuery {
-	if odq.driver.Dialect() == dialect.Postgres {
-		odq.Unique(false)
+func (_q *OrgDeptQuery) ForUpdate(opts ...sql.LockOption) *OrgDeptQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	odq.modifiers = append(odq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForUpdate(opts...)
 	})
-	return odq
+	return _q
 }
 
 // ForShare behaves similarly to ForUpdate, except that it acquires a shared mode lock
 // on any rows that are read. Other sessions can read the rows, but cannot modify them
 // until your transaction commits.
-func (odq *OrgDeptQuery) ForShare(opts ...sql.LockOption) *OrgDeptQuery {
-	if odq.driver.Dialect() == dialect.Postgres {
-		odq.Unique(false)
+func (_q *OrgDeptQuery) ForShare(opts ...sql.LockOption) *OrgDeptQuery {
+	if _q.driver.Dialect() == dialect.Postgres {
+		_q.Unique(false)
 	}
-	odq.modifiers = append(odq.modifiers, func(s *sql.Selector) {
+	_q.modifiers = append(_q.modifiers, func(s *sql.Selector) {
 		s.ForShare(opts...)
 	})
-	return odq
+	return _q
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (odq *OrgDeptQuery) Modify(modifiers ...func(s *sql.Selector)) *OrgDeptSelect {
-	odq.modifiers = append(odq.modifiers, modifiers...)
-	return odq.Select()
+func (_q *OrgDeptQuery) Modify(modifiers ...func(s *sql.Selector)) *OrgDeptSelect {
+	_q.modifiers = append(_q.modifiers, modifiers...)
+	return _q.Select()
 }
 
 // OrgDeptGroupBy is the group-by builder for OrgDept entities.
@@ -800,41 +800,41 @@ type OrgDeptGroupBy struct {
 }
 
 // Aggregate adds the given aggregation functions to the group-by query.
-func (odgb *OrgDeptGroupBy) Aggregate(fns ...AggregateFunc) *OrgDeptGroupBy {
-	odgb.fns = append(odgb.fns, fns...)
-	return odgb
+func (_g *OrgDeptGroupBy) Aggregate(fns ...AggregateFunc) *OrgDeptGroupBy {
+	_g.fns = append(_g.fns, fns...)
+	return _g
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (odgb *OrgDeptGroupBy) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, odgb.build.ctx, ent.OpQueryGroupBy)
-	if err := odgb.build.prepareQuery(ctx); err != nil {
+func (_g *OrgDeptGroupBy) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _g.build.ctx, ent.OpQueryGroupBy)
+	if err := _g.build.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrgDeptQuery, *OrgDeptGroupBy](ctx, odgb.build, odgb, odgb.build.inters, v)
+	return scanWithInterceptors[*OrgDeptQuery, *OrgDeptGroupBy](ctx, _g.build, _g, _g.build.inters, v)
 }
 
-func (odgb *OrgDeptGroupBy) sqlScan(ctx context.Context, root *OrgDeptQuery, v any) error {
+func (_g *OrgDeptGroupBy) sqlScan(ctx context.Context, root *OrgDeptQuery, v any) error {
 	selector := root.sqlQuery(ctx).Select()
-	aggregation := make([]string, 0, len(odgb.fns))
-	for _, fn := range odgb.fns {
+	aggregation := make([]string, 0, len(_g.fns))
+	for _, fn := range _g.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
 	if len(selector.SelectedColumns()) == 0 {
-		columns := make([]string, 0, len(*odgb.flds)+len(odgb.fns))
-		for _, f := range *odgb.flds {
+		columns := make([]string, 0, len(*_g.flds)+len(_g.fns))
+		for _, f := range *_g.flds {
 			columns = append(columns, selector.C(f))
 		}
 		columns = append(columns, aggregation...)
 		selector.Select(columns...)
 	}
-	selector.GroupBy(selector.Columns(*odgb.flds...)...)
+	selector.GroupBy(selector.Columns(*_g.flds...)...)
 	if err := selector.Err(); err != nil {
 		return err
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := odgb.build.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _g.build.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -848,27 +848,27 @@ type OrgDeptSelect struct {
 }
 
 // Aggregate adds the given aggregation functions to the selector query.
-func (ods *OrgDeptSelect) Aggregate(fns ...AggregateFunc) *OrgDeptSelect {
-	ods.fns = append(ods.fns, fns...)
-	return ods
+func (_s *OrgDeptSelect) Aggregate(fns ...AggregateFunc) *OrgDeptSelect {
+	_s.fns = append(_s.fns, fns...)
+	return _s
 }
 
 // Scan applies the selector query and scans the result into the given value.
-func (ods *OrgDeptSelect) Scan(ctx context.Context, v any) error {
-	ctx = setContextOp(ctx, ods.ctx, ent.OpQuerySelect)
-	if err := ods.prepareQuery(ctx); err != nil {
+func (_s *OrgDeptSelect) Scan(ctx context.Context, v any) error {
+	ctx = setContextOp(ctx, _s.ctx, ent.OpQuerySelect)
+	if err := _s.prepareQuery(ctx); err != nil {
 		return err
 	}
-	return scanWithInterceptors[*OrgDeptQuery, *OrgDeptSelect](ctx, ods.OrgDeptQuery, ods, ods.inters, v)
+	return scanWithInterceptors[*OrgDeptQuery, *OrgDeptSelect](ctx, _s.OrgDeptQuery, _s, _s.inters, v)
 }
 
-func (ods *OrgDeptSelect) sqlScan(ctx context.Context, root *OrgDeptQuery, v any) error {
+func (_s *OrgDeptSelect) sqlScan(ctx context.Context, root *OrgDeptQuery, v any) error {
 	selector := root.sqlQuery(ctx)
-	aggregation := make([]string, 0, len(ods.fns))
-	for _, fn := range ods.fns {
+	aggregation := make([]string, 0, len(_s.fns))
+	for _, fn := range _s.fns {
 		aggregation = append(aggregation, fn(selector))
 	}
-	switch n := len(*ods.selector.flds); {
+	switch n := len(*_s.selector.flds); {
 	case n == 0 && len(aggregation) > 0:
 		selector.Select(aggregation...)
 	case n != 0 && len(aggregation) > 0:
@@ -876,7 +876,7 @@ func (ods *OrgDeptSelect) sqlScan(ctx context.Context, root *OrgDeptQuery, v any
 	}
 	rows := &sql.Rows{}
 	query, args := selector.Query()
-	if err := ods.driver.Query(ctx, query, args, rows); err != nil {
+	if err := _s.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
@@ -884,7 +884,7 @@ func (ods *OrgDeptSelect) sqlScan(ctx context.Context, root *OrgDeptQuery, v any
 }
 
 // Modify adds a query modifier for attaching custom logic to queries.
-func (ods *OrgDeptSelect) Modify(modifiers ...func(s *sql.Selector)) *OrgDeptSelect {
-	ods.modifiers = append(ods.modifiers, modifiers...)
-	return ods
+func (_s *OrgDeptSelect) Modify(modifiers ...func(s *sql.Selector)) *OrgDeptSelect {
+	_s.modifiers = append(_s.modifiers, modifiers...)
+	return _s
 }

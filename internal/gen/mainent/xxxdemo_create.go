@@ -24,143 +24,143 @@ type XxxDemoCreate struct {
 }
 
 // SetIsDel sets the "is_del" field.
-func (xdc *XxxDemoCreate) SetIsDel(b bool) *XxxDemoCreate {
-	xdc.mutation.SetIsDel(b)
-	return xdc
+func (_c *XxxDemoCreate) SetIsDel(v bool) *XxxDemoCreate {
+	_c.mutation.SetIsDel(v)
+	return _c
 }
 
 // SetNillableIsDel sets the "is_del" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableIsDel(b *bool) *XxxDemoCreate {
-	if b != nil {
-		xdc.SetIsDel(*b)
+func (_c *XxxDemoCreate) SetNillableIsDel(v *bool) *XxxDemoCreate {
+	if v != nil {
+		_c.SetIsDel(*v)
 	}
-	return xdc
+	return _c
 }
 
 // SetMemo sets the "memo" field.
-func (xdc *XxxDemoCreate) SetMemo(s string) *XxxDemoCreate {
-	xdc.mutation.SetMemo(s)
-	return xdc
+func (_c *XxxDemoCreate) SetMemo(v string) *XxxDemoCreate {
+	_c.mutation.SetMemo(v)
+	return _c
 }
 
 // SetNillableMemo sets the "memo" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableMemo(s *string) *XxxDemoCreate {
-	if s != nil {
-		xdc.SetMemo(*s)
+func (_c *XxxDemoCreate) SetNillableMemo(v *string) *XxxDemoCreate {
+	if v != nil {
+		_c.SetMemo(*v)
 	}
-	return xdc
+	return _c
 }
 
 // SetSort sets the "sort" field.
-func (xdc *XxxDemoCreate) SetSort(i int32) *XxxDemoCreate {
-	xdc.mutation.SetSort(i)
-	return xdc
+func (_c *XxxDemoCreate) SetSort(v int32) *XxxDemoCreate {
+	_c.mutation.SetSort(v)
+	return _c
 }
 
 // SetNillableSort sets the "sort" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableSort(i *int32) *XxxDemoCreate {
-	if i != nil {
-		xdc.SetSort(*i)
+func (_c *XxxDemoCreate) SetNillableSort(v *int32) *XxxDemoCreate {
+	if v != nil {
+		_c.SetSort(*v)
 	}
-	return xdc
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (xdc *XxxDemoCreate) SetCreatedAt(t time.Time) *XxxDemoCreate {
-	xdc.mutation.SetCreatedAt(t)
-	return xdc
+func (_c *XxxDemoCreate) SetCreatedAt(v time.Time) *XxxDemoCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableCreatedAt(t *time.Time) *XxxDemoCreate {
-	if t != nil {
-		xdc.SetCreatedAt(*t)
+func (_c *XxxDemoCreate) SetNillableCreatedAt(v *time.Time) *XxxDemoCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return xdc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (xdc *XxxDemoCreate) SetUpdatedAt(t time.Time) *XxxDemoCreate {
-	xdc.mutation.SetUpdatedAt(t)
-	return xdc
+func (_c *XxxDemoCreate) SetUpdatedAt(v time.Time) *XxxDemoCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableUpdatedAt(t *time.Time) *XxxDemoCreate {
-	if t != nil {
-		xdc.SetUpdatedAt(*t)
+func (_c *XxxDemoCreate) SetNillableUpdatedAt(v *time.Time) *XxxDemoCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return xdc
+	return _c
 }
 
 // SetDeletedAt sets the "deleted_at" field.
-func (xdc *XxxDemoCreate) SetDeletedAt(t time.Time) *XxxDemoCreate {
-	xdc.mutation.SetDeletedAt(t)
-	return xdc
+func (_c *XxxDemoCreate) SetDeletedAt(v time.Time) *XxxDemoCreate {
+	_c.mutation.SetDeletedAt(v)
+	return _c
 }
 
 // SetNillableDeletedAt sets the "deleted_at" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableDeletedAt(t *time.Time) *XxxDemoCreate {
-	if t != nil {
-		xdc.SetDeletedAt(*t)
+func (_c *XxxDemoCreate) SetNillableDeletedAt(v *time.Time) *XxxDemoCreate {
+	if v != nil {
+		_c.SetDeletedAt(*v)
 	}
-	return xdc
+	return _c
 }
 
 // SetIsActive sets the "is_active" field.
-func (xdc *XxxDemoCreate) SetIsActive(b bool) *XxxDemoCreate {
-	xdc.mutation.SetIsActive(b)
-	return xdc
+func (_c *XxxDemoCreate) SetIsActive(v bool) *XxxDemoCreate {
+	_c.mutation.SetIsActive(v)
+	return _c
 }
 
 // SetNillableIsActive sets the "is_active" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableIsActive(b *bool) *XxxDemoCreate {
-	if b != nil {
-		xdc.SetIsActive(*b)
+func (_c *XxxDemoCreate) SetNillableIsActive(v *bool) *XxxDemoCreate {
+	if v != nil {
+		_c.SetIsActive(*v)
 	}
-	return xdc
+	return _c
 }
 
 // SetCode sets the "code" field.
-func (xdc *XxxDemoCreate) SetCode(s string) *XxxDemoCreate {
-	xdc.mutation.SetCode(s)
-	return xdc
+func (_c *XxxDemoCreate) SetCode(v string) *XxxDemoCreate {
+	_c.mutation.SetCode(v)
+	return _c
 }
 
 // SetName sets the "name" field.
-func (xdc *XxxDemoCreate) SetName(s string) *XxxDemoCreate {
-	xdc.mutation.SetName(s)
-	return xdc
+func (_c *XxxDemoCreate) SetName(v string) *XxxDemoCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetID sets the "id" field.
-func (xdc *XxxDemoCreate) SetID(s string) *XxxDemoCreate {
-	xdc.mutation.SetID(s)
-	return xdc
+func (_c *XxxDemoCreate) SetID(v string) *XxxDemoCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (xdc *XxxDemoCreate) SetNillableID(s *string) *XxxDemoCreate {
-	if s != nil {
-		xdc.SetID(*s)
+func (_c *XxxDemoCreate) SetNillableID(v *string) *XxxDemoCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return xdc
+	return _c
 }
 
 // Mutation returns the XxxDemoMutation object of the builder.
-func (xdc *XxxDemoCreate) Mutation() *XxxDemoMutation {
-	return xdc.mutation
+func (_c *XxxDemoCreate) Mutation() *XxxDemoMutation {
+	return _c.mutation
 }
 
 // Save creates the XxxDemo in the database.
-func (xdc *XxxDemoCreate) Save(ctx context.Context) (*XxxDemo, error) {
-	xdc.defaults()
-	return withHooks(ctx, xdc.sqlSave, xdc.mutation, xdc.hooks)
+func (_c *XxxDemoCreate) Save(ctx context.Context) (*XxxDemo, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (xdc *XxxDemoCreate) SaveX(ctx context.Context) *XxxDemo {
-	v, err := xdc.Save(ctx)
+func (_c *XxxDemoCreate) SaveX(ctx context.Context) *XxxDemo {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -168,83 +168,83 @@ func (xdc *XxxDemoCreate) SaveX(ctx context.Context) *XxxDemo {
 }
 
 // Exec executes the query.
-func (xdc *XxxDemoCreate) Exec(ctx context.Context) error {
-	_, err := xdc.Save(ctx)
+func (_c *XxxDemoCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (xdc *XxxDemoCreate) ExecX(ctx context.Context) {
-	if err := xdc.Exec(ctx); err != nil {
+func (_c *XxxDemoCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (xdc *XxxDemoCreate) defaults() {
-	if _, ok := xdc.mutation.IsDel(); !ok {
+func (_c *XxxDemoCreate) defaults() {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		v := xxxdemo.DefaultIsDel
-		xdc.mutation.SetIsDel(v)
+		_c.mutation.SetIsDel(v)
 	}
-	if _, ok := xdc.mutation.Memo(); !ok {
+	if _, ok := _c.mutation.Memo(); !ok {
 		v := xxxdemo.DefaultMemo
-		xdc.mutation.SetMemo(v)
+		_c.mutation.SetMemo(v)
 	}
-	if _, ok := xdc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		v := xxxdemo.DefaultSort
-		xdc.mutation.SetSort(v)
+		_c.mutation.SetSort(v)
 	}
-	if _, ok := xdc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := xxxdemo.DefaultCreatedAt()
-		xdc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := xdc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := xxxdemo.DefaultUpdatedAt()
-		xdc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := xdc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		v := xxxdemo.DefaultIsActive
-		xdc.mutation.SetIsActive(v)
+		_c.mutation.SetIsActive(v)
 	}
-	if _, ok := xdc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := xxxdemo.DefaultID()
-		xdc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (xdc *XxxDemoCreate) check() error {
-	if _, ok := xdc.mutation.IsDel(); !ok {
+func (_c *XxxDemoCreate) check() error {
+	if _, ok := _c.mutation.IsDel(); !ok {
 		return &ValidationError{Name: "is_del", err: errors.New(`mainent: missing required field "XxxDemo.is_del"`)}
 	}
-	if v, ok := xdc.mutation.Memo(); ok {
+	if v, ok := _c.mutation.Memo(); ok {
 		if err := xxxdemo.MemoValidator(v); err != nil {
 			return &ValidationError{Name: "memo", err: fmt.Errorf(`mainent: validator failed for field "XxxDemo.memo": %w`, err)}
 		}
 	}
-	if _, ok := xdc.mutation.Sort(); !ok {
+	if _, ok := _c.mutation.Sort(); !ok {
 		return &ValidationError{Name: "sort", err: errors.New(`mainent: missing required field "XxxDemo.sort"`)}
 	}
-	if _, ok := xdc.mutation.IsActive(); !ok {
+	if _, ok := _c.mutation.IsActive(); !ok {
 		return &ValidationError{Name: "is_active", err: errors.New(`mainent: missing required field "XxxDemo.is_active"`)}
 	}
-	if _, ok := xdc.mutation.Code(); !ok {
+	if _, ok := _c.mutation.Code(); !ok {
 		return &ValidationError{Name: "code", err: errors.New(`mainent: missing required field "XxxDemo.code"`)}
 	}
-	if v, ok := xdc.mutation.Code(); ok {
+	if v, ok := _c.mutation.Code(); ok {
 		if err := xxxdemo.CodeValidator(v); err != nil {
 			return &ValidationError{Name: "code", err: fmt.Errorf(`mainent: validator failed for field "XxxDemo.code": %w`, err)}
 		}
 	}
-	if _, ok := xdc.mutation.Name(); !ok {
+	if _, ok := _c.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`mainent: missing required field "XxxDemo.name"`)}
 	}
-	if v, ok := xdc.mutation.Name(); ok {
+	if v, ok := _c.mutation.Name(); ok {
 		if err := xxxdemo.NameValidator(v); err != nil {
 			return &ValidationError{Name: "name", err: fmt.Errorf(`mainent: validator failed for field "XxxDemo.name": %w`, err)}
 		}
 	}
-	if v, ok := xdc.mutation.ID(); ok {
+	if v, ok := _c.mutation.ID(); ok {
 		if err := xxxdemo.IDValidator(v); err != nil {
 			return &ValidationError{Name: "id", err: fmt.Errorf(`mainent: validator failed for field "XxxDemo.id": %w`, err)}
 		}
@@ -252,12 +252,12 @@ func (xdc *XxxDemoCreate) check() error {
 	return nil
 }
 
-func (xdc *XxxDemoCreate) sqlSave(ctx context.Context) (*XxxDemo, error) {
-	if err := xdc.check(); err != nil {
+func (_c *XxxDemoCreate) sqlSave(ctx context.Context) (*XxxDemo, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := xdc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, xdc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -270,54 +270,54 @@ func (xdc *XxxDemoCreate) sqlSave(ctx context.Context) (*XxxDemo, error) {
 			return nil, fmt.Errorf("unexpected XxxDemo.ID type: %T", _spec.ID.Value)
 		}
 	}
-	xdc.mutation.id = &_node.ID
-	xdc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (xdc *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
+func (_c *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
 	var (
-		_node = &XxxDemo{config: xdc.config}
+		_node = &XxxDemo{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(xxxdemo.Table, sqlgraph.NewFieldSpec(xxxdemo.FieldID, field.TypeString))
 	)
-	_spec.OnConflict = xdc.conflict
-	if id, ok := xdc.mutation.ID(); ok {
+	_spec.OnConflict = _c.conflict
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
-	if value, ok := xdc.mutation.IsDel(); ok {
+	if value, ok := _c.mutation.IsDel(); ok {
 		_spec.SetField(xxxdemo.FieldIsDel, field.TypeBool, value)
 		_node.IsDel = value
 	}
-	if value, ok := xdc.mutation.Memo(); ok {
+	if value, ok := _c.mutation.Memo(); ok {
 		_spec.SetField(xxxdemo.FieldMemo, field.TypeString, value)
 		_node.Memo = &value
 	}
-	if value, ok := xdc.mutation.Sort(); ok {
+	if value, ok := _c.mutation.Sort(); ok {
 		_spec.SetField(xxxdemo.FieldSort, field.TypeInt32, value)
 		_node.Sort = value
 	}
-	if value, ok := xdc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(xxxdemo.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = &value
 	}
-	if value, ok := xdc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(xxxdemo.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = &value
 	}
-	if value, ok := xdc.mutation.DeletedAt(); ok {
+	if value, ok := _c.mutation.DeletedAt(); ok {
 		_spec.SetField(xxxdemo.FieldDeletedAt, field.TypeTime, value)
 		_node.DeletedAt = &value
 	}
-	if value, ok := xdc.mutation.IsActive(); ok {
+	if value, ok := _c.mutation.IsActive(); ok {
 		_spec.SetField(xxxdemo.FieldIsActive, field.TypeBool, value)
 		_node.IsActive = value
 	}
-	if value, ok := xdc.mutation.Code(); ok {
+	if value, ok := _c.mutation.Code(); ok {
 		_spec.SetField(xxxdemo.FieldCode, field.TypeString, value)
 		_node.Code = value
 	}
-	if value, ok := xdc.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(xxxdemo.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
@@ -340,10 +340,10 @@ func (xdc *XxxDemoCreate) createSpec() (*XxxDemo, *sqlgraph.CreateSpec) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (xdc *XxxDemoCreate) OnConflict(opts ...sql.ConflictOption) *XxxDemoUpsertOne {
-	xdc.conflict = opts
+func (_c *XxxDemoCreate) OnConflict(opts ...sql.ConflictOption) *XxxDemoUpsertOne {
+	_c.conflict = opts
 	return &XxxDemoUpsertOne{
-		create: xdc,
+		create: _c,
 	}
 }
 
@@ -353,10 +353,10 @@ func (xdc *XxxDemoCreate) OnConflict(opts ...sql.ConflictOption) *XxxDemoUpsertO
 //	client.XxxDemo.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (xdc *XxxDemoCreate) OnConflictColumns(columns ...string) *XxxDemoUpsertOne {
-	xdc.conflict = append(xdc.conflict, sql.ConflictColumns(columns...))
+func (_c *XxxDemoCreate) OnConflictColumns(columns ...string) *XxxDemoUpsertOne {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &XxxDemoUpsertOne{
-		create: xdc,
+		create: _c,
 	}
 }
 
@@ -731,16 +731,16 @@ type XxxDemoCreateBulk struct {
 }
 
 // Save creates the XxxDemo entities in the database.
-func (xdcb *XxxDemoCreateBulk) Save(ctx context.Context) ([]*XxxDemo, error) {
-	if xdcb.err != nil {
-		return nil, xdcb.err
+func (_c *XxxDemoCreateBulk) Save(ctx context.Context) ([]*XxxDemo, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(xdcb.builders))
-	nodes := make([]*XxxDemo, len(xdcb.builders))
-	mutators := make([]Mutator, len(xdcb.builders))
-	for i := range xdcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*XxxDemo, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := xdcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*XxxDemoMutation)
@@ -754,12 +754,12 @@ func (xdcb *XxxDemoCreateBulk) Save(ctx context.Context) ([]*XxxDemo, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, xdcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
-					spec.OnConflict = xdcb.conflict
+					spec.OnConflict = _c.conflict
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, xdcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -779,7 +779,7 @@ func (xdcb *XxxDemoCreateBulk) Save(ctx context.Context) ([]*XxxDemo, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, xdcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -787,8 +787,8 @@ func (xdcb *XxxDemoCreateBulk) Save(ctx context.Context) ([]*XxxDemo, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (xdcb *XxxDemoCreateBulk) SaveX(ctx context.Context) []*XxxDemo {
-	v, err := xdcb.Save(ctx)
+func (_c *XxxDemoCreateBulk) SaveX(ctx context.Context) []*XxxDemo {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -796,14 +796,14 @@ func (xdcb *XxxDemoCreateBulk) SaveX(ctx context.Context) []*XxxDemo {
 }
 
 // Exec executes the query.
-func (xdcb *XxxDemoCreateBulk) Exec(ctx context.Context) error {
-	_, err := xdcb.Save(ctx)
+func (_c *XxxDemoCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (xdcb *XxxDemoCreateBulk) ExecX(ctx context.Context) {
-	if err := xdcb.Exec(ctx); err != nil {
+func (_c *XxxDemoCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
@@ -823,10 +823,10 @@ func (xdcb *XxxDemoCreateBulk) ExecX(ctx context.Context) {
 //			SetIsDel(v+v).
 //		}).
 //		Exec(ctx)
-func (xdcb *XxxDemoCreateBulk) OnConflict(opts ...sql.ConflictOption) *XxxDemoUpsertBulk {
-	xdcb.conflict = opts
+func (_c *XxxDemoCreateBulk) OnConflict(opts ...sql.ConflictOption) *XxxDemoUpsertBulk {
+	_c.conflict = opts
 	return &XxxDemoUpsertBulk{
-		create: xdcb,
+		create: _c,
 	}
 }
 
@@ -836,10 +836,10 @@ func (xdcb *XxxDemoCreateBulk) OnConflict(opts ...sql.ConflictOption) *XxxDemoUp
 //	client.XxxDemo.Create().
 //		OnConflict(sql.ConflictColumns(columns...)).
 //		Exec(ctx)
-func (xdcb *XxxDemoCreateBulk) OnConflictColumns(columns ...string) *XxxDemoUpsertBulk {
-	xdcb.conflict = append(xdcb.conflict, sql.ConflictColumns(columns...))
+func (_c *XxxDemoCreateBulk) OnConflictColumns(columns ...string) *XxxDemoUpsertBulk {
+	_c.conflict = append(_c.conflict, sql.ConflictColumns(columns...))
 	return &XxxDemoUpsertBulk{
-		create: xdcb,
+		create: _c,
 	}
 }
 

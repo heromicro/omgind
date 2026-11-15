@@ -60,7 +60,7 @@ func (*SysAnnex) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the SysAnnex fields.
-func (sa *SysAnnex) assignValues(columns []string, values []any) error {
+func (_m *SysAnnex) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -70,70 +70,70 @@ func (sa *SysAnnex) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value.Valid {
-				sa.ID = value.String
+				_m.ID = value.String
 			}
 		case sysannex.FieldMemo:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field memo", values[i])
 			} else if value.Valid {
-				sa.Memo = new(string)
-				*sa.Memo = value.String
+				_m.Memo = new(string)
+				*_m.Memo = value.String
 			}
 		case sysannex.FieldSort:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field sort", values[i])
 			} else if value.Valid {
-				sa.Sort = int32(value.Int64)
+				_m.Sort = int32(value.Int64)
 			}
 		case sysannex.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				sa.CreatedAt = new(time.Time)
-				*sa.CreatedAt = value.Time
+				_m.CreatedAt = new(time.Time)
+				*_m.CreatedAt = value.Time
 			}
 		case sysannex.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				sa.UpdatedAt = new(time.Time)
-				*sa.UpdatedAt = value.Time
+				_m.UpdatedAt = new(time.Time)
+				*_m.UpdatedAt = value.Time
 			}
 		case sysannex.FieldDeletedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field deleted_at", values[i])
 			} else if value.Valid {
-				sa.DeletedAt = new(time.Time)
-				*sa.DeletedAt = value.Time
+				_m.DeletedAt = new(time.Time)
+				*_m.DeletedAt = value.Time
 			}
 		case sysannex.FieldIsActive:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_active", values[i])
 			} else if value.Valid {
-				sa.IsActive = value.Bool
+				_m.IsActive = value.Bool
 			}
 		case sysannex.FieldIsDel:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field is_del", values[i])
 			} else if value.Valid {
-				sa.IsDel = value.Bool
+				_m.IsDel = value.Bool
 			}
 		case sysannex.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				sa.Name = new(string)
-				*sa.Name = value.String
+				_m.Name = new(string)
+				*_m.Name = value.String
 			}
 		case sysannex.FieldFilePath:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field file_path", values[i])
 			} else if value.Valid {
-				sa.FilePath = new(string)
-				*sa.FilePath = value.String
+				_m.FilePath = new(string)
+				*_m.FilePath = value.String
 			}
 		default:
-			sa.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -141,68 +141,68 @@ func (sa *SysAnnex) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the SysAnnex.
 // This includes values selected through modifiers, order, etc.
-func (sa *SysAnnex) Value(name string) (ent.Value, error) {
-	return sa.selectValues.Get(name)
+func (_m *SysAnnex) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this SysAnnex.
 // Note that you need to call SysAnnex.Unwrap() before calling this method if this SysAnnex
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (sa *SysAnnex) Update() *SysAnnexUpdateOne {
-	return NewSysAnnexClient(sa.config).UpdateOne(sa)
+func (_m *SysAnnex) Update() *SysAnnexUpdateOne {
+	return NewSysAnnexClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the SysAnnex entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (sa *SysAnnex) Unwrap() *SysAnnex {
-	_tx, ok := sa.config.driver.(*txDriver)
+func (_m *SysAnnex) Unwrap() *SysAnnex {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("mainent: SysAnnex is not a transactional entity")
 	}
-	sa.config.driver = _tx.drv
-	return sa
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (sa *SysAnnex) String() string {
+func (_m *SysAnnex) String() string {
 	var builder strings.Builder
 	builder.WriteString("SysAnnex(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", sa.ID))
-	if v := sa.Memo; v != nil {
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
+	if v := _m.Memo; v != nil {
 		builder.WriteString("memo=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
 	builder.WriteString("sort=")
-	builder.WriteString(fmt.Sprintf("%v", sa.Sort))
+	builder.WriteString(fmt.Sprintf("%v", _m.Sort))
 	builder.WriteString(", ")
-	if v := sa.CreatedAt; v != nil {
+	if v := _m.CreatedAt; v != nil {
 		builder.WriteString("created_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sa.UpdatedAt; v != nil {
+	if v := _m.UpdatedAt; v != nil {
 		builder.WriteString("updated_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
-	if v := sa.DeletedAt; v != nil {
+	if v := _m.DeletedAt; v != nil {
 		builder.WriteString("deleted_at=")
 		builder.WriteString(v.Format(time.ANSIC))
 	}
 	builder.WriteString(", ")
 	builder.WriteString("is_active=")
-	builder.WriteString(fmt.Sprintf("%v", sa.IsActive))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsActive))
 	builder.WriteString(", ")
 	builder.WriteString("is_del=")
-	builder.WriteString(fmt.Sprintf("%v", sa.IsDel))
+	builder.WriteString(fmt.Sprintf("%v", _m.IsDel))
 	builder.WriteString(", ")
-	if v := sa.Name; v != nil {
+	if v := _m.Name; v != nil {
 		builder.WriteString("name=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := sa.FilePath; v != nil {
+	if v := _m.FilePath; v != nil {
 		builder.WriteString("file_path=")
 		builder.WriteString(*v)
 	}
