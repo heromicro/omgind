@@ -10,7 +10,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdict"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysdictitem"
-	"github.com/heromicro/omgind/internal/scheme/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo/entgo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/str"
 )

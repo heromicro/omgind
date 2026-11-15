@@ -10,7 +10,7 @@ import (
 	"github.com/heromicro/omgind/internal/app/service"
 
 	"github.com/heromicro/omgind/internal/scheme"
-	"github.com/heromicro/omgind/internal/scheme/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo/entgo"
 	"github.com/heromicro/omgind/pkg/config"
 
 	// "github.com/heromicro/omgind/pkg/mw/asyncq"

@@ -11,7 +11,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysmenuaction"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysmenuactionresource"
-	"github.com/heromicro/omgind/internal/scheme/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo/entgo"
 	"github.com/ttacon/chalk"
 	"gopkg.in/yaml.v2"
 )

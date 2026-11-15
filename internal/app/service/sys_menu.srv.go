@@ -16,7 +16,7 @@ import (
 	"github.com/heromicro/omgind/internal/gen/mainent"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysmenu"
 	"github.com/heromicro/omgind/internal/gen/mainent/sysmenuactionresource"
-	"github.com/heromicro/omgind/internal/scheme/repo"
+	"github.com/heromicro/omgind/internal/scheme/repo/entgo"
 	"github.com/heromicro/omgind/pkg/errors"
 	"github.com/heromicro/omgind/pkg/helper/yaml"
 	"github.com/heromicro/omgind/pkg/mw/asyncq/worker"
