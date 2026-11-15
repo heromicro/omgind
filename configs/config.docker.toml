@@ -40,7 +40,7 @@
     # debug模式
     Debug = false
     # 模型配置文件(也可以启动服务时使用-m指定)
-    Model = ""
+    ModelFile = "configs/rbac_model.conf"
     # 是否启用定期自动加载策略
     AutoLoad = false
     # 定期自动加载策略时间间隔（单位秒）
@@ -188,7 +188,7 @@
     # 允许跨域请求的请求方式列表
     AllowMethods = ["GET","POST","PUT","DELETE","PATCH"]
     # 允许客户端与跨域请求一起使用的非简单标头的列表
-    AllowHeaders = []
+    AllowHeaders = ["Origin", "Content-Type", "Authorization", "X-Org-ID"]
     # 请求是否可以包含cookie，HTTP身份验证或客户端SSL证书等用户凭据
     AllowCredentials = true
     # 可以缓存预检请求结果的时间（以秒为单位）

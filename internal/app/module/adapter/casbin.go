@@ -19,6 +19,7 @@ var _ persist.Adapter = (*CasbinAdapter)(nil)
 var CasbinAdapterSet = wire.NewSet(wire.Struct(new(CasbinAdapter), "*"), wire.Bind(new(persist.Adapter), new(*CasbinAdapter)))
 
 type CasbinAdapter struct {
+	OrgOrganRepo     *repo.OrgOrgan
 	RoleRepo         *repo.Role
 	RoleMenuRepo     *repo.RoleMenu
 	MenuResourceRepo *repo.MenuActionResource
@@ -47,6 +48,20 @@ func (a *CasbinAdapter) LoadPolicy(model casbinModel.Model) error {
 // Load role policy (p,role_id,path,method)
 func (a *CasbinAdapter) loadRolePolicy(ctx context.Context, m casbinModel.Model) error {
 
+	organizations, err := a.OrgOrganRepo.Query(ctx, schema.OrgOrganQueryParam{IsActive: ptr.Bool(true)})
+	if err != nil {
+		return err
+	}
+	for _, org := range organizations.Data {
+		if org.OwnerId == "" {
+			continue
+		}
+		role := "owner:" + org.ID
+		persist.LoadPolicyLine(fmt.Sprintf("g,%s,%s,%s", org.OwnerId, role, org.ID), m)
+		for _, method := range []string{"GET", "POST", "PUT", "PATCH", "DELETE"} {
+			persist.LoadPolicyLine(fmt.Sprintf("p,%s,%s,/api/v2/*,%s", role, org.ID, method), m)
+		}
+	}
 	isActive := ptr.Bool(true)
 	roleResult, err := a.RoleRepo.Query(ctx, schema.RoleQueryParam{
 		IsActive: isActive,
@@ -81,7 +96,7 @@ func (a *CasbinAdapter) loadRolePolicy(ctx context.Context, m casbinModel.Model)
 							continue
 						}
 						mcache[mr.Path+mr.Method] = struct{}{}
-						line := fmt.Sprintf("p,%s,%s,%s", item.ID, mr.Path, mr.Method)
+						line := fmt.Sprintf("p,%s,%s,%s,%s", item.ID, item.OrgID, mr.Path, mr.Method)
 						persist.LoadPolicyLine(line, m)
 					}
 				}
@@ -111,7 +126,7 @@ func (a *CasbinAdapter) loadUserPolicy(ctx context.Context, m casbinModel.Model)
 		for _, uitem := range userResult.Data {
 			if urs, ok := mUserRoles[uitem.ID]; ok {
 				for _, ur := range urs {
-					line := fmt.Sprintf("g,%s,%s", ur.UserID, ur.RoleID)
+					line := fmt.Sprintf("g,%s,%s,%s", ur.UserID, ur.RoleID, ur.OrgID)
 					persist.LoadPolicyLine(line, m)
 				}
 			}
