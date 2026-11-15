@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"github.com/casbin/casbin/v2"
+	"github.com/heromicro/omgind/internal/app/contextx"
 
 	"github.com/google/wire"
 
@@ -18,7 +20,8 @@ var OrgOrganSet = wire.NewSet(wire.Struct(new(OrgOrgan), "*"))
 
 // OrgOrgan 组织管理
 type OrgOrgan struct {
-	EntCli *mainent.Client
+	Enforcer *casbin.SyncedEnforcer
+	EntCli   *mainent.Client
 
 	OrgOrganRepo *repo.OrgOrgan
 
@@ -60,7 +63,17 @@ func (a *OrgOrgan) View(ctx context.Context, id string, opts ...schema.OrgOrganQ
 }
 
 // Create 创建数据
-func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.OrgOrgan, error) {
+func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (result *schema.OrgOrgan, err error) {
+	defer func() {
+		if err == nil {
+			err = LoadCasbinPolicy(ctx, a.Enforcer)
+		}
+	}()
+	uid, _ := contextx.FromUserID(ctx)
+	if uid == "" {
+		return nil, errors.ErrNoPerm
+	}
+	item.OwnerId = uid
 
 	addr_iteminput := repo.ToEntCreateSysAddressInput(item.Haddr)
 	item.Haddr = nil
@@ -75,12 +88,15 @@ func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.Or
 
 	err = repo.WithTx(ctx, a.EntCli, func(tx *mainent.Tx) error {
 
-		r_addr, err := tx.SysAddress.Create().SetInput(*addr_iteminput).Save(ctx)
+		rr_orgorgan, err = tx.OrgOrgan.Create().SetInput(*organ_iteminput).SetOwnerID(uid).Save(ctx)
 		if err != nil {
 			return err
 		}
-		rr_orgorgan, err = tx.OrgOrgan.Create().SetInput(*organ_iteminput).SetHaddrID(r_addr.ID).Save(ctx)
+		r_addr, err := tx.SysAddress.Create().SetInput(*addr_iteminput).SetOrgID(rr_orgorgan.ID).Save(ctx)
 		if err != nil {
+			return err
+		}
+		if _, err := tx.OrgOrgan.UpdateOneID(rr_orgorgan.ID).SetHaddrID(r_addr.ID).Save(ctx); err != nil {
 			return err
 		}
 
@@ -88,6 +104,9 @@ func (a *OrgOrgan) Create(ctx context.Context, item schema.OrgOrgan) (*schema.Or
 		_, err = tx.OrgDept.Create().SetOrgID(rr_orgorgan.ID).SetTreeID(la_tree_id).SetName(item.Sname).SetTreeLevel(1).SetTreeLeft(1).SetTreeRight(2).SetSort(0).SetIsShow(false).SetIsLeaf(false).Save(ctx)
 
 		if err != nil {
+			return err
+		}
+		if _, err := tx.OrgStaff.Create().SetOrgID(rr_orgorgan.ID).SetUserID(uid).Save(ctx); err != nil {
 			return err
 		}
 		return nil
